@@ -8,7 +8,6 @@
 
 import Foundation
 import XCTest
-import UIUTest
 
 @testable import Workflow
 
@@ -890,53 +889,6 @@ extension UIKitPresenterTests {
         func next() {
             proceedInWorkflow(data)
         }
-    }
-}
-
-extension IndexPath {
-    static var empty:IndexPath = {
-        return IndexPath(row: 0, section: 0)
-    }()
-}
-
-extension UITableView {
-    func waitForDataToLoad() {
-        waitUntil(visibleCells.count > 0)
-    }
-}
-
-extension UIControl {
-    func simulateTouchOnResponsiveElement() {
-        waitUntil(willRespondToUser)
-        simulateTouch()
-    }
-}
-extension UIView {
-    var flattenedHigherarchy:[UIView] {
-        func allSubviews(for view: UIView) -> [UIView] {
-            var arr = view.subviews
-            for subview in view.subviews {
-                if (!subview.subviews.isEmpty) {
-                    arr.append(contentsOf: allSubviews(for: subview))
-                }
-            }
-            return arr
-        }
-        return allSubviews(for: self)
-    }
-    
-    public subscript(_ idOrLabel:String) -> [UIView] {
-        return flattenedHigherarchy.filter { $0.accessibilityIdentifier == idOrLabel
-            || $0.accessibilityLabel == idOrLabel }
-    }
-    
-    public subscript<T>(first idOrLabel:String) -> T? {
-        let firstMatch = flattenedHigherarchy
-            .first(where: { $0.accessibilityIdentifier == idOrLabel || $0.accessibilityLabel == idOrLabel })
-        if firstMatch != nil && (firstMatch as? T) == nil {
-            XCTFail("Could not cast view with id: \(idOrLabel) to: \(T.self)")
-        }
-        return firstMatch as? T
     }
 }
 
