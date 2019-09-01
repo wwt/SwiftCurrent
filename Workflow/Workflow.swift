@@ -3,17 +3,17 @@
 //  Workflow
 //
 //  Created by Tyler Thompson on 8/26/19.
-//  Copyright © 2019 TT. All rights reserved.
+//  Copyright © 2019 Tyler Tompson. All rights reserved.
 //
 
 import Foundation
 
 public class Workflow: LinkedList<AnyFlowRepresentable.Type> {
     
-    internal var instances:LinkedList<AnyFlowRepresentable> = []
+    internal var instances:LinkedList<AnyFlowRepresentable?> = []
     internal var presenter:AnyPresenter?
 
-    public var firstLoadedInstance:LinkedList<AnyFlowRepresentable>.Node<AnyFlowRepresentable>?
+    public var firstLoadedInstance:LinkedList<AnyFlowRepresentable?>.Node<AnyFlowRepresentable?>?
     
     override init(_ node: Element?) {
         super.init(node)
@@ -23,16 +23,29 @@ public class Workflow: LinkedList<AnyFlowRepresentable.Type> {
         self.presenter = presenter
     }
     
-    public func launch(from: Any?, with args:Any?, withLaunchStyle launchStyle:PresentationType = .default, onFinish:((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable>.Node<AnyFlowRepresentable>? {
+    public func launch(from: Any?, with args:Any?, withLaunchStyle launchStyle:PresentationType = .default, onFinish:((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Node<AnyFlowRepresentable?>? {
         removeInstances()
-        instances.append(contentsOf: map {
-            var flowRepresentable = $0.value.instance()
-            flowRepresentable.workflow = self
-            return flowRepresentable
+        instances.append(contentsOf: map { _ in
+//            var flowRepresentable = $0.value.instance()
+//            flowRepresentable.workflow = self
+            return nil
         })
-        instances.forEach { setupCallbacks(for: $0, onFinish: onFinish) }
-        firstLoadedInstance = instances.first?.traverse {
-            $0.value.erasedShouldLoad(with: args)
+//        instances.forEach { setupCallbacks(for: $0, onFinish: onFinish) }
+        _ = first?.traverse { node in
+            var flowRepresentable = node.value.instance()
+            flowRepresentable.workflow = self
+            let shouldLoad = flowRepresentable.erasedShouldLoad(with: args)
+            defer {
+                if (shouldLoad) {
+                    let position = node.position
+                    instances.replace(atIndex: position, withItem: flowRepresentable)
+                    firstLoadedInstance = instances.first?.traverse(position)
+                    if let firstLoadedInstance = firstLoadedInstance {
+                        self.setupCallbacks(for: firstLoadedInstance, onFinish: onFinish)
+                    }
+                }
+            }
+            return shouldLoad
         }
         guard let first = firstLoadedInstance else {
             return nil
@@ -46,7 +59,7 @@ public class Workflow: LinkedList<AnyFlowRepresentable.Type> {
     }
     
     private func removeInstances() {
-        instances.forEach { $0.value.callback = nil }
+        instances.forEach { $0.value?.callback = nil }
         instances.removeAll()
     }
     
@@ -55,13 +68,14 @@ public class Workflow: LinkedList<AnyFlowRepresentable.Type> {
         instances.replace(atIndex: index, withItem: instance)
     }
 
-    private func setupCallbacks(for node:LinkedList<AnyFlowRepresentable>.Node<AnyFlowRepresentable>, onFinish:((Any?) -> Void)?) {
-        node.value.callback = { args in
+    private func setupCallbacks(for node:LinkedList<AnyFlowRepresentable?>.Node<AnyFlowRepresentable?>, onFinish:((Any?) -> Void)?) {
+        node.value?.callback = { args in
             var argsToPass = args
             let nextNode = node.next?.traverse {
                 let index = $0.position
                 var instance = self.first?.traverse(index)?.value.instance()
-                instance?.callback = $0.value.callback
+                instance?.callback = $0.value?.callback
+                instance?.workflow = self
                 
                 let hold = instance?.callback
                 defer {
@@ -78,6 +92,8 @@ public class Workflow: LinkedList<AnyFlowRepresentable.Type> {
                 onFinish?(args)
                 return
             }
+            
+            self.setupCallbacks(for: nodeToPresent, onFinish: onFinish)
             
             let instanceToPresent = self.instances.first?.traverse(nodeToPresent.position)?.value
             

@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD2AEA01231C757A0069F9B4 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2AEA00231C757A0069F9B4 /* Location.swift */; };
+		AD2AEA03231C75820069F9B4 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2AEA02231C75820069F9B4 /* Order.swift */; };
 		AD4AA2A6231462D200C3C95E /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4AA2A5231462D200C3C95E /* TopViewController.swift */; };
 		AD4AA2A82314635B00C3C95E /* UIKitPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4AA2A72314635B00C3C95E /* UIKitPresenterTests.swift */; };
 		AD4AA2AB2314647900C3C95E /* UIKitPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4AA2AA2314647900C3C95E /* UIKitPresenter.swift */; };
 		AD4AA2AD231464A600C3C95E /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4AA2AC231464A600C3C95E /* Presenter.swift */; };
 		AD4AA2D52315C59200C3C95E /* WaitUntil.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4AA2D42315C59200C3C95E /* WaitUntil.swift */; };
 		AD5BB00E231B82C9001DAF7C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5BB00D231B82C9001DAF7C /* AppDelegate.swift */; };
-		AD5BB010231B82C9001DAF7C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5BB00F231B82C9001DAF7C /* ViewController.swift */; };
 		AD5BB013231B82C9001DAF7C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD5BB011231B82C9001DAF7C /* Main.storyboard */; };
 		AD5BB015231B82CC001DAF7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD5BB014231B82CC001DAF7C /* Assets.xcassets */; };
 		AD5BB018231B82CC001DAF7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD5BB016231B82CC001DAF7C /* LaunchScreen.storyboard */; };
@@ -64,6 +65,8 @@
 		93153A9A1549D7ECC6FF5A30 /* Pods_Workflow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Workflow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		94D06747513FD57DC845C020 /* Pods-Workflow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Workflow.debug.xcconfig"; path = "Target Support Files/Pods-Workflow/Pods-Workflow.debug.xcconfig"; sourceTree = "<group>"; };
 		AA3DC57E64BEE24B54E95F04 /* Pods-Workflow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Workflow.release.xcconfig"; path = "Target Support Files/Pods-Workflow/Pods-Workflow.release.xcconfig"; sourceTree = "<group>"; };
+		AD2AEA00231C757A0069F9B4 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		AD2AEA02231C75820069F9B4 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		AD4AA2A5231462D200C3C95E /* TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
 		AD4AA2A72314635B00C3C95E /* UIKitPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitPresenterTests.swift; sourceTree = "<group>"; };
 		AD4AA2AA2314647900C3C95E /* UIKitPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitPresenter.swift; sourceTree = "<group>"; };
@@ -71,7 +74,6 @@
 		AD4AA2D42315C59200C3C95E /* WaitUntil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaitUntil.swift; sourceTree = "<group>"; };
 		AD5BB00B231B82C9001DAF7C /* WorkflowExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkflowExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD5BB00D231B82C9001DAF7C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		AD5BB00F231B82C9001DAF7C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		AD5BB012231B82C9001DAF7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AD5BB014231B82CC001DAF7C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AD5BB017231B82CC001DAF7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -141,6 +143,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		AD2AE9FF231C756F0069F9B4 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AD2AEA00231C757A0069F9B4 /* Location.swift */,
+				AD2AEA02231C75820069F9B4 /* Order.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		AD4AA2A92314646900C3C95E /* UIKitPresenter */ = {
 			isa = PBXGroup;
 			children = (
@@ -153,8 +164,8 @@
 		AD5BB00C231B82C9001DAF7C /* WorkflowExample */ = {
 			isa = PBXGroup;
 			children = (
+				AD2AE9FF231C756F0069F9B4 /* Models */,
 				AD5BB00D231B82C9001DAF7C /* AppDelegate.swift */,
-				AD5BB00F231B82C9001DAF7C /* ViewController.swift */,
 				AD5BB011231B82C9001DAF7C /* Main.storyboard */,
 				AD5BB014231B82CC001DAF7C /* Assets.xcassets */,
 				AD5BB016231B82CC001DAF7C /* LaunchScreen.storyboard */,
@@ -347,7 +358,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1030;
 				LastUpgradeCheck = 1030;
-				ORGANIZATIONNAME = TT;
+				ORGANIZATIONNAME = "Tyler Thompson";
 				TargetAttributes = {
 					AD5BB00A231B82C9001DAF7C = {
 						CreatedOnToolsVersion = 10.3;
@@ -478,7 +489,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD5BB010231B82C9001DAF7C /* ViewController.swift in Sources */,
+				AD2AEA03231C75820069F9B4 /* Order.swift in Sources */,
+				AD2AEA01231C757A0069F9B4 /* Location.swift in Sources */,
 				AD5BB00E231B82C9001DAF7C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
