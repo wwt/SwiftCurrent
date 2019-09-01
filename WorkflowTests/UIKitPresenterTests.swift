@@ -702,7 +702,6 @@ class UIKitPresenterTests: XCTestCase {
         let controller = UINavigationController(rootViewController: rootController)
         loadView(controller: firstView)
         firstView.present(controller, animated: false)
-        waitUntil(UIApplication.topViewController() === controller)
 
         let workflow = Workflow([ExpectedModal.self])
         rootController.launchInto(workflow, withLaunchStyle: .modally)
@@ -870,9 +869,7 @@ class UIKitPresenterTests: XCTestCase {
         RunLoop.current.singlePass()
 
         XCTAssertEqual(controller.viewControllers.count, 1)
-        waitUntil(UIApplication.topViewController() is ExpectedNav)
         (UIApplication.topViewController() as? ExpectedNav)?.proceedInWorkflow()
-        waitUntil(UIApplication.topViewController() is ExpectedModal)
         XCTAssert(UIApplication.topViewController() is ExpectedModal, "Top View was not a modal")
         XCTAssertNil((UIApplication.topViewController() as? ExpectedModal)?.navigationController, "You didn't present modally")
     }
