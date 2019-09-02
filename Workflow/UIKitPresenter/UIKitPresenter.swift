@@ -36,6 +36,8 @@ open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
         case .navigationStack:
             if let nav = root.navigationController {
                 nav.pushViewController(view, animated: true)
+            } else if let nav = root as? UINavigationController {
+                nav.pushViewController(view, animated: true)
             } else {
                 let nav = UINavigationController(rootViewController: view)
                 root.present(nav, animated: true)

@@ -372,6 +372,41 @@ class UIKitPresenterTests: XCTestCase {
         waitUntil(UIApplication.topViewController() is FR4)
         XCTAssert(UIApplication.topViewController() is FR4)
     }
+    
+    func testFlowPresentsOnNavStackWhenNavHasNoRoot() {
+        class FR1: TestViewController { }
+        
+        let nav = UINavigationController()
+        loadView(controller: nav)
+        
+        nav.launchInto([FR1.self])
+        waitUntil(UIApplication.topViewController() is FR1)
+        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertNil(nav.mostRecentlyPresentedViewController)
+        XCTAssertNotNil(UIApplication.topViewController()?.navigationController)
+        XCTAssertEqual(UIApplication.topViewController()?.navigationController?.viewControllers.count, 1)
+        XCTAssert(UIApplication.topViewController()?.navigationController?.visibleViewController is FR1)
+    }
+
+    func testFlowPresentsOnNavStackWhenNavHasNoRootAndNavigationStackLaunchStyle() {
+        class FR1: TestViewController {
+            override var preferredLaunchStyle: PresentationType {
+                return .navigationStack
+            }
+        }
+        
+        let nav = UINavigationController()
+        loadView(controller: nav)
+        
+        nav.launchInto([FR1.self], withLaunchStyle: .navigationStack)
+        waitUntil(UIApplication.topViewController() is FR1)
+        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertNil(nav.mostRecentlyPresentedViewController)
+        XCTAssertNotNil(UIApplication.topViewController()?.navigationController)
+        XCTAssert(UIApplication.topViewController()?.navigationController === nav)
+        XCTAssertEqual(UIApplication.topViewController()?.navigationController?.viewControllers.count, 1)
+        XCTAssert(UIApplication.topViewController()?.navigationController?.visibleViewController is FR1)
+    }
 
     func testFlowThatSkipsScreen() {
         class FR1: TestViewController { }
