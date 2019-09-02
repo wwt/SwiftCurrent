@@ -5,12 +5,12 @@ DEPENDENCIES:
   - UIUTest
 
 SPEC REPOS:
-  https://cdn.cocoapods.org/:
+  https://github.com/cocoapods/specs.git:
     - UIUTest
 
 SPEC CHECKSUMS:
   UIUTest: 842c642e5bec098b1e2c890cbe25aacab80f2481
 
-PODFILE CHECKSUM: 64bbb34e7a043bae0a1b99bbde38c8cbab37ff7d
+PODFILE CHECKSUM: 9c6344ba71d580bdd58bc8aa368101d2a277a34d
 
 COCOAPODS: 1.7.5
