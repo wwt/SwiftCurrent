@@ -1,0 +1,11 @@
+language: swift
+osx_image: xcode10.2
+xcode_project: Workflow.xcodeproj # path to your xcodeproj folder
+xcode_scheme: Workflow
+xcode_destination: platform=iOS Simulator,name=iPhone 8
+if: tag IS blank
+deploy:
+  provider: script
+  script: carthage build --no-skip-current && gem install cocoapods && ./deploy_pod.sh
+  on:
+    branch: master
