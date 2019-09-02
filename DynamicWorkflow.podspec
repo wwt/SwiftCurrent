@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
-  s.name             = 'Dynamic-Workflow'
+  s.name             = 'DynamicWorkflow'
   s.version          = '0.0.1'
-  s.summary          = 'Workflow\'s that work, yo (blame Richard)'
+  s.summary          = 'Workflows that work, yo (blame Richard for this name)'
   s.description      = <<-DESC
 iOS has a linear paradigm for navigation that doesn't support a lot of flexibility. This library attempts to create a dynamic way to define your workflows in code allowing for easy reording.
                        DESC
