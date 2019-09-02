@@ -1,16 +1,39 @@
 PODS:
+  - CwlCatchException (1.0.2)
+  - CwlPreconditionTesting (1.1.1):
+    - CwlCatchException
   - UIUTest (1.6.0)
 
 DEPENDENCIES:
+  - CwlCatchException (from `https://github.com/mattgallagher/CwlCatchException.git`, tag `1.2.0`)
+  - CwlPreconditionTesting (from `https://github.com/mattgallagher/CwlPreconditionTesting.git`, tag `1.2.0`)
   - UIUTest
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - UIUTest
 
+EXTERNAL SOURCES:
+  CwlCatchException:
+    :git: https://github.com/mattgallagher/CwlCatchException.git
+    :tag: 1.2.0
+  CwlPreconditionTesting:
+    :git: https://github.com/mattgallagher/CwlPreconditionTesting.git
+    :tag: 1.2.0
+
+CHECKOUT OPTIONS:
+  CwlCatchException:
+    :git: https://github.com/mattgallagher/CwlCatchException.git
+    :tag: 1.2.0
+  CwlPreconditionTesting:
+    :git: https://github.com/mattgallagher/CwlPreconditionTesting.git
+    :tag: 1.2.0
+
 SPEC CHECKSUMS:
+  CwlCatchException: 70a52ae44ea5d46db7bd385f801a94942420cd8c
+  CwlPreconditionTesting: d33a4e4f285c0b885fddcae5dfedfbb34d4f3961
   UIUTest: 842c642e5bec098b1e2c890cbe25aacab80f2481
 
-PODFILE CHECKSUM: 9c6344ba71d580bdd58bc8aa368101d2a277a34d
+PODFILE CHECKSUM: 6bb3c29538ccc315544b3b57dd2156ce54e6077f
 
 COCOAPODS: 1.7.5

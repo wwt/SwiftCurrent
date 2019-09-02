@@ -12,6 +12,4 @@ public protocol AnyPresenter:class {
     
     func launch(view:Any?, from root:Any?, withLaunchStyle launchStyle:PresentationType)
     func abandon(_ workflow:Workflow, animated:Bool, onFinish:(() -> Void)?)
-    
-    var presentationType:PresentationType { get }
 }

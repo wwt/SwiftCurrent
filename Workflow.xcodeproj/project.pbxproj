@@ -23,6 +23,7 @@
 		AD8BEBE6231830860071A83D /* BasePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8BEBE5231830860071A83D /* BasePresenter.swift */; };
 		AD8BEBE9231830B50071A83D /* UIWorkflowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8BEBE8231830B50071A83D /* UIWorkflowItem.swift */; };
 		AD8BEBEB2318313C0071A83D /* PresentationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8BEBEA2318313C0071A83D /* PresentationType.swift */; };
+		AD9C788B231DB9B400859E18 /* CustomAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9C788A231DB9B400859E18 /* CustomAssertions.swift */; };
 		ADD823682312CC6300D77D3C /* Workflow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADD8235E2312CC6300D77D3C /* Workflow.framework */; };
 		ADD8236D2312CC6300D77D3C /* WorkflowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD8236C2312CC6300D77D3C /* WorkflowTests.swift */; };
 		ADD8236F2312CC6300D77D3C /* Workflow.h in Headers */ = {isa = PBXBuildFile; fileRef = ADD823612312CC6300D77D3C /* Workflow.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -83,6 +84,7 @@
 		AD8BEBE5231830860071A83D /* BasePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePresenter.swift; sourceTree = "<group>"; };
 		AD8BEBE8231830B50071A83D /* UIWorkflowItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIWorkflowItem.swift; sourceTree = "<group>"; };
 		AD8BEBEA2318313C0071A83D /* PresentationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationType.swift; sourceTree = "<group>"; };
+		AD9C788A231DB9B400859E18 /* CustomAssertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAssertions.swift; sourceTree = "<group>"; };
 		ADD8235E2312CC6300D77D3C /* Workflow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Workflow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADD823612312CC6300D77D3C /* Workflow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Workflow.h; sourceTree = "<group>"; };
 		ADD823622312CC6300D77D3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 				AD4AA2A5231462D200C3C95E /* TopViewController.swift */,
 				AD4AA2A72314635B00C3C95E /* UIKitPresenterTests.swift */,
 				AD8B6C762319E8B200781B01 /* Screen.swift */,
+				AD9C788A231DB9B400859E18 /* CustomAssertions.swift */,
 			);
 			path = WorkflowTests;
 			sourceTree = "<group>";
@@ -528,6 +531,7 @@
 				AD4AA2A82314635B00C3C95E /* UIKitPresenterTests.swift in Sources */,
 				AD8B6C772319E8B200781B01 /* Screen.swift in Sources */,
 				ADD823912312CEDE00D77D3C /* LinkedListTests.swift in Sources */,
+				AD9C788B231DB9B400859E18 /* CustomAssertions.swift in Sources */,
 				AD4AA2D52315C59200C3C95E /* WaitUntil.swift in Sources */,
 				ADD8236D2312CC6300D77D3C /* WorkflowTests.swift in Sources */,
 			);

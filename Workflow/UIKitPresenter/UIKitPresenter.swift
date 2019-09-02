@@ -10,8 +10,6 @@ import Foundation
 import UIKit
 
 open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
-    public var presentationType: PresentationType { return .default }
-    
     public func launch(view: UIViewController, from root: UIViewController, withLaunchStyle launchStyle:PresentationType = .default) {
         switch launchStyle {
         case .default:
@@ -20,7 +18,7 @@ open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
                 root.present(view, animated: true)
             } else if let nav = root.navigationController {
                 nav.pushViewController(view, animated: true)
-            } else if let nav = root as? UINavigationController {#warning("TEST ME")
+            } else if let nav = root as? UINavigationController {
                 nav.pushViewController(view, animated: true)
             } else {
                 root.present(view, animated: true)
@@ -51,11 +49,7 @@ open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
             if nav.viewControllers.first === first {
                 nav.dismiss(animated: animated, completion: onFinish)
             } else {
-                var farthestPresented = nav.presentedViewController
-                while let presented = farthestPresented?.presentedViewController {
-                    farthestPresented = presented
-                }
-                if let presented = farthestPresented {
+                if let presented = nav.presentedViewController {
                     presented.dismiss(animated: false, completion: onFinish)
                 } else {
                     onFinish?()

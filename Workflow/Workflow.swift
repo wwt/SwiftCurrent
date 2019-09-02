@@ -30,12 +30,7 @@ public class Workflow: LinkedList<AnyFlowRepresentable.Type> {
     
     public func launch(from: Any?, with args:Any?, withLaunchStyle launchStyle:PresentationType = .default, onFinish:((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Node<AnyFlowRepresentable?>? {
         removeInstances()
-        instances.append(contentsOf: map { _ in
-//            var flowRepresentable = $0.value.instance()
-//            flowRepresentable.workflow = self
-            return nil
-        })
-//        instances.forEach { setupCallbacks(for: $0, onFinish: onFinish) }
+        instances.append(contentsOf: map { _ in nil })
         _ = first?.traverse { node in
             var flowRepresentable = node.value.instance()
             flowRepresentable.workflow = self
@@ -75,7 +70,6 @@ public class Workflow: LinkedList<AnyFlowRepresentable.Type> {
     }
     
     private func replaceInstance(atIndex index:Int, withInstance instance:AnyFlowRepresentable?) {
-        guard let instance = instance else { return }
         instances.replace(atIndex: index, withItem: instance)
     }
 
@@ -99,18 +93,17 @@ public class Workflow: LinkedList<AnyFlowRepresentable.Type> {
                 return instance?.erasedShouldLoad(with: argsToPass) == true
             }
 
-            guard let nodeToPresent = nextNode else {
+            guard let nodeToPresent = nextNode,
+                  let instanceToPresent = self.instances.first?.traverse(nodeToPresent.position)?.value else {
                 onFinish?(args)
                 return
             }
             
             self.setupCallbacks(for: nodeToPresent, onFinish: onFinish)
             
-            let instanceToPresent = self.instances.first?.traverse(nodeToPresent.position)?.value
-            
             self.presenter?.launch(view: instanceToPresent,
                                    from: self.instances.first?.traverse(node.position)?.value,
-                                   withLaunchStyle: instanceToPresent?.preferredLaunchStyle ?? .default)
+                                   withLaunchStyle: instanceToPresent.preferredLaunchStyle)
         }
     }
 }

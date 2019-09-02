@@ -10,6 +10,7 @@ import XCTest
 import UIUTest
 
 @testable import Workflow
+@testable import CwlPreconditionTesting
 
 class WorkflowTests: XCTestCase {
     func testFlowRepresentablesWithMultipleTypesCanBeStoredInAnArray() {
@@ -139,6 +140,11 @@ class WorkflowTests: XCTestCase {
         XCTAssert((presenter.launchView as? FR3) === firstInstance?.next?.next?.value as? FR3)
     }
     
+    func testWorkflowReturnsNilWhenLaunchingWithoutRepresentables() {
+        let wf:Workflow = []
+        XCTAssertNil(wf.launch(from: nil, with: nil))
+    }
+    
     func testWorkflowCallsBackOnCompletion() {
         class FR1: TestFlowRepresentable<Int>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable {
@@ -174,6 +180,15 @@ class WorkflowTests: XCTestCase {
         XCTAssert(callbackCalled)
     }
     
+    func testPresenterThrowsAFatalErrorWhenThereIsATypeMismatch() {
+        class View { }
+        class NotView { }
+        let presenter = TestTypedPresenter<View>()
+        XCTAssertThrowsFatalError{
+            presenter.launch(view: NotView(), from: NotView(), withLaunchStyle: .default)
+        }
+    }
+    
     class TestPresenter: AnyPresenter {
         var abandonCalled = 0
         func abandon(_ workflow: Workflow, animated:Bool = true, onFinish:(() -> Void)? = nil) {
@@ -194,6 +209,12 @@ class WorkflowTests: XCTestCase {
         }
         
         var presentationType: PresentationType = .default
+    }
+    
+    class TestTypedPresenter<T>: BasePresenter<T>, Presenter {
+        func launch(view: T, from root: T, withLaunchStyle launchStyle: PresentationType) { }
+        
+        func abandon(_ workflow: Workflow, animated: Bool, onFinish: (() -> Void)?) { }
     }
     
     class TestFlowRepresentable<I> {

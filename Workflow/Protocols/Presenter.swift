@@ -16,7 +16,7 @@ public protocol Presenter: AnyPresenter {
 extension Presenter {
     public func launch(view: Any?, from root: Any?, withLaunchStyle launchStyle: PresentationType) {
         guard let v = view as? ViewType, let r = root as? ViewType else {
-            fatalError("\(String(describing:Self.self)) is unaware of view type: \(view ?? "nil"), expected view type: \(ViewType.self)")
+            fatalError("\(String(describing:Self.self)) is unaware of view type: \(String(describing: view)), expected view type: \(ViewType.self)")
         }
         launch(view: v, from: r, withLaunchStyle: launchStyle)
     }

@@ -51,15 +51,13 @@ extension LinkedList {
     
     public func drop(while predicate: (Element) throws -> Bool) rethrows -> SubSequence {
         guard var l = last?.copy() else { return [] }
-        do {
-            while (try predicate(l)) {
-                if let prev = l.previous {
-                    l = prev
-                } else { break }
-            }
-            l.next = nil
-            return LinkedList(l)
-        } catch { return [] }
+        while (try predicate(l)) {
+            if let prev = l.previous {
+                l = prev
+            } else { break }
+        }
+        l.next = nil
+        return LinkedList(l)
     }
     
     public func prefix(_ maxLength: Int) -> SubSequence {
@@ -71,15 +69,13 @@ extension LinkedList {
     
     public func prefix(while predicate: (Element) throws -> Bool) rethrows -> SubSequence {
         guard var f = first?.copy() else { return [] }
-        do {
-            while (try predicate(f)) {
-                if let next = f.next {
-                    f = next
-                } else { break }
-            }
-            f.next = nil
-            return LinkedList(f)
-        } catch { return [] }
+        while (try predicate(f)) {
+            if let next = f.next {
+                f = next
+            } else { break }
+        }
+        f.next = nil
+        return LinkedList(f)
     }
     
     public func suffix(_ maxLength: Int) -> SubSequence {

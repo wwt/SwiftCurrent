@@ -403,6 +403,20 @@ class LinkedListTests: XCTestCase {
         XCTAssertEqual(list.first?.traverse(2)?.value, 3)
     }
     
+    func testSwapWithInvalidStart() {
+        let list:LinkedList = [1, 3, 2]
+        XCTAssertThrowsFatalError {
+            list.swapAt(20, 2)
+        }
+    }
+
+    func testSwapWithInvalidEnd() {
+        let list:LinkedList = [1, 3, 2]
+        XCTAssertThrowsFatalError {
+            list.swapAt(1, 12)
+        }
+    }
+
     func testMutableReplace() {
         let list:LinkedList = [ 2, 5, 6 ]
         
