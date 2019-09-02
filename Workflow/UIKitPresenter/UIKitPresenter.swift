@@ -20,6 +20,8 @@ open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
                 root.present(view, animated: true)
             } else if let nav = root.navigationController {
                 nav.pushViewController(view, animated: true)
+            } else if let nav = root as? UINavigationController {#warning("TEST ME")
+                nav.pushViewController(view, animated: true)
             } else {
                 root.present(view, animated: true)
             }

@@ -19,6 +19,11 @@ public class Workflow: LinkedList<AnyFlowRepresentable.Type> {
         super.init(node)
     }
     
+    deinit {
+        removeInstances()
+        presenter = nil
+    }
+    
     public func applyPresenter(_ presenter:AnyPresenter) {
         self.presenter = presenter
     }
@@ -55,12 +60,18 @@ public class Workflow: LinkedList<AnyFlowRepresentable.Type> {
     }
     
     public func abandon(animated:Bool = true, onFinish:(() -> Void)? = nil) {
-        presenter?.abandon(self, animated:animated, onFinish:onFinish)
+        presenter?.abandon(self, animated:animated) {
+            self.removeInstances()
+            self.firstLoadedInstance = nil
+            self.presenter = nil
+            onFinish?()
+        }
     }
     
     private func removeInstances() {
         instances.forEach { $0.value?.callback = nil }
         instances.removeAll()
+        self.firstLoadedInstance = nil
     }
     
     private func replaceInstance(atIndex index:Int, withInstance instance:AnyFlowRepresentable?) {

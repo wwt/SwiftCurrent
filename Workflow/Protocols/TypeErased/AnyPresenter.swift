@@ -7,7 +7,7 @@
 //
 
 import Foundation
-public protocol AnyPresenter {
+public protocol AnyPresenter:class {
     init()
     
     func launch(view:Any?, from root:Any?, withLaunchStyle launchStyle:PresentationType)
