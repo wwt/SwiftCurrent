@@ -47,15 +47,21 @@ open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
         guard let first = workflow.firstLoadedInstance?.value as? UIViewController else { return }
         if let nav = first.navigationController {
             if nav.viewControllers.first === first {
-                nav.dismiss(animated: animated, completion: onFinish)
+                if let presenting = nav.presentingViewController {
+                    presenting.dismiss(animated: true, completion: onFinish)
+                }
             } else {
-                if let presented = nav.presentedViewController {
-                    presented.dismiss(animated: false, completion: onFinish)
+                if let _ = nav.presentedViewController {
+                    nav.dismiss(animated: animated) {
+                        onFinish?()
+                        nav.popToViewController(first, animated: false)
+                        nav.popViewController(animated: animated)
+                    }
                 } else {
                     onFinish?()
+                    nav.popToViewController(first, animated: false)
+                    nav.popViewController(animated: animated)
                 }
-                nav.popToViewController(first, animated: false)
-                nav.popViewController(animated: animated)
             }
         } else {
             first.dismiss(animated: animated, completion: onFinish)

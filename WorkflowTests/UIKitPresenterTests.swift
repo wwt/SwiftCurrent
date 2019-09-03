@@ -796,6 +796,119 @@ class UIKitPresenterTests: XCTestCase {
         XCTAssertTrue(UIKitPresenterTests.testCallbackCalled)
     }
     
+    func testAbandonWhenWorkflowHasNavPresentingSubsequentViewsModally() {
+        class FR1: TestViewController { }
+        class FR2: TestViewController {
+            override var preferredLaunchStyle: PresentationType {
+                return .modally
+            }
+        }
+        class FR3: TestViewController { }
+        class FR4: TestViewController { }
+        
+        let root = UIViewController()
+        loadView(controller: root)
+        
+        root.launchInto([FR1.self, FR2.self, FR3.self, FR4.self], withLaunchStyle: .navigationStack)
+        waitUntil(UIApplication.topViewController() is FR1)
+        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertNotNil(UIApplication.topViewController()?.navigationController)
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR2)
+        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertNil(UIApplication.topViewController()?.navigationController)
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR3)
+        XCTAssert(UIApplication.topViewController() is FR3)
+        (UIApplication.topViewController() as? FR3)?.proceedInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR4)
+        XCTAssert(UIApplication.topViewController() is FR4)
+        (UIApplication.topViewController() as? FR4)?.abandonWorkflow()
+        waitUntil(UIApplication.topViewController() === root)
+        XCTAssert(UIApplication.topViewController() === root)
+    }
+    
+    func testAbandonWhenWorkflowHasNavPresentingSubsequentViewsModallyAndWithMoreNavigation() {
+        class FR1: TestViewController { }
+        class FR2: TestViewController {
+            override var preferredLaunchStyle: PresentationType {
+                return .modally
+            }
+        }
+        class FR3: TestViewController {
+            override var preferredLaunchStyle: PresentationType {
+                return .navigationStack
+            }
+        }
+        class FR4: TestViewController {
+            override var preferredLaunchStyle: PresentationType {
+                return .modally
+            }
+        }
+        
+        let root = UIViewController()
+        loadView(controller: root)
+        
+        root.launchInto([FR1.self, FR2.self, FR3.self, FR4.self], withLaunchStyle: .navigationStack)
+        waitUntil(UIApplication.topViewController() is FR1)
+        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertNotNil(UIApplication.topViewController()?.navigationController)
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR2)
+        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertNil(UIApplication.topViewController()?.navigationController)
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR3)
+        XCTAssert(UIApplication.topViewController() is FR3)
+        (UIApplication.topViewController() as? FR3)?.proceedInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR4)
+        XCTAssert(UIApplication.topViewController() is FR4)
+        (UIApplication.topViewController() as? FR4)?.abandonWorkflow()
+        waitUntil(UIApplication.topViewController() === root)
+        XCTAssert(UIApplication.topViewController() === root)
+    }
+    
+    func testAbandonWhenWorkflowHasNavWithStartingViewPresentingSubsequentViewsModallyAndWithMoreNavigation() {
+        class FR1: TestViewController { }
+        class FR2: TestViewController {
+            override var preferredLaunchStyle: PresentationType {
+                return .modally
+            }
+        }
+        class FR3: TestViewController {
+            override var preferredLaunchStyle: PresentationType {
+                return .navigationStack
+            }
+        }
+        class FR4: TestViewController {
+            override var preferredLaunchStyle: PresentationType {
+                return .modally
+            }
+        }
+        
+        let root = UIViewController()
+        let nav = UINavigationController(rootViewController: root)
+        loadView(controller: nav)
+        
+        root.launchInto([FR1.self, FR2.self, FR3.self, FR4.self], withLaunchStyle: .navigationStack)
+        waitUntil(UIApplication.topViewController() is FR1)
+        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertNotNil(UIApplication.topViewController()?.navigationController)
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR2)
+        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertNil(UIApplication.topViewController()?.navigationController)
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR3)
+        XCTAssert(UIApplication.topViewController() is FR3)
+        (UIApplication.topViewController() as? FR3)?.proceedInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR4)
+        XCTAssert(UIApplication.topViewController() is FR4)
+        (UIApplication.topViewController() as? FR4)?.abandonWorkflow()
+        waitUntil(UIApplication.topViewController() === root)
+        XCTAssert(UIApplication.topViewController() === root)
+    }
+    
     func testWorkflowLaunchModallyButFirstViewHasANavControllerAndThenDismiss() {
         class ExpectedModal: UIWorkflowItem<Any?>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable {
