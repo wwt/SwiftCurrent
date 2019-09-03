@@ -1,6 +1,6 @@
 language: swift
-osx_image: xcode10.2
-xcode_project: Workflow.xcodeproj # path to your xcodeproj folder
+osx_image: xcode10.3
+xcode_workspace: Workflow.xcworkspace
 xcode_scheme: Workflow
 xcode_destination: platform=iOS Simulator,name=iPhone 8
 if: tag IS blank
