@@ -26,5 +26,5 @@ If applicable, add screenshots to help explain your problem.
 **Additional context**
 Add any other context about the problem here.
  - XCode Version: [e.g. XCode 10.2]
- - CucumberSwift Version: [e.g. 2.1.24]
+ - Workflow Version: [e.g. 2.1.24]
  - Example Feature File (if applicable)
