@@ -17,3 +17,9 @@ target 'Workflow' do
   end
 
 end
+
+target 'WorkflowExample' do
+  use_frameworks!
+  
+  pod 'DynamicWorkflow', :path => '.'
+end

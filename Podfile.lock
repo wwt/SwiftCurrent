@@ -2,11 +2,13 @@ PODS:
   - CwlCatchException (1.0.2)
   - CwlPreconditionTesting (1.1.1):
     - CwlCatchException
+  - DynamicWorkflow (0.0.3)
   - UIUTest (1.6.0)
 
 DEPENDENCIES:
   - CwlCatchException (from `https://github.com/mattgallagher/CwlCatchException.git`, tag `1.2.0`)
   - CwlPreconditionTesting (from `https://github.com/mattgallagher/CwlPreconditionTesting.git`, tag `1.2.0`)
+  - DynamicWorkflow (from `.`)
   - UIUTest
 
 SPEC REPOS:
@@ -20,6 +22,8 @@ EXTERNAL SOURCES:
   CwlPreconditionTesting:
     :git: https://github.com/mattgallagher/CwlPreconditionTesting.git
     :tag: 1.2.0
+  DynamicWorkflow:
+    :path: "."
 
 CHECKOUT OPTIONS:
   CwlCatchException:
@@ -32,8 +36,9 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   CwlCatchException: 70a52ae44ea5d46db7bd385f801a94942420cd8c
   CwlPreconditionTesting: d33a4e4f285c0b885fddcae5dfedfbb34d4f3961
+  DynamicWorkflow: a45e06c1d0448d295ed3572ccc591a347fe40237
   UIUTest: 842c642e5bec098b1e2c890cbe25aacab80f2481
 
-PODFILE CHECKSUM: 89d0efc16174c914f075c10043de2690dece8a77
+PODFILE CHECKSUM: 18326f83e0ef521b2ecc44966469cd4f4412e5b1
 
 COCOAPODS: 1.7.5

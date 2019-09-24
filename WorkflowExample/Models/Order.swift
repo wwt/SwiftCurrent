@@ -9,4 +9,14 @@
 import Foundation
 struct Order {
     let location:Location?
+    var orderType:OrderType?
+    var menuType:MenuType?
+    init (location:Location?) {
+        self.location = location
+    }
+}
+
+enum MenuType {
+    case catering
+    case regular
 }

@@ -18,4 +18,11 @@ struct Address {
 struct Location {
     let name:String
     let address:Address
+    let orderTypes:[OrderType]
+    let menuTypes:[MenuType]
+}
+
+enum OrderType {
+    case pickup
+    case delivery(Address)
 }
