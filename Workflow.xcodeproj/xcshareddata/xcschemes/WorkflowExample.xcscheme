@@ -26,7 +26,28 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      systemAttachmentLifetime = "keepNever"
+      codeCoverageEnabled = "YES"
+      onlyGenerateCoverageForSpecifiedTargets = "YES"
       shouldUseLaunchSchemeArgsEnv = "YES">
+      <PreActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;pod install&#10;">
+            </ActionContent>
+         </ExecutionAction>
+      </PreActions>
+      <CodeCoverageTargets>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "AD5BB00A231B82C9001DAF7C"
+            BuildableName = "WorkflowExample.app"
+            BlueprintName = "WorkflowExample"
+            ReferencedContainer = "container:Workflow.xcodeproj">
+         </BuildableReference>
+      </CodeCoverageTargets>
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -35,6 +56,16 @@
                BlueprintIdentifier = "ADD823662312CC6300D77D3C"
                BuildableName = "WorkflowTests.xctest"
                BlueprintName = "WorkflowTests"
+               ReferencedContainer = "container:Workflow.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "ADEE774E233BAA6C007E9FD2"
+               BuildableName = "WorkflowExampleTests.xctest"
+               BlueprintName = "WorkflowExampleTests"
                ReferencedContainer = "container:Workflow.xcodeproj">
             </BuildableReference>
          </TestableReference>

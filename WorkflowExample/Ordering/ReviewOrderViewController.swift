@@ -36,6 +36,10 @@ class ReviewOrderViewController: UIWorkflowItem<Order>, StoryboardLoadable {
             this.text = order?.shoppingCart.compactMap { $0.name }.joined(separator: ", ")
         }
     }
+    
+//    @IBAction func editLocation() {
+//
+//    }
 }
 
 extension ReviewOrderViewController: FlowRepresentable {

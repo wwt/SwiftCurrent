@@ -12,7 +12,11 @@ import DynamicWorkflow
 protocol StoryboardLoadable {}
 
 extension StoryboardLoadable {
+    static var storyboardId:String {
+        return String(describing: Self.self)
+    }
+    
     static func instance() -> AnyFlowRepresentable {
-        return Storyboard.main.instantiateViewController(withIdentifier: String(describing: Self.self)) as! AnyFlowRepresentable
+        return Storyboard.main.instantiateViewController(withIdentifier: storyboardId) as! AnyFlowRepresentable
     }
 }

@@ -22,4 +22,10 @@ target 'WorkflowExample' do
   use_frameworks!
   
   pod 'DynamicWorkflow', :path => '.'
+  
+  target 'WorkflowExampleTests' do
+    pod 'DynamicWorkflow', :path => '.'
+    pod 'UIUTest'
+  end
+  
 end
