@@ -31,6 +31,11 @@ class PickupOrDeliveryViewController: UIWorkflowItem<Order>, StoryboardLoadable 
 extension PickupOrDeliveryViewController: FlowRepresentable {
     func shouldLoad(with order: Order) -> Bool {
         self.order = order
+        if let location = order.location,
+            location.orderTypes.count == 1 {
+            self.order?.orderType = location.orderTypes.first
+            proceedInWorkflow(self.order)
+        }
         return (order.location?.orderTypes.count ?? 0) > 1
     }
 }

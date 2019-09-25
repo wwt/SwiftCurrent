@@ -12,16 +12,10 @@ import UIUTest
 
 @testable import WorkflowExample
 
-class LocationsViewControllerTests:XCTestCase {
-    typealias ControllerType = LocationsViewController
-    var testViewController:ControllerType!
+class LocationsViewControllerTests:ViewControllerTest<LocationsViewController> {
     var tableView:UITableView!
-    override func setUp() {
-        loadFromStoryboard()
-    }
     
-    private func loadFromStoryboard(configure: ((ControllerType) -> Void)? = nil) {
-        testViewController = UIViewController.loadFromStoryboard(identifier: ControllerType.storyboardId, configure:configure)
+    override func afterLoadFromStoryboard() {
         tableView = testViewController.tableView
     }
 

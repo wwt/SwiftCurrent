@@ -51,8 +51,10 @@
 		ADEE7746233ADF8D007E9FD2 /* MenuSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEE7745233ADF8D007E9FD2 /* MenuSelectionViewController.swift */; };
 		ADEE7748233AE2C4007E9FD2 /* FoodSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEE7747233AE2C4007E9FD2 /* FoodSelectionViewController.swift */; };
 		ADEE774A233AE7CA007E9FD2 /* ReviewOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEE7749233AE7CA007E9FD2 /* ReviewOrderViewController.swift */; };
-		ADEE7752233BAA6C007E9FD2 /* WorkflowExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEE7751233BAA6C007E9FD2 /* WorkflowExampleTests.swift */; };
 		ADEE775A233BAB27007E9FD2 /* LocationsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEE7759233BAB27007E9FD2 /* LocationsViewControllerTests.swift */; };
+		ADEE775C233BC7F0007E9FD2 /* ViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEE775B233BC7F0007E9FD2 /* ViewControllerTest.swift */; };
+		ADEE775E233BC901007E9FD2 /* PickupOrDeliveryViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEE775D233BC901007E9FD2 /* PickupOrDeliveryViewControllerTests.swift */; };
+		ADEE7760233BC960007E9FD2 /* Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEE775F233BC960007E9FD2 /* Convenience.swift */; };
 		F93CBFAA29F3056CFE892E13 /* Pods_WorkflowTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2B5B41A4F86FDBF12D88F62 /* Pods_WorkflowTests.framework */; };
 		FD64E72C1869DD8B92AC3061 /* Pods_Workflow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93153A9A1549D7ECC6FF5A30 /* Pods_Workflow.framework */; };
 /* End PBXBuildFile section */
@@ -138,9 +140,11 @@
 		ADEE7747233AE2C4007E9FD2 /* FoodSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSelectionViewController.swift; sourceTree = "<group>"; };
 		ADEE7749233AE7CA007E9FD2 /* ReviewOrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewOrderViewController.swift; sourceTree = "<group>"; };
 		ADEE774F233BAA6C007E9FD2 /* WorkflowExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorkflowExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		ADEE7751233BAA6C007E9FD2 /* WorkflowExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowExampleTests.swift; sourceTree = "<group>"; };
 		ADEE7753233BAA6C007E9FD2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADEE7759233BAB27007E9FD2 /* LocationsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsViewControllerTests.swift; sourceTree = "<group>"; };
+		ADEE775B233BC7F0007E9FD2 /* ViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerTest.swift; sourceTree = "<group>"; };
+		ADEE775D233BC901007E9FD2 /* PickupOrDeliveryViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupOrDeliveryViewControllerTests.swift; sourceTree = "<group>"; };
+		ADEE775F233BC960007E9FD2 /* Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Convenience.swift; sourceTree = "<group>"; };
 		CCFE28428D8EFEABB9A39C8D /* Pods-WorkflowTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkflowTests.release.xcconfig"; path = "Target Support Files/Pods-WorkflowTests/Pods-WorkflowTests.release.xcconfig"; sourceTree = "<group>"; };
 		CF2C1E796D1CCA3C0AC77D60 /* Pods-WorkflowExample-WorkflowExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkflowExample-WorkflowExampleTests.release.xcconfig"; path = "Target Support Files/Pods-WorkflowExample-WorkflowExampleTests/Pods-WorkflowExample-WorkflowExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		D2B5B41A4F86FDBF12D88F62 /* Pods_WorkflowTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WorkflowTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -351,9 +355,11 @@
 		ADEE7750233BAA6C007E9FD2 /* WorkflowExampleTests */ = {
 			isa = PBXGroup;
 			children = (
-				ADEE7751233BAA6C007E9FD2 /* WorkflowExampleTests.swift */,
 				ADEE7753233BAA6C007E9FD2 /* Info.plist */,
 				ADEE7759233BAB27007E9FD2 /* LocationsViewControllerTests.swift */,
+				ADEE775B233BC7F0007E9FD2 /* ViewControllerTest.swift */,
+				ADEE775D233BC901007E9FD2 /* PickupOrDeliveryViewControllerTests.swift */,
+				ADEE775F233BC960007E9FD2 /* Convenience.swift */,
 			);
 			path = WorkflowExampleTests;
 			sourceTree = "<group>";
@@ -753,8 +759,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ADEE7752233BAA6C007E9FD2 /* WorkflowExampleTests.swift in Sources */,
 				ADEE775A233BAB27007E9FD2 /* LocationsViewControllerTests.swift in Sources */,
+				ADEE7760233BC960007E9FD2 /* Convenience.swift in Sources */,
+				ADEE775C233BC7F0007E9FD2 /* ViewControllerTest.swift in Sources */,
+				ADEE775E233BC901007E9FD2 /* PickupOrDeliveryViewControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
