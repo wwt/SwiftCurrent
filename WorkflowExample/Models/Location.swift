@@ -26,3 +26,13 @@ enum OrderType {
     case pickup
     case delivery(Address)
 }
+
+extension OrderType: Equatable {
+    static func == (lhs: OrderType, rhs: OrderType) -> Bool {
+        switch (lhs, rhs) {
+        case (.pickup, .pickup): return true
+        case (.delivery(_), .delivery(_)): return true
+        default: return false
+        }
+    }
+}

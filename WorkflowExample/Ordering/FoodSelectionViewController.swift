@@ -13,15 +13,18 @@ class FoodSelectionViewController: UIWorkflowItem<Order>, StoryboardLoadable {
     var order:Order?
     
     @IBAction func firstFoodChoice() {
-        
+        order?.shoppingCart.append(Food(name: "Combo #1"))
+        proceedInWorkflow(order)
     }
 
     @IBAction func secondFoodChoice() {
-        
+        order?.shoppingCart.append(Food(name: "Combo #2"))
+        proceedInWorkflow(order)
     }
 
     @IBAction func thirdFoodChoice() {
-        
+        order?.shoppingCart.append(Food(name: "Combo #3"))
+        proceedInWorkflow(order)
     }
 }
 

@@ -38,10 +38,10 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
-        <!--Locations View Controller-->
+        <!--Pick A Location-->
         <scene sceneID="yyM-5H-m7F">
             <objects>
-                <viewController storyboardIdentifier="LocationsViewController" id="SBz-2D-5OJ" customClass="LocationsViewController" customModule="WorkflowExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LocationsViewController" title="Pick A Location" id="SBz-2D-5OJ" customClass="LocationsViewController" customModule="WorkflowExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="W74-m2-GoL">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -82,10 +82,10 @@
             </objects>
             <point key="canvasLocation" x="830" y="21"/>
         </scene>
-        <!--Pickup Or Delivery View Controller-->
+        <!--Pickup or Delivery-->
         <scene sceneID="VGh-M0-H8y">
             <objects>
-                <viewController storyboardIdentifier="PickupOrDeliveryViewController" id="tAU-Hs-61W" customClass="PickupOrDeliveryViewController" customModule="WorkflowExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PickupOrDeliveryViewController" title="Pickup or Delivery" id="tAU-Hs-61W" customClass="PickupOrDeliveryViewController" customModule="WorkflowExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="n9u-VR-yVe">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -121,10 +121,10 @@
             </objects>
             <point key="canvasLocation" x="1593" y="21"/>
         </scene>
-        <!--Menu Selection View Controller-->
+        <!--Menu Selection-->
         <scene sceneID="UbD-eL-2cC">
             <objects>
-                <viewController storyboardIdentifier="MenuSelectionViewController" id="OgI-Pz-ECb" customClass="MenuSelectionViewController" customModule="WorkflowExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MenuSelectionViewController" title="Menu Selection" id="OgI-Pz-ECb" customClass="MenuSelectionViewController" customModule="WorkflowExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Sh5-QX-zhq">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -160,20 +160,147 @@
             </objects>
             <point key="canvasLocation" x="2339" y="21"/>
         </scene>
-        <!--Food Selection View Controller-->
+        <!--Food Selection-->
         <scene sceneID="Sck-46-gKr">
             <objects>
-                <viewController storyboardIdentifier="FoodSelectionViewController" id="xzd-xt-Dsx" customClass="FoodSelectionViewController" customModule="WorkflowExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FoodSelectionViewController" title="Food Selection" id="xzd-xt-Dsx" customClass="FoodSelectionViewController" customModule="WorkflowExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bbW-W2-Ziq">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fh7-K0-eBm">
+                                <rect key="frame" x="20" y="64" width="374" height="30"/>
+                                <state key="normal" title="Combo #1"/>
+                                <connections>
+                                    <action selector="firstFoodChoice" destination="xzd-xt-Dsx" eventType="touchUpInside" id="1a9-6q-MtE"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="moT-IB-ioo">
+                                <rect key="frame" x="20" y="114" width="374" height="30"/>
+                                <state key="normal" title="Combo #2"/>
+                                <connections>
+                                    <action selector="secondFoodChoice" destination="xzd-xt-Dsx" eventType="touchUpInside" id="Zvv-ZT-zPG"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8IE-zm-HPF">
+                                <rect key="frame" x="20" y="164" width="374" height="30"/>
+                                <state key="normal" title="Combo #3"/>
+                                <connections>
+                                    <action selector="thirdFoodChoice" destination="xzd-xt-Dsx" eventType="touchUpInside" id="DhS-Ic-pdf"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="moT-IB-ioo" firstAttribute="leading" secondItem="3wV-u7-uFS" secondAttribute="leading" constant="20" id="2gB-FN-ui6"/>
+                            <constraint firstItem="3wV-u7-uFS" firstAttribute="trailing" secondItem="fh7-K0-eBm" secondAttribute="trailing" constant="20" id="3WN-5p-scm"/>
+                            <constraint firstItem="8IE-zm-HPF" firstAttribute="leading" secondItem="3wV-u7-uFS" secondAttribute="leading" constant="20" id="5c1-Zs-fA8"/>
+                            <constraint firstItem="fh7-K0-eBm" firstAttribute="top" secondItem="3wV-u7-uFS" secondAttribute="top" constant="20" id="JeX-ia-k5M"/>
+                            <constraint firstItem="moT-IB-ioo" firstAttribute="top" secondItem="fh7-K0-eBm" secondAttribute="bottom" constant="20" id="LqI-Tc-aEp"/>
+                            <constraint firstItem="3wV-u7-uFS" firstAttribute="trailing" secondItem="moT-IB-ioo" secondAttribute="trailing" constant="20" id="Qh2-fz-1NH"/>
+                            <constraint firstItem="fh7-K0-eBm" firstAttribute="leading" secondItem="3wV-u7-uFS" secondAttribute="leading" constant="20" id="TlX-wo-4N5"/>
+                            <constraint firstItem="3wV-u7-uFS" firstAttribute="trailing" secondItem="8IE-zm-HPF" secondAttribute="trailing" constant="20" id="Z5X-eN-aly"/>
+                            <constraint firstItem="8IE-zm-HPF" firstAttribute="top" secondItem="moT-IB-ioo" secondAttribute="bottom" constant="20" id="hEw-lS-EeV"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="3wV-u7-uFS"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Glp-9O-wTj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3096" y="21"/>
+        </scene>
+        <!--Review-->
+        <scene sceneID="WG0-VG-yRw">
+            <objects>
+                <viewController storyboardIdentifier="ReviewOrderViewController" title="Review" id="hoP-OR-1JJ" customClass="ReviewOrderViewController" customModule="WorkflowExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bHY-NG-Zhy">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Location:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0AW-gy-J1N">
+                                <rect key="frame" x="20" y="64" width="71" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wc2-sV-amd">
+                                <rect key="frame" x="101" y="64" width="293" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Efd-v0-zMu">
+                                <rect key="frame" x="121" y="105" width="273" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Order Type:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gIN-Vm-d9e">
+                                <rect key="frame" x="20" y="105" width="91" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Menu:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TB0-cF-Lv9">
+                                <rect key="frame" x="20" y="146" width="48" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eLI-AB-1Hb">
+                                <rect key="frame" x="20" y="187" width="43.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xdB-yL-KZu">
+                                <rect key="frame" x="78" y="146" width="316" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YK0-O9-iMN">
+                                <rect key="frame" x="73.5" y="187" width="320.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="TB0-cF-Lv9" firstAttribute="leading" secondItem="koR-ot-gtM" secondAttribute="leading" constant="20" id="0b4-4V-VSN"/>
+                            <constraint firstItem="Wc2-sV-amd" firstAttribute="centerY" secondItem="0AW-gy-J1N" secondAttribute="centerY" id="0eD-ih-GuK"/>
+                            <constraint firstItem="YK0-O9-iMN" firstAttribute="leading" secondItem="eLI-AB-1Hb" secondAttribute="trailing" constant="10" id="45J-5w-gJY"/>
+                            <constraint firstItem="koR-ot-gtM" firstAttribute="trailing" secondItem="xdB-yL-KZu" secondAttribute="trailing" constant="20" id="4Pw-K4-1fJ"/>
+                            <constraint firstItem="koR-ot-gtM" firstAttribute="trailing" secondItem="Wc2-sV-amd" secondAttribute="trailing" constant="20" id="A9V-9d-lD3"/>
+                            <constraint firstItem="gIN-Vm-d9e" firstAttribute="leading" secondItem="koR-ot-gtM" secondAttribute="leading" constant="20" id="EtE-0W-MbZ"/>
+                            <constraint firstItem="gIN-Vm-d9e" firstAttribute="top" secondItem="0AW-gy-J1N" secondAttribute="bottom" constant="20" id="GuO-30-von"/>
+                            <constraint firstItem="xdB-yL-KZu" firstAttribute="leading" secondItem="TB0-cF-Lv9" secondAttribute="trailing" constant="10" id="OV8-Dt-ImT"/>
+                            <constraint firstItem="eLI-AB-1Hb" firstAttribute="top" secondItem="TB0-cF-Lv9" secondAttribute="bottom" constant="20" id="Qo7-x3-ece"/>
+                            <constraint firstItem="xdB-yL-KZu" firstAttribute="centerY" secondItem="TB0-cF-Lv9" secondAttribute="centerY" id="SV8-Df-bhC"/>
+                            <constraint firstItem="YK0-O9-iMN" firstAttribute="centerY" secondItem="eLI-AB-1Hb" secondAttribute="centerY" id="U7I-eP-XC7"/>
+                            <constraint firstItem="koR-ot-gtM" firstAttribute="trailing" secondItem="YK0-O9-iMN" secondAttribute="trailing" constant="20" id="aDC-uf-ohG"/>
+                            <constraint firstItem="TB0-cF-Lv9" firstAttribute="top" secondItem="gIN-Vm-d9e" secondAttribute="bottom" constant="20" id="cgb-iy-iW4"/>
+                            <constraint firstItem="koR-ot-gtM" firstAttribute="trailing" secondItem="Efd-v0-zMu" secondAttribute="trailing" constant="20" id="dOw-iN-2O3"/>
+                            <constraint firstItem="Wc2-sV-amd" firstAttribute="leading" secondItem="0AW-gy-J1N" secondAttribute="trailing" constant="10" id="fSJ-85-uir"/>
+                            <constraint firstItem="Efd-v0-zMu" firstAttribute="centerY" secondItem="gIN-Vm-d9e" secondAttribute="centerY" id="kZN-PG-kP4"/>
+                            <constraint firstItem="eLI-AB-1Hb" firstAttribute="leading" secondItem="koR-ot-gtM" secondAttribute="leading" constant="20" id="nP9-Rf-bZv"/>
+                            <constraint firstItem="0AW-gy-J1N" firstAttribute="top" secondItem="koR-ot-gtM" secondAttribute="top" constant="20" id="rdA-hk-ug2"/>
+                            <constraint firstItem="Efd-v0-zMu" firstAttribute="leading" secondItem="gIN-Vm-d9e" secondAttribute="trailing" constant="10" id="s2R-wW-JeT"/>
+                            <constraint firstItem="0AW-gy-J1N" firstAttribute="leading" secondItem="koR-ot-gtM" secondAttribute="leading" constant="20" id="vhA-Pf-qko"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="koR-ot-gtM"/>
+                    </view>
+                    <connections>
+                        <outlet property="foodChoiceLabel" destination="YK0-O9-iMN" id="fOP-pe-CUQ"/>
+                        <outlet property="locationNameLabel" destination="Wc2-sV-amd" id="WYL-D4-Mn3"/>
+                        <outlet property="menuLabel" destination="xdB-yL-KZu" id="riJ-HF-dek"/>
+                        <outlet property="orderTypeLabel" destination="Efd-v0-zMu" id="qYg-kd-kIX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dYi-Bx-gjP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3853.6231884057975" y="20.758928571428569"/>
         </scene>
         <!--Enter Address View Controller-->
         <scene sceneID="2Sc-5a-P7A">

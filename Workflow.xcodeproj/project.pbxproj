@@ -50,6 +50,7 @@
 		ADEE7744233ADBE5007E9FD2 /* EnterAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEE7743233ADBE5007E9FD2 /* EnterAddressViewController.swift */; };
 		ADEE7746233ADF8D007E9FD2 /* MenuSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEE7745233ADF8D007E9FD2 /* MenuSelectionViewController.swift */; };
 		ADEE7748233AE2C4007E9FD2 /* FoodSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEE7747233AE2C4007E9FD2 /* FoodSelectionViewController.swift */; };
+		ADEE774A233AE7CA007E9FD2 /* ReviewOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEE7749233AE7CA007E9FD2 /* ReviewOrderViewController.swift */; };
 		F93CBFAA29F3056CFE892E13 /* Pods_WorkflowTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2B5B41A4F86FDBF12D88F62 /* Pods_WorkflowTests.framework */; };
 		FD64E72C1869DD8B92AC3061 /* Pods_Workflow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93153A9A1549D7ECC6FF5A30 /* Pods_Workflow.framework */; };
 /* End PBXBuildFile section */
@@ -125,6 +126,7 @@
 		ADEE7743233ADBE5007E9FD2 /* EnterAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterAddressViewController.swift; sourceTree = "<group>"; };
 		ADEE7745233ADF8D007E9FD2 /* MenuSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSelectionViewController.swift; sourceTree = "<group>"; };
 		ADEE7747233AE2C4007E9FD2 /* FoodSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSelectionViewController.swift; sourceTree = "<group>"; };
+		ADEE7749233AE7CA007E9FD2 /* ReviewOrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewOrderViewController.swift; sourceTree = "<group>"; };
 		CCFE28428D8EFEABB9A39C8D /* Pods-WorkflowTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkflowTests.release.xcconfig"; path = "Target Support Files/Pods-WorkflowTests/Pods-WorkflowTests.release.xcconfig"; sourceTree = "<group>"; };
 		D2B5B41A4F86FDBF12D88F62 /* Pods_WorkflowTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WorkflowTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F410624365BB7807E12BEA08 /* Pods_WorkflowExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WorkflowExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -308,6 +310,7 @@
 				ADEE7743233ADBE5007E9FD2 /* EnterAddressViewController.swift */,
 				ADEE7745233ADF8D007E9FD2 /* MenuSelectionViewController.swift */,
 				ADEE7747233AE2C4007E9FD2 /* FoodSelectionViewController.swift */,
+				ADEE7749233AE7CA007E9FD2 /* ReviewOrderViewController.swift */,
 			);
 			path = Ordering;
 			sourceTree = "<group>";
@@ -593,6 +596,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD2AEA03231C75820069F9B4 /* Order.swift in Sources */,
+				ADEE774A233AE7CA007E9FD2 /* ReviewOrderViewController.swift in Sources */,
 				ADEE7742233AD88D007E9FD2 /* OptionSetExtensions.swift in Sources */,
 				AD2AEA01231C757A0069F9B4 /* Location.swift in Sources */,
 				ADEE7746233ADF8D007E9FD2 /* MenuSelectionViewController.swift in Sources */,

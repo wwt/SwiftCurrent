@@ -11,6 +11,7 @@ struct Order {
     let location:Location?
     var orderType:OrderType?
     var menuType:MenuType?
+    var shoppingCart:[Food] = []
     init (location:Location?) {
         self.location = location
     }
@@ -19,4 +20,8 @@ struct Order {
 enum MenuType {
     case catering
     case regular
+}
+
+struct Food {
+    let name:String
 }
