@@ -4,13 +4,13 @@
 Workflow is a library meant to handle complex user flows in iOS applications.
 
 #### Table of Contents:
-- [Insallation](installation)
-- [Why DynamicWorkflow?](why-this-library)
-- [Getting Started](getting-started)
-- [Testing Your Workflows](testing)
-- [Advanced](advanced)
-- [Developer Documentation](dev-docs)
-- [FAQ](faq)
+=- [Insallation](https://github.com/Tyler-Keith-Thompson/Workflow/wiki/Installation)
+- [Why DynamicWorkflow?](https://github.com/Tyler-Keith-Thompson/Workflow/wiki/why-this-library)
+- [Getting Started](https://github.com/Tyler-Keith-Thompson/Workflow/wiki/getting-started)
+- [Testing Your Workflows](https://github.com/Tyler-Keith-Thompson/Workflow/wiki/testing)
+- [Advanced](https://github.com/Tyler-Keith-Thompson/Workflow/wiki/advanced)
+- [Developer Documentation](https://github.com/Tyler-Keith-Thompson/Workflow/wiki/dev-docs)
+- [FAQ](https://github.com/Tyler-Keith-Thompson/Workflow/wiki/faq)
 
 ### The problem DynamicWorkflow was built to solve:
 When developing for iOS one view controller has to know about the one following it in order to pass along daa. Imagine a workflow for a fast food app.
