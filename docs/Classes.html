@@ -14,7 +14,7 @@
     <a title="Classes  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">DynamicWorkflow Docs</a> (4% documented)</p>
+        <p><a href="index.html">DynamicWorkflow Docs</a> (20% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -32,6 +32,14 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Classes.html#/s:15DynamicWorkflow0B0C">Workflow</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/FlowRepresentable.html">FlowRepresentable</a>
               </li>
             </ul>
           </li>
@@ -60,7 +68,23 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Workflow: a doubley linked list</p>
+                        <p>Workflow: A doubly linked list of AnyFlowRepresentable types. Can be used to create a user flow.</p>
+
+<p>Examples:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">workflow</span><span class="p">:</span><span class="kt">Workflow</span> <span class="o">=</span> <span class="p">[</span> <span class="kt">SomeFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">SomeOtherFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span> <span class="p">]</span>
+<span class="k">let</span> <span class="nv">workflow</span> <span class="o">=</span> <span class="kt">Workflow</span><span class="p">(</span><span class="kt">SomeFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">SomeOtherFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+</code></pre>
+<h3 id='discussion' class='heading'>Discussion:</h3>
+
+<p>In a sufficiently complex application it may make sense to create a structure to hold onto all the workflows in an application.
+If you&rsquo;re using UIKit then you can use a &lsquo;magic&rsquo; method on UIViewController like so:</p>
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">MainViewController</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span>
+    <span class="kd">@IBAction</span> <span class="kd">func</span> <span class="nf">launchFlow</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nf">launchInto</span><span class="p">([</span> <span class="kt">SomeFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span><span class="p">,</span>
+                     <span class="kt">SomeOtherFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span> <span class="p">])</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">

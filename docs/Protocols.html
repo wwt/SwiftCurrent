@@ -14,7 +14,7 @@
     <a title="Protocols  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">DynamicWorkflow Docs</a> (7% documented)</p>
+        <p><a href="index.html">DynamicWorkflow Docs</a> (20% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -31,41 +31,7 @@
             <a href="Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Classes/BasePresenter.html">BasePresenter</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/LinkedList.html">LinkedList</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/LinkedList/LinkedListIterator.html">– LinkedListIterator</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/LinkedList/Node.html">– Node</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/UIKitPresenter.html">UIKitPresenter</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/UIWorkflowItem.html">UIWorkflowItem</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/Workflow.html">Workflow</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Enums.html">Enumerations</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Enums/PresentationType.html">PresentationType</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Extensions.html">Extensions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Extensions/UIViewController.html">UIViewController</a>
+                <a href="Classes.html#/s:15DynamicWorkflow0B0C">Workflow</a>
               </li>
             </ul>
           </li>
@@ -73,16 +39,7 @@
             <a href="Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Protocols/AnyFlowRepresentable.html">AnyFlowRepresentable</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/AnyPresenter.html">AnyPresenter</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Protocols/FlowRepresentable.html">FlowRepresentable</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/Presenter.html">Presenter</a>
               </li>
             </ul>
           </li>
@@ -111,7 +68,30 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>FlowRepresentable: A typed version of &lsquo;AnyFlowRepresentable&rsquo;. Use this on views that you want to add to a workflow.</p>
+
+<p>Examples:</p>
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">SomeViewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="kt">FlowRepresentable</span> <span class="p">{</span>
+    <span class="kd">typealias</span> <span class="kt">IntakeType</span> <span class="o">=</span> <span class="kt">String</span>
+
+    <span class="k">var</span> <span class="nv">preferredLaunchStyle</span><span class="p">:</span> <span class="kt">PresentationType</span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span>
+
+    <span class="k">weak</span> <span class="k">var</span> <span class="nv">workflow</span><span class="p">:</span> <span class="kt">Workflow</span><span class="p">?</span>
+
+    <span class="k">var</span> <span class="nv">callback</span><span class="p">:</span> <span class="p">((</span><span class="kt">Any</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span>
+
+    <span class="kd">static</span> <span class="kd">func</span> <span class="nf">instance</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">AnyFlowRepresentable</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kt">UIStoryboard</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Main"</span><span class="p">,</span> <span class="nv">bundle</span><span class="p">:</span> <span class="kt">Bundle</span><span class="o">.</span><span class="n">main</span><span class="p">)</span><span class="o">.</span><span class="nf">instantiateViewController</span><span class="p">(</span><span class="nv">withIdentifier</span><span class="p">:</span> <span class="s">"SomeViewController"</span><span class="p">)</span> <span class="k">as!</span> <span class="kt">SomeViewController</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">shouldLoad</span><span class="p">(</span><span class="n">with</span> <span class="nv">args</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">true</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id='discussion' class='heading'>Discussion:</h3>
+
+<p>It&rsquo;s important to make sure your FlowRepresentable is not dependent on other views. It&rsquo;s okay to specify that a certain kind of data needs to be passed in, but keep your views from knowing what came before or what&rsquo;s likely to come after. In that way you&rsquo;ll end up with pieces of a workflow that can be moved, or put into multiple places with ease. Notice the &lsquo;Instance&rsquo; method. This is needed for Workflow to create a new instance of your view. Make sure that this function always returns a new, unique instance of your class. Note that this is still accomplishable whether the view is created programmatically or in a storyboard.</p>
 
                         <a href="Protocols/FlowRepresentable.html" class="slightly-smaller">See more</a>
                       </div>
@@ -119,103 +99,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">FlowRepresentable</span> <span class="p">:</span> <span class="kt"><a href="Protocols/AnyFlowRepresentable.html">AnyFlowRepresentable</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:15DynamicWorkflow9PresenterP"></a>
-                    <a name="//apple_ref/swift/Protocol/Presenter" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15DynamicWorkflow9PresenterP">Presenter</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Protocols/Presenter.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">Presenter</span> <span class="p">:</span> <span class="kt"><a href="Protocols/AnyPresenter.html">AnyPresenter</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:15DynamicWorkflow20AnyFlowRepresentableP"></a>
-                    <a name="//apple_ref/swift/Protocol/AnyFlowRepresentable" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15DynamicWorkflow20AnyFlowRepresentableP">AnyFlowRepresentable</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Protocols/AnyFlowRepresentable.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">AnyFlowRepresentable</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:15DynamicWorkflow12AnyPresenterP"></a>
-                    <a name="//apple_ref/swift/Protocol/AnyPresenter" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15DynamicWorkflow12AnyPresenterP">AnyPresenter</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Protocols/AnyPresenter.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">AnyPresenter</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">FlowRepresentable</span> <span class="p">:</span> <span class="kt">AnyFlowRepresentable</span></code></pre>
 
                         </div>
                       </div>

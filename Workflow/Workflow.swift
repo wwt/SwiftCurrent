@@ -8,7 +8,27 @@
 
 import Foundation
 
-///Workflow: a doubley linked list
+/**
+ Workflow: A doubly linked list of AnyFlowRepresentable types. Can be used to create a user flow.
+ 
+ Examples:
+ ```swift
+ let workflow:Workflow = [ SomeFlowRepresentableClass.self, SomeOtherFlowRepresentableClass.self ]
+ let workflow = Workflow(SomeFlowRepresentableClass.self, SomeOtherFlowRepresentableClass.self)
+ ```
+
+ ### Discussion:
+ In a sufficiently complex application it may make sense to create a structure to hold onto all the workflows in an application.
+ If you're using UIKit then you can use a 'magic' method on UIViewController like so:
+ ```swift
+ class MainViewController: UIViewController {
+     @IBAction func launchFlow() {
+         launchInto([ SomeFlowRepresentableClass.self,
+                      SomeOtherFlowRepresentableClass.self ])
+     }
+ }
+ ```
+ */
 public class Workflow: LinkedList<AnyFlowRepresentable.Type> {
     
     internal var instances:LinkedList<AnyFlowRepresentable?> = []
