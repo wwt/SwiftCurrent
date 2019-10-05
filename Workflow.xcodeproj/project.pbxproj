@@ -23,6 +23,11 @@
 		AD79EC4523491F2200F86101 /* TestFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD79EC4423491F2200F86101 /* TestFinder.swift */; };
 		AD79EC472349210000F86101 /* MenuSelectionViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD79EC462349210000F86101 /* MenuSelectionViewControllerTests.swift */; };
 		AD79EC49234926D000F86101 /* FoodSelectionViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD79EC48234926D000F86101 /* FoodSelectionViewControllerTests.swift */; };
+		AD79EC4B23492B6F00F86101 /* ReviewOrderViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD79EC4A23492B6F00F86101 /* ReviewOrderViewControllerTests.swift */; };
+		AD79EC4D23492EDD00F86101 /* EnterAddressViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD79EC4C23492EDD00F86101 /* EnterAddressViewControllerTests.swift */; };
+		AD79EC4F2349306100F86101 /* SetupViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD79EC4E2349306100F86101 /* SetupViewControllerTests.swift */; };
+		AD79EC522349319300F86101 /* MockPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD79EC512349319300F86101 /* MockPresenter.swift */; };
+		AD79EC54234931A400F86101 /* WorkflowListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD79EC53234931A400F86101 /* WorkflowListener.swift */; };
 		AD8B6C772319E8B200781B01 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8B6C762319E8B200781B01 /* Screen.swift */; };
 		AD8BEBE42318303A0071A83D /* AnyPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8BEBE32318303A0071A83D /* AnyPresenter.swift */; };
 		AD8BEBE6231830860071A83D /* BasePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8BEBE5231830860071A83D /* BasePresenter.swift */; };
@@ -112,6 +117,11 @@
 		AD79EC4423491F2200F86101 /* TestFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestFinder.swift; sourceTree = "<group>"; };
 		AD79EC462349210000F86101 /* MenuSelectionViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSelectionViewControllerTests.swift; sourceTree = "<group>"; };
 		AD79EC48234926D000F86101 /* FoodSelectionViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSelectionViewControllerTests.swift; sourceTree = "<group>"; };
+		AD79EC4A23492B6F00F86101 /* ReviewOrderViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewOrderViewControllerTests.swift; sourceTree = "<group>"; };
+		AD79EC4C23492EDD00F86101 /* EnterAddressViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterAddressViewControllerTests.swift; sourceTree = "<group>"; };
+		AD79EC4E2349306100F86101 /* SetupViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewControllerTests.swift; sourceTree = "<group>"; };
+		AD79EC512349319300F86101 /* MockPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPresenter.swift; sourceTree = "<group>"; };
+		AD79EC53234931A400F86101 /* WorkflowListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowListener.swift; sourceTree = "<group>"; };
 		AD8B6C762319E8B200781B01 /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		AD8BEBE32318303A0071A83D /* AnyPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyPresenter.swift; sourceTree = "<group>"; };
 		AD8BEBE5231830860071A83D /* BasePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePresenter.swift; sourceTree = "<group>"; };
@@ -242,6 +252,15 @@
 			path = WorkflowExample;
 			sourceTree = "<group>";
 		};
+		AD79EC502349317C00F86101 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				AD79EC512349319300F86101 /* MockPresenter.swift */,
+				AD79EC53234931A400F86101 /* WorkflowListener.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		AD8BEBE72318308C0071A83D /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -364,6 +383,7 @@
 		ADEE7750233BAA6C007E9FD2 /* WorkflowExampleTests */ = {
 			isa = PBXGroup;
 			children = (
+				AD79EC502349317C00F86101 /* Mocks */,
 				ADEE7753233BAA6C007E9FD2 /* Info.plist */,
 				ADEE7759233BAB27007E9FD2 /* LocationsViewControllerTests.swift */,
 				ADEE775B233BC7F0007E9FD2 /* ViewControllerTest.swift */,
@@ -372,6 +392,9 @@
 				AD79EC4423491F2200F86101 /* TestFinder.swift */,
 				AD79EC462349210000F86101 /* MenuSelectionViewControllerTests.swift */,
 				AD79EC48234926D000F86101 /* FoodSelectionViewControllerTests.swift */,
+				AD79EC4A23492B6F00F86101 /* ReviewOrderViewControllerTests.swift */,
+				AD79EC4C23492EDD00F86101 /* EnterAddressViewControllerTests.swift */,
+				AD79EC4E2349306100F86101 /* SetupViewControllerTests.swift */,
 			);
 			path = WorkflowExampleTests;
 			sourceTree = "<group>";
@@ -783,10 +806,15 @@
 				AD79EC4523491F2200F86101 /* TestFinder.swift in Sources */,
 				AD79EC49234926D000F86101 /* FoodSelectionViewControllerTests.swift in Sources */,
 				ADEE775A233BAB27007E9FD2 /* LocationsViewControllerTests.swift in Sources */,
+				AD79EC4D23492EDD00F86101 /* EnterAddressViewControllerTests.swift in Sources */,
+				AD79EC4F2349306100F86101 /* SetupViewControllerTests.swift in Sources */,
 				AD79EC472349210000F86101 /* MenuSelectionViewControllerTests.swift in Sources */,
+				AD79EC54234931A400F86101 /* WorkflowListener.swift in Sources */,
 				ADEE7760233BC960007E9FD2 /* Convenience.swift in Sources */,
 				ADEE775C233BC7F0007E9FD2 /* ViewControllerTest.swift in Sources */,
+				AD79EC522349319300F86101 /* MockPresenter.swift in Sources */,
 				ADEE775E233BC901007E9FD2 /* PickupOrDeliveryViewControllerTests.swift in Sources */,
+				AD79EC4B23492B6F00F86101 /* ReviewOrderViewControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

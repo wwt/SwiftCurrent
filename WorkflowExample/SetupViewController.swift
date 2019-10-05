@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class SetupViewController: UIViewController {
+class SetupViewController: UIViewController, StoryboardLoadable {
     @IBAction func launchMultiLocationWorkflow() {
         let locations = [
             Location(name: "Just Pickup w/ just catering",

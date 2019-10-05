@@ -17,6 +17,9 @@ class TestFinder: XCTestCase {
         XCTestSuite(forTestCaseClass: PickupOrDeliveryViewConrollerTests.self).tests.forEach { suite.addTest($0) }
         XCTestSuite(forTestCaseClass: MenuSelectionViewControllerTests.self).tests.forEach { suite.addTest($0) }
         XCTestSuite(forTestCaseClass: FoodSelectionViewControllerTests.self).tests.forEach { suite.addTest($0) }
+        XCTestSuite(forTestCaseClass: ReviewOrderViewControllerTests.self).tests.forEach { suite.addTest($0) }
+        XCTestSuite(forTestCaseClass: EnterAddressViewControllerTests.self).tests.forEach { suite.addTest($0) }
+        XCTestSuite(forTestCaseClass: SetupViewControllerTests.self).tests.forEach { suite.addTest($0) }
         return suite
     }
     
