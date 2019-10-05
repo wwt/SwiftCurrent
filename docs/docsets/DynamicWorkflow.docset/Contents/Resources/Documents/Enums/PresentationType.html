@@ -14,7 +14,7 @@
     <a title="PresentationType Enumeration Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">DynamicWorkflow Docs</a> (7% documented)</p>
+        <p><a href="../index.html">DynamicWorkflow Docs</a> (45% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -31,22 +31,7 @@
             <a href="../Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Classes/BasePresenter.html">BasePresenter</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/LinkedList.html">LinkedList</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/LinkedList/LinkedListIterator.html">– LinkedListIterator</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/LinkedList/Node.html">– Node</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/UIKitPresenter.html">UIKitPresenter</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/UIWorkflowItem.html">UIWorkflowItem</a>
+                <a href="../Classes.html#/s:15DynamicWorkflow14UIWorkflowItemC">UIWorkflowItem</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Workflow.html">Workflow</a>
@@ -62,21 +47,10 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="../Extensions.html">Extensions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="../Extensions/UIViewController.html">UIViewController</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
             <a href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Protocols/AnyFlowRepresentable.html">AnyFlowRepresentable</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Protocols/AnyPresenter.html">AnyPresenter</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a>
@@ -98,7 +72,10 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>PresentationType: An enum that indicates how FlowRepresentables should be presented</p>
+<h3 id='discussion' class='heading'>Discussion:</h3>
+
+<p>Mostly used when you tell a workflow to launch, or on the <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> protocol if you have a view that preferrs to be launched with a certain style</p>
 
           </section>
           <section class="section task-group-section">
@@ -117,7 +94,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>navigationStack: Indicates a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> should be launched in a navigation stack of some kind (For example with UIKit this would use a UINavigationController)</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    If no current navigation stack is available, one will be created
+
+</div>
 
                       </div>
                       <div class="declaration">
@@ -144,7 +126,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>modally: Indicates a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> should be launched modally</p>
 
                       </div>
                       <div class="declaration">
@@ -171,7 +153,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>default: Indicates a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> can be launched contextually</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    If there&rsquo;s already a navigation stack, it will be used. Otherwise views will present modally
+
+</div>
 
                       </div>
                       <div class="declaration">

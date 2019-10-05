@@ -48,7 +48,7 @@ public class Workflow: LinkedList<AnyFlowRepresentable.Type> {
     public func applyPresenter(_ presenter:AnyPresenter) {
         self.presenter = presenter
     }
-    
+
     public func launch(from: Any?, with args:Any?, withLaunchStyle launchStyle:PresentationType = .default, onFinish:((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Node<AnyFlowRepresentable?>? {
         #if DEBUG
         if (NSClassFromString("XCTest") != nil) {
@@ -86,6 +86,11 @@ public class Workflow: LinkedList<AnyFlowRepresentable.Type> {
         return firstLoadedInstance
     }
     
+    /// abandon: Called when the workflow should be terminated, and the app should return to the point before the workflow was launched
+    /// - Parameter animated: A boolean indicating whether abandoning the workflow should be animated
+    /// - Parameter onFinish: A callback after the workflow has been abandoned.
+    /// - Returns: Void
+    /// - Note: In order for this to function the workflow must have a presenter, presenters must call back to the workflow to inform when the abandon process has finished for the onFinish callback to be called.
     public func abandon(animated:Bool = true, onFinish:(() -> Void)? = nil) {
         presenter?.abandon(self, animated:animated) {
             self.removeInstances()

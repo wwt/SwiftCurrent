@@ -14,7 +14,7 @@
     <a title="AnyFlowRepresentable Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">DynamicWorkflow Docs</a> (7% documented)</p>
+        <p><a href="../index.html">DynamicWorkflow Docs</a> (45% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -31,22 +31,7 @@
             <a href="../Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Classes/BasePresenter.html">BasePresenter</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/LinkedList.html">LinkedList</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/LinkedList/LinkedListIterator.html">– LinkedListIterator</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/LinkedList/Node.html">– Node</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/UIKitPresenter.html">UIKitPresenter</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/UIWorkflowItem.html">UIWorkflowItem</a>
+                <a href="../Classes.html#/s:15DynamicWorkflow14UIWorkflowItemC">UIWorkflowItem</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Workflow.html">Workflow</a>
@@ -62,21 +47,10 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="../Extensions.html">Extensions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="../Extensions/UIViewController.html">UIViewController</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
             <a href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Protocols/AnyFlowRepresentable.html">AnyFlowRepresentable</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Protocols/AnyPresenter.html">AnyPresenter</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a>
@@ -98,7 +72,7 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>AnyFlowRepresentable: A type erased version of &lsquo;FlowRepresentable&rsquo;. Generally speaking don&rsquo;t use this directly, use FlowRepresentable instead.</p>
 
           </section>
           <section class="section task-group-section">
@@ -117,7 +91,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>preferredLaunchStyle: Gives the ability for a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> to describe how it best shows up. For example a view can claim it preferrs to be launched in a navigationStack</p>
 
                       </div>
                       <div class="declaration">
@@ -144,7 +118,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>workflow: Access to the <code><a href="../Classes/Workflow.html">Workflow</a></code> controlling the <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code>. A common use case may be a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> that wants to abandon the <code><a href="../Classes/Workflow.html">Workflow</a></code> it&rsquo;s in.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    While not strictly necessary it would be wise to declare this property as <code>weak</code>
+
+</div>
 
                       </div>
                       <div class="declaration">
@@ -152,60 +131,6 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">workflow</span><span class="p">:</span> <span class="kt"><a href="../Classes/Workflow.html">Workflow</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:15DynamicWorkflow20AnyFlowRepresentableP8callbackyypSgcSgvp"></a>
-                    <a name="//apple_ref/swift/Property/callback" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15DynamicWorkflow20AnyFlowRepresentableP8callbackyypSgcSgvp">callback</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">callback</span><span class="p">:</span> <span class="p">((</span><span class="kt">Any</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:15DynamicWorkflow20AnyFlowRepresentableP16erasedShouldLoad4withSbypSg_tF"></a>
-                    <a name="//apple_ref/swift/Method/erasedShouldLoad(with:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15DynamicWorkflow20AnyFlowRepresentableP16erasedShouldLoad4withSbypSg_tF">erasedShouldLoad(with:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">erasedShouldLoad</span><span class="p">(</span><span class="n">with</span> <span class="nv">args</span><span class="p">:</span> <span class="kt">Any</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
@@ -225,7 +150,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>instance: A method to return an instance of the <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code></p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This needs to return a unique instance of your view. Whether programmatic or from the storyboard is irrelevant
+
+</div>
 
                       </div>
                       <div class="declaration">
@@ -235,6 +165,10 @@
                           <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="nf">instance</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">AnyFlowRepresentable</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>AnyFlowRepresentable</code>. Specifically a new instance from the static class passed to a <code><a href="../Classes/Workflow.html">Workflow</a></code></p>
                       </div>
                     </section>
                   </div>
