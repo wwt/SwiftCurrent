@@ -1,0 +1,1 @@
+jazzy -x -workspace,Workflow.xcworkspace,-scheme,Workflow --skip-undocumented

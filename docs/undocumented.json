@@ -1,0 +1,166 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/LinkedList.swift",
+      "line": 10,
+      "symbol": "LinkedList",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/LinkedList.swift",
+      "line": 10,
+      "symbol": "LinkedList",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/LinkedList.swift",
+      "line": 10,
+      "symbol": "LinkedList",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/LinkedList.swift",
+      "line": 10,
+      "symbol": "LinkedList",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/LinkedList.swift",
+      "line": 10,
+      "symbol": "LinkedList",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/LinkedList.swift",
+      "line": 10,
+      "symbol": "LinkedList",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/LinkedList.swift",
+      "line": 10,
+      "symbol": "LinkedList",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/Models/BasePresenter.swift",
+      "line": 10,
+      "symbol": "BasePresenter",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/Models/PresentationType.swift",
+      "line": 10,
+      "symbol": "PresentationType",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/Protocols/FlowRepresentable.swift",
+      "line": 11,
+      "symbol": "FlowRepresentable",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/Protocols/FlowRepresentable.swift",
+      "line": 17,
+      "symbol": "FlowRepresentable",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/Protocols/FlowRepresentable.swift",
+      "line": 79,
+      "symbol": "FlowRepresentable",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/Protocols/Presenter.swift",
+      "line": 11,
+      "symbol": "Presenter",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/Protocols/Presenter.swift",
+      "line": 16,
+      "symbol": "Presenter",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/Protocols/TypeErased/AnyFlowRepresentable.swift",
+      "line": 10,
+      "symbol": "AnyFlowRepresentable",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/Protocols/TypeErased/AnyPresenter.swift",
+      "line": 10,
+      "symbol": "AnyPresenter",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/UIKitPresenter/UIKitPresenter.swift",
+      "line": 12,
+      "symbol": "UIKitPresenter",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/UIKitPresenter/UIKitPresenter.swift",
+      "line": 73,
+      "symbol": "UIViewController.launchInto(_:args:withLaunchStyle:onFinish:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/UIKitPresenter/UIWorkflowItem.swift",
+      "line": 12,
+      "symbol": "UIWorkflowItem",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/Workflow.swift",
+      "line": 17,
+      "symbol": "Workflow.firstLoadedInstance",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/Workflow.swift",
+      "line": 28,
+      "symbol": "Workflow.applyPresenter(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/Workflow.swift",
+      "line": 32,
+      "symbol": "Workflow.launch(from:with:withLaunchStyle:onFinish:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/Workflow.swift",
+      "line": 69,
+      "symbol": "Workflow.abandon(animated:onFinish:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/tyler.thompson/workspace/Workflow"
+}

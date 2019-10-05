@@ -8,6 +8,7 @@
 
 import Foundation
 
+///Workflow: a doubley linked list
 public class Workflow: LinkedList<AnyFlowRepresentable.Type> {
     
     internal var instances:LinkedList<AnyFlowRepresentable?> = []
