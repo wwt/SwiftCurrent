@@ -30,8 +30,8 @@ class SetupViewController: UIViewController {
         ]
         launchInto([
             LocationsViewController.self,
-            MenuSelectionViewController.self,
             PickupOrDeliveryViewController.self,
+            MenuSelectionViewController.self,
             FoodSelectionViewController.self,
             ReviewOrderViewController.self,
         ], args: locations, withLaunchStyle: .navigationStack)

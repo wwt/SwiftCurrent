@@ -20,6 +20,9 @@
 		AD5BB013231B82C9001DAF7C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD5BB011231B82C9001DAF7C /* Main.storyboard */; };
 		AD5BB015231B82CC001DAF7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD5BB014231B82CC001DAF7C /* Assets.xcassets */; };
 		AD5BB018231B82CC001DAF7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD5BB016231B82CC001DAF7C /* LaunchScreen.storyboard */; };
+		AD79EC4523491F2200F86101 /* TestFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD79EC4423491F2200F86101 /* TestFinder.swift */; };
+		AD79EC472349210000F86101 /* MenuSelectionViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD79EC462349210000F86101 /* MenuSelectionViewControllerTests.swift */; };
+		AD79EC49234926D000F86101 /* FoodSelectionViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD79EC48234926D000F86101 /* FoodSelectionViewControllerTests.swift */; };
 		AD8B6C772319E8B200781B01 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8B6C762319E8B200781B01 /* Screen.swift */; };
 		AD8BEBE42318303A0071A83D /* AnyPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8BEBE32318303A0071A83D /* AnyPresenter.swift */; };
 		AD8BEBE6231830860071A83D /* BasePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8BEBE5231830860071A83D /* BasePresenter.swift */; };
@@ -106,6 +109,9 @@
 		AD5BB014231B82CC001DAF7C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AD5BB017231B82CC001DAF7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AD5BB019231B82CC001DAF7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AD79EC4423491F2200F86101 /* TestFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestFinder.swift; sourceTree = "<group>"; };
+		AD79EC462349210000F86101 /* MenuSelectionViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSelectionViewControllerTests.swift; sourceTree = "<group>"; };
+		AD79EC48234926D000F86101 /* FoodSelectionViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSelectionViewControllerTests.swift; sourceTree = "<group>"; };
 		AD8B6C762319E8B200781B01 /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		AD8BEBE32318303A0071A83D /* AnyPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyPresenter.swift; sourceTree = "<group>"; };
 		AD8BEBE5231830860071A83D /* BasePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePresenter.swift; sourceTree = "<group>"; };
@@ -363,6 +369,9 @@
 				ADEE775B233BC7F0007E9FD2 /* ViewControllerTest.swift */,
 				ADEE775D233BC901007E9FD2 /* PickupOrDeliveryViewControllerTests.swift */,
 				ADEE775F233BC960007E9FD2 /* Convenience.swift */,
+				AD79EC4423491F2200F86101 /* TestFinder.swift */,
+				AD79EC462349210000F86101 /* MenuSelectionViewControllerTests.swift */,
+				AD79EC48234926D000F86101 /* FoodSelectionViewControllerTests.swift */,
 			);
 			path = WorkflowExampleTests;
 			sourceTree = "<group>";
@@ -771,7 +780,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD79EC4523491F2200F86101 /* TestFinder.swift in Sources */,
+				AD79EC49234926D000F86101 /* FoodSelectionViewControllerTests.swift in Sources */,
 				ADEE775A233BAB27007E9FD2 /* LocationsViewControllerTests.swift in Sources */,
+				AD79EC472349210000F86101 /* MenuSelectionViewControllerTests.swift in Sources */,
 				ADEE7760233BC960007E9FD2 /* Convenience.swift in Sources */,
 				ADEE775C233BC7F0007E9FD2 /* ViewControllerTest.swift in Sources */,
 				ADEE775E233BC901007E9FD2 /* PickupOrDeliveryViewControllerTests.swift in Sources */,

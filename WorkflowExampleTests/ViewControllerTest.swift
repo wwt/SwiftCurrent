@@ -24,5 +24,4 @@ class ViewControllerTest<T: UIViewController & StoryboardLoadable>: XCTestCase {
     }
     
     func afterLoadFromStoryboard() { }
-
 }
