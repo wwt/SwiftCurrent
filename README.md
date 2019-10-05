@@ -9,7 +9,7 @@ Workflow is a library meant to handle complex user flows in iOS applications.
 - [Getting Started](https://github.com/Tyler-Keith-Thompson/Workflow/wiki/getting-started)
 - [Testing Your Workflows](https://github.com/Tyler-Keith-Thompson/Workflow/wiki/testing)
 - [Advanced](https://github.com/Tyler-Keith-Thompson/Workflow/wiki/advanced)
-- [Developer Documentation](https://github.com/Tyler-Keith-Thompson/Workflow/wiki/dev-docs)
+- [Developer Documentation](https://htmlpreview.github.io/?https://github.com/Tyler-Keith-Thompson/Workflow/blob/master/docs/index.html)
 - [FAQ](https://github.com/Tyler-Keith-Thompson/Workflow/wiki/faq)
 
 ### The problem DynamicWorkflow was built to solve:
