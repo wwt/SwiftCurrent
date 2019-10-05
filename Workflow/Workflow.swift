@@ -29,6 +29,17 @@ public class Workflow: LinkedList<AnyFlowRepresentable.Type> {
     }
     
     public func launch(from: Any?, with args:Any?, withLaunchStyle launchStyle:PresentationType = .default, onFinish:((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Node<AnyFlowRepresentable?>? {
+        #if DEBUG
+        if (NSClassFromString("XCTest") != nil) {
+            NotificationCenter.default.post(name: .workflowLaunched, object: [
+                "workflow" : self,
+                "launchFrom": from,
+                "args": args,
+                "style": launchStyle,
+                "onFinish": onFinish
+            ])
+        }
+        #endif
         removeInstances()
         instances.append(contentsOf: map { _ in nil })
         _ = first?.traverse { node in

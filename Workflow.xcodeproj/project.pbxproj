@@ -55,6 +55,7 @@
 		ADEE775C233BC7F0007E9FD2 /* ViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEE775B233BC7F0007E9FD2 /* ViewControllerTest.swift */; };
 		ADEE775E233BC901007E9FD2 /* PickupOrDeliveryViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEE775D233BC901007E9FD2 /* PickupOrDeliveryViewControllerTests.swift */; };
 		ADEE7760233BC960007E9FD2 /* Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEE775F233BC960007E9FD2 /* Convenience.swift */; };
+		ADEE7763233C2D5B007E9FD2 /* WorkflowNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEE7762233C2D5B007E9FD2 /* WorkflowNotifications.swift */; };
 		F93CBFAA29F3056CFE892E13 /* Pods_WorkflowTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2B5B41A4F86FDBF12D88F62 /* Pods_WorkflowTests.framework */; };
 		FD64E72C1869DD8B92AC3061 /* Pods_Workflow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93153A9A1549D7ECC6FF5A30 /* Pods_Workflow.framework */; };
 /* End PBXBuildFile section */
@@ -145,6 +146,7 @@
 		ADEE775B233BC7F0007E9FD2 /* ViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerTest.swift; sourceTree = "<group>"; };
 		ADEE775D233BC901007E9FD2 /* PickupOrDeliveryViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupOrDeliveryViewControllerTests.swift; sourceTree = "<group>"; };
 		ADEE775F233BC960007E9FD2 /* Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Convenience.swift; sourceTree = "<group>"; };
+		ADEE7762233C2D5B007E9FD2 /* WorkflowNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowNotifications.swift; sourceTree = "<group>"; };
 		CCFE28428D8EFEABB9A39C8D /* Pods-WorkflowTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkflowTests.release.xcconfig"; path = "Target Support Files/Pods-WorkflowTests/Pods-WorkflowTests.release.xcconfig"; sourceTree = "<group>"; };
 		CF2C1E796D1CCA3C0AC77D60 /* Pods-WorkflowExample-WorkflowExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkflowExample-WorkflowExampleTests.release.xcconfig"; path = "Target Support Files/Pods-WorkflowExample-WorkflowExampleTests/Pods-WorkflowExample-WorkflowExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		D2B5B41A4F86FDBF12D88F62 /* Pods_WorkflowTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WorkflowTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -278,6 +280,7 @@
 				ADD823612312CC6300D77D3C /* Workflow.h */,
 				ADD823622312CC6300D77D3C /* Info.plist */,
 				ADD8239723145AD800D77D3C /* Workflow.swift */,
+				ADEE7761233C2D4A007E9FD2 /* TestOnly */,
 			);
 			path = Workflow;
 			sourceTree = "<group>";
@@ -364,6 +367,14 @@
 			path = WorkflowExampleTests;
 			sourceTree = "<group>";
 		};
+		ADEE7761233C2D4A007E9FD2 /* TestOnly */ = {
+			isa = PBXGroup;
+			children = (
+				ADEE7762233C2D5B007E9FD2 /* WorkflowNotifications.swift */,
+			);
+			path = TestOnly;
+			sourceTree = "<group>";
+		};
 		D4E280E2374C0659E83AD82F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -401,7 +412,7 @@
 				AD5BB007231B82C9001DAF7C /* Sources */,
 				AD5BB008231B82C9001DAF7C /* Frameworks */,
 				AD5BB009231B82C9001DAF7C /* Resources */,
-				FF0741859C562B3198C7D582 /* [CP] Embed Pods Frameworks */,
+				335393CE505EF6BD046DCD5B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -555,6 +566,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		335393CE505EF6BD046DCD5B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WorkflowExample/Pods-WorkflowExample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WorkflowExample/Pods-WorkflowExample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WorkflowExample/Pods-WorkflowExample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		3D5EB486326AAA1AC42B2899 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -677,23 +705,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		FF0741859C562B3198C7D582 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-WorkflowExample/Pods-WorkflowExample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-WorkflowExample/Pods-WorkflowExample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WorkflowExample/Pods-WorkflowExample-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -725,6 +736,7 @@
 				AD8BEBE6231830860071A83D /* BasePresenter.swift in Sources */,
 				ADD8239823145AD800D77D3C /* Workflow.swift in Sources */,
 				ADD8238B2312CE5900D77D3C /* LinkedList.swift in Sources */,
+				ADEE7763233C2D5B007E9FD2 /* WorkflowNotifications.swift in Sources */,
 				ADD823852312CE5900D77D3C /* Sorting.swift in Sources */,
 				AD8BEBE9231830B50071A83D /* UIWorkflowItem.swift in Sources */,
 				ADD823872312CE5900D77D3C /* NonMutatingOperations.swift in Sources */,

@@ -20,6 +20,7 @@ class ViewControllerTest<T: UIViewController & StoryboardLoadable>: XCTestCase {
     
     final func loadFromStoryboard(configure: ((ControllerType) -> Void)? = nil) {
         testViewController = UIViewController.loadFromStoryboard(identifier: ControllerType.storyboardId, configure:configure)
+        afterLoadFromStoryboard()
     }
     
     func afterLoadFromStoryboard() { }
