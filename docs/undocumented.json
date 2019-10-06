@@ -163,14 +163,7 @@
     },
     {
       "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/UIKitPresenter/UIKitPresenter.swift",
-      "line": 73,
-      "symbol": "UIViewController.launchInto(_:args:withLaunchStyle:onFinish:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/UIKitPresenter/UIKitPresenter.swift",
-      "line": 80,
+      "line": 86,
       "symbol": "FlowRepresentable.abandonWorkflow()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

@@ -70,6 +70,12 @@ open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
 }
 
 public extension UIViewController {
+    ///launchInto: When using UIKit this is how you launch a workflow
+    /// - Parameter workflow: `Workflow` to launch
+    /// - Parameter args: Args to pass to the first `FlowRepresentable`
+    /// - Parameter launchStyle: The `PresentationType` used to launch the workflow
+    /// - Parameter onFinish: A callback that is called when the last item in the workflow calls back
+    /// - Note: In the background this applies a UIKitPresenter, if you call launch on workflow directly you'll need to apply one yourself
     func launchInto(_ workflow:Workflow, args:Any? = nil, withLaunchStyle launchStyle:PresentationType = .default, onFinish:((Any?) -> Void)? = nil) {
         workflow.applyPresenter(UIKitPresenter())
         _ = workflow.launch(from: self, with: args, withLaunchStyle: launchStyle, onFinish: onFinish)?.value as? UIViewController

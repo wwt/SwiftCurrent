@@ -43,71 +43,64 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
-      "line": 11,
-      "symbol": "LinkedList.reversed()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/LinkedList.swift",
+      "line": 19,
+      "symbol": "LinkedList.Index",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/LinkedList.swift",
+      "line": 20,
+      "symbol": "LinkedList.SubSequence",
+      "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
       "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
-      "line": 26,
-      "symbol": "LinkedList.replacing(atIndex:withItem:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
-      "line": 33,
-      "symbol": "LinkedList.sorted(by:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
-      "line": 38,
+      "line": 48,
       "symbol": "LinkedList.dropFirst(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
-      "line": 45,
+      "line": 55,
       "symbol": "LinkedList.dropLast(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
-      "line": 52,
+      "line": 62,
       "symbol": "LinkedList.drop(while:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
-      "line": 63,
+      "line": 73,
       "symbol": "LinkedList.prefix(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
-      "line": 70,
+      "line": 80,
       "symbol": "LinkedList.prefix(while:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
-      "line": 81,
+      "line": 91,
       "symbol": "LinkedList.suffix(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
-      "line": 88,
+      "line": 98,
       "symbol": "LinkedList.split(maxSplits:omittingEmptySubsequences:whereSeparator:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -170,14 +163,7 @@
     },
     {
       "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/UIKitPresenter/UIKitPresenter.swift",
-      "line": 73,
-      "symbol": "UIViewController.launchInto(_:args:withLaunchStyle:onFinish:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/UIKitPresenter/UIKitPresenter.swift",
-      "line": 80,
+      "line": 86,
       "symbol": "FlowRepresentable.abandonWorkflow()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

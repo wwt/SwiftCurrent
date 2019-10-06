@@ -14,7 +14,7 @@
     <a title="UIViewController Extension Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">DynamicWorkflow Docs</a> (7% documented)</p>
+        <p><a href="../index.html">DynamicWorkflow Docs</a> (69% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -31,22 +31,13 @@
             <a href="../Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Classes/BasePresenter.html">BasePresenter</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Classes/LinkedList.html">LinkedList</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/LinkedList/LinkedListIterator.html">– LinkedListIterator</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/LinkedList/Node.html">– Node</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/UIKitPresenter.html">UIKitPresenter</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/UIWorkflowItem.html">UIWorkflowItem</a>
+                <a href="../Classes.html#/s:15DynamicWorkflow14UIWorkflowItemC">UIWorkflowItem</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Workflow.html">Workflow</a>
@@ -74,9 +65,6 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Protocols/AnyFlowRepresentable.html">AnyFlowRepresentable</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Protocols/AnyPresenter.html">AnyPresenter</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a>
@@ -116,7 +104,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>launchInto: When using UIKit this is how you launch a workflow</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    In the background this applies a UIKitPresenter, if you call launch on workflow directly you&rsquo;ll need to apply one yourself
+
+</div>
 
                       </div>
                       <div class="declaration">
@@ -126,6 +119,61 @@
                           <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">launchInto</span><span class="p">(</span><span class="n">_</span> <span class="nv">workflow</span><span class="p">:</span> <span class="kt"><a href="../Classes/Workflow.html">Workflow</a></span><span class="p">,</span> <span class="nv">args</span><span class="p">:</span> <span class="kt">Any</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="n">withLaunchStyle</span> <span class="nv">launchStyle</span><span class="p">:</span> <span class="kt"><a href="../Enums/PresentationType.html">PresentationType</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span> <span class="nv">onFinish</span><span class="p">:</span> <span class="p">((</span><span class="kt">Any</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>workflow</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code><a href="../Classes/Workflow.html">Workflow</a></code> to launch</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>args</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Args to pass to the first <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code></p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>launchStyle</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The <code><a href="../Enums/PresentationType.html">PresentationType</a></code> used to launch the workflow</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onFinish</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A callback that is called when the last item in the workflow calls back</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
