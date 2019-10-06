@@ -8,6 +8,8 @@
 
 import Foundation
 extension LinkedList {
+    /// reversed: Return a new version of the LinkedList with all elements reversed
+    /// - Returns: A new reversed version of the LinkedList
     public func reversed() -> LinkedList<Value> {
         var current = first
         var previous:Element?
@@ -23,6 +25,10 @@ extension LinkedList {
         return LinkedList<Value>(previous)
     }
     
+    /// replacing: Return a new version of the LinkedList with a specific element replaced
+    /// - Parameter index: The index of the node who's concrete value should be replaced
+    /// - Parameter newItem: The concrete value to replace
+    /// - Returns: A new version of the LinkedList with a specific element replaced
     public func replacing(atIndex index: Int, withItem newItem: Value) -> LinkedList<Value> {
         guard let first = first else { return self }
         let copy = LinkedList<Value>(first.copy())
@@ -30,6 +36,10 @@ extension LinkedList {
         return copy
     }
     
+    /// sorted: Return a new sorted version of the LinkedList
+    /// - Parameter comparator: A function that takes in 2 concrete types and indicates how they should be sorted
+    /// - Complexity: O(nLogn) This uses Merge Sort under the covers and is more performant than the built in alternative
+    /// - Returns: A new sorted version of the LinkedList
     public func sorted(by comparator:(Value, Value) -> Bool) -> LinkedList<Value> {
         guard first?.next != nil else { return self }
         return LinkedList(mergeSort(first, by: comparator))

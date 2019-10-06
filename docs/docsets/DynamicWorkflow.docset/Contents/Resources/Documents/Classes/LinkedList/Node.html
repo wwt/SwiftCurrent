@@ -14,7 +14,7 @@
     <a title="Node Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../../index.html">DynamicWorkflow Docs</a> (7% documented)</p>
+        <p><a href="../../index.html">DynamicWorkflow Docs</a> (68% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -31,22 +31,13 @@
             <a href="../../Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../../Classes/BasePresenter.html">BasePresenter</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../../Classes/LinkedList.html">LinkedList</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../../Classes/LinkedList/LinkedListIterator.html">– LinkedListIterator</a>
               </li>
               <li class="nav-group-task">
                 <a href="../../Classes/LinkedList/Node.html">– Node</a>
               </li>
               <li class="nav-group-task">
-                <a href="../../Classes/UIKitPresenter.html">UIKitPresenter</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../../Classes/UIWorkflowItem.html">UIWorkflowItem</a>
+                <a href="../../Classes.html#/s:15DynamicWorkflow14UIWorkflowItemC">UIWorkflowItem</a>
               </li>
               <li class="nav-group-task">
                 <a href="../../Classes/Workflow.html">Workflow</a>
@@ -62,21 +53,10 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="../../Extensions.html">Extensions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="../../Extensions/UIViewController.html">UIViewController</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
             <a href="../../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../../Protocols/AnyFlowRepresentable.html">AnyFlowRepresentable</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../../Protocols/AnyPresenter.html">AnyPresenter</a>
               </li>
               <li class="nav-group-task">
                 <a href="../../Protocols/FlowRepresentable.html">FlowRepresentable</a>
@@ -98,7 +78,10 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>LinkedList.Node: A type to hold onto elements in a LinkedList</p>
+<h3 id='discussion' class='heading'>Discussion:</h3>
+
+<p>These nodes hold onto a value, the next node, and the previous node.</p>
 
           </section>
           <section class="section task-group-section">
@@ -117,7 +100,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Value: A typealias that is equivalent to the specialized type in the LinkedList</p>
 
                       </div>
                       <div class="declaration">
@@ -144,7 +127,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>value: The concrete value the node is holding onto</p>
 
                       </div>
                       <div class="declaration">
@@ -171,7 +154,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>next: An optional reference to the next node in the LinkedList</p>
 
                       </div>
                       <div class="declaration">
@@ -198,7 +181,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>previous: An optional reference to the previous node in the LinkedList</p>
 
                       </div>
                       <div class="declaration">
@@ -225,7 +208,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>traverse(distance): A method to move N spaces forwards or backwards through the nodes</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    If the distance is out of bounds nil will be returned
+
+</div>
 
                       </div>
                       <div class="declaration">
@@ -235,6 +223,29 @@
                           <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">traverse</span><span class="p">(</span><span class="n">_</span> <span class="nv">distance</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">?</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>distance</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An integer indicating how far to move through the nodes</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Node<T>? where T is the specialized type of the LinkedList</p>
                       </div>
                     </section>
                   </div>
@@ -252,7 +263,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>traverse(Until): A method to move forward through the nodes until a precondition is met</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    If <code>true</code> is returned from <code>until</code> then traversal stops. e.g. <code>node.traverse { $0.value == 0 }</code> traverses until it finds a node who has a value of 0
+
+</div>
 
                       </div>
                       <div class="declaration">
@@ -262,6 +278,29 @@
                           <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">traverse</span><span class="p">(</span><span class="n">_</span> <span class="nv">until</span><span class="p">:</span> <span class="p">((</span><span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="kt">Node</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">?</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>until</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A function that takes in a Node<T> and returns a boolean to indicate whether traversal should continue</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Node<T>? where T is the specialized type of the LinkedList</p>
                       </div>
                     </section>
                   </div>
@@ -279,7 +318,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>traverseToEnd: A method to move forward through the nodes until there is no <code><a href="../../Classes/LinkedList/Node.html#/s:15DynamicWorkflow10LinkedListC4NodeC4nextAEyx_qd__GSgvp">next</a></code></p>
 
                       </div>
                       <div class="declaration">
@@ -306,7 +345,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>traverseToBeginning: A method to move backwards through the nodes until there is no <code><a href="../../Classes/LinkedList/Node.html#/s:15DynamicWorkflow10LinkedListC4NodeC8previousAEyx_qd__GSgvp">previous</a></code></p>
 
                       </div>
                       <div class="declaration">
@@ -333,7 +372,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>position: A computed property that calculates a nodes position in the LinkedList</p>
+<div class="aside aside-complexity">
+    <p class="aside-title">Complexity</p>
+    O(n) this has a worst case of having to traverse the entire list to determine its position
+
+</div>
 
                       </div>
                       <div class="declaration">
@@ -360,7 +404,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>copy: Creates an exact replica of the node, including the next and previous values, this essentially deep copies the entire LinkedList</p>
 
                       </div>
                       <div class="declaration">

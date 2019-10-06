@@ -1,52 +1,115 @@
 {
   "warnings": [
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/LinkedList.swift",
-      "line": 10,
-      "symbol": "LinkedList",
-      "symbol_kind": "source.lang.swift.decl.class",
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/Comparable.swift",
+      "line": 11,
+      "symbol": "LinkedList.sort()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/LinkedList.swift",
-      "line": 10,
-      "symbol": "LinkedList",
-      "symbol_kind": "source.lang.swift.decl.extension",
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/Comparable.swift",
+      "line": 16,
+      "symbol": "LinkedList.sorted()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/LinkedList.swift",
-      "line": 10,
-      "symbol": "LinkedList",
-      "symbol_kind": "source.lang.swift.decl.extension",
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/Comparable.swift",
+      "line": 20,
+      "symbol": "LinkedList.max()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/LinkedList.swift",
-      "line": 10,
-      "symbol": "LinkedList",
-      "symbol_kind": "source.lang.swift.decl.extension",
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/Comparable.swift",
+      "line": 26,
+      "symbol": "LinkedList.min()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/LinkedList.swift",
-      "line": 10,
-      "symbol": "LinkedList",
-      "symbol_kind": "source.lang.swift.decl.extension",
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/Equatable.swift",
+      "line": 14,
+      "symbol": "LinkedList.contains(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/LinkedList.swift",
-      "line": 10,
-      "symbol": "LinkedList",
-      "symbol_kind": "source.lang.swift.decl.extension",
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/Iterator.swift",
+      "line": 11,
+      "symbol": "LinkedList.LinkedListIterator",
+      "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/LinkedList.swift",
-      "line": 10,
-      "symbol": "LinkedList",
-      "symbol_kind": "source.lang.swift.decl.extension",
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
+      "line": 11,
+      "symbol": "LinkedList.reversed()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
+      "line": 26,
+      "symbol": "LinkedList.replacing(atIndex:withItem:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
+      "line": 33,
+      "symbol": "LinkedList.sorted(by:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
+      "line": 38,
+      "symbol": "LinkedList.dropFirst(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
+      "line": 45,
+      "symbol": "LinkedList.dropLast(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
+      "line": 52,
+      "symbol": "LinkedList.drop(while:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
+      "line": 63,
+      "symbol": "LinkedList.prefix(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
+      "line": 70,
+      "symbol": "LinkedList.prefix(while:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
+      "line": 81,
+      "symbol": "LinkedList.suffix(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
+      "line": 88,
+      "symbol": "LinkedList.split(maxSplits:omittingEmptySubsequences:whereSeparator:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
@@ -72,21 +135,7 @@
     },
     {
       "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/Protocols/Presenter.swift",
-      "line": 19,
-      "symbol": "Presenter.ViewType",
-      "symbol_kind": "source.lang.swift.decl.associatedtype",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/Protocols/Presenter.swift",
-      "line": 20,
-      "symbol": "Presenter.launch(view:from:withLaunchStyle:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/Protocols/Presenter.swift",
-      "line": 24,
+      "line": 29,
       "symbol": "Presenter.launch(view:from:withLaunchStyle:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
