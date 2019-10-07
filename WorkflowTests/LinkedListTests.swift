@@ -269,9 +269,9 @@ class LinkedListTests: XCTestCase {
     func testPrefixWhile() {
         let list:LinkedList = [1, 2, 3, 4, 5, 6]
         
-        XCTAssertEqual(list.prefix(while: { $0.value != 2 }).last?.value, 2)
+        XCTAssertEqual(list.prefix(while: { $0 != 2 }).last?.value, 2)
         
-        XCTAssertEqual(list.prefix(while: { $0.value != 4 }).last?.value, 4)
+        XCTAssertEqual(list.prefix(while: { $0 != 4 }).last?.value, 4)
         
         XCTAssertEqual(list.count, 6)
     }
@@ -330,7 +330,7 @@ class LinkedListTests: XCTestCase {
     func testDropWhile() {
         let list:LinkedList = [1, 2, 3, 4, 5, 6]
         
-        XCTAssertEqual(list.drop(while: { $0.value != 3}).last?.value, 3)
+        XCTAssertEqual(list.drop(while: { $0 != 3}).last?.value, 3)
 
         XCTAssertEqual(list.count, 6)
     }

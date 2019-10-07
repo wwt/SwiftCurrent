@@ -21,6 +21,10 @@ class WorkflowListener {
         NotificationCenter.default.addObserver(self, selector: #selector(workflowLaunched(notification:)), name: .workflowLaunched, object: nil)
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     @objc func workflowLaunched(notification: Notification) {
         let dict = notification.object as? [String:Any?]
         workflow = dict?["workflow"] as? Workflow

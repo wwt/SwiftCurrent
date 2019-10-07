@@ -45,6 +45,10 @@ extension LinkedList {
         return LinkedList(mergeSort(first, by: comparator))
     }
     
+    /// dropFirst: Return a new version of the LinkedList without the first n items
+    /// - Parameter n: The number of items to drop from the start of the list
+    /// - Returns: A new version of the LinkedList without the first n items
+    /// - Note: If you pass in an index that is out of the range of the LinkedList an empty LinkedList will be returned
     public func dropFirst(_ n: Int = 1) -> SubSequence {
         guard n > 0 else { return self }
         let copy = first?.copy().traverse(n)
@@ -52,6 +56,10 @@ extension LinkedList {
         return LinkedList(copy)
     }
     
+    /// dropFirst: Return a new version of the LinkedList without the last n items
+    /// - Parameter n: The number of items to drop from the end of the list
+    /// - Returns: A new version of the LinkedList without the last n items
+    /// - Note: If you pass in an index that is out of the range of the LinkedList an empty LinkedList will be returned
     public func dropLast(_ n: Int = 1) -> SubSequence {
         guard n > 0 else { return self }
         let l = last?.copy().traverse(-n)
@@ -59,9 +67,13 @@ extension LinkedList {
         return LinkedList(l?.traverseToBeginning())
     }
     
-    public func drop(while predicate: (Element) throws -> Bool) rethrows -> SubSequence {
+    /// drop(while): Return a new version of the LinkedList without the last n items
+    /// - Parameter predicate: A closure that takes in the concrete type the node wraps and returns a boolean indicating whether it should drop from the list
+    /// - Returns: A new version of the LinkedList without the last n items
+    /// - Note: If you pass in an index that is out of the range of the LinkedList an empty LinkedList will be returned
+    public func drop(while predicate: (Value) throws -> Bool) rethrows -> SubSequence {
         guard var l = last?.copy() else { return [] }
-        while (try predicate(l)) {
+        while (try predicate(l.value)) {
             if let prev = l.previous {
                 l = prev
             } else { break }
@@ -70,6 +82,10 @@ extension LinkedList {
         return LinkedList(l)
     }
     
+    /// prefix(maxLength): Return a new version of the LinkedList with just the first n items
+    /// - Parameter maxLength: The number of items to return
+    /// - Returns: A new version of the LinkedList with just the first n items
+    /// - Note: If you pass in an index that is greater than the size of the LinkedList you'll get the full list. If you send in an index smaller than the size of the LinkedList you'll get an empty list back.
     public func prefix(_ maxLength: Int) -> SubSequence {
         guard maxLength > 0 else { return [] }
         let copy = first?.copy().traverse(maxLength-1)
@@ -77,9 +93,13 @@ extension LinkedList {
         return LinkedList(copy?.traverseToBeginning())
     }
     
-    public func prefix(while predicate: (Element) throws -> Bool) rethrows -> SubSequence {
+    /// prefix(while): Return a new version of the LinkedList with just the first n items
+    /// - Parameter predicate: A closure that takes in the concrete type the node wraps and returns a boolean indicating whether it should be included in the new list
+    /// - Returns: A a new version of the LinkedList with just the first n items
+    /// - Note: If you pass in an index that is greater than the size of the LinkedList you'll get the full list. If you send in an index smaller than the size of the LinkedList you'll get an empty list back.
+    public func prefix(while predicate: (Value) throws -> Bool) rethrows -> SubSequence {
         guard var f = first?.copy() else { return [] }
-        while (try predicate(f)) {
+        while (try predicate(f.value)) {
             if let next = f.next {
                 f = next
             } else { break }
@@ -88,6 +108,9 @@ extension LinkedList {
         return LinkedList(f)
     }
     
+    /// suffix(maxLength): Return a new version of the LinkedList with just the last n items
+    /// - Parameter maxLength: The number of items to return
+    /// - Returns: A new version of the LinkedList with just the last n items
     public func suffix(_ maxLength: Int) -> SubSequence {
         guard maxLength > 0 else { return [] }
         let copy = last?.copy().traverse(-(maxLength-1))
@@ -95,7 +118,7 @@ extension LinkedList {
         return LinkedList(copy)
     }
     
-    public func split(maxSplits: Int, omittingEmptySubsequences: Bool, whereSeparator isSeparator: (Element) throws -> Bool) rethrows -> [SubSequence] {
+    public func split(maxSplits: Int = Int.max, omittingEmptySubsequences: Bool = true, whereSeparator isSeparator: (Element) throws -> Bool) rethrows -> [SubSequence] {
         let splitNodeArr = (try? map { $0 }.split(maxSplits: maxSplits, omittingEmptySubsequences: omittingEmptySubsequences, whereSeparator: isSeparator)) ?? []
         return splitNodeArr.map { LinkedList($0.map { $0.value }) }
     }

@@ -58,49 +58,7 @@
     },
     {
       "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
-      "line": 48,
-      "symbol": "LinkedList.dropFirst(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
-      "line": 55,
-      "symbol": "LinkedList.dropLast(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
-      "line": 62,
-      "symbol": "LinkedList.drop(while:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
-      "line": 73,
-      "symbol": "LinkedList.prefix(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
-      "line": 80,
-      "symbol": "LinkedList.prefix(while:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
-      "line": 91,
-      "symbol": "LinkedList.suffix(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
-      "line": 98,
+      "line": 121,
       "symbol": "LinkedList.split(maxSplits:omittingEmptySubsequences:whereSeparator:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

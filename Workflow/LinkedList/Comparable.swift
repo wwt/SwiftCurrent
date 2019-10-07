@@ -17,12 +17,16 @@ extension LinkedList where Value : Comparable {
         return LinkedList(mergeSort(first, by: { $0 <= $1 }))
     }
 
+    /// max: Returns the maximum value in the comparable LinkedList
+    /// - Returns: The maximum concrete value in the LinkedList or nil if there is none
     public func max() -> Value? {
         guard var m = first?.value else { return nil }
         forEach { m = Swift.max(m, $0.value) }
         return m
     }
     
+    /// min: Returns the minimum value in the comparable LinkedList
+    /// - Returns: The minimum concrete value in the LinkedList or nil if there is none
     public func min() -> Value? {
         guard var m = first?.value else { return nil }
         forEach { m = Swift.min(m, $0.value) }
