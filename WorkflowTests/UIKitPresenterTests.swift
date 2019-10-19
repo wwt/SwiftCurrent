@@ -1020,6 +1020,26 @@ class UIKitPresenterTests: XCTestCase {
         XCTAssert(UIApplication.topViewController() is ExpectedModal, "Top View was not a modal")
         XCTAssertNil((UIApplication.topViewController() as? ExpectedModal)?.navigationController, "You didn't present modally")
     }
+    
+    func testFlowRepresentableThatDoesNotTakeInData() {
+        class ExpectedController: UIWorkflowItem<Never>, FlowRepresentable {
+            static func instance() -> AnyFlowRepresentable {
+                let controller = ExpectedController()
+                controller.view.backgroundColor = .green
+                return controller
+            }
+        }
+
+        let rootController = UIViewController()
+        loadView(controller: rootController)
+
+        rootController.launchInto(Workflow([ExpectedController.self]), withLaunchStyle: .navigationStack)
+        RunLoop.current.singlePass()
+
+        XCTAssert(rootController.mostRecentlyPresentedViewController is UINavigationController, "mostRecentlyPresentedViewController should be nav controller: \(String(describing: rootController.mostRecentlyPresentedViewController))")
+        XCTAssertEqual((rootController.mostRecentlyPresentedViewController as? UINavigationController)?.viewControllers.count, 1)
+        XCTAssert((rootController.mostRecentlyPresentedViewController as? UINavigationController)?.viewControllers.first is ExpectedController)
+    }
 }
 
 extension UIKitPresenterTests {

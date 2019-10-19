@@ -1,5 +1,5 @@
 language: swift
-osx_image: xcode10.3
+osx_image: xcode11.1
 xcode_workspace: Workflow.xcworkspace
 xcode_scheme: Workflow
 xcode_destination: platform=iOS Simulator,name=iPhone 8

@@ -19,7 +19,7 @@ public protocol AnyFlowRepresentable {
     var workflow:Workflow? { get set }
     var callback:((Any?) -> Void)? { get set }
     
-    func erasedShouldLoad(with args:Any?) -> Bool
+    mutating func erasedShouldLoad(with args:Any?) -> Bool
     
     /// instance: A method to return an instance of the `FlowRepresentable`
     /// - Returns: `AnyFlowRepresentable`. Specifically a new instance from the static class passed to a `Workflow`

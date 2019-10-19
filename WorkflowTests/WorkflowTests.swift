@@ -61,8 +61,10 @@ class WorkflowTests: XCTestCase {
             }
         }
         let flow:[AnyFlowRepresentable.Type] = [FR1.self, FR2.self]
-        _ = flow.first?.instance().erasedShouldLoad(with: "str")
-        _ = flow.last?.instance().erasedShouldLoad(with: 1)
+        var first = flow.first?.instance()
+        var last = flow.last?.instance()
+        _ = first?.erasedShouldLoad(with: "str")
+        _ = last?.erasedShouldLoad(with: 1)
         
         XCTAssert(FR1.shouldLoadCalledOnFR1, "Should load not called on flow representable 1 with correct corresponding type")
         XCTAssert(FR2.shouldLoadCalledOnFR2, "Should load not called on flow representable 2 with correct corresponding type")
