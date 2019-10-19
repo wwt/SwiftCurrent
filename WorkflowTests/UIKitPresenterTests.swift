@@ -1040,7 +1040,27 @@ class UIKitPresenterTests: XCTestCase {
         XCTAssertEqual((rootController.mostRecentlyPresentedViewController as? UINavigationController)?.viewControllers.count, 1)
         XCTAssert((rootController.mostRecentlyPresentedViewController as? UINavigationController)?.viewControllers.first is ExpectedController)
     }
-}
+
+    func testFlowRepresentableThatDoesNotTakeInDataAndOverridesShouldLoad() {
+        class ExpectedController: UIWorkflowItem<Never>, FlowRepresentable {
+            static func instance() -> AnyFlowRepresentable {
+                let controller = ExpectedController()
+                controller.view.backgroundColor = .green
+                return controller
+            }
+            func shouldLoad() -> Bool {
+                return false
+            }
+        }
+
+        let rootController = UIViewController()
+        loadView(controller: rootController)
+
+        rootController.launchInto(Workflow([ExpectedController.self]))
+        RunLoop.current.singlePass()
+
+        XCTAssert(UIApplication.topViewController() === rootController)
+    }}
 
 extension UIKitPresenterTests {
     class TestViewController: UIWorkflowItem<Any?>, FlowRepresentable {

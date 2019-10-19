@@ -51,14 +51,35 @@
     },
     {
       "file": "/Users/thompsty/workspace/Workflow/Workflow/Protocols/FlowRepresentable.swift",
-      "line": 66,
+      "line": 48,
+      "symbol": "FlowRepresentable.shouldLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/Protocols/FlowRepresentable.swift",
+      "line": 52,
+      "symbol": "FlowRepresentable.shouldLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/Protocols/FlowRepresentable.swift",
+      "line": 58,
       "symbol": "FlowRepresentable.erasedShouldLoad(with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/thompsty/workspace/Workflow/Workflow/Protocols/FlowRepresentable.swift",
-      "line": 71,
+      "line": 73,
+      "symbol": "FlowRepresentable.erasedShouldLoad(with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/Protocols/FlowRepresentable.swift",
+      "line": 78,
       "symbol": "FlowRepresentable.proceedInWorkflow(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

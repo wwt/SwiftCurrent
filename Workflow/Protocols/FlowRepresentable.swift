@@ -45,9 +45,16 @@ public protocol FlowRepresentable: AnyFlowRepresentable {
     /// - Returns: Bool
     /// - Note: This method is called *before* your view loads. Do not attempt to do any UI work in this method. This is however a good place to set up data on your view.
     mutating func shouldLoad(with args:IntakeType) -> Bool
+    mutating func shouldLoad() -> Bool
 }
 
-extension FlowRepresentable where IntakeType == Never {
+public extension FlowRepresentable {
+    mutating func shouldLoad() -> Bool {
+        return true
+    }
+}
+
+public extension FlowRepresentable where IntakeType == Never {
     mutating func erasedShouldLoad(with args: Any?) -> Bool {
         return shouldLoad()
     }
@@ -57,7 +64,7 @@ extension FlowRepresentable where IntakeType == Never {
     /// shouldLoad: A method indicating whether it makes sense for this view to load in a workflow
     /// - Returns: Bool
     /// - Note: This particular version of shouldLoad is only available when your `IntakeType` is `Never`, indicating you do not care about data passed to this view
-    func shouldLoad() -> Bool {
+    mutating func shouldLoad() -> Bool {
         return true
     }
 }
