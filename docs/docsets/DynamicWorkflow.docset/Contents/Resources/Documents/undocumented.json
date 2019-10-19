@@ -15,27 +15,6 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/Comparable.swift",
-      "line": 20,
-      "symbol": "LinkedList.max()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/Comparable.swift",
-      "line": 26,
-      "symbol": "LinkedList.min()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/Equatable.swift",
-      "line": 14,
-      "symbol": "LinkedList.contains(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/Iterator.swift",
       "line": 11,
       "symbol": "LinkedList.LinkedListIterator",

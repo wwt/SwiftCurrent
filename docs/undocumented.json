@@ -1,159 +1,152 @@
 {
   "warnings": [
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/Comparable.swift",
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/LinkedList/Comparable.swift",
       "line": 11,
       "symbol": "LinkedList.sort()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/Comparable.swift",
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/LinkedList/Comparable.swift",
       "line": 16,
       "symbol": "LinkedList.sorted()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/Iterator.swift",
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/LinkedList/Iterator.swift",
       "line": 11,
       "symbol": "LinkedList.LinkedListIterator",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/LinkedList.swift",
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/LinkedList/LinkedList.swift",
       "line": 19,
       "symbol": "LinkedList.Index",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/LinkedList.swift",
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/LinkedList/LinkedList.swift",
       "line": 20,
       "symbol": "LinkedList.SubSequence",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/LinkedList/NonMutatingOperations.swift",
       "line": 121,
       "symbol": "LinkedList.split(maxSplits:omittingEmptySubsequences:whereSeparator:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/Models/BasePresenter.swift",
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/Models/BasePresenter.swift",
       "line": 10,
       "symbol": "BasePresenter",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/Protocols/FlowRepresentable.swift",
-      "line": 51,
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/Protocols/FlowRepresentable.swift",
+      "line": 66,
       "symbol": "FlowRepresentable.erasedShouldLoad(with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/Protocols/FlowRepresentable.swift",
-      "line": 56,
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/Protocols/FlowRepresentable.swift",
+      "line": 71,
       "symbol": "FlowRepresentable.proceedInWorkflow(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/Protocols/Presenter.swift",
-      "line": 29,
-      "symbol": "Presenter.launch(view:from:withLaunchStyle:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/Protocols/TypeErased/AnyFlowRepresentable.swift",
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/Protocols/TypeErased/AnyFlowRepresentable.swift",
       "line": 20,
       "symbol": "AnyFlowRepresentable.callback",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/Protocols/TypeErased/AnyFlowRepresentable.swift",
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/Protocols/TypeErased/AnyFlowRepresentable.swift",
       "line": 22,
       "symbol": "AnyFlowRepresentable.erasedShouldLoad(with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/Protocols/TypeErased/AnyPresenter.swift",
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/Protocols/TypeErased/AnyPresenter.swift",
       "line": 10,
       "symbol": "AnyPresenter",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/UIKitPresenter/UIKitPresenter.swift",
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/UIKitPresenter/UIKitPresenter.swift",
       "line": 12,
       "symbol": "UIKitPresenter",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/UIKitPresenter/UIKitPresenter.swift",
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/UIKitPresenter/UIKitPresenter.swift",
       "line": 86,
       "symbol": "FlowRepresentable.abandonWorkflow()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/UIKitPresenter/UIWorkflowItem.swift",
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/UIKitPresenter/UIWorkflowItem.swift",
       "line": 49,
       "symbol": "UIWorkflowItem.callback",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/UIKitPresenter/UIWorkflowItem.swift",
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/UIKitPresenter/UIWorkflowItem.swift",
       "line": 51,
       "symbol": "UIWorkflowItem.IntakeType",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/UIKitPresenter/UIWorkflowItem.swift",
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/UIKitPresenter/UIWorkflowItem.swift",
       "line": 53,
       "symbol": "UIWorkflowItem.workflow",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/UIKitPresenter/UIWorkflowItem.swift",
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/UIKitPresenter/UIWorkflowItem.swift",
       "line": 55,
       "symbol": "UIWorkflowItem.preferredLaunchStyle",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/Workflow.swift",
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/Workflow.swift",
       "line": 37,
       "symbol": "Workflow.firstLoadedInstance",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/Workflow.swift",
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/Workflow.swift",
       "line": 48,
       "symbol": "Workflow.applyPresenter(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tyler.thompson/workspace/Workflow/Workflow/Workflow.swift",
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/Workflow.swift",
       "line": 52,
       "symbol": "Workflow.launch(from:with:withLaunchStyle:onFinish:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/tyler.thompson/workspace/Workflow"
+  "source_directory": "/Users/thompsty/workspace/Workflow"
 }
