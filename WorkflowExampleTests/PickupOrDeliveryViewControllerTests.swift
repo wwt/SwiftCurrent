@@ -24,7 +24,7 @@ class PickupOrDeliveryViewConrollerTests:ViewControllerTest<PickupOrDeliveryView
         var callbackCalled = false
         let locationWithOne = Location(name: "", address: Address(), orderTypes: [.delivery(Address())], menuTypes: [])
         loadFromStoryboard { viewController in
-            viewController.callback = { data in
+            viewController.proceedInWorkflow = { data in
                 callbackCalled = true
                 XCTAssert(data is Order)
                 XCTAssertEqual((data as? Order)?.orderType, .delivery(Address()))
@@ -39,7 +39,7 @@ class PickupOrDeliveryViewConrollerTests:ViewControllerTest<PickupOrDeliveryView
         var callbackCalled = false
         let location = Location(name: "", address: Address(), orderTypes: [.pickup, .delivery(Address())], menuTypes: [])
         loadFromStoryboard { viewController in
-            viewController.callback = { data in
+            viewController.proceedInWorkflow = { data in
                 callbackCalled = true
                 XCTAssert(data is Order)
                 XCTAssertEqual((data as? Order)?.orderType, .pickup)
@@ -68,7 +68,7 @@ class PickupOrDeliveryViewConrollerTests:ViewControllerTest<PickupOrDeliveryView
         listener.workflow?.applyPresenter(mock)
         
         var proceedInWorkflowCalled = false
-        testViewController.callback = { data in
+        testViewController.proceedInWorkflow = { data in
             proceedInWorkflowCalled = true
             XCTAssertEqual(data as? Int, 2)
         }

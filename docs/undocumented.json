@@ -87,7 +87,7 @@
     {
       "file": "/Users/thompsty/workspace/Workflow/Workflow/Protocols/TypeErased/AnyFlowRepresentable.swift",
       "line": 20,
-      "symbol": "AnyFlowRepresentable.callback",
+      "symbol": "AnyFlowRepresentable.proceedInWorkflow",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -122,7 +122,7 @@
     {
       "file": "/Users/thompsty/workspace/Workflow/Workflow/UIKitPresenter/UIWorkflowItem.swift",
       "line": 49,
-      "symbol": "UIWorkflowItem.callback",
+      "symbol": "UIWorkflowItem.proceedInWorkflow",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },

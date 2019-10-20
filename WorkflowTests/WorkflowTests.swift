@@ -21,7 +21,7 @@ class WorkflowTests: XCTestCase {
             
             var workflow: Workflow?
             
-            var callback: ((Any?) -> Void)?
+            var proceedInWorkflow: ((Any?) -> Void)?
             
             static var shouldLoadCalledOnFR1 = false
             typealias IntakeType = String
@@ -44,7 +44,7 @@ class WorkflowTests: XCTestCase {
             
             var workflow: Workflow?
             
-            var callback: ((Any?) -> Void)?
+            var proceedInWorkflow: ((Any?) -> Void)?
             
             static var shouldLoadCalledOnFR2 = false
             typealias IntakeType = Int
@@ -80,7 +80,7 @@ class WorkflowTests: XCTestCase {
             
             var workflow: Workflow?
             
-            var callback: ((Any?) -> Void)?
+            var proceedInWorkflow: ((Any?) -> Void)?
             
             static var shouldLoadCalledOnFR1 = false
             typealias IntakeType = Any?
@@ -222,7 +222,7 @@ class WorkflowTests: XCTestCase {
     class TestFlowRepresentable<I> {
         var preferredLaunchStyle: PresentationType = .default
 
-        var callback: ((Any?) -> Void)?
+        var proceedInWorkflow: ((Any?) -> Void)?
         
         typealias IntakeType = I
         

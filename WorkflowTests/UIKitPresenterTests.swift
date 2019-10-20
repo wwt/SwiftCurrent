@@ -20,7 +20,7 @@ class UIKitPresenterTests: XCTestCase {
             
             var workflow: Workflow?
             
-            var callback: ((Any?) -> Void)?
+            var proceedInWorkflow: ((Any?) -> Void)?
             
             typealias IntakeType = Void?
             
@@ -52,7 +52,7 @@ class UIKitPresenterTests: XCTestCase {
             
             var workflow: Workflow?
             
-            var callback: ((Any?) -> Void)?
+            var proceedInWorkflow: ((Any?) -> Void)?
 
             typealias IntakeType = String?
 
@@ -73,7 +73,7 @@ class UIKitPresenterTests: XCTestCase {
             
             var workflow: Workflow?
             
-            var callback: ((Any?) -> Void)?
+            var proceedInWorkflow: ((Any?) -> Void)?
 
             typealias IntakeType = Int?
 
@@ -105,7 +105,7 @@ class UIKitPresenterTests: XCTestCase {
             
             var workflow: Workflow?
             
-            var callback: ((Any?) -> Void)?
+            var proceedInWorkflow: ((Any?) -> Void)?
             
             typealias IntakeType = Void?
             
@@ -141,7 +141,7 @@ class UIKitPresenterTests: XCTestCase {
             
             var workflow: Workflow?
             
-            var callback: ((Any?) -> Void)?
+            var proceedInWorkflow: ((Any?) -> Void)?
 
             typealias IntakeType = Void?
 
@@ -183,7 +183,7 @@ class UIKitPresenterTests: XCTestCase {
             
             var workflow: Workflow?
 
-            var callback: ((Any?) -> Void)?
+            var proceedInWorkflow: ((Any?) -> Void)?
 
             typealias IntakeType = Void?
 
@@ -226,7 +226,7 @@ class UIKitPresenterTests: XCTestCase {
             
             var workflow: Workflow?
             
-            var callback: ((Any?) -> Void)?
+            var proceedInWorkflow: ((Any?) -> Void)?
             
             typealias IntakeType = Void?
             

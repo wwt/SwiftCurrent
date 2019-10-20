@@ -76,6 +76,6 @@ public extension FlowRepresentable {
     }
     
     func proceedInWorkflow(_ args:Any? = nil) {
-        callback?(args)
+        proceedInWorkflow?(args)
     }
 }

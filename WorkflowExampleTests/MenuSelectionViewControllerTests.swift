@@ -24,7 +24,7 @@ class MenuSelectionViewControllerTests: ViewControllerTest<MenuSelectionViewCont
         var proceedInWorkflowCalled = false
         let locationWithOne = Location(name: "", address: Address(), orderTypes: [], menuTypes: [.catering])
         
-        testViewController.callback = { data in
+        testViewController.proceedInWorkflow = { data in
             proceedInWorkflowCalled = true
             XCTAssertEqual((data as? Order)?.menuType, .catering)
         }
@@ -38,7 +38,7 @@ class MenuSelectionViewControllerTests: ViewControllerTest<MenuSelectionViewCont
         let locationWithMultiple = Location(name: "", address: Address(), orderTypes: [], menuTypes: [.regular, .catering])
         testViewController.order = Order(location: locationWithMultiple)
         
-        testViewController.callback = { data in
+        testViewController.proceedInWorkflow = { data in
             proceedInWorkflowCalled = true
             XCTAssertEqual((data as? Order)?.menuType, .catering)
         }
@@ -53,7 +53,7 @@ class MenuSelectionViewControllerTests: ViewControllerTest<MenuSelectionViewCont
         let locationWithMultiple = Location(name: "", address: Address(), orderTypes: [], menuTypes: [.regular, .catering])
         testViewController.order = Order(location: locationWithMultiple)
         
-        testViewController.callback = { data in
+        testViewController.proceedInWorkflow = { data in
             proceedInWorkflowCalled = true
             XCTAssertEqual((data as? Order)?.menuType, .regular)
         }

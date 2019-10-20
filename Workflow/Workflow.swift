@@ -101,7 +101,7 @@ public class Workflow: LinkedList<AnyFlowRepresentable.Type> {
     }
     
     private func removeInstances() {
-        instances.forEach { $0.value?.callback = nil }
+        instances.forEach { $0.value?.proceedInWorkflow = nil }
         instances.removeAll()
         self.firstLoadedInstance = nil
     }
@@ -111,21 +111,21 @@ public class Workflow: LinkedList<AnyFlowRepresentable.Type> {
     }
 
     private func setupCallbacks(for node:LinkedList<AnyFlowRepresentable?>.Node<AnyFlowRepresentable?>, onFinish:((Any?) -> Void)?) {
-        node.value?.callback = { args in
+        node.value?.proceedInWorkflow = { args in
             var argsToPass = args
             let nextNode = node.next?.traverse {
                 let index = $0.position
                 var instance = self.first?.traverse(index)?.value.instance()
-                instance?.callback = $0.value?.callback
+                instance?.proceedInWorkflow = $0.value?.proceedInWorkflow
                 instance?.workflow = self
                 
-                let hold = instance?.callback
+                let hold = instance?.proceedInWorkflow
                 defer {
-                    instance?.callback = hold
+                    instance?.proceedInWorkflow = hold
                     self.replaceInstance(atIndex: index, withInstance: instance)
                 }
                 
-                instance?.callback = { argsToPass = $0 }
+                instance?.proceedInWorkflow = { argsToPass = $0 }
                 
                 return instance?.erasedShouldLoad(with: argsToPass) == true
             }

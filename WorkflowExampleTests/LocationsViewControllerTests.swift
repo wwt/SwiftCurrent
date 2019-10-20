@@ -31,7 +31,7 @@ class LocationsViewControllerTests:ViewControllerTest<LocationsViewController> {
         let rand = UUID().uuidString
         var callbackCalled = false
         loadFromStoryboard { viewController in
-            viewController.callback = { data in
+            viewController.proceedInWorkflow = { data in
                 callbackCalled = true
                 XCTAssert(data is Order, "View should pass on data as an order object")
                 XCTAssertEqual((data as? Order)?.location?.name, rand, "The location in the order should be the same one selected")
@@ -88,7 +88,7 @@ class LocationsViewControllerTests:ViewControllerTest<LocationsViewController> {
                 Location(name: rand, address: Address(line1: "", line2: "", city: "", state: "", zip: ""), orderTypes: [], menuTypes: []),
                 Location(name: "", address: Address(line1: "", line2: "", city: "", state: "", zip: ""), orderTypes: [], menuTypes: [])
             ])
-            viewController.callback = { data in
+            viewController.proceedInWorkflow = { data in
                 callbackCalled = true
                 XCTAssert(data is Order, "View should pass on data as an order object")
                 XCTAssertEqual((data as? Order)?.location?.name, rand, "The location in the order should be the same one selected")

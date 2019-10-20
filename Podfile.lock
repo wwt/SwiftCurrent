@@ -2,7 +2,7 @@ PODS:
   - CwlCatchException (1.0.2)
   - CwlPreconditionTesting (1.1.1):
     - CwlCatchException
-  - DynamicWorkflow (0.0.7)
+  - DynamicWorkflow (0.0.10)
   - UIUTest (1.6.0)
 
 DEPENDENCIES:
@@ -36,7 +36,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   CwlCatchException: 70a52ae44ea5d46db7bd385f801a94942420cd8c
   CwlPreconditionTesting: d33a4e4f285c0b885fddcae5dfedfbb34d4f3961
-  DynamicWorkflow: 214b6218b7e17dc458c865ea5f09436bf4922da5
+  DynamicWorkflow: a977fca94a5318fb6c6fa95f4d041e8656a80446
   UIUTest: 842c642e5bec098b1e2c890cbe25aacab80f2481
 
 PODFILE CHECKSUM: 5f55f064de83e2e4f31f04427448900a8e9571f2

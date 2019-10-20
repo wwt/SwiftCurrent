@@ -20,7 +20,7 @@ class FoodSelectionViewControllerTests: ViewControllerTest<FoodSelectionViewCont
         let order = Order(location: Location(name: "", address: Address(), orderTypes: [], menuTypes: []))
         testViewController.order = order
         var proceedInWorkflowCalled = false
-        testViewController.callback = { data in
+        testViewController.proceedInWorkflow = { data in
             proceedInWorkflowCalled = true
             XCTAssertEqual((data as? Order)?.shoppingCart.last?.name, "Combo #1")
         }
@@ -33,7 +33,7 @@ class FoodSelectionViewControllerTests: ViewControllerTest<FoodSelectionViewCont
         let order = Order(location: Location(name: "", address: Address(), orderTypes: [], menuTypes: []))
         testViewController.order = order
         var proceedInWorkflowCalled = false
-        testViewController.callback = { data in
+        testViewController.proceedInWorkflow = { data in
             proceedInWorkflowCalled = true
             XCTAssertEqual((data as? Order)?.shoppingCart.last?.name, "Combo #2")
         }
@@ -46,7 +46,7 @@ class FoodSelectionViewControllerTests: ViewControllerTest<FoodSelectionViewCont
         let order = Order(location: Location(name: "", address: Address(), orderTypes: [], menuTypes: []))
         testViewController.order = order
         var proceedInWorkflowCalled = false
-        testViewController.callback = { data in
+        testViewController.proceedInWorkflow = { data in
             proceedInWorkflowCalled = true
             XCTAssertEqual((data as? Order)?.shoppingCart.last?.name, "Combo #3")
         }

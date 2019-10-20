@@ -46,7 +46,7 @@ import UIKit
  */
 
 open class UIWorkflowItem<I>: UIViewController {
-    public var callback: ((Any?) -> Void)?
+    public var proceedInWorkflow: ((Any?) -> Void)?
     
     public typealias IntakeType = I
     
