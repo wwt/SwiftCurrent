@@ -12,34 +12,32 @@ import UIKit
 open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
     public func launch(view: UIViewController, from root: UIViewController, withLaunchStyle launchStyle:PresentationType = .default) {
         switch launchStyle {
-        case .default:
-            if let style = (view as? AnyFlowRepresentable)?.preferredLaunchStyle,
-                style == .modally {
-                root.present(view, animated: true)
-            } else if let nav = root.navigationController {
-                nav.pushViewController(view, animated: true)
-            } else if let nav = root as? UINavigationController {
-                nav.pushViewController(view, animated: true)
-            } else {
-                root.present(view, animated: true)
-            }
-        case .modally:
-            if let style = (view as? AnyFlowRepresentable)?.preferredLaunchStyle,
-                style == .navigationStack {
-                let nav = UINavigationController(rootViewController: view)
-                root.present(nav, animated: true)
-            } else {
-                root.present(view, animated: true)
-            }
-        case .navigationStack:
-            if let nav = root.navigationController {
-                nav.pushViewController(view, animated: true)
-            } else if let nav = root as? UINavigationController {
-                nav.pushViewController(view, animated: true)
-            } else {
-                let nav = UINavigationController(rootViewController: view)
-                root.present(nav, animated: true)
-            }
+            case .default:
+                if let style = (view as? AnyFlowRepresentable)?.preferredLaunchStyle,
+                    style == .modally {
+                    root.present(view, animated: true)
+                } else if let nav = root.navigationController
+                    ?? root as? UINavigationController {
+                    nav.pushViewController(view, animated: true)
+                } else {
+                    root.present(view, animated: true)
+                }
+            case .modally:
+                if let style = (view as? AnyFlowRepresentable)?.preferredLaunchStyle,
+                    style == .navigationStack {
+                    let nav = UINavigationController(rootViewController: view)
+                    root.present(nav, animated: true)
+                } else {
+                    root.present(view, animated: true)
+                }
+            case .navigationStack:
+                if let nav = root.navigationController
+                    ?? root as? UINavigationController {
+                    nav.pushViewController(view, animated: true)
+                } else {
+                    let nav = UINavigationController(rootViewController: view)
+                    root.present(nav, animated: true)
+                }
         }
     }
     

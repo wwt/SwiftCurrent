@@ -34,7 +34,7 @@ public class Workflow: LinkedList<AnyFlowRepresentable.Type> {
     internal var instances:LinkedList<AnyFlowRepresentable?> = []
     internal var presenter:AnyPresenter?
 
-    public var firstLoadedInstance:LinkedList<AnyFlowRepresentable?>.Node<AnyFlowRepresentable?>?
+    public var firstLoadedInstance:LinkedList<AnyFlowRepresentable?>.Element?
     
     override init(_ node: Element?) {
         super.init(node)
@@ -49,7 +49,7 @@ public class Workflow: LinkedList<AnyFlowRepresentable.Type> {
         self.presenter = presenter
     }
 
-    public func launch(from: Any?, with args:Any?, withLaunchStyle launchStyle:PresentationType = .default, onFinish:((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Node<AnyFlowRepresentable?>? {
+    public func launch(from: Any?, with args:Any?, withLaunchStyle launchStyle:PresentationType = .default, onFinish:((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Element? {
         #if DEBUG
         if (NSClassFromString("XCTest") != nil) {
             NotificationCenter.default.post(name: .workflowLaunched, object: [
@@ -79,9 +79,9 @@ public class Workflow: LinkedList<AnyFlowRepresentable.Type> {
             }
             return shouldLoad
         }
-        guard let first = firstLoadedInstance else {
-            return nil
-        }
+        
+        guard let first = firstLoadedInstance else { return nil }
+        
         presenter?.launch(view: first.value, from: from, withLaunchStyle: launchStyle)
         return firstLoadedInstance
     }
@@ -103,14 +103,14 @@ public class Workflow: LinkedList<AnyFlowRepresentable.Type> {
     private func removeInstances() {
         instances.forEach { $0.value?.proceedInWorkflow = nil }
         instances.removeAll()
-        self.firstLoadedInstance = nil
+        firstLoadedInstance = nil
     }
     
     private func replaceInstance(atIndex index:Int, withInstance instance:AnyFlowRepresentable?) {
         instances.replace(atIndex: index, withItem: instance)
     }
 
-    private func setupCallbacks(for node:LinkedList<AnyFlowRepresentable?>.Node<AnyFlowRepresentable?>, onFinish:((Any?) -> Void)?) {
+    private func setupCallbacks(for node:LinkedList<AnyFlowRepresentable?>.Element, onFinish:((Any?) -> Void)?) {
         node.value?.proceedInWorkflow = { args in
             var argsToPass = args
             let nextNode = node.next?.traverse {

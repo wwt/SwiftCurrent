@@ -64,7 +64,7 @@ class LinkedListTests: XCTestCase {
     }
     
     func testLinkedListIterator() {
-        var arr = [1, 2, 3]
+        let arr = [1, 2, 3]
         let list = LinkedList(arr)
         
         for (i, node) in list.enumerated() {
@@ -215,9 +215,9 @@ class LinkedListTests: XCTestCase {
 
     func testRemoveAllCleansUpMemory() {
         let list:LinkedList = [ComplexObject(1), ComplexObject(2), ComplexObject(3)]
-        weak var first:LinkedList<ComplexObject>.Node<ComplexObject>? = list.first
+        weak var first:LinkedList<ComplexObject>.Element? = list.first
         weak var middle:ComplexObject? = list.first?.next?.value
-        weak var last:LinkedList<ComplexObject>.Node<ComplexObject>? = list.last
+        weak var last:LinkedList<ComplexObject>.Element? = list.last
 
         list.removeAll()
         

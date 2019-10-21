@@ -22,17 +22,9 @@ class UIKitPresenterTests: XCTestCase {
             
             var proceedInWorkflow: ((Any?) -> Void)?
             
-            typealias IntakeType = Void?
-            
-            typealias OutputType = IntakeType
-            
-            static func instance() -> AnyFlowRepresentable {
-                return FR1()
-            }
-            
-            func shouldLoad(with args: Void?) -> Bool {
-                return true
-            }
+            typealias IntakeType = Never
+
+            static func instance() -> AnyFlowRepresentable { Self() }
         }
         let flow:Workflow = [FR1.self]
         
@@ -56,15 +48,9 @@ class UIKitPresenterTests: XCTestCase {
 
             typealias IntakeType = String?
 
-            typealias OutputType = IntakeType
+            static func instance() -> AnyFlowRepresentable { Self() }
 
-            static func instance() -> AnyFlowRepresentable {
-                return FR1()
-            }
-
-            func shouldLoad(with args: String?) -> Bool {
-                return false
-            }
+            func shouldLoad(with args: String?) -> Bool { false }
         }
         class FR2:UIViewController, FlowRepresentable {
             var preferredLaunchStyle: PresentationType = .default
@@ -77,15 +63,9 @@ class UIKitPresenterTests: XCTestCase {
 
             typealias IntakeType = Int?
 
-            typealias OutputType = Array<Int>
+            static func instance() -> AnyFlowRepresentable { Self() }
 
-            static func instance() -> AnyFlowRepresentable {
-                return FR2()
-            }
-
-            func shouldLoad(with args: Int?) -> Bool {
-                return true
-            }
+            func shouldLoad(with args: Int?) -> Bool { true }
         }
         let flow:Workflow = [FR1.self, FR2.self]
 
@@ -107,18 +87,12 @@ class UIKitPresenterTests: XCTestCase {
             
             var proceedInWorkflow: ((Any?) -> Void)?
             
-            typealias IntakeType = Void?
-            
-            typealias OutputType = IntakeType
+            typealias IntakeType = Never
             
             static func instance() -> AnyFlowRepresentable {
-                let vc = FR1()
+                let vc = Self()
                 vc.view.backgroundColor = .green
                 return vc
-            }
-            
-            func shouldLoad(with args: Void?) -> Bool {
-                return true
             }
         }
         let root = UIViewController()
@@ -143,18 +117,12 @@ class UIKitPresenterTests: XCTestCase {
             
             var proceedInWorkflow: ((Any?) -> Void)?
 
-            typealias IntakeType = Void?
-
-            typealias OutputType = IntakeType
+            typealias IntakeType = Never
 
             static func instance() -> AnyFlowRepresentable {
-                let vc = FR1()
+                let vc = Self()
                 vc.view.backgroundColor = .green
                 return vc
-            }
-
-            func shouldLoad(with args: Void?) -> Bool {
-                return true
             }
         }
         
@@ -185,18 +153,12 @@ class UIKitPresenterTests: XCTestCase {
 
             var proceedInWorkflow: ((Any?) -> Void)?
 
-            typealias IntakeType = Void?
-
-            typealias OutputType = IntakeType
+            typealias IntakeType = Never
 
             static func instance() -> AnyFlowRepresentable {
-                let vc = FR1()
+                let vc = Self()
                 vc.view.backgroundColor = .green
                 return vc
-            }
-            
-            func shouldLoad(with args: Void?) -> Bool {
-                return true
             }
         }
         
@@ -228,18 +190,12 @@ class UIKitPresenterTests: XCTestCase {
             
             var proceedInWorkflow: ((Any?) -> Void)?
             
-            typealias IntakeType = Void?
-            
-            typealias OutputType = IntakeType
+            typealias IntakeType = Never
             
             static func instance() -> AnyFlowRepresentable {
-                let vc = FR1()
+                let vc = Self()
                 vc.view.backgroundColor = .green
                 return vc
-            }
-            
-            func shouldLoad(with args: Void?) -> Bool {
-                return true
             }
         }
         
@@ -268,7 +224,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR1: UIWorkflowItem<Int>, FlowRepresentable {
             static var shouldLoadCalled = false
             static func instance() -> AnyFlowRepresentable {
-                let vc = FR1()
+                let vc = Self()
                 vc.view.backgroundColor = .green
                 return vc
             }
@@ -296,7 +252,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR1: UIWorkflowItem<Int>, FlowRepresentable {
             static var shouldLoadCalled = false
             static func instance() -> AnyFlowRepresentable {
-                let vc = FR1()
+                let vc = Self()
                 vc.view.backgroundColor = .green
                 return vc
             }
@@ -390,9 +346,7 @@ class UIKitPresenterTests: XCTestCase {
 
     func testFlowPresentsOnNavStackWhenNavHasNoRootAndNavigationStackLaunchStyle() {
         class FR1: TestViewController {
-            override var preferredLaunchStyle: PresentationType {
-                return .navigationStack
-            }
+            override var preferredLaunchStyle: PresentationType { .navigationStack }
         }
         
         let nav = UINavigationController()
@@ -411,9 +365,7 @@ class UIKitPresenterTests: XCTestCase {
     func testFlowThatSkipsScreen() {
         class FR1: TestViewController { }
         class FR2: TestViewController {
-            override func shouldLoad(with args: Any?) -> Bool {
-                return false
-            }
+            override func shouldLoad(with args: Any?) -> Bool { false }
         }
         class FR3: TestViewController { }
         
@@ -431,9 +383,7 @@ class UIKitPresenterTests: XCTestCase {
 
     func testFlowThatSkipsScreenIfThatScreenIsFirst() {
         class FR1: TestViewController {
-            override func shouldLoad(with args: Any?) -> Bool {
-                return false
-            }
+            override func shouldLoad(with args: Any?) -> Bool { false }
         }
         class FR2: TestViewController { }
         class FR3: TestViewController { }
@@ -658,13 +608,12 @@ class UIKitPresenterTests: XCTestCase {
     }
 
     func testWorkflowLaunchModally() {
-        class ExpectedModal: UIWorkflowItem<Any?>, FlowRepresentable {
+        class ExpectedModal: UIWorkflowItem<Never>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable {
-                let modal = ExpectedModal()
+                let modal = Self()
                 modal.view.backgroundColor = .green
                 return modal
             }
-            func shouldLoad(with args: Any?) -> Bool { return true }
         }
 
         let rootController = UIViewController()
@@ -679,29 +628,25 @@ class UIKitPresenterTests: XCTestCase {
     }
 
     func testWorkflowLaunchModallyButSecondViewPreferrsANavController() {
-        class ExpectedModal: UIWorkflowItem<Any?>, FlowRepresentable {
+        class ExpectedModal: UIWorkflowItem<Never>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable {
-                let modal = ExpectedModal()
+                let modal = Self()
                 modal.view.backgroundColor = .green
                 return modal
             }
-            func shouldLoad(with args: Any?) -> Bool { return true }
 
             override func viewDidAppear(_ animated: Bool) {
                 proceedInWorkflow()
             }
         }
 
-        class ExpectedModalPreferNav: UIWorkflowItem<Any?>, FlowRepresentable {
+        class ExpectedModalPreferNav: UIWorkflowItem<Never>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable {
-                let modal = ExpectedModalPreferNav()
+                let modal = Self()
                 modal.view.backgroundColor = .blue
                 return modal
             }
-            func shouldLoad(with args: Any?) -> Bool { return true }
-            override var preferredLaunchStyle: PresentationType {
-                return .navigationStack
-            }
+            override var preferredLaunchStyle: PresentationType { .navigationStack }
         }
 
         let rootController = UIViewController()
@@ -719,16 +664,13 @@ class UIKitPresenterTests: XCTestCase {
     }
 
     func testWorkflowLaunchModallyButFirstViewHasANavController() {
-        class ExpectedModal: UIWorkflowItem<Any?>, FlowRepresentable {
+        class ExpectedModal: UIWorkflowItem<Never>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable {
-                let modal = ExpectedModal()
+                let modal = Self()
                 modal.view.backgroundColor = .green
                 return modal
             }
-            func shouldLoad(with args: Any?) -> Bool { return true }
-            override var preferredLaunchStyle: PresentationType {
-                return .navigationStack
-            }
+            override var preferredLaunchStyle: PresentationType { .navigationStack }
         }
 
         let firstView = UIViewController()
@@ -799,9 +741,7 @@ class UIKitPresenterTests: XCTestCase {
     func testAbandonWhenWorkflowHasNavPresentingSubsequentViewsModally() {
         class FR1: TestViewController { }
         class FR2: TestViewController {
-            override var preferredLaunchStyle: PresentationType {
-                return .modally
-            }
+            override var preferredLaunchStyle: PresentationType { .modally }
         }
         class FR3: TestViewController { }
         class FR4: TestViewController { }
@@ -831,19 +771,13 @@ class UIKitPresenterTests: XCTestCase {
     func testAbandonWhenWorkflowHasNavPresentingSubsequentViewsModallyAndWithMoreNavigation() {
         class FR1: TestViewController { }
         class FR2: TestViewController {
-            override var preferredLaunchStyle: PresentationType {
-                return .modally
-            }
+            override var preferredLaunchStyle: PresentationType { .modally }
         }
         class FR3: TestViewController {
-            override var preferredLaunchStyle: PresentationType {
-                return .navigationStack
-            }
+            override var preferredLaunchStyle: PresentationType { .navigationStack }
         }
         class FR4: TestViewController {
-            override var preferredLaunchStyle: PresentationType {
-                return .modally
-            }
+            override var preferredLaunchStyle: PresentationType { .modally }
         }
         
         let root = UIViewController()
@@ -871,19 +805,13 @@ class UIKitPresenterTests: XCTestCase {
     func testAbandonWhenWorkflowHasNavWithStartingViewPresentingSubsequentViewsModallyAndWithMoreNavigation() {
         class FR1: TestViewController { }
         class FR2: TestViewController {
-            override var preferredLaunchStyle: PresentationType {
-                return .modally
-            }
+            override var preferredLaunchStyle: PresentationType { .modally }
         }
         class FR3: TestViewController {
-            override var preferredLaunchStyle: PresentationType {
-                return .navigationStack
-            }
+            override var preferredLaunchStyle: PresentationType { .navigationStack }
         }
         class FR4: TestViewController {
-            override var preferredLaunchStyle: PresentationType {
-                return .modally
-            }
+            override var preferredLaunchStyle: PresentationType { .modally }
         }
         
         let root = UIViewController()
@@ -910,16 +838,13 @@ class UIKitPresenterTests: XCTestCase {
     }
     
     func testWorkflowLaunchModallyButFirstViewHasANavControllerAndThenDismiss() {
-        class ExpectedModal: UIWorkflowItem<Any?>, FlowRepresentable {
+        class ExpectedModal: UIWorkflowItem<Never>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable {
-                let modal = ExpectedModal()
+                let modal = Self()
                 modal.view.backgroundColor = .green
                 return modal
             }
-            func shouldLoad(with args: Any?) -> Bool { return true }
-            override var preferredLaunchStyle: PresentationType {
-                return .modally
-            }
+            override var preferredLaunchStyle: PresentationType { .modally }
         }
         let rootController = UIViewController()
         let controller = UINavigationController(rootViewController: rootController)
@@ -940,13 +865,12 @@ class UIKitPresenterTests: XCTestCase {
     }
     
     func testWorkflowLaunchWithNavigationStack() {
-        class ExpectedController: UIWorkflowItem<Any?>, FlowRepresentable {
+        class ExpectedController: UIWorkflowItem<Never>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable {
-                let controller = ExpectedController()
+                let controller = Self()
                 controller.view.backgroundColor = .green
                 return controller
             }
-            func shouldLoad(with args: Any?) -> Bool { return true }
         }
 
         let rootController = UIViewController()
@@ -961,13 +885,12 @@ class UIKitPresenterTests: XCTestCase {
     }
 
     func testWorkflowLaunchWithNavigationStackWhenLauncherDoesNotHavNavController() {
-        class ExpectedController: UIWorkflowItem<Any?>, FlowRepresentable {
+        class ExpectedController: UIWorkflowItem<Never>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable {
-                let controller = ExpectedController()
+                let controller = Self()
                 controller.view.backgroundColor = .green
                 return controller
             }
-            func shouldLoad(with args: Any?) -> Bool { return true }
         }
 
         let rootController = UIViewController()
@@ -982,28 +905,24 @@ class UIKitPresenterTests: XCTestCase {
     }
 
     func testWorkflowLaunchesWithNavButHasAViewThatPreferrsModalBecauseItCan() {
-        class ExpectedModal: UIWorkflowItem<Any?>, FlowRepresentable {
+        class ExpectedModal: UIWorkflowItem<Never>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable {
-                let modal = ExpectedModal()
+                let modal = Self()
                 modal.view.backgroundColor = .green
                 return modal
             }
-            func shouldLoad(with args: Any?) -> Bool { return true }
-            override var preferredLaunchStyle: PresentationType {
-                return .modally
-            }
+            override var preferredLaunchStyle: PresentationType { .modally }
             override func viewDidAppear(_ animated: Bool) {
                 proceedInWorkflow()
             }
         }
-        class ExpectedNav: UIWorkflowItem<Any?>, FlowRepresentable {
+        class ExpectedNav: UIWorkflowItem<Never>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable {
                 let modal = ExpectedModal()
                 modal.view.backgroundColor = .blue
                 return modal
             }
-            func shouldLoad(with args: Any?) -> Bool { return true }
-
+            
             override func viewDidAppear(_ animated: Bool) {
                 proceedInWorkflow()
             }
@@ -1024,7 +943,7 @@ class UIKitPresenterTests: XCTestCase {
     func testFlowRepresentableThatDoesNotTakeInData() {
         class ExpectedController: UIWorkflowItem<Never>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable {
-                let controller = ExpectedController()
+                let controller = Self()
                 controller.view.backgroundColor = .green
                 return controller
             }
@@ -1044,13 +963,11 @@ class UIKitPresenterTests: XCTestCase {
     func testFlowRepresentableThatDoesNotTakeInDataAndOverridesShouldLoad() {
         class ExpectedController: UIWorkflowItem<Never>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable {
-                let controller = ExpectedController()
+                let controller = Self()
                 controller.view.backgroundColor = .green
                 return controller
             }
-            func shouldLoad() -> Bool {
-                return false
-            }
+            func shouldLoad() -> Bool { false }
         }
 
         let rootController = UIViewController()
@@ -1066,7 +983,7 @@ extension UIKitPresenterTests {
     class TestViewController: UIWorkflowItem<Any?>, FlowRepresentable {
         var data:Any?
         static func instance() -> AnyFlowRepresentable {
-            let controller = self.init()
+            let controller = Self()
             controller.view.backgroundColor = .red
             return controller
         }
@@ -1081,13 +998,9 @@ extension UIKitPresenterTests {
 }
 
 class MockFlowRepresentable: UIWorkflowItem<Any?>, FlowRepresentable {
-    static func instance() -> AnyFlowRepresentable {
-        return MockFlowRepresentable()
-    }
+    static func instance() -> AnyFlowRepresentable { Self() }
     
-    func shouldLoad(with args: Any?) -> Bool {
-        return true
-    }
+    func shouldLoad(with args: Any?) -> Bool { true }
     
     override func viewDidLoad() {
         UIKitPresenterTests.viewDidLoadOnMockCalled += 1

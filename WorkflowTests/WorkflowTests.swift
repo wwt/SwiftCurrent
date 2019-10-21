@@ -26,11 +26,7 @@ class WorkflowTests: XCTestCase {
             static var shouldLoadCalledOnFR1 = false
             typealias IntakeType = String
             
-            typealias OutputType = IntakeType
-            
-            static func instance() -> AnyFlowRepresentable {
-                return FR1()
-            }
+            static func instance() -> AnyFlowRepresentable { FR1() }
             
             func shouldLoad(with args: String) -> Bool {
                 FR1.shouldLoadCalledOnFR1 = true
@@ -49,12 +45,8 @@ class WorkflowTests: XCTestCase {
             static var shouldLoadCalledOnFR2 = false
             typealias IntakeType = Int
             
-            typealias OutputType = Array<Int>
-            
-            static func instance() -> AnyFlowRepresentable {
-                return FR2()
-            }
-            
+            static func instance() -> AnyFlowRepresentable { FR2() }
+
             func shouldLoad(with args: Int) -> Bool {
                 FR2.shouldLoadCalledOnFR2 = true
                 return true
@@ -74,8 +66,6 @@ class WorkflowTests: XCTestCase {
         class FR1: FlowRepresentable {
             var preferredLaunchStyle: PresentationType = .default
 
-            func shouldLoad(with args: Any?) -> Bool { return true }
-            
             var presenter: AnyPresenter?
             
             var workflow: Workflow?
@@ -83,43 +73,25 @@ class WorkflowTests: XCTestCase {
             var proceedInWorkflow: ((Any?) -> Void)?
             
             static var shouldLoadCalledOnFR1 = false
-            typealias IntakeType = Any?
+            typealias IntakeType = Never
             
-            static func instance() -> AnyFlowRepresentable {
-                return FR1()
-            }
+            static func instance() -> AnyFlowRepresentable { FR1() }
         }
 
-        XCTAssert((FR1.instance() as? FR1)?.shouldLoad(with: "str") == true)
+        var instance = FR1.instance() as? FR1
+        XCTAssert(instance?.erasedShouldLoad(with: "str") == true)
     }
     
     func testProgressToNextAvailableItemInWorkflow() {
-        class FR1: TestFlowRepresentable<Int>, FlowRepresentable {
-            static func instance() -> AnyFlowRepresentable {
-                return FR1()
-            }
-            
-            func shouldLoad(with args: Int) -> Bool {
-                return true
-            }
+        class FR1: TestFlowRepresentable<Never>, FlowRepresentable {
+            static func instance() -> AnyFlowRepresentable { Self() }
         }
-        class FR2: TestFlowRepresentable<String>, FlowRepresentable {
-            static func instance() -> AnyFlowRepresentable {
-                return FR2()
-            }
-            
-            func shouldLoad(with args: String) -> Bool {
-                return false
-            }
+        class FR2: TestFlowRepresentable<Never>, FlowRepresentable {
+            static func instance() -> AnyFlowRepresentable { Self() }
+            func shouldLoad() -> Bool { false }
         }
-        class FR3: TestFlowRepresentable<String>, FlowRepresentable {
-            func shouldLoad(with args: String) -> Bool {
-                return true
-            }
-            
-            static func instance() -> AnyFlowRepresentable {
-                return FR3()
-            }
+        class FR3: TestFlowRepresentable<Never>, FlowRepresentable {
+            static func instance() -> AnyFlowRepresentable { Self() }
         }
         class TestView { }
         
@@ -135,7 +107,7 @@ class WorkflowTests: XCTestCase {
         XCTAssert(presenter.launchView is FR1)
         XCTAssert((presenter.launchView as? FR1) === firstInstance?.value as? FR1)
         XCTAssertEqual(presenter.launchCalled, 1)
-        (firstInstance?.value as? FR1)?.proceedInWorkflow("test")
+        (firstInstance?.value as? FR1)?.proceedInWorkflow()
         XCTAssertEqual(presenter.launchCalled, 2)
         XCTAssert((presenter.launchRoot as? FR1) === firstInstance?.value as? FR1)
         XCTAssert(presenter.launchView is FR3)
@@ -148,23 +120,11 @@ class WorkflowTests: XCTestCase {
     }
     
     func testWorkflowCallsBackOnCompletion() {
-        class FR1: TestFlowRepresentable<Int>, FlowRepresentable {
-            static func instance() -> AnyFlowRepresentable {
-                return FR1()
-            }
-            
-            func shouldLoad(with args: Int) -> Bool {
-                return true
-            }
+        class FR1: TestFlowRepresentable<Never>, FlowRepresentable {
+            static func instance() -> AnyFlowRepresentable { Self() }
         }
-        class FR2: TestFlowRepresentable<String>, FlowRepresentable {
-            func shouldLoad(with args: String) -> Bool {
-                return true
-            }
-            
-            static func instance() -> AnyFlowRepresentable {
-                return FR2()
-            }
+        class FR2: TestFlowRepresentable<Never>, FlowRepresentable {
+            static func instance() -> AnyFlowRepresentable { Self() }
         }
         class TestView { }
         
@@ -220,6 +180,7 @@ class WorkflowTests: XCTestCase {
     }
     
     class TestFlowRepresentable<I> {
+        required init() { }
         var preferredLaunchStyle: PresentationType = .default
 
         var proceedInWorkflow: ((Any?) -> Void)?

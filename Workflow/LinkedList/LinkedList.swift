@@ -86,7 +86,7 @@ public class LinkedList<Value> : Sequence, ExpressibleByArrayLiteral, CustomStri
         first = node
     }
     
-    public func makeIterator() -> LinkedList<Value>.LinkedListIterator<LinkedList<Value>.Node<Value>> {
+    public func makeIterator() -> Iterator {
         return LinkedListIterator(first)
     }
     
