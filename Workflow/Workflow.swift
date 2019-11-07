@@ -145,7 +145,7 @@ public class Workflow: LinkedList<FlowRepresentableMetaData>, ExpressibleByArray
         
         guard let first = firstLoadedInstance else { return nil }
         
-        presenter?.launch(view: first.value, from: from, withLaunchStyle: launchStyle, animated: true)
+        presenter?.launch(view: first.value, from: from, withLaunchStyle: launchStyle, animated: true) { }
         return firstLoadedInstance
     }
     
@@ -176,6 +176,7 @@ public class Workflow: LinkedList<FlowRepresentableMetaData>, ExpressibleByArray
     private func setupCallbacks(for node:LinkedList<AnyFlowRepresentable?>.Element, shouldDestroy:Bool = false, onFinish:((Any?) -> Void)?) {
         node.value?.proceedInWorkflow = { args in
             var argsToPass = args
+            var viewToPresent:Any?
             let nextNode = node.next?.traverse {
                 let index = $0.position
                 let metadata = self.first?.traverse(index)?.value
@@ -193,9 +194,10 @@ public class Workflow: LinkedList<FlowRepresentableMetaData>, ExpressibleByArray
                 
                 let shouldLoad = instance?.erasedShouldLoad(with: argsToPass) == true
                 if (!shouldLoad && metadata?.staysInViewStack(argsToPass) == .hiddenInitially) {
+                    viewToPresent = instance
                     self.presenter?.launch(view: instance,
                                            from: self.instances.first?.traverse(node.position)?.value,
-                                           withLaunchStyle: instance?.preferredLaunchStyle ?? .default, animated: false)
+                                           withLaunchStyle: instance?.preferredLaunchStyle ?? .default, animated: false) { }
 
                 }
                 
@@ -210,12 +212,14 @@ public class Workflow: LinkedList<FlowRepresentableMetaData>, ExpressibleByArray
             
             self.setupCallbacks(for: nodeToPresent, shouldDestroy: self.first?.traverse(nodeToPresent.position)?.value.staysInViewStack(argsToPass) == ViewPersistance.removedAfterProceeding, onFinish: onFinish)
             
+            viewToPresent = viewToPresent ?? self.instances.first?.traverse(node.position)?.value
+            
             self.presenter?.launch(view: instanceToPresent,
-                                   from: self.instances.first?.traverse(node.position)?.value,
-                                   withLaunchStyle: instanceToPresent.preferredLaunchStyle, animated: true)
-
-            if shouldDestroy {
-                self.presenter?.destroy(self.instances.first?.traverse(node.position)?.value)
+                                   from: viewToPresent,
+                                   withLaunchStyle: instanceToPresent.preferredLaunchStyle, animated: true) {
+                if shouldDestroy {
+                    self.presenter?.destroy(self.instances.first?.traverse(node.position)?.value)
+                }
             }
         }
     }

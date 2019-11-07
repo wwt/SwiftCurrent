@@ -62,7 +62,7 @@ class SetupViewController: UIViewController, StoryboardLoadable {
             Workflow()
             .thenPresent(LocationsViewController.self)
             .thenPresent(PickupOrDeliveryViewController.self)
-            .thenPresent(MenuSelectionViewController.self, staysInViewStack: .removedAfterProceeding)
+            .thenPresent(MenuSelectionViewController.self, staysInViewStack: .hiddenInitially)
             .thenPresent(FoodSelectionViewController.self)
             .thenPresent(ReviewOrderViewController.self),
             args: locations, withLaunchStyle: .navigationStack)

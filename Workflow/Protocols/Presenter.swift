@@ -22,16 +22,16 @@ public protocol Presenter: AnyPresenter {
     /// - Parameter view: The view to show
     /// - Parameter root: The view that is currently visible
     /// - Parameter launchStyle: The preferred style to launch the view with see: `PresentationType`
-    func launch(view:ViewType, from root:ViewType, withLaunchStyle launchStyle: PresentationType, animated:Bool)
+    func launch(view:ViewType, from root:ViewType, withLaunchStyle launchStyle: PresentationType, animated:Bool, completion:@escaping () -> Void)
     func destroy(_ view:ViewType)
 }
 
 public extension Presenter {
-    func launch(view: Any?, from root: Any?, withLaunchStyle launchStyle: PresentationType, animated:Bool) {
+    func launch(view: Any?, from root: Any?, withLaunchStyle launchStyle: PresentationType, animated:Bool, completion:@escaping () -> Void) {
         guard let v = view as? ViewType, let r = root as? ViewType else {
             fatalError("\(String(describing:Self.self)) is unaware of view type: \(String(describing: view)), expected view type: \(ViewType.self)")
         }
-        launch(view: v, from: r, withLaunchStyle: launchStyle, animated: animated)
+        launch(view: v, from: r, withLaunchStyle: launchStyle, animated: animated, completion: completion)
     }
     
     func destroy(_ view: Any?) {

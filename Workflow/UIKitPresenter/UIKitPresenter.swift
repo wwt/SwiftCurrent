@@ -9,6 +9,13 @@
 import Foundation
 import UIKit
 
+extension NSObject {
+    func copyObject<T:NSObject>() throws -> T? {
+        let data = try NSKeyedArchiver.archivedData(withRootObject:self, requiringSecureCoding:false)
+        return try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? T
+    }
+}
+
 open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
     public func destroy(_ view: UIViewController) {
         if let nav = view.navigationController {
@@ -16,36 +23,50 @@ open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
                 return $0 !== view
             }
             nav.setViewControllers(vcs, animated: false)
+        } else {
+            let parent = view.presentingViewController
+            let child = view.presentedViewController
+            if let cv:UIView = try? child?.view.copyObject() {
+                view.view = cv
+            }
+            parent?.dismiss(animated: false) {
+                if let p = parent,
+                    let c = child {
+                    p.present(c, animated: false)
+                }
+            }
         }
     }
     
-    public func launch(view: UIViewController, from root: UIViewController, withLaunchStyle launchStyle:PresentationType = .default, animated:Bool) {
+    public func launch(view: UIViewController, from root: UIViewController, withLaunchStyle launchStyle:PresentationType = .default, animated:Bool, completion: @escaping () -> Void) {
         switch launchStyle {
             case .default:
                 if let style = (view as? AnyFlowRepresentable)?.preferredLaunchStyle,
                     style == .modally {
-                    root.present(view, animated: animated)
+                    root.present(view, animated: animated, completion: completion)
                 } else if let nav = root.navigationController
                     ?? root as? UINavigationController {
                     nav.pushViewController(view, animated: animated)
+                    completion()
                 } else {
-                    root.present(view, animated: animated)
+                    root.present(view, animated: animated, completion: completion)
                 }
             case .modally:
                 if let style = (view as? AnyFlowRepresentable)?.preferredLaunchStyle,
                     style == .navigationStack {
                     let nav = UINavigationController(rootViewController: view)
-                    root.present(nav, animated: animated)
+                    root.present(nav, animated: animated, completion: completion)
                 } else {
-                    root.present(view, animated: animated)
+                    root.present(view, animated: animated, completion: completion)
                 }
             case .navigationStack:
                 if let nav = root.navigationController
                     ?? root as? UINavigationController {
                     nav.pushViewController(view, animated: animated)
+                    completion()
                 } else {
                     let nav = UINavigationController(rootViewController: view)
-                    root.present(nav, animated: animated)
+                    root.present(nav, animated: animated, completion: completion)
                 }
         }
     }

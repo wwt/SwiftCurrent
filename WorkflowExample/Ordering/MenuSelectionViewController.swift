@@ -31,6 +31,7 @@ extension MenuSelectionViewController: FlowRepresentable {
             o.menuType = order.location?.menuTypes.first
             proceedInWorkflow(o)
         }
+        return false
         return (order.location?.menuTypes.count ?? 0) > 1
     }
 }
