@@ -41,6 +41,6 @@ func XCTAssertWorkflowLaunched(listener: WorkflowListener, expectedFlowRepresent
         XCTFail("workflow does not contain correct representables: \(String(describing: listener.workflow?.compactMap { String(describing: $0.value) }) )")
         return
     }
-    XCTAssertEqual(workflow.compactMap { String(describing: $0.value) },
+    XCTAssertEqual(workflow.compactMap { String(describing: $0.value.flowRepresentableType) },
                    expectedFlowRepresentables.map { String(describing: $0) })
 }

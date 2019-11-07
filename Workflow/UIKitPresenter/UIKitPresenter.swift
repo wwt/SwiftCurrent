@@ -10,33 +10,33 @@ import Foundation
 import UIKit
 
 open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
-    public func launch(view: UIViewController, from root: UIViewController, withLaunchStyle launchStyle:PresentationType = .default) {
+    public func launch(view: UIViewController, from root: UIViewController, withLaunchStyle launchStyle:PresentationType = .default, animated:Bool) {
         switch launchStyle {
             case .default:
                 if let style = (view as? AnyFlowRepresentable)?.preferredLaunchStyle,
                     style == .modally {
-                    root.present(view, animated: true)
+                    root.present(view, animated: animated)
                 } else if let nav = root.navigationController
                     ?? root as? UINavigationController {
-                    nav.pushViewController(view, animated: true)
+                    nav.pushViewController(view, animated: animated)
                 } else {
-                    root.present(view, animated: true)
+                    root.present(view, animated: animated)
                 }
             case .modally:
                 if let style = (view as? AnyFlowRepresentable)?.preferredLaunchStyle,
                     style == .navigationStack {
                     let nav = UINavigationController(rootViewController: view)
-                    root.present(nav, animated: true)
+                    root.present(nav, animated: animated)
                 } else {
-                    root.present(view, animated: true)
+                    root.present(view, animated: animated)
                 }
             case .navigationStack:
                 if let nav = root.navigationController
                     ?? root as? UINavigationController {
-                    nav.pushViewController(view, animated: true)
+                    nav.pushViewController(view, animated: animated)
                 } else {
                     let nav = UINavigationController(rootViewController: view)
-                    root.present(nav, animated: true)
+                    root.present(nav, animated: animated)
                 }
         }
     }
@@ -46,7 +46,7 @@ open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
         if let nav = first.navigationController {
             if nav.viewControllers.first === first {
                 if let presenting = nav.presentingViewController {
-                    presenting.dismiss(animated: true, completion: onFinish)
+                    presenting.dismiss(animated: animated, completion: onFinish)
                 }
             } else {
                 if let _ = nav.presentedViewController {

@@ -14,7 +14,7 @@ import Foundation
  A workflow is ultimately a doubly linked list. This is the underlying sequence type used.
  */
 
-public class LinkedList<Value> : Sequence, ExpressibleByArrayLiteral, CustomStringConvertible {
+public class LinkedList<Value> : Sequence, CustomStringConvertible {
     public typealias Element = LinkedList.Node<Value>
     public typealias Index = Int
     public typealias SubSequence = LinkedList<Value>
@@ -45,32 +45,32 @@ public class LinkedList<Value> : Sequence, ExpressibleByArrayLiteral, CustomStri
     /// - Complexity: O(n). The LinkedList must traverse to the end to determine the count
     public var last        : Element? { return first?.traverseToEnd() }
     
-    /** init(arrayLiteral): A LinkedList can be instantiated with an array literal
-     ### Example:
-     ```swift
-     let list:LinkedList<Int> = [1, 2, 3, 4]
-     ```
-    */
-    required public convenience init(arrayLiteral elements: Value...) {
-        self.init(elements)
-    }
-    
-    /** init(elements): A LinkedList can be instantiated with variadic arguments
-     ### Example:
-     ```swift
-     let list = LinkedList<Int>(1, 2, 3, 4)
-     ```
-     */
+//    /** init(arrayLiteral): A LinkedList can be instantiated with an array literal
+//     ### Example:
+//     ```swift
+//     let list:LinkedList<Int> = [1, 2, 3, 4]
+//     ```
+//    */
+//    required public convenience init(arrayLiteral elements: Value...) {
+//        self.init(elements)
+//    }
+//
+//    /** init(elements): A LinkedList can be instantiated with variadic arguments
+//     ### Example:
+//     ```swift
+//     let list = LinkedList<Int>(1, 2, 3, 4)
+//     ```
+//     */
     public convenience init(_ elements: Value...) {
         self.init(elements)
     }
-    
-    /** init(elements): A LinkedList can be instantiated with an array
-     ### Example:
-     ```swift
-     let list = LinkedList<Int>([1, 2, 3, 4])
-     ```
-     */
+//
+//    /** init(elements): A LinkedList can be instantiated with an array
+//     ### Example:
+//     ```swift
+//     let list = LinkedList<Int>([1, 2, 3, 4])
+//     ```
+//     */
     public convenience init(_ elements: [Value])  {
         let collection = elements.map { Element(with: $0) }
         for (i, node) in collection.enumerated() {

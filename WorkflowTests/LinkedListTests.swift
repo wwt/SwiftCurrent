@@ -17,7 +17,7 @@ class LinkedListTests: XCTestCase {
         let obj2 = Object()
         let obj3 = Object()
         
-        let list:LinkedList = [obj1, obj2, obj3]
+        let list = LinkedList([obj1, obj2, obj3])
 
         XCTAssert(list.first?.value === obj1)
         XCTAssert(list.first?.next?.value === obj2)
@@ -89,14 +89,14 @@ class LinkedListTests: XCTestCase {
     }
     
     func testContainsOnEquatable() {
-        let list:LinkedList = [1, 2, 3]
+        let list = LinkedList([1, 2, 3])
         
         XCTAssert(list.contains(1))
         XCTAssertFalse(list.contains(4))
     }
     
     func testSort() {
-        let list:LinkedList = [3, 1, 2]
+        let list = LinkedList([3, 1, 2])
 
         list.sort()
         
@@ -112,7 +112,7 @@ class LinkedListTests: XCTestCase {
                 int = val
             }
         }
-        let list:LinkedList = [Wrapper(3), Wrapper(1), Wrapper(2)]
+        let list = LinkedList([Wrapper(3), Wrapper(1), Wrapper(2)])
         
         list.sort(by: { $0.int <= $1.int })
 
@@ -155,7 +155,7 @@ class LinkedListTests: XCTestCase {
     }
     
     func testAppendToExisting() {
-        let list:LinkedList = [1, 2, 3]
+        let list = LinkedList([1, 2, 3])
         list.append(4)
         
         XCTAssertEqual(list.last?.value, 4)
@@ -171,7 +171,7 @@ class LinkedListTests: XCTestCase {
     }
     
     func testAppendArrToExisting() {
-        let list:LinkedList = [1, 2, 3]
+        let list = LinkedList([1, 2, 3])
         list.append(contentsOf: [4, 5])
         
         XCTAssertEqual(list.first?.traverse(3)?.value, 4)
@@ -191,7 +191,7 @@ class LinkedListTests: XCTestCase {
     }
     
     func testInsertToExisting() {
-        let list:LinkedList = [1, 2, 4]
+        let list = LinkedList([1, 2, 4])
 
         list.insert(3, atIndex: 2)
         
@@ -201,7 +201,7 @@ class LinkedListTests: XCTestCase {
     }
 
     func testInsertCollectionToExisting() {
-        let list:LinkedList = [1, 2, 5]
+        let list = LinkedList([1, 2, 5])
 
         list.insert(contentsOf: [3, 4], at: 2)
 
@@ -214,7 +214,7 @@ class LinkedListTests: XCTestCase {
     }
 
     func testRemoveAllCleansUpMemory() {
-        let list:LinkedList = [ComplexObject(1), ComplexObject(2), ComplexObject(3)]
+        let list = LinkedList([ComplexObject(1), ComplexObject(2), ComplexObject(3)])
         weak var first:LinkedList<ComplexObject>.Element? = list.first
         weak var middle:ComplexObject? = list.first?.next?.value
         weak var last:LinkedList<ComplexObject>.Element? = list.last
@@ -227,7 +227,7 @@ class LinkedListTests: XCTestCase {
     }
     
     func testRemoveFirst() {
-        let list:LinkedList = [1, 2, 3, 4, 5, 6]
+        let list = LinkedList([1, 2, 3, 4, 5, 6])
         list.removeFirst()
         
         XCTAssertEqual(list.first?.value, 2)
@@ -238,7 +238,7 @@ class LinkedListTests: XCTestCase {
     }
     
     func testRemoveFirstCleansUpMemory() {
-        let list:LinkedList = [ComplexObject(1), ComplexObject(2), ComplexObject(3), ComplexObject(4), ComplexObject(5), ComplexObject(6)]
+        let list = LinkedList([ComplexObject(1), ComplexObject(2), ComplexObject(3), ComplexObject(4), ComplexObject(5), ComplexObject(6)])
         weak var first = list.first
         
         list.removeFirst()
@@ -247,7 +247,7 @@ class LinkedListTests: XCTestCase {
     }
     
     func testDropFirst() {
-        let list:LinkedList = [1, 2, 3, 4, 5, 6]
+        let list = LinkedList([1, 2, 3, 4, 5, 6])
         
         XCTAssertEqual(list.dropFirst().first?.value, 2)
         
@@ -257,7 +257,7 @@ class LinkedListTests: XCTestCase {
     }
     
     func testPrefix() {
-        let list:LinkedList = [1, 2, 3, 4, 5, 6]
+        let list = LinkedList([1, 2, 3, 4, 5, 6])
         
         XCTAssertEqual(list.prefix(1).last?.value, 1)
         
@@ -267,7 +267,7 @@ class LinkedListTests: XCTestCase {
     }
     
     func testPrefixWhile() {
-        let list:LinkedList = [1, 2, 3, 4, 5, 6]
+        let list = LinkedList([1, 2, 3, 4, 5, 6])
         
         XCTAssertEqual(list.prefix(while: { $0 != 2 }).last?.value, 2)
         
@@ -277,7 +277,7 @@ class LinkedListTests: XCTestCase {
     }
     
     func testRemoveLast() {
-        let list:LinkedList = [1, 2, 3, 4, 5, 6]
+        let list = LinkedList([1, 2, 3, 4, 5, 6])
         
         list.removeLast()
         
@@ -289,7 +289,7 @@ class LinkedListTests: XCTestCase {
     }
     
     func testRemoveLastWhenOnlyOneItem() {
-        let list:LinkedList = [1]
+        let list = LinkedList([1])
         
         list.removeLast()
         
@@ -298,7 +298,7 @@ class LinkedListTests: XCTestCase {
     }
     
     func testRemoveLastCleansUpMemory() {
-        let list:LinkedList = [ComplexObject(1), ComplexObject(2), ComplexObject(3), ComplexObject(4), ComplexObject(5), ComplexObject(6)]
+        let list = LinkedList([ComplexObject(1), ComplexObject(2), ComplexObject(3), ComplexObject(4), ComplexObject(5), ComplexObject(6)])
         
         weak var last = list.last?.previous
         
@@ -308,7 +308,7 @@ class LinkedListTests: XCTestCase {
     }
     
     func testDropLast() {
-        let list:LinkedList = [1, 2, 3, 4, 5, 6]
+        let list = LinkedList([1, 2, 3, 4, 5, 6])
         
         XCTAssertEqual(list.dropLast().last?.value, 5)
         
@@ -318,7 +318,7 @@ class LinkedListTests: XCTestCase {
     }
     
     func testSuffix() {
-        let list:LinkedList = [1, 2, 3, 4, 5, 6]
+        let list = LinkedList([1, 2, 3, 4, 5, 6])
         
         XCTAssertEqual(list.suffix(1).first?.value, 6)
         
@@ -328,7 +328,7 @@ class LinkedListTests: XCTestCase {
     }
     
     func testDropWhile() {
-        let list:LinkedList = [1, 2, 3, 4, 5, 6]
+        let list = LinkedList([1, 2, 3, 4, 5, 6])
         
         XCTAssertEqual(list.drop(while: { $0 != 3}).last?.value, 3)
 
@@ -336,7 +336,7 @@ class LinkedListTests: XCTestCase {
     }
     
     func testPopLast() {
-        let list:LinkedList = [1, 2]
+        let list = LinkedList([1, 2])
         
         let last = list.popLast()
         
@@ -347,7 +347,7 @@ class LinkedListTests: XCTestCase {
     }
     
     func testPopLastCleansUpMemory() {
-        let list:LinkedList = [ComplexObject(1), ComplexObject(2), ComplexObject(3)]
+        let list = LinkedList([ComplexObject(1), ComplexObject(2), ComplexObject(3)])
         
         weak var last = list.popLast()
         weak var middle = list.popLast()
@@ -360,7 +360,7 @@ class LinkedListTests: XCTestCase {
     }
     
     func testRemoveAtIndex() {
-        let list:LinkedList = [1, 2, 3]
+        let list = LinkedList([1, 2, 3])
         
         list.remove(at: 1)
         
@@ -372,7 +372,7 @@ class LinkedListTests: XCTestCase {
     }
     
     func testRemoveAll() {
-        let list:LinkedList = [1, 2, 3]
+        let list = LinkedList([1, 2, 3])
         
         list.removeAll()
         
@@ -382,18 +382,18 @@ class LinkedListTests: XCTestCase {
     }
     
     func testEquatability() {
-        let list:LinkedList = [1, 2, 3]
-        let list2:LinkedList = [1, 2, 3]
+        let list = LinkedList([1, 2, 3])
+        let list2 = LinkedList([1, 2, 3])
         
         XCTAssertEqual(list, list2)
         
-        let list3:LinkedList = [1, 2, 3, 4]
+        let list3 = LinkedList([1, 2, 3, 4])
         
         XCTAssertNotEqual(list, list3)
     }
     
     func testSwap() {
-        let list:LinkedList = [1, 3, 2]
+        let list = LinkedList([1, 3, 2])
         
         list.swapAt(1, 2)
         
@@ -404,21 +404,21 @@ class LinkedListTests: XCTestCase {
     }
     
     func testSwapWithInvalidStart() {
-        let list:LinkedList = [1, 3, 2]
+        let list = LinkedList([1, 3, 2])
         XCTAssertThrowsFatalError {
             list.swapAt(20, 2)
         }
     }
 
     func testSwapWithInvalidEnd() {
-        let list:LinkedList = [1, 3, 2]
+        let list = LinkedList([1, 3, 2])
         XCTAssertThrowsFatalError {
             list.swapAt(1, 12)
         }
     }
 
     func testMutableReplace() {
-        let list:LinkedList = [ 2, 5, 6 ]
+        let list = LinkedList([ 2, 5, 6 ])
         
         list.replace(atIndex: 1, withItem: 4)
         
@@ -428,14 +428,14 @@ class LinkedListTests: XCTestCase {
     }
 
     func testImmutableReplace() {
-        let list:LinkedList = [ 2, 5, 6 ]
+        let list = LinkedList([ 2, 5, 6 ])
         
         XCTAssertEqual(list.replacing(atIndex: 1, withItem: 4).first?.traverse(1)?.value, 4)
         XCTAssertEqual(list.first?.traverse(1)?.value, 5)
     }
 
     func testReverse() {
-        let list:LinkedList = [1, 2, 3]
+        let list = LinkedList([1, 2, 3])
         
         list.reverse()
         
@@ -465,7 +465,7 @@ class LinkedListTests: XCTestCase {
     }
     
     func testPositionOfNode() {
-        let list: LinkedList<Int> = [1, 2, 3, 1]
+        let list: LinkedList<Int> = LinkedList([1, 2, 3, 1])
         XCTAssertEqual(list.first?.traverse(3)?.position, 3)
     }
     

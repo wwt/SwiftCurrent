@@ -12,6 +12,8 @@ import DynamicWorkflow
 
 class SetupViewController: UIViewController, StoryboardLoadable {
     @IBAction func launchMultiLocationWorkflow() {
+        launchMultiLocationWorkflowWithFluidAPI()
+        return
         let locations = [
             Location(name: "Just Pickup w/ just catering",
                      address: Address(line1: "123 Fake St", line2: "", city: "Fakerton", state: "FK", zip: "00001"),
@@ -60,7 +62,7 @@ class SetupViewController: UIViewController, StoryboardLoadable {
             Workflow()
             .thenPresent(LocationsViewController.self)
             .thenPresent(PickupOrDeliveryViewController.self)
-            .thenPresent(MenuSelectionViewController.self)
+            .thenPresent(MenuSelectionViewController.self, staysInViewStack: .hiddenInitially)
             .thenPresent(FoodSelectionViewController.self)
             .thenPresent(ReviewOrderViewController.self),
             args: locations, withLaunchStyle: .navigationStack)

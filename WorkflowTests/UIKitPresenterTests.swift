@@ -537,6 +537,58 @@ class UIKitPresenterTests: XCTestCase {
         XCTAssert(UIApplication.topViewController() is FR3)
     }
     
+    func testNavWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStack() {
+        class FR1: TestViewController { }
+        class FR2: UIWorkflowItem<Never>, FlowRepresentable {
+            static func instance() -> AnyFlowRepresentable { FR2() }
+            func shouldLoad() -> Bool { false }
+        }
+        class FR3: TestViewController { }
+        
+        let nav = UINavigationController()
+        loadView(controller: nav)
+        
+        nav.launchInto(Workflow()
+                    .thenPresent(FR1.self)
+                    .thenPresent(FR2.self, staysInViewStack: .hiddenInitially)
+                    .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
+        waitUntil(UIApplication.topViewController() is FR1)
+        XCTAssert(UIApplication.topViewController() is FR1)
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR3)
+        XCTAssert(UIApplication.topViewController() is FR3)
+        (UIApplication.topViewController()?.navigationController)?.backButton?.simulateTouch()
+        waitUntil(UIApplication.topViewController() is FR2)
+        XCTAssert(UIApplication.topViewController() is FR2)
+    }
+    
+    func testNavWorkflowWhichDoesNotSkipAScreen_ButRemovesItFromTheViewStack() {
+        class FR1: TestViewController { }
+        class FR2: UIWorkflowItem<Never>, FlowRepresentable {
+            static func instance() -> AnyFlowRepresentable { FR2() }
+        }
+        class FR3: TestViewController { }
+        
+        let nav = UINavigationController()
+        loadView(controller: nav)
+        
+        nav.launchInto(Workflow()
+                    .thenPresent(FR1.self)
+                    .thenPresent(FR2.self, staysInViewStack: .removedAfterProceeding)
+                    .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
+        waitUntil(UIApplication.topViewController() is FR1)
+        XCTAssert(UIApplication.topViewController() is FR1)
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR2)
+        XCTAssert(UIApplication.topViewController() is FR2)
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR3)
+        XCTAssert(UIApplication.topViewController() is FR3)
+        (UIApplication.topViewController()?.navigationController)?.backButton?.simulateTouch()
+        waitUntil(UIApplication.topViewController() is FR1)
+        XCTAssert(UIApplication.topViewController() is FR1)
+    }
+    
     func testNavWorkflowLaunchingNewWorkflowWithNavigationStack_Abandoning_ThenProceedingInNav() {
         class FR1: TestViewController { }
         class FR2: TestViewController {

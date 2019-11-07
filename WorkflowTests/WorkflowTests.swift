@@ -147,7 +147,7 @@ class WorkflowTests: XCTestCase {
         class NotView { }
         let presenter = TestTypedPresenter<View>()
         XCTAssertThrowsFatalError{
-            presenter.launch(view: NotView(), from: NotView(), withLaunchStyle: .default)
+            presenter.launch(view: NotView(), from: NotView(), withLaunchStyle: .default, animated: false)
         }
     }
     
@@ -163,7 +163,7 @@ class WorkflowTests: XCTestCase {
         var launchView:Any?
         var launchRoot:Any?
         var launchStyle:PresentationType?
-        func launch(view: Any?, from root: Any?, withLaunchStyle launchStyle: PresentationType) {
+        func launch(view: Any?, from root: Any?, withLaunchStyle launchStyle: PresentationType, animated:Bool) {
             launchCalled += 1
             launchView = view
             launchRoot = root
@@ -174,7 +174,7 @@ class WorkflowTests: XCTestCase {
     }
     
     class TestTypedPresenter<T>: BasePresenter<T>, Presenter {
-        func launch(view: T, from root: T, withLaunchStyle launchStyle: PresentationType) { }
+        func launch(view: T, from root: T, withLaunchStyle launchStyle: PresentationType, animated:Bool) { }
         
         func abandon(_ workflow: Workflow, animated: Bool, onFinish: (() -> Void)?) { }
     }
