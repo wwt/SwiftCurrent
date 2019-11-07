@@ -463,6 +463,115 @@ class UIKitPresenterTests: XCTestCase {
         XCTAssert(UIApplication.topViewController() is FR3)
     }
     
+    func testNavWorkflowLaunchingModalWorkflow_Abandoning_ThenProceedingInNav() {
+        class FR1: TestViewController { }
+        class FR2: TestViewController {
+            func launchSecondary() {
+                let wf:Workflow = [FR_1.self]
+                launchInto(wf) { args in
+                    self.data = args
+                    wf.abandon(animated: false)
+                }
+            }
+        }
+        class FR3: TestViewController { }
+        class FR_1: TestViewController {
+            override var preferredLaunchStyle: PresentationType {
+                .modally
+            }
+        }
+        
+        let nav = UINavigationController()
+        loadView(controller: nav)
+        
+        nav.launchInto([FR1.self, FR2.self, FR3.self])
+        waitUntil(UIApplication.topViewController() is FR1)
+        XCTAssert(UIApplication.topViewController() is FR1)
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR2)
+        XCTAssert(UIApplication.topViewController() is FR2)
+        (UIApplication.topViewController() as? FR2)?.launchSecondary()
+        waitUntil(UIApplication.topViewController() is FR_1)
+        class Obj { }
+        let obj = Obj()
+        (UIApplication.topViewController() as? FR_1)?.proceedInWorkflow(obj)
+        waitUntil(UIApplication.topViewController() is FR2)
+        XCTAssert((UIApplication.topViewController() as? FR2)?.data as? Obj === obj)
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR3)
+        XCTAssert(UIApplication.topViewController() is FR3)
+    }
+    
+    func testNavWorkflowLaunchingWorkflowModally_Abandoning_ThenProceedingInNav() {
+        class FR1: TestViewController { }
+        class FR2: TestViewController {
+            func launchSecondary() {
+                let wf:Workflow = [FR_1.self]
+                launchInto(wf, withLaunchStyle: .modally) { args in
+                    self.data = args
+                    wf.abandon(animated: false)
+                }
+            }
+        }
+        class FR3: TestViewController { }
+        class FR_1: TestViewController { }
+        
+        let nav = UINavigationController()
+        loadView(controller: nav)
+        
+        nav.launchInto([FR1.self, FR2.self, FR3.self])
+        waitUntil(UIApplication.topViewController() is FR1)
+        XCTAssert(UIApplication.topViewController() is FR1)
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR2)
+        XCTAssert(UIApplication.topViewController() is FR2)
+        (UIApplication.topViewController() as? FR2)?.launchSecondary()
+        waitUntil(UIApplication.topViewController() is FR_1)
+        class Obj { }
+        let obj = Obj()
+        (UIApplication.topViewController() as? FR_1)?.proceedInWorkflow(obj)
+        waitUntil(UIApplication.topViewController() is FR2)
+        XCTAssert((UIApplication.topViewController() as? FR2)?.data as? Obj === obj)
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR3)
+        XCTAssert(UIApplication.topViewController() is FR3)
+    }
+    
+    func testNavWorkflowLaunchingNewWorkflowWithNavigationStack_Abandoning_ThenProceedingInNav() {
+        class FR1: TestViewController { }
+        class FR2: TestViewController {
+            func launchSecondary() {
+                let wf:Workflow = [FR_1.self]
+                launchInto(wf, withLaunchStyle: .navigationStack) { args in
+                    self.data = args
+                    wf.abandon(animated: false)
+                }
+            }
+        }
+        class FR3: TestViewController { }
+        class FR_1: TestViewController { }
+        
+        let nav = UINavigationController()
+        loadView(controller: nav)
+        
+        nav.launchInto([FR1.self, FR2.self, FR3.self])
+        waitUntil(UIApplication.topViewController() is FR1)
+        XCTAssert(UIApplication.topViewController() is FR1)
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR2)
+        XCTAssert(UIApplication.topViewController() is FR2)
+        (UIApplication.topViewController() as? FR2)?.launchSecondary()
+        waitUntil(UIApplication.topViewController() is FR_1)
+        class Obj { }
+        let obj = Obj()
+        (UIApplication.topViewController() as? FR_1)?.proceedInWorkflow(obj)
+        waitUntil(UIApplication.topViewController() is FR2)
+        XCTAssert((UIApplication.topViewController() as? FR2)?.data as? Obj === obj)
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR3)
+        XCTAssert(UIApplication.topViewController() is FR3)
+    }
+    
     func testCallingThroughMultipleSkippedWorkflowItems() {
         class FR1: TestViewController {
             override func shouldLoad(with args: Any?) -> Bool {
@@ -494,6 +603,26 @@ class UIKitPresenterTests: XCTestCase {
         waitUntil(UIApplication.topViewController() is FR4)
         XCTAssert(UIApplication.topViewController() is FR4)
         XCTAssert((UIApplication.topViewController() as? FR4)?.data as? Obj === obj)
+    }
+    
+    func testStartWithEmptyNav_LaunchWorkflowThatSkipsTheFirstScreenAndPassesData() {
+        class FR1: TestViewController {
+            override func shouldLoad(with args: Any?) -> Bool {
+                proceedInWorkflow(args)
+                return false
+            }
+        }
+        class FR2: TestViewController { }
+        class Obj { }
+        let obj = Obj()
+        
+        let nav = UINavigationController()
+        loadView(controller: nav)
+        
+        nav.launchInto([FR1.self, FR2.self], args: obj)
+        waitUntil(UIApplication.topViewController() is FR2)
+        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssert((UIApplication.topViewController() as? FR2)?.data as? Obj === obj)
     }
 
     func testFinishingWorkflowCallsBack() {
