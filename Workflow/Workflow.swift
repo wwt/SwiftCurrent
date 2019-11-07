@@ -45,6 +45,18 @@ public class Workflow: LinkedList<AnyFlowRepresentable.Type> {
         presenter = nil
     }
     
+    public func thenPresent(_ type:AnyFlowRepresentable.Type, staysInViewStack:@autoclosure () -> Bool = false, preferredLaunchStyle:PresentationType = .default) -> Workflow {
+        let wf = Workflow(first)
+        wf.append(type)
+        return wf
+    }
+
+    public func thenPresent<F>(_ type:F.Type, staysInViewStack:(F.IntakeType) -> Bool, preferredLaunchStyle:PresentationType = .default) -> Workflow where F: FlowRepresentable {
+        let wf = Workflow(first)
+        wf.append(type)
+        return wf
+    }
+
     public func applyPresenter(_ presenter:AnyPresenter) {
         self.presenter = presenter
     }

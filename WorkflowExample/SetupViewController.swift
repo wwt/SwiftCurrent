@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import DynamicWorkflow
 
 class SetupViewController: UIViewController, StoryboardLoadable {
     @IBAction func launchMultiLocationWorkflow() {
@@ -35,5 +36,33 @@ class SetupViewController: UIViewController, StoryboardLoadable {
             FoodSelectionViewController.self,
             ReviewOrderViewController.self,
         ], args: locations, withLaunchStyle: .navigationStack)
+    }
+    
+    @IBAction func launchMultiLocationWorkflowWithFluidAPI() {
+        let locations = [
+            Location(name: "Just Pickup w/ just catering",
+                     address: Address(line1: "123 Fake St", line2: "", city: "Fakerton", state: "FK", zip: "00001"),
+                     orderTypes: [OrderType.pickup],
+                     menuTypes: [MenuType.catering]),
+            Location(name: "Just Pickup w/ all menu types",
+                     address: Address(line1: "123 Fake St", line2: "", city: "Fakerton", state: "FK", zip: "00001"),
+                     orderTypes: [OrderType.pickup], menuTypes: [MenuType.catering, MenuType.regular]),
+            Location(name: "Pickup And Delivery w/ just regular menu",
+                     address: Address(line1: "567 Fake St", line2: "", city: "Fakerton", state: "FK", zip: "00003"),
+                     orderTypes: [OrderType.pickup, OrderType.delivery(Address(line1: "", line2: "", city: "", state: "", zip: ""))],
+                     menuTypes: [.regular]),
+            Location(name: "Pickup And Delivery w/ all menu types",
+                     address: Address(line1: "890 Fake St", line2: "", city: "Fakerton", state: "FK", zip: "00004"),
+                     orderTypes: [OrderType.pickup, OrderType.delivery(Address(line1: "", line2: "", city: "", state: "", zip: ""))],
+                     menuTypes: [.catering, .regular]),
+        ]
+        launchInto(
+            Workflow()
+            .thenPresent(LocationsViewController.self)
+            .thenPresent(PickupOrDeliveryViewController.self)
+            .thenPresent(MenuSelectionViewController.self)
+            .thenPresent(FoodSelectionViewController.self)
+            .thenPresent(ReviewOrderViewController.self),
+            args: locations, withLaunchStyle: .navigationStack)
     }
 }

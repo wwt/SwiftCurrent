@@ -59,7 +59,7 @@ public extension FlowRepresentable where IntakeType == Never {
         return shouldLoad()
     }
     
-    mutating func shouldLoad(with args: Never) -> Bool {}
+    mutating func shouldLoad(with args: Never) -> Bool { }
     
     /// shouldLoad: A method indicating whether it makes sense for this view to load in a workflow
     /// - Returns: Bool
