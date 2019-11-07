@@ -557,7 +557,7 @@ class UIKitPresenterTests: XCTestCase {
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow()
         waitUntil(UIApplication.topViewController() is FR3)
         XCTAssert(UIApplication.topViewController() is FR3)
-        (UIApplication.topViewController()?.navigationController)?.backButton?.simulateTouch()
+        (UIApplication.topViewController()?.navigationController)?.popViewController(animated: false)
         waitUntil(UIApplication.topViewController() is FR2)
         XCTAssert(UIApplication.topViewController() is FR2)
     }
@@ -636,7 +636,7 @@ class UIKitPresenterTests: XCTestCase {
         (UIApplication.topViewController() as? FR2)?.proceedInWorkflow()
         waitUntil(UIApplication.topViewController() is FR3)
         XCTAssert(UIApplication.topViewController() is FR3)
-        (UIApplication.topViewController()?.navigationController)?.backButton?.simulateTouch()
+        (UIApplication.topViewController()?.navigationController)?.popViewController(animated: false)
         waitUntil(UIApplication.topViewController() is FR1)
         XCTAssert(UIApplication.topViewController() is FR1)
     }
