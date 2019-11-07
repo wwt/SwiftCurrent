@@ -173,7 +173,7 @@ public class Workflow: LinkedList<FlowRepresentableMetaData>, ExpressibleByArray
         instances.replace(atIndex: index, withItem: instance)
     }
 
-    private func setupCallbacks(for node:LinkedList<AnyFlowRepresentable?>.Element, onFinish:((Any?) -> Void)?) {
+    private func setupCallbacks(for node:LinkedList<AnyFlowRepresentable?>.Element, shouldDestroy:Bool = false, onFinish:((Any?) -> Void)?) {
         node.value?.proceedInWorkflow = { args in
             var argsToPass = args
             let nextNode = node.next?.traverse {
@@ -208,13 +208,13 @@ public class Workflow: LinkedList<FlowRepresentableMetaData>, ExpressibleByArray
                 return
             }
             
-            self.setupCallbacks(for: nodeToPresent, onFinish: onFinish)
+            self.setupCallbacks(for: nodeToPresent, shouldDestroy: self.first?.traverse(nodeToPresent.position)?.value.staysInViewStack(argsToPass) == ViewPersistance.removedAfterProceeding, onFinish: onFinish)
             
             self.presenter?.launch(view: instanceToPresent,
                                    from: self.instances.first?.traverse(node.position)?.value,
                                    withLaunchStyle: instanceToPresent.preferredLaunchStyle, animated: true)
 
-            if self.first?.traverse(node.position)?.value.staysInViewStack(argsToPass) == ViewPersistance.removedAfterProceeding {
+            if shouldDestroy {
                 self.presenter?.destroy(self.instances.first?.traverse(node.position)?.value)
             }
         }
