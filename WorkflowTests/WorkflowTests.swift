@@ -152,6 +152,11 @@ class WorkflowTests: XCTestCase {
     }
     
     class TestPresenter: AnyPresenter {
+        var destroyCalled = 0
+        func destroy(_ view: Any?) {
+            destroyCalled += 1
+        }
+        
         var abandonCalled = 0
         func abandon(_ workflow: Workflow, animated:Bool = true, onFinish:(() -> Void)? = nil) {
             abandonCalled += 1
@@ -174,6 +179,8 @@ class WorkflowTests: XCTestCase {
     }
     
     class TestTypedPresenter<T>: BasePresenter<T>, Presenter {
+        func destroy(_ view: T) { }
+        
         func launch(view: T, from root: T, withLaunchStyle launchStyle: PresentationType, animated:Bool) { }
         
         func abandon(_ workflow: Workflow, animated: Bool, onFinish: (() -> Void)?) { }

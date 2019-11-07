@@ -12,4 +12,5 @@ public protocol AnyPresenter:class {
     
     func launch(view:Any?, from root:Any?, withLaunchStyle launchStyle:PresentationType, animated:Bool)
     func abandon(_ workflow:Workflow, animated:Bool, onFinish:(() -> Void)?)
+    func destroy(_ view:Any?)
 }

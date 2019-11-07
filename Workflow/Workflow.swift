@@ -98,6 +98,16 @@ public class Workflow: LinkedList<FlowRepresentableMetaData>, ExpressibleByArray
         return wf
     }
 
+    public func thenPresent<F>(_ type:F.Type, staysInViewStack:@escaping () -> ViewPersistance, preferredLaunchStyle:PresentationType = .default) -> Workflow where F: FlowRepresentable, F.IntakeType == Never {
+        let wf = Workflow(first)
+        wf.append(FlowRepresentableMetaData(type,
+                                            staysInViewStack: { _ in
+                                                return staysInViewStack()
+                                            },
+                                            presentationType: preferredLaunchStyle))
+        return wf
+    }
+
     public func applyPresenter(_ presenter:AnyPresenter) {
         self.presenter = presenter
     }
@@ -203,6 +213,10 @@ public class Workflow: LinkedList<FlowRepresentableMetaData>, ExpressibleByArray
             self.presenter?.launch(view: instanceToPresent,
                                    from: self.instances.first?.traverse(node.position)?.value,
                                    withLaunchStyle: instanceToPresent.preferredLaunchStyle, animated: true)
+
+            if self.first?.traverse(node.position)?.value.staysInViewStack(argsToPass) == ViewPersistance.removedAfterProceeding {
+                self.presenter?.destroy(self.instances.first?.traverse(node.position)?.value)
+            }
         }
     }
 }

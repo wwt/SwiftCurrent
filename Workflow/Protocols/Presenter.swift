@@ -23,6 +23,7 @@ public protocol Presenter: AnyPresenter {
     /// - Parameter root: The view that is currently visible
     /// - Parameter launchStyle: The preferred style to launch the view with see: `PresentationType`
     func launch(view:ViewType, from root:ViewType, withLaunchStyle launchStyle: PresentationType, animated:Bool)
+    func destroy(_ view:ViewType)
 }
 
 public extension Presenter {
@@ -31,5 +32,12 @@ public extension Presenter {
             fatalError("\(String(describing:Self.self)) is unaware of view type: \(String(describing: view)), expected view type: \(ViewType.self)")
         }
         launch(view: v, from: r, withLaunchStyle: launchStyle, animated: animated)
+    }
+    
+    func destroy(_ view: Any?) {
+        guard let v = view as? ViewType else {
+            fatalError("\(String(describing:Self.self)) is unaware of view type: \(String(describing: view)), expected view type: \(ViewType.self)")
+        }
+        destroy(v)
     }
 }

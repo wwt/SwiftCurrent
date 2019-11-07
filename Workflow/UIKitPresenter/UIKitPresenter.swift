@@ -10,6 +10,15 @@ import Foundation
 import UIKit
 
 open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
+    public func destroy(_ view: UIViewController) {
+        if let nav = view.navigationController {
+            let vcs = nav.viewControllers.filter {
+                return $0 !== view
+            }
+            nav.setViewControllers(vcs, animated: false)
+        }
+    }
+    
     public func launch(view: UIViewController, from root: UIViewController, withLaunchStyle launchStyle:PresentationType = .default, animated:Bool) {
         switch launchStyle {
             case .default:
