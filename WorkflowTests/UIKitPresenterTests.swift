@@ -657,7 +657,7 @@ class UIKitPresenterTests: XCTestCase {
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow()
         waitUntil(UIApplication.topViewController() is FR3)
         XCTAssert(UIApplication.topViewController() is FR3)
-        (UIApplication.topViewController()?.navigationController)?.backButton?.simulateTouch()
+        (UIApplication.topViewController()?.navigationController)?.popViewController(animated: false)
         waitUntil(UIApplication.topViewController() is FR2)
         XCTAssert(UIApplication.topViewController() is FR2)
     }
@@ -709,7 +709,7 @@ class UIKitPresenterTests: XCTestCase {
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow("blah")
         waitUntil(UIApplication.topViewController() is FR3)
         XCTAssert(UIApplication.topViewController() is FR3)
-        (UIApplication.topViewController()?.navigationController)?.backButton?.simulateTouch()
+        (UIApplication.topViewController()?.navigationController)?.popViewController(animated: false)
         waitUntil(UIApplication.topViewController() is FR2)
         XCTAssert(UIApplication.topViewController() is FR2)
     }
@@ -772,6 +772,32 @@ class UIKitPresenterTests: XCTestCase {
         XCTAssert(UIApplication.topViewController() is FR2)
     }
     
+    func testModalWorkflowWhichSkipsFirstScreen_ButKeepsItInTheViewStack() {
+        class FR1: TestViewController {
+            override func shouldLoad(with args: Any?) -> Bool {
+                _ = super.shouldLoad(with: args)
+                return false
+            }
+        }
+        class FR2: UIWorkflowItem<Never>, FlowRepresentable {
+            static func instance() -> AnyFlowRepresentable { FR2() }
+        }
+        class FR3: TestViewController { }
+        
+        let root = UIViewController()
+        loadView(controller: root)
+        
+        root.launchInto(Workflow()
+                    .thenPresent(FR1.self, staysInViewStack: .hiddenInitially)
+                    .thenPresent(FR2.self)
+                    .thenPresent(FR3.self), withLaunchStyle: .modally)
+        waitUntil(UIApplication.topViewController() is FR2)
+        XCTAssert(UIApplication.topViewController() is FR2)
+        UIApplication.topViewController()?.dismiss(animated: false)
+        waitUntil(UIApplication.topViewController() is FR1)
+        XCTAssert(UIApplication.topViewController() is FR1)
+    }
+    
     func testModalWorkflowWhichDoesNotSkipAScreen_ButRemovesItFromTheViewStack() {
         class FR1: TestViewController { }
         class FR2: UIWorkflowItem<Never>, FlowRepresentable {
@@ -797,6 +823,31 @@ class UIKitPresenterTests: XCTestCase {
         UIApplication.topViewController()?.dismiss(animated: true)
         waitUntil(UIApplication.topViewController() is FR1)
         XCTAssert(UIApplication.topViewController() is FR1)
+    }
+    
+    
+    func testModalWorkflowWhichDoesNotSkipFirstScreen_ButRemovesItFromTheViewStack() {
+        class FR1: TestViewController { }
+        class FR2: UIWorkflowItem<Never>, FlowRepresentable {
+            static func instance() -> AnyFlowRepresentable { FR2() }
+        }
+        class FR3: TestViewController { }
+        
+        let root = UIViewController()
+        loadView(controller: root)
+        
+        root.launchInto(Workflow()
+                    .thenPresent(FR1.self, staysInViewStack: .removedAfterProceeding)
+                    .thenPresent(FR2.self)
+                    .thenPresent(FR3.self), withLaunchStyle: .modally)
+        waitUntil(UIApplication.topViewController() is FR1)
+        XCTAssert(UIApplication.topViewController() is FR1)
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR2)
+        XCTAssert(UIApplication.topViewController() is FR2)
+        UIApplication.topViewController()?.dismiss(animated: false)
+        waitUntil(UIApplication.topViewController() === root)
+        XCTAssert(UIApplication.topViewController() === root)
     }
     
     func testModalWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStackUsingAClsure() {

@@ -132,6 +132,7 @@ public class Workflow: LinkedList<FlowRepresentableMetaData>, ExpressibleByArray
         #endif
         removeInstances()
         instances.append(contentsOf: map { _ in nil })
+        var rootView:Any?
         _ = first?.traverse { node in
             var metadata = node.value
             var flowRepresentable = metadata.flowRepresentableType.instance()
@@ -148,6 +149,7 @@ public class Workflow: LinkedList<FlowRepresentableMetaData>, ExpressibleByArray
                                             onFinish: onFinish)
                     }
                 } else if (!shouldLoad && metadata.staysInViewStack(args) == .hiddenInitially) {
+                    rootView = flowRepresentable
                     self.presenter?.launch(view: flowRepresentable,
                                            from: from,
                                            withLaunchStyle: flowRepresentable.preferredLaunchStyle,
@@ -162,7 +164,7 @@ public class Workflow: LinkedList<FlowRepresentableMetaData>, ExpressibleByArray
         
         guard let first = firstLoadedInstance else { return nil }
         
-        presenter?.launch(view: first.value, from: from, withLaunchStyle: launchStyle, animated: true, completion: nil)
+        presenter?.launch(view: first.value, from: rootView ?? from, withLaunchStyle: launchStyle, animated: true, completion: nil)
         return firstLoadedInstance
     }
     
