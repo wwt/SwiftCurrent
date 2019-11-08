@@ -168,7 +168,7 @@ class WorkflowTests: XCTestCase {
         var launchView:Any?
         var launchRoot:Any?
         var launchStyle:PresentationType?
-        func launch(view: Any?, from root: Any?, withLaunchStyle launchStyle: PresentationType, animated:Bool, completion:@escaping () -> Void) {
+        func launch(view: Any?, from root: Any?, withLaunchStyle launchStyle: PresentationType, animated:Bool, completion: (() -> Void)?) {
             launchCalled += 1
             launchView = view
             launchRoot = root

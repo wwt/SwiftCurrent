@@ -133,7 +133,8 @@ public class Workflow: LinkedList<FlowRepresentableMetaData>, ExpressibleByArray
         removeInstances()
         instances.append(contentsOf: map { _ in nil })
         _ = first?.traverse { node in
-            var flowRepresentable = node.value.flowRepresentableType.instance()
+            var metadata = node.value
+            var flowRepresentable = metadata.flowRepresentableType.instance()
             flowRepresentable.workflow = self
             let shouldLoad = flowRepresentable.erasedShouldLoad(with: args)
             defer {
@@ -142,16 +143,26 @@ public class Workflow: LinkedList<FlowRepresentableMetaData>, ExpressibleByArray
                     instances.replace(atIndex: position, withItem: flowRepresentable)
                     firstLoadedInstance = instances.first?.traverse(position)
                     if let firstLoadedInstance = firstLoadedInstance {
-                        self.setupCallbacks(for: firstLoadedInstance, onFinish: onFinish)
+                        self.setupCallbacks(for: firstLoadedInstance,
+                                            shouldDestroy: metadata.staysInViewStack(args) == ViewPersistance.removedAfterProceeding,
+                                            onFinish: onFinish)
                     }
+                } else if (!shouldLoad && metadata.staysInViewStack(args) == .hiddenInitially) {
+                    self.presenter?.launch(view: flowRepresentable,
+                                           from: from,
+                                           withLaunchStyle: flowRepresentable.preferredLaunchStyle,
+                                           animated: false,
+                                           completion: nil)
+
                 }
+
             }
             return shouldLoad
         }
         
         guard let first = firstLoadedInstance else { return nil }
         
-        presenter?.launch(view: first.value, from: from, withLaunchStyle: launchStyle, animated: true) { }
+        presenter?.launch(view: first.value, from: from, withLaunchStyle: launchStyle, animated: true, completion: nil)
         return firstLoadedInstance
     }
     
@@ -203,7 +214,7 @@ public class Workflow: LinkedList<FlowRepresentableMetaData>, ExpressibleByArray
                     viewToPresent = instance
                     self.presenter?.launch(view: instance,
                                            from: self.instances.first?.traverse(node.position)?.value,
-                                           withLaunchStyle: instance?.preferredLaunchStyle ?? .default, animated: false) { }
+                                           withLaunchStyle: instance?.preferredLaunchStyle ?? .default, animated: false, completion: nil)
 
                 }
                 
@@ -216,7 +227,9 @@ public class Workflow: LinkedList<FlowRepresentableMetaData>, ExpressibleByArray
                 return
             }
             
-            self.setupCallbacks(for: nodeToPresent, shouldDestroy: self.first?.traverse(nodeToPresent.position)?.value.staysInViewStack(argsToPass) == ViewPersistance.removedAfterProceeding, onFinish: onFinish)
+            self.setupCallbacks(for: nodeToPresent,
+                                shouldDestroy: self.first?.traverse(nodeToPresent.position)?.value.staysInViewStack(argsToPass) == ViewPersistance.removedAfterProceeding,
+                                onFinish: onFinish)
             
             viewToPresent = viewToPresent ?? self.instances.first?.traverse(node.position)?.value
             

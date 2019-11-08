@@ -27,11 +27,11 @@ public protocol Presenter: AnyPresenter {
 }
 
 public extension Presenter {
-    func launch(view: Any?, from root: Any?, withLaunchStyle launchStyle: PresentationType, animated:Bool, completion:@escaping () -> Void) {
+    func launch(view: Any?, from root: Any?, withLaunchStyle launchStyle: PresentationType, animated:Bool, completion: (() -> Void)?) {
         guard let v = view as? ViewType, let r = root as? ViewType else {
             fatalError("\(String(describing:Self.self)) is unaware of view type: \(String(describing: view)), expected view type: \(ViewType.self)")
         }
-        launch(view: v, from: r, withLaunchStyle: launchStyle, animated: animated, completion: completion)
+        launch(view: v, from: r, withLaunchStyle: launchStyle, animated: animated, completion: completion ?? {})
     }
     
     func destroy(_ view: Any?) {

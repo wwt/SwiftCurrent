@@ -562,6 +562,32 @@ class UIKitPresenterTests: XCTestCase {
         XCTAssert(UIApplication.topViewController() is FR2)
     }
     
+    func testNavWorkflowWhichSkipsFirstScreen_ButKeepsItInTheViewStack() {
+        class FR1: TestViewController {
+            override func shouldLoad(with args: Any?) -> Bool {
+                _ = super.shouldLoad(with: args)
+                return false
+            }
+        }
+        class FR2: UIWorkflowItem<Never>, FlowRepresentable {
+            static func instance() -> AnyFlowRepresentable { FR2() }
+        }
+        class FR3: TestViewController { }
+        
+        let nav = UINavigationController()
+        loadView(controller: nav)
+        
+        nav.launchInto(Workflow()
+                    .thenPresent(FR1.self, staysInViewStack: .hiddenInitially)
+                    .thenPresent(FR2.self)
+                    .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
+        waitUntil(UIApplication.topViewController() is FR2)
+        XCTAssert(UIApplication.topViewController() is FR2)
+        (UIApplication.topViewController()?.navigationController)?.popViewController(animated: false)
+        waitUntil(UIApplication.topViewController() is FR1)
+        XCTAssert(UIApplication.topViewController() is FR1)
+    }
+    
     func testNavWorkflowWhichDoesNotSkipAScreen_ButRemovesItFromTheViewStack() {
         class FR1: TestViewController { }
         class FR2: UIWorkflowItem<Never>, FlowRepresentable {
@@ -587,6 +613,28 @@ class UIKitPresenterTests: XCTestCase {
         (UIApplication.topViewController()?.navigationController)?.popViewController(animated: false)
         waitUntil(UIApplication.topViewController() is FR1)
         XCTAssert(UIApplication.topViewController() is FR1)
+    }
+    
+    func testNavWorkflowWhichDoesNotSkipFirstScreen_ButRemovesItFromTheViewStack() {
+        class FR1: TestViewController { }
+        class FR2: UIWorkflowItem<Never>, FlowRepresentable {
+            static func instance() -> AnyFlowRepresentable { FR2() }
+        }
+        class FR3: TestViewController { }
+        
+        let nav = UINavigationController()
+        loadView(controller: nav)
+        
+        nav.launchInto(Workflow()
+                    .thenPresent(FR1.self, staysInViewStack: .removedAfterProceeding)
+                    .thenPresent(FR2.self)
+                    .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
+        waitUntil(UIApplication.topViewController() is FR1)
+        XCTAssert(UIApplication.topViewController() is FR1)
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR2)
+        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssert(UIApplication.topViewController()?.navigationController?.viewControllers.first is FR2)
     }
     
     func testNavWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStackUsingAClsure() {

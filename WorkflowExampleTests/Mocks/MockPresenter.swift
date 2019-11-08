@@ -10,6 +10,10 @@ import Foundation
 @testable import DynamicWorkflow
 
 class MockPresenter: Presenter {
+    func launch(view: Any?, from root: Any?, withLaunchStyle launchStyle: PresentationType, animated: Bool, completion: @escaping () -> Void) {
+        
+    }
+    
     var abandonCalled = 0
     var lastWorkflow:Workflow?
     var lastAnimated:Bool?
