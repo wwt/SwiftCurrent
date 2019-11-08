@@ -29,12 +29,6 @@ import Foundation
  }
  ```
  */
-
-public enum ViewPersistance {
-    case `default`
-    case hiddenInitially
-    case removedAfterProceeding
-}
 public class Workflow: LinkedList<FlowRepresentableMetaData>, ExpressibleByArrayLiteral {
     public typealias ArrayLiteralElement = AnyFlowRepresentable.Type
     internal var instances = LinkedList<AnyFlowRepresentable?>()
@@ -79,32 +73,44 @@ public class Workflow: LinkedList<FlowRepresentableMetaData>, ExpressibleByArray
         presenter = nil
     }
     
-    public func thenPresent<F>(_ type:F.Type, staysInViewStack:@escaping @autoclosure () -> ViewPersistance = .default, preferredLaunchStyle:PresentationType = .default) -> Workflow where F: FlowRepresentable {
+    /// thenPresent: A way of creating workflows with a fluid API. Useful for complex workflows with difficult requirements
+    /// - Parameter type: A reference to the class used to create the workflow
+    /// - Parameter staysInViewStack: An `ViewPersistance`type representing how this item in the workflow should persist.
+    /// - Returns: `Workflow`
+    public func thenPresent<F>(_ type:F.Type, staysInViewStack:@escaping @autoclosure () -> ViewPersistance = .default) -> Workflow where F: FlowRepresentable {
         let wf = Workflow(first)
         wf.append(FlowRepresentableMetaData(type,
                                             staysInViewStack: { _ in staysInViewStack() },
-                                            presentationType: preferredLaunchStyle))
+                                            presentationType: .default))
         return wf
     }
 
-    public func thenPresent<F>(_ type:F.Type, staysInViewStack:@escaping (F.IntakeType) -> ViewPersistance, preferredLaunchStyle:PresentationType = .default) -> Workflow where F: FlowRepresentable {
+    /// thenPresent: A way of creating workflows with a fluid API. Useful for complex workflows with difficult requirements
+    /// - Parameter type: A reference to the class used to create the workflow
+    /// - Parameter staysInViewStack: A closure taking in the generic type from the `FlowRepresentable` and returning a `ViewPersistance`type representing how this item in the workflow should persist.
+    /// - Returns: `Workflow`
+    public func thenPresent<F>(_ type:F.Type, staysInViewStack:@escaping (F.IntakeType) -> ViewPersistance) -> Workflow where F: FlowRepresentable {
         let wf = Workflow(first)
         wf.append(FlowRepresentableMetaData(type,
                                             staysInViewStack: { data in
                                                 guard let cast = data as? F.IntakeType else { return .default }
                                                 return staysInViewStack(cast)
                                             },
-                                            presentationType: preferredLaunchStyle))
+                                            presentationType: .default))
         return wf
     }
 
-    public func thenPresent<F>(_ type:F.Type, staysInViewStack:@escaping () -> ViewPersistance, preferredLaunchStyle:PresentationType = .default) -> Workflow where F: FlowRepresentable, F.IntakeType == Never {
+    /// thenPresent: A way of creating workflows with a fluid API. Useful for complex workflows with difficult requirements
+    /// - Parameter type: A reference to the class used to create the workflow
+    /// - Parameter staysInViewStack: A closure returning a `ViewPersistance`type representing how this item in the workflow should persist.
+    /// - Returns: `Workflow`
+    public func thenPresent<F>(_ type:F.Type, staysInViewStack:@escaping () -> ViewPersistance) -> Workflow where F: FlowRepresentable, F.IntakeType == Never {
         let wf = Workflow(first)
         wf.append(FlowRepresentableMetaData(type,
                                             staysInViewStack: { _ in
                                                 return staysInViewStack()
                                             },
-                                            presentationType: preferredLaunchStyle))
+                                            presentationType: .default))
         return wf
     }
 

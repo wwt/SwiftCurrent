@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>PresentationType Enumeration Reference</title>
+    <title>ViewPersistance Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Enum/PresentationType" class="dashAnchor"></a>
-    <a title="PresentationType Enumeration Reference"></a>
+    <a name="//apple_ref/swift/Enum/ViewPersistance" class="dashAnchor"></a>
+    <a title="ViewPersistance Enumeration Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">DynamicWorkflow Docs</a> (74% documented)</p>
@@ -21,7 +21,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">DynamicWorkflow Reference</a>
         <img id="carat" src="../img/carat.png" />
-        PresentationType Enumeration Reference
+        ViewPersistance Enumeration Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -82,17 +82,17 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>PresentationType</h1>
+            <h1>ViewPersistance</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">PresentationType</span> <span class="p">:</span> <span class="kt">Int</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">ViewPersistance</span></code></pre>
 
                 </div>
               </div>
-            <p>PresentationType: An enum that indicates how FlowRepresentables should be presented</p>
+            <p>ViewPersistance: An enum that indicates how FlowRepresentables should be persist when in the view stack</p>
 <h3 id='discussion' class='heading'>Discussion:</h3>
 
-<p>Mostly used when you tell a workflow to launch, or on the <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> protocol if you have a view that preferrs to be launched with a certain style</p>
+<p>Used when you are creating a workflow</p>
 
           </section>
           <section class="section task-group-section">
@@ -101,68 +101,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:15DynamicWorkflow16PresentationTypeO15navigationStackyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/navigationStack" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15DynamicWorkflow16PresentationTypeO15navigationStackyA2CmF">navigationStack</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>navigationStack: Indicates a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> should be launched in a navigation stack of some kind (For example with UIKit this would use a UINavigationController)</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    If no current navigation stack is available, one will be created
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">navigationStack</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:15DynamicWorkflow16PresentationTypeO7modallyyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/modally" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15DynamicWorkflow16PresentationTypeO7modallyyA2CmF">modally</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>modally: Indicates a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> should be launched modally</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">modally</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:15DynamicWorkflow16PresentationTypeO7defaultyA2CmF"></a>
+                    <a name="/s:15DynamicWorkflow15ViewPersistanceO7defaultyA2CmF"></a>
                     <a name="//apple_ref/swift/Element/default" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15DynamicWorkflow16PresentationTypeO7defaultyA2CmF">default</a>
+                    <a class="token" href="#/s:15DynamicWorkflow15ViewPersistanceO7defaultyA2CmF">default</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -170,12 +111,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>default: Indicates a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> can be launched contextually</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    If there&rsquo;s already a navigation stack, it will be used. Otherwise views will present modally
-
-</div>
+                        <p>default: Indicates a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> in a <code><a href="../Classes/Workflow.html">Workflow</a></code> should persist in the viewstack based on it&rsquo;s <code>shouldLoad</code> function</p>
 
                       </div>
                       <div class="declaration">
@@ -183,6 +119,60 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="k">case</span> <span class="p">`</span><span class="nv">default</span><span class="p">`</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:15DynamicWorkflow15ViewPersistanceO15hiddenInitiallyyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/hiddenInitially" class="dashAnchor"></a>
+                    <a class="token" href="#/s:15DynamicWorkflow15ViewPersistanceO15hiddenInitiallyyA2CmF">hiddenInitially</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>default: Indicates a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> in a <code><a href="../Classes/Workflow.html">Workflow</a></code> who&rsquo;s <code>shouldLoad</code> function returns false should still be in the viewstack so if a user navigates backwards it&rsquo;ll appear</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">hiddenInitially</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:15DynamicWorkflow15ViewPersistanceO22removedAfterProceedingyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/removedAfterProceeding" class="dashAnchor"></a>
+                    <a class="token" href="#/s:15DynamicWorkflow15ViewPersistanceO22removedAfterProceedingyA2CmF">removedAfterProceeding</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>default: Indicates a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> in a <code><a href="../Classes/Workflow.html">Workflow</a></code> who&rsquo;s <code>shouldLoad</code> function returns true should be removed from the viewstack after the user progresses past it</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">removedAfterProceeding</span></code></pre>
 
                         </div>
                       </div>

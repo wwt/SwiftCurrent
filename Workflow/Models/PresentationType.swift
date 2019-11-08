@@ -23,3 +23,18 @@ public enum PresentationType:Int {
     /// - Note: If there's already a navigation stack, it will be used. Otherwise views will present modally
     case `default`
 }
+
+/**
+ViewPersistance: An enum that indicates how FlowRepresentables should be persist when in the view stack
+
+### Discussion:
+Used when you are creating a workflow
+*/
+public enum ViewPersistance {
+    /// default: Indicates a `FlowRepresentable` in a `Workflow` should persist in the viewstack based on it's `shouldLoad` function
+    case `default`
+    /// default: Indicates a `FlowRepresentable` in a `Workflow` who's `shouldLoad` function returns false should still be in the viewstack so if a user navigates backwards it'll appear
+    case hiddenInitially
+    /// default: Indicates a `FlowRepresentable` in a `Workflow` who's `shouldLoad` function returns true should be removed from the viewstack after the user progresses past it
+    case removedAfterProceeding
+}

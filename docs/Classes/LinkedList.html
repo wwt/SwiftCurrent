@@ -14,7 +14,7 @@
     <a title="LinkedList Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">DynamicWorkflow Docs</a> (77% documented)</p>
+        <p><a href="../index.html">DynamicWorkflow Docs</a> (74% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -50,6 +50,9 @@
               <li class="nav-group-task">
                 <a href="../Enums/PresentationType.html">PresentationType</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ViewPersistance.html">ViewPersistance</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -82,7 +85,7 @@
             <h1>LinkedList</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">LinkedList</span><span class="o">&lt;</span><span class="kt">Value</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt">Sequence</span><span class="p">,</span> <span class="kt">ExpressibleByArrayLiteral</span><span class="p">,</span> <span class="kt">CustomStringConvertible</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">LinkedList</span><span class="o">&lt;</span><span class="kt">Value</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt">Sequence</span><span class="p">,</span> <span class="kt">CustomStringConvertible</span></code></pre>
 
                 </div>
               </div>
@@ -364,96 +367,6 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:15DynamicWorkflow10LinkedListC12arrayLiteralACyxGxd_tcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(arrayLiteral:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15DynamicWorkflow10LinkedListC12arrayLiteralACyxGxd_tcfc">init(arrayLiteral:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>init(arrayLiteral): A LinkedList can be instantiated with an array literal
- ### Example:</p>
-<pre class="highlight swift"><code> <span class="k">let</span> <span class="nv">list</span><span class="p">:</span><span class="kt">LinkedList</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
-</code></pre>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">required</span> <span class="kd">public</span> <span class="kd">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="n">arrayLiteral</span> <span class="nv">elements</span><span class="p">:</span> <span class="kt">Value</span><span class="o">...</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:15DynamicWorkflow10LinkedListCyACyxGxd_tcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15DynamicWorkflow10LinkedListCyACyxGxd_tcfc">init(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>init(elements): A LinkedList can be instantiated with variadic arguments
- ### Example:</p>
-<pre class="highlight swift"><code> <span class="k">let</span> <span class="nv">list</span> <span class="o">=</span> <span class="kt">LinkedList</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-</code></pre>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">elements</span><span class="p">:</span> <span class="kt">Value</span><span class="o">...</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:15DynamicWorkflow10LinkedListCyACyxGSayxGcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15DynamicWorkflow10LinkedListCyACyxGSayxGcfc">init(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>init(elements): A LinkedList can be instantiated with an array
- ### Example:</p>
-<pre class="highlight swift"><code> <span class="k">let</span> <span class="nv">list</span> <span class="o">=</span> <span class="kt">LinkedList</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
-</code></pre>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">elements</span><span class="p">:</span> <span class="p">[</span><span class="kt">Value</span><span class="p">])</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:15DynamicWorkflow10LinkedListCyACyxGAC4NodeCyx_xGSgcfc"></a>
                     <a name="//apple_ref/swift/Method/init(_:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:15DynamicWorkflow10LinkedListCyACyxGAC4NodeCyx_xGSgcfc">init(_:)</a>
@@ -497,7 +410,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">makeIterator</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">LinkedList</span><span class="o">&lt;</span><span class="kt">Value</span><span class="o">&gt;.</span><span class="kt">LinkedListIterator</span><span class="o">&lt;</span><span class="kt">LinkedList</span><span class="o">&lt;</span><span class="kt">Value</span><span class="o">&gt;.</span><span class="kt"><a href="../Classes/LinkedList/Node.html">Node</a></span><span class="o">&lt;</span><span class="kt">Value</span><span class="o">&gt;&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">makeIterator</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/LinkedList.html#/s:ST8IteratorQa">Iterator</a></span></code></pre>
 
                         </div>
                       </div>
@@ -1859,7 +1772,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="https://github.com/Tyler-Keith-Thompson/Workflow" target="_blank" rel="external">Tyler.Thompson</a>. All rights reserved. (Last updated: 2019-10-20)</p>
+          <p>&copy; 2019 <a class="link" href="https://github.com/Tyler-Keith-Thompson/Workflow" target="_blank" rel="external">Tyler.Thompson</a>. All rights reserved. (Last updated: 2019-11-07)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
