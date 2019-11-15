@@ -10,7 +10,7 @@ import Foundation
 @testable import DynamicWorkflow
 
 class MockPresenter: Presenter {
-    func launch(view: Any?, from root: Any?, withLaunchStyle launchStyle: PresentationType, animated: Bool, completion: @escaping () -> Void) {
+    func launch(view: Any?, from root: Any?, withLaunchStyle launchStyle: PresentationType, metadata:FlowRepresentableMetaData, animated: Bool, completion: @escaping () -> Void) {
         
     }
     

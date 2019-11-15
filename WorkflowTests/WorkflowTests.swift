@@ -146,8 +146,12 @@ class WorkflowTests: XCTestCase {
         class View { }
         class NotView { }
         let presenter = TestTypedPresenter<View>()
+        class FR1: TestFlowRepresentable<Never>, FlowRepresentable {
+            static func instance() -> AnyFlowRepresentable { FR1() }
+        }
         XCTAssertThrowsFatalError{
-            presenter.launch(view: NotView(), from: NotView(), withLaunchStyle: .default, animated: false) { }
+            (presenter as AnyPresenter).launch(view: NotView(), from: NotView(), withLaunchStyle: .default, metadata: FlowRepresentableMetaData(FR1.self,
+                                                                                                                              staysInViewStack: { _ in .default }), animated: false) { }
         }
     }
     
@@ -168,7 +172,7 @@ class WorkflowTests: XCTestCase {
         var launchView:Any?
         var launchRoot:Any?
         var launchStyle:PresentationType?
-        func launch(view: Any?, from root: Any?, withLaunchStyle launchStyle: PresentationType, animated:Bool, completion: (() -> Void)?) {
+        func launch(view: Any?, from root: Any?, withLaunchStyle launchStyle: PresentationType, metadata: FlowRepresentableMetaData, animated:Bool, completion: (() -> Void)?) {
             launchCalled += 1
             launchView = view
             launchRoot = root
@@ -181,7 +185,7 @@ class WorkflowTests: XCTestCase {
     class TestTypedPresenter<T>: BasePresenter<T>, Presenter {
         func destroy(_ view: T) { }
         
-        func launch(view: T, from root: T, withLaunchStyle launchStyle: PresentationType, animated:Bool, completion:@escaping () -> Void) { }
+        func launch(view: T, from root: T, withLaunchStyle launchStyle: PresentationType, metadata: FlowRepresentableMetaData, animated:Bool, completion:@escaping () -> Void) { }
         
         func abandon(_ workflow: Workflow, animated: Bool, onFinish: (() -> Void)?) { }
     }

@@ -1214,6 +1214,46 @@ class UIKitPresenterTests: XCTestCase {
         XCTAssert(UIApplication.topViewController() is ExpectedModalPreferNav, "Top view controller should be ExpectedModalPresetNav:\(String(describing: UIApplication.topViewController()))")
         XCTAssertNotNil(UIApplication.topViewController()?.navigationController)
     }
+    
+    func testFluidWorkflowLaunchModallyButSecondViewPreferrsANavController() {
+        class ExpectedModal: UIWorkflowItem<Never>, FlowRepresentable {
+            static func instance() -> AnyFlowRepresentable {
+                let modal = Self()
+                modal.view.backgroundColor = .green
+                return modal
+            }
+
+            override func viewDidAppear(_ animated: Bool) {
+                proceedInWorkflow()
+            }
+        }
+
+        class ExpectedModalPreferNav: UIWorkflowItem<Never>, FlowRepresentable {
+            static func instance() -> AnyFlowRepresentable {
+                let modal = Self()
+                modal.view.backgroundColor = .blue
+                return modal
+            }
+        }
+
+        let rootController = UIViewController()
+        let controller = UINavigationController(rootViewController: rootController)
+        loadView(controller: controller)
+
+        rootController.launchInto(
+            Workflow()
+                .thenPresent(ExpectedModal.self)
+                .thenPresent(ExpectedModalPreferNav.self,
+                      presentationType: .navigationStack),
+            withLaunchStyle: .modally)
+        RunLoop.current.singlePass()
+
+        XCTAssertEqual(controller.viewControllers.count, 1)
+        XCTAssert(rootController.mostRecentlyPresentedViewController is ExpectedModal, "mostRecentlyPresentedViewController should be ExpectedModal: \(String(describing: controller.mostRecentlyPresentedViewController))")
+        waitUntil(UIApplication.topViewController() is ExpectedModalPreferNav)
+        XCTAssert(UIApplication.topViewController() is ExpectedModalPreferNav, "Top view controller should be ExpectedModalPresetNav:\(String(describing: UIApplication.topViewController()))")
+        XCTAssertNotNil(UIApplication.topViewController()?.navigationController)
+    }
 
     func testWorkflowLaunchModallyButFirstViewHasANavController() {
         class ExpectedModal: UIWorkflowItem<Never>, FlowRepresentable {
@@ -1232,6 +1272,33 @@ class UIKitPresenterTests: XCTestCase {
         firstView.present(controller, animated: false)
 
         let workflow = Workflow([ExpectedModal.self])
+        rootController.launchInto(workflow, withLaunchStyle: .modally)
+        RunLoop.current.singlePass()
+
+        XCTAssertEqual(controller.viewControllers.count, 1)
+        XCTAssert(rootController.mostRecentlyPresentedViewController is UINavigationController, "mostRecentlyPresentedViewController should be UINavigationController: \(String(describing: rootController.mostRecentlyPresentedViewController))")
+        XCTAssertEqual((rootController.mostRecentlyPresentedViewController as? UINavigationController)?.viewControllers.count, 1)
+        XCTAssert((rootController.mostRecentlyPresentedViewController as? UINavigationController)?.viewControllers.first is ExpectedModal, "rootViewController should be ExpectedModal: \(String(describing: (rootController.mostRecentlyPresentedViewController as? UINavigationController)?.viewControllers.first))")
+    }
+    
+    func testFluidWorkflowLaunchModallyButFirstViewHasANavController() {
+        class ExpectedModal: UIWorkflowItem<Never>, FlowRepresentable {
+            static func instance() -> AnyFlowRepresentable {
+                let modal = Self()
+                modal.view.backgroundColor = .green
+                return modal
+            }
+            override var preferredLaunchStyle: PresentationType { .modally }
+        }
+
+        let firstView = UIViewController()
+        let rootController = UIViewController()
+        let controller = UINavigationController(rootViewController: rootController)
+        loadView(controller: firstView)
+        firstView.present(controller, animated: false)
+
+        let workflow = Workflow()
+            .thenPresent(ExpectedModal.self, presentationType: .navigationStack)
         rootController.launchInto(workflow, withLaunchStyle: .modally)
         RunLoop.current.singlePass()
 
@@ -1320,6 +1387,42 @@ class UIKitPresenterTests: XCTestCase {
         XCTAssert(UIApplication.topViewController() === root)
     }
     
+    func testAbandonWhenFluidWorkflowHasNavPresentingSubsequentViewsModally() {
+        class FR1: TestViewController { }
+        class FR2: TestViewController {
+            override var preferredLaunchStyle: PresentationType { .modally }
+        }
+        class FR3: TestViewController { }
+        class FR4: TestViewController { }
+        
+        let root = UIViewController()
+        loadView(controller: root)
+        
+        root.launchInto(
+            Workflow()
+                .thenPresent(FR1.self)
+                .thenPresent(FR2.self, presentationType: .modally)
+                .thenPresent(FR3.self)
+                .thenPresent(FR4.self),
+            withLaunchStyle: .navigationStack)
+        waitUntil(UIApplication.topViewController() is FR1)
+        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertNotNil(UIApplication.topViewController()?.navigationController)
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR2)
+        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertNil(UIApplication.topViewController()?.navigationController)
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR3)
+        XCTAssert(UIApplication.topViewController() is FR3)
+        (UIApplication.topViewController() as? FR3)?.proceedInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR4)
+        XCTAssert(UIApplication.topViewController() is FR4)
+        (UIApplication.topViewController() as? FR4)?.abandonWorkflow()
+        waitUntil(UIApplication.topViewController() === root)
+        XCTAssert(UIApplication.topViewController() === root)
+    }
+        
     func testAbandonWhenWorkflowHasNavPresentingSubsequentViewsModallyAndWithMoreNavigation() {
         class FR1: TestViewController { }
         class FR2: TestViewController {
@@ -1353,6 +1456,42 @@ class UIKitPresenterTests: XCTestCase {
         waitUntil(UIApplication.topViewController() === root)
         XCTAssert(UIApplication.topViewController() === root)
     }
+    
+    func testAbandonWhenFluidWorkflowHasNavPresentingSubsequentViewsModallyAndWithMoreNavigation() {
+        class FR1: TestViewController { }
+        class FR2: TestViewController { }
+        class FR3: TestViewController { }
+        class FR4: TestViewController { }
+        
+        let root = UIViewController()
+        loadView(controller: root)
+        
+        root.launchInto(
+            Workflow()
+                .thenPresent(FR1.self)
+                .thenPresent(FR2.self, presentationType: .modally)
+                .thenPresent(FR3.self, presentationType: .navigationStack)
+                .thenPresent(FR4.self, presentationType: .modally),
+            withLaunchStyle: .navigationStack)
+
+        waitUntil(UIApplication.topViewController() is FR1)
+        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertNotNil(UIApplication.topViewController()?.navigationController)
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR2)
+        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertNil(UIApplication.topViewController()?.navigationController)
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR3)
+        XCTAssert(UIApplication.topViewController() is FR3)
+        (UIApplication.topViewController() as? FR3)?.proceedInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR4)
+        XCTAssert(UIApplication.topViewController() is FR4)
+        (UIApplication.topViewController() as? FR4)?.abandonWorkflow()
+        waitUntil(UIApplication.topViewController() === root)
+        XCTAssert(UIApplication.topViewController() === root)
+    }
+
     
     func testAbandonWhenWorkflowHasNavWithStartingViewPresentingSubsequentViewsModallyAndWithMoreNavigation() {
         class FR1: TestViewController { }

@@ -10,7 +10,7 @@ import Foundation
 public protocol AnyPresenter:class {
     init()
     
-    func launch(view:Any?, from root:Any?, withLaunchStyle launchStyle:PresentationType, animated:Bool, completion:(() -> Void)?)
+    func launch(view:Any?, from root:Any?, withLaunchStyle launchStyle:PresentationType, metadata:FlowRepresentableMetaData, animated:Bool, completion:(() -> Void)?)
     func abandon(_ workflow:Workflow, animated:Bool, onFinish:(() -> Void)?)
     func destroy(_ view:Any?)
 }

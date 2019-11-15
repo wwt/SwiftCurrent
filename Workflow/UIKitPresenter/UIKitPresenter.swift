@@ -38,10 +38,10 @@ open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
         }
     }
     
-    public func launch(view: UIViewController, from root: UIViewController, withLaunchStyle launchStyle:PresentationType = .default, animated:Bool, completion: @escaping () -> Void) {
+    public func launch(view: UIViewController, from root: UIViewController, withLaunchStyle launchStyle:PresentationType = .default, metadata: FlowRepresentableMetaData, animated:Bool, completion: @escaping () -> Void) {
         switch launchStyle {
             case .default:
-                if let style = (view as? AnyFlowRepresentable)?.preferredLaunchStyle,
+                if let style = metadata.presentationType ?? (view as? AnyFlowRepresentable)?.preferredLaunchStyle,
                     style == .modally {
                     root.present(view, animated: animated, completion: completion)
                 } else if let nav = root.navigationController
@@ -52,7 +52,7 @@ open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
                     root.present(view, animated: animated, completion: completion)
                 }
             case .modally:
-                if let style = (view as? AnyFlowRepresentable)?.preferredLaunchStyle,
+                if let style = metadata.presentationType ?? (view as? AnyFlowRepresentable)?.preferredLaunchStyle,
                     style == .navigationStack {
                     let nav = UINavigationController(rootViewController: view)
                     root.present(nav, animated: animated, completion: completion)

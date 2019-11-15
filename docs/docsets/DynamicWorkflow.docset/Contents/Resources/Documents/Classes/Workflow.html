@@ -14,7 +14,7 @@
     <a title="Workflow Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">DynamicWorkflow Docs</a> (74% documented)</p>
+        <p><a href="../index.html">DynamicWorkflow Docs</a> (73% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -94,6 +94,9 @@
 <p>Examples:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">workflow</span><span class="p">:</span><span class="kt">Workflow</span> <span class="o">=</span> <span class="p">[</span> <span class="kt">SomeFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">SomeOtherFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span> <span class="p">]</span>
 <span class="k">let</span> <span class="nv">workflow</span> <span class="o">=</span> <span class="kt">Workflow</span><span class="p">(</span><span class="kt">SomeFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">SomeOtherFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">workflow</span> <span class="o">=</span> <span class="kt">Workflow</span><span class="p">()</span>
+                   <span class="o">.</span><span class="nf">thenPresent</span><span class="p">(</span><span class="kt">SomeFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+                   <span class="o">.</span><span class="nf">thenPResent</span><span class="p">(</span><span class="kt">SomeOtherFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">presentationType</span><span class="p">:</span> <span class="o">.</span><span class="n">navigationStack</span><span class="p">)</span>
 </code></pre>
 <h3 id='discussion' class='heading'>Discussion:</h3>
 
@@ -166,9 +169,9 @@ If you&rsquo;re using UIKit then you can use a &lsquo;magic&rsquo; method on UIV
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:15DynamicWorkflow0B0C11thenPresent_16staysInViewStackACxm_AA0G11PersistanceOyXAtAA17FlowRepresentableRzlF"></a>
-                    <a name="//apple_ref/swift/Method/thenPresent(_:staysInViewStack:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15DynamicWorkflow0B0C11thenPresent_16staysInViewStackACxm_AA0G11PersistanceOyXAtAA17FlowRepresentableRzlF">thenPresent(_:staysInViewStack:)</a>
+                    <a name="/s:15DynamicWorkflow0B0C11thenPresent_16presentationType16staysInViewStackACxm_AA012PresentationF0OSgAA0I11PersistanceOyXAtAA17FlowRepresentableRzlF"></a>
+                    <a name="//apple_ref/swift/Method/thenPresent(_:presentationType:staysInViewStack:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:15DynamicWorkflow0B0C11thenPresent_16presentationType16staysInViewStackACxm_AA012PresentationF0OSgAA0I11PersistanceOyXAtAA17FlowRepresentableRzlF">thenPresent(_:presentationType:staysInViewStack:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -183,7 +186,7 @@ If you&rsquo;re using UIKit then you can use a &lsquo;magic&rsquo; method on UIV
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">thenPresent</span><span class="o">&lt;</span><span class="kt">F</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span><span class="kt">F</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">staysInViewStack</span><span class="p">:</span><span class="kd">@escaping</span> <span class="kd">@autoclosure</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Enums/ViewPersistance.html">ViewPersistance</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Workflow</span> <span class="k">where</span> <span class="kt">F</span><span class="p">:</span> <span class="kt"><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">thenPresent</span><span class="o">&lt;</span><span class="kt">F</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span><span class="kt">F</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">presentationType</span><span class="p">:</span><span class="kt"><a href="../Enums/PresentationType.html">PresentationType</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">staysInViewStack</span><span class="p">:</span><span class="kd">@escaping</span> <span class="kd">@autoclosure</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Enums/ViewPersistance.html">ViewPersistance</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Workflow</span> <span class="k">where</span> <span class="kt">F</span><span class="p">:</span> <span class="kt"><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -200,6 +203,18 @@ If you&rsquo;re using UIKit then you can use a &lsquo;magic&rsquo; method on UIV
                               <td>
                                 <div>
                                   <p>A reference to the class used to create the workflow</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>presentationType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A <code><a href="../Enums/PresentationType.html">PresentationType</a></code> the flow representable should use while it&rsquo;s part of this workflow</p>
                                 </div>
                               </td>
                             </tr>
@@ -228,9 +243,9 @@ If you&rsquo;re using UIKit then you can use a &lsquo;magic&rsquo; method on UIV
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:15DynamicWorkflow0B0C11thenPresent_16staysInViewStackACxm_AA0G11PersistanceO10IntakeTypeQzctAA17FlowRepresentableRzlF"></a>
-                    <a name="//apple_ref/swift/Method/thenPresent(_:staysInViewStack:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15DynamicWorkflow0B0C11thenPresent_16staysInViewStackACxm_AA0G11PersistanceO10IntakeTypeQzctAA17FlowRepresentableRzlF">thenPresent(_:staysInViewStack:)</a>
+                    <a name="/s:15DynamicWorkflow0B0C11thenPresent_16presentationType16staysInViewStackACxm_AA012PresentationF0OSgAA0I11PersistanceO06IntakeF0QzctAA17FlowRepresentableRzlF"></a>
+                    <a name="//apple_ref/swift/Method/thenPresent(_:presentationType:staysInViewStack:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:15DynamicWorkflow0B0C11thenPresent_16presentationType16staysInViewStackACxm_AA012PresentationF0OSgAA0I11PersistanceO06IntakeF0QzctAA17FlowRepresentableRzlF">thenPresent(_:presentationType:staysInViewStack:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -245,7 +260,7 @@ If you&rsquo;re using UIKit then you can use a &lsquo;magic&rsquo; method on UIV
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">thenPresent</span><span class="o">&lt;</span><span class="kt">F</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span><span class="kt">F</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">staysInViewStack</span><span class="p">:</span><span class="kd">@escaping</span> <span class="p">(</span><span class="kt">F</span><span class="o">.</span><span class="kt">IntakeType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Enums/ViewPersistance.html">ViewPersistance</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Workflow</span> <span class="k">where</span> <span class="kt">F</span><span class="p">:</span> <span class="kt"><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">thenPresent</span><span class="o">&lt;</span><span class="kt">F</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span><span class="kt">F</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">presentationType</span><span class="p">:</span><span class="kt"><a href="../Enums/PresentationType.html">PresentationType</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">staysInViewStack</span><span class="p">:</span><span class="kd">@escaping</span> <span class="p">(</span><span class="kt">F</span><span class="o">.</span><span class="kt">IntakeType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Enums/ViewPersistance.html">ViewPersistance</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Workflow</span> <span class="k">where</span> <span class="kt">F</span><span class="p">:</span> <span class="kt"><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -262,6 +277,18 @@ If you&rsquo;re using UIKit then you can use a &lsquo;magic&rsquo; method on UIV
                               <td>
                                 <div>
                                   <p>A reference to the class used to create the workflow</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>presentationType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A <code><a href="../Enums/PresentationType.html">PresentationType</a></code> the flow representable should use while it&rsquo;s part of this workflow</p>
                                 </div>
                               </td>
                             </tr>
@@ -290,9 +317,9 @@ If you&rsquo;re using UIKit then you can use a &lsquo;magic&rsquo; method on UIV
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:15DynamicWorkflow0B0C11thenPresent_16staysInViewStackACxm_AA0G11PersistanceOyctAA17FlowRepresentableRzs5NeverO10IntakeTypeRtzlF"></a>
-                    <a name="//apple_ref/swift/Method/thenPresent(_:staysInViewStack:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15DynamicWorkflow0B0C11thenPresent_16staysInViewStackACxm_AA0G11PersistanceOyctAA17FlowRepresentableRzs5NeverO10IntakeTypeRtzlF">thenPresent(_:staysInViewStack:)</a>
+                    <a name="/s:15DynamicWorkflow0B0C11thenPresent_16presentationType16staysInViewStackACxm_AA012PresentationF0OSgAA0I11PersistanceOyctAA17FlowRepresentableRzs5NeverO06IntakeF0RtzlF"></a>
+                    <a name="//apple_ref/swift/Method/thenPresent(_:presentationType:staysInViewStack:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:15DynamicWorkflow0B0C11thenPresent_16presentationType16staysInViewStackACxm_AA012PresentationF0OSgAA0I11PersistanceOyctAA17FlowRepresentableRzs5NeverO06IntakeF0RtzlF">thenPresent(_:presentationType:staysInViewStack:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -307,7 +334,7 @@ If you&rsquo;re using UIKit then you can use a &lsquo;magic&rsquo; method on UIV
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">thenPresent</span><span class="o">&lt;</span><span class="kt">F</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span><span class="kt">F</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">staysInViewStack</span><span class="p">:</span><span class="kd">@escaping</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Enums/ViewPersistance.html">ViewPersistance</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Workflow</span> <span class="k">where</span> <span class="kt">F</span><span class="p">:</span> <span class="kt"><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></span><span class="p">,</span> <span class="kt">F</span><span class="o">.</span><span class="kt">IntakeType</span> <span class="o">==</span> <span class="kt">Never</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">thenPresent</span><span class="o">&lt;</span><span class="kt">F</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span><span class="kt">F</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">presentationType</span><span class="p">:</span><span class="kt"><a href="../Enums/PresentationType.html">PresentationType</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">staysInViewStack</span><span class="p">:</span><span class="kd">@escaping</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Enums/ViewPersistance.html">ViewPersistance</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Workflow</span> <span class="k">where</span> <span class="kt">F</span><span class="p">:</span> <span class="kt"><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></span><span class="p">,</span> <span class="kt">F</span><span class="o">.</span><span class="kt">IntakeType</span> <span class="o">==</span> <span class="kt">Never</span></code></pre>
 
                         </div>
                       </div>
@@ -324,6 +351,18 @@ If you&rsquo;re using UIKit then you can use a &lsquo;magic&rsquo; method on UIV
                               <td>
                                 <div>
                                   <p>A reference to the class used to create the workflow</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>presentationType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A <code><a href="../Enums/PresentationType.html">PresentationType</a></code> the flow representable should use while it&rsquo;s part of this workflow</p>
                                 </div>
                               </td>
                             </tr>
@@ -421,7 +460,7 @@ If you&rsquo;re using UIKit then you can use a &lsquo;magic&rsquo; method on UIV
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="https://github.com/Tyler-Keith-Thompson/Workflow" target="_blank" rel="external">Tyler.Thompson</a>. All rights reserved. (Last updated: 2019-11-07)</p>
+          <p>&copy; 2019 <a class="link" href="https://github.com/Tyler-Keith-Thompson/Workflow" target="_blank" rel="external">Tyler.Thompson</a>. All rights reserved. (Last updated: 2019-11-15)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
