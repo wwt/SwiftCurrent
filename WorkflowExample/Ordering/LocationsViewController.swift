@@ -12,6 +12,17 @@ import DynamicWorkflow
 class LocationsViewController: UIWorkflowItem<[Location]>, StoryboardLoadable {
     @IBOutlet weak var tableView:UITableView!
     
+    @DependencyInjected var networkManager:NetworkManager?
+
+    override func viewDidLoad() {
+        networkManager?.get(URL(string: "https://www.google.com")!, completion: {
+            switch $0 {
+                case .success(let body): print(body)
+                case .failure(let error): print(error)
+            }
+        })
+    }
+    
     var locations:[Location] = []
 }
 

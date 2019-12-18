@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D08D90623A9919400EF05C1 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D08D90523A9919400EF05C1 /* NetworkManager.swift */; };
+		1D08D91B23A9C01500EF05C1 /* DependencyInjectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D08D91A23A9C01500EF05C1 /* DependencyInjectionTests.swift */; };
+		1D08D92523A9C03E00EF05C1 /* Workflow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADD8235E2312CC6300D77D3C /* Workflow.framework */; };
+		1D08D92823A9C11D00EF05C1 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D08D90123A97D3400EF05C1 /* DIContainer.swift */; };
+		1D08D92923A9C12400EF05C1 /* DependencyInjected.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D08D8FF23A97CAA00EF05C1 /* DependencyInjected.swift */; };
 		27472C9F972F4D5C4F5D2A29 /* Pods_WorkflowExample_WorkflowExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09E02615312015EBAC53492E /* Pods_WorkflowExample_WorkflowExampleTests.framework */; };
 		7339A5C72AEF92812564A3A2 /* Pods_WorkflowExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F410624365BB7807E12BEA08 /* Pods_WorkflowExample.framework */; };
 		AD2AEA01231C757A0069F9B4 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2AEA00231C757A0069F9B4 /* Location.swift */; };
@@ -94,8 +99,18 @@
 
 /* Begin PBXFileReference section */
 		09E02615312015EBAC53492E /* Pods_WorkflowExample_WorkflowExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WorkflowExample_WorkflowExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D08D8FF23A97CAA00EF05C1 /* DependencyInjected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjected.swift; sourceTree = "<group>"; };
+		1D08D90123A97D3400EF05C1 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
+		1D08D90523A9919400EF05C1 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		1D08D90F23A9C01500EF05C1 /* DependencyInjection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DependencyInjection.h; sourceTree = "<group>"; };
+		1D08D91023A9C01500EF05C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D08D91523A9C01500EF05C1 /* DependencyInjectionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DependencyInjectionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D08D91A23A9C01500EF05C1 /* DependencyInjectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjectionTests.swift; sourceTree = "<group>"; };
+		1D08D91C23A9C01500EF05C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		33A2FC4E659AC99A82ECE86B /* Pods-WorkflowExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkflowExample.release.xcconfig"; path = "Target Support Files/Pods-WorkflowExample/Pods-WorkflowExample.release.xcconfig"; sourceTree = "<group>"; };
 		356DB6CB5C8022ACC4891ED9 /* Pods-WorkflowTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkflowTests.debug.xcconfig"; path = "Target Support Files/Pods-WorkflowTests/Pods-WorkflowTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4F790BC10E63BF4E7DABAD9D /* Pods-DependencyInjection.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DependencyInjection.debug.xcconfig"; path = "Target Support Files/Pods-DependencyInjection/Pods-DependencyInjection.debug.xcconfig"; sourceTree = "<group>"; };
+		619C275F7E04DADACCE5319E /* Pods_DependencyInjection.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DependencyInjection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		844F9C41CF2BB78EBB56D9A0 /* Pods-WorkflowExample-WorkflowExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkflowExample-WorkflowExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-WorkflowExample-WorkflowExampleTests/Pods-WorkflowExample-WorkflowExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		93153A9A1549D7ECC6FF5A30 /* Pods_Workflow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Workflow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		94D06747513FD57DC845C020 /* Pods-Workflow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Workflow.debug.xcconfig"; path = "Target Support Files/Pods-Workflow/Pods-Workflow.debug.xcconfig"; sourceTree = "<group>"; };
@@ -166,10 +181,19 @@
 		CCFE28428D8EFEABB9A39C8D /* Pods-WorkflowTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkflowTests.release.xcconfig"; path = "Target Support Files/Pods-WorkflowTests/Pods-WorkflowTests.release.xcconfig"; sourceTree = "<group>"; };
 		CF2C1E796D1CCA3C0AC77D60 /* Pods-WorkflowExample-WorkflowExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkflowExample-WorkflowExampleTests.release.xcconfig"; path = "Target Support Files/Pods-WorkflowExample-WorkflowExampleTests/Pods-WorkflowExample-WorkflowExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		D2B5B41A4F86FDBF12D88F62 /* Pods_WorkflowTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WorkflowTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD1CAE72F7FEDD9196FE9748 /* Pods-DependencyInjection.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DependencyInjection.release.xcconfig"; path = "Target Support Files/Pods-DependencyInjection/Pods-DependencyInjection.release.xcconfig"; sourceTree = "<group>"; };
 		F410624365BB7807E12BEA08 /* Pods_WorkflowExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WorkflowExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1D08D91223A9C01500EF05C1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D08D92523A9C03E00EF05C1 /* Workflow.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AD5BB008231B82C9001DAF7C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -206,6 +230,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D08D90E23A9C01500EF05C1 /* DependencyInjection */ = {
+			isa = PBXGroup;
+			children = (
+				1D08D8FF23A97CAA00EF05C1 /* DependencyInjected.swift */,
+				1D08D90123A97D3400EF05C1 /* DIContainer.swift */,
+				1D08D90F23A9C01500EF05C1 /* DependencyInjection.h */,
+				1D08D91023A9C01500EF05C1 /* Info.plist */,
+			);
+			path = DependencyInjection;
+			sourceTree = "<group>";
+		};
+		1D08D91923A9C01500EF05C1 /* DependencyInjectionTests */ = {
+			isa = PBXGroup;
+			children = (
+				1D08D91A23A9C01500EF05C1 /* DependencyInjectionTests.swift */,
+				1D08D91C23A9C01500EF05C1 /* Info.plist */,
+			);
+			path = DependencyInjectionTests;
+			sourceTree = "<group>";
+		};
 		867ECA52B1C8FDC1F385611F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -213,6 +257,7 @@
 				D2B5B41A4F86FDBF12D88F62 /* Pods_WorkflowTests.framework */,
 				F410624365BB7807E12BEA08 /* Pods_WorkflowExample.framework */,
 				09E02615312015EBAC53492E /* Pods_WorkflowExample_WorkflowExampleTests.framework */,
+				619C275F7E04DADACCE5319E /* Pods_DependencyInjection.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -277,6 +322,8 @@
 				ADD8236B2312CC6300D77D3C /* WorkflowTests */,
 				AD5BB00C231B82C9001DAF7C /* WorkflowExample */,
 				ADEE7750233BAA6C007E9FD2 /* WorkflowExampleTests */,
+				1D08D90E23A9C01500EF05C1 /* DependencyInjection */,
+				1D08D91923A9C01500EF05C1 /* DependencyInjectionTests */,
 				ADD8235F2312CC6300D77D3C /* Products */,
 				D4E280E2374C0659E83AD82F /* Pods */,
 				867ECA52B1C8FDC1F385611F /* Frameworks */,
@@ -290,6 +337,7 @@
 				ADD823672312CC6300D77D3C /* WorkflowTests.xctest */,
 				AD5BB00B231B82C9001DAF7C /* WorkflowExample.app */,
 				ADEE774F233BAA6C007E9FD2 /* WorkflowExampleTests.xctest */,
+				1D08D91523A9C01500EF05C1 /* DependencyInjectionTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -376,6 +424,7 @@
 			isa = PBXGroup;
 			children = (
 				ADEE773C233AD29E007E9FD2 /* StoryboardLoadable.swift */,
+				1D08D90523A9919400EF05C1 /* NetworkManager.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -418,6 +467,8 @@
 				33A2FC4E659AC99A82ECE86B /* Pods-WorkflowExample.release.xcconfig */,
 				844F9C41CF2BB78EBB56D9A0 /* Pods-WorkflowExample-WorkflowExampleTests.debug.xcconfig */,
 				CF2C1E796D1CCA3C0AC77D60 /* Pods-WorkflowExample-WorkflowExampleTests.release.xcconfig */,
+				4F790BC10E63BF4E7DABAD9D /* Pods-DependencyInjection.debug.xcconfig */,
+				DD1CAE72F7FEDD9196FE9748 /* Pods-DependencyInjection.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -436,6 +487,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		1D08D91423A9C01500EF05C1 /* DependencyInjectionTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D08D92323A9C01500EF05C1 /* Build configuration list for PBXNativeTarget "DependencyInjectionTests" */;
+			buildPhases = (
+				1D08D91123A9C01500EF05C1 /* Sources */,
+				1D08D91223A9C01500EF05C1 /* Frameworks */,
+				1D08D91323A9C01500EF05C1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DependencyInjectionTests;
+			productName = DependencyInjectionTests;
+			productReference = 1D08D91523A9C01500EF05C1 /* DependencyInjectionTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		AD5BB00A231B82C9001DAF7C /* WorkflowExample */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AD5BB01A231B82CC001DAF7C /* Build configuration list for PBXNativeTarget "WorkflowExample" */;
@@ -521,10 +589,13 @@
 		ADD823552312CC6300D77D3C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1030;
+				LastSwiftUpdateCheck = 1110;
 				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = "Tyler Thompson";
 				TargetAttributes = {
+					1D08D91423A9C01500EF05C1 = {
+						CreatedOnToolsVersion = 11.1;
+					};
 					AD5BB00A231B82C9001DAF7C = {
 						CreatedOnToolsVersion = 10.3;
 					};
@@ -559,11 +630,19 @@
 				ADD823662312CC6300D77D3C /* WorkflowTests */,
 				AD5BB00A231B82C9001DAF7C /* WorkflowExample */,
 				ADEE774E233BAA6C007E9FD2 /* WorkflowExampleTests */,
+				1D08D91423A9C01500EF05C1 /* DependencyInjectionTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		1D08D91323A9C01500EF05C1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AD5BB009231B82C9001DAF7C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -740,6 +819,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1D08D91123A9C01500EF05C1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D08D91B23A9C01500EF05C1 /* DependencyInjectionTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AD5BB007231B82C9001DAF7C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -747,6 +834,7 @@
 				AD2AEA03231C75820069F9B4 /* Order.swift in Sources */,
 				ADEE774A233AE7CA007E9FD2 /* ReviewOrderViewController.swift in Sources */,
 				AD2AEA01231C757A0069F9B4 /* Location.swift in Sources */,
+				1D08D90623A9919400EF05C1 /* NetworkManager.swift in Sources */,
 				ADEE7746233ADF8D007E9FD2 /* MenuSelectionViewController.swift in Sources */,
 				ADEE773F233AD59A007E9FD2 /* PickupOrDeliveryViewController.swift in Sources */,
 				ADEE7744233ADBE5007E9FD2 /* EnterAddressViewController.swift in Sources */,
@@ -775,8 +863,10 @@
 				ADD8239423139E2700D77D3C /* AnyFlowRepresentable.swift in Sources */,
 				ADD823792312CC7E00D77D3C /* FlowRepresentable.swift in Sources */,
 				ADD8238A2312CE5900D77D3C /* Node.swift in Sources */,
+				1D08D92823A9C11D00EF05C1 /* DIContainer.swift in Sources */,
 				AD4AA2AD231464A600C3C95E /* Presenter.swift in Sources */,
 				ADD8238D2312CE7B00D77D3C /* CollectionExtensions.swift in Sources */,
+				1D08D92923A9C12400EF05C1 /* DependencyInjected.swift in Sources */,
 				ADD823882312CE5900D77D3C /* Iterator.swift in Sources */,
 				ADD823862312CE5900D77D3C /* Equatable.swift in Sources */,
 				ADD823892312CE5900D77D3C /* MutatingOperations.swift in Sources */,
@@ -858,6 +948,42 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		1D08D92023A9C01500EF05C1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = DependencyInjectionTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = TT.DependencyInjectionTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1D08D92123A9C01500EF05C1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = DependencyInjectionTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = TT.DependencyInjectionTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		AD5BB01B231B82CC001DAF7C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A084DFDED9C9736BB28DAAC6 /* Pods-WorkflowExample.debug.xcconfig */;
@@ -1162,6 +1288,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1D08D92323A9C01500EF05C1 /* Build configuration list for PBXNativeTarget "DependencyInjectionTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D08D92023A9C01500EF05C1 /* Debug */,
+				1D08D92123A9C01500EF05C1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		AD5BB01A231B82CC001DAF7C /* Build configuration list for PBXNativeTarget "WorkflowExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

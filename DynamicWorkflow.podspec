@@ -14,5 +14,11 @@ iOS has a linear paradigm for navigation that doesn't support a lot of flexibili
   s.ios.deployment_target = '11.0'
   s.swift_version = '5'
 
-  s.source_files = 'Workflow/**/*.{swift,h,m}' 
+  s.source_files = 'Workflow/**/*.{swift,h,m}'
+
+  s.subspec 'Swinject' do |ss|
+    ss.source_files = ['DependencyInjection/**/*.{swift,h}']
+    ss.dependency 'Swinject'
+  end
+
 end

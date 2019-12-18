@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import DynamicWorkflow
+import Swinject
 
 class SetupViewController: UIViewController, StoryboardLoadable {
     @IBAction func launchMultiLocationWorkflow() {
@@ -58,11 +59,16 @@ class SetupViewController: UIViewController, StoryboardLoadable {
         ]
         launchInto(
             Workflow()
-            .thenPresent(LocationsViewController.self)
-            .thenPresent(PickupOrDeliveryViewController.self)
-            .thenPresent(MenuSelectionViewController.self, staysInViewStack: .hiddenInitially)
-            .thenPresent(FoodSelectionViewController.self)
-            .thenPresent(ReviewOrderViewController.self),
-            args: locations, withLaunchStyle: .navigationStack)
+                .thenPresent(LocationsViewController.self, dependencyInjectionSetup: {
+                    $0.register(NetworkManager.self) { _ in
+                        SomeNetworkManager()
+                    }
+                })
+                .thenPresent(PickupOrDeliveryViewController.self)
+                .thenPresent(MenuSelectionViewController.self, staysInViewStack: .hiddenInitially)
+                .thenPresent(FoodSelectionViewController.self)
+                .thenPresent(ReviewOrderViewController.self),
+            args: locations,
+            withLaunchStyle: .navigationStack)
     }
 }
