@@ -17,7 +17,7 @@ iOS has a linear paradigm for navigation that doesn't support a lot of flexibili
   s.source_files = 'Workflow/**/*.{swift,h,m}'
 
   s.subspec 'Swinject' do |ss|
-    ss.source_files = ['DependencyInjection/**/*.{swift,h}']
+    ss.source_files = ['Workflow/**/*.{swift,h,m}', 'DependencyInjection/**/*.{swift,h}']
     ss.dependency 'Swinject'
   end
 

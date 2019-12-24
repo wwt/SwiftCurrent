@@ -26,7 +26,7 @@ class SetupViewControllerTests: ViewControllerTest<SetupViewController> {
         ])
     }
     
-    func testLaunchingMultiLocationWorkflowWithFluidAPI() {
+    func testLaunchingMultiLocationWorkflowWithFluentAPI() {
         let listener = WorkflowListener()
         
         testViewController.launchMultiLocationWorkflowWithFluidAPI()

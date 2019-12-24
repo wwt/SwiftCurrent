@@ -14,7 +14,7 @@ extension Workflow {
 }
 
 public extension Workflow {
-    /// thenPresent: A way of creating workflows with a fluid API. Useful for complex workflows with difficult requirements
+    /// thenPresent: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     /// - Parameter type: A reference to the class used to create the workflow
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
     /// - Parameter staysInViewStack: An `ViewPersistance`type representing how this item in the workflow should persist.
@@ -47,7 +47,7 @@ public extension Workflow {
         return wf
     }
 
-    /// thenPresent: A way of creating workflows with a fluid API. Useful for complex workflows with difficult requirements
+    /// thenPresent: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     /// - Parameter type: A reference to the class used to create the workflow
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
     /// - Parameter staysInViewStack: A closure returning a `ViewPersistance`type representing how this item in the workflow should persist.

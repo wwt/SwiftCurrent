@@ -845,9 +845,10 @@ class UIKitPresenterTests: XCTestCase {
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow()
         waitUntil(UIApplication.topViewController() is FR2)
         XCTAssert(UIApplication.topViewController() is FR2)
-        UIApplication.topViewController()?.dismiss(animated: false)
-        waitUntil(UIApplication.topViewController() === root)
-        XCTAssert(UIApplication.topViewController() === root)
+        UIApplication.topViewController()?.dismiss(animated: true) {
+            waitUntil(UIApplication.topViewController() === root)
+            XCTAssert(UIApplication.topViewController() === root, "Expected top view controller to be root, but was: \(String(describing: UIApplication.topViewController()))")
+        }
     }
     
     func testModalWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStackUsingAClsure() {
@@ -1215,7 +1216,7 @@ class UIKitPresenterTests: XCTestCase {
         XCTAssertNotNil(UIApplication.topViewController()?.navigationController)
     }
     
-    func testFluidWorkflowLaunchModallyButSecondViewPreferrsANavController() {
+    func testFluentWorkflowLaunchModallyButSecondViewPreferrsANavController() {
         class ExpectedModal: UIWorkflowItem<Never>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable {
                 let modal = Self()
@@ -1281,7 +1282,7 @@ class UIKitPresenterTests: XCTestCase {
         XCTAssert((rootController.mostRecentlyPresentedViewController as? UINavigationController)?.viewControllers.first is ExpectedModal, "rootViewController should be ExpectedModal: \(String(describing: (rootController.mostRecentlyPresentedViewController as? UINavigationController)?.viewControllers.first))")
     }
     
-    func testFluidWorkflowLaunchModallyButFirstViewHasANavController() {
+    func testFluentWorkflowLaunchModallyButFirstViewHasANavController() {
         class ExpectedModal: UIWorkflowItem<Never>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable {
                 let modal = Self()
@@ -1387,7 +1388,7 @@ class UIKitPresenterTests: XCTestCase {
         XCTAssert(UIApplication.topViewController() === root)
     }
     
-    func testAbandonWhenFluidWorkflowHasNavPresentingSubsequentViewsModally() {
+    func testAbandonWhenFluentWorkflowHasNavPresentingSubsequentViewsModally() {
         class FR1: TestViewController { }
         class FR2: TestViewController {
             override var preferredLaunchStyle: PresentationType { .modally }
@@ -1457,7 +1458,7 @@ class UIKitPresenterTests: XCTestCase {
         XCTAssert(UIApplication.topViewController() === root)
     }
     
-    func testAbandonWhenFluidWorkflowHasNavPresentingSubsequentViewsModallyAndWithMoreNavigation() {
+    func testAbandonWhenFluentWorkflowHasNavPresentingSubsequentViewsModallyAndWithMoreNavigation() {
         class FR1: TestViewController { }
         class FR2: TestViewController { }
         class FR3: TestViewController { }
