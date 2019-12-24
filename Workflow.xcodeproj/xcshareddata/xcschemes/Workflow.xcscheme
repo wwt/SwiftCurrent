@@ -58,6 +58,16 @@
                ReferencedContainer = "container:Workflow.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "1D08D91423A9C01500EF05C1"
+               BuildableName = "DependencyInjectionTests.xctest"
+               BlueprintName = "DependencyInjectionTests"
+               ReferencedContainer = "container:Workflow.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

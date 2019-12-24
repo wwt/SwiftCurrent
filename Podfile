@@ -20,7 +20,11 @@ target 'Workflow' do
     pod 'CwlCatchException', :git => 'https://github.com/mattgallagher/CwlCatchException.git', :tag => '1.2.0'
     # Pods for testing
   end
-
+  
+  target 'DependencyInjectionTests' do
+    shared_pods
+  end
+  
 end
 
 target 'WorkflowExample' do

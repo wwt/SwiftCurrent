@@ -7,28 +7,75 @@
 //
 
 import XCTest
-@testable import DependencyInjection
+import Swinject
+
+@testable import Workflow
+
+protocol Vehicle { }
+class Car:Vehicle { }
+class Motorcycle:Vehicle { }
 
 class DependencyInjectionTests: XCTestCase {
 
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        Workflow.defaultContainer.removeAll()
     }
-
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    func testPropertyWrapperInjectsFromDefaultContainer() {
+        let car = Car()
+        Workflow.defaultContainer.register(Vehicle.self) { _ in car }
+        class Thing {
+            @DependencyInjected var vehicle:Vehicle?
         }
+        
+        XCTAssertNotNil(Thing().vehicle)
+        XCTAssert(Thing().vehicle is Car)
+        XCTAssert((Thing().vehicle as? Car) === car)
     }
 
+    func testPropertyWrapperWithSpecificName() {
+        let car = Car()
+        Workflow.defaultContainer.register(Vehicle.self, name: "car1") { _ in car }
+        Workflow.defaultContainer.register(Vehicle.self, name: "car2") { _ in Car() }
+        
+        class Thing {
+            @DependencyInjected(name: "car1") var vehicle:Vehicle?
+        }
+        
+        XCTAssertNotNil(Thing().vehicle)
+        XCTAssert(Thing().vehicle is Car)
+        XCTAssert((Thing().vehicle as? Car) === car)
+    }
+    
+    func testPropertyWrapperWithSpecificContainer() {
+        Workflow.defaultContainer.register(Vehicle.self) { _ in Motorcycle() }
+        Thing.container.register(Vehicle.self) { _ in Car() }
+        
+        class Thing {
+            static var container:Container = Container()
+            
+            @DependencyInjected(container: Thing.container) var vehicle:Vehicle?
+        }
+        
+        XCTAssert(Thing().vehicle is Car)
+    }
+
+    func testPropertyWrapperShouldBeLazy() {
+        var callbackCalled = 0
+        Workflow.defaultContainer.register(Vehicle.self) { _ in
+            callbackCalled += 1
+            return Car()
+        }
+        
+        class Thing {
+            @DependencyInjected var vehicle:Vehicle?
+        }
+        
+        let thing = Thing()
+        
+        XCTAssertNotNil(thing.vehicle)
+        XCTAssert(thing.vehicle is Car)
+        XCTAssertEqual(callbackCalled, 1)
+    }
+    
 }
