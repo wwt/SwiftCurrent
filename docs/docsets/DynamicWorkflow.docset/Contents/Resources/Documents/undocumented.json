@@ -93,14 +93,14 @@
     },
     {
       "file": "/Users/thompsty/workspace/Workflow/Workflow/Protocols/Presenter.swift",
-      "line": 26,
+      "line": 27,
       "symbol": "Presenter.destroy(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/thompsty/workspace/Workflow/Workflow/Protocols/Presenter.swift",
-      "line": 37,
+      "line": 38,
       "symbol": "Presenter.destroy(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

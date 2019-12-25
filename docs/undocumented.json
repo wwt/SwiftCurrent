@@ -1,6 +1,13 @@
 {
   "warnings": [
     {
+      "file": "/Users/thompsty/workspace/Workflow/DependencyInjection/DependencyInjected.swift",
+      "line": 13,
+      "symbol": "DependencyInjected",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/thompsty/workspace/Workflow/Workflow/LinkedList/Comparable.swift",
       "line": 11,
       "symbol": "LinkedList.sort()",
