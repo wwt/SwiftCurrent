@@ -1,4 +1,6 @@
 ![Build Status](https://img.shields.io/travis/com/Tyler-Keith-Thompson/Workflow.svg?style=popout) ![Pod Platform](https://img.shields.io/cocoapods/p/DynamicWorkflow.svg?style=popout) ![Pod Version](https://img.shields.io/cocoapods/v/DynamicWorkflow.svg?style=popout)
+![Quality Gate](https://img.shields.io/sonar/quality_gate/Tyler-Keith-Thompson_Workflow?server=https%3A%2F%2Fsonarcloud.io)
+![Coverage](https://img.shields.io/sonar/coverage/Tyler-Keith-Thompson_Workflow?server=http%3A%2F%2Fsonarcloud.io)
 
 ### Welcome to Workflow!
 Workflow is a library meant to handle complex user flows in iOS applications.
