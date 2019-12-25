@@ -117,9 +117,4 @@ extension LinkedList {
         copy?.previous = nil
         return LinkedList(copy)
     }
-    
-//    public func split(maxSplits: Int = Int.max, omittingEmptySubsequences: Bool = true, whereSeparator isSeparator: (Element) throws -> Bool) rethrows -> [SubSequence] {
-//        let splitNodeArr = (try? map { $0 }.split(maxSplits: maxSplits, omittingEmptySubsequences: omittingEmptySubsequences, whereSeparator: isSeparator)) ?? []
-//        return splitNodeArr.map { SubSequence($0.map { $0.value }) }
-//    }
 }

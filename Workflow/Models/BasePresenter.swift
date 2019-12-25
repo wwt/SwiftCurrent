@@ -10,5 +10,7 @@ import Foundation
 open class BasePresenter<T> {
     public typealias ViewType = T
     
-    required public init() { }
+    required public init() {
+        //Meant to be called from subclasses, but presenters *must* contain an empty initializer
+    }
 }

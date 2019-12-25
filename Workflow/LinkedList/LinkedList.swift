@@ -45,32 +45,10 @@ public class LinkedList<Value> : Sequence, CustomStringConvertible {
     /// - Complexity: O(n). The LinkedList must traverse to the end to determine the count
     public var last        : Element? { return first?.traverseToEnd() }
     
-//    /** init(arrayLiteral): A LinkedList can be instantiated with an array literal
-//     ### Example:
-//     ```swift
-//     let list:LinkedList<Int> = [1, 2, 3, 4]
-//     ```
-//    */
-//    required public convenience init(arrayLiteral elements: Value...) {
-//        self.init(elements)
-//    }
-//
-//    /** init(elements): A LinkedList can be instantiated with variadic arguments
-//     ### Example:
-//     ```swift
-//     let list = LinkedList<Int>(1, 2, 3, 4)
-//     ```
-//     */
     public convenience init(_ elements: Value...) {
         self.init(elements)
     }
-//
-//    /** init(elements): A LinkedList can be instantiated with an array
-//     ### Example:
-//     ```swift
-//     let list = LinkedList<Int>([1, 2, 3, 4])
-//     ```
-//     */
+
     public convenience init(_ elements: [Value])  {
         let collection = elements.map { Element(with: $0) }
         for (i, node) in collection.enumerated() {
