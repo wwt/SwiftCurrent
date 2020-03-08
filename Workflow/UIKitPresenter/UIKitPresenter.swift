@@ -16,6 +16,26 @@ extension NSObject {
     }
 }
 
+extension UIModalPresentationStyle {
+    static func styleFor(_ style: PresentationType.ModalPresentationStyle) -> UIModalPresentationStyle? {
+        switch style {
+            case .fullScreen: return .fullScreen
+            case .pageSheet: return .pageSheet
+            case .formSheet: return .formSheet
+            case .currentContext: return .currentContext
+            case .custom: return .custom
+            case .overFullScreen: return .overFullScreen
+            case .overCurrentContext: return .overCurrentContext
+            case .popover: return .popover
+            case .automatic: if #available(iOS 13.0, *) {
+                return .automatic
+            }
+            default: return nil
+        }
+        return nil
+    }
+}
+
 open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
     public func destroy(_ view: UIViewController) {
         if let nav = view.navigationController {
@@ -41,7 +61,10 @@ open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
     public func launch(view: UIViewController, from root: UIViewController, withLaunchStyle launchStyle:PresentationType = .default, metadata: FlowRepresentableMetaData, animated:Bool, completion: @escaping () -> Void) {
         switch launchStyle {
             case .default:
-                if metadata.presentationType == .modally {
+                if case .modal(let style) = metadata.presentationType {
+                    if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
+                        view.modalPresentationStyle = modalPresentationStyle
+                    }
                     root.present(view, animated: animated, completion: completion)
                 } else if let nav = root.navigationController
                     ?? root as? UINavigationController {
@@ -50,11 +73,17 @@ open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
                 } else {
                     root.present(view, animated: animated, completion: completion)
                 }
-            case .modally:
+            case .modal(let style):
                 if metadata.presentationType == .navigationStack {
                     let nav = UINavigationController(rootViewController: view)
+                    if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
+                        nav.modalPresentationStyle = modalPresentationStyle
+                    }
                     root.present(nav, animated: animated, completion: completion)
                 } else {
+                    if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
+                        view.modalPresentationStyle = modalPresentationStyle
+                    }
                     root.present(view, animated: animated, completion: completion)
                 }
             case .navigationStack:

@@ -20,7 +20,7 @@ class PickupOrDeliveryViewController: UIWorkflowItem<Order>, StoryboardLoadable 
     @IBAction func selectDelivery() {
         let workflow = Workflow()
             .thenPresent(EnterAddressViewController.self)
-        launchInto(workflow, args: order, withLaunchStyle: .modally) { [weak self] (order) in
+        launchInto(workflow, args: order, withLaunchStyle: .modal) { [weak self] (order) in
             workflow.abandon()
             self?.proceedInWorkflow(order)
         }

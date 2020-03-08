@@ -19,16 +19,17 @@ public enum PresentationType {
     /// - Note: If no current navigation stack is available, one will be created
     case navigationStack
     /// modally: Indicates a `FlowRepresentable` should be launched modally
-    case modally(ModalPresentationStyle = .automatic)
+    case modal(ModalPresentationStyle = .default)
     /// default: Indicates a `FlowRepresentable` can be launched contextually
     /// - Note: If there's already a navigation stack, it will be used. Otherwise views will present modally
     case `default`
     
-    public static var modally:PresentationType {
-        return .modally()
+    public static var modal:PresentationType {
+        return .modal()
     }
     
     public enum ModalPresentationStyle {
+        case `default`
         case fullScreen
         case pageSheet
         case formSheet
@@ -37,7 +38,6 @@ public enum PresentationType {
         case overFullScreen
         case overCurrentContext
         case popover
-        case none
         case automatic
     }
 }
@@ -47,7 +47,7 @@ extension PresentationType: Equatable {
         switch (lhs, rhs) {
             case (.navigationStack, .navigationStack): return true
             case (.default, .default): return true
-            case (.modally(let pres1), .modally(let pres2)): return pres1 == pres2
+            case (.modal(let pres1), .modal(let pres2)): return pres1 == pres2
             default: return false
         }
     }

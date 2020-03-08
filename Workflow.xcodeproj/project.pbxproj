@@ -12,6 +12,7 @@
 		1D08D92523A9C03E00EF05C1 /* Workflow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADD8235E2312CC6300D77D3C /* Workflow.framework */; };
 		1D08D92823A9C11D00EF05C1 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D08D90123A97D3400EF05C1 /* DIContainer.swift */; };
 		1D08D92923A9C12400EF05C1 /* DependencyInjected.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D08D8FF23A97CAA00EF05C1 /* DependencyInjected.swift */; };
+		1D7092F624150BB70018F04D /* ModalStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7092F524150BB70018F04D /* ModalStyleTests.swift */; };
 		27472C9F972F4D5C4F5D2A29 /* Pods_WorkflowExample_WorkflowExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09E02615312015EBAC53492E /* Pods_WorkflowExample_WorkflowExampleTests.framework */; };
 		7339A5C72AEF92812564A3A2 /* Pods_WorkflowExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F410624365BB7807E12BEA08 /* Pods_WorkflowExample.framework */; };
 		AD2AEA01231C757A0069F9B4 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2AEA00231C757A0069F9B4 /* Location.swift */; };
@@ -109,6 +110,7 @@
 		1D08D91523A9C01500EF05C1 /* DependencyInjectionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DependencyInjectionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D08D91A23A9C01500EF05C1 /* DependencyInjectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjectionTests.swift; sourceTree = "<group>"; };
 		1D08D91C23A9C01500EF05C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D7092F524150BB70018F04D /* ModalStyleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalStyleTests.swift; sourceTree = "<group>"; };
 		33A2FC4E659AC99A82ECE86B /* Pods-WorkflowExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkflowExample.release.xcconfig"; path = "Target Support Files/Pods-WorkflowExample/Pods-WorkflowExample.release.xcconfig"; sourceTree = "<group>"; };
 		356DB6CB5C8022ACC4891ED9 /* Pods-WorkflowTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkflowTests.debug.xcconfig"; path = "Target Support Files/Pods-WorkflowTests/Pods-WorkflowTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4F790BC10E63BF4E7DABAD9D /* Pods-DependencyInjection.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DependencyInjection.debug.xcconfig"; path = "Target Support Files/Pods-DependencyInjection/Pods-DependencyInjection.debug.xcconfig"; sourceTree = "<group>"; };
@@ -255,6 +257,15 @@
 			path = DependencyInjectionTests;
 			sourceTree = "<group>";
 		};
+		1D7092F424150BA60018F04D /* UIKitPresenter */ = {
+			isa = PBXGroup;
+			children = (
+				AD4AA2A72314635B00C3C95E /* UIKitPresenterTests.swift */,
+				1D7092F524150BB70018F04D /* ModalStyleTests.swift */,
+			);
+			path = UIKitPresenter;
+			sourceTree = "<group>";
+		};
 		867ECA52B1C8FDC1F385611F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -367,12 +378,12 @@
 		ADD8236B2312CC6300D77D3C /* WorkflowTests */ = {
 			isa = PBXGroup;
 			children = (
+				1D7092F424150BA60018F04D /* UIKitPresenter */,
 				AD4AA2D42315C59200C3C95E /* WaitUntil.swift */,
 				ADD823902312CEDE00D77D3C /* LinkedListTests.swift */,
 				ADD8236C2312CC6300D77D3C /* WorkflowTests.swift */,
 				ADD8236E2312CC6300D77D3C /* Info.plist */,
 				AD4AA2A5231462D200C3C95E /* TopViewController.swift */,
-				AD4AA2A72314635B00C3C95E /* UIKitPresenterTests.swift */,
 				AD8B6C762319E8B200781B01 /* Screen.swift */,
 				AD9C788A231DB9B400859E18 /* CustomAssertions.swift */,
 			);
@@ -929,6 +940,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD4AA2A6231462D200C3C95E /* TopViewController.swift in Sources */,
+				1D7092F624150BB70018F04D /* ModalStyleTests.swift in Sources */,
 				AD4AA2A82314635B00C3C95E /* UIKitPresenterTests.swift in Sources */,
 				AD8B6C772319E8B200781B01 /* Screen.swift in Sources */,
 				ADD823912312CEDE00D77D3C /* LinkedListTests.swift in Sources */,
