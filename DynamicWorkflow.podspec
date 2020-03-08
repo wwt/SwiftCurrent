@@ -12,7 +12,7 @@ iOS has a linear paradigm for navigation that doesn't support a lot of flexibili
   s.source           = { :git => 'https://github.com/Tyler-Keith-Thompson/Workflow.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '11.0'
-  s.swift_version = '5'
+  s.swift_version = '5.1'
 
   s.source_files = 'Workflow/**/*.{swift,h,m}'
 

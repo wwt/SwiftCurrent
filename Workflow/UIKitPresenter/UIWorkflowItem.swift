@@ -37,10 +37,6 @@ import UIKit
      public typealias IntakeType = I
  
      public weak var workflow: Workflow?
- 
-     open var preferredLaunchStyle:PresentationType {
-         return .default
-     }
  }
  ```
  */
@@ -51,8 +47,4 @@ open class UIWorkflowItem<I>: UIViewController {
     public typealias IntakeType = I
     
     public weak var workflow: Workflow?
-    
-    open var preferredLaunchStyle:PresentationType {
-        return .default
-    }
 }

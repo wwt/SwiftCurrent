@@ -32,7 +32,7 @@ import Foundation
  }
  ```
  */
-public class Workflow: LinkedList<FlowRepresentableMetaData>, ExpressibleByArrayLiteral {
+public class Workflow: LinkedList<FlowRepresentableMetaData> {
     public typealias ArrayLiteralElement = AnyFlowRepresentable.Type
     internal var instances = LinkedList<AnyFlowRepresentable?>()
     internal var presenter:AnyPresenter?
@@ -47,29 +47,6 @@ public class Workflow: LinkedList<FlowRepresentableMetaData>, ExpressibleByArray
         super.init(node)
     }
     
-    required public convenience init(arrayLiteral elements: ArrayLiteralElement...) {
-        self.init(elements)
-    }
-    
-    public convenience init(_ elements: AnyFlowRepresentable.Type...) {
-        self.init(elements)
-    }
-    
-    public convenience init(_ elements: [AnyFlowRepresentable.Type])  {
-        let collection = elements.map {
-            Element(with:
-                FlowRepresentableMetaData($0,
-                                          staysInViewStack: { _ in .default })
-            )
-        }
-        for (i, node) in collection.enumerated() {
-            node.previous = collection[safe: i-1]
-            node.next = collection[safe: i+1]
-        }
-
-        self.init(collection.first)
-    }
-    
     deinit {
         removeInstances()
         presenter = nil
@@ -80,7 +57,7 @@ public class Workflow: LinkedList<FlowRepresentableMetaData>, ExpressibleByArray
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
     /// - Parameter staysInViewStack: An `ViewPersistance`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
-    public func thenPresent<F>(_ type:F.Type, presentationType:PresentationType? = nil, staysInViewStack:@escaping @autoclosure () -> ViewPersistance = .default) -> Workflow where F: FlowRepresentable {
+    public func thenPresent<F>(_ type:F.Type, presentationType:PresentationType = .default, staysInViewStack:@escaping @autoclosure () -> ViewPersistance = .default) -> Workflow where F: FlowRepresentable {
         let wf = Workflow(first)
         wf.append(FlowRepresentableMetaData(type,
                                             presentationType: presentationType,
@@ -93,7 +70,7 @@ public class Workflow: LinkedList<FlowRepresentableMetaData>, ExpressibleByArray
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
     /// - Parameter staysInViewStack: A closure taking in the generic type from the `FlowRepresentable` and returning a `ViewPersistance`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
-    public func thenPresent<F>(_ type:F.Type, presentationType:PresentationType? = nil, staysInViewStack:@escaping (F.IntakeType) -> ViewPersistance) -> Workflow where F: FlowRepresentable {
+    public func thenPresent<F>(_ type:F.Type, presentationType:PresentationType = .default, staysInViewStack:@escaping (F.IntakeType) -> ViewPersistance) -> Workflow where F: FlowRepresentable {
         let wf = Workflow(first)
         wf.append(FlowRepresentableMetaData(type,
                                             presentationType: presentationType,
@@ -109,7 +86,7 @@ public class Workflow: LinkedList<FlowRepresentableMetaData>, ExpressibleByArray
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
     /// - Parameter staysInViewStack: A closure returning a `ViewPersistance`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
-    public func thenPresent<F>(_ type:F.Type, presentationType:PresentationType? = nil, staysInViewStack:@escaping () -> ViewPersistance) -> Workflow where F: FlowRepresentable, F.IntakeType == Never {
+    public func thenPresent<F>(_ type:F.Type, presentationType:PresentationType = .default, staysInViewStack:@escaping () -> ViewPersistance) -> Workflow where F: FlowRepresentable, F.IntakeType == Never {
         let wf = Workflow(first)
         wf.append(FlowRepresentableMetaData(type,
                                             presentationType: presentationType,
@@ -159,7 +136,7 @@ public class Workflow: LinkedList<FlowRepresentableMetaData>, ExpressibleByArray
                     rootView = flowRepresentable
                     self.presenter?.launch(view: flowRepresentable,
                                            from: from,
-                                           withLaunchStyle: metadata.presentationType ?? flowRepresentable.preferredLaunchStyle, metadata: metadata,
+                                           withLaunchStyle: metadata.presentationType, metadata: metadata,
                                            animated: false,
                                            completion: nil)
 
@@ -224,7 +201,7 @@ public class Workflow: LinkedList<FlowRepresentableMetaData>, ExpressibleByArray
                     viewToPresent = instance
                     self.presenter?.launch(view: instance,
                                            from: self.instances.first?.traverse(node.position)?.value,
-                                           withLaunchStyle: metadata.presentationType ?? instance.preferredLaunchStyle, metadata: metadata, animated: false, completion: nil)
+                                           withLaunchStyle: metadata.presentationType, metadata: metadata, animated: false, completion: nil)
 
                 }
                 
@@ -246,7 +223,7 @@ public class Workflow: LinkedList<FlowRepresentableMetaData>, ExpressibleByArray
             
             self.presenter?.launch(view: instanceToPresent,
                                    from: viewToPresent,
-                                   withLaunchStyle: metadata.presentationType ?? instanceToPresent.preferredLaunchStyle, metadata: metadata, animated: true) {
+                                   withLaunchStyle: metadata.presentationType, metadata: metadata, animated: true) {
                 if shouldDestroy {
                     self.presenter?.destroy(self.instances.first?.traverse(node.position)?.value)
                 }
@@ -258,8 +235,8 @@ public class Workflow: LinkedList<FlowRepresentableMetaData>, ExpressibleByArray
 public class FlowRepresentableMetaData {
     private(set) var flowRepresentableType:AnyFlowRepresentable.Type
     private(set) var staysInViewStack:(Any?) -> ViewPersistance
-    private(set) var presentationType:PresentationType?
-    internal init(_ flowRepresentableType:AnyFlowRepresentable.Type, presentationType:PresentationType? = nil, staysInViewStack:@escaping (Any?) -> ViewPersistance) {
+    private(set) var presentationType:PresentationType
+    internal init(_ flowRepresentableType:AnyFlowRepresentable.Type, presentationType:PresentationType = .default, staysInViewStack:@escaping (Any?) -> ViewPersistance) {
         self.flowRepresentableType = flowRepresentableType
         self.staysInViewStack = staysInViewStack
         self.presentationType = presentationType

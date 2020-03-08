@@ -15,8 +15,6 @@ import UIUTest
 class WorkflowTests: XCTestCase {
     func testFlowRepresentablesWithMultipleTypesCanBeStoredInAnArray() {
         class FR1: FlowRepresentable {
-            var preferredLaunchStyle: PresentationType = .default
-            
             var presenter: AnyPresenter?
             
             var workflow: Workflow?
@@ -34,8 +32,6 @@ class WorkflowTests: XCTestCase {
             }
         }
         class FR2: FlowRepresentable {
-            var preferredLaunchStyle: PresentationType = .default
-
             var presenter: AnyPresenter?
             
             var workflow: Workflow?
@@ -64,8 +60,6 @@ class WorkflowTests: XCTestCase {
     
     func testFlowRepresentablesThatDefineAnIntakeTypeOfOptionalAnyDoesNotRecurseForever() {
         class FR1: FlowRepresentable {
-            var preferredLaunchStyle: PresentationType = .default
-
             var presenter: AnyPresenter?
             
             var workflow: Workflow?
@@ -96,7 +90,11 @@ class WorkflowTests: XCTestCase {
         class TestView { }
         
         let presenter = TestPresenter()
-        let wf:Workflow = [FR1.self, FR2.self, FR3.self]
+        let wf = Workflow()
+            .thenPresent(FR1.self)
+            .thenPresent(FR2.self)
+            .thenPresent(FR3.self)
+        
         wf.applyPresenter(presenter)
         
         let view = TestView()
@@ -115,7 +113,7 @@ class WorkflowTests: XCTestCase {
     }
     
     func testWorkflowReturnsNilWhenLaunchingWithoutRepresentables() {
-        let wf:Workflow = []
+        let wf:Workflow = Workflow()
         XCTAssertNil(wf.launch(from: nil, with: nil))
     }
     
@@ -128,7 +126,9 @@ class WorkflowTests: XCTestCase {
         }
         class TestView { }
         
-        let wf:Workflow = [FR1.self, FR2.self]
+        let wf:Workflow = Workflow()
+            .thenPresent(FR1.self)
+            .thenPresent(FR2.self)
         
         let view = TestView()
         var callbackCalled = false
@@ -192,7 +192,6 @@ class WorkflowTests: XCTestCase {
     
     class TestFlowRepresentable<I> {
         required init() { }
-        var preferredLaunchStyle: PresentationType = .default
 
         var proceedInWorkflow: ((Any?) -> Void)?
         
