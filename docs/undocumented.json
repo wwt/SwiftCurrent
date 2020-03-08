@@ -44,14 +44,14 @@
     },
     {
       "file": "/Users/thompsty/workspace/Workflow/Workflow/LinkedList/LinkedList.swift",
-      "line": 64,
+      "line": 48,
       "symbol": "LinkedList.init(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/thompsty/workspace/Workflow/Workflow/LinkedList/LinkedList.swift",
-      "line": 74,
+      "line": 52,
       "symbol": "LinkedList.init(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -64,36 +64,50 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/Models/PresentationType.swift",
+      "line": 27,
+      "symbol": "PresentationType.modally",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/Models/PresentationType.swift",
+      "line": 31,
+      "symbol": "PresentationType.ModalPresentationStyle",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/thompsty/workspace/Workflow/Workflow/Protocols/FlowRepresentable.swift",
-      "line": 48,
+      "line": 46,
       "symbol": "FlowRepresentable.shouldLoad()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/thompsty/workspace/Workflow/Workflow/Protocols/FlowRepresentable.swift",
-      "line": 52,
+      "line": 50,
       "symbol": "FlowRepresentable.shouldLoad()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/thompsty/workspace/Workflow/Workflow/Protocols/FlowRepresentable.swift",
-      "line": 58,
+      "line": 56,
       "symbol": "FlowRepresentable.erasedShouldLoad(with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/thompsty/workspace/Workflow/Workflow/Protocols/FlowRepresentable.swift",
-      "line": 75,
+      "line": 71,
       "symbol": "FlowRepresentable.erasedShouldLoad(with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/thompsty/workspace/Workflow/Workflow/Protocols/FlowRepresentable.swift",
-      "line": 80,
+      "line": 76,
       "symbol": "FlowRepresentable.proceedInWorkflow(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -114,21 +128,14 @@
     },
     {
       "file": "/Users/thompsty/workspace/Workflow/Workflow/Protocols/TypeErased/AnyFlowRepresentable.swift",
-      "line": 17,
-      "symbol": "AnyFlowRepresentable.preferredLaunchStyle",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/thompsty/workspace/Workflow/Workflow/Protocols/TypeErased/AnyFlowRepresentable.swift",
-      "line": 21,
+      "line": 18,
       "symbol": "AnyFlowRepresentable.proceedInWorkflow",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/thompsty/workspace/Workflow/Workflow/Protocols/TypeErased/AnyFlowRepresentable.swift",
-      "line": 23,
+      "line": 20,
       "symbol": "AnyFlowRepresentable.erasedShouldLoad(with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -149,37 +156,37 @@
     },
     {
       "file": "/Users/thompsty/workspace/Workflow/Workflow/UIKitPresenter/UIKitPresenter.swift",
-      "line": 114,
+      "line": 112,
       "symbol": "FlowRepresentable.abandonWorkflow()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/thompsty/workspace/Workflow/Workflow/UIKitPresenter/UIWorkflowItem.swift",
-      "line": 49,
+      "line": 45,
       "symbol": "UIWorkflowItem.proceedInWorkflow",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/thompsty/workspace/Workflow/Workflow/UIKitPresenter/UIWorkflowItem.swift",
-      "line": 51,
+      "line": 47,
       "symbol": "UIWorkflowItem.IntakeType",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
       "file": "/Users/thompsty/workspace/Workflow/Workflow/UIKitPresenter/UIWorkflowItem.swift",
-      "line": 53,
+      "line": 49,
       "symbol": "UIWorkflowItem.workflow",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/thompsty/workspace/Workflow/Workflow/UIKitPresenter/UIWorkflowItem.swift",
-      "line": 55,
-      "symbol": "UIWorkflowItem.preferredLaunchStyle",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "file": "/Users/thompsty/workspace/Workflow/Workflow/Workflow.swift",
+      "line": 36,
+      "symbol": "Workflow.ArrayLiteralElement",
+      "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
@@ -198,35 +205,21 @@
     },
     {
       "file": "/Users/thompsty/workspace/Workflow/Workflow/Workflow.swift",
-      "line": 54,
-      "symbol": "Workflow.init(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/thompsty/workspace/Workflow/Workflow/Workflow.swift",
-      "line": 58,
-      "symbol": "Workflow.init(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/thompsty/workspace/Workflow/Workflow/Workflow.swift",
-      "line": 122,
+      "line": 99,
       "symbol": "Workflow.applyPresenter(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/thompsty/workspace/Workflow/Workflow/Workflow.swift",
-      "line": 126,
+      "line": 103,
       "symbol": "Workflow.launch(from:with:withLaunchStyle:onFinish:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/thompsty/workspace/Workflow/Workflow/Workflow.swift",
-      "line": 258,
+      "line": 235,
       "symbol": "FlowRepresentableMetaData",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"

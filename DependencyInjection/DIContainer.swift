@@ -20,7 +20,7 @@ public extension Workflow {
     /// - Parameter staysInViewStack: An `ViewPersistance`type representing how this item in the workflow should persist.
     /// - Parameter dependencyInjectionSetup: A closure that hands off a `Container` for you to set up Dependency Injection
     /// - Returns: `Workflow`
-    func thenPresent<F>(_ type:F.Type, presentationType:PresentationType? = nil, staysInViewStack:@escaping @autoclosure () -> ViewPersistance = .default, dependencyInjectionSetup: ((Container) -> Void)? = nil) -> Workflow where F: FlowRepresentable {
+    func thenPresent<F>(_ type:F.Type, presentationType:PresentationType = .default, staysInViewStack:@escaping @autoclosure () -> ViewPersistance = .default, dependencyInjectionSetup: ((Container) -> Void)? = nil) -> Workflow where F: FlowRepresentable {
         let wf = Workflow(first)
         dependencyInjectionSetup?(Workflow.defaultContainer)
         wf.append(FlowRepresentableMetaData(type,
@@ -35,7 +35,7 @@ public extension Workflow {
     /// - Parameter staysInViewStack: A closure taking in the generic type from the `FlowRepresentable` and returning a `ViewPersistance`type representing how this item in the workflow should persist.
     /// - Parameter dependencyInjectionSetup: A closure that hands off a `Container` for you to set up Dependency Injection
     /// - Returns: `Workflow`
-    func thenPresent<F>(_ type:F.Type, presentationType:PresentationType? = nil, staysInViewStack:@escaping (F.IntakeType) -> ViewPersistance, dependencyInjectionSetup: ((Container) -> Void)? = nil) -> Workflow where F: FlowRepresentable {
+    func thenPresent<F>(_ type:F.Type, presentationType:PresentationType = .default, staysInViewStack:@escaping (F.IntakeType) -> ViewPersistance, dependencyInjectionSetup: ((Container) -> Void)? = nil) -> Workflow where F: FlowRepresentable {
         let wf = Workflow(first)
         dependencyInjectionSetup?(Workflow.defaultContainer)
         wf.append(FlowRepresentableMetaData(type,
@@ -53,7 +53,7 @@ public extension Workflow {
     /// - Parameter staysInViewStack: A closure returning a `ViewPersistance`type representing how this item in the workflow should persist.
     /// - Parameter dependencyInjectionSetup: A closure that hands off a `Container` for you to set up Dependency Injection
     /// - Returns: `Workflow`
-    func thenPresent<F>(_ type:F.Type, presentationType:PresentationType? = nil, staysInViewStack:@escaping () -> ViewPersistance, dependencyInjectionSetup: ((Container) -> Void)? = nil) -> Workflow where F: FlowRepresentable, F.IntakeType == Never {
+    func thenPresent<F>(_ type:F.Type, presentationType:PresentationType = .default, staysInViewStack:@escaping () -> ViewPersistance, dependencyInjectionSetup: ((Container) -> Void)? = nil) -> Workflow where F: FlowRepresentable, F.IntakeType == Never {
         let wf = Workflow(first)
         dependencyInjectionSetup?(Workflow.defaultContainer)
         wf.append(FlowRepresentableMetaData(type,

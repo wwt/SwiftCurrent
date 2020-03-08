@@ -25,18 +25,4 @@ class SetupViewControllerTests: ViewControllerTest<SetupViewController> {
             ReviewOrderViewController.self,
         ])
     }
-    
-    func testLaunchingMultiLocationWorkflowWithFluentAPI() {
-        let listener = WorkflowListener()
-        
-        testViewController.launchMultiLocationWorkflowWithFluidAPI()
-        
-        XCTAssertWorkflowLaunched(listener: listener, expectedFlowRepresentables: [
-            LocationsViewController.self,
-            PickupOrDeliveryViewController.self,
-            MenuSelectionViewController.self,
-            FoodSelectionViewController.self,
-            ReviewOrderViewController.self,
-        ])
-    }
 }

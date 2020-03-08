@@ -12,9 +12,6 @@ import Foundation
  AnyFlowRepresentable: A type erased version of 'FlowRepresentable'. Generally speaking don't use this directly, use FlowRepresentable instead.
  */
 public protocol AnyFlowRepresentable {
-    @available(*, deprecated, message: "PresentationType on FlowRepresentables is deprecated, please use the fluent API with workflow to specify presentation styles. Workflow().thenPresent(<#SomeFlowRepresentable#>.self, presentationType: <#preferredLaunchStyle#>)")
-    /// preferredLaunchStyle: Gives the ability for a `FlowRepresentable` to describe how it best shows up. For example a view can claim it preferrs to be launched in a navigationStack
-    var preferredLaunchStyle:PresentationType { get }
     /// workflow: Access to the `Workflow` controlling the `FlowRepresentable`. A common use case may be a `FlowRepresentable` that wants to abandon the `Workflow` it's in.
     /// - Note: While not strictly necessary it would be wise to declare this property as `weak`
     var workflow:Workflow? { get set }
