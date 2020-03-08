@@ -42,6 +42,7 @@ class ModalStyleTests: XCTestCase {
                              presentationType: .modal(.pageSheet)))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
+        
         XCTAssertEqual(UIApplication.topViewController()?.modalPresentationStyle, .pageSheet)
     }
     

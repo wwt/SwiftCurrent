@@ -64,6 +64,26 @@
                BlueprintName = "WorkflowTests"
                ReferencedContainer = "container:Workflow.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "ModalStyleTests/testShowModalAsFormSheet()">
+               </Test>
+               <Test
+                  Identifier = "ModalStyleTests/testShowModalAsFormSheet_FromLaunch()">
+               </Test>
+               <Test
+                  Identifier = "ModalStyleTests/testShowModalAsFormSheet_FromLaunch_WithFirstScreenOnANavController()">
+               </Test>
+               <Test
+                  Identifier = "ModalStyleTests/testShowModalAsPageSheet()">
+               </Test>
+               <Test
+                  Identifier = "ModalStyleTests/testShowModalAsPageSheet_FromLaunch()">
+               </Test>
+               <Test
+                  Identifier = "ModalStyleTests/testShowModalAsPageSheet_FromLaunch_WithFirstScreenOnANavController()">
+               </Test>
+            </SkippedTests>
          </TestableReference>
          <TestableReference
             skipped = "NO">
