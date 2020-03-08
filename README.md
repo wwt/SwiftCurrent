@@ -28,17 +28,16 @@ Finally the review screen would be really nice if it gave a way to edit. This sp
 DynamicWorkflow lets you specify once what the whole workflow looks like, then each view controller defines whether it should show up or not, so to solve the above problem you'd use something like this.
 
 ```swift
-let workflow:Workflow = [
-    LocationsViewController.self,
-    PickupOrDeliveryViewController.self,
-    MenuChooserViewController.self,
-    FoodChooserViewController.self,
-    ReviewOrderViewController.self,
-    SubmitPaymentViewController.self
-]
+let workflow = Workflow()
+                .thenPresent(LocationsViewController.self)
+                .thenPresent(PickupOrDeliveryViewController.self)
+                .thenPresent(MenuChooserViewController.self)
+                .thenPresent(FoodChooserViewController.self)
+                .thenPresent(ReviewOrderViewController.self)
+                .thenPresent(SubmitPaymentViewController.self)
 
 //from wherever this flow is launched
 launchInto(workflow)
 ```
 
-If you ever want to re-order these you simply move their position in the array. Your ViewControllers will be naturally start to become defined in a way where they can be injected into any kind of workflow and so if for scheduled orders you want screens to show up in a different order, you just define a new `Workflow`.
+If you ever want to re-order these you simply move their position in the chain. Your ViewControllers will be naturally start to become defined in a way where they can be injected into any kind of workflow and so if for scheduled orders you want screens to show up in a different order, you just define a new `Workflow`.
