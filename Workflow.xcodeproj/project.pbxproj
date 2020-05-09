@@ -13,6 +13,9 @@
 		1D08D92823A9C11D00EF05C1 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D08D90123A97D3400EF05C1 /* DIContainer.swift */; };
 		1D08D92923A9C12400EF05C1 /* DependencyInjected.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D08D8FF23A97CAA00EF05C1 /* DependencyInjected.swift */; };
 		1D7092F624150BB70018F04D /* ModalStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7092F524150BB70018F04D /* ModalStyleTests.swift */; };
+		1DD744A42466F99E00BB1884 /* WorkflowListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD744A32466F99E00BB1884 /* WorkflowListener.swift */; };
+		1DD744A62466FA0000BB1884 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DD744A52466FA0000BB1884 /* XCTest.framework */; };
+		1DD744A82467609D00BB1884 /* MockPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD744A72467609D00BB1884 /* MockPresenter.swift */; };
 		27472C9F972F4D5C4F5D2A29 /* Pods_WorkflowExample_WorkflowExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09E02615312015EBAC53492E /* Pods_WorkflowExample_WorkflowExampleTests.framework */; };
 		7339A5C72AEF92812564A3A2 /* Pods_WorkflowExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F410624365BB7807E12BEA08 /* Pods_WorkflowExample.framework */; };
 		AD2AEA01231C757A0069F9B4 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2AEA00231C757A0069F9B4 /* Location.swift */; };
@@ -111,6 +114,9 @@
 		1D08D91A23A9C01500EF05C1 /* DependencyInjectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjectionTests.swift; sourceTree = "<group>"; };
 		1D08D91C23A9C01500EF05C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D7092F524150BB70018F04D /* ModalStyleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalStyleTests.swift; sourceTree = "<group>"; };
+		1DD744A32466F99E00BB1884 /* WorkflowListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowListener.swift; sourceTree = "<group>"; };
+		1DD744A52466FA0000BB1884 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		1DD744A72467609D00BB1884 /* MockPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPresenter.swift; sourceTree = "<group>"; };
 		33A2FC4E659AC99A82ECE86B /* Pods-WorkflowExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkflowExample.release.xcconfig"; path = "Target Support Files/Pods-WorkflowExample/Pods-WorkflowExample.release.xcconfig"; sourceTree = "<group>"; };
 		356DB6CB5C8022ACC4891ED9 /* Pods-WorkflowTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkflowTests.debug.xcconfig"; path = "Target Support Files/Pods-WorkflowTests/Pods-WorkflowTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4F790BC10E63BF4E7DABAD9D /* Pods-DependencyInjection.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DependencyInjection.debug.xcconfig"; path = "Target Support Files/Pods-DependencyInjection/Pods-DependencyInjection.debug.xcconfig"; sourceTree = "<group>"; };
@@ -213,6 +219,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DD744A62466FA0000BB1884 /* XCTest.framework in Frameworks */,
 				FD64E72C1869DD8B92AC3061 /* Pods_Workflow.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -266,9 +273,18 @@
 			path = UIKitPresenter;
 			sourceTree = "<group>";
 		};
+		1DD744A22466F98800BB1884 /* DebugOnly */ = {
+			isa = PBXGroup;
+			children = (
+				ADEE7762233C2D5B007E9FD2 /* WorkflowNotifications.swift */,
+			);
+			path = DebugOnly;
+			sourceTree = "<group>";
+		};
 		867ECA52B1C8FDC1F385611F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1DD744A52466FA0000BB1884 /* XCTest.framework */,
 				93153A9A1549D7ECC6FF5A30 /* Pods_Workflow.framework */,
 				D2B5B41A4F86FDBF12D88F62 /* Pods_WorkflowTests.framework */,
 				F410624365BB7807E12BEA08 /* Pods_WorkflowExample.framework */,
@@ -370,6 +386,7 @@
 				ADD823612312CC6300D77D3C /* Workflow.h */,
 				ADD823622312CC6300D77D3C /* Info.plist */,
 				ADD8239723145AD800D77D3C /* Workflow.swift */,
+				1DD744A22466F98800BB1884 /* DebugOnly */,
 				ADEE7761233C2D4A007E9FD2 /* TestOnly */,
 			);
 			path = Workflow;
@@ -468,7 +485,8 @@
 		ADEE7761233C2D4A007E9FD2 /* TestOnly */ = {
 			isa = PBXGroup;
 			children = (
-				ADEE7762233C2D5B007E9FD2 /* WorkflowNotifications.swift */,
+				1DD744A32466F99E00BB1884 /* WorkflowListener.swift */,
+				1DD744A72467609D00BB1884 /* MockPresenter.swift */,
 			);
 			path = TestOnly;
 			sourceTree = "<group>";
@@ -915,12 +933,14 @@
 				AD8BEBEB2318313C0071A83D /* PresentationType.swift in Sources */,
 				AD8BEBE6231830860071A83D /* BasePresenter.swift in Sources */,
 				ADD8239823145AD800D77D3C /* Workflow.swift in Sources */,
+				1DD744A82467609D00BB1884 /* MockPresenter.swift in Sources */,
 				ADD8238B2312CE5900D77D3C /* LinkedList.swift in Sources */,
 				ADEE7763233C2D5B007E9FD2 /* WorkflowNotifications.swift in Sources */,
 				ADD823852312CE5900D77D3C /* Sorting.swift in Sources */,
 				AD8BEBE9231830B50071A83D /* UIWorkflowItem.swift in Sources */,
 				ADD823872312CE5900D77D3C /* NonMutatingOperations.swift in Sources */,
 				ADD8239423139E2700D77D3C /* AnyFlowRepresentable.swift in Sources */,
+				1DD744A42466F99E00BB1884 /* WorkflowListener.swift in Sources */,
 				ADD823792312CC7E00D77D3C /* FlowRepresentable.swift in Sources */,
 				ADD8238A2312CE5900D77D3C /* Node.swift in Sources */,
 				1D08D92823A9C11D00EF05C1 /* DIContainer.swift in Sources */,
@@ -1228,6 +1248,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = tt.Workflow;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -1257,6 +1278,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = tt.Workflow;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";

@@ -20,5 +20,5 @@ git tag "`podspec-bump --dump-version`"
 git push https://${PERSONAL_ACCESS_TOKEN}@github.com/Tyler-Keith-Thompson/Workflow.git HEAD -u $(podspec-bump --dump-version)
 git reset --hard
 git clean -df
-curl --data "{\"tag_name\": \"`podspec-bump --dump-version`\",\"target_commitish\": \"master\",\"name\": \"`podspec-bump --dump-version`\",\"body\": \"Release of version `podspec-bump --dump-version`\",\"draft\": false,\"prerelease\": false}" "https://api.github.com/repos/Tyler-Keith-Thompson/Workflow/releases?access_token=$PERSONAL_ACCESS_TOKEN"
+curl --data "{\"tag_name\": \"`podspec-bump --dump-version`\",\"target_commitish\": \"master\",\"name\": \"`podspec-bump --dump-version`\",\"body\": \"Release of version `podspec-bump --dump-version`\",\"draft\": false,\"prerelease\": false}" -H "Authorization: token $PERSONAL_ACCESS_TOKEN" "https://api.github.com/repos/Tyler-Keith-Thompson/Workflow/releases"
 pod trunk push DynamicWorkflow.podspec --allow-warnings

@@ -6,7 +6,16 @@ xcode_workspace: Workflow.xcworkspace
 xcode_scheme: Workflow
 xcode_destination: platform=iOS Simulator,name=iPhone 8
 before_install:
-- pod install --repo-update
+  - brew cask install adoptopenjdk/openjdk/adoptopenjdk8
+  - brew install jenv
+  - export PATH="$HOME/.jenv/bin:$PATH"
+  - eval "$(jenv init -)"
+  - jenv add /Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/
+  - jenv global 1.8
+  - java -version
+  - gem install cocoapods -v 1.8.4
+  - pod _1.8.4_ install --repo-update
+
 install:
   - bundle install
 script:
