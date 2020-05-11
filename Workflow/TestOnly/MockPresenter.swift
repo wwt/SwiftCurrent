@@ -6,6 +6,7 @@
 //  Copyright © 2020 Tyler Thompson. All rights reserved.
 //
 
+#if DEBUG
 import Foundation
 public class MockPresenter: Presenter {
     public var launchCalled = 0
@@ -34,3 +35,4 @@ public class MockPresenter: Presenter {
     
     required public init() { }
 }
+#endif

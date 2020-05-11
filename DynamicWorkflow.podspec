@@ -19,11 +19,12 @@ iOS has a linear paradigm for navigation that doesn't support a lot of flexibili
 
   s.subspec 'Swinject' do |ss|
     ss.source_files = ['Workflow/**/*.{swift,h,m}', 'DependencyInjection/**/*.{swift,h}']
+    ss.exclude_files = 'Workflow/TestOnly/**/*.{swift}'
     ss.dependency 'Swinject'
   end
 
   s.subspec 'XCTest' do |ss|
-    ss.source_files = ['Workflow/TestOnly/**/*.{swift}']
+    ss.source_files = ['Workflow/**/*.{swift}']
     ss.framework = "XCTest"
     ss.pod_target_xcconfig = {
       'FRAMEWORK_SEARCH_PATHS' => '$(inherited) "$(PLATFORM_DIR)/Developer/Library/Frameworks"',

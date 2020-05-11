@@ -6,9 +6,9 @@
 //  Copyright © 2019 Tyler Thompson. All rights reserved.
 //
 
+#if DEBUG
 import Foundation
 
-#if DEBUG
 extension Notification.Name {
     static var workflowLaunched:Notification.Name {
         return Notification.Name(rawValue: "WorkflowLaunched")

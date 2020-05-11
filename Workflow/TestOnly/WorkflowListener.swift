@@ -6,6 +6,7 @@
 //  Copyright © 2020 Tyler Thompson. All rights reserved.
 //
 
+#if DEBUG
 import Foundation
 import XCTest
 
@@ -43,3 +44,4 @@ public class WorkflowListener {
         args = dict?["args"] as Any?
     }
 }
+#endif
