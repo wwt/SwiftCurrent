@@ -35,6 +35,7 @@ target 'WorkflowExample' do
   
   target 'WorkflowExampleTests' do
     pod 'DynamicWorkflow', :path => '.'
+    pod 'DynamicWorkflow/XCTest', :path => '.'
     pod 'UIUTest'
   end
   

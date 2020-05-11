@@ -10,6 +10,7 @@ import Foundation
 import XCTest
 
 @testable import WorkflowExample
+import DynamicWorkflow
 
 class SetupViewControllerTests: ViewControllerTest<SetupViewController> {
     func testLaunchingMultiLocationWorkflow() {
