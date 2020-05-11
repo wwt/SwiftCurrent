@@ -10,14 +10,14 @@
 import Foundation
 import XCTest
 
-public func XCTAssertWorkflowLaunched(listener: WorkflowListener, expectedFlowRepresentables:[AnyFlowRepresentable.Type]) {
-    XCTAssertNotNil(listener.workflow, "No workflow found")
+public func XCTAssertWorkflowLaunched(listener: WorkflowListener, expectedFlowRepresentables:[AnyFlowRepresentable.Type], file: StaticString = #file, line: UInt = #line) {
+    XCTAssertNotNil(listener.workflow, "No workflow found", file: file, line: line)
     guard let workflow = listener.workflow, expectedFlowRepresentables.count == workflow.count else {
-        XCTFail("workflow does not contain correct representables: \(String(describing: listener.workflow?.compactMap { String(describing: $0.value.flowRepresentableType) }) )")
+        XCTFail("workflow does not contain correct representables: \(String(describing: listener.workflow?.compactMap { String(describing: $0.value.flowRepresentableType) }) )", file: file, line: line)
         return
     }
     XCTAssertEqual(workflow.compactMap { String(describing: $0.value.flowRepresentableType) },
-                   expectedFlowRepresentables.map { String(describing: $0) })
+                   expectedFlowRepresentables.map { String(describing: $0) }, file: file, line: line)
 }
 
 public class WorkflowListener {
