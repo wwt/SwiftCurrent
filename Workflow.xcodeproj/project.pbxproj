@@ -72,26 +72,7 @@
 		ADEE7760233BC960007E9FD2 /* Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEE775F233BC960007E9FD2 /* Convenience.swift */; };
 		ADEE7763233C2D5B007E9FD2 /* WorkflowNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEE7762233C2D5B007E9FD2 /* WorkflowNotifications.swift */; };
 		B2488BD170D0E683391A8759 /* Pods_Workflow_DependencyInjectionTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 849E05E774E42E2863BCC8D7 /* Pods_Workflow_DependencyInjectionTests.framework */; };
-		CA00AE2B246B41BF009868F8 /* Workflow_XCTest.h in Headers */ = {isa = PBXBuildFile; fileRef = CA00AE29246B41BF009868F8 /* Workflow_XCTest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CA00AE2F246B427E009868F8 /* BasePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8BEBE5231830860071A83D /* BasePresenter.swift */; };
-		CA00AE30246B4281009868F8 /* PresentationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8BEBEA2318313C0071A83D /* PresentationType.swift */; };
-		CA00AE31246B4285009868F8 /* UIKitPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4AA2AA2314647900C3C95E /* UIKitPresenter.swift */; };
-		CA00AE32246B4288009868F8 /* UIWorkflowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8BEBE8231830B50071A83D /* UIWorkflowItem.swift */; };
-		CA00AE33246B428C009868F8 /* Comparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD8237C2312CE5900D77D3C /* Comparable.swift */; };
-		CA00AE34246B428F009868F8 /* Sorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD8237D2312CE5900D77D3C /* Sorting.swift */; };
-		CA00AE35246B4291009868F8 /* Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD8237E2312CE5900D77D3C /* Equatable.swift */; };
-		CA00AE36246B4294009868F8 /* NonMutatingOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD8237F2312CE5900D77D3C /* NonMutatingOperations.swift */; };
-		CA00AE37246B4296009868F8 /* Iterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD823802312CE5900D77D3C /* Iterator.swift */; };
-		CA00AE38246B4299009868F8 /* MutatingOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD823812312CE5900D77D3C /* MutatingOperations.swift */; };
-		CA00AE39246B429C009868F8 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD823822312CE5900D77D3C /* Node.swift */; };
-		CA00AE3A246B429E009868F8 /* LinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD823832312CE5900D77D3C /* LinkedList.swift */; };
-		CA00AE3B246B42A3009868F8 /* AnyFlowRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD8239323139E2700D77D3C /* AnyFlowRepresentable.swift */; };
-		CA00AE3C246B42A5009868F8 /* AnyPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8BEBE32318303A0071A83D /* AnyPresenter.swift */; };
-		CA00AE3D246B42A7009868F8 /* FlowRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD823782312CC7E00D77D3C /* FlowRepresentable.swift */; };
-		CA00AE3E246B42A9009868F8 /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4AA2AC231464A600C3C95E /* Presenter.swift */; };
-		CA00AE40246B42B3009868F8 /* Workflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD8239723145AD800D77D3C /* Workflow.swift */; };
-		CA00AE41246B42B7009868F8 /* WorkflowNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEE7762233C2D5B007E9FD2 /* WorkflowNotifications.swift */; };
-		CA00AE42246B42E0009868F8 /* CollectionExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD8238C2312CE7B00D77D3C /* CollectionExtensions.swift */; };
+		CA00AE4C246B4844009868F8 /* Workflow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADD8235E2312CC6300D77D3C /* Workflow.framework */; };
 		F93CBFAA29F3056CFE892E13 /* Pods_WorkflowTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2B5B41A4F86FDBF12D88F62 /* Pods_WorkflowTests.framework */; };
 		FD64E72C1869DD8B92AC3061 /* Pods_Workflow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93153A9A1549D7ECC6FF5A30 /* Pods_Workflow.framework */; };
 /* End PBXBuildFile section */
@@ -117,6 +98,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = AD5BB00A231B82C9001DAF7C;
 			remoteInfo = WorkflowExample;
+		};
+		CA00AE4D246B4844009868F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ADD823552312CC6300D77D3C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ADD8235D2312CC6300D77D3C;
+			remoteInfo = Workflow;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -206,9 +194,8 @@
 		ADEE775D233BC901007E9FD2 /* PickupOrDeliveryViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupOrDeliveryViewControllerTests.swift; sourceTree = "<group>"; };
 		ADEE775F233BC960007E9FD2 /* Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Convenience.swift; sourceTree = "<group>"; };
 		ADEE7762233C2D5B007E9FD2 /* WorkflowNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowNotifications.swift; sourceTree = "<group>"; };
-		CA00AE27246B41BF009868F8 /* Workflow_XCTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Workflow_XCTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CA00AE29246B41BF009868F8 /* Workflow_XCTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Workflow_XCTest.h; sourceTree = "<group>"; };
-		CA00AE2A246B41BF009868F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CA00AE47246B4844009868F8 /* Workflow+XCTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Workflow+XCTest.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA00AE4B246B4844009868F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CCFE28428D8EFEABB9A39C8D /* Pods-WorkflowTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkflowTests.release.xcconfig"; path = "Target Support Files/Pods-WorkflowTests/Pods-WorkflowTests.release.xcconfig"; sourceTree = "<group>"; };
 		CF2C1E796D1CCA3C0AC77D60 /* Pods-WorkflowExample-WorkflowExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkflowExample-WorkflowExampleTests.release.xcconfig"; path = "Target Support Files/Pods-WorkflowExample-WorkflowExampleTests/Pods-WorkflowExample-WorkflowExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		D2B5B41A4F86FDBF12D88F62 /* Pods_WorkflowTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WorkflowTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -260,10 +247,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CA00AE24246B41BF009868F8 /* Frameworks */ = {
+		CA00AE44246B4844009868F8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA00AE4C246B4844009868F8 /* Workflow.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,7 +362,7 @@
 				ADEE7750233BAA6C007E9FD2 /* WorkflowExampleTests */,
 				1D08D90E23A9C01500EF05C1 /* DependencyInjection */,
 				1D08D91923A9C01500EF05C1 /* DependencyInjectionTests */,
-				CA00AE28246B41BF009868F8 /* Workflow+XCTest */,
+				CA00AE48246B4844009868F8 /* Workflow+XCTest */,
 				ADD8235F2312CC6300D77D3C /* Products */,
 				D4E280E2374C0659E83AD82F /* Pods */,
 				867ECA52B1C8FDC1F385611F /* Frameworks */,
@@ -389,7 +377,7 @@
 				AD5BB00B231B82C9001DAF7C /* WorkflowExample.app */,
 				ADEE774F233BAA6C007E9FD2 /* WorkflowExampleTests.xctest */,
 				1D08D91523A9C01500EF05C1 /* DependencyInjectionTests.xctest */,
-				CA00AE27246B41BF009868F8 /* Workflow_XCTest.framework */,
+				CA00AE47246B4844009868F8 /* Workflow+XCTest.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -508,12 +496,11 @@
 			path = TestOnly;
 			sourceTree = "<group>";
 		};
-		CA00AE28246B41BF009868F8 /* Workflow+XCTest */ = {
+		CA00AE48246B4844009868F8 /* Workflow+XCTest */ = {
 			isa = PBXGroup;
 			children = (
 				ADEE7761233C2D4A007E9FD2 /* TestOnly */,
-				CA00AE29246B41BF009868F8 /* Workflow_XCTest.h */,
-				CA00AE2A246B41BF009868F8 /* Info.plist */,
+				CA00AE4B246B4844009868F8 /* Info.plist */,
 			);
 			path = "Workflow+XCTest";
 			sourceTree = "<group>";
@@ -545,14 +532,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADD8236F2312CC6300D77D3C /* Workflow.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CA00AE22246B41BF009868F8 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CA00AE2B246B41BF009868F8 /* Workflow_XCTest.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -657,23 +636,23 @@
 			productReference = ADEE774F233BAA6C007E9FD2 /* WorkflowExampleTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		CA00AE26246B41BF009868F8 /* Workflow+XCTest */ = {
+		CA00AE46246B4844009868F8 /* Workflow+XCTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CA00AE2E246B41BF009868F8 /* Build configuration list for PBXNativeTarget "Workflow+XCTest" */;
+			buildConfigurationList = CA00AE4F246B4844009868F8 /* Build configuration list for PBXNativeTarget "Workflow+XCTest" */;
 			buildPhases = (
-				CA00AE22246B41BF009868F8 /* Headers */,
-				CA00AE23246B41BF009868F8 /* Sources */,
-				CA00AE24246B41BF009868F8 /* Frameworks */,
-				CA00AE25246B41BF009868F8 /* Resources */,
+				CA00AE43246B4844009868F8 /* Sources */,
+				CA00AE44246B4844009868F8 /* Frameworks */,
+				CA00AE45246B4844009868F8 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				CA00AE4E246B4844009868F8 /* PBXTargetDependency */,
 			);
 			name = "Workflow+XCTest";
 			productName = "Workflow+XCTest";
-			productReference = CA00AE27246B41BF009868F8 /* Workflow_XCTest.framework */;
-			productType = "com.apple.product-type.framework";
+			productReference = CA00AE47246B4844009868F8 /* Workflow+XCTest.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -681,7 +660,7 @@
 		ADD823552312CC6300D77D3C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1110;
+				LastSwiftUpdateCheck = 1140;
 				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = "Tyler Thompson";
 				TargetAttributes = {
@@ -703,7 +682,7 @@
 						CreatedOnToolsVersion = 10.3;
 						TestTargetID = AD5BB00A231B82C9001DAF7C;
 					};
-					CA00AE26246B41BF009868F8 = {
+					CA00AE46246B4844009868F8 = {
 						CreatedOnToolsVersion = 11.4.1;
 					};
 				};
@@ -726,7 +705,7 @@
 				AD5BB00A231B82C9001DAF7C /* WorkflowExample */,
 				ADEE774E233BAA6C007E9FD2 /* WorkflowExampleTests */,
 				1D08D91423A9C01500EF05C1 /* DependencyInjectionTests */,
-				CA00AE26246B41BF009868F8 /* Workflow+XCTest */,
+				CA00AE46246B4844009868F8 /* Workflow+XCTest */,
 			);
 		};
 /* End PBXProject section */
@@ -770,7 +749,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CA00AE25246B41BF009868F8 /* Resources */ = {
+		CA00AE45246B4844009868F8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1051,29 +1030,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CA00AE23246B41BF009868F8 /* Sources */ = {
+		CA00AE43246B4844009868F8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CA00AE34246B428F009868F8 /* Sorting.swift in Sources */,
-				CA00AE31246B4285009868F8 /* UIKitPresenter.swift in Sources */,
-				CA00AE42246B42E0009868F8 /* CollectionExtensions.swift in Sources */,
-				CA00AE3E246B42A9009868F8 /* Presenter.swift in Sources */,
-				CA00AE2F246B427E009868F8 /* BasePresenter.swift in Sources */,
-				CA00AE39246B429C009868F8 /* Node.swift in Sources */,
-				CA00AE30246B4281009868F8 /* PresentationType.swift in Sources */,
-				CA00AE3D246B42A7009868F8 /* FlowRepresentable.swift in Sources */,
-				CA00AE3B246B42A3009868F8 /* AnyFlowRepresentable.swift in Sources */,
-				CA00AE33246B428C009868F8 /* Comparable.swift in Sources */,
-				CA00AE3A246B429E009868F8 /* LinkedList.swift in Sources */,
-				CA00AE32246B4288009868F8 /* UIWorkflowItem.swift in Sources */,
-				CA00AE3C246B42A5009868F8 /* AnyPresenter.swift in Sources */,
-				CA00AE38246B4299009868F8 /* MutatingOperations.swift in Sources */,
-				CA00AE41246B42B7009868F8 /* WorkflowNotifications.swift in Sources */,
-				CA00AE37246B4296009868F8 /* Iterator.swift in Sources */,
-				CA00AE36246B4294009868F8 /* NonMutatingOperations.swift in Sources */,
-				CA00AE35246B4291009868F8 /* Equatable.swift in Sources */,
-				CA00AE40246B42B3009868F8 /* Workflow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1094,6 +1054,11 @@
 			isa = PBXTargetDependency;
 			target = AD5BB00A231B82C9001DAF7C /* WorkflowExample */;
 			targetProxy = ADEE7754233BAA6C007E9FD2 /* PBXContainerItemProxy */;
+		};
+		CA00AE4E246B4844009868F8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ADD8235D2312CC6300D77D3C /* Workflow */;
+			targetProxy = CA00AE4D246B4844009868F8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1467,53 +1432,37 @@
 			};
 			name = Release;
 		};
-		CA00AE2C246B41BF009868F8 /* Debug */ = {
+		CA00AE50246B4844009868F8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
 				INFOPLIST_FILE = "Workflow+XCTest/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "TT.Workflow-XCTest";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		CA00AE2D246B41BF009868F8 /* Release */ = {
+		CA00AE51246B4844009868F8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
 				INFOPLIST_FILE = "Workflow+XCTest/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "TT.Workflow-XCTest";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1576,11 +1525,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CA00AE2E246B41BF009868F8 /* Build configuration list for PBXNativeTarget "Workflow+XCTest" */ = {
+		CA00AE4F246B4844009868F8 /* Build configuration list for PBXNativeTarget "Workflow+XCTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				CA00AE2C246B41BF009868F8 /* Debug */,
-				CA00AE2D246B41BF009868F8 /* Release */,
+				CA00AE50246B4844009868F8 /* Debug */,
+				CA00AE51246B4844009868F8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
