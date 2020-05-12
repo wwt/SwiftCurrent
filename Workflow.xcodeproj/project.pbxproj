@@ -13,7 +13,6 @@
 		1D08D92823A9C11D00EF05C1 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D08D90123A97D3400EF05C1 /* DIContainer.swift */; };
 		1D08D92923A9C12400EF05C1 /* DependencyInjected.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D08D8FF23A97CAA00EF05C1 /* DependencyInjected.swift */; };
 		1D7092F624150BB70018F04D /* ModalStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7092F524150BB70018F04D /* ModalStyleTests.swift */; };
-		1DD744A62466FA0000BB1884 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DD744A52466FA0000BB1884 /* XCTest.framework */; };
 		27472C9F972F4D5C4F5D2A29 /* Pods_WorkflowExample_WorkflowExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09E02615312015EBAC53492E /* Pods_WorkflowExample_WorkflowExampleTests.framework */; };
 		7339A5C72AEF92812564A3A2 /* Pods_WorkflowExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F410624365BB7807E12BEA08 /* Pods_WorkflowExample.framework */; };
 		AD2AEA01231C757A0069F9B4 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2AEA00231C757A0069F9B4 /* Location.swift */; };
@@ -244,7 +243,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1DD744A62466FA0000BB1884 /* XCTest.framework in Frameworks */,
 				FD64E72C1869DD8B92AC3061 /* Pods_Workflow.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
