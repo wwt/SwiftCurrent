@@ -13,9 +13,7 @@
 		1D08D92823A9C11D00EF05C1 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D08D90123A97D3400EF05C1 /* DIContainer.swift */; };
 		1D08D92923A9C12400EF05C1 /* DependencyInjected.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D08D8FF23A97CAA00EF05C1 /* DependencyInjected.swift */; };
 		1D7092F624150BB70018F04D /* ModalStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7092F524150BB70018F04D /* ModalStyleTests.swift */; };
-		1DD744A42466F99E00BB1884 /* WorkflowListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD744A32466F99E00BB1884 /* WorkflowListener.swift */; };
 		1DD744A62466FA0000BB1884 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DD744A52466FA0000BB1884 /* XCTest.framework */; };
-		1DD744A82467609D00BB1884 /* MockPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD744A72467609D00BB1884 /* MockPresenter.swift */; };
 		27472C9F972F4D5C4F5D2A29 /* Pods_WorkflowExample_WorkflowExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09E02615312015EBAC53492E /* Pods_WorkflowExample_WorkflowExampleTests.framework */; };
 		7339A5C72AEF92812564A3A2 /* Pods_WorkflowExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F410624365BB7807E12BEA08 /* Pods_WorkflowExample.framework */; };
 		AD2AEA01231C757A0069F9B4 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2AEA00231C757A0069F9B4 /* Location.swift */; };
@@ -73,6 +71,27 @@
 		ADEE7763233C2D5B007E9FD2 /* WorkflowNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEE7762233C2D5B007E9FD2 /* WorkflowNotifications.swift */; };
 		B2488BD170D0E683391A8759 /* Pods_Workflow_DependencyInjectionTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 849E05E774E42E2863BCC8D7 /* Pods_Workflow_DependencyInjectionTests.framework */; };
 		CA00AE4C246B4844009868F8 /* Workflow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADD8235E2312CC6300D77D3C /* Workflow.framework */; };
+		CA494A83246B49F100DDB480 /* WorkflowListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD744A32466F99E00BB1884 /* WorkflowListener.swift */; };
+		CA494A84246B49F700DDB480 /* MockPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD744A72467609D00BB1884 /* MockPresenter.swift */; };
+		CA494A85246B4A0200DDB480 /* BasePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8BEBE5231830860071A83D /* BasePresenter.swift */; };
+		CA494A86246B4A0400DDB480 /* PresentationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8BEBEA2318313C0071A83D /* PresentationType.swift */; };
+		CA494A87246B4A0900DDB480 /* UIKitPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4AA2AA2314647900C3C95E /* UIKitPresenter.swift */; };
+		CA494A88246B4A0B00DDB480 /* UIWorkflowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8BEBE8231830B50071A83D /* UIWorkflowItem.swift */; };
+		CA494A89246B4A0E00DDB480 /* CollectionExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD8238C2312CE7B00D77D3C /* CollectionExtensions.swift */; };
+		CA494A8A246B4A1200DDB480 /* Comparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD8237C2312CE5900D77D3C /* Comparable.swift */; };
+		CA494A8B246B4A1400DDB480 /* Sorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD8237D2312CE5900D77D3C /* Sorting.swift */; };
+		CA494A8C246B4A1700DDB480 /* Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD8237E2312CE5900D77D3C /* Equatable.swift */; };
+		CA494A8D246B4A1900DDB480 /* NonMutatingOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD8237F2312CE5900D77D3C /* NonMutatingOperations.swift */; };
+		CA494A8E246B4A1C00DDB480 /* Iterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD823802312CE5900D77D3C /* Iterator.swift */; };
+		CA494A8F246B4A1E00DDB480 /* MutatingOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD823812312CE5900D77D3C /* MutatingOperations.swift */; };
+		CA494A90246B4A2000DDB480 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD823822312CE5900D77D3C /* Node.swift */; };
+		CA494A91246B4A2200DDB480 /* LinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD823832312CE5900D77D3C /* LinkedList.swift */; };
+		CA494A92246B4A3600DDB480 /* AnyFlowRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD8239323139E2700D77D3C /* AnyFlowRepresentable.swift */; };
+		CA494A93246B4A3800DDB480 /* AnyPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8BEBE32318303A0071A83D /* AnyPresenter.swift */; };
+		CA494A94246B4A3B00DDB480 /* FlowRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD823782312CC7E00D77D3C /* FlowRepresentable.swift */; };
+		CA494A95246B4A3F00DDB480 /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4AA2AC231464A600C3C95E /* Presenter.swift */; };
+		CA494A96246B4A4600DDB480 /* Workflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD8239723145AD800D77D3C /* Workflow.swift */; };
+		CA494A97246B4A4900DDB480 /* WorkflowNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEE7762233C2D5B007E9FD2 /* WorkflowNotifications.swift */; };
 		F93CBFAA29F3056CFE892E13 /* Pods_WorkflowTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2B5B41A4F86FDBF12D88F62 /* Pods_WorkflowTests.framework */; };
 		FD64E72C1869DD8B92AC3061 /* Pods_Workflow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93153A9A1549D7ECC6FF5A30 /* Pods_Workflow.framework */; };
 /* End PBXBuildFile section */
@@ -976,14 +995,12 @@
 				AD8BEBEB2318313C0071A83D /* PresentationType.swift in Sources */,
 				AD8BEBE6231830860071A83D /* BasePresenter.swift in Sources */,
 				ADD8239823145AD800D77D3C /* Workflow.swift in Sources */,
-				1DD744A82467609D00BB1884 /* MockPresenter.swift in Sources */,
 				ADD8238B2312CE5900D77D3C /* LinkedList.swift in Sources */,
 				ADEE7763233C2D5B007E9FD2 /* WorkflowNotifications.swift in Sources */,
 				ADD823852312CE5900D77D3C /* Sorting.swift in Sources */,
 				AD8BEBE9231830B50071A83D /* UIWorkflowItem.swift in Sources */,
 				ADD823872312CE5900D77D3C /* NonMutatingOperations.swift in Sources */,
 				ADD8239423139E2700D77D3C /* AnyFlowRepresentable.swift in Sources */,
-				1DD744A42466F99E00BB1884 /* WorkflowListener.swift in Sources */,
 				ADD823792312CC7E00D77D3C /* FlowRepresentable.swift in Sources */,
 				ADD8238A2312CE5900D77D3C /* Node.swift in Sources */,
 				1D08D92823A9C11D00EF05C1 /* DIContainer.swift in Sources */,
@@ -1034,6 +1051,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA494A84246B49F700DDB480 /* MockPresenter.swift in Sources */,
+				CA494A95246B4A3F00DDB480 /* Presenter.swift in Sources */,
+				CA494A92246B4A3600DDB480 /* AnyFlowRepresentable.swift in Sources */,
+				CA494A8F246B4A1E00DDB480 /* MutatingOperations.swift in Sources */,
+				CA494A96246B4A4600DDB480 /* Workflow.swift in Sources */,
+				CA494A8A246B4A1200DDB480 /* Comparable.swift in Sources */,
+				CA494A89246B4A0E00DDB480 /* CollectionExtensions.swift in Sources */,
+				CA494A8E246B4A1C00DDB480 /* Iterator.swift in Sources */,
+				CA494A85246B4A0200DDB480 /* BasePresenter.swift in Sources */,
+				CA494A87246B4A0900DDB480 /* UIKitPresenter.swift in Sources */,
+				CA494A88246B4A0B00DDB480 /* UIWorkflowItem.swift in Sources */,
+				CA494A8B246B4A1400DDB480 /* Sorting.swift in Sources */,
+				CA494A8D246B4A1900DDB480 /* NonMutatingOperations.swift in Sources */,
+				CA494A83246B49F100DDB480 /* WorkflowListener.swift in Sources */,
+				CA494A93246B4A3800DDB480 /* AnyPresenter.swift in Sources */,
+				CA494A8C246B4A1700DDB480 /* Equatable.swift in Sources */,
+				CA494A94246B4A3B00DDB480 /* FlowRepresentable.swift in Sources */,
+				CA494A91246B4A2200DDB480 /* LinkedList.swift in Sources */,
+				CA494A86246B4A0400DDB480 /* PresentationType.swift in Sources */,
+				CA494A97246B4A4900DDB480 /* WorkflowNotifications.swift in Sources */,
+				CA494A90246B4A2000DDB480 /* Node.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
