@@ -2,9 +2,9 @@ PODS:
   - CwlCatchException (1.0.2)
   - CwlPreconditionTesting (1.1.1):
     - CwlCatchException
-  - DynamicWorkflow (0.0.22):
-    - DynamicWorkflow/Swinject (= 0.0.22)
-  - DynamicWorkflow/Swinject (0.0.22):
+  - DynamicWorkflow (1.0.1):
+    - DynamicWorkflow/Swinject (= 1.0.1)
+  - DynamicWorkflow/Swinject (1.0.1):
     - Swinject
   - Swinject (2.7.1)
   - UIUTest (1.6.0)
@@ -43,10 +43,10 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   CwlCatchException: 70a52ae44ea5d46db7bd385f801a94942420cd8c
   CwlPreconditionTesting: d33a4e4f285c0b885fddcae5dfedfbb34d4f3961
-  DynamicWorkflow: 0c5f15395bf97f214029c7d458fb25db6adb6ab6
+  DynamicWorkflow: 154e45e7477f601d3ed33568cfeced0b4c6353bf
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
   UIUTest: 842c642e5bec098b1e2c890cbe25aacab80f2481
 
 PODFILE CHECKSUM: 9446e19cd304190fb0bff5ec8aefc4f0e183127b
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.1
