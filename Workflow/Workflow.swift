@@ -123,8 +123,8 @@ public class Workflow: LinkedList<FlowRepresentableMetaData> {
             flowRepresentable.workflow = self
             let shouldLoad = flowRepresentable.erasedShouldLoad(with: args)
             defer {
+                let position = node.position
                 if (shouldLoad) {
-                    let position = node.position
                     instances.replace(atIndex: position, withItem: flowRepresentable)
                     firstLoadedInstance = instances.first?.traverse(position)
                     if let firstLoadedInstance = firstLoadedInstance {
@@ -133,13 +133,14 @@ public class Workflow: LinkedList<FlowRepresentableMetaData> {
                                             onFinish: onFinish)
                     }
                 } else if (!shouldLoad && metadata.staysInViewStack(args) == .hiddenInitially) {
-                    rootView = flowRepresentable
-                    self.presenter?.launch(view: flowRepresentable,
-                                           from: from,
-                                           withLaunchStyle: metadata.presentationType, metadata: metadata,
-                                           animated: false,
-                                           completion: nil)
-
+                    var reference:((Any?) -> Void)?
+                    self.handleCallbackWhenHiddenInitially(viewToPresent: &rootView,
+                                                           hold: &reference,
+                                                           instance: flowRepresentable,
+                                                           instancePosition: position,
+                                                           from: from,
+                                                           metadata: metadata,
+                                                           onFinish: onFinish)
                 }
 
             }
@@ -188,7 +189,7 @@ public class Workflow: LinkedList<FlowRepresentableMetaData> {
                 instance.proceedInWorkflow = $0.value?.proceedInWorkflow
                 instance.workflow = self
                 
-                let hold = instance.proceedInWorkflow
+                var hold = instance.proceedInWorkflow
                 defer {
                     instance.proceedInWorkflow = hold
                     self.replaceInstance(atIndex: index, withInstance: instance)
@@ -198,11 +199,13 @@ public class Workflow: LinkedList<FlowRepresentableMetaData> {
                 
                 let shouldLoad = instance.erasedShouldLoad(with: argsToPass) == true
                 if (!shouldLoad && metadata.staysInViewStack(argsToPass) == .hiddenInitially) {
-                    viewToPresent = instance
-                    self.presenter?.launch(view: instance,
-                                           from: self.instances.first?.traverse(node.position)?.value,
-                                           withLaunchStyle: metadata.presentationType, metadata: metadata, animated: false, completion: nil)
-
+                    self.handleCallbackWhenHiddenInitially(viewToPresent: &viewToPresent,
+                                                           hold: &hold,
+                                                           instance: instance,
+                                                           instancePosition: index,
+                                                           from: self.instances.first?.traverse(node.position)?.value,
+                                                           metadata: metadata,
+                                                           onFinish: onFinish)
                 }
                 
                 return shouldLoad
@@ -229,6 +232,19 @@ public class Workflow: LinkedList<FlowRepresentableMetaData> {
                 }
             }
         }
+    }
+    
+    private func handleCallbackWhenHiddenInitially(viewToPresent:inout Any?, hold:inout ((Any?) -> Void)?, instance:AnyFlowRepresentable, instancePosition:Int, from:Any?, metadata: FlowRepresentableMetaData, onFinish:((Any?) -> Void)?) {
+        viewToPresent = instance
+        self.replaceInstance(atIndex: instancePosition, withInstance: instance)
+        if let instanceNode = self.instances.first?.traverse(instancePosition) {
+            self.setupCallbacks(for: instanceNode, onFinish: onFinish)
+            hold = instanceNode.value?.proceedInWorkflow
+        }
+        self.presenter?.launch(view: instance,
+                               from: from,
+                               withLaunchStyle: metadata.presentationType, metadata: metadata, animated: false, completion: nil)
+
     }
 }
 
