@@ -9,12 +9,11 @@ git reset --hard origin/master
 git clean -df
 
 # do the podspec stuff
-npm install -g podspec-bump #uncomment if you need the node package
-npm install simple-plist
+npm install -g podspec-bump
 podspec-bump -w
 
 # commit the podspec bump
-node edit-plist.js `podspec-bump --dump-version`
+./edit-plist.sh `podspec-bump --dump-version`
 git commit -am "[ci skip] publishing pod version: `podspec-bump --dump-version`" 
 git tag "`podspec-bump --dump-version`"
 git push https://${PERSONAL_ACCESS_TOKEN}@github.com/Tyler-Keith-Thompson/Workflow.git HEAD -u $(podspec-bump --dump-version)
