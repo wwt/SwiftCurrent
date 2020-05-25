@@ -18,4 +18,26 @@ platform :ios do
       workspace: 'Workflow.xcworkspace'
     )
   end
+
+  desc "Release a new version with a patch bump_type"
+  lane :patch do
+    release("patch")
+  end
+
+  desc "Release a new version with a minor bump_type"
+  lane :minor do
+    release("minor")
+  end
+
+  desc "Release a new version with a major bump_type"
+  lane :major do
+    release("major")
+  end
+
+  def release(type)
+    podspec_name = "DynamicWorkflow.podspec"
+    version = version_bump_podspec(path: podspec_name,
+                                   bump_type: type)
+    sh("./../edit-plist.sh", version, "../Workflow/Info.plist")
+  end
 end

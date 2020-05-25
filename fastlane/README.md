@@ -21,6 +21,21 @@ or alternatively using `brew cask install fastlane`
 fastlane ios unit_test
 ```
 
+### ios patch
+```
+fastlane ios patch
+```
+Release a new version with a patch bump_type
+### ios minor
+```
+fastlane ios minor
+```
+Release a new version with a minor bump_type
+### ios major
+```
+fastlane ios major
+```
+Release a new version with a major bump_type
 
 ----
 

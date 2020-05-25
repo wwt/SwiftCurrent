@@ -8,16 +8,13 @@ git checkout master
 git reset --hard origin/master
 git clean -df
 
-# do the podspec stuff
-npm install -g podspec-bump
-podspec-bump -w
-
 # commit the podspec bump
-./edit-plist.sh `podspec-bump --dump-version`
-git commit -am "[ci skip] publishing pod version: `podspec-bump --dump-version`" 
-git tag "`podspec-bump --dump-version`"
-git push https://${PERSONAL_ACCESS_TOKEN}@github.com/Tyler-Keith-Thompson/Workflow.git HEAD -u $(podspec-bump --dump-version)
+fastlane patch
+version=`/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" Workflow/Info.plist`
+git commit -am "[ci skip] publishing pod version: $version" 
+git tag "$version"
+git push https://${PERSONAL_ACCESS_TOKEN}@github.com/Tyler-Keith-Thompson/Workflow.git HEAD -u $version
 git reset --hard
 git clean -df
-curl --data "{\"tag_name\": \"`podspec-bump --dump-version`\",\"target_commitish\": \"master\",\"name\": \"`podspec-bump --dump-version`\",\"body\": \"Release of version `podspec-bump --dump-version`\",\"draft\": false,\"prerelease\": false}" -H "Authorization: token $PERSONAL_ACCESS_TOKEN" "https://api.github.com/repos/Tyler-Keith-Thompson/Workflow/releases"
+curl --data "{\"tag_name\": \"$version\",\"target_commitish\": \"master\",\"name\": \"$version\",\"body\": \"Release of version $version\",\"draft\": false,\"prerelease\": false}" -H "Authorization: token $PERSONAL_ACCESS_TOKEN" "https://api.github.com/repos/Tyler-Keith-Thompson/Workflow/releases"
 pod trunk push DynamicWorkflow.podspec --allow-warnings
