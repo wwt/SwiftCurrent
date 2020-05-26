@@ -1,0 +1,10 @@
+theme: fullwidth 
+skip_undocumented: true
+readme: README.md
+module: Workflow
+xcodebuild_arguments:
+  - -workspace
+  - Workflow.xcworkspace
+  - -scheme
+  - Workflow
+author: Tyler THompson

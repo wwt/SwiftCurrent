@@ -74,3 +74,4 @@ npm-debug.log
 *.xcuserstate
 .DS_Store
 Gemfile.lock
+dependency-check-report.html
