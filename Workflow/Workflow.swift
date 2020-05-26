@@ -13,8 +13,6 @@ import Foundation
  
  Examples:
  ```swift
- let workflow:Workflow = [ SomeFlowRepresentableClass.self, SomeOtherFlowRepresentableClass.self ]
- let workflow = Workflow(SomeFlowRepresentableClass.self, SomeOtherFlowRepresentableClass.self)
  let workflow = Workflow()
                     .thenPresent(SomeFlowRepresentableClass.self)
                     .thenPResent(SomeOtherFlowRepresentableClass.self, presentationType: .navigationStack)
@@ -22,13 +20,12 @@ import Foundation
 
  ### Discussion:
  In a sufficiently complex application it may make sense to create a structure to hold onto all the workflows in an application.
- If you're using UIKit then you can use a 'magic' method on UIViewController like so:
+ Example
  ```swift
- class MainViewController: UIViewController {
-     @IBAction func launchFlow() {
-         launchInto([ SomeFlowRepresentableClass.self,
-                      SomeOtherFlowRepresentableClass.self ])
-     }
+ struct Workflows {
+    static let schedulingFlow = Workflow()
+                                 .thenPresent(SomeFlowRepresentableClass.self)
+                                 .thenPResent(SomeOtherFlowRepresentableClass.self, presentationType: .navigationStack)
  }
  ```
  */
