@@ -104,6 +104,9 @@ open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
             if nav.viewControllers.first === first {
                 if let presenting = nav.presentingViewController {
                     presenting.dismiss(animated: animated, completion: onFinish)
+                } else {
+                    nav.setViewControllers([], animated: animated)
+                    onFinish?()
                 }
             } else {
                 if let _ = nav.presentedViewController {

@@ -1419,6 +1419,24 @@ class UIKitPresenterTests: XCTestCase {
         XCTAssertTrue(UIKitPresenterTests.testCallbackCalled)
     }
 
+    func testWorkflowAbandonWhenLaunchedFromNavController_ExpectVCsToBeEmpty() {
+        let controller = UINavigationController()
+        loadView(controller: controller)
+
+        let workflow = Workflow().thenPresent(TestViewController.self)
+
+        controller.launchInto(workflow)
+
+        waitUntil(UIApplication.topViewController() is TestViewController)
+
+        workflow.abandon(animated: false, onFinish: testCallback)
+
+        waitUntil(UIApplication.topViewController() === controller)
+        XCTAssert(controller.viewControllers.isEmpty)
+        XCTAssert(UIApplication.topViewController() === controller, "Expected top view to be 'controller' but got: \(String(describing: UIApplication.topViewController()))")
+        XCTAssertTrue(UIKitPresenterTests.testCallbackCalled)
+    }
+
     func testWorkflowAbandonWhenNoNavigationControllerExists() {
         let rootController = UIViewController()
         loadView(controller: rootController)
