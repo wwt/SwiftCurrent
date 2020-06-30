@@ -96,6 +96,11 @@ public class Workflow: LinkedList<FlowRepresentableMetaData> {
     public func applyPresenter(_ presenter:AnyPresenter) {
         self.presenter = presenter
     }
+    
+    private enum PassedArgs {
+        case none
+        case args(Any?)
+    }
 
     public func launch(from: Any?, with args:Any?, withLaunchStyle launchStyle:PresentationType = .default, onFinish:((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Element? {
         #if DEBUG
@@ -113,12 +118,17 @@ public class Workflow: LinkedList<FlowRepresentableMetaData> {
         instances.append(contentsOf: map { _ in nil })
         var rootView:Any?
         var metadata:FlowRepresentableMetaData?
+        var passedArgs:PassedArgs = .none
         _ = first?.traverse { node in
             metadata = node.value
             let metadata = node.value
             var flowRepresentable = metadata.flowRepresentableType.instance()
             flowRepresentable.workflow = self
+            
+            flowRepresentable.proceedInWorkflow = { passedArgs = .args($0) }
+
             let shouldLoad = flowRepresentable.erasedShouldLoad(with: args)
+            
             defer {
                 let position = node.position
                 if (shouldLoad) {
@@ -145,7 +155,12 @@ public class Workflow: LinkedList<FlowRepresentableMetaData> {
         }
         
         guard let first = firstLoadedInstance,
-              let m = metadata else { return nil }
+              let m = metadata else {
+                if case .args(let value) = passedArgs {
+                    onFinish?(value)
+                }
+                return nil
+        }
         
         presenter?.launch(view: first.value, from: rootView ?? from, withLaunchStyle: launchStyle, metadata: m, animated: true, completion: nil)
         return firstLoadedInstance
@@ -211,7 +226,7 @@ public class Workflow: LinkedList<FlowRepresentableMetaData> {
             guard let nodeToPresent = nextNode,
                   let metadata = self.first?.traverse(nodeToPresent.position)?.value,
                   let instanceToPresent = self.instances.first?.traverse(nodeToPresent.position)?.value else {
-                onFinish?(args)
+                onFinish?(argsToPass)
                 return
             }
             

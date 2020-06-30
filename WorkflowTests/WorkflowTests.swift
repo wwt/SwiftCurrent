@@ -142,6 +142,57 @@ class WorkflowTests: XCTestCase {
         XCTAssert(callbackCalled)
     }
     
+    func testWorkflowCallsBackOnCompletionWhenLastViewIsSkipped() {
+        class FR1: TestFlowRepresentable<Never>, FlowRepresentable {
+            static func instance() -> AnyFlowRepresentable { Self() }
+        }
+        class FR2: TestFlowRepresentable<Never>, FlowRepresentable {
+            static func instance() -> AnyFlowRepresentable { Self() }
+            
+            func shouldLoad() -> Bool {
+                proceedInWorkflow("args")
+                return false
+            }
+        }
+        class TestView { }
+        
+        let wf:Workflow = Workflow()
+            .thenPresent(FR1.self)
+            .thenPresent(FR2.self)
+        
+        let view = TestView()
+        var callbackCalled = false
+        let firstInstance = wf.launch(from: view, with: 1) { args in
+            callbackCalled = true
+            XCTAssertEqual(args as? String, "args")
+        }
+        XCTAssert(firstInstance?.value is FR1)
+        (firstInstance?.value as? FR1)?.proceedInWorkflow("test")
+        XCTAssert(callbackCalled)
+    }
+    
+    func testWorkflowCallsBackOnCompletionWhenLastViewIsSkipped_AndItIsTheOnlyView() {
+        class FR1: TestFlowRepresentable<Never>, FlowRepresentable {
+            static func instance() -> AnyFlowRepresentable { Self() }
+            func shouldLoad() -> Bool {
+                proceedInWorkflow("args")
+                return false
+            }
+        }
+        class TestView { }
+        
+        let wf:Workflow = Workflow()
+            .thenPresent(FR1.self)
+        
+        let view = TestView()
+        var callbackCalled = false
+        _ = wf.launch(from: view, with: 1) { args in
+            callbackCalled = true
+            XCTAssertEqual(args as? String, "args")
+        }
+        XCTAssert(callbackCalled)
+    }
+    
     func testPresenterThrowsAFatalErrorWhenThereIsATypeMismatch() {
         class View { }
         class NotView { }
