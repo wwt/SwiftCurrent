@@ -156,7 +156,7 @@
     },
     {
       "file": "/Users/tylerthompson/workspace/Workflow/Workflow/UIKitPresenter/UIKitPresenter.swift",
-      "line": 141,
+      "line": 144,
       "symbol": "FlowRepresentable.abandonWorkflow()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -212,14 +212,14 @@
     },
     {
       "file": "/Users/tylerthompson/workspace/Workflow/Workflow/Workflow.swift",
-      "line": 100,
+      "line": 105,
       "symbol": "Workflow.launch(from:with:withLaunchStyle:onFinish:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/tylerthompson/workspace/Workflow/Workflow/Workflow.swift",
-      "line": 248,
+      "line": 263,
       "symbol": "FlowRepresentableMetaData",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
