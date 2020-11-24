@@ -367,7 +367,7 @@ class ModalStyleTests: XCTestCase {
 }
 
 extension ModalStyleTests {
-    class RootViewController: UIWorkflowItem<Never>, FlowRepresentable {
+    class RootViewController: UIWorkflowItem<Never, Never>, FlowRepresentable {
         static func instance() -> AnyFlowRepresentable {
             standard
         }
@@ -379,7 +379,7 @@ extension ModalStyleTests {
         }
     }
     
-    class TestViewController: UIWorkflowItem<Any?>, FlowRepresentable {
+    class TestViewController: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
         var data:Any?
         static func instance() -> AnyFlowRepresentable {
             let controller = Self()

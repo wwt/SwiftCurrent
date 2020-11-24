@@ -22,7 +22,7 @@ class EnterAddressViewControllerTests: ViewControllerTest<EnterAddressViewContro
         let order = Order(location: nil)
         testViewController.order = order
         
-        testViewController.proceedInWorkflow = { data in
+        testViewController.proceedInWorkflowStorage = { data in
             proceedInWorkflowCalled = true
             XCTAssertEqual((data as? Order)?.orderType, .delivery(Address()))
         }

@@ -34,17 +34,18 @@ import UIKit
  open class UITableViewWorkflowItem<I>: UITableViewController {
      public var callback: ((Any?) -> Void)?
  
-     public typealias IntakeType = I
+     public typealias WorkflowInput = I
  
      public weak var workflow: Workflow?
  }
  ```
  */
 
-open class UIWorkflowItem<I>: UIViewController {
-    public var proceedInWorkflow: ((Any?) -> Void)?
+open class UIWorkflowItem<I, O>: UIViewController {
+    public var proceedInWorkflowStorage: ((Any?) -> Void)?
     
-    public typealias IntakeType = I
+    public typealias WorkflowInput = I
+    public typealias WorkflowOutput = O
     
     public weak var workflow: Workflow?
 }

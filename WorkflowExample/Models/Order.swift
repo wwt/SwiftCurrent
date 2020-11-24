@@ -7,7 +7,13 @@
 //
 
 import Foundation
-struct Order {
+struct Order: Equatable {
+    static func == (lhs: Order, rhs: Order) -> Bool {
+        lhs.invisibleId == rhs.invisibleId
+    }
+    
+    fileprivate let invisibleId = UUID()
+    
     let location:Location?
     var orderType:OrderType?
     var menuType:MenuType?

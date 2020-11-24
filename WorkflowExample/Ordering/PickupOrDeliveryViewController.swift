@@ -9,7 +9,7 @@
 import Foundation
 import DynamicWorkflow
 
-class PickupOrDeliveryViewController: UIWorkflowItem<Order>, StoryboardLoadable {
+class PickupOrDeliveryViewController: UIWorkflowItem<Order, Order?>, StoryboardLoadable {
     var order:Order?
     
     @IBAction func selectPickup() {
@@ -22,7 +22,7 @@ class PickupOrDeliveryViewController: UIWorkflowItem<Order>, StoryboardLoadable 
             .thenPresent(EnterAddressViewController.self)
         launchInto(workflow, args: order, withLaunchStyle: .modal) { [weak self] (order) in
             workflow.abandon()
-            self?.proceedInWorkflow(order)
+            self?.proceedInWorkflow(order as? Order)
         }
     }
 }

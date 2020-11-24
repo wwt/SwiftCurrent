@@ -15,12 +15,19 @@ public protocol AnyFlowRepresentable {
     /// workflow: Access to the `Workflow` controlling the `FlowRepresentable`. A common use case may be a `FlowRepresentable` that wants to abandon the `Workflow` it's in.
     /// - Note: While not strictly necessary it would be wise to declare this property as `weak`
     var workflow:Workflow? { get set }
-    var proceedInWorkflow:((Any?) -> Void)? { get set }
+    var proceedInWorkflowStorage:((Any?) -> Void)? { get set }
     
     mutating func erasedShouldLoad(with args:Any?) -> Bool
+    func erasedProceedInWorkflow(_ args:Any?)
     
     /// instance: A method to return an instance of the `FlowRepresentable`
     /// - Returns: `AnyFlowRepresentable`. Specifically a new instance from the static class passed to a `Workflow`
     /// - Note: This needs to return a unique instance of your view. Whether programmatic or from the storyboard is irrelevant
     static func instance() -> AnyFlowRepresentable
+}
+
+public extension AnyFlowRepresentable {
+    func erasedProceedInWorkflow(_ args:Any? = nil) {
+        proceedInWorkflowStorage?(args)
+    }
 }

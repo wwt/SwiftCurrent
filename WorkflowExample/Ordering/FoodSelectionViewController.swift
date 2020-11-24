@@ -9,7 +9,7 @@
 import Foundation
 import DynamicWorkflow
 
-class FoodSelectionViewController: UIWorkflowItem<Order>, StoryboardLoadable {
+class FoodSelectionViewController: UIWorkflowItem<Order, Order?>, StoryboardLoadable {
     var order:Order?
     
     @IBAction func firstFoodChoice() {

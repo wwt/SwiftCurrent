@@ -9,7 +9,7 @@
 import Foundation
 import DynamicWorkflow
 
-class LocationsViewController: UIWorkflowItem<[Location]>, StoryboardLoadable {
+class LocationsViewController: UIWorkflowItem<[Location], Order>, StoryboardLoadable {
     @IBOutlet weak var tableView:UITableView!
     
     var locations:[Location] = []

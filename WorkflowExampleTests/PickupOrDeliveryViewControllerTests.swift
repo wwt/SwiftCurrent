@@ -24,7 +24,7 @@ class PickupOrDeliveryViewConrollerTests:ViewControllerTest<PickupOrDeliveryView
         var callbackCalled = false
         let locationWithOne = Location(name: "", address: Address(), orderTypes: [.delivery(Address())], menuTypes: [])
         loadFromStoryboard { viewController in
-            viewController.proceedInWorkflow = { data in
+            viewController.proceedInWorkflowStorage = { data in
                 callbackCalled = true
                 XCTAssert(data is Order)
                 XCTAssertEqual((data as? Order)?.orderType, .delivery(Address()))
@@ -39,7 +39,7 @@ class PickupOrDeliveryViewConrollerTests:ViewControllerTest<PickupOrDeliveryView
         var callbackCalled = false
         let location = Location(name: "", address: Address(), orderTypes: [.pickup, .delivery(Address())], menuTypes: [])
         loadFromStoryboard { viewController in
-            viewController.proceedInWorkflow = { data in
+            viewController.proceedInWorkflowStorage = { data in
                 callbackCalled = true
                 XCTAssert(data is Order)
                 XCTAssertEqual((data as? Order)?.orderType, .pickup)
@@ -57,6 +57,7 @@ class PickupOrDeliveryViewConrollerTests:ViewControllerTest<PickupOrDeliveryView
         let unique = UUID().uuidString
         testViewController.order = Order(location: Location(name: unique, address: Address(), orderTypes: [], menuTypes: []))
         let listener = WorkflowListener()
+        let orderOutput = Order(location: Location(name: unique, address: Address(), orderTypes: [], menuTypes: []))
             
         testViewController.selectDelivery()
         
@@ -68,12 +69,13 @@ class PickupOrDeliveryViewConrollerTests:ViewControllerTest<PickupOrDeliveryView
         listener.workflow?.applyPresenter(mock)
         
         var proceedInWorkflowCalled = false
-        testViewController.proceedInWorkflow = { data in
+        testViewController.proceedInWorkflowStorage = { data in
             proceedInWorkflowCalled = true
-            XCTAssertEqual(data as? Int, 2)
+            XCTAssert(data is Order)
+            XCTAssertEqual(data as? Order, orderOutput)
         }
 
-        listener.onFinish?(2)
+        listener.onFinish?(orderOutput)
         
         XCTAssertEqual(mock.abandonCalled, 1)
         

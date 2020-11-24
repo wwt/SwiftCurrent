@@ -14,7 +14,7 @@ import Foundation
  Examples:
  ```swift
  class SomeViewController: UIViewController, FlowRepresentable {
-     typealias IntakeType = String
+     typealias WorkflowInput = String
  
      weak var workflow: Workflow?
  
@@ -35,14 +35,15 @@ import Foundation
  */
 
 public protocol FlowRepresentable: AnyFlowRepresentable {
-    ///IntakeType: The data type required to be passed to your FlowRepresentable (use `Any?` if you don't care)
-    associatedtype IntakeType
+    ///WorkflowInput: The data type required to be passed to your FlowRepresentable (use `Any?` if you don't care)
+    associatedtype WorkflowInput
+    associatedtype WorkflowOutput = Never
 
     /// shouldLoad: A method indicating whether it makes sense for this view to load in a workflow
     /// - Parameter args: Note you can rename this in your implementation if 'args' doesn't make sense. If a previous item in a workflow tries to pass a type that does not match `shouldLoad` will automatically be false, and this method will not be called.
     /// - Returns: Bool
     /// - Note: This method is called *before* your view loads. Do not attempt to do any UI work in this method. This is however a good place to set up data on your view.
-    mutating func shouldLoad(with args:IntakeType) -> Bool
+    mutating func shouldLoad(with args:WorkflowInput) -> Bool
     mutating func shouldLoad() -> Bool
 }
 
@@ -52,7 +53,7 @@ public extension FlowRepresentable {
     }
 }
 
-public extension FlowRepresentable where IntakeType == Never {
+public extension FlowRepresentable where WorkflowInput == Never {
     mutating func erasedShouldLoad(with args: Any?) -> Bool {
         return shouldLoad()
     }
@@ -61,19 +62,25 @@ public extension FlowRepresentable where IntakeType == Never {
     
     /// shouldLoad: A method indicating whether it makes sense for this view to load in a workflow
     /// - Returns: Bool
-    /// - Note: This particular version of shouldLoad is only available when your `IntakeType` is `Never`, indicating you do not care about data passed to this view
+    /// - Note: This particular version of shouldLoad is only available when your `WorkflowInput` is `Never`, indicating you do not care about data passed to this view
     mutating func shouldLoad() -> Bool {
         return true
     }
 }
 
+public extension FlowRepresentable where WorkflowOutput == Never {
+    func proceedInWorkflow() {
+        return erasedProceedInWorkflow(nil)
+    }
+}
+
 public extension FlowRepresentable {
     mutating func erasedShouldLoad(with args:Any?) -> Bool {
-        guard let cast = args as? IntakeType else { return false }
+        guard let cast = args as? WorkflowInput else { return false }
         return shouldLoad(with: cast)
     }
     
-    func proceedInWorkflow(_ args:Any? = nil) {
-        proceedInWorkflow?(args)
+    func proceedInWorkflow(_ args:WorkflowOutput) {
+        proceedInWorkflowStorage?(args)
     }
 }

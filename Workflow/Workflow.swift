@@ -67,12 +67,12 @@ public class Workflow: LinkedList<FlowRepresentableMetaData> {
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
     /// - Parameter staysInViewStack: A closure taking in the generic type from the `FlowRepresentable` and returning a `ViewPersistance`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
-    public func thenPresent<F>(_ type:F.Type, presentationType:PresentationType = .default, staysInViewStack:@escaping (F.IntakeType) -> ViewPersistance) -> Workflow where F: FlowRepresentable {
+    public func thenPresent<F>(_ type:F.Type, presentationType:PresentationType = .default, staysInViewStack:@escaping (F.WorkflowInput) -> ViewPersistance) -> Workflow where F: FlowRepresentable {
         let wf = Workflow(first)
         wf.append(FlowRepresentableMetaData(type,
                                             presentationType: presentationType,
                                             staysInViewStack: { data in
-                                                guard let cast = data as? F.IntakeType else { return .default }
+                                                guard let cast = data as? F.WorkflowInput else { return .default }
                                                 return staysInViewStack(cast)
         }))
         return wf
@@ -83,7 +83,7 @@ public class Workflow: LinkedList<FlowRepresentableMetaData> {
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
     /// - Parameter staysInViewStack: A closure returning a `ViewPersistance`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
-    public func thenPresent<F>(_ type:F.Type, presentationType:PresentationType = .default, staysInViewStack:@escaping () -> ViewPersistance) -> Workflow where F: FlowRepresentable, F.IntakeType == Never {
+    public func thenPresent<F>(_ type:F.Type, presentationType:PresentationType = .default, staysInViewStack:@escaping () -> ViewPersistance) -> Workflow where F: FlowRepresentable, F.WorkflowInput == Never {
         let wf = Workflow(first)
         wf.append(FlowRepresentableMetaData(type,
                                             presentationType: presentationType,
@@ -125,7 +125,7 @@ public class Workflow: LinkedList<FlowRepresentableMetaData> {
             var flowRepresentable = metadata.flowRepresentableType.instance()
             flowRepresentable.workflow = self
             
-            flowRepresentable.proceedInWorkflow = { passedArgs = .args($0) }
+            flowRepresentable.proceedInWorkflowStorage = { passedArgs = .args($0) }
 
             let shouldLoad = flowRepresentable.erasedShouldLoad(with: args)
             
@@ -181,7 +181,7 @@ public class Workflow: LinkedList<FlowRepresentableMetaData> {
     }
     
     private func removeInstances() {
-        instances.forEach { $0.value?.proceedInWorkflow = nil }
+        instances.forEach { $0.value?.proceedInWorkflowStorage = nil }
         instances.removeAll()
         firstLoadedInstance = nil
     }
@@ -191,23 +191,23 @@ public class Workflow: LinkedList<FlowRepresentableMetaData> {
     }
 
     private func setupCallbacks(for node:LinkedList<AnyFlowRepresentable?>.Element, shouldDestroy:Bool = false, onFinish:((Any?) -> Void)?) {
-        node.value?.proceedInWorkflow = { args in
+        node.value?.proceedInWorkflowStorage = { args in
             var argsToPass = args
             var viewToPresent:Any?
             let nextNode = node.next?.traverse {
                 let index = $0.position
                 guard let metadata = self.first?.traverse(index)?.value else { return false }
                 var instance = metadata.flowRepresentableType.instance()
-                instance.proceedInWorkflow = $0.value?.proceedInWorkflow
+                instance.proceedInWorkflowStorage = $0.value?.proceedInWorkflowStorage
                 instance.workflow = self
                 
-                var hold = instance.proceedInWorkflow
+                var hold = instance.proceedInWorkflowStorage
                 defer {
-                    instance.proceedInWorkflow = hold
+                    instance.proceedInWorkflowStorage = hold
                     self.replaceInstance(atIndex: index, withInstance: instance)
                 }
                 
-                instance.proceedInWorkflow = { argsToPass = $0 }
+                instance.proceedInWorkflowStorage = { argsToPass = $0 }
                 
                 let shouldLoad = instance.erasedShouldLoad(with: argsToPass) == true
                 if (!shouldLoad && metadata.staysInViewStack(argsToPass) == .hiddenInitially) {
@@ -251,7 +251,7 @@ public class Workflow: LinkedList<FlowRepresentableMetaData> {
         self.replaceInstance(atIndex: instancePosition, withInstance: instance)
         if let instanceNode = self.instances.first?.traverse(instancePosition) {
             self.setupCallbacks(for: instanceNode, onFinish: onFinish)
-            hold = instanceNode.value?.proceedInWorkflow
+            hold = instanceNode.value?.proceedInWorkflowStorage
         }
         self.presenter?.launch(view: instance,
                                from: from,

@@ -9,7 +9,7 @@
 import Foundation
 import DynamicWorkflow
 
-class ReviewOrderViewController: UIWorkflowItem<Order>, StoryboardLoadable {
+class ReviewOrderViewController: UIWorkflowItem<Order, Order?>, StoryboardLoadable {
     var order:Order?
     
     @IBOutlet weak var locationNameLabel:UILabel! {

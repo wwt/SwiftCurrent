@@ -9,7 +9,7 @@
 import Foundation
 import DynamicWorkflow
 
-class EnterAddressViewController: UIWorkflowItem<Order>, StoryboardLoadable {
+class EnterAddressViewController: UIWorkflowItem<Order, Order?>, StoryboardLoadable {
     var order:Order?
     @IBAction func saveAddress() {
         order?.orderType = .delivery(Address(line1: "MyAddress", line2: "", city: "", state: "", zip: ""))
