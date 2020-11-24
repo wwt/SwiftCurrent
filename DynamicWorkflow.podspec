@@ -14,10 +14,17 @@ iOS has a linear paradigm for navigation that doesn't support a lot of flexibili
   s.ios.deployment_target = '11.0'
   s.swift_version = '5.1'
 
-  s.source_files = 'Workflow/**/*.{swift,h,m}'
+  s.module_name = 'Workflow'
+
+  s.subspec 'Core' do |ss|
+    ss.ios.deployment_target = '11.0'
+    ss.source_files = 'Workflow/Sources/Workflow/**/*.{swift,h,m}'
+  end
 
   s.subspec 'Swinject' do |ss|
-    ss.source_files = ['Workflow/**/*.{swift,h,m}', 'DependencyInjection/**/*.{swift,h}']
+    ss.ios.deployment_target = '11.0'
+    ss.source_files = 'Workflow/Sources/DependencyInjection/**/*.{swift,h}'
+    ss.dependency 'DynamicWorkflow/Core'
     ss.dependency 'Swinject'
   end
 
