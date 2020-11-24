@@ -8,6 +8,7 @@
 
 import Foundation
 import Workflow
+import WorkflowUIKit
 import UIKit
 
 class LocationsViewController: UIWorkflowItem<[Location], Order>, StoryboardLoadable {

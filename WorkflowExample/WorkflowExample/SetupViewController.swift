@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import Workflow
 import WorkflowDI
+import WorkflowUIKit
 import Swinject
 
 class SetupViewController: UIViewController, StoryboardLoadable {

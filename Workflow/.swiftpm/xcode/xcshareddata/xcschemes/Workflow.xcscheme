@@ -26,7 +26,32 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES"
+      onlyGenerateCoverageForSpecifiedTargets = "YES">
+      <CodeCoverageTargets>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "Workflow"
+            BuildableName = "Workflow"
+            BlueprintName = "Workflow"
+            ReferencedContainer = "container:">
+         </BuildableReference>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "WorkflowDI"
+            BuildableName = "WorkflowDI"
+            BlueprintName = "WorkflowDI"
+            ReferencedContainer = "container:">
+         </BuildableReference>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "WorkflowUIKit"
+            BuildableName = "WorkflowUIKit"
+            BlueprintName = "WorkflowUIKit"
+            ReferencedContainer = "container:">
+         </BuildableReference>
+      </CodeCoverageTargets>
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -43,8 +68,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CAF58634256CF0E50044C864"
-               BuildableName = "WorkflowTests.xctest"
-               BlueprintName = "WorkflowTests"
+               BuildableName = "WorkflowUIKitTests.xctest"
+               BlueprintName = "WorkflowUIKitTests"
                ReferencedContainer = "container:../WorkflowExample/WorkflowExample.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -55,6 +80,16 @@
                BlueprintIdentifier = "DependencyInjectionTests"
                BuildableName = "DependencyInjectionTests"
                BlueprintName = "DependencyInjectionTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "WorkflowTests"
+               BuildableName = "WorkflowTests"
+               BlueprintName = "WorkflowTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>

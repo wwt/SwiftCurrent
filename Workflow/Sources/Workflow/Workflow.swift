@@ -326,9 +326,9 @@ public extension Workflow {
 }
 
 public class FlowRepresentableMetaData {
-    private(set) var flowRepresentableType:AnyFlowRepresentable.Type
-    private(set) var staysInViewStack:(Any?) -> ViewPersistance
-    private(set) var presentationType:PresentationType
+    private(set) public var flowRepresentableType:AnyFlowRepresentable.Type
+    private(set) public var staysInViewStack:(Any?) -> ViewPersistance
+    private(set) public var presentationType:PresentationType
     public init(_ flowRepresentableType:AnyFlowRepresentable.Type, presentationType:PresentationType = .default, staysInViewStack:@escaping (Any?) -> ViewPersistance) {
         self.flowRepresentableType = flowRepresentableType
         self.staysInViewStack = staysInViewStack

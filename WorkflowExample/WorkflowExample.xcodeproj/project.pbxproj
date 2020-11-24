@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CAC1C22B256D8B0700DBD0D4 /* WorkflowUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = CAC1C22A256D8B0700DBD0D4 /* WorkflowUIKit */; };
+		CAC1C234256D8DA300DBD0D4 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1C233256D8DA300DBD0D4 /* Screen.swift */; };
+		CAC1C235256D8DA300DBD0D4 /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1C232256D8DA300DBD0D4 /* TopViewController.swift */; };
+		CAC1C23D256D8DB100DBD0D4 /* WaitUntil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1C23C256D8DB100DBD0D4 /* WaitUntil.swift */; };
+		CAC1C24F256D8F0400DBD0D4 /* ModalStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1C24E256D8F0400DBD0D4 /* ModalStyleTests.swift */; };
+		CAC1C250256D8F0400DBD0D4 /* UIKitPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1C24D256D8F0300DBD0D4 /* UIKitPresenterTests.swift */; };
+		CAC1C26D256D8FA500DBD0D4 /* CwlPosixPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = CAC1C26C256D8FA500DBD0D4 /* CwlPosixPreconditionTesting */; };
+		CAC1C26F256D8FA500DBD0D4 /* CwlPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = CAC1C26E256D8FA500DBD0D4 /* CwlPreconditionTesting */; };
 		CAF5852E256CEE990044C864 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF5852D256CEE990044C864 /* AppDelegate.swift */; };
 		CAF58530256CEE990044C864 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF5852F256CEE990044C864 /* SceneDelegate.swift */; };
 		CAF58532256CEE990044C864 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF58531256CEE990044C864 /* ViewController.swift */; };
@@ -25,21 +33,11 @@
 		CAF58585256CEF2F0044C864 /* PickupOrDeliveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF5854C256CEECC0044C864 /* PickupOrDeliveryViewController.swift */; };
 		CAF58587256CEF340044C864 /* StoryboardLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF58552256CEECC0044C864 /* StoryboardLoadable.swift */; };
 		CAF58589256CEF350044C864 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF58553256CEECC0044C864 /* NetworkManager.swift */; };
-		CAF586A2256CF2560044C864 /* CwlPosixPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = CAF586A1256CF2560044C864 /* CwlPosixPreconditionTesting */; };
-		CAF586A4256CF2560044C864 /* CwlPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = CAF586A3256CF2560044C864 /* CwlPreconditionTesting */; };
 		CAF58714256CF40C0044C864 /* UIUTest in Frameworks */ = {isa = PBXBuildFile; productRef = CAF58713256CF40C0044C864 /* UIUTest */; };
 		CAF5873F256CF55E0044C864 /* CwlPosixPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = CAF5873E256CF55E0044C864 /* CwlPosixPreconditionTesting */; };
 		CAF58741256CF55E0044C864 /* CwlPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = CAF58740256CF55E0044C864 /* CwlPreconditionTesting */; };
 		CAF58743256CF55E0044C864 /* UIUTest in Frameworks */ = {isa = PBXBuildFile; productRef = CAF58742256CF55E0044C864 /* UIUTest */; };
-		CAF5880B256D72BE0044C864 /* WaitUntil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF58800256D72BD0044C864 /* WaitUntil.swift */; };
-		CAF5880C256D72BE0044C864 /* LinkedListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF58801256D72BD0044C864 /* LinkedListTests.swift */; };
-		CAF5880D256D72BE0044C864 /* CustomAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF58802256D72BD0044C864 /* CustomAssertions.swift */; };
-		CAF5880F256D72BE0044C864 /* WorkflowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF58804256D72BD0044C864 /* WorkflowTests.swift */; };
-		CAF58810256D72BE0044C864 /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF58805256D72BD0044C864 /* TopViewController.swift */; };
 		CAF58811256D72BE0044C864 /* XCTestManifests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF58806256D72BD0044C864 /* XCTestManifests.swift */; };
-		CAF58812256D72BE0044C864 /* UIKitPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF58808256D72BD0044C864 /* UIKitPresenterTests.swift */; };
-		CAF58813256D72BE0044C864 /* ModalStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF58809256D72BD0044C864 /* ModalStyleTests.swift */; };
-		CAF58814256D72BE0044C864 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF5880A256D72BE0044C864 /* Screen.swift */; };
 		CAF58829256D73090044C864 /* ViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF5881C256D73080044C864 /* ViewControllerTest.swift */; };
 		CAF5882A256D73090044C864 /* PickupOrDeliveryViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF5881D256D73080044C864 /* PickupOrDeliveryViewControllerTests.swift */; };
 		CAF5882B256D73090044C864 /* EnterAddressViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF5881E256D73080044C864 /* EnterAddressViewControllerTests.swift */; };
@@ -74,6 +72,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CAC1C232256D8DA300DBD0D4 /* TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
+		CAC1C233256D8DA300DBD0D4 /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
+		CAC1C23C256D8DB100DBD0D4 /* WaitUntil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitUntil.swift; sourceTree = "<group>"; };
+		CAC1C24D256D8F0300DBD0D4 /* UIKitPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitPresenterTests.swift; sourceTree = "<group>"; };
+		CAC1C24E256D8F0400DBD0D4 /* ModalStyleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalStyleTests.swift; sourceTree = "<group>"; };
 		CAF5852A256CEE990044C864 /* WorkflowExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkflowExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAF5852D256CEE990044C864 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CAF5852F256CEE990044C864 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -96,22 +99,12 @@
 		CAF58553256CEECC0044C864 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		CAF58554256CEF080044C864 /* SetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewController.swift; sourceTree = "<group>"; };
 		CAF5858B256CEF9A0044C864 /* Workflow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Workflow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CAF58635256CF0E50044C864 /* WorkflowTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorkflowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CAF58683256CF1970044C864 /* WorkflowTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WorkflowTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		CAF58635256CF0E50044C864 /* WorkflowUIKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorkflowUIKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAF586AE256CF2B40044C864 /* WorkflowExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorkflowExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAF5871F256CF4DC0044C864 /* UIUTest_ObjC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UIUTest_ObjC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAF58721256CF4DC0044C864 /* UIUTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UIUTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CAF58800256D72BD0044C864 /* WaitUntil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WaitUntil.swift; path = ../../Workflow/Tests/WorkflowTests/WaitUntil.swift; sourceTree = "<group>"; };
-		CAF58801256D72BD0044C864 /* LinkedListTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LinkedListTests.swift; path = ../../Workflow/Tests/WorkflowTests/LinkedListTests.swift; sourceTree = "<group>"; };
-		CAF58802256D72BD0044C864 /* CustomAssertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomAssertions.swift; path = ../../Workflow/Tests/WorkflowTests/CustomAssertions.swift; sourceTree = "<group>"; };
 		CAF58803256D72BD0044C864 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../../Workflow/Tests/WorkflowTests/Info.plist; sourceTree = "<group>"; };
-		CAF58804256D72BD0044C864 /* WorkflowTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkflowTests.swift; path = ../../Workflow/Tests/WorkflowTests/WorkflowTests.swift; sourceTree = "<group>"; };
-		CAF58805256D72BD0044C864 /* TopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TopViewController.swift; path = ../../Workflow/Tests/WorkflowTests/TopViewController.swift; sourceTree = "<group>"; };
 		CAF58806256D72BD0044C864 /* XCTestManifests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XCTestManifests.swift; path = ../../Workflow/Tests/WorkflowTests/XCTestManifests.swift; sourceTree = "<group>"; };
-		CAF58808256D72BD0044C864 /* UIKitPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitPresenterTests.swift; sourceTree = "<group>"; };
-		CAF58809256D72BD0044C864 /* ModalStyleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalStyleTests.swift; sourceTree = "<group>"; };
-		CAF5880A256D72BE0044C864 /* Screen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Screen.swift; path = ../../Workflow/Tests/WorkflowTests/Screen.swift; sourceTree = "<group>"; };
-		CAF5881B256D73080044C864 /* WorkflowExampleTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WorkflowExampleTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		CAF5881C256D73080044C864 /* ViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewControllerTest.swift; path = ../../Workflow/Tests/WorkflowExampleTests/ViewControllerTest.swift; sourceTree = "<group>"; };
 		CAF5881D256D73080044C864 /* PickupOrDeliveryViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PickupOrDeliveryViewControllerTests.swift; path = ../../Workflow/Tests/WorkflowExampleTests/PickupOrDeliveryViewControllerTests.swift; sourceTree = "<group>"; };
 		CAF5881E256D73080044C864 /* EnterAddressViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EnterAddressViewControllerTests.swift; path = ../../Workflow/Tests/WorkflowExampleTests/EnterAddressViewControllerTests.swift; sourceTree = "<group>"; };
@@ -133,6 +126,7 @@
 			files = (
 				CAF58861256D73D60044C864 /* WorkflowDI in Frameworks */,
 				CAF5885F256D73D60044C864 /* Workflow in Frameworks */,
+				CAC1C22B256D8B0700DBD0D4 /* WorkflowUIKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,9 +134,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAC1C26D256D8FA500DBD0D4 /* CwlPosixPreconditionTesting in Frameworks */,
 				CAF58714256CF40C0044C864 /* UIUTest in Frameworks */,
-				CAF586A4256CF2560044C864 /* CwlPreconditionTesting in Frameworks */,
-				CAF586A2256CF2560044C864 /* CwlPosixPreconditionTesting in Frameworks */,
+				CAC1C26F256D8FA500DBD0D4 /* CwlPreconditionTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,7 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				CAF5852C256CEE990044C864 /* WorkflowExample */,
-				CAF58636256CF0E50044C864 /* WorkflowTests */,
+				CAF58636256CF0E50044C864 /* WorkflowUIKitTests */,
 				CAF586AF256CF2B40044C864 /* WorkflowExampleTests */,
 				CAF5852B256CEE990044C864 /* Products */,
 				CAF58542256CEEAA0044C864 /* Frameworks */,
@@ -174,7 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				CAF5852A256CEE990044C864 /* WorkflowExample.app */,
-				CAF58635256CF0E50044C864 /* WorkflowTests.xctest */,
+				CAF58635256CF0E50044C864 /* WorkflowUIKitTests.xctest */,
 				CAF586AE256CF2B40044C864 /* WorkflowExampleTests.xctest */,
 			);
 			name = Products;
@@ -241,21 +235,18 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		CAF58636256CF0E50044C864 /* WorkflowTests */ = {
+		CAF58636256CF0E50044C864 /* WorkflowUIKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				CAF58802256D72BD0044C864 /* CustomAssertions.swift */,
+				CAC1C24E256D8F0400DBD0D4 /* ModalStyleTests.swift */,
+				CAC1C24D256D8F0300DBD0D4 /* UIKitPresenterTests.swift */,
+				CAC1C233256D8DA300DBD0D4 /* Screen.swift */,
+				CAC1C23C256D8DB100DBD0D4 /* WaitUntil.swift */,
+				CAC1C232256D8DA300DBD0D4 /* TopViewController.swift */,
 				CAF58803256D72BD0044C864 /* Info.plist */,
-				CAF58801256D72BD0044C864 /* LinkedListTests.swift */,
-				CAF5880A256D72BE0044C864 /* Screen.swift */,
-				CAF58805256D72BD0044C864 /* TopViewController.swift */,
-				CAF58807256D72BD0044C864 /* UIKitPresenter */,
-				CAF58800256D72BD0044C864 /* WaitUntil.swift */,
-				CAF58804256D72BD0044C864 /* WorkflowTests.swift */,
 				CAF58806256D72BD0044C864 /* XCTestManifests.swift */,
-				CAF58683256CF1970044C864 /* WorkflowTests-Bridging-Header.h */,
 			);
-			path = WorkflowTests;
+			path = WorkflowUIKitTests;
 			sourceTree = "<group>";
 		};
 		CAF586AF256CF2B40044C864 /* WorkflowExampleTests */ = {
@@ -272,19 +263,8 @@
 				CAF58824256D73090044C864 /* SetupViewControllerTests.swift */,
 				CAF5881F256D73080044C864 /* TestFinder.swift */,
 				CAF5881C256D73080044C864 /* ViewControllerTest.swift */,
-				CAF5881B256D73080044C864 /* WorkflowExampleTests-Bridging-Header.h */,
 			);
 			path = WorkflowExampleTests;
-			sourceTree = "<group>";
-		};
-		CAF58807256D72BD0044C864 /* UIKitPresenter */ = {
-			isa = PBXGroup;
-			children = (
-				CAF58808256D72BD0044C864 /* UIKitPresenterTests.swift */,
-				CAF58809256D72BD0044C864 /* ModalStyleTests.swift */,
-			);
-			name = UIKitPresenter;
-			path = ../../Workflow/Tests/WorkflowTests/UIKitPresenter;
 			sourceTree = "<group>";
 		};
 		CAF58826256D73090044C864 /* Mocks */ = {
@@ -316,14 +296,15 @@
 			packageProductDependencies = (
 				CAF5885E256D73D60044C864 /* Workflow */,
 				CAF58860256D73D60044C864 /* WorkflowDI */,
+				CAC1C22A256D8B0700DBD0D4 /* WorkflowUIKit */,
 			);
 			productName = WorkflowExample;
 			productReference = CAF5852A256CEE990044C864 /* WorkflowExample.app */;
 			productType = "com.apple.product-type.application";
 		};
-		CAF58634256CF0E50044C864 /* WorkflowTests */ = {
+		CAF58634256CF0E50044C864 /* WorkflowUIKitTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CAF5863C256CF0E50044C864 /* Build configuration list for PBXNativeTarget "WorkflowTests" */;
+			buildConfigurationList = CAF5863C256CF0E50044C864 /* Build configuration list for PBXNativeTarget "WorkflowUIKitTests" */;
 			buildPhases = (
 				CAF58631256CF0E50044C864 /* Sources */,
 				CAF58632256CF0E50044C864 /* Frameworks */,
@@ -334,14 +315,14 @@
 			dependencies = (
 				CAF5863B256CF0E50044C864 /* PBXTargetDependency */,
 			);
-			name = WorkflowTests;
+			name = WorkflowUIKitTests;
 			packageProductDependencies = (
-				CAF586A1256CF2560044C864 /* CwlPosixPreconditionTesting */,
-				CAF586A3256CF2560044C864 /* CwlPreconditionTesting */,
 				CAF58713256CF40C0044C864 /* UIUTest */,
+				CAC1C26C256D8FA500DBD0D4 /* CwlPosixPreconditionTesting */,
+				CAC1C26E256D8FA500DBD0D4 /* CwlPreconditionTesting */,
 			);
 			productName = WorkflowTests;
-			productReference = CAF58635256CF0E50044C864 /* WorkflowTests.xctest */;
+			productReference = CAF58635256CF0E50044C864 /* WorkflowUIKitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		CAF586AD256CF2B40044C864 /* WorkflowExampleTests */ = {
@@ -409,7 +390,7 @@
 			projectRoot = "";
 			targets = (
 				CAF58529256CEE990044C864 /* WorkflowExample */,
-				CAF58634256CF0E50044C864 /* WorkflowTests */,
+				CAF58634256CF0E50044C864 /* WorkflowUIKitTests */,
 				CAF586AD256CF2B40044C864 /* WorkflowExampleTests */,
 			);
 		};
@@ -469,14 +450,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CAF5880F256D72BE0044C864 /* WorkflowTests.swift in Sources */,
-				CAF58813256D72BE0044C864 /* ModalStyleTests.swift in Sources */,
-				CAF5880C256D72BE0044C864 /* LinkedListTests.swift in Sources */,
-				CAF5880B256D72BE0044C864 /* WaitUntil.swift in Sources */,
-				CAF5880D256D72BE0044C864 /* CustomAssertions.swift in Sources */,
-				CAF58814256D72BE0044C864 /* Screen.swift in Sources */,
-				CAF58812256D72BE0044C864 /* UIKitPresenterTests.swift in Sources */,
-				CAF58810256D72BE0044C864 /* TopViewController.swift in Sources */,
+				CAC1C234256D8DA300DBD0D4 /* Screen.swift in Sources */,
+				CAC1C24F256D8F0400DBD0D4 /* ModalStyleTests.swift in Sources */,
+				CAC1C250256D8F0400DBD0D4 /* UIKitPresenterTests.swift in Sources */,
+				CAC1C235256D8DA300DBD0D4 /* TopViewController.swift in Sources */,
+				CAC1C23D256D8DB100DBD0D4 /* WaitUntil.swift in Sources */,
 				CAF58811256D72BE0044C864 /* XCTestManifests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -704,7 +682,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = TT.WorkflowTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "WorkflowTests/WorkflowTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -727,7 +704,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = TT.WorkflowTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "WorkflowTests/WorkflowTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WorkflowExample.app/WorkflowExample";
@@ -750,7 +726,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = TT.WorkflowExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "WorkflowExampleTests/WorkflowExampleTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -774,7 +749,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = TT.WorkflowExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "WorkflowExampleTests/WorkflowExampleTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WorkflowExample.app/WorkflowExample";
@@ -802,7 +776,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CAF5863C256CF0E50044C864 /* Build configuration list for PBXNativeTarget "WorkflowTests" */ = {
+		CAF5863C256CF0E50044C864 /* Build configuration list for PBXNativeTarget "WorkflowUIKitTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CAF5863D256CF0E50044C864 /* Debug */,
@@ -842,12 +816,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		CAF586A1256CF2560044C864 /* CwlPosixPreconditionTesting */ = {
+		CAC1C22A256D8B0700DBD0D4 /* WorkflowUIKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WorkflowUIKit;
+		};
+		CAC1C26C256D8FA500DBD0D4 /* CwlPosixPreconditionTesting */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CAF586A0256CF2560044C864 /* XCRemoteSwiftPackageReference "CwlPreconditionTesting" */;
 			productName = CwlPosixPreconditionTesting;
 		};
-		CAF586A3256CF2560044C864 /* CwlPreconditionTesting */ = {
+		CAC1C26E256D8FA500DBD0D4 /* CwlPreconditionTesting */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CAF586A0256CF2560044C864 /* XCRemoteSwiftPackageReference "CwlPreconditionTesting" */;
 			productName = CwlPreconditionTesting;

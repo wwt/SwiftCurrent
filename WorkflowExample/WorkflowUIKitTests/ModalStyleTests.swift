@@ -11,6 +11,7 @@ import XCTest
 import UIUTest
 
 @testable import Workflow
+import WorkflowUIKit
 
 class ModalStyleTests: XCTestCase {
     override func setUp() {

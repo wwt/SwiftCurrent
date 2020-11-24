@@ -8,6 +8,7 @@
 
 import Foundation
 import Workflow
+import WorkflowUIKit
 
 class PickupOrDeliveryViewController: UIWorkflowItem<Order, Order>, StoryboardLoadable {
     var order:Order?

@@ -8,6 +8,7 @@
 
 import Foundation
 import Workflow
+import WorkflowUIKit
 import UIKit
 
 class ReviewOrderViewController: UIWorkflowItem<Order, Order?>, StoryboardLoadable {
@@ -37,10 +38,6 @@ class ReviewOrderViewController: UIWorkflowItem<Order, Order?>, StoryboardLoadab
             this.text = order?.shoppingCart.compactMap { $0.name }.joined(separator: ", ")
         }
     }
-    
-//    @IBAction func editLocation() {
-//
-//    }
 }
 
 extension ReviewOrderViewController: FlowRepresentable {

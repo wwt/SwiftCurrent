@@ -10,6 +10,7 @@ import Foundation
 import XCTest
 
 @testable import Workflow
+import WorkflowUIKit
 
 class UIKitPresenterTests: XCTestCase {
     func testWorkflowCanLaunchViewController() {

@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Workflow
 
 extension NSObject {
     func copyObject<T:NSObject>() throws -> T? {

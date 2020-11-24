@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Workflow
 
 /**
  UIWorkflowItem: A subclass of UIViewController designed for convenience. This does **NOT** have to be used, it simply removes some of the overhead that normally comes with a FlowRepresentable.
