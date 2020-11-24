@@ -16,11 +16,11 @@ public struct DependencyInjected<Value> {
     
     public init(wrappedValue value: Value?) {
         name = nil
-        container = Workflow.defaultContainer
+        container = AnyWorkflow.defaultContainer
     }
     public init(wrappedValue value: Value? = nil, name:String) {
         self.name = name
-        container = Workflow.defaultContainer
+        container = AnyWorkflow.defaultContainer
     }
 
     public init(wrappedValue value: Value? = nil, container containerGetter:@autoclosure () -> Container, name:String? = nil) {

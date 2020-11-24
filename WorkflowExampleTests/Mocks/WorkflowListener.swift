@@ -12,7 +12,7 @@ import XCTest
 @testable import DynamicWorkflow
 
 class WorkflowListener {
-    var workflow:Workflow?
+    var workflow:AnyWorkflow?
     var launchStyle:PresentationType?
     var args:Any?
     var launchedFrom:AnyFlowRepresentable?
@@ -27,7 +27,7 @@ class WorkflowListener {
     
     @objc func workflowLaunched(notification: Notification) {
         let dict = notification.object as? [String:Any?]
-        workflow = dict?["workflow"] as? Workflow
+        workflow = dict?["workflow"] as? AnyWorkflow
         launchStyle = dict?["style"] as? PresentationType
         onFinish = dict?["onFinish"] as? ((Any?) -> Void)
         launchedFrom = dict?["launchFrom"] as? AnyFlowRepresentable

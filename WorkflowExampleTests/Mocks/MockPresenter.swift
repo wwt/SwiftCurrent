@@ -15,9 +15,9 @@ class MockPresenter: Presenter {
     }
     
     var abandonCalled = 0
-    var lastWorkflow:Workflow?
+    var lastWorkflow:AnyWorkflow?
     var lastAnimated:Bool?
-    func abandon(_ workflow: Workflow, animated: Bool, onFinish: (() -> Void)?) {
+    func abandon(_ workflow: AnyWorkflow, animated: Bool, onFinish: (() -> Void)?) {
         abandonCalled += 1
         lastWorkflow = workflow
         lastAnimated = animated

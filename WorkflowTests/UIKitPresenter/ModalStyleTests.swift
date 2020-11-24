@@ -24,8 +24,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: RootViewController.standard)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self,
+            .launchInto(Workflow(TestViewController.self,
                              presentationType: .modal(.fullScreen)))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
@@ -37,8 +36,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: vc)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self,
+            .launchInto(Workflow(TestViewController.self,
                              presentationType: .modal(.pageSheet)))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
@@ -50,8 +48,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: RootViewController.standard)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self,
+            .launchInto(Workflow(TestViewController.self,
                              presentationType: .modal(.formSheet)))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
@@ -62,8 +59,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: RootViewController.standard)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self,
+            .launchInto(Workflow(TestViewController.self,
                              presentationType: .modal(.currentContext)))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
@@ -74,8 +70,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: RootViewController.standard)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self,
+            .launchInto(Workflow(TestViewController.self,
                              presentationType: .modal(.custom)))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
@@ -86,8 +81,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: RootViewController.standard)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self,
+            .launchInto(Workflow(TestViewController.self,
                              presentationType: .modal(.overFullScreen)))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
@@ -98,8 +92,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: RootViewController.standard)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self,
+            .launchInto(Workflow(TestViewController.self,
                              presentationType: .modal(.overCurrentContext)))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
@@ -110,8 +103,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: RootViewController.standard)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self,
+            .launchInto(Workflow(TestViewController.self,
                              presentationType: .modal(.popover)))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
@@ -123,8 +115,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: RootViewController.standard)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self,
+            .launchInto(Workflow(TestViewController.self,
                              presentationType: .modal(.automatic)))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
@@ -135,8 +126,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: RootViewController.standard)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self),
+            .launchInto(Workflow(TestViewController.self),
                              withLaunchStyle: .modal(.fullScreen))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
@@ -148,8 +138,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: vc)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self),
+            .launchInto(Workflow(TestViewController.self),
                              withLaunchStyle: .modal(.pageSheet))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
@@ -160,8 +149,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: RootViewController.standard)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self),
+            .launchInto(Workflow(TestViewController.self),
                              withLaunchStyle: .modal(.formSheet))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
@@ -172,8 +160,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: RootViewController.standard)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self),
+            .launchInto(Workflow(TestViewController.self),
                              withLaunchStyle: .modal(.currentContext))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
@@ -184,8 +171,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: RootViewController.standard)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self),
+            .launchInto(Workflow(TestViewController.self),
                              withLaunchStyle: .modal(.custom))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
@@ -196,8 +182,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: RootViewController.standard)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self),
+            .launchInto(Workflow(TestViewController.self),
                              withLaunchStyle: .modal(.overFullScreen))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
@@ -208,8 +193,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: RootViewController.standard)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self),
+            .launchInto(Workflow(TestViewController.self),
                              withLaunchStyle: .modal(.overCurrentContext))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
@@ -220,8 +204,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: RootViewController.standard)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self),
+            .launchInto(Workflow(TestViewController.self),
                              withLaunchStyle: .modal(.popover))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
@@ -233,8 +216,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: RootViewController.standard)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self),
+            .launchInto(Workflow(TestViewController.self),
                              withLaunchStyle: .modal(.automatic))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
@@ -245,8 +227,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: RootViewController.standard)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self, presentationType: .navigationStack),
+            .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
                              withLaunchStyle: .modal(.fullScreen))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
@@ -258,8 +239,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: vc)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self, presentationType: .navigationStack),
+            .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
                              withLaunchStyle: .modal(.pageSheet))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
@@ -270,8 +250,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: RootViewController.standard)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self, presentationType: .navigationStack),
+            .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
                              withLaunchStyle: .modal(.formSheet))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
@@ -282,8 +261,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: RootViewController.standard)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self, presentationType: .navigationStack),
+            .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
                              withLaunchStyle: .modal(.currentContext))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
@@ -294,8 +272,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: RootViewController.standard)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self, presentationType: .navigationStack),
+            .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
                              withLaunchStyle: .modal(.custom))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
@@ -306,8 +283,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: RootViewController.standard)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self, presentationType: .navigationStack),
+            .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
                              withLaunchStyle: .modal(.overFullScreen))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
@@ -318,8 +294,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: RootViewController.standard)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self, presentationType: .navigationStack),
+            .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
                              withLaunchStyle: .modal(.overCurrentContext))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
@@ -330,8 +305,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: RootViewController.standard)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self, presentationType: .navigationStack),
+            .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
                              withLaunchStyle: .modal(.popover))
         
         waitUntil(UIApplication.topViewController() is TestViewController)
@@ -343,8 +317,7 @@ class ModalStyleTests: XCTestCase {
         loadView(controller: RootViewController.standard)
         
         UIApplication.topViewController()?
-            .launchInto(Workflow()
-                .thenPresent(TestViewController.self, presentationType: .navigationStack),
+            .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
                              withLaunchStyle: .modal(.automatic))
         
         waitUntil(UIApplication.topViewController() is TestViewController)

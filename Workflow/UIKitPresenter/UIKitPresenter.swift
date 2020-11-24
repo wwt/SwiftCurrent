@@ -98,7 +98,7 @@ open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
         }
     }
     
-    public func abandon(_ workflow:Workflow, animated:Bool = true, onFinish:(() -> Void)? = nil) {
+    public func abandon(_ workflow:AnyWorkflow, animated:Bool = true, onFinish:(() -> Void)? = nil) {
         guard let first = workflow.firstLoadedInstance?.value as? UIViewController else { return }
         if let nav = first.navigationController {
             if nav.viewControllers.first === first {
@@ -134,7 +134,7 @@ public extension UIViewController {
     /// - Parameter launchStyle: The `PresentationType` used to launch the workflow
     /// - Parameter onFinish: A callback that is called when the last item in the workflow calls back
     /// - Note: In the background this applies a UIKitPresenter, if you call launch on workflow directly you'll need to apply one yourself
-    func launchInto(_ workflow:Workflow, args:Any? = nil, withLaunchStyle launchStyle:PresentationType = .default, onFinish:((Any?) -> Void)? = nil) {
+    func launchInto(_ workflow:AnyWorkflow, args:Any? = nil, withLaunchStyle launchStyle:PresentationType = .default, onFinish:((Any?) -> Void)? = nil) {
         workflow.applyPresenter(UIKitPresenter())
         _ = workflow.launch(from: self, with: args, withLaunchStyle: launchStyle, onFinish: onFinish)?.value as? UIViewController
     }

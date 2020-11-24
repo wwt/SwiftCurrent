@@ -18,12 +18,12 @@ class Motorcycle:Vehicle { }
 class DependencyInjectionTests: XCTestCase {
 
     override func tearDown() {
-        Workflow.defaultContainer.removeAll()
+        AnyWorkflow.defaultContainer.removeAll()
     }
     
     func testPropertyWrapperInjectsFromDefaultContainer() {
         let car = Car()
-        Workflow.defaultContainer.register(Vehicle.self) { _ in car }
+        AnyWorkflow.defaultContainer.register(Vehicle.self) { _ in car }
         class Thing {
             @DependencyInjected var vehicle:Vehicle?
         }
@@ -35,8 +35,8 @@ class DependencyInjectionTests: XCTestCase {
 
     func testPropertyWrapperWithSpecificName() {
         let car = Car()
-        Workflow.defaultContainer.register(Vehicle.self, name: "car1") { _ in car }
-        Workflow.defaultContainer.register(Vehicle.self, name: "car2") { _ in Car() }
+        AnyWorkflow.defaultContainer.register(Vehicle.self, name: "car1") { _ in car }
+        AnyWorkflow.defaultContainer.register(Vehicle.self, name: "car2") { _ in Car() }
         
         class Thing {
             @DependencyInjected(name: "car1") var vehicle:Vehicle?
@@ -48,7 +48,7 @@ class DependencyInjectionTests: XCTestCase {
     }
     
     func testPropertyWrapperWithSpecificContainer() {
-        Workflow.defaultContainer.register(Vehicle.self) { _ in Motorcycle() }
+        AnyWorkflow.defaultContainer.register(Vehicle.self) { _ in Motorcycle() }
         Thing.container.register(Vehicle.self) { _ in Car() }
         
         class Thing {
@@ -62,7 +62,7 @@ class DependencyInjectionTests: XCTestCase {
 
     func testPropertyWrapperShouldBeLazy() {
         var callbackCalled = 0
-        Workflow.defaultContainer.register(Vehicle.self) { _ in
+        AnyWorkflow.defaultContainer.register(Vehicle.self) { _ in
             callbackCalled += 1
             return Car()
         }

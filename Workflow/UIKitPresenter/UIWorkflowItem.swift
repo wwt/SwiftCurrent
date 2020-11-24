@@ -47,5 +47,5 @@ open class UIWorkflowItem<I, O>: UIViewController {
     public typealias WorkflowInput = I
     public typealias WorkflowOutput = O
     
-    public weak var workflow: Workflow?
+    public weak var workflow: AnyWorkflow?
 }

@@ -29,7 +29,8 @@ import Foundation
  }
  ```
  */
-public class Workflow: LinkedList<FlowRepresentableMetaData> {
+
+public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
     public typealias ArrayLiteralElement = AnyFlowRepresentable.Type
     internal var instances = LinkedList<AnyFlowRepresentable?>()
     internal var presenter:AnyPresenter?
@@ -54,8 +55,8 @@ public class Workflow: LinkedList<FlowRepresentableMetaData> {
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
     /// - Parameter staysInViewStack: An `ViewPersistance`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
-    public func thenPresent<F>(_ type:F.Type, presentationType:PresentationType = .default, staysInViewStack:@escaping @autoclosure () -> ViewPersistance = .default) -> Workflow where F: FlowRepresentable {
-        let wf = Workflow(first)
+    public func thenPresent<FR: FlowRepresentable>(_ type:FR.Type, presentationType:PresentationType = .default, staysInViewStack:@escaping @autoclosure () -> ViewPersistance = .default) -> Workflow<FR> {
+        let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetaData(type,
                                             presentationType: presentationType,
                                             staysInViewStack: { _ in staysInViewStack() }))
@@ -67,12 +68,12 @@ public class Workflow: LinkedList<FlowRepresentableMetaData> {
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
     /// - Parameter staysInViewStack: A closure taking in the generic type from the `FlowRepresentable` and returning a `ViewPersistance`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
-    public func thenPresent<F>(_ type:F.Type, presentationType:PresentationType = .default, staysInViewStack:@escaping (F.WorkflowInput) -> ViewPersistance) -> Workflow where F: FlowRepresentable {
-        let wf = Workflow(first)
+    public func thenPresent<FR: FlowRepresentable>(_ type:FR.Type, presentationType:PresentationType = .default, staysInViewStack:@escaping (FR.WorkflowInput) -> ViewPersistance) -> Workflow<FR> {
+        let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetaData(type,
                                             presentationType: presentationType,
                                             staysInViewStack: { data in
-                                                guard let cast = data as? F.WorkflowInput else { return .default }
+                                                guard let cast = data as? FR.WorkflowInput else { return .default }
                                                 return staysInViewStack(cast)
         }))
         return wf
@@ -83,8 +84,8 @@ public class Workflow: LinkedList<FlowRepresentableMetaData> {
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
     /// - Parameter staysInViewStack: A closure returning a `ViewPersistance`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
-    public func thenPresent<F>(_ type:F.Type, presentationType:PresentationType = .default, staysInViewStack:@escaping () -> ViewPersistance) -> Workflow where F: FlowRepresentable, F.WorkflowInput == Never {
-        let wf = Workflow(first)
+    public func thenPresent<FR: FlowRepresentable>(_ type:FR.Type, presentationType:PresentationType = .default, staysInViewStack:@escaping () -> ViewPersistance) -> Workflow<FR> where FR.WorkflowInput == Never {
+        let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetaData(type,
                                             presentationType: presentationType,
                                             staysInViewStack: { _ in
@@ -257,6 +258,51 @@ public class Workflow: LinkedList<FlowRepresentableMetaData> {
                                from: from,
                                withLaunchStyle: metadata.presentationType, metadata: metadata, animated: false, completion: nil)
 
+    }
+}
+
+public class Workflow<F: FlowRepresentable>: AnyWorkflow {
+    internal override init(_ node: AnyWorkflow.Element?) {
+        super.init(node)
+    }
+    
+    internal override init() { super.init() }
+    
+    /// init: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
+    /// - Parameter type: A reference to the class used to create the workflow
+    /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
+    /// - Parameter staysInViewStack: An `ViewPersistance`type representing how this item in the workflow should persist.
+    /// - Returns: `Workflow`
+    public convenience init(_ type:F.Type, presentationType:PresentationType = .default, staysInViewStack:@escaping @autoclosure () -> ViewPersistance = .default) {
+        self.init(FlowRepresentableMetaData(type,
+                                             presentationType: presentationType,
+                                             staysInViewStack: { _ in staysInViewStack() }))
+    }
+    /// init: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
+    /// - Parameter type: A reference to the class used to create the workflow
+    /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
+    /// - Parameter staysInViewStack: A closure taking in the generic type from the `FlowRepresentable` and returning a `ViewPersistance`type representing how this item in the workflow should persist.
+    /// - Returns: `Workflow`
+    public convenience init(_ type:F.Type, presentationType:PresentationType = .default, staysInViewStack:@escaping (F.WorkflowInput) -> ViewPersistance) {
+        self.init(FlowRepresentableMetaData(type,
+                                            presentationType: presentationType,
+                                            staysInViewStack: { data in
+                                                guard let cast = data as? F.WorkflowInput else { return .default }
+                                                return staysInViewStack(cast)
+        }))
+    }
+
+    /// init: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
+    /// - Parameter type: A reference to the class used to create the workflow
+    /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
+    /// - Parameter staysInViewStack: A closure returning a `ViewPersistance`type representing how this item in the workflow should persist.
+    /// - Returns: `Workflow`
+    public convenience init(_ type:F.Type, presentationType:PresentationType = .default, staysInViewStack:@escaping () -> ViewPersistance) where F.WorkflowInput == Never {
+        self.init(FlowRepresentableMetaData(type,
+                                            presentationType: presentationType,
+                                            staysInViewStack: { _ in
+                                                return staysInViewStack()
+        }))
     }
 }
 

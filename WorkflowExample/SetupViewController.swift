@@ -31,8 +31,7 @@ class SetupViewController: UIViewController, StoryboardLoadable {
                      menuTypes: [.catering, .regular]),
         ]
         launchInto(
-            Workflow()
-                .thenPresent(LocationsViewController.self, dependencyInjectionSetup: {
+            Workflow(LocationsViewController.self, dependencyInjectionSetup: {
                     $0.register(NetworkManager.self) { _ in
                         SomeNetworkManager()
                     }

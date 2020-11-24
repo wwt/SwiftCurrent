@@ -14,7 +14,7 @@ import Foundation
 public protocol AnyFlowRepresentable {
     /// workflow: Access to the `Workflow` controlling the `FlowRepresentable`. A common use case may be a `FlowRepresentable` that wants to abandon the `Workflow` it's in.
     /// - Note: While not strictly necessary it would be wise to declare this property as `weak`
-    var workflow:Workflow? { get set }
+    var workflow:AnyWorkflow? { get set }
     var proceedInWorkflowStorage:((Any?) -> Void)? { get set }
     
     mutating func erasedShouldLoad(with args:Any?) -> Bool

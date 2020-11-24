@@ -17,7 +17,7 @@ class WorkflowTests: XCTestCase {
         class FR1: FlowRepresentable {
             var presenter: AnyPresenter?
             
-            var workflow: Workflow?
+            var workflow: AnyWorkflow?
             
             var proceedInWorkflowStorage: ((Any?) -> Void)?
             
@@ -34,7 +34,7 @@ class WorkflowTests: XCTestCase {
         class FR2: FlowRepresentable {
             var presenter: AnyPresenter?
             
-            var workflow: Workflow?
+            var workflow: AnyWorkflow?
             
             var proceedInWorkflowStorage: ((Any?) -> Void)?
             
@@ -62,7 +62,7 @@ class WorkflowTests: XCTestCase {
         class FR1: FlowRepresentable {
             var presenter: AnyPresenter?
             
-            var workflow: Workflow?
+            var workflow: AnyWorkflow?
             
             var proceedInWorkflowStorage: ((Any?) -> Void)?
             
@@ -90,8 +90,7 @@ class WorkflowTests: XCTestCase {
         class TestView { }
         
         let presenter = TestPresenter()
-        let wf = Workflow()
-            .thenPresent(FR1.self)
+        let wf = Workflow(FR1.self)
             .thenPresent(FR2.self)
             .thenPresent(FR3.self)
         
@@ -113,7 +112,7 @@ class WorkflowTests: XCTestCase {
     }
     
     func testWorkflowReturnsNilWhenLaunchingWithoutRepresentables() {
-        let wf:Workflow = Workflow()
+        let wf:AnyWorkflow = AnyWorkflow()
         XCTAssertNil(wf.launch(from: nil, with: nil))
     }
     
@@ -128,8 +127,7 @@ class WorkflowTests: XCTestCase {
         }
         class TestView { }
         
-        let wf:Workflow = Workflow()
-            .thenPresent(FR1.self)
+        let wf:Workflow = Workflow(FR1.self)
             .thenPresent(FR2.self)
         
         let view = TestView()
@@ -160,8 +158,7 @@ class WorkflowTests: XCTestCase {
         }
         class TestView { }
         
-        let wf:Workflow = Workflow()
-            .thenPresent(FR1.self)
+        let wf:Workflow = Workflow(FR1.self)
             .thenPresent(FR2.self)
         
         let view = TestView()
@@ -186,8 +183,7 @@ class WorkflowTests: XCTestCase {
         }
         class TestView { }
         
-        let wf:Workflow = Workflow()
-            .thenPresent(FR1.self)
+        let wf:Workflow = Workflow(FR1.self)
         
         let view = TestView()
         var callbackCalled = false
@@ -218,7 +214,7 @@ class WorkflowTests: XCTestCase {
         }
         
         var abandonCalled = 0
-        func abandon(_ workflow: Workflow, animated:Bool = true, onFinish:(() -> Void)? = nil) {
+        func abandon(_ workflow: AnyWorkflow, animated:Bool = true, onFinish:(() -> Void)? = nil) {
             abandonCalled += 1
         }
         
@@ -243,7 +239,7 @@ class WorkflowTests: XCTestCase {
         
         func launch(view: T, from root: T, withLaunchStyle launchStyle: PresentationType, metadata: FlowRepresentableMetaData, animated:Bool, completion:@escaping () -> Void) { }
         
-        func abandon(_ workflow: Workflow, animated: Bool, onFinish: (() -> Void)?) { }
+        func abandon(_ workflow: AnyWorkflow, animated: Bool, onFinish: (() -> Void)?) { }
     }
     
     class TestFlowRepresentable<I> {
@@ -253,6 +249,6 @@ class WorkflowTests: XCTestCase {
         
         typealias WorkflowInput = I
         
-        var workflow: Workflow?
+        var workflow: AnyWorkflow?
     }
 }
