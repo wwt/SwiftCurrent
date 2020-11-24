@@ -9,28 +9,33 @@
 import Foundation
 import DynamicWorkflow
 
-class FoodSelectionViewController: UIWorkflowItem<Order, Order?>, StoryboardLoadable {
+class FoodSelectionViewController: UIWorkflowItem<Order, Order>, StoryboardLoadable {
     var order:Order?
     
     @IBAction func firstFoodChoice() {
         order?.shoppingCart.append(Food(name: "Combo #1"))
+        guard let order = order else { return }
         proceedInWorkflow(order)
     }
 
     @IBAction func secondFoodChoice() {
         order?.shoppingCart.append(Food(name: "Combo #2"))
+        guard let order = order else { return }
         proceedInWorkflow(order)
     }
 
     @IBAction func thirdFoodChoice() {
         order?.shoppingCart.append(Food(name: "Combo #3"))
+        guard let order = order else { return }
         proceedInWorkflow(order)
     }
 }
 
 extension FoodSelectionViewController: FlowRepresentable {
     func shouldLoad(with order: Order) -> Bool {
-        self.order = order
+        defer {
+            self.order = order
+        }
         return true
     }
 }

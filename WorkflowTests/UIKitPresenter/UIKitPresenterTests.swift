@@ -43,6 +43,7 @@ class UIKitPresenterTests: XCTestCase {
             var proceedInWorkflowStorage: ((Any?) -> Void)?
 
             typealias WorkflowInput = String?
+            typealias WorkflowOutput = Int?
 
             static func instance() -> AnyFlowRepresentable { Self() }
 
@@ -542,9 +543,9 @@ class UIKitPresenterTests: XCTestCase {
     
     func testNavWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStack() {
         class FR1: TestViewController { }
-        class FR2: UIWorkflowItem<Never, Never>, FlowRepresentable {
+        class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable { FR2() }
-            func shouldLoad() -> Bool { false }
+            func shouldLoad(with args: Any?) -> Bool { false }
         }
         class FR3: TestViewController { }
         
@@ -566,9 +567,10 @@ class UIKitPresenterTests: XCTestCase {
     
     func testNavWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStack_BacksUp_ThenGoesForwardAgain() {
         class FR1: TestViewController { }
-        class FR2: UIWorkflowItem<Never, Never>, FlowRepresentable {
+        class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
+            func shouldLoad(with args: Any?) -> Bool { false }
+            
             static func instance() -> AnyFlowRepresentable { FR2() }
-            func shouldLoad() -> Bool { false }
         }
         class FR3: TestViewController { }
         
@@ -586,7 +588,7 @@ class UIKitPresenterTests: XCTestCase {
         (UIApplication.topViewController()?.navigationController)?.popViewController(animated: false)
         waitUntil(UIApplication.topViewController() is FR2)
         XCTAssert(UIApplication.topViewController() is FR2)
-        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow()
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
         waitUntil(UIApplication.topViewController() is FR3)
         XCTAssert(UIApplication.topViewController() is FR3)
     }
@@ -598,7 +600,7 @@ class UIKitPresenterTests: XCTestCase {
                 return false
             }
         }
-        class FR2: UIWorkflowItem<Never, Never>, FlowRepresentable {
+        class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable { FR2() }
         }
         class FR3: TestViewController { }
@@ -623,7 +625,7 @@ class UIKitPresenterTests: XCTestCase {
                 return false
             }
         }
-        class FR2: UIWorkflowItem<Never, Never>, FlowRepresentable {
+        class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable { FR2() }
         }
         class FR3: TestViewController { }
@@ -646,7 +648,9 @@ class UIKitPresenterTests: XCTestCase {
     
     func testNavWorkflowWhichDoesNotSkipAScreen_ButRemovesItFromTheViewStack() {
         class FR1: TestViewController { }
-        class FR2: UIWorkflowItem<Never, Never>, FlowRepresentable {
+        class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
+            func shouldLoad(with args: Any?) -> Bool { true }
+            
             static func instance() -> AnyFlowRepresentable { FR2() }
         }
         class FR3: TestViewController { }
@@ -662,7 +666,7 @@ class UIKitPresenterTests: XCTestCase {
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
         waitUntil(UIApplication.topViewController() is FR2)
         XCTAssert(UIApplication.topViewController() is FR2)
-        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow()
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
         waitUntil(UIApplication.topViewController() is FR3)
         XCTAssert(UIApplication.topViewController() is FR3)
         (UIApplication.topViewController()?.navigationController)?.popViewController(animated: false)
@@ -672,7 +676,7 @@ class UIKitPresenterTests: XCTestCase {
     
     func testNavWorkflowWhichDoesNotSkipFirstScreen_ButRemovesItFromTheViewStack() {
         class FR1: TestViewController { }
-        class FR2: UIWorkflowItem<Never, Never>, FlowRepresentable {
+        class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable { FR2() }
         }
         class FR3: TestViewController { }
@@ -693,7 +697,7 @@ class UIKitPresenterTests: XCTestCase {
     
     func testNavWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStackUsingAClsure() {
         class FR1: TestViewController { }
-        class FR2: UIWorkflowItem<Never, Never>, FlowRepresentable {
+        class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable { FR2() }
             func shouldLoad() -> Bool { false }
         }
@@ -703,7 +707,7 @@ class UIKitPresenterTests: XCTestCase {
         loadView(controller: nav)
         
         nav.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, staysInViewStack: { .hiddenInitially })
+                    .thenPresent(FR2.self, staysInViewStack: .hiddenInitially)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
         waitUntil(UIApplication.topViewController() is FR1)
         XCTAssert(UIApplication.topViewController() is FR1)
@@ -717,7 +721,7 @@ class UIKitPresenterTests: XCTestCase {
     
     func testNavWorkflowWhichDoesNotSkipAScreen_ButRemovesItFromTheViewStackUsingAClsure() {
         class FR1: TestViewController { }
-        class FR2: UIWorkflowItem<Never, Never>, FlowRepresentable {
+        class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable { FR2() }
         }
         class FR3: TestViewController { }
@@ -726,14 +730,14 @@ class UIKitPresenterTests: XCTestCase {
         loadView(controller: nav)
         
         nav.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, staysInViewStack: { .removedAfterProceeding })
+                    .thenPresent(FR2.self, staysInViewStack: .removedAfterProceeding)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
         waitUntil(UIApplication.topViewController() is FR1)
         XCTAssert(UIApplication.topViewController() is FR1)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
         waitUntil(UIApplication.topViewController() is FR2)
         XCTAssert(UIApplication.topViewController() is FR2)
-        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow()
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
         waitUntil(UIApplication.topViewController() is FR3)
         XCTAssert(UIApplication.topViewController() is FR3)
         (UIApplication.topViewController()?.navigationController)?.popViewController(animated: false)
@@ -743,9 +747,9 @@ class UIKitPresenterTests: XCTestCase {
     
     func testNavWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStackUsingAClsureWithData() {
         class FR1: TestViewController { }
-        class FR2: UIWorkflowItem<String, Never>, FlowRepresentable {
+        class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable { FR2() }
-            func shouldLoad(with args:String) -> Bool { false }
+            func shouldLoad(with args:Any?) -> Bool { false }
         }
         class FR3: TestViewController { }
         
@@ -767,8 +771,8 @@ class UIKitPresenterTests: XCTestCase {
     
     func testNavWorkflowWhichDoesNotSkipAScreen_ButRemovesItFromTheViewStackUsingAClsureWithData() {
         class FR1: TestViewController { }
-        class FR2: UIWorkflowItem<String?, Never>, FlowRepresentable {
-            func shouldLoad(with args: String?) -> Bool {
+        class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
+            func shouldLoad(with args: Any?) -> Bool {
                 return true
             }
             static func instance() -> AnyFlowRepresentable { FR2() }
@@ -780,7 +784,7 @@ class UIKitPresenterTests: XCTestCase {
 
         nav.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, staysInViewStack: { data in
-                        XCTAssertEqual(data, "blah")
+                        XCTAssertEqual(data as? String, "blah")
                         return .removedAfterProceeding
                     })
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
@@ -789,7 +793,7 @@ class UIKitPresenterTests: XCTestCase {
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow("blah")
         waitUntil(UIApplication.topViewController() is FR2)
         XCTAssert(UIApplication.topViewController() is FR2)
-        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow()
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
         waitUntil(UIApplication.topViewController() is FR3)
         XCTAssert(UIApplication.topViewController() is FR3)
         (UIApplication.topViewController()?.navigationController)?.popViewController(animated: false)
@@ -799,9 +803,9 @@ class UIKitPresenterTests: XCTestCase {
     
     func testModalWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStack() {
         class FR1: TestViewController { }
-        class FR2: UIWorkflowItem<Never, Never>, FlowRepresentable {
+        class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable { FR2() }
-            func shouldLoad() -> Bool { false }
+            func shouldLoad(with args:Any?) -> Bool { false }
         }
         class FR3: TestViewController { }
         
@@ -828,7 +832,7 @@ class UIKitPresenterTests: XCTestCase {
                 return false
             }
         }
-        class FR2: UIWorkflowItem<Never, Never>, FlowRepresentable {
+        class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable { FR2() }
         }
         class FR3: TestViewController { }
@@ -848,8 +852,9 @@ class UIKitPresenterTests: XCTestCase {
     
     func testModalWorkflowWhichDoesNotSkipAScreen_ButRemovesItFromTheViewStack() {
         class FR1: TestViewController { }
-        class FR2: UIWorkflowItem<Never, Never>, FlowRepresentable {
+        class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable { FR2() }
+            func shouldLoad(with args: Any?) -> Bool { true }
         }
         class FR3: TestViewController { }
         
@@ -864,7 +869,7 @@ class UIKitPresenterTests: XCTestCase {
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
         waitUntil(UIApplication.topViewController() is FR2)
         XCTAssert(UIApplication.topViewController() is FR2)
-        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow()
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
         waitUntil(UIApplication.topViewController() is FR3)
         XCTAssert(UIApplication.topViewController() is FR3)
         UIApplication.topViewController()?.dismiss(animated: true)
@@ -874,7 +879,7 @@ class UIKitPresenterTests: XCTestCase {
     
     func testModalWorkflowWhichDoesNotSkipFirstScreen_ButRemovesItFromTheViewStack() {
         class FR1: TestViewController { }
-        class FR2: UIWorkflowItem<Never, Never>, FlowRepresentable {
+        class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable { FR2() }
         }
         class FR3: TestViewController { }
@@ -898,7 +903,7 @@ class UIKitPresenterTests: XCTestCase {
     
     func testModalWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStackUsingAClsure() {
         class FR1: TestViewController { }
-        class FR2: UIWorkflowItem<Never, Never>, FlowRepresentable {
+        class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable { FR2() }
             func shouldLoad() -> Bool { false }
         }
@@ -908,7 +913,7 @@ class UIKitPresenterTests: XCTestCase {
         loadView(controller: root)
         
         root.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, staysInViewStack: { .hiddenInitially })
+                    .thenPresent(FR2.self, staysInViewStack: .hiddenInitially)
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
         waitUntil(UIApplication.topViewController() is FR1)
         XCTAssert(UIApplication.topViewController() is FR1)
@@ -922,7 +927,7 @@ class UIKitPresenterTests: XCTestCase {
     
     func testModalWorkflowWhichDoesNotSkipAScreen_ButRemovesItFromTheViewStackUsingAClsure() {
         class FR1: TestViewController { }
-        class FR2: UIWorkflowItem<Never, Never>, FlowRepresentable {
+        class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable { FR2() }
         }
         class FR3: TestViewController { }
@@ -931,14 +936,14 @@ class UIKitPresenterTests: XCTestCase {
         loadView(controller: root)
         
         root.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, staysInViewStack: { .removedAfterProceeding })
+                    .thenPresent(FR2.self, staysInViewStack: .removedAfterProceeding)
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
         waitUntil(UIApplication.topViewController() is FR1)
         XCTAssert(UIApplication.topViewController() is FR1)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
         waitUntil(UIApplication.topViewController() is FR2)
         XCTAssert(UIApplication.topViewController() is FR2)
-        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow()
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
         waitUntil(UIApplication.topViewController() is FR3)
         XCTAssert(UIApplication.topViewController() is FR3)
         UIApplication.topViewController()?.dismiss(animated: true)
@@ -948,9 +953,9 @@ class UIKitPresenterTests: XCTestCase {
     
     func testModalWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStackUsingAClsureWithData() {
         class FR1: TestViewController { }
-        class FR2: UIWorkflowItem<String, Never>, FlowRepresentable {
+        class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable { FR2() }
-            func shouldLoad(with args:String) -> Bool { false }
+            func shouldLoad(with args:Any?) -> Bool { false }
         }
         class FR3: TestViewController { }
         
@@ -972,8 +977,8 @@ class UIKitPresenterTests: XCTestCase {
     
     func testModalWorkflowWhichDoesNotSkipAScreen_ButRemovesItFromTheViewStackUsingAClsureWithData() {
         class FR1: TestViewController { }
-        class FR2: UIWorkflowItem<String?, Never>, FlowRepresentable {
-            func shouldLoad(with args: String?) -> Bool {
+        class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
+            func shouldLoad(with args: Any?) -> Bool {
                 return true
             }
             static func instance() -> AnyFlowRepresentable { FR2() }
@@ -985,7 +990,7 @@ class UIKitPresenterTests: XCTestCase {
 
         root.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, staysInViewStack: { data in
-                        XCTAssertEqual(data, "blah")
+                        XCTAssertEqual(data as? String, "blah")
                         return .removedAfterProceeding
                     })
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
@@ -994,7 +999,7 @@ class UIKitPresenterTests: XCTestCase {
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow("blah")
         waitUntil(UIApplication.topViewController() is FR2)
         XCTAssert(UIApplication.topViewController() is FR2)
-        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow()
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
         waitUntil(UIApplication.topViewController() is FR3)
         XCTAssert(UIApplication.topViewController() is FR3)
         UIApplication.topViewController()?.dismiss(animated: true)
@@ -1177,7 +1182,9 @@ class UIKitPresenterTests: XCTestCase {
         UIKitPresenterTests.viewDidLoadOnMockCalled = 0
         
         class FR1: TestViewController { }
-        class FR2: TestViewController { }
+        class FR2: UIWorkflowItem<Never, Never>, FlowRepresentable {
+            static func instance() -> AnyFlowRepresentable { Self() }
+        }
         
         let root = UIViewController()
         let nav = UINavigationController(rootViewController: root)

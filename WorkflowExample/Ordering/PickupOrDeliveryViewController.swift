@@ -9,11 +9,12 @@
 import Foundation
 import DynamicWorkflow
 
-class PickupOrDeliveryViewController: UIWorkflowItem<Order, Order?>, StoryboardLoadable {
+class PickupOrDeliveryViewController: UIWorkflowItem<Order, Order>, StoryboardLoadable {
     var order:Order?
     
     @IBAction func selectPickup() {
         order?.orderType = .pickup
+        guard let order = order else { return }
         proceedInWorkflow(order)
     }
     
@@ -21,18 +22,22 @@ class PickupOrDeliveryViewController: UIWorkflowItem<Order, Order?>, StoryboardL
         let workflow = Workflow(EnterAddressViewController.self)
         launchInto(workflow, args: order, withLaunchStyle: .modal) { [weak self] (order) in
             workflow.abandon()
-            self?.proceedInWorkflow(order as? Order)
+            guard let order = order as? Order else { return }
+            self?.proceedInWorkflow(order)
         }
     }
 }
 
 extension PickupOrDeliveryViewController: FlowRepresentable {
     func shouldLoad(with order: Order) -> Bool {
-        self.order = order
+        defer {
+            self.order = order
+        }
+        var order = order
         if let location = order.location,
             location.orderTypes.count == 1 {
-            self.order?.orderType = location.orderTypes.first
-            proceedInWorkflow(self.order)
+            order.orderType = location.orderTypes.first
+            proceedInWorkflow(order)
         }
         return (order.location?.orderTypes.count ?? 0) > 1
     }

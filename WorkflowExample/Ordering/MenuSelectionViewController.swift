@@ -9,27 +9,31 @@
 import Foundation
 import DynamicWorkflow
 
-class MenuSelectionViewController: UIWorkflowItem<Order, Order?>, StoryboardLoadable {
+class MenuSelectionViewController: UIWorkflowItem<Order, Order>, StoryboardLoadable {
     var order:Order?
     
     @IBAction func cateringMenu() {
         order?.menuType = .catering
+        guard let order = order else { return }
         proceedInWorkflow(order)
     }
     
     @IBAction func regularMenu() {
         order?.menuType = .regular
+        guard let order = order else { return }
         proceedInWorkflow(order)
     }
 }
 
 extension MenuSelectionViewController: FlowRepresentable {
     func shouldLoad(with order: Order) -> Bool {
-        self.order = order
+        var order = order
+        defer {
+            self.order = order
+        }
         if (order.location?.menuTypes.count == 1) {
-            var o = order
-            o.menuType = order.location?.menuTypes.first
-            proceedInWorkflow(o)
+            order.menuType = order.location?.menuTypes.first
+            proceedInWorkflow(order)
         }
         return (order.location?.menuTypes.count ?? 0) > 1
     }
