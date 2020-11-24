@@ -8,10 +8,6 @@ platform :ios do
   end
 
   lane :unit_test do
-    cocoapods(
-      clean: true,
-      repo_update: true,
-    )
     scan(
       code_coverage: true,
       scheme:  'Workflow',
@@ -38,6 +34,5 @@ platform :ios do
     podspec_name = "DynamicWorkflow.podspec"
     version = version_bump_podspec(path: podspec_name,
                                    bump_type: type)
-    sh("./../edit-plist.sh", version, "../Workflow/Info.plist")
   end
 end
