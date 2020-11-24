@@ -34,6 +34,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
     public typealias ArrayLiteralElement = AnyFlowRepresentable.Type
     internal var instances = LinkedList<AnyFlowRepresentable?>()
     internal var presenter:AnyPresenter?
+    internal var orchestrationResponder:AnyOrchestrationResponder?
 
     public var firstLoadedInstance:LinkedList<AnyFlowRepresentable?>.Element?
     
@@ -48,12 +49,17 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
     deinit {
         removeInstances()
         presenter = nil
+        orchestrationResponder = nil
     }
     
     public func applyPresenter(_ presenter:AnyPresenter) {
         self.presenter = presenter
     }
     
+    public func applyOrchestrationResponder(_ orchestrationResponder:AnyOrchestrationResponder) {
+        self.orchestrationResponder = orchestrationResponder
+    }
+
     private enum PassedArgs {
         case none
         case args(Any?)
@@ -73,7 +79,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
         #endif
         removeInstances()
         instances.append(contentsOf: map { _ in nil })
-        var rootView:Any?
+        var root:Any?
         var metadata:FlowRepresentableMetaData?
         var passedArgs:PassedArgs = .none
         _ = first?.traverse { node in
@@ -98,7 +104,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
                     }
                 } else if (!shouldLoad && metadata.staysInViewStack(args) == .hiddenInitially) {
                     var reference:((Any?) -> Void)?
-                    self.handleCallbackWhenHiddenInitially(viewToPresent: &rootView,
+                    self.handleCallbackWhenHiddenInitially(viewToPresent: &root,
                                                            hold: &reference,
                                                            instance: flowRepresentable,
                                                            instancePosition: position,
@@ -119,7 +125,8 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
                 return nil
         }
         
-        presenter?.launch(view: first.value, from: rootView ?? from, withLaunchStyle: launchStyle, metadata: m, animated: true, completion: nil)
+        presenter?.launch(view: first.value, from: root ?? from, withLaunchStyle: launchStyle, metadata: m, animated: true, completion: nil)
+        orchestrationResponder?.proceed(to: first.value, from: nil, metadata: m)
         return firstLoadedInstance
     }
     
@@ -148,12 +155,12 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
     }
 
     private func setupCallbacks(for node:LinkedList<AnyFlowRepresentable?>.Element, shouldDestroy:Bool = false, onFinish:((Any?) -> Void)?) {
-        node.value?.proceedInWorkflowStorage = { args in
+        node.value?.proceedInWorkflowStorage = { [self] args in
             var argsToPass = args
             var viewToPresent:Any?
             let nextNode = node.next?.traverse {
                 let index = $0.position
-                guard let metadata = self.first?.traverse(index)?.value else { return false }
+                guard let metadata = first?.traverse(index)?.value else { return false }
                 var instance = metadata.flowRepresentableType.instance()
                 instance.proceedInWorkflowStorage = $0.value?.proceedInWorkflowStorage
                 instance.workflow = self
@@ -161,18 +168,18 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
                 var hold = instance.proceedInWorkflowStorage
                 defer {
                     instance.proceedInWorkflowStorage = hold
-                    self.replaceInstance(atIndex: index, withInstance: instance)
+                    replaceInstance(atIndex: index, withInstance: instance)
                 }
                 
                 instance.proceedInWorkflowStorage = { argsToPass = $0 }
                 
                 let shouldLoad = instance.erasedShouldLoad(with: argsToPass) == true
                 if (!shouldLoad && metadata.staysInViewStack(argsToPass) == .hiddenInitially) {
-                    self.handleCallbackWhenHiddenInitially(viewToPresent: &viewToPresent,
+                    handleCallbackWhenHiddenInitially(viewToPresent: &viewToPresent,
                                                            hold: &hold,
                                                            instance: instance,
                                                            instancePosition: index,
-                                                           from: self.instances.first?.traverse(node.position)?.value,
+                                                           from: instances.first?.traverse(node.position)?.value,
                                                            metadata: metadata,
                                                            onFinish: onFinish)
                 }
@@ -181,8 +188,8 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
             }
 
             guard let nodeToPresent = nextNode,
-                  let metadata = self.first?.traverse(nodeToPresent.position)?.value,
-                  let instanceToPresent = self.instances.first?.traverse(nodeToPresent.position)?.value else {
+                  let metadata = first?.traverse(nodeToPresent.position)?.value,
+                  let instanceToPresent = instances.first?.traverse(nodeToPresent.position)?.value else {
                 onFinish?(argsToPass)
                 return
             }
@@ -191,15 +198,17 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
                                 shouldDestroy: metadata.staysInViewStack(argsToPass) == ViewPersistance.removedAfterProceeding,
                                 onFinish: onFinish)
             
-            viewToPresent = viewToPresent ?? self.instances.first?.traverse(node.position)?.value
+            viewToPresent = viewToPresent ?? instances.first?.traverse(node.position)?.value
             
-            self.presenter?.launch(view: instanceToPresent,
+            presenter?.launch(view: instanceToPresent,
                                    from: viewToPresent,
                                    withLaunchStyle: metadata.presentationType, metadata: metadata, animated: true) {
                 if shouldDestroy {
-                    self.presenter?.destroy(self.instances.first?.traverse(node.position)?.value)
+                    presenter?.destroy(instances.first?.traverse(node.position)?.value)
                 }
             }
+            
+            orchestrationResponder?.proceed(to: instanceToPresent, from: viewToPresent, metadata: metadata)
         }
     }
     

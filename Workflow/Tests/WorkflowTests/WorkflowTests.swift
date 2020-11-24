@@ -10,7 +10,7 @@ import XCTest
 @testable import Workflow
 
 class WorkflowTests: XCTestCase {
-    func testFlowRepresentablesWithMultipleTypesCanBeStoredInAnArray() {
+    func testFlowRepresentablesWithMultipleTypesCanBeStoredIAndRetreived() {
         class FR1: FlowRepresentable {
             var presenter: AnyPresenter?
             
@@ -39,7 +39,7 @@ class WorkflowTests: XCTestCase {
             typealias WorkflowInput = Int
             
             static func instance() -> AnyFlowRepresentable { FR2() }
-
+            
             func shouldLoad(with args: Int) -> Bool {
                 FR2.shouldLoadCalledOnFR2 = true
                 return true
@@ -57,6 +57,8 @@ class WorkflowTests: XCTestCase {
     
     func testFlowRepresentablesThatDefineAWorkflowInputOfOptionalAnyDoesNotRecurseForever() {
         class FR1: FlowRepresentable {
+            func shouldLoad(with args: Any?) -> Bool { true }
+            
             var presenter: AnyPresenter?
             
             var workflow: AnyWorkflow?
@@ -64,11 +66,11 @@ class WorkflowTests: XCTestCase {
             var proceedInWorkflowStorage: ((Any?) -> Void)?
             
             static var shouldLoadCalledOnFR1 = false
-            typealias WorkflowInput = Never
+            typealias WorkflowInput = Any?
             
             static func instance() -> AnyFlowRepresentable { FR1() }
         }
-
+        
         var instance = FR1.instance() as? FR1
         XCTAssert(instance?.erasedShouldLoad(with: "str") == true)
     }
@@ -198,9 +200,12 @@ class WorkflowTests: XCTestCase {
         class FR1: TestFlowRepresentable<Never>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable { FR1() }
         }
-        XCTAssertThrowsFatalError{
-            (presenter as AnyPresenter).launch(view: NotView(), from: NotView(), withLaunchStyle: .default, metadata: FlowRepresentableMetaData(FR1.self,
-                                                                                                                              staysInViewStack: { _ in .default }), animated: false) { }
+        XCTAssertThrowsFatalError {
+            (presenter as AnyPresenter).launch(view: NotView(),
+                                               from: NotView(),
+                                               withLaunchStyle: .default,
+                                               metadata: FlowRepresentableMetaData(FR1.self,
+                                                                                   staysInViewStack: { _ in .default }), animated: false) { }
         }
     }
     
@@ -241,7 +246,7 @@ class WorkflowTests: XCTestCase {
     
     class TestFlowRepresentable<I> {
         required init() { }
-
+        
         var proceedInWorkflowStorage: ((Any?) -> Void)?
         
         typealias WorkflowInput = I
