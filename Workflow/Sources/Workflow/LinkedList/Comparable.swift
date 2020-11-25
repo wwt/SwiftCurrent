@@ -7,12 +7,12 @@
 //
 
 import Foundation
-extension LinkedList where Value : Comparable {
+extension LinkedList where Value: Comparable {
     public func sort() {
         guard first?.next != nil else { return }
         first = LinkedList(mergeSort(first, by: { $0 <= $1 })).first
     }
-    
+
     public func sorted() -> LinkedList<Value> {
         return LinkedList(mergeSort(first, by: { $0 <= $1 }))
     }
@@ -24,7 +24,7 @@ extension LinkedList where Value : Comparable {
         forEach { max = Swift.max(max, $0.value) }
         return max
     }
-    
+
     /// min: Returns the minimum value in the comparable LinkedList
     /// - Returns: The minimum concrete value in the LinkedList or nil if there is none
     public func min() -> Value? {

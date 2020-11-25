@@ -33,30 +33,30 @@ import Foundation
 public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
     public typealias ArrayLiteralElement = AnyFlowRepresentable.Type
     internal var instances = LinkedList<AnyFlowRepresentable?>()
-    internal var presenter:AnyPresenter?
-    internal var orchestrationResponder:AnyOrchestrationResponder?
+    internal var presenter: AnyPresenter?
+    internal var orchestrationResponder: AnyOrchestrationResponder?
 
-    public var firstLoadedInstance:LinkedList<AnyFlowRepresentable?>.Element?
-    
+    public var firstLoadedInstance: LinkedList<AnyFlowRepresentable?>.Element?
+
     public init() {
         super.init(nil)
     }
-    
+
     required init(_ node: Element?) {
         super.init(node)
     }
-    
+
     deinit {
         removeInstances()
         presenter = nil
         orchestrationResponder = nil
     }
-    
-    public func applyPresenter(_ presenter:AnyPresenter) {
+
+    public func applyPresenter(_ presenter: AnyPresenter) {
         self.presenter = presenter
     }
-    
-    public func applyOrchestrationResponder(_ orchestrationResponder:AnyOrchestrationResponder) {
+
+    public func applyOrchestrationResponder(_ orchestrationResponder: AnyOrchestrationResponder) {
         self.orchestrationResponder = orchestrationResponder
     }
 
@@ -65,11 +65,11 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
         case args(Any?)
     }
 
-    public func launch(from: Any?, with args:Any?, withLaunchStyle launchStyle:PresentationType = .default, onFinish:((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Element? {
+    public func launch(from: Any?, with args: Any?, withLaunchStyle launchStyle: PresentationType = .default, onFinish: ((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Element? {
         #if DEBUG
-        if (NSClassFromString("XCTest") != nil) {
+        if NSClassFromString("XCTest") != nil {
             NotificationCenter.default.post(name: .workflowLaunched, object: [
-                "workflow" : self,
+                "workflow": self,
                 "launchFrom": from,
                 "args": args,
                 "style": launchStyle,
@@ -79,22 +79,22 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
         #endif
         removeInstances()
         instances.append(contentsOf: map { _ in nil })
-        var root:Any?
-        var metadata:FlowRepresentableMetaData?
-        var passedArgs:PassedArgs = .none
+        var root: Any?
+        var metadata: FlowRepresentableMetaData?
+        var passedArgs: PassedArgs = .none
         _ = first?.traverse { node in
             metadata = node.value
             let metadata = node.value
             var flowRepresentable = metadata.flowRepresentableType.instance()
             flowRepresentable.workflow = self
-            
+
             flowRepresentable.proceedInWorkflowStorage = { passedArgs = .args($0) }
 
             let shouldLoad = flowRepresentable.erasedShouldLoad(with: args)
-            
+
             defer {
                 let position = node.position
-                if (shouldLoad) {
+                if shouldLoad {
                     instances.replace(atIndex: position, withItem: flowRepresentable)
                     firstLoadedInstance = instances.first?.traverse(position)
                     if let firstLoadedInstance = firstLoadedInstance {
@@ -102,8 +102,8 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
                                             shouldDestroy: metadata.staysInViewStack(args) == ViewPersistance.removedAfterProceeding,
                                             onFinish: onFinish)
                     }
-                } else if (!shouldLoad && metadata.staysInViewStack(args) == .hiddenInitially) {
-                    var reference:((Any?) -> Void)?
+                } else if !shouldLoad && metadata.staysInViewStack(args) == .hiddenInitially {
+                    var reference: ((Any?) -> Void)?
                     self.handleCallbackWhenHiddenInitially(viewToPresent: &root,
                                                            hold: &reference,
                                                            instance: flowRepresentable,
@@ -116,7 +116,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
             }
             return shouldLoad
         }
-        
+
         guard let first = firstLoadedInstance,
               let m = metadata else {
                 if case .args(let value) = passedArgs {
@@ -124,57 +124,57 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
                 }
                 return nil
         }
-        
+
         presenter?.launch(view: first.value, from: root ?? from, withLaunchStyle: launchStyle, metadata: m, animated: true, completion: nil)
         orchestrationResponder?.proceed(to: first.value, from: nil, metadata: m)
         return firstLoadedInstance
     }
-    
+
     /// abandon: Called when the workflow should be terminated, and the app should return to the point before the workflow was launched
     /// - Parameter animated: A boolean indicating whether abandoning the workflow should be animated
     /// - Parameter onFinish: A callback after the workflow has been abandoned.
     /// - Returns: Void
     /// - Note: In order for this to function the workflow must have a presenter, presenters must call back to the workflow to inform when the abandon process has finished for the onFinish callback to be called.
-    public func abandon(animated:Bool = true, onFinish:(() -> Void)? = nil) {
-        presenter?.abandon(self, animated:animated) {
+    public func abandon(animated: Bool = true, onFinish:(() -> Void)? = nil) {
+        presenter?.abandon(self, animated: animated) {
             self.removeInstances()
             self.firstLoadedInstance = nil
             self.presenter = nil
             onFinish?()
         }
     }
-    
+
     private func removeInstances() {
         instances.forEach { $0.value?.proceedInWorkflowStorage = nil }
         instances.removeAll()
         firstLoadedInstance = nil
     }
-    
-    private func replaceInstance(atIndex index:Int, withInstance instance:AnyFlowRepresentable?) {
+
+    private func replaceInstance(atIndex index: Int, withInstance instance: AnyFlowRepresentable?) {
         instances.replace(atIndex: index, withItem: instance)
     }
 
-    private func setupCallbacks(for node:LinkedList<AnyFlowRepresentable?>.Element, shouldDestroy:Bool = false, onFinish:((Any?) -> Void)?) {
+    private func setupCallbacks(for node: LinkedList<AnyFlowRepresentable?>.Element, shouldDestroy: Bool = false, onFinish: ((Any?) -> Void)?) {
         node.value?.proceedInWorkflowStorage = { [self] args in
             var argsToPass = args
-            var viewToPresent:Any?
+            var viewToPresent: Any?
             let nextNode = node.next?.traverse {
                 let index = $0.position
                 guard let metadata = first?.traverse(index)?.value else { return false }
                 var instance = metadata.flowRepresentableType.instance()
                 instance.proceedInWorkflowStorage = $0.value?.proceedInWorkflowStorage
                 instance.workflow = self
-                
+
                 var hold = instance.proceedInWorkflowStorage
                 defer {
                     instance.proceedInWorkflowStorage = hold
                     replaceInstance(atIndex: index, withInstance: instance)
                 }
-                
+
                 instance.proceedInWorkflowStorage = { argsToPass = $0 }
-                
+
                 let shouldLoad = instance.erasedShouldLoad(with: argsToPass) == true
-                if (!shouldLoad && metadata.staysInViewStack(argsToPass) == .hiddenInitially) {
+                if !shouldLoad && metadata.staysInViewStack(argsToPass) == .hiddenInitially {
                     handleCallbackWhenHiddenInitially(viewToPresent: &viewToPresent,
                                                            hold: &hold,
                                                            instance: instance,
@@ -183,7 +183,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
                                                            metadata: metadata,
                                                            onFinish: onFinish)
                 }
-                
+
                 return shouldLoad
             }
 
@@ -193,13 +193,13 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
                 onFinish?(argsToPass)
                 return
             }
-            
+
             self.setupCallbacks(for: nodeToPresent,
                                 shouldDestroy: metadata.staysInViewStack(argsToPass) == ViewPersistance.removedAfterProceeding,
                                 onFinish: onFinish)
-            
+
             viewToPresent = viewToPresent ?? instances.first?.traverse(node.position)?.value
-            
+
             presenter?.launch(view: instanceToPresent,
                                    from: viewToPresent,
                                    withLaunchStyle: metadata.presentationType, metadata: metadata, animated: true) {
@@ -207,18 +207,18 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
                     presenter?.destroy(instances.first?.traverse(node.position)?.value)
                 }
             }
-            
+
             orchestrationResponder?.proceed(to: instanceToPresent, from: viewToPresent, metadata: metadata)
         }
     }
-    
+
     private func handleCallbackWhenHiddenInitially(viewToPresent:inout Any?,
                                                    hold:inout ((Any?) -> Void)?,
-                                                   instance:AnyFlowRepresentable,
-                                                   instancePosition:Int,
-                                                   from:Any?,
+                                                   instance: AnyFlowRepresentable,
+                                                   instancePosition: Int,
+                                                   from: Any?,
                                                    metadata: FlowRepresentableMetaData,
-                                                   onFinish:((Any?) -> Void)?) {
+                                                   onFinish: ((Any?) -> Void)?) {
         viewToPresent = instance
         self.replaceInstance(atIndex: instancePosition, withInstance: instance)
         if let instanceNode = self.instances.first?.traverse(instancePosition) {
@@ -236,15 +236,15 @@ public final class Workflow<F: FlowRepresentable>: AnyWorkflow {
     public required init(_ node: AnyWorkflow.Element?) {
         super.init(node)
     }
-    
+
     internal override init() { super.init() }
-    
+
     /// init: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     /// - Parameter type: A reference to the class used to create the workflow
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
     /// - Parameter staysInViewStack: An `ViewPersistance`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
-    public convenience init(_ type:F.Type, presentationType:PresentationType = .default, staysInViewStack:@escaping @autoclosure () -> ViewPersistance = .default) {
+    public convenience init(_ type: F.Type, presentationType: PresentationType = .default, staysInViewStack:@escaping @autoclosure () -> ViewPersistance = .default) {
         self.init(FlowRepresentableMetaData(type,
                                              presentationType: presentationType,
                                              staysInViewStack: { _ in staysInViewStack() }))
@@ -254,7 +254,7 @@ public final class Workflow<F: FlowRepresentable>: AnyWorkflow {
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
     /// - Parameter staysInViewStack: A closure taking in the generic type from the `FlowRepresentable` and returning a `ViewPersistance`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
-    public convenience init(_ type:F.Type, presentationType:PresentationType = .default, staysInViewStack:@escaping (F.WorkflowInput) -> ViewPersistance) {
+    public convenience init(_ type: F.Type, presentationType: PresentationType = .default, staysInViewStack:@escaping (F.WorkflowInput) -> ViewPersistance) {
         self.init(FlowRepresentableMetaData(type,
                                             presentationType: presentationType,
                                             staysInViewStack: { data in
@@ -268,7 +268,7 @@ public final class Workflow<F: FlowRepresentable>: AnyWorkflow {
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
     /// - Parameter staysInViewStack: A closure returning a `ViewPersistance`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
-    public convenience init(_ type:F.Type, presentationType:PresentationType = .default, staysInViewStack:@escaping () -> ViewPersistance) where F.WorkflowInput == Never {
+    public convenience init(_ type: F.Type, presentationType: PresentationType = .default, staysInViewStack:@escaping () -> ViewPersistance) where F.WorkflowInput == Never {
         self.init(FlowRepresentableMetaData(type,
                                             presentationType: presentationType,
                                             staysInViewStack: { _ in
@@ -283,8 +283,8 @@ public extension Workflow where F.WorkflowOutput == Never {
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
     /// - Parameter staysInViewStack: An `ViewPersistance`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
-    func thenPresent<FR: FlowRepresentable>(_ type:FR.Type,
-                                            presentationType:PresentationType = .default,
+    func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
+                                            presentationType: PresentationType = .default,
                                             staysInViewStack:@escaping @autoclosure () -> ViewPersistance = .default) -> Workflow<FR> where FR.WorkflowInput == Never {
         let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetaData(type,
@@ -302,8 +302,8 @@ public extension Workflow {
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
     /// - Parameter staysInViewStack: An `ViewPersistance`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
-    func thenPresent<FR: FlowRepresentable>(_ type:FR.Type,
-                                            presentationType:PresentationType = .default,
+    func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
+                                            presentationType: PresentationType = .default,
                                             staysInViewStack:@escaping @autoclosure () -> ViewPersistance = .default) -> Workflow<FR> where F.WorkflowOutput == FR.WorkflowInput {
         let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetaData(type,
@@ -317,8 +317,8 @@ public extension Workflow {
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
     /// - Parameter staysInViewStack: A closure taking in the generic type from the `FlowRepresentable` and returning a `ViewPersistance`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
-    func thenPresent<FR: FlowRepresentable>(_ type:FR.Type,
-                                            presentationType:PresentationType = .default,
+    func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
+                                            presentationType: PresentationType = .default,
                                             staysInViewStack:@escaping (FR.WorkflowInput) -> ViewPersistance) -> Workflow<FR> where F.WorkflowOutput == FR.WorkflowInput {
         let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetaData(type,
@@ -329,14 +329,14 @@ public extension Workflow {
         }))
         return wf
     }
-    
+
     /// thenPresent: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     /// - Parameter type: A reference to the class used to create the workflow
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
     /// - Parameter staysInViewStack: A closure returning a `ViewPersistance`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
-    func thenPresent<FR: FlowRepresentable>(_ type:FR.Type,
-                                            presentationType:PresentationType = .default,
+    func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
+                                            presentationType: PresentationType = .default,
                                             staysInViewStack:@escaping @autoclosure () -> ViewPersistance = .default) -> Workflow<FR> where FR.WorkflowInput == Never {
         let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetaData(type,
@@ -349,10 +349,10 @@ public extension Workflow {
 }
 
 public class FlowRepresentableMetaData {
-    private(set) public var flowRepresentableType:AnyFlowRepresentable.Type
-    private(set) public var staysInViewStack:(Any?) -> ViewPersistance
-    private(set) public var presentationType:PresentationType
-    public init(_ flowRepresentableType:AnyFlowRepresentable.Type, presentationType:PresentationType = .default, staysInViewStack:@escaping (Any?) -> ViewPersistance) {
+    private(set) public var flowRepresentableType: AnyFlowRepresentable.Type
+    private(set) public var staysInViewStack: (Any?) -> ViewPersistance
+    private(set) public var presentationType: PresentationType
+    public init(_ flowRepresentableType: AnyFlowRepresentable.Type, presentationType: PresentationType = .default, staysInViewStack:@escaping (Any?) -> ViewPersistance) {
         self.flowRepresentableType = flowRepresentableType
         self.staysInViewStack = staysInViewStack
         self.presentationType = presentationType

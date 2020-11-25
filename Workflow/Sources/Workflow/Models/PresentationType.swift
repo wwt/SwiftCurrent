@@ -22,11 +22,11 @@ public enum PresentationType {
     /// default: Indicates a `FlowRepresentable` can be launched contextually
     /// - Note: If there's already a navigation stack, it will be used. Otherwise views will present modally
     case `default`
-    
-    public static var modal:PresentationType {
+
+    public static var modal: PresentationType {
         return .modal()
     }
-    
+
     public enum ModalPresentationStyle {
         case `default`
         case fullScreen
@@ -42,7 +42,7 @@ public enum PresentationType {
 }
 
 extension PresentationType: Equatable {
-    public static func == (lhs:PresentationType, rhs:PresentationType) -> Bool {
+    public static func == (lhs: PresentationType, rhs: PresentationType) -> Bool {
         switch (lhs, rhs) {
             case (.navigationStack, .navigationStack): return true
             case (.default, .default): return true

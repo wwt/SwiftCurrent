@@ -10,12 +10,12 @@ import Foundation
 extension LinkedList {
     public struct LinkedListIterator<N: Element>: IteratorProtocol {
         public typealias Element = N
-        var element:N?
-        
-        init(_ node:N?) {
+        var element: N?
+
+        init(_ node: N?) {
             element = node
         }
-        
+
         mutating public func next() -> N? {
             let elementCopy = element
             element = element?.next as? N

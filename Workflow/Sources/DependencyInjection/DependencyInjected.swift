@@ -12,19 +12,19 @@ import Workflow
 
 @propertyWrapper
 public struct DependencyInjected<Value> {
-    let name:String?
-    let container:Container
-    
+    let name: String?
+    let container: Container
+
     public init(wrappedValue value: Value?) {
         name = nil
         container = AnyWorkflow.defaultContainer
     }
-    public init(wrappedValue value: Value? = nil, name:String) {
+    public init(wrappedValue value: Value? = nil, name: String) {
         self.name = name
         container = AnyWorkflow.defaultContainer
     }
 
-    public init(wrappedValue value: Value? = nil, container containerGetter:@autoclosure () -> Container, name:String? = nil) {
+    public init(wrappedValue value: Value? = nil, container containerGetter:@autoclosure () -> Container, name: String? = nil) {
         self.name = name
         container = containerGetter()
     }

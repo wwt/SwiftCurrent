@@ -43,7 +43,7 @@ public protocol FlowRepresentable: AnyFlowRepresentable {
     /// - Parameter args: Note you can rename this in your implementation if 'args' doesn't make sense. If a previous item in a workflow tries to pass a type that does not match `shouldLoad` will automatically be false, and this method will not be called.
     /// - Returns: Bool
     /// - Note: This method is called *before* your view loads. Do not attempt to do any UI work in this method. This is however a good place to set up data on your view.
-    mutating func shouldLoad(with args:WorkflowInput) -> Bool
+    mutating func shouldLoad(with args: WorkflowInput) -> Bool
     mutating func shouldLoad() -> Bool
 }
 
@@ -57,9 +57,9 @@ public extension FlowRepresentable where WorkflowInput == Never {
     mutating func erasedShouldLoad(with args: Any?) -> Bool {
         return shouldLoad()
     }
-    
+
     mutating func shouldLoad(with args: Never) -> Bool { }
-    
+
     /// shouldLoad: A method indicating whether it makes sense for this view to load in a workflow
     /// - Returns: Bool
     /// - Note: This particular version of shouldLoad is only available when your `WorkflowInput` is `Never`, indicating you do not care about data passed to this view
@@ -75,12 +75,12 @@ public extension FlowRepresentable where WorkflowOutput == Never {
 }
 
 public extension FlowRepresentable {
-    mutating func erasedShouldLoad(with args:Any?) -> Bool {
+    mutating func erasedShouldLoad(with args: Any?) -> Bool {
         guard let cast = args as? WorkflowInput else { return false }
         return shouldLoad(with: cast)
     }
-    
-    func proceedInWorkflow(_ args:WorkflowOutput) {
+
+    func proceedInWorkflow(_ args: WorkflowOutput) {
         proceedInWorkflowStorage?(args)
     }
 }

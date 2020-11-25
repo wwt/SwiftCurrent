@@ -44,9 +44,9 @@ import Workflow
 
 open class UIWorkflowItem<I, O>: UIViewController {
     public var proceedInWorkflowStorage: ((Any?) -> Void)?
-    
+
     public typealias WorkflowInput = I
     public typealias WorkflowOutput = O
-    
+
     public weak var workflow: AnyWorkflow?
 }

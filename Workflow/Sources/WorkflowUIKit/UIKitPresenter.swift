@@ -11,8 +11,8 @@ import UIKit
 import Workflow
 
 extension NSObject {
-    func copyObject<T:NSObject>() throws -> T? {
-        let data = try NSKeyedArchiver.archivedData(withRootObject:self, requiringSecureCoding:false)
+    func copyObject<T: NSObject>() throws -> T? {
+        let data = try NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false)
         return try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? T
     }
 }
@@ -47,7 +47,7 @@ open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
         } else {
             let parent = view.presentingViewController
             let child = view.presentedViewController
-            if let cv:UIView = try? child?.view.copyObject() {
+            if let cv: UIView = try? child?.view.copyObject() {
                 view.view = cv
             }
             parent?.dismiss(animated: false) {
@@ -58,12 +58,12 @@ open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
             }
         }
     }
-    
+
     public func launch(view: UIViewController,
                        from root: UIViewController,
-                       withLaunchStyle launchStyle:PresentationType = .default,
+                       withLaunchStyle launchStyle: PresentationType = .default,
                        metadata: FlowRepresentableMetaData,
-                       animated:Bool,
+                       animated: Bool,
                        completion: @escaping () -> Void) {
         switch launchStyle {
             case .default:
@@ -103,8 +103,8 @@ open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
                 }
         }
     }
-    
-    public func abandon(_ workflow:AnyWorkflow, animated:Bool = true, onFinish:(() -> Void)? = nil) {
+
+    public func abandon(_ workflow: AnyWorkflow, animated: Bool = true, onFinish:(() -> Void)? = nil) {
         guard let first = workflow.firstLoadedInstance?.value as? UIViewController else { return }
         if let nav = first.navigationController {
             if nav.viewControllers.first === first {
@@ -140,7 +140,7 @@ public extension UIViewController {
     /// - Parameter launchStyle: The `PresentationType` used to launch the workflow
     /// - Parameter onFinish: A callback that is called when the last item in the workflow calls back
     /// - Note: In the background this applies a UIKitPresenter, if you call launch on workflow directly you'll need to apply one yourself
-    func launchInto(_ workflow:AnyWorkflow, args:Any? = nil, withLaunchStyle launchStyle:PresentationType = .default, onFinish:((Any?) -> Void)? = nil) {
+    func launchInto(_ workflow: AnyWorkflow, args: Any? = nil, withLaunchStyle launchStyle: PresentationType = .default, onFinish: ((Any?) -> Void)? = nil) {
         workflow.applyPresenter(UIKitPresenter())
         _ = workflow.launch(from: self, with: args, withLaunchStyle: launchStyle, onFinish: onFinish)?.value as? UIViewController
     }
