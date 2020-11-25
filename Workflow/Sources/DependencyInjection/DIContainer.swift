@@ -23,7 +23,7 @@ extension Workflow where F.WorkflowOutput == Never {
     /// - Returns: `Workflow`
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: PresentationType = .default,
-                                                   staysInViewStack:@escaping @autoclosure () -> ViewPersistance = .default,
+                                                   staysInViewStack:@escaping @autoclosure () -> FlowPersistance = .default,
                                                    dependencyInjectionSetup: ((Container) -> Void)) -> Workflow<FR> where FR.WorkflowInput == Never {
         let wf = Workflow<FR>(first)
         dependencyInjectionSetup(Workflow.defaultContainer)
@@ -43,7 +43,7 @@ public extension Workflow {
     /// - Returns: `Workflow`
     func thenPresent<FR>(_ type: FR.Type,
                          presentationType: PresentationType = .default,
-                         staysInViewStack:@escaping @autoclosure () -> ViewPersistance = .default,
+                         staysInViewStack:@escaping @autoclosure () -> FlowPersistance = .default,
                          dependencyInjectionSetup: ((Container) -> Void)) -> Workflow<FR> where FR: FlowRepresentable, F.WorkflowOutput == FR.WorkflowInput {
         let wf = Workflow<FR>(first)
         dependencyInjectionSetup(Workflow.defaultContainer)
@@ -61,7 +61,7 @@ public extension Workflow {
     /// - Returns: `Workflow`
     convenience init(_ type: F.Type,
                      presentationType: PresentationType = .default,
-                     staysInViewStack:@escaping @autoclosure () -> ViewPersistance = .default, dependencyInjectionSetup: ((Container) -> Void)) {
+                     staysInViewStack:@escaping @autoclosure () -> FlowPersistance = .default, dependencyInjectionSetup: ((Container) -> Void)) {
         dependencyInjectionSetup(Workflow.defaultContainer)
         self.init(FlowRepresentableMetaData(type,
                                             presentationType: presentationType,
@@ -76,7 +76,7 @@ public extension Workflow {
     /// - Returns: `Workflow`
     func thenPresent<FR>(_ type: FR.Type,
                          presentationType: PresentationType = .default,
-                         staysInViewStack:@escaping (FR.WorkflowInput) -> ViewPersistance,
+                         staysInViewStack:@escaping (FR.WorkflowInput) -> FlowPersistance,
                          dependencyInjectionSetup: ((Container) -> Void)) -> Workflow<FR> where FR: FlowRepresentable, F.WorkflowOutput == FR.WorkflowInput {
         let wf = Workflow<FR>(first)
         dependencyInjectionSetup(Workflow.defaultContainer)
@@ -97,7 +97,7 @@ public extension Workflow {
     /// - Returns: `Workflow`
     convenience init(_ type: F.Type,
                      presentationType: PresentationType = .default,
-                     staysInViewStack:@escaping (F.WorkflowInput) -> ViewPersistance,
+                     staysInViewStack:@escaping (F.WorkflowInput) -> FlowPersistance,
                      dependencyInjectionSetup: ((Container) -> Void)) {
         dependencyInjectionSetup(Workflow.defaultContainer)
         self.init(FlowRepresentableMetaData(type,
@@ -116,7 +116,7 @@ public extension Workflow {
     /// - Returns: `Workflow`
     func thenPresent<FR>(_ type: FR.Type,
                          presentationType: PresentationType = .default,
-                         staysInViewStack:@escaping @autoclosure () -> ViewPersistance = .default,
+                         staysInViewStack:@escaping @autoclosure () -> FlowPersistance = .default,
                          dependencyInjectionSetup: ((Container) -> Void)) -> Workflow<FR> where FR: FlowRepresentable, FR.WorkflowInput == Never {
         let wf = Workflow<FR>(first)
         dependencyInjectionSetup(Workflow.defaultContainer)
@@ -136,7 +136,7 @@ public extension Workflow {
     /// - Returns: `Workflow`
     convenience init(_ type: F.Type,
                      presentationType: PresentationType = .default,
-                     staysInViewStack:@escaping () -> ViewPersistance,
+                     staysInViewStack:@escaping () -> FlowPersistance,
                      dependencyInjectionSetup: ((Container) -> Void)) where F.WorkflowInput == Never {
         dependencyInjectionSetup(Workflow.defaultContainer)
         self.init(FlowRepresentableMetaData(type,

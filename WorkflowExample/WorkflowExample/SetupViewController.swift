@@ -39,7 +39,7 @@ class SetupViewController: UIViewController, StoryboardLoadable {
                     }
                 })
                 .thenPresent(PickupOrDeliveryViewController.self)
-                .thenPresent(MenuSelectionViewController.self, staysInViewStack: .hiddenInitially)
+                .thenPresent(MenuSelectionViewController.self, staysInViewStack: .persistWhenSkipped)
                 .thenPresent(FoodSelectionViewController.self)
                 .thenPresent(ReviewOrderViewController.self),
             args: locations,
