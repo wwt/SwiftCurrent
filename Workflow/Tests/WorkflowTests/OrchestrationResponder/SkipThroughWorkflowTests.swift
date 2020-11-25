@@ -121,6 +121,314 @@ class SkipThroughWorkflowTests: XCTestCase {
         
         wait(for: [expectation], timeout: 3)
     }
+    
+    func testWorkflowCanSkipFirstItem_AndStillProceedThroughFlow_PassingThroughCorrectArgsToNextWorkflowItem() {
+        class FR1: TestFlowRepresentable<Never, String>, FlowRepresentable {
+            static let id = UUID().uuidString
+            func shouldLoad() -> Bool {
+                proceedInWorkflow(FR1.id)
+                return false
+            }
+        }
+        class FR2: TestFlowRepresentable<String, Never>, FlowRepresentable {
+            static let expectation = XCTestExpectation(description: "shouldLoad called")
+            func shouldLoad(with id: String) -> Bool {
+                FR2.expectation.fulfill()
+                XCTAssertEqual(id, FR1.id)
+                return true
+            }
+        }
+        class FR3: TestPassthroughFlowRepresentable { }
+        let wf = Workflow(FR1.self)
+            .thenPresent(FR2.self)
+            .thenPresent(FR3.self)
+        let responder = MockOrchestrationResponder()
+        wf.applyOrchestrationResponder(responder)
+        
+        let launchedRepresentable = wf.launch(from: nil, with: nil)
+        
+        XCTAssertEqual(responder.proceedCalled, 1)
+        XCTAssert(launchedRepresentable?.value is FR2)
+        XCTAssert(responder.lastTo is FR2)
+        XCTAssertNil(responder.lastFrom)
+        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR2.self)
+        
+        let fr2 = (responder.lastTo as? FR2)
+        fr2?.proceedInWorkflow()
+        
+        XCTAssertEqual(responder.proceedCalled, 2)
+        XCTAssert(responder.lastTo is FR3)
+        XCTAssertNotNil(responder.lastFrom)
+        XCTAssert(responder.lastFrom is FR2)
+        XCTAssert((responder.lastFrom as? FR2) === fr2)
+        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR3.self)
+        
+        (responder.lastTo as? FR3)?.proceedInWorkflow()
+        
+        wait(for: [FR2.expectation], timeout: 3)
+    }
+    
+    func testWorkflowCanSkipMultipleItems_AndStillProceedThroughFlow_PassingThroughCorrectArgsToNextWorkflowItem() {
+        class FR1: TestFlowRepresentable<Never, String>, FlowRepresentable {
+            static let id = UUID().uuidString
+            func shouldLoad() -> Bool {
+                proceedInWorkflow(FR1.id)
+                return false
+            }
+        }
+        class FR2: TestFlowRepresentable<String, String>, FlowRepresentable {
+            static let expectation = XCTestExpectation(description: "shouldLoad called")
+            func shouldLoad(with id: String) -> Bool {
+                FR2.expectation.fulfill()
+                XCTAssertEqual(id, FR1.id)
+                proceedInWorkflow(id)
+                return false
+            }
+        }
+        class FR3: TestFlowRepresentable<String, Never>, FlowRepresentable {
+            static let expectation = XCTestExpectation(description: "shouldLoad called")
+            func shouldLoad(with id: String) -> Bool {
+                FR3.expectation.fulfill()
+                XCTAssertEqual(id, FR1.id)
+                return true
+            }
+        }
+        let wf = Workflow(FR1.self)
+            .thenPresent(FR2.self)
+            .thenPresent(FR3.self)
+        let responder = MockOrchestrationResponder()
+        wf.applyOrchestrationResponder(responder)
+        
+        let launchedRepresentable = wf.launch(from: nil, with: nil)
+        
+        XCTAssertEqual(responder.proceedCalled, 1)
+        XCTAssert(launchedRepresentable?.value is FR3)
+        XCTAssert(responder.lastTo is FR3)
+        XCTAssertNil(responder.lastFrom)
+        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR3.self)
+        
+        (responder.lastTo as? FR3)?.proceedInWorkflow()
+        
+        wait(for: [FR2.expectation, FR3.expectation], timeout: 3)
+    }
+    
+    func testWorkflowCanSkipFirstItem_AndStillProceedThroughFlow_PassingThroughInitialArgsToNextWorkflowItem() {
+        class FR1: TestFlowRepresentable<String, String>, FlowRepresentable {
+            static let id = UUID().uuidString
+            func shouldLoad(with id: String) -> Bool { false }
+        }
+        class FR2: TestFlowRepresentable<String, Never>, FlowRepresentable {
+            static let expectation = XCTestExpectation(description: "shouldLoad called")
+            func shouldLoad(with id: String) -> Bool {
+                FR2.expectation.fulfill()
+                XCTAssertEqual(id, FR1.id)
+                return true
+            }
+        }
+        class FR3: TestPassthroughFlowRepresentable { }
+        let wf = Workflow(FR1.self)
+            .thenPresent(FR2.self)
+            .thenPresent(FR3.self)
+        let responder = MockOrchestrationResponder()
+        wf.applyOrchestrationResponder(responder)
+        
+        let launchedRepresentable = wf.launch(from: nil, with: FR1.id)
+        
+        XCTAssertEqual(responder.proceedCalled, 1)
+        XCTAssert(launchedRepresentable?.value is FR2)
+        XCTAssert(responder.lastTo is FR2)
+        XCTAssertNil(responder.lastFrom)
+        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR2.self)
+        
+        let fr2 = (responder.lastTo as? FR2)
+        fr2?.proceedInWorkflow()
+        
+        XCTAssertEqual(responder.proceedCalled, 2)
+        XCTAssert(responder.lastTo is FR3)
+        XCTAssertNotNil(responder.lastFrom)
+        XCTAssert(responder.lastFrom is FR2)
+        XCTAssert((responder.lastFrom as? FR2) === fr2)
+        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR3.self)
+        
+        (responder.lastTo as? FR3)?.proceedInWorkflow()
+        
+        wait(for: [FR2.expectation], timeout: 3)
+    }
+    
+    func testWorkflowCanSkipMultipleItems_AndStillProceedThroughFlow_PassingThroughInitialArgsToNextWorkflowItem() {
+        class FR1: TestFlowRepresentable<String, String>, FlowRepresentable {
+            static let id = UUID().uuidString
+            func shouldLoad(with id: String) -> Bool {
+                return false
+            }
+        }
+        class FR2: TestFlowRepresentable<String, String>, FlowRepresentable {
+            static let expectation = XCTestExpectation(description: "shouldLoad called")
+            func shouldLoad(with id: String) -> Bool {
+                FR2.expectation.fulfill()
+                XCTAssertEqual(id, FR1.id)
+                return false
+            }
+        }
+        class FR3: TestFlowRepresentable<String, Never>, FlowRepresentable {
+            static let expectation = XCTestExpectation(description: "shouldLoad called")
+            func shouldLoad(with id: String) -> Bool {
+                FR3.expectation.fulfill()
+                XCTAssertEqual(id, FR1.id)
+                return true
+            }
+        }
+        let wf = Workflow(FR1.self)
+            .thenPresent(FR2.self)
+            .thenPresent(FR3.self)
+        let responder = MockOrchestrationResponder()
+        wf.applyOrchestrationResponder(responder)
+        
+        let launchedRepresentable = wf.launch(from: nil, with: FR1.id)
+        
+        XCTAssertEqual(responder.proceedCalled, 1)
+        XCTAssert(launchedRepresentable?.value is FR3)
+        XCTAssert(responder.lastTo is FR3)
+        XCTAssertNil(responder.lastFrom)
+        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR3.self)
+        
+        (responder.lastTo as? FR3)?.proceedInWorkflow()
+        
+        wait(for: [FR2.expectation, FR3.expectation], timeout: 3)
+    }
+    
+    func testWorkflowCanSkipAllItems_AndStillProceedThroughFlow_PassingThroughInitialArgsToNextWorkflowItem() {
+        class FR1: TestFlowRepresentable<String, String>, FlowRepresentable {
+            static let id = UUID().uuidString
+            func shouldLoad(with id: String) -> Bool {
+                return false
+            }
+        }
+        class FR2: TestFlowRepresentable<String, String>, FlowRepresentable {
+            static let expectation = XCTestExpectation(description: "shouldLoad called")
+            func shouldLoad(with id: String) -> Bool {
+                FR2.expectation.fulfill()
+                XCTAssertEqual(id, FR1.id)
+                return false
+            }
+        }
+        class FR3: TestFlowRepresentable<String, String>, FlowRepresentable {
+            static let expectation = XCTestExpectation(description: "shouldLoad called")
+            func shouldLoad(with id: String) -> Bool {
+                FR3.expectation.fulfill()
+                XCTAssertEqual(id, FR1.id)
+                return false
+            }
+        }
+        let expectation = self.expectation(description: "onFinish called")
+        let wf = Workflow(FR1.self)
+            .thenPresent(FR2.self)
+            .thenPresent(FR3.self)
+        let responder = MockOrchestrationResponder()
+        wf.applyOrchestrationResponder(responder)
+        
+        let launchedRepresentable = wf.launch(from: nil, with: FR1.id) { id in
+            expectation.fulfill()
+            XCTAssertEqual(id as? String, FR1.id)
+        }
+        
+        XCTAssertEqual(responder.proceedCalled, 0)
+        XCTAssertNil(launchedRepresentable)
+        XCTAssertNil(responder.lastTo)
+        XCTAssertNil(responder.lastFrom)
+        
+        wait(for: [FR2.expectation, FR3.expectation, expectation], timeout: 3)
+    }
+    
+    func testWorkflowCanSkipMiddleItem_AndStillProceedThroughFlow_PassingThroughCorrectArgsToNextWorkflowItem() {
+        class FR1: TestFlowRepresentable<Never, String>, FlowRepresentable {
+            static let id = UUID().uuidString
+        }
+        class FR2: TestFlowRepresentable<String, String>, FlowRepresentable {
+            static let expectation = XCTestExpectation(description: "shouldLoad called")
+            func shouldLoad(with id: String) -> Bool {
+                FR2.expectation.fulfill()
+                XCTAssertEqual(id, FR1.id)
+                proceedInWorkflow(id)
+                return false
+            }
+        }
+        class FR3: TestFlowRepresentable<String, Never>, FlowRepresentable {
+            static let expectation = XCTestExpectation(description: "shouldLoad called")
+            func shouldLoad(with id: String) -> Bool {
+                FR3.expectation.fulfill()
+                XCTAssertEqual(id, FR1.id)
+                return true
+            }
+        }
+        let wf = Workflow(FR1.self)
+            .thenPresent(FR2.self)
+            .thenPresent(FR3.self)
+        let responder = MockOrchestrationResponder()
+        wf.applyOrchestrationResponder(responder)
+        
+        let launchedRepresentable = wf.launch(from: nil, with: nil)
+        
+        XCTAssertEqual(responder.proceedCalled, 1)
+        XCTAssert(launchedRepresentable?.value is FR1)
+        XCTAssert(responder.lastTo is FR1)
+        XCTAssertNil(responder.lastFrom)
+        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR1.self)
+        
+        (responder.lastTo as? FR1)?.proceedInWorkflow(FR1.id)
+        
+        XCTAssertEqual(responder.proceedCalled, 2)
+        XCTAssert(responder.lastTo is FR3)
+        XCTAssert(responder.lastFrom is FR1)
+        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR3.self)
+        
+        wait(for: [FR2.expectation, FR3.expectation], timeout: 3)
+    }
+    
+    func testWorkflowCanSkipAllExceptTheFirstItem_AndStillProceedThroughFlow_PassingThroughCorrectArgsToNextWorkflowItem() {
+        class FR1: TestFlowRepresentable<Never, String>, FlowRepresentable {
+            static let id = UUID().uuidString
+        }
+        class FR2: TestFlowRepresentable<String, String>, FlowRepresentable {
+            static let expectation = XCTestExpectation(description: "shouldLoad called")
+            func shouldLoad(with id: String) -> Bool {
+                FR2.expectation.fulfill()
+                XCTAssertEqual(id, FR1.id)
+                proceedInWorkflow(id)
+                return false
+            }
+        }
+        class FR3: TestFlowRepresentable<String, String>, FlowRepresentable {
+            static let expectation = XCTestExpectation(description: "shouldLoad called")
+            func shouldLoad(with id: String) -> Bool {
+                FR3.expectation.fulfill()
+                XCTAssertEqual(id, FR1.id)
+                proceedInWorkflow(id)
+                return false
+            }
+        }
+        let expectation = self.expectation(description: "onFinish called")
+        let wf = Workflow(FR1.self)
+            .thenPresent(FR2.self)
+            .thenPresent(FR3.self)
+        let responder = MockOrchestrationResponder()
+        wf.applyOrchestrationResponder(responder)
+        
+        let launchedRepresentable = wf.launch(from: nil, with: nil) { id in
+            expectation.fulfill()
+            XCTAssertEqual(id as? String, FR1.id)
+        }
+        
+        XCTAssertEqual(responder.proceedCalled, 1)
+        XCTAssert(launchedRepresentable?.value is FR1)
+        XCTAssert(responder.lastTo is FR1)
+        XCTAssertNil(responder.lastFrom)
+        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR1.self)
+        
+        (launchedRepresentable?.value as? FR1)?.proceedInWorkflow(FR1.id)
+                
+        wait(for: [FR2.expectation, FR3.expectation, expectation], timeout: 3)
+    }
 }
 
 extension SkipThroughWorkflowTests {

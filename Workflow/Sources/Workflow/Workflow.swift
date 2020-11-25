@@ -93,7 +93,14 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
 
             flowRepresentable.proceedInWorkflowStorage = { passedArgs = .args($0) }
 
-            let shouldLoad = flowRepresentable.erasedShouldLoad(with: args)
+            let argsToPass: Any? = {
+                if case .args(let value) = passedArgs {
+                    return value
+                }
+                return args
+            }()
+
+            let shouldLoad = flowRepresentable.erasedShouldLoad(with: argsToPass)
 
             defer {
                 let position = node.position
@@ -124,6 +131,8 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
               let m = metadata else {
                 if case .args(let value) = passedArgs {
                     onFinish?(value)
+                } else if args != nil {
+                    onFinish?(args)
                 }
                 return nil
         }
