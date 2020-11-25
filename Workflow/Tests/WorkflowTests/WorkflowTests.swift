@@ -205,7 +205,8 @@ class WorkflowTests: XCTestCase {
                                                from: NotView(),
                                                withLaunchStyle: .default,
                                                metadata: FlowRepresentableMetaData(FR1.self,
-                                                                                   staysInViewStack: { _ in .default }), animated: false) { }
+                                                                                   flowPersistance: { _ in .default }),
+                                                                                   animated: false) { }
         }
     }
     

@@ -554,7 +554,7 @@ class UIKitPresenterTests: XCTestCase {
         loadView(controller: nav)
         
         nav.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, staysInViewStack: .persistWhenSkipped)
+                    .thenPresent(FR2.self, flowPersistance: .persistWhenSkipped)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
         waitUntil(UIApplication.topViewController() is FR1)
         XCTAssert(UIApplication.topViewController() is FR1)
@@ -579,7 +579,7 @@ class UIKitPresenterTests: XCTestCase {
         loadView(controller: nav)
         
         nav.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, staysInViewStack: .persistWhenSkipped)
+                    .thenPresent(FR2.self, flowPersistance: .persistWhenSkipped)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
         waitUntil(UIApplication.topViewController() is FR1)
         XCTAssert(UIApplication.topViewController() is FR1)
@@ -609,7 +609,7 @@ class UIKitPresenterTests: XCTestCase {
         let nav = UINavigationController()
         loadView(controller: nav)
         
-        nav.launchInto(Workflow(FR1.self, staysInViewStack: .persistWhenSkipped)
+        nav.launchInto(Workflow(FR1.self, flowPersistance: .persistWhenSkipped)
                     .thenPresent(FR2.self)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
         waitUntil(UIApplication.topViewController() is FR2)
@@ -634,7 +634,7 @@ class UIKitPresenterTests: XCTestCase {
         let nav = UINavigationController()
         loadView(controller: nav)
         
-        nav.launchInto(Workflow(FR1.self, staysInViewStack: .persistWhenSkipped)
+        nav.launchInto(Workflow(FR1.self, flowPersistance: .persistWhenSkipped)
                     .thenPresent(FR2.self)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
         waitUntil(UIApplication.topViewController() is FR2)
@@ -660,7 +660,7 @@ class UIKitPresenterTests: XCTestCase {
         loadView(controller: nav)
         
         nav.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, staysInViewStack: .removedAfterProceeding)
+                    .thenPresent(FR2.self, flowPersistance: .removedAfterProceeding)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
         waitUntil(UIApplication.topViewController() is FR1)
         XCTAssert(UIApplication.topViewController() is FR1)
@@ -685,7 +685,7 @@ class UIKitPresenterTests: XCTestCase {
         let nav = UINavigationController()
         loadView(controller: nav)
         
-        nav.launchInto(Workflow(FR1.self, staysInViewStack: .removedAfterProceeding)
+        nav.launchInto(Workflow(FR1.self, flowPersistance: .removedAfterProceeding)
                     .thenPresent(FR2.self)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
         waitUntil(UIApplication.topViewController() is FR1)
@@ -708,7 +708,7 @@ class UIKitPresenterTests: XCTestCase {
         loadView(controller: nav)
         
         nav.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, staysInViewStack: .persistWhenSkipped)
+                    .thenPresent(FR2.self, flowPersistance: .persistWhenSkipped)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
         waitUntil(UIApplication.topViewController() is FR1)
         XCTAssert(UIApplication.topViewController() is FR1)
@@ -731,7 +731,7 @@ class UIKitPresenterTests: XCTestCase {
         loadView(controller: nav)
         
         nav.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, staysInViewStack: .removedAfterProceeding)
+                    .thenPresent(FR2.self, flowPersistance: .removedAfterProceeding)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
         waitUntil(UIApplication.topViewController() is FR1)
         XCTAssert(UIApplication.topViewController() is FR1)
@@ -758,7 +758,7 @@ class UIKitPresenterTests: XCTestCase {
         loadView(controller: nav)
         
         nav.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, staysInViewStack: { _ in .persistWhenSkipped })
+                    .thenPresent(FR2.self, flowPersistance: { _ in .persistWhenSkipped })
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
         waitUntil(UIApplication.topViewController() is FR1)
         XCTAssert(UIApplication.topViewController() is FR1)
@@ -784,7 +784,7 @@ class UIKitPresenterTests: XCTestCase {
         loadView(controller: nav)
 
         nav.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, staysInViewStack: { data in
+                    .thenPresent(FR2.self, flowPersistance: { data in
                         XCTAssertEqual(data as? String, "blah")
                         return .removedAfterProceeding
                     })
@@ -814,7 +814,7 @@ class UIKitPresenterTests: XCTestCase {
         loadView(controller: root)
         
         root.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, staysInViewStack: .persistWhenSkipped)
+                    .thenPresent(FR2.self, flowPersistance: .persistWhenSkipped)
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
         waitUntil(UIApplication.topViewController() is FR1)
         XCTAssert(UIApplication.topViewController() is FR1)
@@ -841,7 +841,7 @@ class UIKitPresenterTests: XCTestCase {
         let root = UIViewController()
         loadView(controller: root)
         
-        root.launchInto(Workflow(FR1.self, staysInViewStack: .persistWhenSkipped)
+        root.launchInto(Workflow(FR1.self, flowPersistance: .persistWhenSkipped)
                     .thenPresent(FR2.self)
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
         waitUntil(UIApplication.topViewController() is FR2)
@@ -863,7 +863,7 @@ class UIKitPresenterTests: XCTestCase {
         loadView(controller: root)
         
         root.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, staysInViewStack: .removedAfterProceeding)
+                    .thenPresent(FR2.self, flowPersistance: .removedAfterProceeding)
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
         waitUntil(UIApplication.topViewController() is FR1)
         XCTAssert(UIApplication.topViewController() is FR1)
@@ -888,7 +888,7 @@ class UIKitPresenterTests: XCTestCase {
         let root = UIViewController()
         loadView(controller: root)
         
-        root.launchInto(Workflow(FR1.self, staysInViewStack: .removedAfterProceeding)
+        root.launchInto(Workflow(FR1.self, flowPersistance: .removedAfterProceeding)
                     .thenPresent(FR2.self)
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
 
@@ -914,7 +914,7 @@ class UIKitPresenterTests: XCTestCase {
         loadView(controller: root)
         
         root.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, staysInViewStack: .persistWhenSkipped)
+                    .thenPresent(FR2.self, flowPersistance: .persistWhenSkipped)
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
         waitUntil(UIApplication.topViewController() is FR1)
         XCTAssert(UIApplication.topViewController() is FR1)
@@ -937,7 +937,7 @@ class UIKitPresenterTests: XCTestCase {
         loadView(controller: root)
         
         root.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, staysInViewStack: .removedAfterProceeding)
+                    .thenPresent(FR2.self, flowPersistance: .removedAfterProceeding)
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
         waitUntil(UIApplication.topViewController() is FR1)
         XCTAssert(UIApplication.topViewController() is FR1)
@@ -964,7 +964,7 @@ class UIKitPresenterTests: XCTestCase {
         loadView(controller: root)
         
         root.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, staysInViewStack: { _ in .persistWhenSkipped })
+                    .thenPresent(FR2.self, flowPersistance: { _ in .persistWhenSkipped })
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
         waitUntil(UIApplication.topViewController() is FR1)
         XCTAssert(UIApplication.topViewController() is FR1)
@@ -990,7 +990,7 @@ class UIKitPresenterTests: XCTestCase {
         loadView(controller: root)
 
         root.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, staysInViewStack: { data in
+                    .thenPresent(FR2.self, flowPersistance: { data in
                         XCTAssertEqual(data as? String, "blah")
                         return .removedAfterProceeding
                     })
