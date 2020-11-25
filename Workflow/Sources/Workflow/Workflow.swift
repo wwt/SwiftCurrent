@@ -65,7 +65,6 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
         case args(Any?)
     }
 
-    // swiftlint:disable:next function_body_length
     public func launch(from: Any?,
                        with args: Any?,
                        withLaunchStyle launchStyle: PresentationType = .default,
