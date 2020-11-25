@@ -115,7 +115,7 @@ open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
                     onFinish?()
                 }
             } else {
-                if let _ = nav.presentedViewController {
+                if nav.presentedViewController != nil {
                     nav.dismiss(animated: animated) {
                         onFinish?()
                         nav.popToViewController(first, animated: false)

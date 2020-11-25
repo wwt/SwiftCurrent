@@ -42,14 +42,14 @@ extension LinkedList {
             let direction: TraversalDirection = (distance >= 0) ? .forward : .backward
             var element: Node<T>? = self
             switch direction {
-            case .forward:
-                for _ in 1...distance {
-                    element = element?.next
-                }
-            case .backward:
-                for _ in 1...(distance * -1) {
-                    element = element?.previous
-                }
+                case .forward:
+                    for _ in 1...distance {
+                        element = element?.next
+                    }
+                case .backward:
+                    for _ in 1...(distance * -1) {
+                        element = element?.previous
+                    }
             }
             return element
         }

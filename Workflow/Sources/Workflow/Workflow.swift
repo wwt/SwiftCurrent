@@ -65,7 +65,11 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
         case args(Any?)
     }
 
-    public func launch(from: Any?, with args: Any?, withLaunchStyle launchStyle: PresentationType = .default, onFinish: ((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Element? {
+    // swiftlint:disable:next function_body_length
+    public func launch(from: Any?,
+                       with args: Any?,
+                       withLaunchStyle launchStyle: PresentationType = .default,
+                       onFinish: ((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Element? {
         #if DEBUG
         if NSClassFromString("XCTest") != nil {
             NotificationCenter.default.post(name: .workflowLaunched, object: [

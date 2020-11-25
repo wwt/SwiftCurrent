@@ -95,7 +95,10 @@ public extension Workflow {
     /// - Parameter staysInViewStack: A closure taking in the generic type from the `FlowRepresentable` and returning a `ViewPersistance`type representing how this item in the workflow should persist.
     /// - Parameter dependencyInjectionSetup: A closure that hands off a `Container` for you to set up Dependency Injection
     /// - Returns: `Workflow`
-    convenience init(_ type: F.Type, presentationType: PresentationType = .default, staysInViewStack:@escaping (F.WorkflowInput) -> ViewPersistance, dependencyInjectionSetup: ((Container) -> Void)) {
+    convenience init(_ type: F.Type,
+                     presentationType: PresentationType = .default,
+                     staysInViewStack:@escaping (F.WorkflowInput) -> ViewPersistance,
+                     dependencyInjectionSetup: ((Container) -> Void)) {
         dependencyInjectionSetup(Workflow.defaultContainer)
         self.init(FlowRepresentableMetaData(type,
                                             presentationType: presentationType,
