@@ -9,7 +9,7 @@
 import Foundation
 
 protocol NetworkManager {
-    func get(_ url:URL, completion:(Result<Any, Error>) -> Void)
+    func get(_ url: URL, completion: (Result<Any, Error>) -> Void)
 }
 
 class SomeNetworkManager: NetworkManager {

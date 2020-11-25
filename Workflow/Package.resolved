@@ -27,15 +27,6 @@
           "revision": "8a76d2c74bafbb455763487cc6a08e91bad1f78b",
           "version": "2.7.1"
         }
-      },
-      {
-        "package": "UIUTest",
-        "repositoryURL": "https://github.com/nallick/UIUTest.git",
-        "state": {
-          "branch": null,
-          "revision": "555fc06586dcdb5bd51007b5f01b01e8efd67e81",
-          "version": "1.7.0"
-        }
       }
     ]
   },

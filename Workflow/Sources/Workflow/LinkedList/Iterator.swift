@@ -17,9 +17,9 @@ extension LinkedList {
         }
         
         mutating public func next() -> N? {
-            let e = element
+            let elementCopy = element
             element = element?.next as? N
-            return e
+            return elementCopy
         }
     }
 }

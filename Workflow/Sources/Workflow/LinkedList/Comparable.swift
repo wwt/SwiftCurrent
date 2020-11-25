@@ -20,16 +20,16 @@ extension LinkedList where Value : Comparable {
     /// max: Returns the maximum value in the comparable LinkedList
     /// - Returns: The maximum concrete value in the LinkedList or nil if there is none
     public func max() -> Value? {
-        guard var m = first?.value else { return nil }
-        forEach { m = Swift.max(m, $0.value) }
-        return m
+        guard var max = first?.value else { return nil }
+        forEach { max = Swift.max(max, $0.value) }
+        return max
     }
     
     /// min: Returns the minimum value in the comparable LinkedList
     /// - Returns: The minimum concrete value in the LinkedList or nil if there is none
     public func min() -> Value? {
-        guard var m = first?.value else { return nil }
-        forEach { m = Swift.min(m, $0.value) }
-        return m
+        guard var min = first?.value else { return nil }
+        forEach { min = Swift.min(min, $0.value) }
+        return min
     }
 }

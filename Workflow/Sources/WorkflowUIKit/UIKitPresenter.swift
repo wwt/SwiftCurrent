@@ -59,7 +59,12 @@ open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
         }
     }
     
-    public func launch(view: UIViewController, from root: UIViewController, withLaunchStyle launchStyle:PresentationType = .default, metadata: FlowRepresentableMetaData, animated:Bool, completion: @escaping () -> Void) {
+    public func launch(view: UIViewController,
+                       from root: UIViewController,
+                       withLaunchStyle launchStyle:PresentationType = .default,
+                       metadata: FlowRepresentableMetaData,
+                       animated:Bool,
+                       completion: @escaping () -> Void) {
         switch launchStyle {
             case .default:
                 if case .modal(let style) = metadata.presentationType {

@@ -12,9 +12,9 @@ import WorkflowUIKit
 import UIKit
 
 class LocationsViewController: UIWorkflowItem<[Location], Order>, StoryboardLoadable {
-    @IBOutlet weak var tableView:UITableView!
-    
-    var locations:[Location] = []
+    @IBOutlet weak var tableView: UITableView!
+
+    var locations: [Location] = []
 }
 
 extension LocationsViewController: FlowRepresentable {
@@ -32,18 +32,18 @@ extension LocationsViewController: UITableViewDataSource, UITableViewDelegate {
     struct Identifiers {
         static let cellReuse = "locationsCell"
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return locations.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Identifiers.cellReuse, for: indexPath)
         let location = locations[indexPath.row]
         cell.textLabel?.text = location.name
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let location = locations[indexPath.row]
         let order = Order(location: location)
