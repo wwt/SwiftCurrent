@@ -17,6 +17,10 @@ extension NSObject {
     }
 }
 
+public extension FlowPersistance {
+    static let hiddenInitially = FlowPersistance.persistWhenSkipped
+}
+
 extension UIModalPresentationStyle {
     static func styleFor(_ style: PresentationType.ModalPresentationStyle) -> UIModalPresentationStyle? {
         switch style {

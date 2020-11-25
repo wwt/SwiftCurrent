@@ -31,6 +31,7 @@ import Foundation
  */
 
 public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
+    public typealias InstanceNode = LinkedList<AnyFlowRepresentable?>.Element
     public typealias ArrayLiteralElement = AnyFlowRepresentable.Type
     internal var instances = LinkedList<AnyFlowRepresentable?>()
     internal var presenter: AnyPresenter?
@@ -148,7 +149,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
         }
 
         presenter?.launch(view: first.value, from: root ?? from, withLaunchStyle: launchStyle, metadata: m, animated: true, completion: nil)
-        orchestrationResponder?.proceed(to: first.value, from: nil, metadata: m)
+        orchestrationResponder?.proceed(to: (instance: first, metadata:m), from: nil)
         return firstLoadedInstance
     }
 
@@ -180,7 +181,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
         node.value?.proceedInWorkflowStorage = { [self] args in
             var argsToPass = args
             var viewToPresent: Any?
-            let nextNode = node.next?.traverse {
+            let nextLoadedNode = node.next?.traverse {
                 let index = $0.position
                 guard let metadata = first?.traverse(index)?.value else { return false }
                 var instance = metadata.flowRepresentableType.instance()
@@ -209,28 +210,32 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
                 return shouldLoad
             }
 
-            guard let nodeToPresent = nextNode,
-                  let metadata = first?.traverse(nodeToPresent.position)?.value,
-                  let instanceToPresent = instances.first?.traverse(nodeToPresent.position)?.value else {
+            guard let nextNode = nextLoadedNode,
+                  let currentMetadataNode = first?.traverse(node.position),
+                  let nextMetadataNode = first?.traverse(nextNode.position),
+                  let instanceToPresent = instances.first?.traverse(nextNode.position)?.value else {
                 onFinish?(argsToPass)
                 return
             }
 
-            self.setupCallbacks(for: nodeToPresent,
-                                shouldDestroy: metadata.persistance(argsToPass) == FlowPersistance.removedAfterProceeding,
+            let nextMetadata = nextMetadataNode.value
+            let currentMetadata = currentMetadataNode.value
+
+            self.setupCallbacks(for: nextNode,
+                                shouldDestroy: nextMetadata.persistance(argsToPass) == FlowPersistance.removedAfterProceeding,
                                 onFinish: onFinish)
 
             viewToPresent = viewToPresent ?? instances.first?.traverse(node.position)?.value
 
             presenter?.launch(view: instanceToPresent,
                                    from: viewToPresent,
-                                   withLaunchStyle: metadata.presentationType, metadata: metadata, animated: true) {
+                                   withLaunchStyle: nextMetadata.presentationType, metadata: nextMetadata, animated: true) {
                 if shouldDestroy {
                     presenter?.destroy(instances.first?.traverse(node.position)?.value)
                 }
             }
 
-            orchestrationResponder?.proceed(to: instanceToPresent, from: viewToPresent, metadata: metadata)
+            orchestrationResponder?.proceed(to: (instance: nextNode, metadata:nextMetadata), from: (instance: node, metadata:currentMetadata))
         }
     }
 

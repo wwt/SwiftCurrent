@@ -29,21 +29,21 @@ class SkipThroughWorkflowTests: XCTestCase {
         
         XCTAssertEqual(responder.proceedCalled, 1)
         XCTAssert(launchedRepresentable?.value is FR2)
-        XCTAssert(responder.lastTo is FR2)
+        XCTAssert(responder.lastTo?.instance.value is FR2)
         XCTAssertNil(responder.lastFrom)
-        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR2.self)
+        XCTAssert(responder.lastTo?.metadata.flowRepresentableType == FR2.self)
         
-        let fr2 = (responder.lastTo as? FR2)
+        let fr2 = (responder.lastTo?.instance.value as? FR2)
         fr2?.proceedInWorkflow()
         
         XCTAssertEqual(responder.proceedCalled, 2)
-        XCTAssert(responder.lastTo is FR3)
+        XCTAssert(responder.lastTo?.instance.value is FR3)
         XCTAssertNotNil(responder.lastFrom)
-        XCTAssert(responder.lastFrom is FR2)
-        XCTAssert((responder.lastFrom as? FR2) === fr2)
-        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR3.self)
+        XCTAssert(responder.lastFrom?.instance.value is FR2)
+        XCTAssert((responder.lastFrom?.instance.value as? FR2) === fr2)
+        XCTAssert(responder.lastTo?.metadata.flowRepresentableType == FR3.self)
         
-        (responder.lastTo as? FR3)?.proceedInWorkflow()
+        (responder.lastTo?.instance.value as? FR3)?.proceedInWorkflow()
         
         wait(for: [expectation], timeout: 3)
     }
@@ -66,21 +66,21 @@ class SkipThroughWorkflowTests: XCTestCase {
         
         XCTAssertEqual(responder.proceedCalled, 1)
         XCTAssert(launchedRepresentable?.value is FR1)
-        XCTAssert(responder.lastTo is FR1)
+        XCTAssert(responder.lastTo?.instance.value is FR1)
         XCTAssertNil(responder.lastFrom)
-        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR1.self)
+        XCTAssert(responder.lastTo?.metadata.flowRepresentableType == FR1.self)
         
-        let fr1 = (responder.lastTo as? FR1)
+        let fr1 = (responder.lastTo?.instance.value as? FR1)
         fr1?.proceedInWorkflow()
         
         XCTAssertEqual(responder.proceedCalled, 2)
-        XCTAssert(responder.lastTo is FR3)
+        XCTAssert(responder.lastTo?.instance.value is FR3)
         XCTAssertNotNil(responder.lastFrom)
-        XCTAssert(responder.lastFrom is FR1)
-        XCTAssert((responder.lastFrom as? FR1) === fr1)
-        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR3.self)
+        XCTAssert(responder.lastFrom?.instance.value is FR1)
+        XCTAssert((responder.lastFrom?.instance.value as? FR1) === fr1)
+        XCTAssert(responder.lastTo?.metadata.flowRepresentableType == FR3.self)
         
-        (responder.lastTo as? FR3)?.proceedInWorkflow()
+        (responder.lastTo?.instance.value as? FR3)?.proceedInWorkflow()
         
         wait(for: [expectation], timeout: 3)
     }
@@ -103,21 +103,21 @@ class SkipThroughWorkflowTests: XCTestCase {
         
         XCTAssertEqual(responder.proceedCalled, 1)
         XCTAssert(launchedRepresentable?.value is FR1)
-        XCTAssert(responder.lastTo is FR1)
+        XCTAssert(responder.lastTo?.instance.value is FR1)
         XCTAssertNil(responder.lastFrom)
-        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR1.self)
+        XCTAssert(responder.lastTo?.metadata.flowRepresentableType == FR1.self)
         
-        let fr1 = (responder.lastTo as? FR1)
+        let fr1 = (responder.lastTo?.instance.value as? FR1)
         fr1?.proceedInWorkflow()
         
         XCTAssertEqual(responder.proceedCalled, 2)
-        XCTAssert(responder.lastTo is FR2)
+        XCTAssert(responder.lastTo?.instance.value is FR2)
         XCTAssertNotNil(responder.lastFrom)
-        XCTAssert(responder.lastFrom is FR1)
-        XCTAssert((responder.lastFrom as? FR1) === fr1)
-        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR2.self)
+        XCTAssert(responder.lastFrom?.instance.value is FR1)
+        XCTAssert((responder.lastFrom?.instance.value as? FR1) === fr1)
+        XCTAssert(responder.lastTo?.metadata.flowRepresentableType == FR2.self)
         
-        (responder.lastTo as? FR2)?.proceedInWorkflow()
+        (responder.lastTo?.instance.value as? FR2)?.proceedInWorkflow()
         
         wait(for: [expectation], timeout: 3)
     }
@@ -149,21 +149,21 @@ class SkipThroughWorkflowTests: XCTestCase {
         
         XCTAssertEqual(responder.proceedCalled, 1)
         XCTAssert(launchedRepresentable?.value is FR2)
-        XCTAssert(responder.lastTo is FR2)
+        XCTAssert(responder.lastTo?.instance.value is FR2)
         XCTAssertNil(responder.lastFrom)
-        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR2.self)
+        XCTAssert(responder.lastTo?.metadata.flowRepresentableType == FR2.self)
         
-        let fr2 = (responder.lastTo as? FR2)
+        let fr2 = (responder.lastTo?.instance.value as? FR2)
         fr2?.proceedInWorkflow()
         
         XCTAssertEqual(responder.proceedCalled, 2)
-        XCTAssert(responder.lastTo is FR3)
+        XCTAssert(responder.lastTo?.instance.value is FR3)
         XCTAssertNotNil(responder.lastFrom)
-        XCTAssert(responder.lastFrom is FR2)
-        XCTAssert((responder.lastFrom as? FR2) === fr2)
-        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR3.self)
+        XCTAssert(responder.lastFrom?.instance.value is FR2)
+        XCTAssert((responder.lastFrom?.instance.value as? FR2) === fr2)
+        XCTAssert(responder.lastTo?.metadata.flowRepresentableType == FR3.self)
         
-        (responder.lastTo as? FR3)?.proceedInWorkflow()
+        (responder.lastTo?.instance.value as? FR3)?.proceedInWorkflow()
         
         wait(for: [FR2.expectation], timeout: 3)
     }
@@ -203,11 +203,11 @@ class SkipThroughWorkflowTests: XCTestCase {
         
         XCTAssertEqual(responder.proceedCalled, 1)
         XCTAssert(launchedRepresentable?.value is FR3)
-        XCTAssert(responder.lastTo is FR3)
+        XCTAssert(responder.lastTo?.instance.value is FR3)
         XCTAssertNil(responder.lastFrom)
-        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR3.self)
+        XCTAssert(responder.lastTo?.metadata.flowRepresentableType == FR3.self)
         
-        (responder.lastTo as? FR3)?.proceedInWorkflow()
+        (responder.lastTo?.instance.value as? FR3)?.proceedInWorkflow()
         
         wait(for: [FR2.expectation, FR3.expectation], timeout: 3)
     }
@@ -236,21 +236,21 @@ class SkipThroughWorkflowTests: XCTestCase {
         
         XCTAssertEqual(responder.proceedCalled, 1)
         XCTAssert(launchedRepresentable?.value is FR2)
-        XCTAssert(responder.lastTo is FR2)
+        XCTAssert(responder.lastTo?.instance.value is FR2)
         XCTAssertNil(responder.lastFrom)
-        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR2.self)
+        XCTAssert(responder.lastTo?.metadata.flowRepresentableType == FR2.self)
         
-        let fr2 = (responder.lastTo as? FR2)
+        let fr2 = (responder.lastTo?.instance.value as? FR2)
         fr2?.proceedInWorkflow()
         
         XCTAssertEqual(responder.proceedCalled, 2)
-        XCTAssert(responder.lastTo is FR3)
+        XCTAssert(responder.lastTo?.instance.value is FR3)
         XCTAssertNotNil(responder.lastFrom)
-        XCTAssert(responder.lastFrom is FR2)
-        XCTAssert((responder.lastFrom as? FR2) === fr2)
-        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR3.self)
+        XCTAssert(responder.lastFrom?.instance.value is FR2)
+        XCTAssert((responder.lastFrom?.instance.value as? FR2) === fr2)
+        XCTAssert(responder.lastTo?.metadata.flowRepresentableType == FR3.self)
         
-        (responder.lastTo as? FR3)?.proceedInWorkflow()
+        (responder.lastTo?.instance.value as? FR3)?.proceedInWorkflow()
         
         wait(for: [FR2.expectation], timeout: 3)
     }
@@ -288,11 +288,11 @@ class SkipThroughWorkflowTests: XCTestCase {
         
         XCTAssertEqual(responder.proceedCalled, 1)
         XCTAssert(launchedRepresentable?.value is FR3)
-        XCTAssert(responder.lastTo is FR3)
+        XCTAssert(responder.lastTo?.instance.value is FR3)
         XCTAssertNil(responder.lastFrom)
-        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR3.self)
+        XCTAssert(responder.lastTo?.metadata.flowRepresentableType == FR3.self)
         
-        (responder.lastTo as? FR3)?.proceedInWorkflow()
+        (responder.lastTo?.instance.value as? FR3)?.proceedInWorkflow()
         
         wait(for: [FR2.expectation, FR3.expectation], timeout: 3)
     }
@@ -371,16 +371,16 @@ class SkipThroughWorkflowTests: XCTestCase {
         
         XCTAssertEqual(responder.proceedCalled, 1)
         XCTAssert(launchedRepresentable?.value is FR1)
-        XCTAssert(responder.lastTo is FR1)
+        XCTAssert(responder.lastTo?.instance.value is FR1)
         XCTAssertNil(responder.lastFrom)
-        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR1.self)
+        XCTAssert(responder.lastTo?.metadata.flowRepresentableType == FR1.self)
         
-        (responder.lastTo as? FR1)?.proceedInWorkflow(FR1.id)
+        (responder.lastTo?.instance.value as? FR1)?.proceedInWorkflow(FR1.id)
         
         XCTAssertEqual(responder.proceedCalled, 2)
-        XCTAssert(responder.lastTo is FR3)
-        XCTAssert(responder.lastFrom is FR1)
-        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR3.self)
+        XCTAssert(responder.lastTo?.instance.value is FR3)
+        XCTAssert(responder.lastFrom?.instance.value is FR1)
+        XCTAssert(responder.lastTo?.metadata.flowRepresentableType == FR3.self)
         
         wait(for: [FR2.expectation, FR3.expectation], timeout: 3)
     }
@@ -421,9 +421,9 @@ class SkipThroughWorkflowTests: XCTestCase {
         
         XCTAssertEqual(responder.proceedCalled, 1)
         XCTAssert(launchedRepresentable?.value is FR1)
-        XCTAssert(responder.lastTo is FR1)
+        XCTAssert(responder.lastTo?.instance.value is FR1)
         XCTAssertNil(responder.lastFrom)
-        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR1.self)
+        XCTAssert(responder.lastTo?.metadata.flowRepresentableType == FR1.self)
         
         (launchedRepresentable?.value as? FR1)?.proceedInWorkflow(FR1.id)
                 
@@ -455,18 +455,5 @@ extension SkipThroughWorkflowTests {
         
         typealias WorkflowInput = Never
         typealias WorkflowOutput = Never
-    }
-    
-    class MockOrchestrationResponder: AnyOrchestrationResponder {
-        var proceedCalled = 0
-        var lastTo: Any?
-        var lastFrom: Any?
-        var lastMetadata:FlowRepresentableMetaData?
-        func proceed(to: Any?, from: Any?, metadata:FlowRepresentableMetaData) {
-            lastTo = to
-            lastFrom = from
-            lastMetadata = metadata
-            proceedCalled += 1
-        }
     }
 }

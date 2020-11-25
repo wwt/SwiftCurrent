@@ -25,28 +25,28 @@ class OrchestrationResponderTests : XCTestCase {
         
         XCTAssertEqual(responder.proceedCalled, 1)
         XCTAssert(launchedRepresentable?.value is FR1)
-        XCTAssert(responder.lastTo is FR1)
+        XCTAssert(responder.lastTo?.instance.value is FR1)
         XCTAssertNil(responder.lastFrom)
-        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR1.self)
+        XCTAssert(responder.lastTo?.metadata.flowRepresentableType == FR1.self)
         
         (launchedRepresentable?.value as? FR1)?.proceedInWorkflow()
         
         XCTAssertEqual(responder.proceedCalled, 2)
-        XCTAssert(responder.lastTo is FR2)
+        XCTAssert(responder.lastTo?.instance.value is FR2)
         XCTAssertNotNil(responder.lastFrom)
-        XCTAssert(responder.lastFrom is FR1)
-        XCTAssert((responder.lastFrom as? FR1) === (launchedRepresentable?.value as? FR1))
-        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR2.self)
+        XCTAssert(responder.lastFrom?.instance.value is FR1)
+        XCTAssert((responder.lastFrom?.instance.value as? FR1) === (launchedRepresentable?.value as? FR1))
+        XCTAssert(responder.lastTo?.metadata.flowRepresentableType == FR2.self)
 
-        let fr2 = (responder.lastTo as? FR2)
+        let fr2 = (responder.lastTo?.instance.value as? FR2)
         fr2?.proceedInWorkflow()
         
         XCTAssertEqual(responder.proceedCalled, 3)
-        XCTAssert(responder.lastTo is FR3)
+        XCTAssert(responder.lastTo?.instance.value is FR3)
         XCTAssertNotNil(responder.lastFrom)
-        XCTAssert(responder.lastFrom is FR2)
-        XCTAssert((responder.lastFrom as? FR2) === fr2)
-        XCTAssert(responder.lastMetadata?.flowRepresentableType == FR3.self)
+        XCTAssert(responder.lastFrom?.instance.value is FR2)
+        XCTAssert((responder.lastFrom?.instance.value as? FR2) === fr2)
+        XCTAssert(responder.lastTo?.metadata.flowRepresentableType == FR3.self)
     }
     
     func testWorkflowCallsOnFinishWhenItIsDone() {
@@ -63,8 +63,8 @@ class OrchestrationResponderTests : XCTestCase {
         let launchedRepresentable = wf.launch(from: nil, with: nil) { _ in expectation.fulfill() }
         
         (launchedRepresentable?.value as? FR1)?.proceedInWorkflow()
-        (responder.lastTo as? FR2)?.proceedInWorkflow()
-        (responder.lastTo as? FR3)?.proceedInWorkflow()
+        (responder.lastTo?.instance.value as? FR2)?.proceedInWorkflow()
+        (responder.lastTo?.instance.value as? FR3)?.proceedInWorkflow()
         
         wait(for: [expectation], timeout: 3)
     }
@@ -88,8 +88,8 @@ class OrchestrationResponderTests : XCTestCase {
         }
         
         (launchedRepresentable?.value as? FR1)?.proceedInWorkflow()
-        (responder.lastTo as? FR2)?.proceedInWorkflow()
-        (responder.lastTo as? FR3)?.proceedInWorkflow(val)
+        (responder.lastTo?.instance.value as? FR2)?.proceedInWorkflow()
+        (responder.lastTo?.instance.value as? FR3)?.proceedInWorkflow(val)
         
         wait(for: [expectation], timeout: 3)
     }
@@ -119,18 +119,5 @@ extension OrchestrationResponderTests {
         
         typealias WorkflowInput = Never
         typealias WorkflowOutput = Never
-    }
-    
-    class MockOrchestrationResponder: AnyOrchestrationResponder {
-        var proceedCalled = 0
-        var lastTo: Any?
-        var lastFrom: Any?
-        var lastMetadata:FlowRepresentableMetaData?
-        func proceed(to: Any?, from: Any?, metadata:FlowRepresentableMetaData) {
-            lastTo = to
-            lastFrom = from
-            lastMetadata = metadata
-            proceedCalled += 1
-        }
     }
 }
