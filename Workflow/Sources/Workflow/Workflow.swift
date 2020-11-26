@@ -33,8 +33,6 @@ public final class Workflow<F: FlowRepresentable>: AnyWorkflow {
         super.init(node)
     }
 
-    internal override init() { super.init() }
-
     /// init: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     /// - Parameter type: A reference to the class used to create the workflow
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow

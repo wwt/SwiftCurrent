@@ -15,14 +15,6 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
 
     public var firstLoadedInstance: LinkedList<AnyFlowRepresentable?>.Element?
 
-    public init() {
-        super.init(nil)
-    }
-
-    required init(_ node: Element?) {
-        super.init(node)
-    }
-
     deinit {
         removeInstances()
         orchestrationResponder = nil
@@ -30,42 +22,6 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
 
     public func applyOrchestrationResponder(_ orchestrationResponder: AnyOrchestrationResponder) {
         self.orchestrationResponder = orchestrationResponder
-    }
-
-    private enum PassedArgs {
-        case none
-        case args(Any?)
-
-        func extract(_ defaultValue: Any?) -> Any? {
-            if case .args(let value) = self {
-                return value
-            }
-            return defaultValue
-        }
-    }
-
-    private func postDataForTestListeners(from: Any?,
-                                          with args: Any?,
-                                          withLaunchStyle launchStyle: PresentationType = .default,
-                                          onFinish: ((Any?) -> Void)? = nil) {
-        #if DEBUG
-        if NSClassFromString("XCTest") != nil {
-            NotificationCenter.default.post(name: .workflowLaunched, object: [
-                "workflow": self,
-                "launchFrom": from,
-                "args": args,
-                "style": launchStyle,
-                "onFinish": onFinish
-            ])
-        }
-        #endif
-    }
-
-    private func convertInput(_ old: (instance: AnyFlowRepresentable,
-                                      metadata: FlowRepresentableMetaData)?) -> (instance: AnyWorkflow.InstanceNode,
-                                                                                 metadata: FlowRepresentableMetaData)? {
-        guard let old = old else { return nil }
-        return (instance: AnyWorkflow.InstanceNode(with: old.instance), metadata: old.metadata)
     }
 
     public func launch(from: (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetaData)?,
@@ -80,6 +36,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
         instances = LinkedList(map { _ in nil })
         var root: (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetaData)?
         var passedArgs: PassedArgs = .none
+
         let metadata = first?.traverse { node in
             let metadata = node.value
             var flowRepresentable = metadata.flowRepresentableType.instance()
@@ -123,10 +80,10 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
     /// - Returns: Void
     /// - Note: In order for this to function the workflow must have a presenter, presenters must call back to the workflow to inform when the abandon process has finished for the onFinish callback to be called.
     public func abandon(animated: Bool = true, onFinish:(() -> Void)? = nil) {
-        orchestrationResponder?.abandon(self, animated: animated, onFinish: { [weak self] in
-            self?.removeInstances()
-            self?.firstLoadedInstance = nil
-            self?.orchestrationResponder = nil
+        orchestrationResponder?.abandon(self, animated: animated, onFinish: {
+            self.removeInstances()
+            self.firstLoadedInstance = nil
+            self.orchestrationResponder = nil
             onFinish?()
         })
     }
@@ -159,7 +116,6 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
                 if !shouldLoad && persistance == .persistWhenSkipped {
                     viewToPresent = (instance: flowRepresentable, metadata: metadata)
                     self.setupCallbacks(for: nextNode, onFinish: onFinish)
-
                     self.orchestrationResponder?.proceed(to: (instance: nextNode, metadata: metadata),
                                                          from: (instance: node, metadata: currentMetadataNode.value))
                 }
@@ -173,10 +129,49 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
                 return
             }
 
-            _ = nextMetadataNode.value.calculatePersistance(argsToPass)
             self.setupCallbacks(for: nextNode, onFinish: onFinish)
             orchestrationResponder?.proceed(to: (instance: nextNode, metadata:nextMetadataNode.value),
                                             from: convertInput(viewToPresent) ?? (instance: node, metadata:currentMetadataNode.value))
+        }
+    }
+}
+
+extension AnyWorkflow {
+    private func postDataForTestListeners(from: Any?,
+                                          with args: Any?,
+                                          withLaunchStyle launchStyle: PresentationType = .default,
+                                          onFinish: ((Any?) -> Void)? = nil) {
+        #if DEBUG
+        if NSClassFromString("XCTest") != nil {
+            NotificationCenter.default.post(name: .workflowLaunched, object: [
+                "workflow": self,
+                "launchFrom": from,
+                "args": args,
+                "style": launchStyle,
+                "onFinish": onFinish
+            ])
+        }
+        #endif
+    }
+
+    private func convertInput(_ old: (instance: AnyFlowRepresentable,
+                                      metadata: FlowRepresentableMetaData)?) -> (instance: AnyWorkflow.InstanceNode,
+                                                                                 metadata: FlowRepresentableMetaData)? {
+        guard let old = old else { return nil }
+        return (instance: AnyWorkflow.InstanceNode(with: old.instance), metadata: old.metadata)
+    }
+}
+
+extension AnyWorkflow {
+    private enum PassedArgs {
+        case none
+        case args(Any?)
+
+        func extract(_ defaultValue: Any?) -> Any? {
+            if case .args(let value) = self {
+                return value
+            }
+            return defaultValue
         }
     }
 }
