@@ -70,14 +70,14 @@ class WorkflowTests: XCTestCase {
     }
 
     func testProgressToNextAvailableItemInWorkflow() {
-        class FR1: TestFlowRepresentable<Never>, FlowRepresentable {
+        class FR1: TestFlowRepresentable<Never, Never>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable { Self() }
         }
-        class FR2: TestFlowRepresentable<Never>, FlowRepresentable {
+        class FR2: TestFlowRepresentable<Never, Never>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable { Self() }
             func shouldLoad() -> Bool { false }
         }
-        class FR3: TestFlowRepresentable<Never>, FlowRepresentable {
+        class FR3: TestFlowRepresentable<Never, Never>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable { Self() }
         }
 
@@ -107,11 +107,11 @@ class WorkflowTests: XCTestCase {
     }
 
     func testWorkflowCallsBackOnCompletion() {
-        class FR1: TestFlowRepresentable<Never>, FlowRepresentable {
+        class FR1: TestFlowRepresentable<Never, Never>, FlowRepresentable {
             typealias WorkflowOutput = String
             static func instance() -> AnyFlowRepresentable { Self() }
         }
-        class FR2: TestFlowRepresentable<Never>, FlowRepresentable {
+        class FR2: TestFlowRepresentable<Never, Never>, FlowRepresentable {
             typealias WorkflowOutput = String
             static func instance() -> AnyFlowRepresentable { Self() }
         }
@@ -131,11 +131,11 @@ class WorkflowTests: XCTestCase {
     }
 
     func testWorkflowCallsBackOnCompletionWhenLastViewIsSkipped() {
-        class FR1: TestFlowRepresentable<Never>, FlowRepresentable {
+        class FR1: TestFlowRepresentable<Never, Never>, FlowRepresentable {
             typealias WorkflowOutput = String
             static func instance() -> AnyFlowRepresentable { Self() }
         }
-        class FR2: TestFlowRepresentable<Never>, FlowRepresentable {
+        class FR2: TestFlowRepresentable<Never, Never>, FlowRepresentable {
             typealias WorkflowOutput = String
             static func instance() -> AnyFlowRepresentable { Self() }
 
@@ -159,7 +159,7 @@ class WorkflowTests: XCTestCase {
     }
 
     func testWorkflowCallsBackOnCompletionWhenLastViewIsSkipped_AndItIsTheOnlyView() {
-        class FR1: TestFlowRepresentable<Never>, FlowRepresentable {
+        class FR1: TestFlowRepresentable<Never, Never>, FlowRepresentable {
             typealias WorkflowOutput = String
             static func instance() -> AnyFlowRepresentable { Self() }
             func shouldLoad() -> Bool {
@@ -178,12 +178,13 @@ class WorkflowTests: XCTestCase {
         XCTAssert(callbackCalled)
     }
     
-    class TestFlowRepresentable<I> {
+    class TestFlowRepresentable<I, O> {
         required init() { }
         
         var proceedInWorkflowStorage: ((Any?) -> Void)?
         
         typealias WorkflowInput = I
+        typealias WorkflowOutput = O
         
         var workflow: AnyWorkflow?
     }

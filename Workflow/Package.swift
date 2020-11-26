@@ -21,6 +21,7 @@ let package = Package(
         .package(url: "https://github.com/Swinject/Swinject.git", .upToNextMajor(from: "2.7.1")),
         .package(url: "https://github.com/mattgallagher/CwlPreconditionTesting.git", from: Version("2.0.0-beta.1")),
         .package(url: "https://github.com/mattgallagher/CwlCatchException.git", from: Version("2.0.0-beta.1")),
+        .package(url: "https://github.com/apple/swift-algorithms", .upToNextMajor(from: "0.0.1")),
     ],
     targets: [
         .target(
@@ -39,6 +40,7 @@ let package = Package(
                 "Workflow",
                 "CwlPreconditionTesting",
                 "CwlCatchException",
+                .product(name: "Algorithms", package: "swift-algorithms")
             ],
             exclude: ["Info.plist"]),
         .testTarget(

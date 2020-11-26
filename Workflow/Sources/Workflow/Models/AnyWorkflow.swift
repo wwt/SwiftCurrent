@@ -90,10 +90,6 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
         firstLoadedInstance = nil
     }
 
-    private func replaceInstance(atIndex index: Int, withInstance instance: AnyFlowRepresentable?) {
-        instances.replace(atIndex: index, withItem: instance)
-    }
-
     private func setupCallbacks(for node: LinkedList<AnyFlowRepresentable?>.Element, onFinish: ((Any?) -> Void)?) {
         guard let currentMetadataNode = first?.traverse(node.position) else { fatalError("Internal state of workflow completely mangled somehow...") }
         node.value?.proceedInWorkflowStorage = { [self] args in
