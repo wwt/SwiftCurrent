@@ -844,6 +844,7 @@ class UIKitPresenterTests: XCTestCase {
         root.launchInto(Workflow(FR1.self, flowPersistance: .hiddenInitially)
                     .thenPresent(FR2.self)
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
+        waitUntil(UIApplication.topViewController() is FR1)
         waitUntil(UIApplication.topViewController() is FR2)
         XCTAssert(UIApplication.topViewController() is FR2)
         UIApplication.topViewController()?.dismiss(animated: false)
@@ -902,7 +903,7 @@ class UIKitPresenterTests: XCTestCase {
         XCTAssert(UIApplication.topViewController() === root, "Expected top view controller to be root, but was: \(String(describing: UIApplication.topViewController()))")
     }
     
-    func testModalWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStackUsingAClsure() {
+    func testModalWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStackUsingAClosure() {
         class FR1: TestViewController { }
         class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable { FR2() }
@@ -952,7 +953,7 @@ class UIKitPresenterTests: XCTestCase {
         XCTAssert(UIApplication.topViewController() is FR1)
     }
     
-    func testModalWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStackUsingAClsureWithData() {
+    func testModalWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStackUsingAClosureWithData() {
         class FR1: TestViewController { }
         class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
             static func instance() -> AnyFlowRepresentable { FR2() }
@@ -976,7 +977,7 @@ class UIKitPresenterTests: XCTestCase {
         XCTAssert(UIApplication.topViewController() is FR2)
     }
     
-    func testModalWorkflowWhichDoesNotSkipAScreen_ButRemovesItFromTheViewStackUsingAClsureWithData() {
+    func testModalWorkflowWhichDoesNotSkipAScreen_ButRemovesItFromTheViewStackUsingAClosureWithData() {
         class FR1: TestViewController { }
         class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
             func shouldLoad(with args: Any?) -> Bool {

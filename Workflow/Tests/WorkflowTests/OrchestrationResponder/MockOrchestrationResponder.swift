@@ -13,7 +13,8 @@ class MockOrchestrationResponder: AnyOrchestrationResponder {
     var lastTo: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)?
     var lastFrom: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)?
     var lastCompletion:(() -> Void)?
-    func proceed(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData), from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)?) {
+    func proceed(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData),
+                 from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)?) {
         lastTo = to
         lastFrom = from
         proceedCalled += 1

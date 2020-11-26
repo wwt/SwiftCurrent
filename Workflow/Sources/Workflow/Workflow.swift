@@ -83,7 +83,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
         #endif
     }
 
-    public func launch(from: Any?,
+    public func launch(from: (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetaData)?,
                        with args: Any?,
                        withLaunchStyle launchStyle: PresentationType = .default,
                        onFinish: ((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Element? {
@@ -93,7 +93,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
                                  onFinish: onFinish)
         removeInstances()
         instances.append(contentsOf: map { _ in nil })
-        var root: Any?
+        var root: (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetaData)?
         var metadata: FlowRepresentableMetaData?
         var passedArgs: PassedArgs = .none
         _ = first?.traverse { node in
@@ -120,10 +120,10 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
                     firstLoadedInstance = instances.first?.traverse(position)
                     if let firstLoadedInstance = firstLoadedInstance {
                         self.setupCallbacks(for: firstLoadedInstance,
-                                            shouldDestroy: metadata.persistance(args) == FlowPersistance.removedAfterProceeding,
+                                            shouldDestroy: metadata.calculatePersistance(args) == FlowPersistance.removedAfterProceeding,
                                             onFinish: onFinish)
                     }
-                } else if !shouldLoad && metadata.persistance(args) == .persistWhenSkipped {
+                } else if !shouldLoad && metadata.calculatePersistance(args) == .persistWhenSkipped {
                     var reference: ((Any?) -> Void)?
                     self.handleCallbackWhenHiddenInitially(viewToPresent: &root,
                                                            hold: &reference,
@@ -138,18 +138,33 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
             return shouldLoad
         }
 
+        let argsToPass: Any? = {
+            if case .args(let value) = passedArgs {
+                return value
+            }
+            return args
+        }()
+
         guard let first = firstLoadedInstance,
               let m = metadata else {
-                if case .args(let value) = passedArgs {
-                    onFinish?(value)
-                } else if args != nil {
-                    onFinish?(args)
+                if argsToPass != nil {
+                    onFinish?(argsToPass)
                 }
                 return nil
         }
 
+        let _ = m.calculatePersistance(argsToPass)
+
         presenter?.launch(view: first.value, from: root ?? from, withLaunchStyle: launchStyle, metadata: m, animated: true, completion: nil)
-        orchestrationResponder?.proceed(to: (instance: first, metadata:m), from: nil)
+        let launcher:(instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)? = {
+            guard let from = from else { return nil }
+            return (instance: AnyWorkflow.InstanceNode(with: from.instance), metadata: from.metadata)
+        }()
+        let rootLauncher:(instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)? = {
+            guard let root = root else { return nil }
+            return (instance: AnyWorkflow.InstanceNode(with: root.instance), metadata: root.metadata)
+        }()
+        orchestrationResponder?.proceed(to: (instance: first, metadata:m), from: rootLauncher ?? launcher)
         return firstLoadedInstance
     }
 
@@ -178,9 +193,10 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
     }
 
     private func setupCallbacks(for node: LinkedList<AnyFlowRepresentable?>.Element, shouldDestroy: Bool = false, onFinish: ((Any?) -> Void)?) {
+        guard let currentMetadataNode = first?.traverse(node.position) else { return }
         node.value?.proceedInWorkflowStorage = { [self] args in
             var argsToPass = args
-            var viewToPresent: Any?
+            var viewToPresent: (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetaData)?
             let nextLoadedNode = node.next?.traverse {
                 let index = $0.position
                 guard let metadata = first?.traverse(index)?.value else { return false }
@@ -196,13 +212,15 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
 
                 instance.proceedInWorkflowStorage = { argsToPass = $0 }
 
+                let persistance = metadata.calculatePersistance(argsToPass)
+                
                 let shouldLoad = instance.erasedShouldLoad(with: argsToPass) == true
-                if !shouldLoad && metadata.persistance(argsToPass) == .persistWhenSkipped {
+                if !shouldLoad && persistance == .persistWhenSkipped {
                     handleCallbackWhenHiddenInitially(viewToPresent: &viewToPresent,
                                                            hold: &hold,
                                                            instance: instance,
                                                            instancePosition: index,
-                                                           from: instances.first?.traverse(node.position)?.value,
+                                                           from: (instance: node.value!, metadata: currentMetadataNode.value),
                                                            metadata: metadata,
                                                            onFinish: onFinish)
                 }
@@ -211,7 +229,6 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
             }
 
             guard let nextNode = nextLoadedNode,
-                  let currentMetadataNode = first?.traverse(node.position),
                   let nextMetadataNode = first?.traverse(nextNode.position),
                   let instanceToPresent = instances.first?.traverse(nextNode.position)?.value else {
                 onFinish?(argsToPass)
@@ -220,41 +237,53 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
 
             let nextMetadata = nextMetadataNode.value
             let currentMetadata = currentMetadataNode.value
+            let nextPersistance = nextMetadata.calculatePersistance(argsToPass)
 
             self.setupCallbacks(for: nextNode,
-                                shouldDestroy: nextMetadata.persistance(argsToPass) == FlowPersistance.removedAfterProceeding,
+                                shouldDestroy: nextPersistance == FlowPersistance.removedAfterProceeding,
                                 onFinish: onFinish)
 
-            viewToPresent = viewToPresent ?? instances.first?.traverse(node.position)?.value
+            let vtp = viewToPresent?.instance ?? instances.first?.traverse(node.position)?.value
 
+            let vtpLauncher:(instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)? = {
+                guard let root = viewToPresent else { return nil }
+                return (instance: AnyWorkflow.InstanceNode(with: root.instance), metadata: root.metadata)
+            }()
             presenter?.launch(view: instanceToPresent,
-                                   from: viewToPresent,
+                                   from: vtp,
                                    withLaunchStyle: nextMetadata.presentationType, metadata: nextMetadata, animated: true) {
                 if shouldDestroy {
                     presenter?.destroy(instances.first?.traverse(node.position)?.value)
                 }
             }
 
-            orchestrationResponder?.proceed(to: (instance: nextNode, metadata:nextMetadata), from: (instance: node, metadata:currentMetadata))
+            orchestrationResponder?.proceed(to: (instance: nextNode, metadata:nextMetadata),
+                                            from: vtpLauncher ?? (instance: node, metadata:currentMetadata))
         }
     }
 
-    private func handleCallbackWhenHiddenInitially(viewToPresent:inout Any?,
+    private func handleCallbackWhenHiddenInitially(viewToPresent:inout (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetaData)?,
                                                    hold:inout ((Any?) -> Void)?,
                                                    instance: AnyFlowRepresentable,
                                                    instancePosition: Int,
-                                                   from: Any?,
+                                                   from: (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetaData)?,
                                                    metadata: FlowRepresentableMetaData,
                                                    onFinish: ((Any?) -> Void)?) {
-        viewToPresent = instance
+        viewToPresent = (instance: instance, metadata: metadata)
         self.replaceInstance(atIndex: instancePosition, withInstance: instance)
-        if let instanceNode = self.instances.first?.traverse(instancePosition) {
-            self.setupCallbacks(for: instanceNode, onFinish: onFinish)
-            hold = instanceNode.value?.proceedInWorkflowStorage
-        }
+        let instanceNode = self.instances.first!.traverse(instancePosition)!
+        self.setupCallbacks(for: instanceNode, onFinish: onFinish)
+        hold = instanceNode.value?.proceedInWorkflowStorage
         self.presenter?.launch(view: instance,
-                               from: from,
+                               from: from?.instance,
                                withLaunchStyle: metadata.presentationType, metadata: metadata, animated: false, completion: nil)
+
+        let launcher:(instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)? = {
+            guard let from = from else { return nil }
+            return (instance: AnyWorkflow.InstanceNode(with: from.instance), metadata: from.metadata)
+        }()
+
+        self.orchestrationResponder?.proceed(to: (instance: instanceNode, metadata: metadata), from: launcher)
 
     }
 }
@@ -383,11 +412,24 @@ public extension Workflow {
 
 public class FlowRepresentableMetaData {
     private(set) public var flowRepresentableType: AnyFlowRepresentable.Type
-    private(set) public var persistance: (Any?) -> FlowPersistance
+    private var flowPersistance: (Any?) -> FlowPersistance
     private(set) public var presentationType: PresentationType
+    private(set) public var persistance:FlowPersistance?
+
+    func calculatePersistance(_ args:Any?) -> FlowPersistance {
+        let val = flowPersistance(args)
+        persistance = val
+        return val
+    }
+
     public init(_ flowRepresentableType: AnyFlowRepresentable.Type, presentationType: PresentationType = .default, flowPersistance:@escaping (Any?) -> FlowPersistance) {
         self.flowRepresentableType = flowRepresentableType
-        self.persistance = flowPersistance
+        self.flowPersistance = flowPersistance
         self.presentationType = presentationType
+    }
+
+    public convenience init<FR>(with flowRepresentable: FR, presentationType: PresentationType, persistance: FlowPersistance) where FR: AnyFlowRepresentable {
+        self.init(FR.self, presentationType: presentationType, flowPersistance: { _ in persistance })
+        self.persistance = persistance
     }
 }

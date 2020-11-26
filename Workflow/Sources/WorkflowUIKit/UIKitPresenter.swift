@@ -41,6 +41,67 @@ extension UIModalPresentationStyle {
     }
 }
 
+open class UIKitPresenter2: AnyOrchestrationResponder {
+    public func proceed(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData),
+                        from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)?) {
+        guard let view = to.instance.value as? UIViewController else { return }
+        guard let root = (from?.instance.value as? UIViewController) ?? (from?.instance.value as? VCBox)?.controller else { return }
+        let animated = !(to.metadata.persistance == .hiddenInitially)
+        let completion = {
+            if let from = from,
+               from.metadata.persistance == .removedAfterProceeding {
+                UIKitPresenter().destroy(root)
+            }
+        }
+        let launchStyle: PresentationType = {
+            if let from = from,
+               from.instance.value is VCBox {
+                return from.metadata.presentationType
+            }
+            return to.metadata.presentationType
+        }()
+        switch launchStyle {
+            case .default:
+                if case .modal(let style) = to.metadata.presentationType {
+                    if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
+                        view.modalPresentationStyle = modalPresentationStyle
+                    }
+                    root.present(view, animated: animated, completion: completion)
+                } else if let nav = root.navigationController
+                    ?? root as? UINavigationController {
+                    nav.pushViewController(view, animated: animated)
+                    completion()
+                } else {
+                    root.present(view, animated: animated, completion: completion)
+                }
+            case .modal(let style):
+                if to.metadata.presentationType == .navigationStack {
+                    let nav = UINavigationController(rootViewController: view)
+                    if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
+                        nav.modalPresentationStyle = modalPresentationStyle
+                    }
+                    root.present(nav, animated: animated, completion: completion)
+                } else {
+                    if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
+                        view.modalPresentationStyle = modalPresentationStyle
+                    }
+                    root.present(view, animated: animated, completion: completion)
+                }
+            case .navigationStack:
+                if let nav = root.navigationController
+                    ?? root as? UINavigationController {
+                    nav.pushViewController(view, animated: animated)
+                    completion()
+                } else {
+                    let nav = UINavigationController(rootViewController: view)
+                    root.present(nav, animated: animated, completion: completion)
+                }
+        }
+    }
+
+
+}
+
 open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
     public func destroy(_ view: UIViewController) {
         if let nav = view.navigationController {
@@ -69,43 +130,43 @@ open class UIKitPresenter: BasePresenter<UIViewController>, Presenter {
                        metadata: FlowRepresentableMetaData,
                        animated: Bool,
                        completion: @escaping () -> Void) {
-        switch launchStyle {
-            case .default:
-                if case .modal(let style) = metadata.presentationType {
-                    if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
-                        view.modalPresentationStyle = modalPresentationStyle
-                    }
-                    root.present(view, animated: animated, completion: completion)
-                } else if let nav = root.navigationController
-                    ?? root as? UINavigationController {
-                    nav.pushViewController(view, animated: animated)
-                    completion()
-                } else {
-                    root.present(view, animated: animated, completion: completion)
-                }
-            case .modal(let style):
-                if metadata.presentationType == .navigationStack {
-                    let nav = UINavigationController(rootViewController: view)
-                    if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
-                        nav.modalPresentationStyle = modalPresentationStyle
-                    }
-                    root.present(nav, animated: animated, completion: completion)
-                } else {
-                    if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
-                        view.modalPresentationStyle = modalPresentationStyle
-                    }
-                    root.present(view, animated: animated, completion: completion)
-                }
-            case .navigationStack:
-                if let nav = root.navigationController
-                    ?? root as? UINavigationController {
-                    nav.pushViewController(view, animated: animated)
-                    completion()
-                } else {
-                    let nav = UINavigationController(rootViewController: view)
-                    root.present(nav, animated: animated, completion: completion)
-                }
-        }
+//        switch launchStyle {
+//            case .default:
+//                if case .modal(let style) = metadata.presentationType {
+//                    if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
+//                        view.modalPresentationStyle = modalPresentationStyle
+//                    }
+//                    root.present(view, animated: animated, completion: completion)
+//                } else if let nav = root.navigationController
+//                    ?? root as? UINavigationController {
+//                    nav.pushViewController(view, animated: animated)
+//                    completion()
+//                } else {
+//                    root.present(view, animated: animated, completion: completion)
+//                }
+//            case .modal(let style):
+//                if metadata.presentationType == .navigationStack {
+//                    let nav = UINavigationController(rootViewController: view)
+//                    if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
+//                        nav.modalPresentationStyle = modalPresentationStyle
+//                    }
+//                    root.present(nav, animated: animated, completion: completion)
+//                } else {
+//                    if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
+//                        view.modalPresentationStyle = modalPresentationStyle
+//                    }
+//                    root.present(view, animated: animated, completion: completion)
+//                }
+//            case .navigationStack:
+//                if let nav = root.navigationController
+//                    ?? root as? UINavigationController {
+//                    nav.pushViewController(view, animated: animated)
+//                    completion()
+//                } else {
+//                    let nav = UINavigationController(rootViewController: view)
+//                    root.present(nav, animated: animated, completion: completion)
+//                }
+//        }
     }
 
     public func abandon(_ workflow: AnyWorkflow, animated: Bool = true, onFinish:(() -> Void)? = nil) {
@@ -146,8 +207,29 @@ public extension UIViewController {
     /// - Note: In the background this applies a UIKitPresenter, if you call launch on workflow directly you'll need to apply one yourself
     func launchInto(_ workflow: AnyWorkflow, args: Any? = nil, withLaunchStyle launchStyle: PresentationType = .default, onFinish: ((Any?) -> Void)? = nil) {
         workflow.applyPresenter(UIKitPresenter())
-        _ = workflow.launch(from: self, with: args, withLaunchStyle: launchStyle, onFinish: onFinish)?.value as? UIViewController
+        workflow.applyOrchestrationResponder(UIKitPresenter2())
+        let box = VCBox(self)
+        _ = workflow.launch(from: (instance: box, metadata: FlowRepresentableMetaData(with: box, presentationType: launchStyle, persistance: .default)),
+                            with: args,
+                            withLaunchStyle: launchStyle,
+                            onFinish: onFinish)?.value as? UIViewController
     }
+}
+
+public final class VCBox: AnyFlowRepresentable {
+    let controller:UIViewController
+
+    init(_ controller:UIViewController) {
+        self.controller = controller
+    }
+
+    public weak var workflow: AnyWorkflow?
+
+    public var proceedInWorkflowStorage: ((Any?) -> Void)?
+
+    public func erasedShouldLoad(with args: Any?) -> Bool { fatalError() }
+
+    public static func instance() -> AnyFlowRepresentable { fatalError() }
 }
 
 public extension FlowRepresentable where Self: UIViewController {

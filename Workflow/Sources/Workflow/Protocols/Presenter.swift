@@ -40,7 +40,8 @@ public extension Presenter {
                 animated: Bool,
                 completion: (() -> Void)?) {
         guard let v = view as? ViewType, let r = root as? ViewType else {
-            fatalError("\(String(describing: Self.self)) is unaware of view type: \(String(describing: view)), expected view type: \(ViewType.self)")
+            return
+//            fatalError("\(String(describing: Self.self)) is unaware of view type: \(String(describing: view)), expected view type: \(ViewType.self)")
         }
         launch(view: v, from: r, withLaunchStyle: launchStyle, metadata: metadata, animated: animated, completion: completion ?? {})
     }
