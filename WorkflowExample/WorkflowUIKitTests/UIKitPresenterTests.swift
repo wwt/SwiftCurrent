@@ -830,7 +830,6 @@ class UIKitPresenterTests: XCTestCase {
         root.launchInto(Workflow(FR1.self, flowPersistance: .hiddenInitially)
                     .thenPresent(FR2.self)
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
-        waitUntil(UIApplication.topViewController() is FR1)
         waitUntil(UIApplication.topViewController() is FR2)
         XCTAssert(UIApplication.topViewController() is FR2)
         UIApplication.topViewController()?.dismiss(animated: false)
