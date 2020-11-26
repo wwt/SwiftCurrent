@@ -1,32 +1,11 @@
 //
-//  LaunchStyle.swift
-//  Workflow
+//  FlowPersistance.swift
+//  
 //
-//  Created by Tyler Thompson on 8/29/19.
-//  Copyright © 2019 Tyler Tompson. All rights reserved.
+//  Created by Tyler Thompson on 11/26/20.
 //
 
 import Foundation
-/**
- LaunchSTyle: An extendable class that indicates how FlowRepresentables should be launched
- 
- ### Discussion:
- Mostly used when you tell a workflow to launch, or on the `FlowRepresentable` protocol if you have a view that preferrs to be launched with a certain style
- */
-
-public final class LaunchStyle {
-    private init() { }
-
-    public static let `default` = LaunchStyle()
-    public static var new: LaunchStyle { LaunchStyle() }
-}
-
-extension LaunchStyle: Equatable {
-    public static func == (lhs: LaunchStyle, rhs: LaunchStyle) -> Bool {
-        return lhs === rhs
-    }
-}
-
 /**
  FlowPersistance: An extendable class that indicates how FlowRepresentables should be persisted
 
