@@ -10,7 +10,7 @@ import XCTest
 @testable import Workflow
 
 class WorkflowTests: XCTestCase {
-    func testFlowRepresentablesWithMultipleTypesCanBeStoredIAndRetreived() {
+    func testFlowRepresentablesWithMultipleTypesCanBeStoredAndRetreived() {
         class FR1: FlowRepresentable {
             var workflow: AnyWorkflow?
             
@@ -69,127 +69,114 @@ class WorkflowTests: XCTestCase {
         XCTAssert(instance?.erasedShouldLoad(with: "str") == true)
     }
 
-    #warning("FINDME")
-//    func testProgressToNextAvailableItemInWorkflow() {
-//        class FR1: TestFlowRepresentable<Never>, FlowRepresentable {
-//            static func instance() -> AnyFlowRepresentable { Self() }
-//        }
-//        class FR2: TestFlowRepresentable<Never>, FlowRepresentable {
-//            static func instance() -> AnyFlowRepresentable { Self() }
-//            func shouldLoad() -> Bool { false }
-//        }
-//        class FR3: TestFlowRepresentable<Never>, FlowRepresentable {
-//            static func instance() -> AnyFlowRepresentable { Self() }
-//        }
-//        class TestView { }
-//
-//        let presenter = TestPresenter()
-//        let wf = Workflow(FR1.self)
-//            .thenPresent(FR2.self)
-//            .thenPresent(FR3.self)
-//
-//        wf.applyPresenter(presenter)
-//
-//        let view = TestView()
-//        let firstInstance = wf.launch(from: view, with: 1)
-//        XCTAssert(firstInstance?.value is FR1)
-//        XCTAssert(presenter.launchRoot is TestView)
-//        XCTAssert((presenter.launchRoot as? TestView) === view)
-//        XCTAssert(presenter.launchView is FR1)
-//        XCTAssert((presenter.launchView as? FR1) === firstInstance?.value as? FR1)
-//        XCTAssertEqual(presenter.launchCalled, 1)
-//        (firstInstance?.value as? FR1)?.proceedInWorkflow()
-//        XCTAssertEqual(presenter.launchCalled, 2)
-//        XCTAssert((presenter.launchRoot as? FR1) === firstInstance?.value as? FR1)
-//        XCTAssert(presenter.launchView is FR3)
-//        XCTAssert((presenter.launchView as? FR3) === firstInstance?.next?.next?.value as? FR3)
-//    }
+    func testProgressToNextAvailableItemInWorkflow() {
+        class FR1: TestFlowRepresentable<Never>, FlowRepresentable {
+            static func instance() -> AnyFlowRepresentable { Self() }
+        }
+        class FR2: TestFlowRepresentable<Never>, FlowRepresentable {
+            static func instance() -> AnyFlowRepresentable { Self() }
+            func shouldLoad() -> Bool { false }
+        }
+        class FR3: TestFlowRepresentable<Never>, FlowRepresentable {
+            static func instance() -> AnyFlowRepresentable { Self() }
+        }
+
+        let responder = MockOrchestrationResponder()
+        let wf = Workflow(FR1.self)
+            .thenPresent(FR2.self)
+            .thenPresent(FR3.self)
+
+        wf.applyOrchestrationResponder(responder)
+
+        let firstInstance = wf.launch(from: nil, with: 1)
+        XCTAssert(firstInstance?.value is FR1)
+        XCTAssertNil(responder.lastFrom)
+        XCTAssert(responder.lastTo?.instance.value is FR1)
+        XCTAssert((responder.lastTo?.instance.value as? FR1) === firstInstance?.value as? FR1)
+        XCTAssertEqual(responder.proceedCalled, 1)
+        (firstInstance?.value as? FR1)?.proceedInWorkflow()
+        XCTAssertEqual(responder.proceedCalled, 2)
+        XCTAssert((responder.lastFrom?.instance.value as? FR1) === firstInstance?.value as? FR1)
+        XCTAssert(responder.lastTo?.instance.value is FR3)
+        XCTAssert((responder.lastTo?.instance.value as? FR3) === firstInstance?.next?.next?.value as? FR3)
+    }
     
     func testWorkflowReturnsNilWhenLaunchingWithoutRepresentables() {
         let wf:AnyWorkflow = AnyWorkflow()
         XCTAssertNil(wf.launch(from: nil, with: nil))
     }
 
-    #warning("FINDME")
-//    func testWorkflowCallsBackOnCompletion() {
-//        class FR1: TestFlowRepresentable<Never>, FlowRepresentable {
-//            typealias WorkflowOutput = String
-//            static func instance() -> AnyFlowRepresentable { Self() }
-//        }
-//        class FR2: TestFlowRepresentable<Never>, FlowRepresentable {
-//            typealias WorkflowOutput = String
-//            static func instance() -> AnyFlowRepresentable { Self() }
-//        }
-//        class TestView { }
-//
-//        let wf:Workflow = Workflow(FR1.self)
-//            .thenPresent(FR2.self)
-//
-//        let view = TestView()
-//        var callbackCalled = false
-//        let firstInstance = wf.launch(from: view, with: 1) { args in
-//            callbackCalled = true
-//            XCTAssertEqual(args as? String, "args")
-//        }
-//        XCTAssert(firstInstance?.value is FR1)
-//        (firstInstance?.value as? FR1)?.proceedInWorkflow("test")
-//        (firstInstance?.next?.value as? FR2)?.proceedInWorkflow("args")
-//        XCTAssert(callbackCalled)
-//    }
+    func testWorkflowCallsBackOnCompletion() {
+        class FR1: TestFlowRepresentable<Never>, FlowRepresentable {
+            typealias WorkflowOutput = String
+            static func instance() -> AnyFlowRepresentable { Self() }
+        }
+        class FR2: TestFlowRepresentable<Never>, FlowRepresentable {
+            typealias WorkflowOutput = String
+            static func instance() -> AnyFlowRepresentable { Self() }
+        }
 
-    #warning("FINDME")
-//    func testWorkflowCallsBackOnCompletionWhenLastViewIsSkipped() {
-//        class FR1: TestFlowRepresentable<Never>, FlowRepresentable {
-//            typealias WorkflowOutput = String
-//            static func instance() -> AnyFlowRepresentable { Self() }
-//        }
-//        class FR2: TestFlowRepresentable<Never>, FlowRepresentable {
-//            typealias WorkflowOutput = String
-//            static func instance() -> AnyFlowRepresentable { Self() }
-//
-//            func shouldLoad() -> Bool {
-//                proceedInWorkflow("args")
-//                return false
-//            }
-//        }
-//        class TestView { }
-//
-//        let wf:Workflow = Workflow(FR1.self)
-//            .thenPresent(FR2.self)
-//
-//        let view = TestView()
-//        var callbackCalled = false
-//        let firstInstance = wf.launch(from: view, with: 1) { args in
-//            callbackCalled = true
-//            XCTAssertEqual(args as? String, "args")
-//        }
-//        XCTAssert(firstInstance?.value is FR1)
-//        (firstInstance?.value as? FR1)?.proceedInWorkflow("test")
-//        XCTAssert(callbackCalled)
-//    }
+        let wf:Workflow = Workflow(FR1.self)
+            .thenPresent(FR2.self)
 
-    #warning("FINDME")
-//    func testWorkflowCallsBackOnCompletionWhenLastViewIsSkipped_AndItIsTheOnlyView() {
-//        class FR1: TestFlowRepresentable<Never>, FlowRepresentable {
-//            typealias WorkflowOutput = String
-//            static func instance() -> AnyFlowRepresentable { Self() }
-//            func shouldLoad() -> Bool {
-//                proceedInWorkflow("args")
-//                return false
-//            }
-//        }
-//        class TestView { }
-//
-//        let wf:Workflow = Workflow(FR1.self)
-//
-//        let view = TestView()
-//        var callbackCalled = false
-//        _ = wf.launch(from: view, with: 1) { args in
-//            callbackCalled = true
-//            XCTAssertEqual(args as? String, "args")
-//        }
-//        XCTAssert(callbackCalled)
-//    }
+        var callbackCalled = false
+        let firstInstance = wf.launch(from: nil, with: 1) { args in
+            callbackCalled = true
+            XCTAssertEqual(args as? String, "args")
+        }
+        XCTAssert(firstInstance?.value is FR1)
+        (firstInstance?.value as? FR1)?.proceedInWorkflow("test")
+        (firstInstance?.next?.value as? FR2)?.proceedInWorkflow("args")
+        XCTAssert(callbackCalled)
+    }
+
+    func testWorkflowCallsBackOnCompletionWhenLastViewIsSkipped() {
+        class FR1: TestFlowRepresentable<Never>, FlowRepresentable {
+            typealias WorkflowOutput = String
+            static func instance() -> AnyFlowRepresentable { Self() }
+        }
+        class FR2: TestFlowRepresentable<Never>, FlowRepresentable {
+            typealias WorkflowOutput = String
+            static func instance() -> AnyFlowRepresentable { Self() }
+
+            func shouldLoad() -> Bool {
+                proceedInWorkflow("args")
+                return false
+            }
+        }
+
+        let wf:Workflow = Workflow(FR1.self)
+            .thenPresent(FR2.self)
+
+        var callbackCalled = false
+        let firstInstance = wf.launch(from: nil, with: 1) { args in
+            callbackCalled = true
+            XCTAssertEqual(args as? String, "args")
+        }
+        XCTAssert(firstInstance?.value is FR1)
+        (firstInstance?.value as? FR1)?.proceedInWorkflow("test")
+        XCTAssert(callbackCalled)
+    }
+
+    func testWorkflowCallsBackOnCompletionWhenLastViewIsSkipped_AndItIsTheOnlyView() {
+        class FR1: TestFlowRepresentable<Never>, FlowRepresentable {
+            typealias WorkflowOutput = String
+            static func instance() -> AnyFlowRepresentable { Self() }
+            func shouldLoad() -> Bool {
+                proceedInWorkflow("args")
+                return false
+            }
+        }
+
+        let wf:Workflow = Workflow(FR1.self)
+
+        var callbackCalled = false
+        _ = wf.launch(from: nil, with: 1) { args in
+            callbackCalled = true
+            XCTAssertEqual(args as? String, "args")
+        }
+        XCTAssert(callbackCalled)
+    }
     
     class TestFlowRepresentable<I> {
         required init() { }

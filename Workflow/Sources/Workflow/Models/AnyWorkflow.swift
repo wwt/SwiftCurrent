@@ -37,25 +37,25 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
         var root: (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetaData)?
         var passedArgs: PassedArgs = .none
 
-        let metadata = first?.traverse { node in
-            let metadata = node.value
-            var flowRepresentable = metadata.flowRepresentableType.instance()
+        let metadata = first?.traverse { nextNode in
+            let nextMetadata = nextNode.value
+            var flowRepresentable = nextMetadata.flowRepresentableType.instance()
             flowRepresentable.workflow = self
             flowRepresentable.proceedInWorkflowStorage = { passedArgs = .args($0) }
             let shouldLoad = flowRepresentable.erasedShouldLoad(with: passedArgs.extract(args))
 
             defer {
-                guard let instance = instances.first?.traverse(node.position) else { fatalError("Internal state of workflow completely mangled somehow...") }
-                let persistance = metadata.calculatePersistance(args)
+                guard let instance = instances.first?.traverse(nextNode.position) else { fatalError("Internal state of workflow completely mangled somehow...") }
+                let persistance = nextMetadata.calculatePersistance(args)
                 if shouldLoad {
                     firstLoadedInstance = instance
                     firstLoadedInstance?.value = flowRepresentable
                     self.setupCallbacks(for: instance, onFinish: onFinish)
                 } else if !shouldLoad && persistance == .persistWhenSkipped {
-                    root = (instance: flowRepresentable, metadata: metadata)
+                    root = (instance: flowRepresentable, metadata: nextMetadata)
                     instance.value = flowRepresentable
                     self.setupCallbacks(for: instance, onFinish: onFinish)
-                    self.orchestrationResponder?.proceed(to: (instance: instance, metadata: metadata), from: convertInput(from))
+                    self.orchestrationResponder?.proceed(to: (instance: instance, metadata: nextMetadata), from: convertInput(from))
                 }
 
             }
