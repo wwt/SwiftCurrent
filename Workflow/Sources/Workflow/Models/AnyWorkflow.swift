@@ -25,7 +25,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
     }
 
     public func launch(with args: Any?,
-                       withLaunchStyle launchStyle: PresentationType = .default,
+                       withLaunchStyle launchStyle: LaunchStyle = .default,
                        onFinish: ((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Element? {
         removeInstances()
         instances = LinkedList(map { _ in nil })

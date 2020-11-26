@@ -36,7 +36,7 @@ class ModalStyleTests: XCTestCase {
     func testShowModalAsPageSheet() {
         let vc = RootViewController()
         loadView(controller: vc)
-        
+
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self,
                              presentationType: .modal(.pageSheet)))

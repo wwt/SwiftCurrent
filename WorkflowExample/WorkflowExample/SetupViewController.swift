@@ -33,11 +33,12 @@ class SetupViewController: UIViewController, StoryboardLoadable {
                      menuTypes: [.catering, .regular]),
         ]
         launchInto(
-            Workflow(LocationsViewController.self, dependencyInjectionSetup: {
+            Workflow(LocationsViewController.self)
+                .dependencyInjectionSetup {
                     $0.register(NetworkManager.self) { _ in
                         SomeNetworkManager()
                     }
-                })
+                }
                 .thenPresent(PickupOrDeliveryViewController.self)
                 .thenPresent(MenuSelectionViewController.self, flowPersistance: .persistWhenSkipped)
                 .thenPresent(FoodSelectionViewController.self)

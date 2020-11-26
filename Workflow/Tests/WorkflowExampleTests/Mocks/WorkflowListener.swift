@@ -13,7 +13,7 @@ import XCTest
 
 class WorkflowListener {
     var workflow:AnyWorkflow?
-    var launchStyle:PresentationType?
+    var launchStyle:LaunchStyle?
     var args:Any?
     var launchedFrom:AnyFlowRepresentable?
     var onFinish:((Any?) -> Void)?
@@ -28,7 +28,7 @@ class WorkflowListener {
     @objc func workflowLaunched(notification: Notification) {
         let dict = notification.object as? [String:Any?]
         workflow = dict?["workflow"] as? AnyWorkflow
-        launchStyle = dict?["style"] as? PresentationType
+        launchStyle = dict?["style"] as? LaunchStyle
         onFinish = dict?["onFinish"] as? ((Any?) -> Void)
         launchedFrom = dict?["launchFrom"] as? AnyFlowRepresentable
         args = dict?["args"] as Any?

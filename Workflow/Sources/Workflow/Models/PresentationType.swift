@@ -13,42 +13,17 @@ import Foundation
  ### Discussion:
  Mostly used when you tell a workflow to launch, or on the `FlowRepresentable` protocol if you have a view that preferrs to be launched with a certain style
  */
-public enum PresentationType {
-    /// navigationStack: Indicates a `FlowRepresentable` should be launched in a navigation stack of some kind (For example with UIKit this would use a UINavigationController)
-    /// - Note: If no current navigation stack is available, one will be created
-    case navigationStack
-    /// modally: Indicates a `FlowRepresentable` should be launched modally
-    case modal(ModalPresentationStyle = .default)
-    /// default: Indicates a `FlowRepresentable` can be launched contextually
-    /// - Note: If there's already a navigation stack, it will be used. Otherwise views will present modally
-    case `default`
 
-    public static var modal: PresentationType {
-        return .modal()
-    }
+public final class LaunchStyle {
+    private init() { }
 
-    public enum ModalPresentationStyle {
-        case `default`
-        case fullScreen
-        case pageSheet
-        case formSheet
-        case currentContext
-        case custom
-        case overFullScreen
-        case overCurrentContext
-        case popover
-        case automatic
-    }
+    public static let `default` = LaunchStyle()
+    public static var new: LaunchStyle { LaunchStyle() }
 }
 
-extension PresentationType: Equatable {
-    public static func == (lhs: PresentationType, rhs: PresentationType) -> Bool {
-        switch (lhs, rhs) {
-            case (.navigationStack, .navigationStack): return true
-            case (.default, .default): return true
-            case (.modal(let pres1), .modal(let pres2)): return pres1 == pres2
-            default: return false
-        }
+extension LaunchStyle: Equatable {
+    public static func == (lhs: LaunchStyle, rhs: LaunchStyle) -> Bool {
+        return lhs === rhs
     }
 }
 
