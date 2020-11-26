@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA875A89256F7B9200243FA4 /* MockOrchestrationResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA875A88256F7B9200243FA4 /* MockOrchestrationResponder.swift */; };
 		CAC1C22B256D8B0700DBD0D4 /* WorkflowUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = CAC1C22A256D8B0700DBD0D4 /* WorkflowUIKit */; };
 		CAC1C234256D8DA300DBD0D4 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1C233256D8DA300DBD0D4 /* Screen.swift */; };
 		CAC1C235256D8DA300DBD0D4 /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1C232256D8DA300DBD0D4 /* TopViewController.swift */; };
@@ -48,7 +49,6 @@
 		CAF58830256D73090044C864 /* ReviewOrderViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF58823256D73090044C864 /* ReviewOrderViewControllerTests.swift */; };
 		CAF58831256D73090044C864 /* SetupViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF58824256D73090044C864 /* SetupViewControllerTests.swift */; };
 		CAF58832256D73090044C864 /* LocationsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF58825256D73090044C864 /* LocationsViewControllerTests.swift */; };
-		CAF58833256D73090044C864 /* MockPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF58827256D73090044C864 /* MockPresenter.swift */; };
 		CAF58834256D73090044C864 /* WorkflowListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF58828256D73090044C864 /* WorkflowListener.swift */; };
 		CAF5885F256D73D60044C864 /* Workflow in Frameworks */ = {isa = PBXBuildFile; productRef = CAF5885E256D73D60044C864 /* Workflow */; };
 		CAF58861256D73D60044C864 /* WorkflowDI in Frameworks */ = {isa = PBXBuildFile; productRef = CAF58860256D73D60044C864 /* WorkflowDI */; };
@@ -72,6 +72,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CA875A88256F7B9200243FA4 /* MockOrchestrationResponder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockOrchestrationResponder.swift; sourceTree = "<group>"; };
 		CAC1C232256D8DA300DBD0D4 /* TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
 		CAC1C233256D8DA300DBD0D4 /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		CAC1C23C256D8DB100DBD0D4 /* WaitUntil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitUntil.swift; sourceTree = "<group>"; };
@@ -115,7 +116,6 @@
 		CAF58823256D73090044C864 /* ReviewOrderViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReviewOrderViewControllerTests.swift; path = ../../Workflow/Tests/WorkflowExampleTests/ReviewOrderViewControllerTests.swift; sourceTree = "<group>"; };
 		CAF58824256D73090044C864 /* SetupViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SetupViewControllerTests.swift; path = ../../Workflow/Tests/WorkflowExampleTests/SetupViewControllerTests.swift; sourceTree = "<group>"; };
 		CAF58825256D73090044C864 /* LocationsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationsViewControllerTests.swift; path = ../../Workflow/Tests/WorkflowExampleTests/LocationsViewControllerTests.swift; sourceTree = "<group>"; };
-		CAF58827256D73090044C864 /* MockPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockPresenter.swift; sourceTree = "<group>"; };
 		CAF58828256D73090044C864 /* WorkflowListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkflowListener.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -270,7 +270,7 @@
 		CAF58826256D73090044C864 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
-				CAF58827256D73090044C864 /* MockPresenter.swift */,
+				CA875A88256F7B9200243FA4 /* MockOrchestrationResponder.swift */,
 				CAF58828256D73090044C864 /* WorkflowListener.swift */,
 			);
 			name = Mocks;
@@ -471,8 +471,8 @@
 				CAF5882F256D73090044C864 /* Convenience.swift in Sources */,
 				CAF58834256D73090044C864 /* WorkflowListener.swift in Sources */,
 				CAF5882A256D73090044C864 /* PickupOrDeliveryViewControllerTests.swift in Sources */,
+				CA875A89256F7B9200243FA4 /* MockOrchestrationResponder.swift in Sources */,
 				CAF5882D256D73090044C864 /* MenuSelectionViewControllerTests.swift in Sources */,
-				CAF58833256D73090044C864 /* MockPresenter.swift in Sources */,
 				CAF5882C256D73090044C864 /* TestFinder.swift in Sources */,
 				CAF58830256D73090044C864 /* ReviewOrderViewControllerTests.swift in Sources */,
 			);

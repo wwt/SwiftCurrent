@@ -327,7 +327,7 @@ class ModalStyleTests: XCTestCase {
     }
     
     private func loadView(controller: UIViewController) {
-        let window = UIApplication.shared.keyWindow
+        let window = UIApplication.shared.windows.first
         window?.removeViewsFromRootViewController()
         
         window?.rootViewController = controller

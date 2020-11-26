@@ -12,8 +12,6 @@ import XCTest
 class WorkflowTests: XCTestCase {
     func testFlowRepresentablesWithMultipleTypesCanBeStoredIAndRetreived() {
         class FR1: FlowRepresentable {
-            var presenter: AnyPresenter?
-            
             var workflow: AnyWorkflow?
             
             var proceedInWorkflowStorage: ((Any?) -> Void)?
@@ -29,8 +27,6 @@ class WorkflowTests: XCTestCase {
             }
         }
         class FR2: FlowRepresentable {
-            var presenter: AnyPresenter?
-            
             var workflow: AnyWorkflow?
             
             var proceedInWorkflowStorage: ((Any?) -> Void)?
@@ -58,8 +54,6 @@ class WorkflowTests: XCTestCase {
     func testFlowRepresentablesThatDefineAWorkflowInputOfOptionalAnyDoesNotRecurseForever() {
         class FR1: FlowRepresentable {
             func shouldLoad(with args: Any?) -> Bool { true }
-            
-            var presenter: AnyPresenter?
             
             var workflow: AnyWorkflow?
             
@@ -196,58 +190,6 @@ class WorkflowTests: XCTestCase {
 //        }
 //        XCTAssert(callbackCalled)
 //    }
-    
-//    func testPresenterThrowsAFatalErrorWhenThereIsATypeMismatch() {
-//        class View { }
-//        class NotView { }
-//        let presenter = TestTypedPresenter<View>()
-//        class FR1: TestFlowRepresentable<Never>, FlowRepresentable {
-//            static func instance() -> AnyFlowRepresentable { FR1() }
-//        }
-//        XCTAssertThrowsFatalError {
-//            (presenter as AnyPresenter).launch(view: NotView(),
-//                                               from: NotView(),
-//                                               withLaunchStyle: .default,
-//                                               metadata: FlowRepresentableMetaData(FR1.self,
-//                                                                                   flowPersistance: { _ in .default }),
-//                                                                                   animated: false) { }
-//        }
-//    }
-    
-    class TestPresenter: AnyPresenter {
-        var destroyCalled = 0
-        func destroy(_ view: Any?) {
-            destroyCalled += 1
-        }
-        
-        var abandonCalled = 0
-        func abandon(_ workflow: AnyWorkflow, animated:Bool = true, onFinish:(() -> Void)? = nil) {
-            abandonCalled += 1
-        }
-        
-        required init() { }
-        
-        var launchCalled = 0
-        var launchView:Any?
-        var launchRoot:Any?
-        var launchStyle:PresentationType?
-        func launch(view: Any?, from root: Any?, withLaunchStyle launchStyle: PresentationType, metadata: FlowRepresentableMetaData, animated:Bool, completion: (() -> Void)?) {
-            launchCalled += 1
-            launchView = view
-            launchRoot = root
-            self.launchStyle = launchStyle
-        }
-        
-        var presentationType: PresentationType = .default
-    }
-    
-    class TestTypedPresenter<T>: BasePresenter<T>, Presenter {
-        func destroy(_ view: T) { }
-        
-        func launch(view: T, from root: T, withLaunchStyle launchStyle: PresentationType, metadata: FlowRepresentableMetaData, animated:Bool, completion:@escaping () -> Void) { }
-        
-        func abandon(_ workflow: AnyWorkflow, animated: Bool, onFinish: (() -> Void)?) { }
-    }
     
     class TestFlowRepresentable<I> {
         required init() { }

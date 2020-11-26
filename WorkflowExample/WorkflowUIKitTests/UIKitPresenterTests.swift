@@ -15,8 +15,6 @@ import WorkflowUIKit
 class UIKitPresenterTests: XCTestCase {
     func testWorkflowCanLaunchViewController() {
         class FR1: UIViewController, FlowRepresentable {
-            var presenter: AnyPresenter?
-            
             var workflow: AnyWorkflow?
             
             var proceedInWorkflowStorage: ((Any?) -> Void)?
@@ -37,8 +35,6 @@ class UIKitPresenterTests: XCTestCase {
     
     func testWorkflowCanSkipTheFirstView() {
         class FR1: UIViewController, FlowRepresentable {
-            var presenter: AnyPresenter?
-            
             var workflow: AnyWorkflow?
             
             var proceedInWorkflowStorage: ((Any?) -> Void)?
@@ -51,8 +47,6 @@ class UIKitPresenterTests: XCTestCase {
             func shouldLoad(with args: String?) -> Bool { false }
         }
         class FR2:UIViewController, FlowRepresentable {
-            var presenter: AnyPresenter?
-            
             var workflow: AnyWorkflow?
             
             var proceedInWorkflowStorage: ((Any?) -> Void)?
@@ -67,7 +61,7 @@ class UIKitPresenterTests: XCTestCase {
             .thenPresent(FR2.self)
 
         let root = UIViewController()
-        UIApplication.shared.keyWindow?.rootViewController = root
+        UIApplication.shared.windows.first?.rootViewController = root
 
         root.launchInto(flow)
 
@@ -76,8 +70,6 @@ class UIKitPresenterTests: XCTestCase {
     
     func testWorkflowCanPushOntoExistingNavController() {
         class FR1: UIViewController, FlowRepresentable {
-            var presenter: AnyPresenter?
-            
             var workflow: AnyWorkflow?
             
             var proceedInWorkflowStorage: ((Any?) -> Void)?
@@ -104,8 +96,6 @@ class UIKitPresenterTests: XCTestCase {
     
     func testAbandonWorkflowWithoutNavigationController() {
         class FR1: UIViewController, FlowRepresentable {
-            var presenter: AnyPresenter?
-            
             var workflow: AnyWorkflow?
             
             var proceedInWorkflowStorage: ((Any?) -> Void)?
@@ -138,8 +128,6 @@ class UIKitPresenterTests: XCTestCase {
     
     func testAbandonWorkflowWithNavigationController() {
         class FR1: UIViewController, FlowRepresentable {
-            var presenter: AnyPresenter?
-            
             var workflow: AnyWorkflow?
 
             var proceedInWorkflowStorage: ((Any?) -> Void)?
@@ -173,8 +161,6 @@ class UIKitPresenterTests: XCTestCase {
     
     func testAbandonWorkflowWithNavigationControllerWhichHasSomeViewControllersAlready() {
         class FR1: UIViewController, FlowRepresentable {
-            var presenter: AnyPresenter?
-            
             var workflow: AnyWorkflow?
             
             var proceedInWorkflowStorage: ((Any?) -> Void)?
@@ -266,7 +252,7 @@ class UIKitPresenterTests: XCTestCase {
     }
     
     private func loadView(controller: UIViewController) {
-        let window = UIApplication.shared.keyWindow
+        let window = UIApplication.shared.windows.first
         window?.removeViewsFromRootViewController()
         
         window?.rootViewController = controller

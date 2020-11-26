@@ -65,8 +65,8 @@ class PickupOrDeliveryViewConrollerTests:ViewControllerTest<PickupOrDeliveryView
             EnterAddressViewController.self
         ])
         
-        let mock = MockPresenter()
-        listener.workflow?.applyPresenter(mock)
+        let mock = MockOrchestrationResponder()
+        listener.workflow?.applyOrchestrationResponder(mock)
         
         var proceedInWorkflowCalled = false
         testViewController.proceedInWorkflowStorage = { data in

@@ -1,8 +1,9 @@
 //
 //  MockOrchestrationResponder.swift
-//  
+//  WorkflowExampleTests
 //
-//  Created by Tyler Thompson on 11/25/20.
+//  Created by Tyler Thompson on 10/5/19.
+//  Copyright © 2019 Tyler Thompson. All rights reserved.
 //
 
 import Foundation
