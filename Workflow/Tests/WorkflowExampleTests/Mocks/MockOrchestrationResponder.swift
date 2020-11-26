@@ -10,12 +10,18 @@ import Foundation
 import Workflow
 
 class MockOrchestrationResponder: AnyOrchestrationResponder {
-    var proceedCalled = 0
+    var launchCalled = 0
     var lastTo: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)?
+    func launch(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
+        lastTo = to
+        launchCalled += 1
+    }
+
+    var proceedCalled = 0
     var lastFrom: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)?
     var lastCompletion:(() -> Void)?
     func proceed(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData),
-                 from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)?) {
+                 from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
         lastTo = to
         lastFrom = from
         proceedCalled += 1

@@ -21,9 +21,9 @@ class OrchestrationResponderTests : XCTestCase {
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
         
-        let launchedRepresentable = wf.launch(from: nil, with: nil)
+        let launchedRepresentable = wf.launch(with: nil)
         
-        XCTAssertEqual(responder.proceedCalled, 1)
+        XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value is FR1)
         XCTAssert(responder.lastTo?.instance.value is FR1)
         XCTAssertNil(responder.lastFrom)
@@ -31,7 +31,7 @@ class OrchestrationResponderTests : XCTestCase {
         
         (launchedRepresentable?.value as? FR1)?.proceedInWorkflow()
         
-        XCTAssertEqual(responder.proceedCalled, 2)
+        XCTAssertEqual(responder.proceedCalled, 1)
         XCTAssert(responder.lastTo?.instance.value is FR2)
         XCTAssertNotNil(responder.lastFrom)
         XCTAssert(responder.lastFrom?.instance.value is FR1)
@@ -41,7 +41,7 @@ class OrchestrationResponderTests : XCTestCase {
         let fr2 = (responder.lastTo?.instance.value as? FR2)
         fr2?.proceedInWorkflow()
         
-        XCTAssertEqual(responder.proceedCalled, 3)
+        XCTAssertEqual(responder.proceedCalled, 2)
         XCTAssert(responder.lastTo?.instance.value is FR3)
         XCTAssertNotNil(responder.lastFrom)
         XCTAssert(responder.lastFrom?.instance.value is FR2)
@@ -60,7 +60,7 @@ class OrchestrationResponderTests : XCTestCase {
         wf.applyOrchestrationResponder(responder)
         let expectation = self.expectation(description: "OnFinish called")
         
-        let launchedRepresentable = wf.launch(from: nil, with: nil) { _ in expectation.fulfill() }
+        let launchedRepresentable = wf.launch(with: nil) { _ in expectation.fulfill() }
         
         (launchedRepresentable?.value as? FR1)?.proceedInWorkflow()
         (responder.lastTo?.instance.value as? FR2)?.proceedInWorkflow()
@@ -82,7 +82,7 @@ class OrchestrationResponderTests : XCTestCase {
         wf.applyOrchestrationResponder(responder)
         let expectation = self.expectation(description: "OnFinish called")
         
-        let launchedRepresentable = wf.launch(from: nil, with: nil) { args in
+        let launchedRepresentable = wf.launch(with: nil) { args in
             XCTAssert(args as? Object === val)
             expectation.fulfill()
         }

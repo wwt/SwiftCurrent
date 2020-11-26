@@ -25,9 +25,9 @@ class SkipThroughWorkflowTests: XCTestCase {
         
         let expectation = self.expectation(description: "OnFinish called")
         
-        let launchedRepresentable = wf.launch(from: nil, with: nil) { _ in expectation.fulfill() }
+        let launchedRepresentable = wf.launch(with: nil) { _ in expectation.fulfill() }
         
-        XCTAssertEqual(responder.proceedCalled, 1)
+        XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value is FR2)
         XCTAssert(responder.lastTo?.instance.value is FR2)
         XCTAssertNil(responder.lastFrom)
@@ -36,7 +36,7 @@ class SkipThroughWorkflowTests: XCTestCase {
         let fr2 = (responder.lastTo?.instance.value as? FR2)
         fr2?.proceedInWorkflow()
         
-        XCTAssertEqual(responder.proceedCalled, 2)
+        XCTAssertEqual(responder.proceedCalled, 1)
         XCTAssert(responder.lastTo?.instance.value is FR3)
         XCTAssertNotNil(responder.lastFrom)
         XCTAssert(responder.lastFrom?.instance.value is FR2)
@@ -62,9 +62,9 @@ class SkipThroughWorkflowTests: XCTestCase {
         
         let expectation = self.expectation(description: "OnFinish called")
         
-        let launchedRepresentable = wf.launch(from: nil, with: nil) { _ in expectation.fulfill() }
+        let launchedRepresentable = wf.launch(with: nil) { _ in expectation.fulfill() }
         
-        XCTAssertEqual(responder.proceedCalled, 1)
+        XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value is FR1)
         XCTAssert(responder.lastTo?.instance.value is FR1)
         XCTAssertNil(responder.lastFrom)
@@ -73,7 +73,7 @@ class SkipThroughWorkflowTests: XCTestCase {
         let fr1 = (responder.lastTo?.instance.value as? FR1)
         fr1?.proceedInWorkflow()
         
-        XCTAssertEqual(responder.proceedCalled, 2)
+        XCTAssertEqual(responder.proceedCalled, 1)
         XCTAssert(responder.lastTo?.instance.value is FR3)
         XCTAssertNotNil(responder.lastFrom)
         XCTAssert(responder.lastFrom?.instance.value is FR1)
@@ -99,9 +99,9 @@ class SkipThroughWorkflowTests: XCTestCase {
         
         let expectation = self.expectation(description: "OnFinish called")
         
-        let launchedRepresentable = wf.launch(from: nil, with: nil) { _ in expectation.fulfill() }
+        let launchedRepresentable = wf.launch(with: nil) { _ in expectation.fulfill() }
         
-        XCTAssertEqual(responder.proceedCalled, 1)
+        XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value is FR1)
         XCTAssert(responder.lastTo?.instance.value is FR1)
         XCTAssertNil(responder.lastFrom)
@@ -110,7 +110,7 @@ class SkipThroughWorkflowTests: XCTestCase {
         let fr1 = (responder.lastTo?.instance.value as? FR1)
         fr1?.proceedInWorkflow()
         
-        XCTAssertEqual(responder.proceedCalled, 2)
+        XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(responder.lastTo?.instance.value is FR2)
         XCTAssertNotNil(responder.lastFrom)
         XCTAssert(responder.lastFrom?.instance.value is FR1)
@@ -145,9 +145,9 @@ class SkipThroughWorkflowTests: XCTestCase {
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
         
-        let launchedRepresentable = wf.launch(from: nil, with: nil)
+        let launchedRepresentable = wf.launch(with: nil)
         
-        XCTAssertEqual(responder.proceedCalled, 1)
+        XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value is FR2)
         XCTAssert(responder.lastTo?.instance.value is FR2)
         XCTAssertNil(responder.lastFrom)
@@ -156,7 +156,7 @@ class SkipThroughWorkflowTests: XCTestCase {
         let fr2 = (responder.lastTo?.instance.value as? FR2)
         fr2?.proceedInWorkflow()
         
-        XCTAssertEqual(responder.proceedCalled, 2)
+        XCTAssertEqual(responder.proceedCalled, 1)
         XCTAssert(responder.lastTo?.instance.value is FR3)
         XCTAssertNotNil(responder.lastFrom)
         XCTAssert(responder.lastFrom?.instance.value is FR2)
@@ -199,9 +199,9 @@ class SkipThroughWorkflowTests: XCTestCase {
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
         
-        let launchedRepresentable = wf.launch(from: nil, with: nil)
+        let launchedRepresentable = wf.launch(with: nil)
         
-        XCTAssertEqual(responder.proceedCalled, 1)
+        XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value is FR3)
         XCTAssert(responder.lastTo?.instance.value is FR3)
         XCTAssertNil(responder.lastFrom)
@@ -232,9 +232,9 @@ class SkipThroughWorkflowTests: XCTestCase {
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
         
-        let launchedRepresentable = wf.launch(from: nil, with: FR1.id)
+        let launchedRepresentable = wf.launch(with: FR1.id)
         
-        XCTAssertEqual(responder.proceedCalled, 1)
+        XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value is FR2)
         XCTAssert(responder.lastTo?.instance.value is FR2)
         XCTAssertNil(responder.lastFrom)
@@ -243,7 +243,7 @@ class SkipThroughWorkflowTests: XCTestCase {
         let fr2 = (responder.lastTo?.instance.value as? FR2)
         fr2?.proceedInWorkflow()
         
-        XCTAssertEqual(responder.proceedCalled, 2)
+        XCTAssertEqual(responder.proceedCalled, 1)
         XCTAssert(responder.lastTo?.instance.value is FR3)
         XCTAssertNotNil(responder.lastFrom)
         XCTAssert(responder.lastFrom?.instance.value is FR2)
@@ -284,9 +284,9 @@ class SkipThroughWorkflowTests: XCTestCase {
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
         
-        let launchedRepresentable = wf.launch(from: nil, with: FR1.id)
+        let launchedRepresentable = wf.launch(with: FR1.id)
         
-        XCTAssertEqual(responder.proceedCalled, 1)
+        XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value is FR3)
         XCTAssert(responder.lastTo?.instance.value is FR3)
         XCTAssertNil(responder.lastFrom)
@@ -327,7 +327,7 @@ class SkipThroughWorkflowTests: XCTestCase {
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
         
-        let launchedRepresentable = wf.launch(from: nil, with: FR1.id) { id in
+        let launchedRepresentable = wf.launch(with: FR1.id) { id in
             expectation.fulfill()
             XCTAssertEqual(id as? String, FR1.id)
         }
@@ -367,9 +367,9 @@ class SkipThroughWorkflowTests: XCTestCase {
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
         
-        let launchedRepresentable = wf.launch(from: nil, with: nil)
+        let launchedRepresentable = wf.launch(with: nil)
         
-        XCTAssertEqual(responder.proceedCalled, 1)
+        XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value is FR1)
         XCTAssert(responder.lastTo?.instance.value is FR1)
         XCTAssertNil(responder.lastFrom)
@@ -377,7 +377,7 @@ class SkipThroughWorkflowTests: XCTestCase {
         
         (responder.lastTo?.instance.value as? FR1)?.proceedInWorkflow(FR1.id)
         
-        XCTAssertEqual(responder.proceedCalled, 2)
+        XCTAssertEqual(responder.proceedCalled, 1)
         XCTAssert(responder.lastTo?.instance.value is FR3)
         XCTAssert(responder.lastFrom?.instance.value is FR1)
         XCTAssert(responder.lastTo?.metadata.flowRepresentableType == FR3.self)
@@ -414,12 +414,12 @@ class SkipThroughWorkflowTests: XCTestCase {
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
         
-        let launchedRepresentable = wf.launch(from: nil, with: nil) { id in
+        let launchedRepresentable = wf.launch(with: nil) { id in
             expectation.fulfill()
             XCTAssertEqual(id as? String, FR1.id)
         }
         
-        XCTAssertEqual(responder.proceedCalled, 1)
+        XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value is FR1)
         XCTAssert(responder.lastTo?.instance.value is FR1)
         XCTAssertNil(responder.lastFrom)

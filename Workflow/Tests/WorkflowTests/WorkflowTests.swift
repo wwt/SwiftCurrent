@@ -88,14 +88,14 @@ class WorkflowTests: XCTestCase {
 
         wf.applyOrchestrationResponder(responder)
 
-        let firstInstance = wf.launch(from: nil, with: 1)
+        let firstInstance = wf.launch(with: 1)
         XCTAssert(firstInstance?.value is FR1)
         XCTAssertNil(responder.lastFrom)
         XCTAssert(responder.lastTo?.instance.value is FR1)
         XCTAssert((responder.lastTo?.instance.value as? FR1) === firstInstance?.value as? FR1)
-        XCTAssertEqual(responder.proceedCalled, 1)
+        XCTAssertEqual(responder.launchCalled, 1)
         (firstInstance?.value as? FR1)?.proceedInWorkflow()
-        XCTAssertEqual(responder.proceedCalled, 2)
+        XCTAssertEqual(responder.proceedCalled, 1)
         XCTAssert((responder.lastFrom?.instance.value as? FR1) === firstInstance?.value as? FR1)
         XCTAssert(responder.lastTo?.instance.value is FR3)
         XCTAssert((responder.lastTo?.instance.value as? FR3) === firstInstance?.next?.next?.value as? FR3)
@@ -103,7 +103,7 @@ class WorkflowTests: XCTestCase {
     
     func testWorkflowReturnsNilWhenLaunchingWithoutRepresentables() {
         let wf:AnyWorkflow = AnyWorkflow()
-        XCTAssertNil(wf.launch(from: nil, with: nil))
+        XCTAssertNil(wf.launch(with: nil))
     }
 
     func testWorkflowCallsBackOnCompletion() {
@@ -120,7 +120,7 @@ class WorkflowTests: XCTestCase {
             .thenPresent(FR2.self)
 
         var callbackCalled = false
-        let firstInstance = wf.launch(from: nil, with: 1) { args in
+        let firstInstance = wf.launch(with: 1) { args in
             callbackCalled = true
             XCTAssertEqual(args as? String, "args")
         }
@@ -149,7 +149,7 @@ class WorkflowTests: XCTestCase {
             .thenPresent(FR2.self)
 
         var callbackCalled = false
-        let firstInstance = wf.launch(from: nil, with: 1) { args in
+        let firstInstance = wf.launch(with: 1) { args in
             callbackCalled = true
             XCTAssertEqual(args as? String, "args")
         }
@@ -171,7 +171,7 @@ class WorkflowTests: XCTestCase {
         let wf:Workflow = Workflow(FR1.self)
 
         var callbackCalled = false
-        _ = wf.launch(from: nil, with: 1) { args in
+        _ = wf.launch(with: 1) { args in
             callbackCalled = true
             XCTAssertEqual(args as? String, "args")
         }

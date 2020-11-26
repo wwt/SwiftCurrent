@@ -42,6 +42,19 @@ extension UIModalPresentationStyle {
 }
 
 open class UIKitPresenter: AnyOrchestrationResponder {
+    let launchedFromVC: UIViewController
+    let launchedPresentationType: PresentationType
+
+    init(_ viewController: UIViewController, launchStyle: PresentationType) {
+        launchedFromVC = viewController
+        launchedPresentationType = launchStyle
+    }
+
+    public func launch(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
+        guard let view = to.instance.value as? UIViewController else { return }
+        displayInstance(to, style: launchedPresentationType, view: view, root: launchedFromVC)
+    }
+
     public func abandon(_ workflow: AnyWorkflow, animated: Bool, onFinish: (() -> Void)?) {
         guard let first = workflow.firstLoadedInstance?.value as? UIViewController else { return }
         if let nav = first.navigationController {
@@ -91,22 +104,13 @@ open class UIKitPresenter: AnyOrchestrationResponder {
         }
     }
 
-    public func proceed(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData),
-                        from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)?) {
-        guard let view = to.instance.value as? UIViewController,
-              let root = (from?.instance.value as? UIViewController) ?? (from?.instance.value as? VCBox)?.controller else { return }
+    fileprivate func displayInstance(_ to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData),
+                                     style: PresentationType,
+                                     view: UIViewController,
+                                     root: UIViewController,
+                                     completion: (() -> Void)? = nil) {
         let animated = !(to.metadata.persistance == .hiddenInitially)
-        let completion = { [self] in
-            if let from = from,
-               from.metadata.persistance == .removedAfterProceeding {
-                destroy(root)
-            }
-        }
-        let launchStyle: PresentationType = {
-            if let from = from, from.instance.value is VCBox { return from.metadata.presentationType }
-            return to.metadata.presentationType
-        }()
-        switch launchStyle {
+        switch style {
             case .default:
                 if case .modal(let style) = to.metadata.presentationType {
                     if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
@@ -116,7 +120,7 @@ open class UIKitPresenter: AnyOrchestrationResponder {
                 } else if let nav = root.navigationController
                             ?? root as? UINavigationController {
                     nav.pushViewController(view, animated: animated)
-                    completion()
+                    completion?()
                 } else {
                     root.present(view, animated: animated, completion: completion)
                 }
@@ -137,12 +141,24 @@ open class UIKitPresenter: AnyOrchestrationResponder {
                 if let nav = root.navigationController
                     ?? root as? UINavigationController {
                     nav.pushViewController(view, animated: animated)
-                    completion()
+                    completion?()
                 } else {
                     let nav = UINavigationController(rootViewController: view)
                     root.present(nav, animated: animated, completion: completion)
                 }
         }
+    }
+
+    public func proceed(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData),
+                        from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
+        guard let view = to.instance.value as? UIViewController,
+              let root = from.instance.value as? UIViewController else { return }
+        let completion = { [self] in
+            if from.metadata.persistance == .removedAfterProceeding {
+                destroy(root)
+            }
+        }
+        displayInstance(to, style: to.metadata.presentationType, view: view, root: root, completion: completion)
     }
 
 }
@@ -155,29 +171,22 @@ public extension UIViewController {
     /// - Parameter onFinish: A callback that is called when the last item in the workflow calls back
     /// - Note: In the background this applies a UIKitPresenter, if you call launch on workflow directly you'll need to apply one yourself
     func launchInto(_ workflow: AnyWorkflow, args: Any? = nil, withLaunchStyle launchStyle: PresentationType = .default, onFinish: ((Any?) -> Void)? = nil) {
-        workflow.applyOrchestrationResponder(UIKitPresenter())
-        let box = VCBox(self)
-        _ = workflow.launch(from: (instance: box, metadata: FlowRepresentableMetaData(with: box, presentationType: launchStyle, persistance: .default)),
-                            with: args,
+        workflow.applyOrchestrationResponder(UIKitPresenter(self, launchStyle: launchStyle))
+        _ = workflow.launch(with: args,
                             withLaunchStyle: launchStyle,
                             onFinish: onFinish)?.value as? UIViewController
+        #if DEBUG
+        if NSClassFromString("XCTest") != nil {
+            NotificationCenter.default.post(name: .workflowLaunched, object: [
+                "workflow": workflow,
+                "launchFrom": self,
+                "args": args,
+                "style": launchStyle,
+                "onFinish": onFinish
+            ])
+        }
+        #endif
     }
-}
-
-public final class VCBox: AnyFlowRepresentable {
-    let controller: UIViewController
-
-    init(_ controller: UIViewController) {
-        self.controller = controller
-    }
-
-    public weak var workflow: AnyWorkflow?
-
-    public var proceedInWorkflowStorage: ((Any?) -> Void)?
-
-    public func erasedShouldLoad(with args: Any?) -> Bool { fatalError() }
-
-    public static func instance() -> AnyFlowRepresentable { fatalError() }
 }
 
 public extension FlowRepresentable where Self: UIViewController {

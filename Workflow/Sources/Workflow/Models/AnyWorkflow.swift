@@ -24,14 +24,9 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
         self.orchestrationResponder = orchestrationResponder
     }
 
-    public func launch(from: (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetaData)?,
-                       with args: Any?,
+    public func launch(with args: Any?,
                        withLaunchStyle launchStyle: PresentationType = .default,
                        onFinish: ((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Element? {
-        postDataForTestListeners(from: from,
-                                 with: args,
-                                 withLaunchStyle: launchStyle,
-                                 onFinish: onFinish)
         removeInstances()
         instances = LinkedList(map { _ in nil })
         var root: (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetaData)?
@@ -52,10 +47,10 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
                     firstLoadedInstance?.value = flowRepresentable
                     self.setupCallbacks(for: instance, onFinish: onFinish)
                 } else if !shouldLoad && persistance == .persistWhenSkipped {
-                    root = (instance: flowRepresentable, metadata: nextMetadata)
                     instance.value = flowRepresentable
                     self.setupCallbacks(for: instance, onFinish: onFinish)
-                    self.orchestrationResponder?.proceed(to: (instance: instance, metadata: nextMetadata), from: convertInput(from))
+                    self.orchestrationResponder?.launchOrProceed(to: (instance: instance, metadata: nextMetadata), from: convertInput(root))
+                    root = (instance: flowRepresentable, metadata: nextMetadata)
                 }
 
             }
@@ -70,7 +65,8 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
                 return nil
         }
 
-        orchestrationResponder?.proceed(to: (instance: first, metadata:m), from: convertInput(root) ?? convertInput(from))
+        self.orchestrationResponder?.launchOrProceed(to: (instance: first, metadata:m), from: convertInput(root))
+
         return firstLoadedInstance
     }
 
@@ -137,23 +133,6 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
 }
 
 extension AnyWorkflow {
-    private func postDataForTestListeners(from: Any?,
-                                          with args: Any?,
-                                          withLaunchStyle launchStyle: PresentationType = .default,
-                                          onFinish: ((Any?) -> Void)? = nil) {
-        #if DEBUG
-        if NSClassFromString("XCTest") != nil {
-            NotificationCenter.default.post(name: .workflowLaunched, object: [
-                "workflow": self,
-                "launchFrom": from,
-                "args": args,
-                "style": launchStyle,
-                "onFinish": onFinish
-            ])
-        }
-        #endif
-    }
-
     private func convertInput(_ old: (instance: AnyFlowRepresentable,
                                       metadata: FlowRepresentableMetaData)?) -> (instance: AnyWorkflow.InstanceNode,
                                                                                  metadata: FlowRepresentableMetaData)? {

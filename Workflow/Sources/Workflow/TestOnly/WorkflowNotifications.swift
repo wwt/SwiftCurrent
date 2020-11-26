@@ -9,7 +9,7 @@
 import Foundation
 
 #if DEBUG
-extension Notification.Name {
+public extension Notification.Name {
     static var workflowLaunched: Notification.Name {
         return Notification.Name(rawValue: "WorkflowLaunched")
     }
