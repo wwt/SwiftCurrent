@@ -72,7 +72,7 @@ extension Workflow {
                             presentationType: LaunchStyle.PresentationType,
                             flowPersistance:@escaping @autoclosure () -> FlowPersistance = .default) {
         self.init(FlowRepresentableMetaData(type,
-                                            presentationType: presentationType.rawValue,
+                                            launchStyle: presentationType.rawValue,
                                             flowPersistance: { _ in flowPersistance() }))
     }
     /// init: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
@@ -84,7 +84,7 @@ extension Workflow {
                             presentationType: LaunchStyle.PresentationType,
                             flowPersistance:@escaping (F.WorkflowInput) -> FlowPersistance) {
         self.init(FlowRepresentableMetaData(type,
-                                            presentationType: presentationType.rawValue,
+                                            launchStyle: presentationType.rawValue,
                                             flowPersistance: { data in
                                                 guard let cast = data as? F.WorkflowInput else { return .default }
                                                 return flowPersistance(cast)
@@ -100,7 +100,7 @@ extension Workflow {
                             presentationType: LaunchStyle.PresentationType,
                             flowPersistance:@escaping () -> FlowPersistance) where F.WorkflowInput == Never {
         self.init(FlowRepresentableMetaData(type,
-                                            presentationType: presentationType.rawValue,
+                                            launchStyle: presentationType.rawValue,
                                             flowPersistance: { _ in
                                                 return flowPersistance()
                                             }))
@@ -118,7 +118,7 @@ public extension Workflow where F.WorkflowOutput == Never {
                                             flowPersistance:@escaping @autoclosure () -> FlowPersistance = .default) -> Workflow<FR> where FR.WorkflowInput == Never {
         let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetaData(type,
-                                            presentationType: presentationType.rawValue,
+                                            launchStyle: presentationType.rawValue,
                                             flowPersistance: { _ in
                                                 return flowPersistance()
                                             }))
@@ -137,7 +137,7 @@ public extension Workflow {
                                             flowPersistance:@escaping @autoclosure () -> FlowPersistance = .default) -> Workflow<FR> where F.WorkflowOutput == FR.WorkflowInput {
         let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetaData(type,
-                                            presentationType: presentationType.rawValue,
+                                            launchStyle: presentationType.rawValue,
                                             flowPersistance: { _ in flowPersistance() }))
         return wf
     }
@@ -152,7 +152,7 @@ public extension Workflow {
                                             flowPersistance:@escaping (FR.WorkflowInput) -> FlowPersistance) -> Workflow<FR> where F.WorkflowOutput == FR.WorkflowInput {
         let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetaData(type,
-                                            presentationType: presentationType.rawValue,
+                                            launchStyle: presentationType.rawValue,
                                             flowPersistance: { data in
                                                 guard let cast = data as? FR.WorkflowInput else { return .default }
                                                 return flowPersistance(cast)
@@ -170,7 +170,7 @@ public extension Workflow {
                                             flowPersistance:@escaping @autoclosure () -> FlowPersistance = .default) -> Workflow<FR> where FR.WorkflowInput == Never {
         let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetaData(type,
-                                            presentationType: presentationType.rawValue,
+                                            launchStyle: presentationType.rawValue,
                                             flowPersistance: { _ in
                                                 return flowPersistance()
                                             }))

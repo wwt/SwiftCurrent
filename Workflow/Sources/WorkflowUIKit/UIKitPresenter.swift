@@ -81,7 +81,7 @@ open class UIKitPresenter: AnyOrchestrationResponder {
         let animated = !(to.metadata.persistance == .hiddenInitially)
         switch LaunchStyle.PresentationType(rawValue: style) {
             case _ where style == .default:
-                if case .modal(let style) = LaunchStyle.PresentationType(rawValue: to.metadata.presentationType) {
+                if case .modal(let style) = LaunchStyle.PresentationType(rawValue: to.metadata.launchStyle) {
                     if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
                         view.modalPresentationStyle = modalPresentationStyle
                     }
@@ -94,7 +94,7 @@ open class UIKitPresenter: AnyOrchestrationResponder {
                     root.present(view, animated: animated, completion: completion)
                 }
             case .modal(let style):
-                if LaunchStyle.PresentationType(rawValue: to.metadata.presentationType) == .navigationStack {
+                if LaunchStyle.PresentationType(rawValue: to.metadata.launchStyle) == .navigationStack {
                     let nav = UINavigationController(rootViewController: view)
                     if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
                         nav.modalPresentationStyle = modalPresentationStyle
@@ -123,7 +123,7 @@ open class UIKitPresenter: AnyOrchestrationResponder {
                         from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
         guard let view = to.instance.value as? UIViewController,
               let root = from.instance.value as? UIViewController else { return }
-        displayInstance(to, style: to.metadata.presentationType, view: view, root: root) { [self] in
+        displayInstance(to, style: to.metadata.launchStyle, view: view, root: root) { [self] in
             if from.metadata.persistance == .removedAfterProceeding {
                 destroy(root)
             }

@@ -1,5 +1,5 @@
 //
-//  PresentationType.swift
+//  LaunchStyle.swift
 //  Workflow
 //
 //  Created by Tyler Thompson on 8/29/19.
@@ -8,7 +8,7 @@
 
 import Foundation
 /**
- PresentationType: An enum that indicates how FlowRepresentables should be presented
+ LaunchSTyle: An extendable class that indicates how FlowRepresentables should be launched
  
  ### Discussion:
  Mostly used when you tell a workflow to launch, or on the `FlowRepresentable` protocol if you have a view that preferrs to be launched with a certain style
@@ -28,18 +28,18 @@ extension LaunchStyle: Equatable {
 }
 
 /**
- FlowPersistance: An enum that indicates how FlowRepresentables should be persist when in the view stack
+ FlowPersistance: An extendable class that indicates how FlowRepresentables should be persisted
 
 ### Discussion:
 Used when you are creating a workflow
 */
 public final class FlowPersistance {
     private init() { }
-    /// default: Indicates a `FlowRepresentable` in a `Workflow` should persist in the viewstack based on it's `shouldLoad` function
+    /// default: Indicates a `FlowRepresentable` in a `Workflow` should persist in based on it's `shouldLoad` function
     public static let `default` = FlowPersistance()
-    /// default: Indicates a `FlowRepresentable` in a `Workflow` who's `shouldLoad` function returns false should still be in the viewstack so if a user navigates backwards it'll appear
+    /// default: Indicates a `FlowRepresentable` in a `Workflow` who's `shouldLoad` function returns false should still be persisted so if the workflow is navigated backwards it'll be there
     public static let persistWhenSkipped = FlowPersistance()
-    /// default: Indicates a `FlowRepresentable` in a `Workflow` who's `shouldLoad` function returns true should be removed from the viewstack after the user progresses past it
+    /// default: Indicates a `FlowRepresentable` in a `Workflow` who's `shouldLoad` function returns true should be removed from the viewstack after the workflow progresses past it
     public static let removedAfterProceeding = FlowPersistance()
 }
 
