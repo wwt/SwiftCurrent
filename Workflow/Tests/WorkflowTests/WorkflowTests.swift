@@ -12,9 +12,7 @@ import XCTest
 class WorkflowTests: XCTestCase {
     func testFlowRepresentablesWithMultipleTypesCanBeStoredAndRetreived() {
         class FR1: FlowRepresentable {
-            var workflow: AnyWorkflow?
-            
-            var proceedInWorkflowStorage: ((Any?) -> Void)?
+            weak var _workflowPointer: AnyFlowRepresentable?
             
             static var shouldLoadCalledOnFR1 = false
             typealias WorkflowInput = String
@@ -28,9 +26,7 @@ class WorkflowTests: XCTestCase {
             }
         }
         class FR2: FlowRepresentable {
-            var workflow: AnyWorkflow?
-            
-            var proceedInWorkflowStorage: ((Any?) -> Void)?
+            weak var _workflowPointer: AnyFlowRepresentable?
             
             static var shouldLoadCalledOnFR2 = false
             typealias WorkflowInput = Int
@@ -56,9 +52,7 @@ class WorkflowTests: XCTestCase {
         class FR1: FlowRepresentable {
             func shouldLoad(with args: Any?) -> Bool { true }
             
-            var workflow: AnyWorkflow?
-            
-            var proceedInWorkflowStorage: ((Any?) -> Void)?
+            weak var _workflowPointer: AnyFlowRepresentable?
             
             static var shouldLoadCalledOnFR1 = false
             typealias WorkflowInput = Any?
@@ -180,13 +174,11 @@ class WorkflowTests: XCTestCase {
     }
     
     class TestFlowRepresentable<I, O> {
-        required init() { }
-        
-        var proceedInWorkflowStorage: ((Any?) -> Void)?
-        
         typealias WorkflowInput = I
         typealias WorkflowOutput = O
         
-        var workflow: AnyWorkflow?
+        required init() { }
+        
+        weak var _workflowPointer: AnyFlowRepresentable?
     }
 }

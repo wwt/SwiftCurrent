@@ -12,7 +12,13 @@ import XCTest
 @testable import WorkflowExample
 import Workflow
 
-class SetupViewControllerTests: ViewControllerTest<SetupViewController> {
+class SetupViewControllerTests: XCTestCase {
+    var testViewController = SetupViewController()
+
+    override func setUp() {
+        testViewController = SetupViewController()
+    }
+
     func testLaunchingMultiLocationWorkflow() {
         let listener = WorkflowListener()
         

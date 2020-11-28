@@ -15,9 +15,7 @@ import WorkflowUIKit
 class UIKitPresenterTests: XCTestCase {
     func testWorkflowCanLaunchViewController() {
         class FR1: UIViewController, FlowRepresentable {
-            var workflow: AnyWorkflow?
-            
-            var proceedInWorkflowStorage: ((Any?) -> Void)?
+            weak var _workflowPointer: AnyFlowRepresentable?
             
             typealias WorkflowInput = Never
 
@@ -35,9 +33,7 @@ class UIKitPresenterTests: XCTestCase {
     
     func testWorkflowCanSkipTheFirstView() {
         class FR1: UIViewController, FlowRepresentable {
-            var workflow: AnyWorkflow?
-            
-            var proceedInWorkflowStorage: ((Any?) -> Void)?
+            weak var _workflowPointer: AnyFlowRepresentable?
 
             typealias WorkflowInput = String?
             typealias WorkflowOutput = Int?
@@ -47,9 +43,7 @@ class UIKitPresenterTests: XCTestCase {
             func shouldLoad(with args: String?) -> Bool { false }
         }
         class FR2:UIViewController, FlowRepresentable {
-            var workflow: AnyWorkflow?
-            
-            var proceedInWorkflowStorage: ((Any?) -> Void)?
+            weak var _workflowPointer: AnyFlowRepresentable?
 
             typealias WorkflowInput = Int?
 
@@ -70,9 +64,7 @@ class UIKitPresenterTests: XCTestCase {
     
     func testWorkflowCanPushOntoExistingNavController() {
         class FR1: UIViewController, FlowRepresentable {
-            var workflow: AnyWorkflow?
-            
-            var proceedInWorkflowStorage: ((Any?) -> Void)?
+            weak var _workflowPointer: AnyFlowRepresentable?
             
             typealias WorkflowInput = Never
             
@@ -96,9 +88,7 @@ class UIKitPresenterTests: XCTestCase {
     
     func testAbandonWorkflowWithoutNavigationController() {
         class FR1: UIViewController, FlowRepresentable {
-            var workflow: AnyWorkflow?
-            
-            var proceedInWorkflowStorage: ((Any?) -> Void)?
+            weak var _workflowPointer: AnyFlowRepresentable?
 
             typealias WorkflowInput = Never
 
@@ -128,11 +118,9 @@ class UIKitPresenterTests: XCTestCase {
     
     func testAbandonWorkflowWithNavigationController() {
         class FR1: UIViewController, FlowRepresentable {
-            var workflow: AnyWorkflow?
-
-            var proceedInWorkflowStorage: ((Any?) -> Void)?
-
             typealias WorkflowInput = Never
+
+            weak var _workflowPointer: AnyFlowRepresentable?
 
             static func instance() -> Self {
                 let vc = Self()
@@ -161,9 +149,7 @@ class UIKitPresenterTests: XCTestCase {
     
     func testAbandonWorkflowWithNavigationControllerWhichHasSomeViewControllersAlready() {
         class FR1: UIViewController, FlowRepresentable {
-            var workflow: AnyWorkflow?
-            
-            var proceedInWorkflowStorage: ((Any?) -> Void)?
+            weak var _workflowPointer: AnyFlowRepresentable?
             
             typealias WorkflowInput = Never
             

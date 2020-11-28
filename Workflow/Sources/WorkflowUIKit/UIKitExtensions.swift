@@ -41,16 +41,14 @@ public extension UIViewController {
         workflow.launch(with: args,
                         withLaunchStyle: launchStyle.rawValue,
                         onFinish: onFinish)
-        #if DEBUG
-        if NSClassFromString("XCTest") != nil {
-            NotificationCenter.default.post(name: .workflowLaunched, object: [
-                "workflow": workflow,
-                "launchFrom": self,
-                "args": args,
-                "style": launchStyle,
-                "onFinish": onFinish
-            ])
-        }
+        #if canImport(XCTest)
+        NotificationCenter.default.post(name: .workflowLaunched, object: [
+            "workflow": workflow,
+            "launchFrom": self,
+            "args": args,
+            "style": launchStyle,
+            "onFinish": onFinish
+        ])
         #endif
     }
 }

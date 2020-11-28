@@ -217,9 +217,7 @@ class PersistanceTests: XCTestCase {
 
 extension PersistanceTests {
     class TestFlowRepresentable<Input, Output> {
-        weak var workflow: AnyWorkflow?
-        
-        var proceedInWorkflowStorage: ((Any?) -> Void)?
+        weak var _workflowPointer: AnyFlowRepresentable?
 
         required init() { }
         static func instance() -> Self { Self() }
@@ -229,9 +227,7 @@ extension PersistanceTests {
     }
     
     class TestPassthroughFlowRepresentable: FlowRepresentable {
-        weak var workflow: AnyWorkflow?
-        
-        var proceedInWorkflowStorage: ((Any?) -> Void)?
+        weak var _workflowPointer: AnyFlowRepresentable?
         
         required init() { }
         

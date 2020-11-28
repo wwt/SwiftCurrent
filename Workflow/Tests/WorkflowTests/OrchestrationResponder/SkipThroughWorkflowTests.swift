@@ -418,9 +418,7 @@ class SkipThroughWorkflowTests: XCTestCase {
 
 extension SkipThroughWorkflowTests {
     class TestFlowRepresentable<Input, Output> {
-        weak var workflow: AnyWorkflow?
-        
-        var proceedInWorkflowStorage: ((Any?) -> Void)?
+        weak var _workflowPointer: AnyFlowRepresentable?
 
         required init() { }
         static func instance() -> Self { Self() }
@@ -430,9 +428,7 @@ extension SkipThroughWorkflowTests {
     }
     
     class TestPassthroughFlowRepresentable: FlowRepresentable {
-        weak var workflow: AnyWorkflow?
-        
-        var proceedInWorkflowStorage: ((Any?) -> Void)?
+        weak var _workflowPointer: AnyFlowRepresentable?
         
         required init() { }
         

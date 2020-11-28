@@ -11,25 +11,6 @@ import Foundation
 /**
  FlowRepresentable: A typed version of 'AnyFlowRepresentable'. Use this on views that you want to add to a workflow.
  
- Examples:
- ```swift
- class SomeViewController: UIViewController, FlowRepresentable {
-     typealias WorkflowInput = String
- 
-     weak var workflow: Workflow?
- 
-     var proceedInWorkflowStorage: ((Any?) -> Void)?
- 
-     static func instance() -> AnyFlowRepresentable {
-         return UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "SomeViewController") as! SomeViewController
-     }
- 
-     func shouldLoad(with args: String) -> Bool {
-         return true
-     }
- }
- ```
- 
  ### Discussion:
  It's important to make sure your FlowRepresentable is not dependent on other views. It's okay to specify that a certain kind of data needs to be passed in, but keep your views from knowing what came before or what's likely to come after. In that way you'll end up with pieces of a workflow that can be moved, or put into multiple places with ease. Notice the 'Instance' method. This is needed for Workflow to create a new instance of your view. Make sure that this function always returns a new, unique instance of your class. Note that this is still accomplishable whether the view is created programmatically or in a storyboard.
  */
@@ -39,10 +20,8 @@ public protocol FlowRepresentable {
     associatedtype WorkflowInput
     associatedtype WorkflowOutput = Never
 
-    /// workflow: Access to the `Workflow` controlling the `FlowRepresentable`. A common use case may be a `FlowRepresentable` that wants to abandon the `Workflow` it's in.
-    /// - Note: While not strictly necessary it would be wise to declare this property as `weak`
-    var workflow: AnyWorkflow? { get set }
-    var proceedInWorkflowStorage: ((Any?) -> Void)? { get set }
+    var _workflowPointer: AnyFlowRepresentable? { get set }
+//    var proceedInWorkflowStorage: ((Any?) -> Void)? { get set }
 
     /// instance: A method to return an instance of the `FlowRepresentable`
     /// - Returns: `AnyFlowRepresentable`. Specifically a new instance from the static class passed to a `Workflow`
@@ -61,13 +40,15 @@ public extension FlowRepresentable {
     mutating func shouldLoad() -> Bool {
         return true
     }
+
+    /// workflow: Access to the `Workflow` controlling the `FlowRepresentable`. A common use case may be a `FlowRepresentable` that wants to abandon the `Workflow` it's in.
+    /// - Note: While not strictly necessary it would be wise to declare this property as `weak`
+    var workflow: AnyWorkflow? {
+        _workflowPointer?.workflow
+    }
 }
 
 public extension FlowRepresentable where WorkflowInput == Never {
-    mutating func erasedShouldLoad(with args: Any?) -> Bool {
-        return shouldLoad()
-    }
-
     mutating func shouldLoad(with args: Never) -> Bool { }
 
     /// shouldLoad: A method indicating whether it makes sense for this view to load in a workflow
@@ -80,17 +61,12 @@ public extension FlowRepresentable where WorkflowInput == Never {
 
 public extension FlowRepresentable where WorkflowOutput == Never {
     func proceedInWorkflow() {
-        proceedInWorkflowStorage?(nil)
+        _workflowPointer?.proceedInWorkflowStorage?(nil)
     }
 }
 
 public extension FlowRepresentable {
-    mutating func erasedShouldLoad(with args: Any?) -> Bool {
-        guard let cast = args as? WorkflowInput else { return false }
-        return shouldLoad(with: cast)
-    }
-
     func proceedInWorkflow(_ args: WorkflowOutput) {
-        proceedInWorkflowStorage?(args)
+        _workflowPointer?.proceedInWorkflowStorage?(args)
     }
 }
