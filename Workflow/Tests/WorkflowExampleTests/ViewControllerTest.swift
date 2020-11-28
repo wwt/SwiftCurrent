@@ -23,7 +23,7 @@ class ViewControllerTest<T: UIViewController & StoryboardLoadable & FlowRepresen
     final func loadFromStoryboard(configure: ((inout ControllerType) -> Void)? = nil) {
         var instance = T.instance()
         testViewController = instance
-        ref = AnyFlowRepresentable(instance)
+        ref = AnyFlowRepresentable(&instance)
         
         let window = UIApplication.shared.windows.first
 

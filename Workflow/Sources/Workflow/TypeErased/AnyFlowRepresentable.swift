@@ -11,6 +11,7 @@ import Foundation
 class AnyFlowRepresentableStorageBase {
     var underlyingInstance: Any { fatalError() }
     var workflow: AnyWorkflow?
+    var _workflowPointer: AnyFlowRepresentable?
     var proceedInWorkflowStorage: ((Any?) -> Void)?
     func shouldLoad(with args: Any?) -> Bool { fatalError() }
 }
@@ -30,6 +31,14 @@ class AnyFlowRepresentableStorage<FR: FlowRepresentable>: AnyFlowRepresentableSt
 
     override var underlyingInstance: Any {
         return holder
+    }
+
+    override var _workflowPointer: AnyFlowRepresentable? {
+        get {
+            holder._workflowPointer
+        } set {
+            holder._workflowPointer = newValue
+        }
     }
 
     init(_ instance: inout FR) {
@@ -65,9 +74,9 @@ public class AnyFlowRepresentable {
         _storage.underlyingInstance
     }
 
-    init<FR: FlowRepresentable>(_ instance: FR) {
-        var instance = instance
+    init<FR: FlowRepresentable>(_ instance: inout FR) {
         _storage = AnyFlowRepresentableStorage(&instance)
         instance._workflowPointer = self
+        _storage._workflowPointer = self
     }
 }

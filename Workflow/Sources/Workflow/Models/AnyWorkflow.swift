@@ -37,6 +37,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
             let flowRepresentable = nextMetadata.flowRepresentableFactory()
             flowRepresentable.workflow = self
             flowRepresentable.proceedInWorkflowStorage = { passedArgs = .args($0) }
+
             let shouldLoad = flowRepresentable.shouldLoad(with: passedArgs.extract(args))
 
             defer {

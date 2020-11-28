@@ -20,7 +20,10 @@ public class FlowRepresentableMetaData {
     }
 
     public init<FR: FlowRepresentable>(_ flowRepresentableType: FR.Type, launchStyle: LaunchStyle = .default, flowPersistance:@escaping (Any?) -> FlowPersistance) {
-        self.flowRepresentableFactory = { AnyFlowRepresentable(FR.instance()) }
+        self.flowRepresentableFactory = {
+            var instance = FR.instance()
+            return AnyFlowRepresentable(&instance)
+        }
         self.flowPersistance = flowPersistance
         self.launchStyle = launchStyle
     }
