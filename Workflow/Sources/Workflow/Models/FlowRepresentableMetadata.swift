@@ -6,8 +6,9 @@
 //
 
 import Foundation
+
 public class FlowRepresentableMetaData {
-    private(set) public var flowRepresentableType: AnyFlowRepresentable.Type
+    private(set) var flowRepresentableFactory: () -> AnyFlowRepresentable
     private var flowPersistance: (Any?) -> FlowPersistance
     private(set) public var launchStyle: LaunchStyle
     private(set) public var persistance: FlowPersistance?
@@ -18,13 +19,13 @@ public class FlowRepresentableMetaData {
         return val
     }
 
-    public init(_ flowRepresentableType: AnyFlowRepresentable.Type, launchStyle: LaunchStyle = .default, flowPersistance:@escaping (Any?) -> FlowPersistance) {
-        self.flowRepresentableType = flowRepresentableType
+    public init<FR: FlowRepresentable>(_ flowRepresentableType: FR.Type, launchStyle: LaunchStyle = .default, flowPersistance:@escaping (Any?) -> FlowPersistance) {
+        self.flowRepresentableFactory = { AnyFlowRepresentable(FR.instance()) }
         self.flowPersistance = flowPersistance
         self.launchStyle = launchStyle
     }
 
-    public convenience init<FR>(with flowRepresentable: FR, launchStyle: LaunchStyle, persistance: FlowPersistance) where FR: AnyFlowRepresentable {
+    public convenience init<FR: FlowRepresentable>(with flowRepresentable: FR, launchStyle: LaunchStyle, persistance: FlowPersistance) {
         self.init(FR.self, launchStyle: launchStyle, flowPersistance: { _ in persistance })
         self.persistance = persistance
     }

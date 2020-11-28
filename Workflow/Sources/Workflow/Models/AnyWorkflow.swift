@@ -24,9 +24,9 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
         self.orchestrationResponder = orchestrationResponder
     }
 
-    public func launch(with args: Any?,
-                       withLaunchStyle launchStyle: LaunchStyle = .default,
-                       onFinish: ((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Element? {
+    @discardableResult public func launch(with args: Any?,
+                                          withLaunchStyle launchStyle: LaunchStyle = .default,
+                                          onFinish: ((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Element? {
         removeInstances()
         instances = LinkedList(map { _ in nil })
         var root: (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetaData)?
@@ -34,10 +34,10 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
 
         let metadata = first?.traverse { nextNode in
             let nextMetadata = nextNode.value
-            var flowRepresentable = nextMetadata.flowRepresentableType.instance()
+            let flowRepresentable = nextMetadata.flowRepresentableFactory()
             flowRepresentable.workflow = self
             flowRepresentable.proceedInWorkflowStorage = { passedArgs = .args($0) }
-            let shouldLoad = flowRepresentable.erasedShouldLoad(with: passedArgs.extract(args))
+            let shouldLoad = flowRepresentable.shouldLoad(with: passedArgs.extract(args))
 
             defer {
                 guard let instance = instances.first?.traverse(nextNode.position) else { fatalError("Internal state of workflow completely mangled somehow...") }
@@ -59,10 +59,10 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
 
         guard let first = firstLoadedInstance,
               let m = metadata else {
-                if let argsToPass = passedArgs.extract(args) {
-                    onFinish?(argsToPass)
-                }
-                return nil
+            if let argsToPass = passedArgs.extract(args) {
+                onFinish?(argsToPass)
+            }
+            return nil
         }
 
         self.orchestrationResponder?.launchOrProceed(to: (instance: first, metadata:m), from: convertInput(root))
@@ -98,13 +98,13 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
             let nextLoadedNode = node.next?.traverse { nextNode in
                 guard let metadata = first?.traverse(nextNode.position)?.value else { return false }
                 let persistance = metadata.calculatePersistance(argsToPass)
-                var flowRepresentable = metadata.flowRepresentableType.instance()
+                let flowRepresentable = metadata.flowRepresentableFactory()
                 flowRepresentable.workflow = self
 
                 nextNode.value = flowRepresentable
                 flowRepresentable.proceedInWorkflowStorage = { argsToPass = $0 }
 
-                let shouldLoad = flowRepresentable.erasedShouldLoad(with: argsToPass) == true
+                let shouldLoad = flowRepresentable.shouldLoad(with: argsToPass) == true
                 if !shouldLoad && persistance == .persistWhenSkipped {
                     viewToPresent = (instance: flowRepresentable, metadata: metadata)
                     self.setupCallbacks(for: nextNode, onFinish: onFinish)

@@ -16,7 +16,7 @@ extension StoryboardLoadable {
         return String(describing: Self.self)
     }
     
-    static func instance() -> AnyFlowRepresentable {
-        return Storyboard.main.instantiateViewController(withIdentifier: storyboardId) as! AnyFlowRepresentable
+    static func instance() -> Self {
+        return Storyboard.main.instantiateViewController(withIdentifier: storyboardId) as! Self
     }
 }

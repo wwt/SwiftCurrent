@@ -20,12 +20,12 @@ open class UIKitPresenter: AnyOrchestrationResponder {
     }
 
     public func launch(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
-        guard let view = to.instance.value as? UIViewController else { return }
+        guard let view = to.instance.value?.underlyingInstance as? UIViewController else { return }
         displayInstance(to, style: launchedPresentationType.rawValue, view: view, root: launchedFromVC)
     }
 
     public func abandon(_ workflow: AnyWorkflow, animated: Bool, onFinish: (() -> Void)?) {
-        guard let first = workflow.firstLoadedInstance?.value as? UIViewController else { return }
+        guard let first = workflow.firstLoadedInstance?.value?.underlyingInstance as? UIViewController else { return }
         if let nav = first.navigationController {
             if nav.viewControllers.first === first {
                 if let presenting = nav.presentingViewController {
@@ -121,8 +121,8 @@ open class UIKitPresenter: AnyOrchestrationResponder {
 
     public func proceed(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData),
                         from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
-        guard let view = to.instance.value as? UIViewController,
-              let root = from.instance.value as? UIViewController else { return }
+        guard let view = to.instance.value?.underlyingInstance as? UIViewController,
+              let root = from.instance.value?.underlyingInstance as? UIViewController else { return }
         displayInstance(to, style: to.metadata.launchStyle, view: view, root: root) { [self] in
             if from.metadata.persistance == .removedAfterProceeding {
                 destroy(root)

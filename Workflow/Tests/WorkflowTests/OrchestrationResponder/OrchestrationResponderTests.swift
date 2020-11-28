@@ -24,29 +24,26 @@ class OrchestrationResponderTests : XCTestCase {
         let launchedRepresentable = wf.launch(with: nil)
         
         XCTAssertEqual(responder.launchCalled, 1)
-        XCTAssert(launchedRepresentable?.value is FR1)
-        XCTAssert(responder.lastTo?.instance.value is FR1)
+        XCTAssert(launchedRepresentable?.value?.underlyingInstance is FR1)
+        XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR1)
         XCTAssertNil(responder.lastFrom)
-        XCTAssert(responder.lastTo?.metadata.flowRepresentableType == FR1.self)
-        
-        (launchedRepresentable?.value as? FR1)?.proceedInWorkflow()
+
+        (launchedRepresentable?.value?.underlyingInstance as? FR1)?.proceedInWorkflow()
         
         XCTAssertEqual(responder.proceedCalled, 1)
-        XCTAssert(responder.lastTo?.instance.value is FR2)
+        XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR2)
         XCTAssertNotNil(responder.lastFrom)
-        XCTAssert(responder.lastFrom?.instance.value is FR1)
-        XCTAssert((responder.lastFrom?.instance.value as? FR1) === (launchedRepresentable?.value as? FR1))
-        XCTAssert(responder.lastTo?.metadata.flowRepresentableType == FR2.self)
+        XCTAssert(responder.lastFrom?.instance.value?.underlyingInstance is FR1)
+        XCTAssert((responder.lastFrom?.instance.value?.underlyingInstance as? FR1) === (launchedRepresentable?.value?.underlyingInstance as? FR1))
 
-        let fr2 = (responder.lastTo?.instance.value as? FR2)
+        let fr2 = (responder.lastTo?.instance.value?.underlyingInstance as? FR2)
         fr2?.proceedInWorkflow()
         
         XCTAssertEqual(responder.proceedCalled, 2)
-        XCTAssert(responder.lastTo?.instance.value is FR3)
+        XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR3)
         XCTAssertNotNil(responder.lastFrom)
-        XCTAssert(responder.lastFrom?.instance.value is FR2)
-        XCTAssert((responder.lastFrom?.instance.value as? FR2) === fr2)
-        XCTAssert(responder.lastTo?.metadata.flowRepresentableType == FR3.self)
+        XCTAssert(responder.lastFrom?.instance.value?.underlyingInstance is FR2)
+        XCTAssert((responder.lastFrom?.instance.value?.underlyingInstance as? FR2) === fr2)
     }
     
     func testWorkflowCallsOnFinishWhenItIsDone() {
@@ -62,9 +59,9 @@ class OrchestrationResponderTests : XCTestCase {
         
         let launchedRepresentable = wf.launch(with: nil) { _ in expectation.fulfill() }
         
-        (launchedRepresentable?.value as? FR1)?.proceedInWorkflow()
-        (responder.lastTo?.instance.value as? FR2)?.proceedInWorkflow()
-        (responder.lastTo?.instance.value as? FR3)?.proceedInWorkflow()
+        (launchedRepresentable?.value?.underlyingInstance as? FR1)?.proceedInWorkflow()
+        (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.proceedInWorkflow()
+        (responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.proceedInWorkflow()
         
         wait(for: [expectation], timeout: 3)
     }
@@ -87,9 +84,9 @@ class OrchestrationResponderTests : XCTestCase {
             expectation.fulfill()
         }
         
-        (launchedRepresentable?.value as? FR1)?.proceedInWorkflow()
-        (responder.lastTo?.instance.value as? FR2)?.proceedInWorkflow()
-        (responder.lastTo?.instance.value as? FR3)?.proceedInWorkflow(val)
+        (launchedRepresentable?.value?.underlyingInstance as? FR1)?.proceedInWorkflow()
+        (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.proceedInWorkflow()
+        (responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.proceedInWorkflow(val)
         
         wait(for: [expectation], timeout: 3)
     }
@@ -102,7 +99,7 @@ extension OrchestrationResponderTests {
         var proceedInWorkflowStorage: ((Any?) -> Void)?
 
         required init() { }
-        static func instance() -> AnyFlowRepresentable { Self() as! AnyFlowRepresentable }
+        static func instance() -> Self { Self() }
 
         typealias WorkflowInput = Input
         typealias WorkflowOutput = Output
@@ -115,7 +112,7 @@ extension OrchestrationResponderTests {
         
         required init() { }
         
-        static func instance() -> AnyFlowRepresentable { Self() }
+        static func instance() -> Self { Self() }
         
         typealias WorkflowInput = Never
         typealias WorkflowOutput = Never

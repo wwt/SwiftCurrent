@@ -10,19 +10,18 @@ import Foundation
 import XCTest
 
 @testable import WorkflowExample
+import Workflow
 
 class SetupViewControllerTests: ViewControllerTest<SetupViewController> {
     func testLaunchingMultiLocationWorkflow() {
         let listener = WorkflowListener()
         
         testViewController.launchMultiLocationWorkflow()
-        
-        XCTAssertWorkflowLaunched(listener: listener, expectedFlowRepresentables: [
-            LocationsViewController.self,
-            PickupOrDeliveryViewController.self,
-            MenuSelectionViewController.self,
-            FoodSelectionViewController.self,
-            ReviewOrderViewController.self,
-        ])
+
+        XCTAssertWorkflowLaunched(listener: listener, workflow: Workflow(LocationsViewController.self)
+                                    .thenPresent(PickupOrDeliveryViewController.self)
+                                    .thenPresent(MenuSelectionViewController.self)
+                                    .thenPresent(FoodSelectionViewController.self)
+                                    .thenPresent(ReviewOrderViewController.self))
     }
 }

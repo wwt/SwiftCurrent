@@ -8,26 +8,83 @@
 
 import Foundation
 
-/**
- AnyFlowRepresentable: A type erased version of 'FlowRepresentable'. Generally speaking don't use this directly, use FlowRepresentable instead.
- */
-public protocol AnyFlowRepresentable {
-    /// workflow: Access to the `Workflow` controlling the `FlowRepresentable`. A common use case may be a `FlowRepresentable` that wants to abandon the `Workflow` it's in.
-    /// - Note: While not strictly necessary it would be wise to declare this property as `weak`
-    var workflow: AnyWorkflow? { get set }
-    var proceedInWorkflowStorage: ((Any?) -> Void)? { get set }
-
-    mutating func erasedShouldLoad(with args: Any?) -> Bool
-    func erasedProceedInWorkflow(_ args: Any?)
-
-    /// instance: A method to return an instance of the `FlowRepresentable`
-    /// - Returns: `AnyFlowRepresentable`. Specifically a new instance from the static class passed to a `Workflow`
-    /// - Note: This needs to return a unique instance of your view. Whether programmatic or from the storyboard is irrelevant
-    static func instance() -> AnyFlowRepresentable
+class AnyFlowRepresentableStorageBase {
+    var underlyingInstance: Any { fatalError() }
+    var workflow: AnyWorkflow?
+    var proceedInWorkflowStorage: ((Any?) -> Void)?
+    func shouldLoad(with args: Any?) -> Bool { fatalError() }
 }
 
-public extension AnyFlowRepresentable {
-    func erasedProceedInWorkflow(_ args: Any? = nil) {
-        proceedInWorkflowStorage?(args)
+class AnyFlowRepresentableStorage<FR: FlowRepresentable>: AnyFlowRepresentableStorageBase {
+    var holder: FR
+
+    override var workflow: AnyWorkflow? {
+        get {
+            holder.workflow
+        }
+        set {
+            holder.workflow = newValue
+        }
+    }
+
+    override var proceedInWorkflowStorage: ((Any?) -> Void)? {
+        get {
+            holder.proceedInWorkflowStorage
+        }
+        set {
+            holder.proceedInWorkflowStorage = newValue
+        }
+    }
+
+    override func shouldLoad(with args: Any?) -> Bool {
+        switch args {
+            case _ where FR.WorkflowInput.self == Never.self: return holder.shouldLoad()
+            default:
+                guard let cast = args as? FR.WorkflowInput else { fatalError("TYPE MISMATCH: \(String(describing: args)) is not type: \(FR.WorkflowInput.self)") }
+                return holder.shouldLoad(with: cast)
+
+        }
+    }
+
+    override var underlyingInstance: Any {
+        return holder
+    }
+
+    init(_ instance: inout FR) {
+        holder = instance
+    }
+}
+
+public class AnyFlowRepresentable {
+    func shouldLoad(with args: Any?) -> Bool { _storage.shouldLoad(with: args) }
+
+    typealias WorkflowInput = Any
+    typealias WorkflowOutput = Any
+
+    var workflow: AnyWorkflow? {
+        get {
+            _storage.workflow
+        } set {
+            _storage.workflow = newValue
+        }
+    }
+
+    var proceedInWorkflowStorage: ((Any?) -> Void)? {
+        get {
+            _storage.proceedInWorkflowStorage
+        } set {
+            _storage.proceedInWorkflowStorage = newValue
+        }
+    }
+
+    var _storage: AnyFlowRepresentableStorageBase
+
+    public var underlyingInstance: Any {
+        _storage.underlyingInstance
+    }
+
+    init<FR: FlowRepresentable>(_ instance: FR) {
+        var instance = instance
+        _storage = AnyFlowRepresentableStorage(&instance)
     }
 }

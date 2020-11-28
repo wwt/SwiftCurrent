@@ -60,10 +60,7 @@ class PickupOrDeliveryViewConrollerTests:ViewControllerTest<PickupOrDeliveryView
         let orderOutput = Order(location: Location(name: unique, address: Address(), orderTypes: [], menuTypes: []))
             
         testViewController.selectDelivery()
-        
-        XCTAssertWorkflowLaunched(listener: listener, expectedFlowRepresentables: [
-            EnterAddressViewController.self
-        ])
+        XCTAssertWorkflowLaunched(listener: listener, workflow: Workflow(EnterAddressViewController.self))
         
         let mock = MockOrchestrationResponder()
         listener.workflow?.applyOrchestrationResponder(mock)

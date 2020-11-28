@@ -38,9 +38,9 @@ public extension UIViewController {
     /// - Note: In the background this applies a UIKitPresenter, if you call launch on workflow directly you'll need to apply one yourself
     func launchInto(_ workflow: AnyWorkflow, args: Any? = nil, withLaunchStyle launchStyle: LaunchStyle.PresentationType = .default, onFinish: ((Any?) -> Void)? = nil) {
         workflow.applyOrchestrationResponder(UIKitPresenter(self, launchStyle: launchStyle))
-        _ = workflow.launch(with: args,
-                            withLaunchStyle: launchStyle.rawValue,
-                            onFinish: onFinish)?.value as? UIViewController
+        workflow.launch(with: args,
+                        withLaunchStyle: launchStyle.rawValue,
+                        onFinish: onFinish)
         #if DEBUG
         if NSClassFromString("XCTest") != nil {
             NotificationCenter.default.post(name: .workflowLaunched, object: [

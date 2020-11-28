@@ -35,12 +35,27 @@ class WorkflowListener {
     }
 }
 
-func XCTAssertWorkflowLaunched(listener: WorkflowListener, expectedFlowRepresentables:[AnyFlowRepresentable.Type]) {
+func XCTAssertWorkflowLaunched(listener: WorkflowListener, workflow:AnyWorkflow) {
     XCTAssertNotNil(listener.workflow, "No workflow found")
-    guard let workflow = listener.workflow, expectedFlowRepresentables.count == workflow.count else {
-        XCTFail("workflow does not contain correct representables: \(String(describing: listener.workflow?.compactMap { String(describing: $0.value) }) )")
+    guard let listenerWorkflow = listener.workflow,
+          listenerWorkflow.count == workflow.count else {
+        XCTFail("workflow does not contain correct representables: \(String(describing: listener.workflow?.flowRepresentableTypes) )")
         return
     }
-    XCTAssertEqual(workflow.compactMap { String(describing: $0.value.flowRepresentableType) },
-                   expectedFlowRepresentables.map { String(describing: $0) })
+
+    for node in listenerWorkflow {
+        let actual = type(of: node.value.flowRepresentableFactory().underlyingInstance)
+        guard let workflowNode = workflow.first?.traverse(node.position) else {
+            XCTFail("expected workflow not as long as actual workflow")
+            return
+        }
+        let expected = type(of: workflowNode.value.flowRepresentableFactory().underlyingInstance)
+        XCTAssert(actual == expected, "Expected type: \(expected), but got: \(actual)")
+    }
+}
+
+extension AnyWorkflow {
+    var flowRepresentableTypes:[Any.Type?] {
+        compactMap { type(of: $0.value.flowRepresentableFactory().underlyingInstance) }
+    }
 }

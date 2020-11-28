@@ -18,7 +18,7 @@ import Foundation
  
      weak var workflow: Workflow?
  
-     var callback: ((Any?) -> Void)?
+     var proceedInWorkflowStorage: ((Any?) -> Void)?
  
      static func instance() -> AnyFlowRepresentable {
          return UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "SomeViewController") as! SomeViewController
@@ -34,10 +34,20 @@ import Foundation
  It's important to make sure your FlowRepresentable is not dependent on other views. It's okay to specify that a certain kind of data needs to be passed in, but keep your views from knowing what came before or what's likely to come after. In that way you'll end up with pieces of a workflow that can be moved, or put into multiple places with ease. Notice the 'Instance' method. This is needed for Workflow to create a new instance of your view. Make sure that this function always returns a new, unique instance of your class. Note that this is still accomplishable whether the view is created programmatically or in a storyboard.
  */
 
-public protocol FlowRepresentable: AnyFlowRepresentable {
+public protocol FlowRepresentable {
     ///WorkflowInput: The data type required to be passed to your FlowRepresentable (use `Any?` if you don't care)
     associatedtype WorkflowInput
     associatedtype WorkflowOutput = Never
+
+    /// workflow: Access to the `Workflow` controlling the `FlowRepresentable`. A common use case may be a `FlowRepresentable` that wants to abandon the `Workflow` it's in.
+    /// - Note: While not strictly necessary it would be wise to declare this property as `weak`
+    var workflow: AnyWorkflow? { get set }
+    var proceedInWorkflowStorage: ((Any?) -> Void)? { get set }
+
+    /// instance: A method to return an instance of the `FlowRepresentable`
+    /// - Returns: `AnyFlowRepresentable`. Specifically a new instance from the static class passed to a `Workflow`
+    /// - Note: This needs to return a unique instance of your view. Whether programmatic or from the storyboard is irrelevant
+    static func instance() -> Self
 
     /// shouldLoad: A method indicating whether it makes sense for this view to load in a workflow
     /// - Parameter args: Note you can rename this in your implementation if 'args' doesn't make sense. If a previous item in a workflow tries to pass a type that does not match `shouldLoad` will automatically be false, and this method will not be called.
@@ -70,7 +80,7 @@ public extension FlowRepresentable where WorkflowInput == Never {
 
 public extension FlowRepresentable where WorkflowOutput == Never {
     func proceedInWorkflow() {
-        return erasedProceedInWorkflow(nil)
+        proceedInWorkflowStorage?(nil)
     }
 }
 

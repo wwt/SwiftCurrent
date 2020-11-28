@@ -222,7 +222,7 @@ extension PersistanceTests {
         var proceedInWorkflowStorage: ((Any?) -> Void)?
 
         required init() { }
-        static func instance() -> AnyFlowRepresentable { Self() as! AnyFlowRepresentable }
+        static func instance() -> Self { Self() }
 
         typealias WorkflowInput = Input
         typealias WorkflowOutput = Output
@@ -235,7 +235,7 @@ extension PersistanceTests {
         
         required init() { }
         
-        static func instance() -> AnyFlowRepresentable { Self() }
+        static func instance() -> Self { Self() }
         
         typealias WorkflowInput = Never
         typealias WorkflowOutput = Never
