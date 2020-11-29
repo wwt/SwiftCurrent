@@ -286,6 +286,21 @@ class WorkflowTests: XCTestCase {
         }
         XCTAssert(callbackCalled)
     }
+
+    func testAnyFlowRepresentableThrowsFatalErrorIfItSomehowHasATypeMismatch() {
+        class FR1: TestFlowRepresentable<String, Int>, FlowRepresentable {
+            static func instance() -> Self { Self() }
+
+            func shouldLoad(with args: String) -> Bool { true }
+        }
+
+        var instance = FR1()
+        let rep = AnyFlowRepresentable(&instance)
+
+        XCTAssertThrowsFatalError {
+            _ = rep.shouldLoad(with: 10.23)
+        }
+    }
     
     class TestFlowRepresentable<I, O> {
         typealias WorkflowInput = I

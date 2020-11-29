@@ -10,7 +10,7 @@ import Foundation
 import XCTest
 
 @testable import Workflow
-import WorkflowUIKit
+@testable import WorkflowUIKit
 
 class UIKitPresenterTests: XCTestCase {
     override func setUpWithError() throws {
@@ -1798,7 +1798,30 @@ class UIKitPresenterTests: XCTestCase {
         RunLoop.current.singlePass()
 
         XCTAssert(UIApplication.topViewController() === rootController)
-    }}
+    }
+
+    func testUnknownLaunchStyleThrowsFatalError() {
+        let ls = LaunchStyle.new
+        class FR1: TestViewController { }
+        class FR2: TestViewController { }
+
+        let wf = Workflow(FR1.self).thenPresent(FR2.self)
+        let rootController = UIViewController()
+        loadView(controller: rootController)
+
+        let presenter = UIKitPresenter(rootController, launchStyle: .modal)
+
+        wf.applyOrchestrationResponder(presenter)
+        var fr1 = FR1()
+        let node = AnyWorkflow.InstanceNode(with: AnyFlowRepresentable(&fr1))
+        let metadata = FlowRepresentableMetaData(FR1.self, launchStyle: ls, flowPersistance: { _ in .default })
+
+        XCTAssertThrowsFatalError {
+            presenter.proceed(to: (instance: node, metadata: metadata),
+                              from: (instance: node, metadata: metadata))
+        }
+    }
+}
 
 extension UIKitPresenterTests {
     class TestViewController: UIWorkflowItem<Any?, Any?>, FlowRepresentable {

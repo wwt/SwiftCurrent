@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CA875A89256F7B9200243FA4 /* MockOrchestrationResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA875A88256F7B9200243FA4 /* MockOrchestrationResponder.swift */; };
+		CA875AC0257353B300243FA4 /* CustomAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA875ABF257353B300243FA4 /* CustomAssertions.swift */; };
 		CAC1C22B256D8B0700DBD0D4 /* WorkflowUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = CAC1C22A256D8B0700DBD0D4 /* WorkflowUIKit */; };
 		CAC1C234256D8DA300DBD0D4 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1C233256D8DA300DBD0D4 /* Screen.swift */; };
 		CAC1C235256D8DA300DBD0D4 /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1C232256D8DA300DBD0D4 /* TopViewController.swift */; };
@@ -73,6 +74,7 @@
 
 /* Begin PBXFileReference section */
 		CA875A88256F7B9200243FA4 /* MockOrchestrationResponder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockOrchestrationResponder.swift; sourceTree = "<group>"; };
+		CA875ABF257353B300243FA4 /* CustomAssertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomAssertions.swift; path = ../../Workflow/Tests/WorkflowTests/CustomAssertions.swift; sourceTree = "<group>"; };
 		CAC1C232256D8DA300DBD0D4 /* TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
 		CAC1C233256D8DA300DBD0D4 /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		CAC1C23C256D8DB100DBD0D4 /* WaitUntil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitUntil.swift; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 			children = (
 				CAC1C24E256D8F0400DBD0D4 /* ModalStyleTests.swift */,
 				CAC1C24D256D8F0300DBD0D4 /* UIKitPresenterTests.swift */,
+				CA875ABF257353B300243FA4 /* CustomAssertions.swift */,
 				CAC1C233256D8DA300DBD0D4 /* Screen.swift */,
 				CAC1C23C256D8DB100DBD0D4 /* WaitUntil.swift */,
 				CAC1C232256D8DA300DBD0D4 /* TopViewController.swift */,
@@ -454,6 +457,7 @@
 				CAC1C24F256D8F0400DBD0D4 /* ModalStyleTests.swift in Sources */,
 				CAC1C250256D8F0400DBD0D4 /* UIKitPresenterTests.swift in Sources */,
 				CAC1C235256D8DA300DBD0D4 /* TopViewController.swift in Sources */,
+				CA875AC0257353B300243FA4 /* CustomAssertions.swift in Sources */,
 				CAC1C23D256D8DB100DBD0D4 /* WaitUntil.swift in Sources */,
 				CAF58811256D72BE0044C864 /* XCTestManifests.swift in Sources */,
 			);
