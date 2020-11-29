@@ -30,27 +30,27 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
         removeInstances()
         instances = LinkedList(map { _ in nil })
         var root: (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetaData)?
-        var passedArgs: PassedArgs = .none
+        var passedArgs: PassedArgs = args != nil ? .args(args) : .none
 
-        let metadata = first?.traverse { nextNode in
+        let metadata = first?.traverse { [self] nextNode in
             let nextMetadata = nextNode.value
             let flowRepresentable = nextMetadata.flowRepresentableFactory()
             flowRepresentable.workflow = self
-            flowRepresentable.proceedInWorkflowStorage = { passedArgs = .args($0) }
+            flowRepresentable.proceedInWorkflowStorage = { passedArgs = $0 }
 
-            let shouldLoad = flowRepresentable.shouldLoad(with: passedArgs.extract(args))
+            let shouldLoad = flowRepresentable.shouldLoad(with: passedArgs)
 
             defer {
                 guard let instance = instances.first?.traverse(nextNode.position) else { fatalError("Internal state of workflow completely mangled somehow...") }
-                let persistance = nextMetadata.calculatePersistance(args)
+                let persistance = nextMetadata.calculatePersistance(passedArgs)
                 if shouldLoad {
                     firstLoadedInstance = instance
                     firstLoadedInstance?.value = flowRepresentable
-                    self.setupCallbacks(for: instance, onFinish: onFinish)
+                    setupCallbacks(for: instance, onFinish: onFinish)
                 } else if !shouldLoad && persistance == .persistWhenSkipped {
                     instance.value = flowRepresentable
-                    self.setupCallbacks(for: instance, onFinish: onFinish)
-                    self.orchestrationResponder?.launchOrProceed(to: (instance: instance, metadata: nextMetadata), from: convertInput(root))
+                    setupCallbacks(for: instance, onFinish: onFinish)
+                    orchestrationResponder?.launchOrProceed(to: (instance: instance, metadata: nextMetadata), from: convertInput(root))
                     root = (instance: flowRepresentable, metadata: nextMetadata)
                 }
 
@@ -66,7 +66,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
             return nil
         }
 
-        self.orchestrationResponder?.launchOrProceed(to: (instance: first, metadata:m), from: convertInput(root))
+        orchestrationResponder?.launchOrProceed(to: (instance: first, metadata:m), from: convertInput(root))
 
         return firstLoadedInstance
     }
@@ -77,10 +77,10 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
     /// - Returns: Void
     /// - Note: In order for this to function the workflow must have a presenter, presenters must call back to the workflow to inform when the abandon process has finished for the onFinish callback to be called.
     public func abandon(animated: Bool = true, onFinish:(() -> Void)? = nil) {
-        orchestrationResponder?.abandon(self, animated: animated, onFinish: {
-            self.removeInstances()
-            self.firstLoadedInstance = nil
-            self.orchestrationResponder = nil
+        orchestrationResponder?.abandon(self, animated: animated, onFinish: { [self] in
+            removeInstances()
+            firstLoadedInstance = nil
+            orchestrationResponder = nil
             onFinish?()
         })
     }
@@ -110,9 +110,9 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
                 if !shouldLoad && persistance == .persistWhenSkipped {
                     nextNode.value = flowRepresentable
                     viewToPresent = (instance: flowRepresentable, metadata: metadata)
-                    self.setupCallbacks(for: nextNode, onFinish: onFinish)
-                    self.orchestrationResponder?.proceed(to: (instance: nextNode, metadata: metadata),
-                                                         from: (instance: node, metadata: currentMetadataNode.value))
+                    setupCallbacks(for: nextNode, onFinish: onFinish)
+                    orchestrationResponder?.proceed(to: (instance: nextNode, metadata: metadata),
+                                                    from: (instance: node, metadata: currentMetadataNode.value))
                 }
 
                 return shouldLoad
@@ -120,11 +120,11 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
 
             guard let nextNode = nextLoadedNode,
                   let nextMetadataNode = first?.traverse(nextNode.position) else {
-                onFinish?(argsToPass)
+                onFinish?(argsToPass.extract(nil))
                 return
             }
 
-            self.setupCallbacks(for: nextNode, onFinish: onFinish)
+            setupCallbacks(for: nextNode, onFinish: onFinish)
             orchestrationResponder?.proceed(to: (instance: nextNode, metadata:nextMetadataNode.value),
                                             from: convertInput(viewToPresent) ?? (instance: node, metadata:currentMetadataNode.value))
         }
@@ -137,9 +137,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
                 return previousNode.value != nil
             }
 
-            guard let previousNode = previousLoadedNode else {
-                fatalError("There is no previous flowRepresentable in the workflow, asking to proceed backwards does not make sense")
-            }
+            guard let previousNode = previousLoadedNode else { return }
 
             guard let previousMetaDataNode = first?.traverse(previousNode.position) else {
                 fatalError("Internal state of workflow completely mangled somehow...")
@@ -164,12 +162,12 @@ extension AnyWorkflow {
     }
 }
 
-extension AnyWorkflow {
-    private enum PassedArgs {
+public extension AnyWorkflow {
+    enum PassedArgs {
         case none
         case args(Any?)
 
-        func extract(_ defaultValue: Any?) -> Any? {
+        public func extract(_ defaultValue: Any?) -> Any? {
             if case .args(let value) = self {
                 return value
             }

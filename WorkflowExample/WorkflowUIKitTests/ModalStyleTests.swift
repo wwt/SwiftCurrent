@@ -354,16 +354,12 @@ extension ModalStyleTests {
         }
     }
     
-    class TestViewController: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
+    class TestViewController: UIWorkflowItem<Never, Any?>, FlowRepresentable {
         var data:Any?
         static func instance() -> Self {
             let controller = Self()
             controller.view.backgroundColor = .red
             return controller
-        }
-        func shouldLoad(with args: Any?) -> Bool {
-            self.data = args
-            return true
         }
         func next() {
             proceedInWorkflow(data)

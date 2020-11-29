@@ -18,19 +18,27 @@ public extension Notification.Name {
 public extension FlowRepresentable {
     var proceedInWorkflowStorage: ((Any?) -> Void)? {
         get {
-            _workflowPointer?.proceedInWorkflowStorage
+            {
+                _workflowPointer?.proceedInWorkflowStorage?(.args($0))
+            }
         }
         set {
-            _workflowPointer?.proceedInWorkflowStorage = newValue
+            _workflowPointer?.proceedInWorkflowStorage = { args in
+                newValue?(args.extract(nil))
+            }
         }
     }
 
     var _proceedInWorkflow: ((Any?) -> Void)? {
         get {
-            _workflowPointer?.proceedInWorkflowStorage
+            {
+                _workflowPointer?.proceedInWorkflowStorage?(.args($0))
+            }
         }
         set {
-            _workflowPointer?.proceedInWorkflowStorage = newValue
+            _workflowPointer?.proceedInWorkflowStorage = { args in
+                newValue?(args.extract(nil))
+            }
         }
     }
 }

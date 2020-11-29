@@ -28,7 +28,7 @@ public protocol FlowRepresentable {
     static func instance() -> Self
 
     /// shouldLoad: A method indicating whether it makes sense for this view to load in a workflow
-    /// - Parameter args: Note you can rename this in your implementation if 'args' doesn't make sense. If a previous item in a workflow tries to pass a type that does not match `shouldLoad` will automatically be false, and this method will not be called.
+    /// - Parameter args: Note you can rename this in your implementation if 'args' doesn't make sense.
     /// - Returns: Bool
     /// - Note: This method is called *before* your view loads. Do not attempt to do any UI work in this method. This is however a good place to set up data on your view.
     mutating func shouldLoad(with args: WorkflowInput) -> Bool
@@ -64,12 +64,12 @@ public extension FlowRepresentable where WorkflowInput == Never {
 
 public extension FlowRepresentable where WorkflowOutput == Never {
     func proceedInWorkflow() {
-        _workflowPointer?.proceedInWorkflowStorage?(nil)
+        _workflowPointer?.proceedInWorkflowStorage?(.none)
     }
 }
 
 public extension FlowRepresentable {
     func proceedInWorkflow(_ args: WorkflowOutput) {
-        _workflowPointer?.proceedInWorkflowStorage?(args)
+        _workflowPointer?.proceedInWorkflowStorage?(.args(args))
     }
 }

@@ -66,16 +66,11 @@ class WorkflowTests: XCTestCase {
     }
 
     func testProgressToNextAvailableItemInWorkflow() {
-        class FR1: TestFlowRepresentable<Never, Never>, FlowRepresentable {
-            static func instance() -> Self { Self() }
-        }
+        class FR1: TestFlowRepresentable<Never, Never>, FlowRepresentable { }
         class FR2: TestFlowRepresentable<Never, Never>, FlowRepresentable {
-            static func instance() -> Self { Self() }
             func shouldLoad() -> Bool { false }
         }
-        class FR3: TestFlowRepresentable<Never, Never>, FlowRepresentable {
-            static func instance() -> Self { Self() }
-        }
+        class FR3: TestFlowRepresentable<Never, Never>, FlowRepresentable { }
 
         let responder = MockOrchestrationResponder()
         let wf = Workflow(FR1.self)
@@ -138,40 +133,6 @@ class WorkflowTests: XCTestCase {
         XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR3)
     }
 
-    func testProceedBackwardThrowsFatalErrorIfYouCallItOnTheFirstRepresentable() {
-        struct FR1: FlowRepresentable {
-            typealias WorkflowInput = Never
-            typealias WorkflowOutput = Never
-            var _workflowPointer: AnyFlowRepresentable?
-            static func instance() -> Self { Self() }
-        }
-        struct FR2: FlowRepresentable {
-            typealias WorkflowInput = Never
-            typealias WorkflowOutput = Never
-            var _workflowPointer: AnyFlowRepresentable?
-            static func instance() -> Self { Self() }
-        }
-        struct FR3: FlowRepresentable {
-            typealias WorkflowInput = Never
-            typealias WorkflowOutput = Never
-            var _workflowPointer: AnyFlowRepresentable?
-            static func instance() -> Self { Self() }
-        }
-
-        let responder = MockOrchestrationResponder()
-        let wf = Workflow(FR1.self)
-            .thenPresent(FR2.self)
-            .thenPresent(FR3.self)
-
-        wf.applyOrchestrationResponder(responder)
-
-        wf.launch(with: 1)
-        
-        XCTAssertThrowsFatalError {
-            (responder.lastTo?.instance.value?.underlyingInstance as? FR1)?.proceedBackwardInWorkflow()
-        }
-    }
-
     func testProceedBackwardThrowsFatalErrorIfInternalStateIsMangled() {
         struct FR1: FlowRepresentable {
             typealias WorkflowInput = Never
@@ -218,11 +179,9 @@ class WorkflowTests: XCTestCase {
     func testWorkflowCallsBackOnCompletion() {
         class FR1: TestFlowRepresentable<Never, Never>, FlowRepresentable {
             typealias WorkflowOutput = String
-            static func instance() -> Self { Self() }
         }
         class FR2: TestFlowRepresentable<Never, Never>, FlowRepresentable {
             typealias WorkflowOutput = String
-            static func instance() -> Self { Self() }
         }
 
         let wf:Workflow = Workflow(FR1.self)
@@ -242,12 +201,9 @@ class WorkflowTests: XCTestCase {
     func testWorkflowCallsBackOnCompletionWhenLastViewIsSkipped() {
         class FR1: TestFlowRepresentable<Never, Never>, FlowRepresentable {
             typealias WorkflowOutput = String
-            static func instance() -> Self { Self() }
         }
         class FR2: TestFlowRepresentable<Never, Never>, FlowRepresentable {
             typealias WorkflowOutput = String
-            static func instance() -> Self { Self() }
-
             func shouldLoad() -> Bool {
                 proceedInWorkflow("args")
                 return false
@@ -270,7 +226,6 @@ class WorkflowTests: XCTestCase {
     func testWorkflowCallsBackOnCompletionWhenLastViewIsSkipped_AndItIsTheOnlyView() {
         class FR1: TestFlowRepresentable<Never, Never>, FlowRepresentable {
             typealias WorkflowOutput = String
-            static func instance() -> Self { Self() }
             func shouldLoad() -> Bool {
                 proceedInWorkflow("args")
                 return false
@@ -289,8 +244,6 @@ class WorkflowTests: XCTestCase {
 
     func testAnyFlowRepresentableThrowsFatalErrorIfItSomehowHasATypeMismatch() {
         class FR1: TestFlowRepresentable<String, Int>, FlowRepresentable {
-            static func instance() -> Self { Self() }
-
             func shouldLoad(with args: String) -> Bool { true }
         }
 
@@ -307,7 +260,9 @@ class WorkflowTests: XCTestCase {
         typealias WorkflowOutput = O
 
         required init() { }
-        
+
+        static func instance() -> Self { Self() }
+
         weak var _workflowPointer: AnyFlowRepresentable?
     }
 }

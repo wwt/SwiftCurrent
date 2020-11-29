@@ -11,23 +11,25 @@ import Foundation
 class AnyFlowRepresentableStorageBase {
     var underlyingInstance: Any { fatalError() }
     var _workflowPointer: AnyFlowRepresentable?
-    func shouldLoad(with args: Any?) -> Bool { fatalError() }
+    func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool { fatalError() }
 
     var workflow: AnyWorkflow?
-    var proceedInWorkflowStorage: ((Any?) -> Void)?
+    var proceedInWorkflowStorage: ((AnyWorkflow.PassedArgs) -> Void)?
     var proceedBackwardInWorkflowStorage: (() -> Void)?
 }
 
 class AnyFlowRepresentableStorage<FR: FlowRepresentable>: AnyFlowRepresentableStorageBase {
     var holder: FR
 
-    override func shouldLoad(with args: Any?) -> Bool {
+    override func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool {
         switch args {
             case _ where FR.WorkflowInput.self == Never.self: return holder.shouldLoad()
-            default:
-                guard let cast = args as? FR.WorkflowInput else { fatalError("TYPE MISMATCH: \(String(describing: args)) is not type: \(FR.WorkflowInput.self)") }
+                //swiftlint:disable:next force_cast
+            case _ where FR.WorkflowInput.self == AnyWorkflow.PassedArgs.self: return holder.shouldLoad(with: args as! FR.WorkflowInput)
+            case .args(let extracted):
+                guard let cast = extracted as? FR.WorkflowInput else { fatalError("TYPE MISMATCH: \(String(describing: args)) is not type: \(FR.WorkflowInput.self)") }
                 return holder.shouldLoad(with: cast)
-
+            default: fatalError("No arguments were passed to representable: \(FR.self), but it expected: \(FR.WorkflowInput.self)")
         }
     }
 
@@ -49,10 +51,13 @@ class AnyFlowRepresentableStorage<FR: FlowRepresentable>: AnyFlowRepresentableSt
 }
 
 public class AnyFlowRepresentable {
-    func shouldLoad(with args: Any?) -> Bool { _storage.shouldLoad(with: args) }
-
     typealias WorkflowInput = Any
     typealias WorkflowOutput = Any
+
+    init<FR: FlowRepresentable>(_ instance: inout FR) {
+        _storage = AnyFlowRepresentableStorage(&instance)
+        _storage._workflowPointer = self
+    }
 
     var workflow: AnyWorkflow? {
         get {
@@ -62,7 +67,7 @@ public class AnyFlowRepresentable {
         }
     }
 
-    var proceedInWorkflowStorage: ((Any?) -> Void)? {
+    var proceedInWorkflowStorage: ((AnyWorkflow.PassedArgs) -> Void)? {
         get {
             _storage.proceedInWorkflowStorage
         } set {
@@ -84,9 +89,6 @@ public class AnyFlowRepresentable {
         _storage.underlyingInstance
     }
 
-    init<FR: FlowRepresentable>(_ instance: inout FR) {
-        _storage = AnyFlowRepresentableStorage(&instance)
-        instance._workflowPointer = self
-        _storage._workflowPointer = self
-    }
+    func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool { _storage.shouldLoad(with: args) }
+    func shouldLoad<T>(with args: T) -> Bool { _storage.shouldLoad(with: .args(args)) }
 }

@@ -44,7 +44,10 @@ class UIKitPresenterTests: XCTestCase {
 
             static func instance() -> Self { Self() }
 
-            func shouldLoad(with args: String?) -> Bool { false }
+            func shouldLoad(with args: String?) -> Bool {
+                proceedInWorkflow(1)
+                return false
+            }
         }
         class FR2:UIViewController, FlowRepresentable {
             weak var _workflowPointer: AnyFlowRepresentable?
@@ -61,7 +64,7 @@ class UIKitPresenterTests: XCTestCase {
         let root = UIViewController()
         UIApplication.shared.windows.first?.rootViewController = root
 
-        root.launchInto(flow)
+        root.launchInto(flow, args: "")
 
         XCTAssert(UIApplication.topViewController() is FR2)
     }
@@ -332,7 +335,7 @@ class UIKitPresenterTests: XCTestCase {
     func testFlowThatSkipsScreen() {
         class FR1: TestViewController { }
         class FR2: TestViewController {
-            override func shouldLoad(with args: Any?) -> Bool { false }
+            override func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool { false }
         }
         class FR3: TestViewController { }
         
@@ -352,7 +355,7 @@ class UIKitPresenterTests: XCTestCase {
 
     func testFlowThatSkipsScreenIfThatScreenIsFirst() {
         class FR1: TestViewController {
-            override func shouldLoad(with args: Any?) -> Bool { false }
+            override func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool { false }
         }
         class FR2: TestViewController { }
         class FR3: TestViewController { }
@@ -380,8 +383,8 @@ class UIKitPresenterTests: XCTestCase {
     func testFlowThatSkipsScreenButStillPassesData() {
         class FR1: TestViewController { }
         class FR2: TestViewController {
-            override func shouldLoad(with args: Any?) -> Bool {
-                proceedInWorkflow(args)
+            override func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool {
+                proceedInWorkflow(args.extract(nil))
                 return false
             }
         }
@@ -600,7 +603,7 @@ class UIKitPresenterTests: XCTestCase {
     
     func testNavWorkflowWhichSkipsFirstScreen_ButKeepsItInTheViewStack() {
         class FR1: TestViewController {
-            override func shouldLoad(with args: Any?) -> Bool {
+            override func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool {
                 _ = super.shouldLoad(with: args)
                 return false
             }
@@ -625,7 +628,7 @@ class UIKitPresenterTests: XCTestCase {
     
     func testNavWorkflowWhichSkipsFirstScreen_ButKeepsItInTheViewStack_BacksUp_ThenGoesForwardAgain() {
         class FR1: TestViewController {
-            override func shouldLoad(with args: Any?) -> Bool {
+            override func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool {
                 _ = super.shouldLoad(with: args)
                 return false
             }
@@ -880,7 +883,7 @@ class UIKitPresenterTests: XCTestCase {
     
     func testModalWorkflowWhichSkipsFirstScreen_ButKeepsItInTheViewStack() {
         class FR1: TestViewController {
-            override func shouldLoad(with args: Any?) -> Bool {
+            override func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool {
                 _ = super.shouldLoad(with: args)
                 return false
             }
@@ -1100,20 +1103,20 @@ class UIKitPresenterTests: XCTestCase {
     
     func testCallingThroughMultipleSkippedWorkflowItems() {
         class FR1: TestViewController {
-            override func shouldLoad(with args: Any?) -> Bool {
-                proceedInWorkflow(args)
+            override func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool {
+                proceedInWorkflow(args.extract(nil))
                 return false
             }
         }
         class FR2: TestViewController {
-            override func shouldLoad(with args: Any?) -> Bool {
-                proceedInWorkflow(args)
+            override func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool {
+                proceedInWorkflow(args.extract(nil))
                 return false
             }
         }
         class FR3: TestViewController {
-            override func shouldLoad(with args: Any?) -> Bool {
-                proceedInWorkflow(args)
+            override func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool {
+                proceedInWorkflow(args.extract(nil))
                 return false
             }
         }
@@ -1136,8 +1139,8 @@ class UIKitPresenterTests: XCTestCase {
     
     func testStartWithEmptyNav_LaunchWorkflowThatSkipsTheFirstScreenAndPassesData() {
         class FR1: TestViewController {
-            override func shouldLoad(with args: Any?) -> Bool {
-                proceedInWorkflow(args)
+            override func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool {
+                proceedInWorkflow(args.extract(nil))
                 return false
             }
         }
@@ -1197,7 +1200,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR2: TestViewController { }
         class FR3: TestViewController { }
         class FR4: TestViewController {
-            override func shouldLoad(with args: Any?) -> Bool {
+            override func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool {
                 self.data = args
                 return false
             }
@@ -1568,7 +1571,6 @@ class UIKitPresenterTests: XCTestCase {
         
         let root = UIViewController()
         loadView(controller: root)
-        
         root.launchInto(Workflow(FR1.self)
             .thenPresent(FR2.self, presentationType: .modal)
             .thenPresent(FR3.self, presentationType: .navigationStack)
@@ -1824,15 +1826,15 @@ class UIKitPresenterTests: XCTestCase {
 }
 
 extension UIKitPresenterTests {
-    class TestViewController: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
+    class TestViewController: UIWorkflowItem<AnyWorkflow.PassedArgs, Any?>, FlowRepresentable {
         var data:Any?
         static func instance() -> Self {
             let controller = Self()
             controller.view.backgroundColor = .red
             return controller
         }
-        func shouldLoad(with args: Any?) -> Bool {
-            self.data = args
+        func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool {
+            self.data = args.extract(nil)
             return true
         }
         func next() {
@@ -1841,10 +1843,10 @@ extension UIKitPresenterTests {
     }
 }
 
-class MockFlowRepresentable: UIWorkflowItem<Any?, Never>, FlowRepresentable {
+class MockFlowRepresentable: UIWorkflowItem<Never, Never>, FlowRepresentable {
     static func instance() -> Self { Self() }
     
-    func shouldLoad(with args: Any?) -> Bool { true }
+    func shouldLoad() -> Bool { true }
     
     override func viewDidLoad() {
         UIKitPresenterTests.viewDidLoadOnMockCalled += 1

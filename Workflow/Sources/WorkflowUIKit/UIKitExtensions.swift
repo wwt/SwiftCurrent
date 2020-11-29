@@ -84,7 +84,8 @@ extension Workflow {
         self.init(FlowRepresentableMetaData(type,
                                             launchStyle: presentationType.rawValue,
                                             flowPersistance: { data in
-                                                guard let cast = data as? F.WorkflowInput else { return .default }
+                                                guard case.args(let extracted) = data,
+                                                      let cast = extracted as? F.WorkflowInput else { return .default }
                                                 return flowPersistance(cast)
                                             }))
     }
@@ -103,6 +104,21 @@ extension Workflow {
                                                 return flowPersistance()
                                             }))
     }
+
+    /// init: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
+    /// - Parameter type: A reference to the class used to create the workflow
+    /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
+    /// - Parameter flowPersistance: A closure returning a `FlowPersistance`type representing how this item in the workflow should persist.
+    /// - Returns: `Workflow`
+    public convenience init(_ type: F.Type,
+                            presentationType: LaunchStyle.PresentationType,
+                            flowPersistance:@escaping () -> FlowPersistance) where F.WorkflowInput == AnyWorkflow.PassedArgs {
+        self.init(FlowRepresentableMetaData(type,
+                                            launchStyle: presentationType.rawValue,
+                                            flowPersistance: { _ in
+                                                return flowPersistance()
+                                            }))
+    }
 }
 
 public extension Workflow where F.WorkflowOutput == Never {
@@ -114,6 +130,24 @@ public extension Workflow where F.WorkflowOutput == Never {
     func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                             presentationType: LaunchStyle.PresentationType,
                                             flowPersistance:@escaping @autoclosure () -> FlowPersistance = .default) -> Workflow<FR> where FR.WorkflowInput == Never {
+        let wf = Workflow<FR>(first)
+        wf.append(FlowRepresentableMetaData(type,
+                                            launchStyle: presentationType.rawValue,
+                                            flowPersistance: { _ in
+                                                return flowPersistance()
+                                            }))
+        return wf
+    }
+
+    /// thenPresent: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
+    /// - Parameter type: A reference to the class used to create the workflow
+    /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
+    /// - Parameter flowPersistance: An `FlowPersistance`type representing how this item in the workflow should persist.
+    /// - Returns: `Workflow`
+    func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
+                                            presentationType: LaunchStyle.PresentationType,
+                                            flowPersistance:@escaping @autoclosure () -> FlowPersistance = .default) -> Workflow<FR>
+                                                                                                                        where FR.WorkflowInput == AnyWorkflow.PassedArgs {
         let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetaData(type,
                                             launchStyle: presentationType.rawValue,
@@ -152,7 +186,8 @@ public extension Workflow {
         wf.append(FlowRepresentableMetaData(type,
                                             launchStyle: presentationType.rawValue,
                                             flowPersistance: { data in
-                                                guard let cast = data as? FR.WorkflowInput else { return .default }
+                                                guard case.args(let extracted) = data,
+                                                      let cast = extracted as? FR.WorkflowInput else { return .default }
                                                 return flowPersistance(cast)
                                             }))
         return wf
@@ -166,6 +201,24 @@ public extension Workflow {
     func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                             presentationType: LaunchStyle.PresentationType,
                                             flowPersistance:@escaping @autoclosure () -> FlowPersistance = .default) -> Workflow<FR> where FR.WorkflowInput == Never {
+        let wf = Workflow<FR>(first)
+        wf.append(FlowRepresentableMetaData(type,
+                                            launchStyle: presentationType.rawValue,
+                                            flowPersistance: { _ in
+                                                return flowPersistance()
+                                            }))
+        return wf
+    }
+
+    /// thenPresent: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
+    /// - Parameter type: A reference to the class used to create the workflow
+    /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
+    /// - Parameter flowPersistance: A closure returning a `FlowPersistance`type representing how this item in the workflow should persist.
+    /// - Returns: `Workflow`
+    func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
+                                            presentationType: LaunchStyle.PresentationType,
+                                            flowPersistance:@escaping @autoclosure () -> FlowPersistance = .default) -> Workflow<FR>
+                                                                                                                        where FR.WorkflowInput == AnyWorkflow.PassedArgs {
         let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetaData(type,
                                             launchStyle: presentationType.rawValue,
