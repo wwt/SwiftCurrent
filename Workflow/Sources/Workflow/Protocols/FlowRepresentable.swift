@@ -21,7 +21,6 @@ public protocol FlowRepresentable {
     associatedtype WorkflowOutput = Never
 
     var _workflowPointer: AnyFlowRepresentable? { get set }
-//    var proceedInWorkflowStorage: ((Any?) -> Void)? { get set }
 
     /// instance: A method to return an instance of the `FlowRepresentable`
     /// - Returns: `AnyFlowRepresentable`. Specifically a new instance from the static class passed to a `Workflow`
@@ -45,6 +44,10 @@ public extension FlowRepresentable {
     /// - Note: While not strictly necessary it would be wise to declare this property as `weak`
     var workflow: AnyWorkflow? {
         _workflowPointer?.workflow
+    }
+
+    func proceedBackwardInWorkflow() {
+        _workflowPointer?.proceedBackwardInWorkflowStorage?()
     }
 }
 

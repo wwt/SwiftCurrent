@@ -11,6 +11,7 @@ import UIKit
 import Workflow
 
 open class UIKitPresenter: AnyOrchestrationResponder {
+
     let launchedFromVC: UIViewController
     let launchedPresentationType: LaunchStyle.PresentationType
 
@@ -130,4 +131,8 @@ open class UIKitPresenter: AnyOrchestrationResponder {
         }
     }
 
+    public func proceedBackward(from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData),
+                                to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
+
+    }
 }
