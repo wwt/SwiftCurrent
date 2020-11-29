@@ -21,7 +21,7 @@ class OrchestrationResponderTests : XCTestCase {
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
         
-        let launchedRepresentable = wf.launch(with: nil)
+        let launchedRepresentable = wf.launch()
         
         XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value?.underlyingInstance is FR1)
@@ -57,7 +57,7 @@ class OrchestrationResponderTests : XCTestCase {
         wf.applyOrchestrationResponder(responder)
         let expectation = self.expectation(description: "OnFinish called")
         
-        let launchedRepresentable = wf.launch(with: nil) { _ in expectation.fulfill() }
+        let launchedRepresentable = wf.launch { _ in expectation.fulfill() }
         
         (launchedRepresentable?.value?.underlyingInstance as? FR1)?.proceedInWorkflow()
         (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.proceedInWorkflow()
@@ -79,7 +79,7 @@ class OrchestrationResponderTests : XCTestCase {
         wf.applyOrchestrationResponder(responder)
         let expectation = self.expectation(description: "OnFinish called")
         
-        let launchedRepresentable = wf.launch(with: nil) { args in
+        let launchedRepresentable = wf.launch { args in
             XCTAssert(args as? Object === val)
             expectation.fulfill()
         }
@@ -101,7 +101,7 @@ class OrchestrationResponderTests : XCTestCase {
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
 
-        let launchedRepresentable = wf.launch(with: nil)
+        let launchedRepresentable = wf.launch()
 
         XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value?.underlyingInstance is FR1)
@@ -144,7 +144,7 @@ class OrchestrationResponderTests : XCTestCase {
         wf.applyOrchestrationResponder(responder)
         let expectation = self.expectation(description: "OnFinish called")
 
-        let launchedRepresentable = wf.launch(with: nil) { _ in expectation.fulfill() }
+        let launchedRepresentable = wf.launch { _ in expectation.fulfill() }
 
         (launchedRepresentable?.value?.underlyingInstance as? FR1)?.proceedInWorkflow()
         (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.proceedInWorkflow()

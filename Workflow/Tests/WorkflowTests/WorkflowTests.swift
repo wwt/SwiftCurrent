@@ -173,6 +173,7 @@ class WorkflowTests: XCTestCase {
     
     func testWorkflowReturnsNilWhenLaunchingWithoutRepresentables() {
         let wf:AnyWorkflow = AnyWorkflow()
+        XCTAssertNil(wf.launch())
         XCTAssertNil(wf.launch(with: nil))
     }
 

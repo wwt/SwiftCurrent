@@ -51,6 +51,25 @@ public extension UIViewController {
         ])
         #endif
     }
+
+    ///launchInto: When using UIKit this is how you launch a workflow
+    /// - Parameter workflow: `Workflow` to launch
+    /// - Parameter launchStyle: The `PresentationType` used to launch the workflow
+    /// - Parameter onFinish: A callback that is called when the last item in the workflow calls back
+    /// - Note: In the background this applies a UIKitPresenter, if you call launch on workflow directly you'll need to apply one yourself
+    func launchInto(_ workflow: AnyWorkflow, withLaunchStyle launchStyle: LaunchStyle.PresentationType = .default, onFinish: ((Any?) -> Void)? = nil) {
+        workflow.applyOrchestrationResponder(UIKitPresenter(self, launchStyle: launchStyle))
+        workflow.launch(withLaunchStyle: launchStyle.rawValue,
+                        onFinish: onFinish)
+        #if canImport(XCTest)
+        NotificationCenter.default.post(name: .workflowLaunched, object: [
+            "workflow": workflow,
+            "launchFrom": self,
+            "style": launchStyle,
+            "onFinish": onFinish as Any
+        ])
+        #endif
+    }
 }
 
 public extension FlowRepresentable where Self: UIViewController {

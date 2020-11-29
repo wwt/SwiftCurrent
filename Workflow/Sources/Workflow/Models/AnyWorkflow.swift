@@ -24,13 +24,24 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
         self.orchestrationResponder = orchestrationResponder
     }
 
+    @discardableResult public func launch(withLaunchStyle launchStyle: LaunchStyle = .default,
+                                          onFinish: ((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Element? {
+        return launch(passedArgs: .none, withLaunchStyle: launchStyle, onFinish: onFinish)
+    }
+
     @discardableResult public func launch(with args: Any?,
+                                          withLaunchStyle launchStyle: LaunchStyle = .default,
+                                          onFinish: ((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Element? {
+        return launch(passedArgs: .args(args), withLaunchStyle: launchStyle, onFinish: onFinish)
+    }
+
+    @discardableResult public func launch(passedArgs: PassedArgs,
                                           withLaunchStyle launchStyle: LaunchStyle = .default,
                                           onFinish: ((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Element? {
         removeInstances()
         instances = LinkedList(map { _ in nil })
         var root: (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetaData)?
-        var passedArgs: PassedArgs = args != nil ? .args(args) : .none
+        var passedArgs = passedArgs
 
         let metadata = first?.traverse { [self] nextNode in
             let nextMetadata = nextNode.value
@@ -60,7 +71,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
 
         guard let first = firstLoadedInstance,
               let m = metadata else {
-            if let argsToPass = passedArgs.extract(args) {
+            if let argsToPass = passedArgs.extract(nil) {
                 onFinish?(argsToPass)
             }
             return nil
