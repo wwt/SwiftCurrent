@@ -14,6 +14,9 @@ let package = Package(
             name: "WorkflowUIKit",
             targets: ["WorkflowUIKit"]),
         .library(
+            name: "WorkflowSwiftUI",
+            targets: ["WorkflowSwiftUI"]),
+        .library(
             name: "WorkflowDI",
             targets: ["WorkflowDI"]),
     ],
@@ -29,6 +32,9 @@ let package = Package(
             dependencies: []),
         .target(
             name: "WorkflowUIKit",
+            dependencies: ["Workflow"]),
+        .target(
+            name: "WorkflowSwiftUI",
             dependencies: ["Workflow"]),
         .target(
             name: "WorkflowDI",

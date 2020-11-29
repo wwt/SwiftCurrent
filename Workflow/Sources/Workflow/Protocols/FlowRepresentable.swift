@@ -21,7 +21,7 @@ public protocol FlowRepresentable {
     associatedtype WorkflowOutput = Never
 
     var _workflowPointer: AnyFlowRepresentable? { get set }
-
+    var _workflowUnderlyingInstance: Any { get }
     /// instance: A method to return an instance of the `FlowRepresentable`
     /// - Returns: `AnyFlowRepresentable`. Specifically a new instance from the static class passed to a `Workflow`
     /// - Note: This needs to return a unique instance of your view. Whether programmatic or from the storyboard is irrelevant
@@ -33,6 +33,10 @@ public protocol FlowRepresentable {
     /// - Note: This method is called *before* your view loads. Do not attempt to do any UI work in this method. This is however a good place to set up data on your view.
     mutating func shouldLoad(with args: WorkflowInput) -> Bool
     mutating func shouldLoad() -> Bool
+}
+
+public extension FlowRepresentable {
+    var _workflowUnderlyingInstance:Any { self }
 }
 
 public extension FlowRepresentable {

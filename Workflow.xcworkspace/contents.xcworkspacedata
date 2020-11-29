@@ -8,6 +8,9 @@
       location = "group:WorkflowExample/WorkflowExample.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:WorkflowSwiftUIExample/WorkflowSwiftUIExample.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:WorkflowLint/WorkflowLint.xcodeproj">
    </FileRef>
    <FileRef

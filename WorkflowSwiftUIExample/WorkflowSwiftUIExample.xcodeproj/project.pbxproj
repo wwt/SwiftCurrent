@@ -1,0 +1,360 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 52;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CA875AD42574497C00243FA4 /* WorkflowSwiftUIExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA875AD32574497C00243FA4 /* WorkflowSwiftUIExampleApp.swift */; };
+		CA875AD62574497C00243FA4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA875AD52574497C00243FA4 /* ContentView.swift */; };
+		CA875AD82574497C00243FA4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA875AD72574497C00243FA4 /* Assets.xcassets */; };
+		CA875ADB2574497C00243FA4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA875ADA2574497C00243FA4 /* Preview Assets.xcassets */; };
+		CA875AE7257449D100243FA4 /* WorkflowSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = CA875AE6257449D100243FA4 /* WorkflowSwiftUI */; };
+		CA875AE9257449E300243FA4 /* Workflow in Frameworks */ = {isa = PBXBuildFile; productRef = CA875AE8257449E300243FA4 /* Workflow */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		CA875AD02574497C00243FA4 /* WorkflowSwiftUIExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkflowSwiftUIExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA875AD32574497C00243FA4 /* WorkflowSwiftUIExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowSwiftUIExampleApp.swift; sourceTree = "<group>"; };
+		CA875AD52574497C00243FA4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		CA875AD72574497C00243FA4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CA875ADA2574497C00243FA4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		CA875ADC2574497C00243FA4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CA875ACD2574497C00243FA4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA875AE7257449D100243FA4 /* WorkflowSwiftUI in Frameworks */,
+				CA875AE9257449E300243FA4 /* Workflow in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CA875AC72574497C00243FA4 = {
+			isa = PBXGroup;
+			children = (
+				CA875AD22574497C00243FA4 /* WorkflowSwiftUIExample */,
+				CA875AD12574497C00243FA4 /* Products */,
+				CA875AE3257449C400243FA4 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		CA875AD12574497C00243FA4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CA875AD02574497C00243FA4 /* WorkflowSwiftUIExample.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CA875AD22574497C00243FA4 /* WorkflowSwiftUIExample */ = {
+			isa = PBXGroup;
+			children = (
+				CA875AD32574497C00243FA4 /* WorkflowSwiftUIExampleApp.swift */,
+				CA875AD52574497C00243FA4 /* ContentView.swift */,
+				CA875AD72574497C00243FA4 /* Assets.xcassets */,
+				CA875ADC2574497C00243FA4 /* Info.plist */,
+				CA875AD92574497C00243FA4 /* Preview Content */,
+			);
+			path = WorkflowSwiftUIExample;
+			sourceTree = "<group>";
+		};
+		CA875AD92574497C00243FA4 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				CA875ADA2574497C00243FA4 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		CA875AE3257449C400243FA4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CA875ACF2574497C00243FA4 /* WorkflowSwiftUIExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA875ADF2574497C00243FA4 /* Build configuration list for PBXNativeTarget "WorkflowSwiftUIExample" */;
+			buildPhases = (
+				CA875ACC2574497C00243FA4 /* Sources */,
+				CA875ACD2574497C00243FA4 /* Frameworks */,
+				CA875ACE2574497C00243FA4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WorkflowSwiftUIExample;
+			packageProductDependencies = (
+				CA875AE6257449D100243FA4 /* WorkflowSwiftUI */,
+				CA875AE8257449E300243FA4 /* Workflow */,
+			);
+			productName = WorkflowSwiftUIExample;
+			productReference = CA875AD02574497C00243FA4 /* WorkflowSwiftUIExample.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CA875AC82574497C00243FA4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1220;
+				LastUpgradeCheck = 1220;
+				TargetAttributes = {
+					CA875ACF2574497C00243FA4 = {
+						CreatedOnToolsVersion = 12.2;
+					};
+				};
+			};
+			buildConfigurationList = CA875ACB2574497C00243FA4 /* Build configuration list for PBXProject "WorkflowSwiftUIExample" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CA875AC72574497C00243FA4;
+			productRefGroup = CA875AD12574497C00243FA4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CA875ACF2574497C00243FA4 /* WorkflowSwiftUIExample */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CA875ACE2574497C00243FA4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA875ADB2574497C00243FA4 /* Preview Assets.xcassets in Resources */,
+				CA875AD82574497C00243FA4 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CA875ACC2574497C00243FA4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA875AD62574497C00243FA4 /* ContentView.swift in Sources */,
+				CA875AD42574497C00243FA4 /* WorkflowSwiftUIExampleApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		CA875ADD2574497C00243FA4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		CA875ADE2574497C00243FA4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CA875AE02574497C00243FA4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"WorkflowSwiftUIExample/Preview Content\"";
+				DEVELOPMENT_TEAM = 9CUJHB48U6;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = WorkflowSwiftUIExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = TT.WorkflowSwiftUIExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CA875AE12574497C00243FA4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"WorkflowSwiftUIExample/Preview Content\"";
+				DEVELOPMENT_TEAM = 9CUJHB48U6;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = WorkflowSwiftUIExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = TT.WorkflowSwiftUIExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CA875ACB2574497C00243FA4 /* Build configuration list for PBXProject "WorkflowSwiftUIExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA875ADD2574497C00243FA4 /* Debug */,
+				CA875ADE2574497C00243FA4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CA875ADF2574497C00243FA4 /* Build configuration list for PBXNativeTarget "WorkflowSwiftUIExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA875AE02574497C00243FA4 /* Debug */,
+				CA875AE12574497C00243FA4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CA875AE6257449D100243FA4 /* WorkflowSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WorkflowSwiftUI;
+		};
+		CA875AE8257449E300243FA4 /* Workflow */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Workflow;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = CA875AC82574497C00243FA4 /* Project object */;
+}
