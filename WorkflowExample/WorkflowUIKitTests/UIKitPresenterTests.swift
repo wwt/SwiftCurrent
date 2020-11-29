@@ -13,6 +13,10 @@ import XCTest
 import WorkflowUIKit
 
 class UIKitPresenterTests: XCTestCase {
+    override func setUpWithError() throws {
+        UIViewController.initializeTestable()
+    }
+
     func testWorkflowCanLaunchViewController() {
         class FR1: UIViewController, FlowRepresentable {
             weak var _workflowPointer: AnyFlowRepresentable?
@@ -565,6 +569,34 @@ class UIKitPresenterTests: XCTestCase {
         waitUntil(UIApplication.topViewController() is FR3)
         XCTAssert(UIApplication.topViewController() is FR3)
     }
+
+    func testNavWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStack_BacksUpUsingWorkflow_ThenGoesForwardAgain() {
+        class FR1: TestViewController { }
+        class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
+            func shouldLoad(with args: Any?) -> Bool { false }
+
+            static func instance() -> Self { Self() }
+        }
+        class FR3: TestViewController { }
+
+        let nav = UINavigationController()
+        loadView(controller: nav)
+
+        nav.launchInto(Workflow(FR1.self)
+                    .thenPresent(FR2.self, flowPersistance: .hiddenInitially)
+                    .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
+        waitUntil(UIApplication.topViewController() is FR1)
+        XCTAssert(UIApplication.topViewController() is FR1)
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
+        waitUntil(UIApplication.topViewController() is FR3)
+        XCTAssert(UIApplication.topViewController() is FR3)
+        (UIApplication.topViewController() as? FR3)?.proceedBackwardInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR2)
+        XCTAssert(UIApplication.topViewController() is FR2)
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
+        waitUntil(UIApplication.topViewController() is FR3)
+        XCTAssert(UIApplication.topViewController() is FR3)
+    }
     
     func testNavWorkflowWhichSkipsFirstScreen_ButKeepsItInTheViewStack() {
         class FR1: TestViewController {
@@ -794,6 +826,54 @@ class UIKitPresenterTests: XCTestCase {
         waitUntil(UIApplication.topViewController() is FR3)
         XCTAssert(UIApplication.topViewController() is FR3)
         UIApplication.topViewController()?.dismiss(animated: true)
+        waitUntil(UIApplication.topViewController() is FR2)
+        XCTAssert(UIApplication.topViewController() is FR2)
+    }
+
+    func testModalWorkflowWhichSkipsAScreen_andBacksUpWithWorkflow() {
+        class FR1: TestViewController { }
+        class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
+            static func instance() -> Self { Self() }
+            func shouldLoad(with args:Any?) -> Bool { false }
+        }
+        class FR3: TestViewController { }
+
+        let root = UIViewController()
+        loadView(controller: root)
+
+        root.launchInto(Workflow(FR1.self)
+                    .thenPresent(FR2.self)
+                    .thenPresent(FR3.self), withLaunchStyle: .modal)
+        waitUntil(UIApplication.topViewController() is FR1)
+        XCTAssert(UIApplication.topViewController() is FR1)
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
+        waitUntil(UIApplication.topViewController() is FR3)
+        XCTAssert(UIApplication.topViewController() is FR3)
+        (UIApplication.topViewController() as? FR3)?.proceedBackwardInWorkflow()
+        waitUntil(UIApplication.topViewController() is FR1)
+        XCTAssert(UIApplication.topViewController() is FR1)
+    }
+
+    func testModalWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStack_andBacksUpWithWorkflow() {
+        class FR1: TestViewController { }
+        class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
+            static func instance() -> Self { Self() }
+            func shouldLoad(with args:Any?) -> Bool { false }
+        }
+        class FR3: TestViewController { }
+
+        let root = UIViewController()
+        loadView(controller: root)
+
+        root.launchInto(Workflow(FR1.self)
+                    .thenPresent(FR2.self, flowPersistance: .hiddenInitially)
+                    .thenPresent(FR3.self), withLaunchStyle: .modal)
+        waitUntil(UIApplication.topViewController() is FR1)
+        XCTAssert(UIApplication.topViewController() is FR1)
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
+        waitUntil(UIApplication.topViewController() is FR3)
+        XCTAssert(UIApplication.topViewController() is FR3)
+        (UIApplication.topViewController() as? FR3)?.proceedBackwardInWorkflow()
         waitUntil(UIApplication.topViewController() is FR2)
         XCTAssert(UIApplication.topViewController() is FR2)
     }

@@ -133,6 +133,11 @@ open class UIKitPresenter: AnyOrchestrationResponder {
 
     public func proceedBackward(from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData),
                                 to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
-
+        guard let view = to.instance.value?.underlyingInstance as? UIViewController else { return }
+        if let nav = view.navigationController {
+            nav.popToViewController(view, animated: true)
+        } else if let presented = view.presentedViewController {
+            presented.dismiss(animated: true)
+        }
     }
 }

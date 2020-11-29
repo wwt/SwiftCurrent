@@ -137,6 +137,78 @@ class WorkflowTests: XCTestCase {
         XCTAssert(responder.lastFrom?.instance.value?.underlyingInstance is FR2)
         XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR3)
     }
+
+    func testProceedBackwardThrowsFatalErrorIfYouCallItOnTheFirstRepresentable() {
+        struct FR1: FlowRepresentable {
+            typealias WorkflowInput = Never
+            typealias WorkflowOutput = Never
+            var _workflowPointer: AnyFlowRepresentable?
+            static func instance() -> Self { Self() }
+        }
+        struct FR2: FlowRepresentable {
+            typealias WorkflowInput = Never
+            typealias WorkflowOutput = Never
+            var _workflowPointer: AnyFlowRepresentable?
+            static func instance() -> Self { Self() }
+        }
+        struct FR3: FlowRepresentable {
+            typealias WorkflowInput = Never
+            typealias WorkflowOutput = Never
+            var _workflowPointer: AnyFlowRepresentable?
+            static func instance() -> Self { Self() }
+        }
+
+        let responder = MockOrchestrationResponder()
+        let wf = Workflow(FR1.self)
+            .thenPresent(FR2.self)
+            .thenPresent(FR3.self)
+
+        wf.applyOrchestrationResponder(responder)
+
+        wf.launch(with: 1)
+        
+        XCTAssertThrowsFatalError {
+            (responder.lastTo?.instance.value?.underlyingInstance as? FR1)?.proceedBackwardInWorkflow()
+        }
+    }
+
+    func testProceedBackwardThrowsFatalErrorIfInternalStateIsMangled() {
+        struct FR1: FlowRepresentable {
+            typealias WorkflowInput = Never
+            typealias WorkflowOutput = Never
+            var _workflowPointer: AnyFlowRepresentable?
+            static func instance() -> Self { Self() }
+        }
+        struct FR2: FlowRepresentable {
+            typealias WorkflowInput = Never
+            typealias WorkflowOutput = Never
+            var _workflowPointer: AnyFlowRepresentable?
+            static func instance() -> Self { Self() }
+        }
+        struct FR3: FlowRepresentable {
+            typealias WorkflowInput = Never
+            typealias WorkflowOutput = Never
+            var _workflowPointer: AnyFlowRepresentable?
+            static func instance() -> Self { Self() }
+        }
+
+        let responder = MockOrchestrationResponder()
+        let wf = Workflow(FR1.self)
+            .thenPresent(FR2.self)
+            .thenPresent(FR3.self)
+
+        wf.applyOrchestrationResponder(responder)
+
+        wf.launch(with: 1)
+
+        (responder.lastTo?.instance.value?.underlyingInstance as? FR1)?.proceedInWorkflow()
+
+        wf.first = nil
+
+        XCTAssertThrowsFatalError {
+            (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.proceedBackwardInWorkflow()
+        }
+    }
     
     func testWorkflowReturnsNilWhenLaunchingWithoutRepresentables() {
         let wf:AnyWorkflow = AnyWorkflow()

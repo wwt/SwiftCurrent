@@ -148,17 +148,48 @@ class OrchestrationResponderTests : XCTestCase {
 
         (launchedRepresentable?.value?.underlyingInstance as? FR1)?.proceedInWorkflow()
         (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.proceedInWorkflow()
+        (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.proceedBackwardInWorkflow()
+        (responder.lastTo?.instance.value?.underlyingInstance as? FR1)?.proceedInWorkflow()
+        (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.proceedInWorkflow()
         (responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.proceedInWorkflow()
 
         wait(for: [expectation], timeout: 3)
     }
 
-    func testWorkflowCallsOnFinishWhenItIsDone_andPassesForwardLastArguments_EvenWhenMovingBackwardsForABit() {
+    func testWorkflowCallsOnFinishWhenItIsDone_andPassesForwardInitialArguments_EvenWhenMovingBackwardsForABit() {
         class Object { }
         let val = Object()
-        class FR1: TestPassthroughFlowRepresentable { }
-        class FR2: TestPassthroughFlowRepresentable { }
-        class FR3: TestFlowRepresentable<Never, Object>, FlowRepresentable { }
+        class FR1: TestFlowRepresentable<Object, Object>, FlowRepresentable {
+            var obj:Object!
+            func shouldLoad(with args: Object) -> Bool {
+                obj = args
+                return true
+            }
+        }
+        class FR2: TestFlowRepresentable<Object, Object>, FlowRepresentable {
+            var obj:Object!
+            func shouldLoad(with args: Object) -> Bool {
+                obj = args
+                return true
+            }
+        }
+        class FR3: TestFlowRepresentable<Object, Object>, FlowRepresentable {
+            static var shouldMoveOn = false
+            var obj:Object!
+            func shouldLoad(with args: Object) -> Bool {
+                defer {
+                    FR3.shouldMoveOn.toggle()
+                }
+
+                obj = args
+
+                if FR3.shouldMoveOn {
+                    return false
+                }
+                proceedBackwardInWorkflow()
+                return true
+            }
+        }
         let wf = Workflow(FR1.self)
             .thenPresent(FR2.self)
             .thenPresent(FR3.self)
@@ -166,13 +197,22 @@ class OrchestrationResponderTests : XCTestCase {
         wf.applyOrchestrationResponder(responder)
         let expectation = self.expectation(description: "OnFinish called")
 
-        let launchedRepresentable = wf.launch(with: nil) { args in
+        let launchedRepresentable = wf.launch(with: val) { args in
             XCTAssert(args as? Object === val)
             expectation.fulfill()
         }
 
-        (launchedRepresentable?.value?.underlyingInstance as? FR1)?.proceedInWorkflow()
-        (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.proceedInWorkflow()
+        XCTAssert((launchedRepresentable?.value?.underlyingInstance as? FR1)?.obj === val)
+        (launchedRepresentable?.value?.underlyingInstance as? FR1)?.proceedInWorkflow(val)
+        XCTAssert((responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.obj === val)
+        (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.proceedInWorkflow(val)
+        XCTAssert((responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.obj === val)
+        (responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.proceedBackwardInWorkflow()
+        XCTAssert((responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.obj === val)
+        (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.proceedInWorkflow(val)
+        XCTAssert((responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.obj === val)
+        (responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.proceedInWorkflow(val)
+        XCTAssert((responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.obj === val)
         (responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.proceedInWorkflow(val)
 
         wait(for: [expectation], timeout: 3)
