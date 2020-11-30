@@ -11,9 +11,43 @@ import WorkflowSwiftUI
 
 struct ContentView: View {
     var body: some View {
+        Text("Above")
+//        T1()
         WorkflowView(Workflow(FR1.self)
-                        .thenPresent(FR2.self)
-                        .thenPresent(FR3.self))
+                        .thenPresent(FR2.self, launchStyle: ._modal)
+                        .thenPresent(FR3.self, launchStyle: ._modal))
+        Text("Below")
+    }
+}
+
+struct Wrapper: View {
+    @State var showingModal = true
+
+    let _content: AnyView
+    let _next: AnyView
+
+    init(next: AnyView, content: AnyView) {
+        _next = next
+        _content = content
+    }
+
+    var body: some View {
+        _content.sheet(isPresented: $showingModal, content: {
+            _next
+        })
+    }
+}
+
+struct T1: View {
+    @State var showingModal = true
+    var body: some View {
+        Wrapper(next: AnyView(T2()), content: AnyView(Text("T1")))
+    }
+}
+
+struct T2: View {
+    var body: some View {
+        Wrapper(next: AnyView(Text("FIN")), content: AnyView(Text("T2")))
     }
 }
 
