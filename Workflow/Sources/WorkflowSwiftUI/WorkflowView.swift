@@ -15,8 +15,6 @@ public extension FlowRepresentable where Self: View {
 
 @available(iOS 14.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
 public class Holder: ObservableObject {
-    @Published var state:Bool = true
-
     let view: AnyView
     let metadata: FlowRepresentableMetaData
     init(view: AnyView, metadata: FlowRepresentableMetaData) {
@@ -44,7 +42,6 @@ public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
         stack.append(Holder(view: next, metadata: to.metadata))
         var v = next
         _ = stack.last?.traverse(direction: .backward, until: {
-            $0.value.state = true
             v = AnyView(Wrapper(next: v, current: $0.value.view).environmentObject(self).environmentObject($0.value))
             return false
         })
@@ -63,16 +60,16 @@ public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
 @available(iOS 14.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
 struct Wrapper: View {
     @EnvironmentObject var model: WorkflowModel
-    @EnvironmentObject var holder: Holder
     let next: AnyView
     let current: AnyView
 
     var body: some View {
-        current.sheet(isPresented: $holder.state, content: {
+        current.sheet(isPresented: .init(get: { true }, set: { val in
+            if !val {
+                model.stack.removeLast()
+            }
+        }), content: {
             next
-        })
-        .onChange(of: holder.state, perform: { _ in
-            model.stack.removeLast()
         })
     }
 }
