@@ -47,6 +47,9 @@ class WorkflowSwiftUIExampleTests: XCTestCase {
 
         _ = try view.workflowModel.view.inspect().anyView().view(Wrapper.self).actualView()
             .current.inspect().anyView().view(FR1.self)
+        _ = try view.workflowModel.view.inspect().anyView().view(Wrapper.self).actualView()
+            .next.inspect().anyView().view(Wrapper.self).actualView()
+            .current.inspect().anyView().view(FR2.self)
         let fr3 = try view.workflowModel.view.inspect().anyView().view(Wrapper.self).actualView()
             .next.inspect().anyView().view(Wrapper.self).actualView()
             .next.inspect().anyView().view(FR3.self).actualView()
@@ -54,6 +57,13 @@ class WorkflowSwiftUIExampleTests: XCTestCase {
 
         _ = try view.workflowModel.view.inspect().anyView().view(Wrapper.self).actualView()
             .current.inspect().anyView().view(FR1.self)
+        _ = try view.workflowModel.view.inspect().anyView().view(Wrapper.self).actualView()
+            .next.inspect().anyView().view(Wrapper.self).actualView()
+            .current.inspect().anyView().view(FR2.self)
+        _ = try view.workflowModel.view.inspect().anyView().view(Wrapper.self).actualView()
+            .next.inspect().anyView().view(Wrapper.self).actualView()
+            .next.inspect().anyView().view(Wrapper.self).actualView()
+            .current.inspect().anyView().view(FR3.self)
         let fr4 = try view.workflowModel.view.inspect().anyView().view(Wrapper.self).actualView()
             .next.inspect().anyView().view(Wrapper.self).actualView()
             .next.inspect().anyView().view(Wrapper.self).actualView()
