@@ -42,7 +42,14 @@ public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
         stack.append(Holder(view: next, metadata: to.metadata))
         var v = next
         _ = stack.last?.traverse(direction: .backward, until: {
-            v = AnyView(Wrapper(next: v, current: $0.value.view).environmentObject(self).environmentObject($0.value))
+            guard let nextNode = $0.next else { return false } //NOTE: Barring some threading crazy, this should never be nil
+            
+            let launchStyle = LaunchStyle.PresentationType(rawValue: nextNode.value.metadata.launchStyle) ?? .default
+            switch launchStyle {
+                case .modal(_): v = AnyView(Wrapper(next: v, current: $0.value.view).environmentObject(self).environmentObject($0.value))
+                default: return false //v = $0.value.view
+            }
+            
             return false
         })
         view = v

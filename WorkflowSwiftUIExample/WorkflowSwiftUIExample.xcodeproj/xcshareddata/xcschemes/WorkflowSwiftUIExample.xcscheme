@@ -28,6 +28,16 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CAA88E372575F1DC001FC055"
+               BuildableName = "WorkflowSwiftUIExampleTests.xctest"
+               BlueprintName = "WorkflowSwiftUIExampleTests"
+               ReferencedContainer = "container:WorkflowSwiftUIExample.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

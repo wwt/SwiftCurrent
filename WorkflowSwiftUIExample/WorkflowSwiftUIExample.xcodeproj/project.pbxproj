@@ -13,7 +13,19 @@
 		CA875ADB2574497C00243FA4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA875ADA2574497C00243FA4 /* Preview Assets.xcassets */; };
 		CA875AE7257449D100243FA4 /* WorkflowSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = CA875AE6257449D100243FA4 /* WorkflowSwiftUI */; };
 		CA875AE9257449E300243FA4 /* Workflow in Frameworks */ = {isa = PBXBuildFile; productRef = CA875AE8257449E300243FA4 /* Workflow */; };
+		CAA88E3B2575F1DC001FC055 /* WorkflowSwiftUIExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA88E3A2575F1DC001FC055 /* WorkflowSwiftUIExampleTests.swift */; };
+		CAA88E462575F256001FC055 /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = CAA88E452575F256001FC055 /* ViewInspector */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CAA88E3D2575F1DC001FC055 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CA875AC82574497C00243FA4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CA875ACF2574497C00243FA4;
+			remoteInfo = WorkflowSwiftUIExample;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		CA875AD02574497C00243FA4 /* WorkflowSwiftUIExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkflowSwiftUIExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -22,6 +34,9 @@
 		CA875AD72574497C00243FA4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA875ADA2574497C00243FA4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CA875ADC2574497C00243FA4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CAA88E382575F1DC001FC055 /* WorkflowSwiftUIExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorkflowSwiftUIExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CAA88E3A2575F1DC001FC055 /* WorkflowSwiftUIExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowSwiftUIExampleTests.swift; sourceTree = "<group>"; };
+		CAA88E3C2575F1DC001FC055 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,6 +49,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CAA88E352575F1DC001FC055 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CAA88E462575F256001FC055 /* ViewInspector in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -41,6 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				CA875AD22574497C00243FA4 /* WorkflowSwiftUIExample */,
+				CAA88E392575F1DC001FC055 /* WorkflowSwiftUIExampleTests */,
 				CA875AD12574497C00243FA4 /* Products */,
 				CA875AE3257449C400243FA4 /* Frameworks */,
 			);
@@ -50,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				CA875AD02574497C00243FA4 /* WorkflowSwiftUIExample.app */,
+				CAA88E382575F1DC001FC055 /* WorkflowSwiftUIExampleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -81,6 +106,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		CAA88E392575F1DC001FC055 /* WorkflowSwiftUIExampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				CAA88E3A2575F1DC001FC055 /* WorkflowSwiftUIExampleTests.swift */,
+				CAA88E3C2575F1DC001FC055 /* Info.plist */,
+			);
+			path = WorkflowSwiftUIExampleTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -105,6 +139,27 @@
 			productReference = CA875AD02574497C00243FA4 /* WorkflowSwiftUIExample.app */;
 			productType = "com.apple.product-type.application";
 		};
+		CAA88E372575F1DC001FC055 /* WorkflowSwiftUIExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CAA88E412575F1DC001FC055 /* Build configuration list for PBXNativeTarget "WorkflowSwiftUIExampleTests" */;
+			buildPhases = (
+				CAA88E342575F1DC001FC055 /* Sources */,
+				CAA88E352575F1DC001FC055 /* Frameworks */,
+				CAA88E362575F1DC001FC055 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CAA88E3E2575F1DC001FC055 /* PBXTargetDependency */,
+			);
+			name = WorkflowSwiftUIExampleTests;
+			packageProductDependencies = (
+				CAA88E452575F256001FC055 /* ViewInspector */,
+			);
+			productName = WorkflowSwiftUIExampleTests;
+			productReference = CAA88E382575F1DC001FC055 /* WorkflowSwiftUIExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -117,6 +172,10 @@
 					CA875ACF2574497C00243FA4 = {
 						CreatedOnToolsVersion = 12.2;
 					};
+					CAA88E372575F1DC001FC055 = {
+						CreatedOnToolsVersion = 12.2;
+						TestTargetID = CA875ACF2574497C00243FA4;
+					};
 				};
 			};
 			buildConfigurationList = CA875ACB2574497C00243FA4 /* Build configuration list for PBXProject "WorkflowSwiftUIExample" */;
@@ -128,11 +187,15 @@
 				Base,
 			);
 			mainGroup = CA875AC72574497C00243FA4;
+			packageReferences = (
+				CAA88E442575F256001FC055 /* XCRemoteSwiftPackageReference "ViewInspector" */,
+			);
 			productRefGroup = CA875AD12574497C00243FA4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				CA875ACF2574497C00243FA4 /* WorkflowSwiftUIExample */,
+				CAA88E372575F1DC001FC055 /* WorkflowSwiftUIExampleTests */,
 			);
 		};
 /* End PBXProject section */
@@ -144,6 +207,13 @@
 			files = (
 				CA875ADB2574497C00243FA4 /* Preview Assets.xcassets in Resources */,
 				CA875AD82574497C00243FA4 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CAA88E362575F1DC001FC055 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,7 +229,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CAA88E342575F1DC001FC055 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CAA88E3B2575F1DC001FC055 /* WorkflowSwiftUIExampleTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CAA88E3E2575F1DC001FC055 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CA875ACF2574497C00243FA4 /* WorkflowSwiftUIExample */;
+			targetProxy = CAA88E3D2575F1DC001FC055 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		CA875ADD2574497C00243FA4 /* Debug */ = {
@@ -322,6 +408,46 @@
 			};
 			name = Release;
 		};
+		CAA88E3F2575F1DC001FC055 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KRX3M99K22;
+				INFOPLIST_FILE = WorkflowSwiftUIExampleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = DignityHealth.WorkflowSwiftUIExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WorkflowSwiftUIExample.app/WorkflowSwiftUIExample";
+			};
+			name = Debug;
+		};
+		CAA88E402575F1DC001FC055 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KRX3M99K22;
+				INFOPLIST_FILE = WorkflowSwiftUIExampleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = DignityHealth.WorkflowSwiftUIExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WorkflowSwiftUIExample.app/WorkflowSwiftUIExample";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -343,7 +469,27 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		CAA88E412575F1DC001FC055 /* Build configuration list for PBXNativeTarget "WorkflowSwiftUIExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CAA88E3F2575F1DC001FC055 /* Debug */,
+				CAA88E402575F1DC001FC055 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CAA88E442575F256001FC055 /* XCRemoteSwiftPackageReference "ViewInspector" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nalexn/ViewInspector";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		CA875AE6257449D100243FA4 /* WorkflowSwiftUI */ = {
@@ -353,6 +499,11 @@
 		CA875AE8257449E300243FA4 /* Workflow */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Workflow;
+		};
+		CAA88E452575F256001FC055 /* ViewInspector */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CAA88E442575F256001FC055 /* XCRemoteSwiftPackageReference "ViewInspector" */;
+			productName = ViewInspector;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
