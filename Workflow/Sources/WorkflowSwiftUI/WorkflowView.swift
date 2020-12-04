@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import Workflow
+
 @available(iOS 14.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
 public extension FlowRepresentable where Self: View {
     var _workflowUnderlyingInstance:Any { AnyView(self) }
@@ -31,15 +32,22 @@ public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
     var launchStyle:LaunchStyle.PresentationType = .default
 
     public func launch(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
-        guard let view = to.instance.value?.underlyingInstance as? AnyView else { return }
-        launchStyle = LaunchStyle.PresentationType(rawValue: to.metadata.launchStyle) ?? .default
-        self.view = view
-        stack.append(Holder(view: view, metadata: to.metadata))
+        guard let next = to.instance.value?.underlyingInstance as? AnyView else { return }
+        stack.append(Holder(view: next, metadata: to.metadata))
+
+        switch launchStyle {
+        case .modal(_): self.view = AnyView(Wrapper(next: next, current: AnyView(EmptyView())).environmentObject(self).environmentObject(stack.first!.value))
+            default: self.view = next
+        }
     }
 
     public func proceed(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData), from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
         guard let next = to.instance.value?.underlyingInstance as? AnyView else { return }
         stack.append(Holder(view: next, metadata: to.metadata))
+        present(view: next)
+    }
+    
+    private func present(view next:AnyView) {
         var v = next
         _ = stack.last?.traverse(direction: .backward, until: {
             guard let nextNode = $0.next else { return false } //NOTE: Barring some threading crazy, this should never be nil
@@ -50,13 +58,21 @@ public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
                 default: return false //v = $0.value.view
             }
             
+            if $0 === stack.first,
+               case .modal = self.launchStyle {
+                v = AnyView(Wrapper(next: v, current: AnyView(EmptyView())).environmentObject(self).environmentObject($0.value))
+            }
+            
             return false
         })
         view = v
     }
 
+    #warning("TEST THIS, also it only kinda works")
     public func proceedBackward(from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData), to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
-
+        stack.removeLast()
+        guard let prev = to.instance.value?.underlyingInstance as? AnyView else { return }
+        present(view: prev)
     }
 
     public func abandon(_ workflow: AnyWorkflow, animated: Bool, onFinish: (() -> Void)?) {
@@ -67,11 +83,16 @@ public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
 @available(iOS 14.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
 struct Wrapper: View {
     @EnvironmentObject var model: WorkflowModel
+    @EnvironmentObject var holder: Holder
+    
     let next: AnyView
     let current: AnyView
 
     var body: some View {
-        current.sheet(isPresented: .init(get: { true }, set: { val in
+        #warning("Is there a way to test the boolean value here?")
+        current.sheet(isPresented: .init(get: {
+            model.stack.contains(where: { $0.value === holder })
+        }, set: { val in
             if !val {
                 model.stack.removeLast()
             }

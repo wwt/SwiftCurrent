@@ -13,8 +13,8 @@ struct ContentView: View {
     var body: some View {
         Text("Above")
         WorkflowView(Workflow(FR1.self)
-                        .thenPresent(FR2.self, launchStyle: ._modal)
-                        .thenPresent(FR3.self, launchStyle: ._modal))
+                        .thenPresent(FR2.self, presentationType: .modal)
+                        .thenPresent(FR3.self, presentationType: .modal), withLaunchStyle: .modal)
         Text("Below")
     }
 }

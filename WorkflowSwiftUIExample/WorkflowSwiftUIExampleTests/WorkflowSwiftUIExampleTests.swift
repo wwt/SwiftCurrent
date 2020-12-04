@@ -31,7 +31,7 @@ class WorkflowSwiftUIExampleTests: XCTestCase {
         wait(for: [expectation], timeout: 3)
     }
     
-    func testProceedingForwardWithWorkflow_WithDefaultLaunchStyle_AndModalDefaultPresentation_CallsThroughToOnFinish() throws {
+    func testProceedingForwardWithWorkflow_WithDefaultLaunchStyle_AndModalDefaultPresentationOnSecondaryAndFartherViews_CallsThroughToOnFinish() throws {
         let expectation = self.expectation(description: "OnFinish called")
         let view = WorkflowView(Workflow(FR1.self)
                                     .thenPresent(FR2.self, presentationType: .modal)
@@ -65,6 +65,66 @@ class WorkflowSwiftUIExampleTests: XCTestCase {
             .next.inspect().anyView().view(Wrapper.self).actualView()
             .current.inspect().anyView().view(FR3.self)
         let fr4 = try view.workflowModel.view.inspect().anyView().view(Wrapper.self).actualView()
+            .next.inspect().anyView().view(Wrapper.self).actualView()
+            .next.inspect().anyView().view(Wrapper.self).actualView()
+            .next.inspect().anyView().view(FR4.self).actualView()
+        fr4.proceedInWorkflow()
+
+        wait(for: [expectation], timeout: 3)
+    }
+    
+    func testProceedingForwardWithWorkflow_WithModalDefaultLaunchStyle_AndModalDefaultPresentationOnSecondaryAndFartherViews_CallsThroughToOnFinish() throws {
+        let expectation = self.expectation(description: "OnFinish called")
+        let view = WorkflowView(Workflow(FR1.self)
+                                    .thenPresent(FR2.self, presentationType: .modal)
+                                    .thenPresent(FR3.self, presentationType: .modal)
+                                    .thenPresent(FR4.self, presentationType: .modal), withLaunchStyle: .modal) { _ in expectation.fulfill() }
+        
+        _ = try view.workflowModel.view.inspect().anyView().view(Wrapper.self).actualView().current.inspect().anyView().emptyView()
+        let fr1 = try view.workflowModel.view.inspect().anyView().view(Wrapper.self).actualView().next.inspect().anyView().view(FR1.self).actualView()
+        fr1.proceedInWorkflow()
+        
+        _ = try view.workflowModel.view.inspect().anyView().view(Wrapper.self).actualView()
+            .current.inspect().anyView().emptyView()
+        _ = try view.workflowModel.view.inspect().anyView().view(Wrapper.self).actualView()
+            .next.inspect().anyView().view(Wrapper.self).actualView()
+            .current.inspect().anyView().view(FR1.self)
+        let fr2 = try view.workflowModel.view.inspect().anyView().view(Wrapper.self).actualView()
+            .next.inspect().anyView().view(Wrapper.self).actualView()
+            .next.inspect().anyView().view(FR2.self).actualView()
+        fr2.proceedInWorkflow()
+
+        _ = try view.workflowModel.view.inspect().anyView().view(Wrapper.self).actualView()
+            .current.inspect().anyView().emptyView()
+        _ = try view.workflowModel.view.inspect().anyView().view(Wrapper.self).actualView()
+            .next.inspect().anyView().view(Wrapper.self).actualView()
+            .current.inspect().anyView().view(FR1.self)
+        _ = try view.workflowModel.view.inspect().anyView().view(Wrapper.self).actualView()
+            .next.inspect().anyView().view(Wrapper.self).actualView()
+            .next.inspect().anyView().view(Wrapper.self).actualView()
+            .current.inspect().anyView().view(FR2.self)
+        let fr3 = try view.workflowModel.view.inspect().anyView().view(Wrapper.self).actualView()
+            .next.inspect().anyView().view(Wrapper.self).actualView()
+            .next.inspect().anyView().view(Wrapper.self).actualView()
+            .next.inspect().anyView().view(FR3.self).actualView()
+        fr3.proceedInWorkflow()
+
+        _ = try view.workflowModel.view.inspect().anyView().view(Wrapper.self).actualView()
+            .current.inspect().anyView().emptyView()
+        _ = try view.workflowModel.view.inspect().anyView().view(Wrapper.self).actualView()
+            .next.inspect().anyView().view(Wrapper.self).actualView()
+            .current.inspect().anyView().view(FR1.self)
+        _ = try view.workflowModel.view.inspect().anyView().view(Wrapper.self).actualView()
+            .next.inspect().anyView().view(Wrapper.self).actualView()
+            .next.inspect().anyView().view(Wrapper.self).actualView()
+            .current.inspect().anyView().view(FR2.self)
+        _ = try view.workflowModel.view.inspect().anyView().view(Wrapper.self).actualView()
+            .next.inspect().anyView().view(Wrapper.self).actualView()
+            .next.inspect().anyView().view(Wrapper.self).actualView()
+            .next.inspect().anyView().view(Wrapper.self).actualView()
+            .current.inspect().anyView().view(FR3.self)
+        let fr4 = try view.workflowModel.view.inspect().anyView().view(Wrapper.self).actualView()
+            .next.inspect().anyView().view(Wrapper.self).actualView()
             .next.inspect().anyView().view(Wrapper.self).actualView()
             .next.inspect().anyView().view(Wrapper.self).actualView()
             .next.inspect().anyView().view(FR4.self).actualView()

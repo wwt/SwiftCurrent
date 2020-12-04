@@ -37,6 +37,7 @@
 		CAA88E382575F1DC001FC055 /* WorkflowSwiftUIExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorkflowSwiftUIExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAA88E3A2575F1DC001FC055 /* WorkflowSwiftUIExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowSwiftUIExampleTests.swift; sourceTree = "<group>"; };
 		CAA88E3C2575F1DC001FC055 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CAA88E492578942B001FC055 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +103,7 @@
 		CA875AE3257449C400243FA4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CAA88E492578942B001FC055 /* XCTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
