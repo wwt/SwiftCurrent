@@ -15,6 +15,7 @@
 		CA875AE9257449E300243FA4 /* Workflow in Frameworks */ = {isa = PBXBuildFile; productRef = CA875AE8257449E300243FA4 /* Workflow */; };
 		CAA88E3B2575F1DC001FC055 /* WorkflowSwiftUIExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA88E3A2575F1DC001FC055 /* WorkflowSwiftUIExampleTests.swift */; };
 		CAA88E462575F256001FC055 /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = CAA88E452575F256001FC055 /* ViewInspector */; };
+		CAE2AA1A257C47380043C650 /* ModalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE2AA19257C47380043C650 /* ModalTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		CAA88E3A2575F1DC001FC055 /* WorkflowSwiftUIExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowSwiftUIExampleTests.swift; sourceTree = "<group>"; };
 		CAA88E3C2575F1DC001FC055 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CAA88E492578942B001FC055 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		CAE2AA19257C47380043C650 /* ModalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 			children = (
 				CAA88E3A2575F1DC001FC055 /* WorkflowSwiftUIExampleTests.swift */,
 				CAA88E3C2575F1DC001FC055 /* Info.plist */,
+				CAE2AA19257C47380043C650 /* ModalTests.swift */,
 			);
 			path = WorkflowSwiftUIExampleTests;
 			sourceTree = "<group>";
@@ -236,6 +239,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAA88E3B2575F1DC001FC055 /* WorkflowSwiftUIExampleTests.swift in Sources */,
+				CAE2AA1A257C47380043C650 /* ModalTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

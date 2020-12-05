@@ -11,31 +11,20 @@ import Workflow
 public extension LaunchStyle {
     static let _navigationStack = LaunchStyle.new
     static let _modal = LaunchStyle.new
+    @available(iOS 14.0, *)
     static let _modal_fullscreen = LaunchStyle.new
-    static let _modal_pageSheet = LaunchStyle.new
-    static let _modal_formSheet = LaunchStyle.new
-    static let _modal_currentContext = LaunchStyle.new
-    static let _modal_custom = LaunchStyle.new
-    static let _modal_overFullScreen = LaunchStyle.new
-    static let _modal_overCurrentContext = LaunchStyle.new
-    static let _modal_popover = LaunchStyle.new
-    static let _modal_automatic = LaunchStyle.new
 
     enum PresentationType: RawRepresentable {
         public init?(rawValue: LaunchStyle) {
+            if #available(iOS 14.0, *),
+               rawValue == ._modal_fullscreen {
+                self = .modal(.fullScreen)
+                return
+            }
             switch rawValue {
                 case .default: self = .default
                 case ._navigationStack: self = .navigationStack
                 case ._modal: self = .modal
-                case ._modal_fullscreen: self = .modal(.fullScreen)
-                case ._modal_pageSheet: self = .modal(.pageSheet)
-                case ._modal_formSheet: self = .modal(.formSheet)
-                case ._modal_currentContext: self = .modal(.currentContext)
-                case ._modal_custom: self = .modal(.custom)
-                case ._modal_overFullScreen: self = .modal(.overFullScreen)
-                case ._modal_overCurrentContext: self = .modal(.overCurrentContext)
-                case ._modal_popover: self = .modal(.popover)
-                case ._modal_automatic: self = .modal(.automatic)
                 default: return nil
             }
         }
@@ -69,28 +58,15 @@ extension LaunchStyle.PresentationType {
     public enum ModalPresentationStyle {
         case `default`
         case fullScreen
-        case pageSheet
-        case formSheet
-        case currentContext
-        case custom
-        case overFullScreen
-        case overCurrentContext
-        case popover
-        case automatic
 
         var launchStyle: LaunchStyle {
             switch self {
                 case .default: return ._modal
-                case .fullScreen: return ._modal_fullscreen
-                case .pageSheet: return ._modal_pageSheet
-                case .formSheet: return ._modal_formSheet
-                case .currentContext: return ._modal_currentContext
-                case .custom: return ._modal_custom
-                case .overFullScreen: return ._modal_overFullScreen
-                case .overCurrentContext: return ._modal_overCurrentContext
-                case .popover: return ._modal_popover
-                case .automatic: return ._modal_automatic
+                case .fullScreen: if #available(iOS 14.0, *) {
+                    return ._modal_fullscreen
+                }
             }
+            return ._modal //should never happen
         }
     }
 }

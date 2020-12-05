@@ -9,12 +9,12 @@ import Foundation
 import SwiftUI
 import Workflow
 
-@available(iOS 14.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
+@available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
 public extension FlowRepresentable where Self: View {
     var _workflowUnderlyingInstance:Any { AnyView(self) }
 }
 
-@available(iOS 14.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
+@available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
 public class Holder: ObservableObject {
     let view: AnyView
     let metadata: FlowRepresentableMetaData
@@ -24,7 +24,7 @@ public class Holder: ObservableObject {
     }
 }
 
-@available(iOS 14.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
+@available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
 public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
     @Published var view:AnyView = AnyView(EmptyView())
     var stack = LinkedList<Holder>()
@@ -35,9 +35,16 @@ public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
         guard let next = to.instance.value?.underlyingInstance as? AnyView else { return }
         stack.append(Holder(view: next, metadata: to.metadata))
 
+        var v = next
+
+        switch LaunchStyle.PresentationType(rawValue: to.metadata.launchStyle) ?? .default {
+            case .modal(let style): v = AnyView(ModalWrapper(next: v, current: AnyView(EmptyView()), style: style).environmentObject(self).environmentObject(stack.first!.value))
+            default: break
+        }
+
         switch launchStyle {
-        case .modal(_): self.view = AnyView(Wrapper(next: next, current: AnyView(EmptyView())).environmentObject(self).environmentObject(stack.first!.value))
-            default: self.view = next
+            case .modal(let style): self.view = AnyView(ModalWrapper(next: v, current: AnyView(EmptyView()), style: style).environmentObject(self).environmentObject(stack.first!.value))
+            default: self.view = v
         }
     }
 
@@ -54,13 +61,13 @@ public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
             
             let launchStyle = LaunchStyle.PresentationType(rawValue: nextNode.value.metadata.launchStyle) ?? .default
             switch launchStyle {
-                case .modal(_): v = AnyView(Wrapper(next: v, current: $0.value.view).environmentObject(self).environmentObject($0.value))
+                case .modal(let style): v = AnyView(ModalWrapper(next: v, current: $0.value.view, style: style).environmentObject(self).environmentObject($0.value))
                 default: return false //v = $0.value.view
             }
             
             if $0 === stack.first,
-               case .modal = self.launchStyle {
-                v = AnyView(Wrapper(next: v, current: AnyView(EmptyView())).environmentObject(self).environmentObject($0.value))
+               case .modal(let style) = self.launchStyle {
+                v = AnyView(ModalWrapper(next: v, current: AnyView(EmptyView()), style: style).environmentObject(self).environmentObject($0.value))
             }
             
             return false
@@ -68,11 +75,11 @@ public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
         view = v
     }
 
-    #warning("TEST THIS, also it only kinda works")
+//    #warning("TEST THIS, also it only kinda works")
     public func proceedBackward(from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData), to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
-        stack.removeLast()
-        guard let prev = to.instance.value?.underlyingInstance as? AnyView else { return }
-        present(view: prev)
+//        stack.removeLast()
+//        guard let prev = to.instance.value?.underlyingInstance as? AnyView else { return }
+//        present(view: prev)
     }
 
     public func abandon(_ workflow: AnyWorkflow, animated: Bool, onFinish: (() -> Void)?) {
@@ -80,29 +87,44 @@ public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
     }
 }
 
-@available(iOS 14.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
-struct Wrapper: View {
+@available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
+struct ModalWrapper: View {
     @EnvironmentObject var model: WorkflowModel
     @EnvironmentObject var holder: Holder
     
     let next: AnyView
     let current: AnyView
+    let style: LaunchStyle.PresentationType.ModalPresentationStyle
 
     var body: some View {
         #warning("Is there a way to test the boolean value here?")
-        current.sheet(isPresented: .init(get: {
-            model.stack.contains(where: { $0.value === holder })
-        }, set: { val in
-            if !val {
-                model.stack.removeLast()
+        switch style {
+            case .default:
+                current.sheet(isPresented: .init(get: {
+                    model.stack.contains(where: { $0.value === holder })
+                }, set: { val in
+                    if !val {
+                        model.stack.removeLast()
+                    }
+                }), content: {
+                    next
+                })
+            case .fullScreen: if #available(iOS 14.0, *) {
+                current.fullScreenCover(isPresented: .init(get: {
+                    model.stack.contains(where: { $0.value === holder })
+                }, set: { val in
+                    if !val {
+                        model.stack.removeLast()
+                    }
+                }), content: {
+                    next
+                })
             }
-        }), content: {
-            next
-        })
+        }
     }
 }
 
-@available(iOS 14.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
+@available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
 public struct WorkflowView: View {
     @ObservedObject var workflowModel:WorkflowModel = WorkflowModel()
 
