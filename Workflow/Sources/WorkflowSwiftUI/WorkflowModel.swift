@@ -20,6 +20,10 @@ public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
         guard let next = to.instance.value?.underlyingInstance as? AnyView else { return }
         stack.append(ViewHolder(view: next, metadata: to.metadata))
 
+        handleLaunch(next, to)
+    }
+
+    private func handleLaunch(_ next: AnyView, _ to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
         var v = next
 
         switch LaunchStyle.PresentationType(rawValue: to.metadata.launchStyle) ?? .default {
@@ -85,14 +89,21 @@ public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
         view = v
     }
 
-//    #warning("TEST THIS, also it only kinda works")
+    #warning("TEST THIS")
     public func proceedBackward(from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData), to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
         stack.removeLast()
-        guard let prev = to.instance.value?.underlyingInstance as? AnyView else { return }
+        guard let prev = to.instance.value?.underlyingInstance as? AnyView,
+              !stack.isEmpty else { return }
+
         if let last = stack.last {
             last.value = last.value.copy
         }
-        present(view: prev)
+
+        if (stack.count == 1) {
+            handleLaunch(prev, to)
+        } else {
+            present(view: prev)
+        }
     }
 
     public func abandon(_ workflow: AnyWorkflow, animated: Bool, onFinish: (() -> Void)?) {
