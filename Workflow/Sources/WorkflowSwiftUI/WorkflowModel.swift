@@ -87,9 +87,12 @@ public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
 
 //    #warning("TEST THIS, also it only kinda works")
     public func proceedBackward(from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData), to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
-//        stack.removeLast()
-//        guard let prev = to.instance.value?.underlyingInstance as? AnyView else { return }
-//        present(view: prev)
+        stack.removeLast()
+        guard let prev = to.instance.value?.underlyingInstance as? AnyView else { return }
+        if let last = stack.last {
+            last.value = last.value.copy
+        }
+        present(view: prev)
     }
 
     public func abandon(_ workflow: AnyWorkflow, animated: Bool, onFinish: (() -> Void)?) {

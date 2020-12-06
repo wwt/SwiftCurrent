@@ -13,6 +13,11 @@ import Workflow
 public class ViewHolder: ObservableObject {
     let view: AnyView
     let metadata: FlowRepresentableMetaData
+
+    var copy: ViewHolder {
+        ViewHolder(view: view, metadata: metadata)
+    }
+
     init(view: AnyView, metadata: FlowRepresentableMetaData) {
         self.view = view
         self.metadata = metadata
