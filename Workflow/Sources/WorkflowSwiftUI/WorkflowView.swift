@@ -65,9 +65,13 @@ public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
                 default: return false //v = $0.value.view
             }
             
-            if $0 === stack.first,
-               case .modal(let style) = self.launchStyle {
-                v = AnyView(ModalWrapper(next: v, current: AnyView(EmptyView()), style: style).environmentObject(self).environmentObject($0.value))
+            if $0 === stack.first {
+                if case .modal(let style) = LaunchStyle.PresentationType(rawValue: $0.value.metadata.launchStyle) {
+                    v = AnyView(ModalWrapper(next: v, current: AnyView(EmptyView()), style: style).environmentObject(self).environmentObject($0.value))
+                }
+                if case .modal(let style) = self.launchStyle {
+                    v = AnyView(ModalWrapper(next: v, current: AnyView(EmptyView()), style: style).environmentObject(self).environmentObject($0.value))
+                }
             }
             
             return false
@@ -97,7 +101,7 @@ struct ModalWrapper: View {
     let style: LaunchStyle.PresentationType.ModalPresentationStyle
 
     var body: some View {
-        #warning("Is there a way to test the boolean value here?")
+        #warning("Is there a way to test the binding boolean getter value here?")
         switch style {
             case .default:
                 current.sheet(isPresented: .init(get: {
