@@ -16,6 +16,12 @@ struct NavWrapper: View {
     let next: AnyView
     let current: AnyView
 
+    @State var appearCount = 0
+
+    var isShowing:Bool {
+        appearCount > 0
+    }
+
     var body: some View {
         VStack {
             current
@@ -24,7 +30,7 @@ struct NavWrapper: View {
                 isActive: .init(get: {
                     model.stack.contains(where: { $0.value === holder })
                 }, set: { val in
-                    if !val {
+                    if isShowing && !val {
                         if let currentNode = model.stack.first(where: { $0.value === holder }) {
                             model.stack.remove { $0 === currentNode.next }
                             currentNode.value = holder.copy
@@ -33,7 +39,8 @@ struct NavWrapper: View {
                 }),
                 label: {
                     EmptyView()
-                })
+                }).onAppear { appearCount = 1 }
+                .onDisappear { appearCount -= 1 }
         }
     }
 }
