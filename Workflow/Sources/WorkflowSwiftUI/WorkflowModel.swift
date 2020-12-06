@@ -24,6 +24,7 @@ public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
 
         switch LaunchStyle.PresentationType(rawValue: to.metadata.launchStyle) ?? .default {
             case .modal(let style): v = AnyView(ModalWrapper(next: v, current: AnyView(EmptyView()), style: style).environmentObject(self).environmentObject(stack.first!.value))
+            case .navigationStack: v = AnyView(NavigationView { v })
             default: break
         }
 

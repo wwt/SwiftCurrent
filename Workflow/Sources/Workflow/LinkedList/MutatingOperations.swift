@@ -89,6 +89,19 @@ extension LinkedList {
         node?.next?.previous = node?.previous
     }
 
+    /// remove(where): Removes a node at the specified index
+    /// - Parameter predicate: A closure indicating whether that node should be removed
+    /// - Note: This operation mutates the original LinkedList
+    public func remove(where predicate: (Element) -> Bool) {
+        _ = first?.traverse {
+            if predicate($0) {
+                $0.previous?.next = $0.next
+                $0.next?.previous = $0.previous
+            }
+            return false
+        }
+    }
+
     /// removeFirst: Removes the first n nodes from the LinkedList
     /// - Parameter n: The number of nodes that should be removed
     /// - Note: This operation mutates the original LinkedList

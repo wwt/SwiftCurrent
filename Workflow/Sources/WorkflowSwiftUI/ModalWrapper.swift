@@ -26,7 +26,7 @@ struct ModalWrapper: View {
                     model.stack.contains(where: { $0.value === holder })
                 }, set: { val in
                     if !val {
-                        model.stack.removeLast()
+                        model.stack.remove { $0.value === holder }
                     }
                 }), content: {
                     next

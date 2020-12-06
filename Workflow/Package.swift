@@ -48,7 +48,7 @@ let package = Package(
                 "CwlCatchException",
                 .product(name: "Algorithms", package: "swift-algorithms")
             ],
-            exclude: ["Info.plist"]),
+            exclude: ["Info.plist", "Workflow.xctestplan"]),
         .testTarget(
             name: "DependencyInjectionTests",
             dependencies: [

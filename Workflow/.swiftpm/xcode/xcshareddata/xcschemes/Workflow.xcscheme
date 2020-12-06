@@ -110,7 +110,7 @@
       </CodeCoverageTargets>
       <TestPlans>
          <TestPlanReference
-            reference = "container:Sources/Workflow/Models/Workflow copy.xctestplan"
+            reference = "container:Tests/WorkflowTests/Workflow.xctestplan"
             default = "YES">
          </TestPlanReference>
       </TestPlans>

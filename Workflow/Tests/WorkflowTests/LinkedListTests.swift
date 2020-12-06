@@ -381,6 +381,17 @@ class LinkedListTests: XCTestCase {
         XCTAssertNil(list.last)
     }
 
+    func testRemoveWhere() {
+        let list = LinkedList([1, 2, 3, 2, 4, 2])
+
+        list.remove { $0.value == 2 }
+
+        XCTAssertEqual(list.count, 3)
+        XCTAssertEqual(list.first?.value, 1)
+        XCTAssertEqual(list.first?.next?.value, 3)
+        XCTAssertEqual(list.last?.value, 4)
+    }
+
     func testEquatability() {
         let list = LinkedList([1, 2, 3])
         let list2 = LinkedList([1, 2, 3])

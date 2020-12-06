@@ -14,7 +14,7 @@ struct ContentView: View {
         Text("Above")
         WorkflowView(Workflow(FR1.self)
                         .thenPresent(FR2.self, presentationType: .navigationStack)
-                        .thenPresent(FR3.self, presentationType: .navigationStack), withLaunchStyle: .navigationStack)
+                        .thenPresent(FR3.self, presentationType: .navigationStack))
         Text("Below")
     }
 }
