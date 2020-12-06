@@ -26,7 +26,10 @@ struct ModalWrapper: View {
                     model.stack.contains(where: { $0.value === holder })
                 }, set: { val in
                     if !val {
-                        model.stack.remove { $0.value === holder }
+                        if let currentNode = model.stack.first(where: { $0.value === holder }) {
+                            model.stack.remove { $0 === currentNode.next }
+                            currentNode.value = ViewHolder(view: holder.view, metadata: holder.metadata)
+                        }
                     }
                 }), content: {
                     next
@@ -36,7 +39,10 @@ struct ModalWrapper: View {
                     model.stack.contains(where: { $0.value === holder })
                 }, set: { val in
                     if !val {
-                        model.stack.removeLast()
+                        if let currentNode = model.stack.first(where: { $0.value === holder }) {
+                            model.stack.remove { $0 === currentNode.next }
+                            currentNode.value = ViewHolder(view: holder.view, metadata: holder.metadata)
+                        }
                     }
                 }), content: {
                     next

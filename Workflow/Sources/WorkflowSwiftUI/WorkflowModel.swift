@@ -29,10 +29,11 @@ public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
         }
 
         switch launchStyle {
-            case .modal(let style): self.view = AnyView(ModalWrapper(next: v, current: AnyView(EmptyView()), style: style).environmentObject(self).environmentObject(stack.first!.value))
-            case .navigationStack: self.view = AnyView(NavigationView { v })
-            default: self.view = v
+            case .modal(let style): v = AnyView(ModalWrapper(next: v, current: AnyView(EmptyView()), style: style).environmentObject(self).environmentObject(stack.first!.value))
+            case .navigationStack: v = AnyView(NavigationView { v })
+            case .default: break
         }
+        self.view = v
     }
 
     public func proceed(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData), from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
