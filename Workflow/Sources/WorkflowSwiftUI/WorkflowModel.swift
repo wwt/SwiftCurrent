@@ -29,6 +29,7 @@ public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
 
         switch launchStyle {
             case .modal(let style): self.view = AnyView(ModalWrapper(next: v, current: AnyView(EmptyView()), style: style).environmentObject(self).environmentObject(stack.first!.value))
+            case .navigationStack: self.view = AnyView(NavigationView { v })
             default: self.view = v
         }
     }
@@ -41,21 +42,39 @@ public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
 
     private func present(view next:AnyView) {
         var v = next
-        _ = stack.last?.traverse(direction: .backward, until: {
-            guard let nextNode = $0.next else { return false } //NOTE: Barring some threading crazy, this should never be nil
+        _ = stack.last?.traverse(direction: .backward, until: { node in
+            guard let nextNode = node.next else { return false } //NOTE: Barring some threading crazy, this should never be nil
 
             let launchStyle = LaunchStyle.PresentationType(rawValue: nextNode.value.metadata.launchStyle) ?? .default
             switch launchStyle {
-                case .modal(let style): v = AnyView(ModalWrapper(next: v, current: $0.value.view, style: style).environmentObject(self).environmentObject($0.value))
-                default: return false //v = $0.value.view
+                case .modal(let style): v = AnyView(ModalWrapper(next: v, current: node.value.view, style: style).environmentObject(self).environmentObject(node.value))
+                case .navigationStack:
+                    var viewToPresent = AnyView(NavWrapper(next: v, current: node.value.view).environmentObject(self).environmentObject(node.value))
+                    guard self.launchStyle != .navigationStack else {
+                        v = viewToPresent
+                        break
+                    }
+                    if node.previous == nil {
+                        viewToPresent = AnyView(NavigationView { viewToPresent })
+                    }
+                    if let style = LaunchStyle.PresentationType(rawValue: node.value.metadata.launchStyle),
+                       style != .navigationStack {
+                        viewToPresent = AnyView(NavigationView { viewToPresent })
+                    }
+                    v = viewToPresent
+                default: return false
             }
 
-            if $0 === stack.first {
-                if case .modal(let style) = LaunchStyle.PresentationType(rawValue: $0.value.metadata.launchStyle) {
-                    v = AnyView(ModalWrapper(next: v, current: AnyView(EmptyView()), style: style).environmentObject(self).environmentObject($0.value))
+            if node === stack.first {
+                if case .modal(let style) = LaunchStyle.PresentationType(rawValue: node.value.metadata.launchStyle) {
+                    v = AnyView(ModalWrapper(next: v, current: AnyView(EmptyView()), style: style).environmentObject(self).environmentObject(node.value))
                 }
-                if case .modal(let style) = self.launchStyle {
-                    v = AnyView(ModalWrapper(next: v, current: AnyView(EmptyView()), style: style).environmentObject(self).environmentObject($0.value))
+                switch self.launchStyle {
+                    case .modal(let style):
+                        v = AnyView(ModalWrapper(next: v, current: AnyView(EmptyView()), style: style).environmentObject(self).environmentObject(node.value))
+                    case .navigationStack:
+                        v = AnyView(NavigationView { v })
+                    default: break
                 }
             }
 

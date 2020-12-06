@@ -12,28 +12,10 @@ import WorkflowSwiftUI
 struct ContentView: View {
     var body: some View {
         Text("Above")
-        WorkflowView(Workflow(FR1.self, presentationType: .modal)
-                        .thenPresent(FR2.self, presentationType: .modal(.fullScreen))
-                        .thenPresent(FR3.self, presentationType: .modal))
+        WorkflowView(Workflow(FR1.self)
+                        .thenPresent(FR2.self, presentationType: .navigationStack)
+                        .thenPresent(FR3.self, presentationType: .navigationStack), withLaunchStyle: .navigationStack)
         Text("Below")
-    }
-}
-
-struct Wrapper: View {
-    @State var showingModal = true
-
-    let _content: AnyView
-    let _next: AnyView
-
-    init(next: AnyView, content: AnyView) {
-        _next = next
-        _content = content
-    }
-
-    var body: some View {
-        _content.sheet(isPresented: $showingModal, content: {
-            _next
-        })
     }
 }
 
@@ -43,9 +25,11 @@ struct FR1: View, FlowRepresentable {
     static func instance() -> Self { Self() }
 
     var body: some View {
-        Text("\(String(describing: Self.self))")
-            .padding()
-        Button("Proceed", action: proceedInWorkflow)
+        VStack {
+            Text("\(String(describing: Self.self))")
+                .padding()
+            Button("Proceed", action: proceedInWorkflow)
+        }
     }
 }
 
@@ -55,10 +39,12 @@ struct FR2: View, FlowRepresentable {
     static func instance() -> Self { Self() }
 
     var body: some View {
-        Text("\(String(describing: Self.self))")
-            .padding()
-        Button("Proceed", action: proceedInWorkflow)
-        Button("Back", action: proceedBackwardInWorkflow)
+        VStack {
+            Text("\(String(describing: Self.self))")
+                .padding()
+            Button("Proceed", action: proceedInWorkflow)
+            Button("Back", action: proceedBackwardInWorkflow)
+        }
     }
 }
 
@@ -68,11 +54,13 @@ struct FR3: View, FlowRepresentable {
     static func instance() -> Self { Self() }
 
     var body: some View {
-        Text("\(String(describing: Self.self))")
-            .padding()
-        Button("Back", action: proceedBackwardInWorkflow)
-        Button("Abandon") {
-            workflow?.abandon()
+        VStack {
+            Text("\(String(describing: Self.self))")
+                .padding()
+            Button("Back", action: proceedBackwardInWorkflow)
+            Button("Abandon") {
+                workflow?.abandon()
+            }
         }
     }
 }
