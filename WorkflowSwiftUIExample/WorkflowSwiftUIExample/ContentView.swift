@@ -12,9 +12,9 @@ import WorkflowSwiftUI
 struct ContentView: View {
     var body: some View {
         Text("Above")
-        WorkflowView(Workflow(FR1.self, presentationType: .navigationStack)
+        WorkflowView(Workflow(FR1.self)
                         .thenPresent(FR2.self, presentationType: .navigationStack)
-                        .thenPresent(FR3.self, presentationType: .navigationStack), withLaunchStyle: .modal(.fullScreen))
+                        .thenPresent(FR3.self, presentationType: .navigationStack))
         Text("Below")
     }
 }

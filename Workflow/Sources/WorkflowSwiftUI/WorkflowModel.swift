@@ -51,23 +51,25 @@ public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
         _ = stack.last?.traverse(direction: .backward, until: { node in
             guard let nextNode = node.next else { return false } //NOTE: Barring some threading crazy, this should never be nil
 
-            let launchStyle = LaunchStyle.PresentationType(rawValue: nextNode.value.metadata.launchStyle) ?? .default
-            switch launchStyle {
+            switch LaunchStyle.PresentationType(rawValue: nextNode.value.metadata.launchStyle) ?? .default {
                 case .modal(let style): v = AnyView(ModalWrapper(next: v, current: node.value.view, style: style).environmentObject(self).environmentObject(node.value))
                 case .navigationStack:
-                    var viewToPresent = AnyView(NavWrapper(next: v, current: node.value.view).environmentObject(self).environmentObject(node.value))
+                    let navWrapper = AnyView(NavWrapper(next: v, current: node.value.view).environmentObject(self).environmentObject(node.value))
                     guard self.launchStyle != .navigationStack else {
-                        v = viewToPresent
+                        v = navWrapper
                         break
                     }
-                    if node.previous == nil {
-                        viewToPresent = AnyView(NavigationView { viewToPresent })
+                    guard node.previous != nil else {
+                        v = AnyView(NavigationView { navWrapper })
+                        break
                     }
+
                     if let style = LaunchStyle.PresentationType(rawValue: node.value.metadata.launchStyle),
                        style != .navigationStack {
-                        viewToPresent = AnyView(NavigationView { viewToPresent })
+                        v = AnyView(NavigationView { navWrapper })
+                        break
                     }
-                    v = viewToPresent
+                    v = navWrapper
                 default: return false
             }
 
