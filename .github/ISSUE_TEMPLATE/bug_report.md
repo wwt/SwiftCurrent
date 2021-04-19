@@ -21,11 +21,11 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-**Debug Logs**
-If applicable, add any debug logs that you have around the time of the problem.
-
 **Additional context**
 Add any other context about the problem here.
  - XCode Version: [e.g. XCode 10.2]
  - Workflow Version: [e.g. 2.1.24]
  - Example Feature File (if applicable)
+
+**Debug Logs**
+If applicable, add any debug logs that you have around the time of the problem.
