@@ -1,7 +1,9 @@
 ---
-name: Bug report (e.g. Crash when proceeding)
-about: Slightly Longer Description (if necessary). (e.g.) If you proceed forward, then backward, then forward, there's a crash.
+name: Bug report
+about: Create a report to help us improve
+title: ''
 labels: ''
+assignees: ''
 
 ---
 
