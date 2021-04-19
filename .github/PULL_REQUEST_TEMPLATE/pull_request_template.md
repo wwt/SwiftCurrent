@@ -3,8 +3,9 @@ Linked Issue:
 
 <!-- (See our contributing guidelines for more details) -->
 ## Checklist:
-- [ ] Is there adequate test coverage for your new code?
 - [ ] Is the linter reporting 0 errors?
+- [ ] Did you comply with our styleguide?
+- [ ] Is there adequate test coverage for your new code?
 - [ ] Does the CI pipeline pass?
 - [ ] Is the static analysis tool reporting 0 issues?
 - [ ] Did you update the documentation?
