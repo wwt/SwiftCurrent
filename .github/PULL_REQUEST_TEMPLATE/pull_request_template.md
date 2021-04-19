@@ -20,3 +20,8 @@ If Applicable:
 - [ ] Did you test when middle items are skipped?
 - [ ] Did you test when incorrect data is passed forward?
 - [ ] Did you test proceeding backwards?
+
+If Public API Has Changed:
+- [ ] Did you deprecate (rather than remove) any old methods/variables/etc?
+- [ ] Have you done the best that you can to make sure that the compiler guides people to changing to the new API? (Example: the renamed attribute)
+- [ ] If necessary, have you tested the upgrade path for at least N-1 versions? For example if data persists between v1 and v2 that upgrade should be tested and as easy as we can make it.
