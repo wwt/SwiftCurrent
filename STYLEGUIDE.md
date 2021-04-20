@@ -28,6 +28,13 @@ Note that brevity is not a primary goal. Code should be made more concise only i
     1. [Closures](#closures)
     1. [Operators](#operators)
 1. [Patterns](#patterns)
+    1. [Initializers](#initializers)
+    1. [Method Complexity](#method-complexity)
+    1. [Control Flow](#control-flow)
+    1. [Access Control](#access-control)
+    1. [Enumerations](#enumerations)
+    1. [Optionals](#optionals)
+    1. [OTHERS](#others)
 1. [File Organization](#file-organization)
 1. [Objective-C Interoperability](#objective-c-interoperability)
 
@@ -594,6 +601,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
 ## Patterns
 
+### Initializers
 * <a id='implicitly-unwrapped-optionals'></a>(<a href='#implicitly-unwrapped-optionals'>link</a>) **Prefer initializing properties at `init` time whenever possible, rather than using implicitly unwrapped optionals.**  A notable exception is UIViewController's `view` property. [![SwiftLint: implicitly_unwrapped_optional](https://img.shields.io/badge/SwiftLint-implicitly__unwrapped__optional-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#implicitly-unwrapped-optional)
 
   <details>
@@ -643,6 +651,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
 * <a id='time-intensive-init'></a>(<a href='#time-intensive-init'>link</a>) **Avoid performing any meaningful or time-intensive work in `init()`.** Avoid doing things like opening database connections, making network requests, reading large amounts of data from disk, etc. Create a factory if these things need to be done before an object is ready for use.
 
+### Method Complexity
 * <a id='complex-property-observers'></a>(<a href='#complex-property-observers'>link</a>) **Extract complex property observers into methods.** This reduces nestedness, separates side-effects from property declarations, and makes the usage of implicitly-passed parameters like `oldValue` explicit.
 
   <details>
@@ -718,6 +727,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
   
+### Control Flow
 * **Prefer using `guard` over `if` for preconditions.**
 
   <details>
@@ -774,6 +784,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
+### Access Control
 * <a id='limit-access-control'></a>(<a href='#limit-access-control'>link</a>) **Access control should be at the strictest level possible.** Prefer `public` to `open` and `private` to `fileprivate` unless you need that behavior.
 
 * <a id='avoid-global-functions'></a>(<a href='#avoid-global-functions'>link</a>) **Avoid global functions whenever possible.** Prefer methods within type definitions.
@@ -831,6 +842,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
+### Enumerations
 * <a id='auto-enum-values'></a>(<a href='#auto-enum-values'>link</a>) **Use Swift's automatic enum values unless they map to an external source, or have a value type like String, that will not cause issues when inserted in the middle.** Add a comment explaining why explicit values are defined. [![SwiftLint: redundant_string_enum_value](https://img.shields.io/badge/SwiftLint-redundant__string__enum__value-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#redundant-string-enum-value)
 
   <details>
@@ -908,6 +920,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
+### Optionals
 * **Prefer throwing or optional intializers over optional properties that should have a value.**
   <details>
  
@@ -966,6 +979,30 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
   
+* <a id='optional-nil-check'></a>(<a href='#optional-nil-check'>link</a>) **Check for nil rather than using optional binding if you don't need to use the value.** [![SwiftLint: unused_optional_binding](https://img.shields.io/badge/SwiftLint-unused_optional_binding-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#unused-optional-binding)
+
+  <details>
+
+  #### Why?
+  Checking for nil makes it immediately clear what the intent of the statement is. Optional binding is less explicit.
+
+  ```swift
+  var thing: Thing?
+
+  // WRONG
+  if let _ = thing {
+    doThing()
+  }
+
+  // RIGHT
+  if thing != nil {
+    doThing()
+  }
+  ```
+
+  </details>
+
+### OTHERS
 * <a id='prefer-immutable-values'></a>(<a href='#prefer-immutable-values'>link</a>) **Prefer immutable values whenever possible.** Use `map` and `compactMap` instead of appending to a new collection. Use `filter` instead of removing elements from a mutable collection.
 
   <details>
@@ -1064,29 +1101,6 @@ Note that brevity is not a primary goal. Code should be made more concise only i
     // Do something
   case .b, .c:
     // Do something else.
-  }
-  ```
-
-  </details>
-
-* <a id='optional-nil-check'></a>(<a href='#optional-nil-check'>link</a>) **Check for nil rather than using optional binding if you don't need to use the value.** [![SwiftLint: unused_optional_binding](https://img.shields.io/badge/SwiftLint-unused_optional_binding-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#unused-optional-binding)
-
-  <details>
-
-  #### Why?
-  Checking for nil makes it immediately clear what the intent of the statement is. Optional binding is less explicit.
-
-  ```swift
-  var thing: Thing?
-
-  // WRONG
-  if let _ = thing {
-    doThing()
-  }
-
-  // RIGHT
-  if thing != nil {
-    doThing()
   }
   ```
 
