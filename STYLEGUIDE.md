@@ -606,6 +606,28 @@ Note that brevity is not a primary goal. Code should be made more concise only i
   ```
 
   </details>
+  
+ * <a id='default-property-declarations'></a>(<a href='#default-property-declarations'>link</a>) ** Prefer default values in property declarations over initializers setting values.** 
+
+  <details>
+
+  ```swift
+  // WRONG
+  class MyClass {
+    var someValue: Int
+    init() {
+      someValue = 5
+    }
+  }
+
+  // RIGHT
+  class MyClass {
+    var someValue: Int = 5
+    init() { }
+  }
+  ```
+  
+  </details>
 
 * <a id='time-intensive-init'></a>(<a href='#time-intensive-init'>link</a>) **Avoid performing any meaningful or time-intensive work in `init()`.** Avoid doing things like opening database connections, making network requests, reading large amounts of data from disk, etc. Create something like a `start()` method if these things need to be done before an object is ready for use.
 
