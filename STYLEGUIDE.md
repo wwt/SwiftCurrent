@@ -120,6 +120,19 @@ Note that brevity is not a primary goal. Code should be made more concise only i
     // RIGHT
     return .left
   }
+  
+  extension Container {
+      static let `default` = Container()
+  }
+  
+  // WRONG
+  func getContainer() -> Container {
+      return Container.default
+  }
+  
+  // RIGHT
+  func getContainer() -> Container { .default }
+  
   ```
 
   </details>
