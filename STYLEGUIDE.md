@@ -1106,33 +1106,6 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* **Never use the `default` case when `switch`ing over an enum.**
-
-  <details>
-
-  #### Why?
-  Enumerating every case requires developers and reviewers have to consider the correctness of every switch statement when new cases are added.
-
-  ```swift
-  // WRONG
-  switch anEnum {
-  case .a:
-    // Do something
-  default:
-    // Do something else.
-  }
-
-  // RIGHT
-  switch anEnum {
-  case .a:
-    // Do something
-  case .b, .c:
-    // Do something else.
-  }
-  ```
-
-  </details>
-
 * **Omit the `return` keyword when not required by the language.** [![SwiftFormat: redundantReturn](https://img.shields.io/badge/SwiftFormat-redundantReturn-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#redundantReturn)
 
   <details>
