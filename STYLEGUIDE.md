@@ -17,7 +17,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 * We strive to make rules lintable:
   * If a rule changes the format of the code, it needs to be able to be reformatted automatically using [SwiftLint](https://github.com/realm/SwiftLint).
   * For rules that don't directly change the format of the code, we should have a lint rule that throws a warning.
-  * For rules that cannot be handled directly with SwiftLint we will strive to have our own linter (for example, file names)
+  * For rules that cannot be handled directly with SwiftLint we will strive to have our own linter (for example, file names).
 
 ## Table of Contents
 
