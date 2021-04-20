@@ -831,12 +831,12 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* <a id='auto-enum-values'></a>(<a href='#auto-enum-values'>link</a>) **Use Swift's automatic enum values unless they map to an external source, or have a value type like string, that will not cause issues when inserted in the middle.** Add a comment explaining why explicit values are defined. [![SwiftLint: redundant_string_enum_value](https://img.shields.io/badge/SwiftLint-redundant__string__enum__value-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#redundant-string-enum-value)
+* <a id='auto-enum-values'></a>(<a href='#auto-enum-values'>link</a>) **Use Swift's automatic enum values unless they map to an external source, or have a value type like String, that will not cause issues when inserted in the middle.** Add a comment explaining why explicit values are defined. [![SwiftLint: redundant_string_enum_value](https://img.shields.io/badge/SwiftLint-redundant__string__enum__value-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#redundant-string-enum-value)
 
   <details>
 
   #### Why?
-  To minimize user error, improve readability, and write code faster, rely on Swift's automatic enum values. If the value maps to an external source (e.g. it's coming from a network request) or is persisted across binaries, however, define the values explicity, and document what these values are mapping to.
+  To minimize user error, improve readability, and write code faster, rely on Swift's automatic enum values. If the value maps to an external source (e.g. it's coming from a network request) or is persisted across binaries, however, define the values explicity, and document what these values are mapping to. The exception to this is when the value type is like `String` that will not cause issues when inserted in the middle.
 
   This ensures that if someone adds a new value in the middle, they won't accidentally break things.
 
@@ -847,8 +847,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
     case warning = "warning"
   }
  
-  // These values are internal, so we do not need to explicity define the values.
-  // Planet is an Int to support sorting
+  // These values are internal, so we should not have explicity defined the values.
   enum Planet: Int {
     case mercury = 0
     case venus = 1
@@ -860,10 +859,18 @@ Note that brevity is not a primary goal. Code should be made more concise only i
     case neptune = 7
   }
 
+  // These values come from a server, so we should have set them here explicitly to match those values.
   enum ErrorCode: Int {
     case notEnoughMemory
     case invalidResource
     case timeOut
+  }
+  
+  // These values also come from a server, but they are of string type so we should have continued to use the automatic values.
+  enum UserType: String {
+    case owner = "owner"
+    case manager = "manager"
+    case member = "member"
   }
 
   // RIGHT
@@ -872,14 +879,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
     case warning
   }
 
-  enum UserType: String {
-    case owner
-    case manager
-    case member
-  }
-
   // These values are internal, so we do not need to explicity define the values.
-  // Planet is an Int to support sorting
   enum Planet: Int {
     case mercury
     case venus
@@ -891,11 +891,18 @@ Note that brevity is not a primary goal. Code should be made more concise only i
     case neptune
   }
 
-  /// These values come from the server, so we set them here explicitly to match those values.
+  // These values come from a server, so we set them here explicitly to match those values.
   enum ErrorCode: Int {
     case notEnoughMemory = 0
     case invalidResource = 1
     case timeOut = 2
+  }
+  
+  // These values also come from a server, but they are of string type so we can continue to use the automatic values.
+  enum UserType: String {
+    case owner
+    case manager
+    case member
   }
   ```
 
