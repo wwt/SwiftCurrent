@@ -665,13 +665,15 @@ Note that brevity is not a primary goal. Code should be made more concise only i
   ```
 
   </details>
+  
+* **Prefer Combine functional chains over completion handlers**. 
 
 * <a id='complex-callback-block'></a>(<a href='#complex-callback-block'>link</a>) **Extract complex callback blocks into methods**. This limits the complexity introduced by weak-self in blocks and reduces nestedness. If you need to reference self in the method call, make use of `guard` to unwrap self for the duration of the callback.
 
   <details>
 
   ```swift
-  //WRONG
+  // WRONG
   class MyClass {
 
     func request(completion: () -> Void) {
@@ -702,8 +704,55 @@ Note that brevity is not a primary goal. Code should be made more concise only i
   ```
 
   </details>
+  
+* **Prefer using `guard` over `if` for preconditions.**
 
-* <a id='guards-at-top'></a>(<a href='#guards-at-top'>link</a>) **Prefer using `guard` at the beginning of a scope.**
+  <details>
+  
+  ```swift
+  // WRONG
+  class MyClass {
+    var thingWeNeed: String?
+    func doThings() {
+      if let thing = thingWeNeed {
+        // lets do something with the thing
+      }
+    }
+  }
+
+  // RIGHT
+  class MyClass {
+    var thingWeNeed: String?
+    func doThings() {
+        guard let thing = thingWeNeed else { return }
+        // lets do something with the thing
+    }
+  }
+  
+  // WRONG
+  class MyClass {
+    var arr = [String]()
+    func doThings() {
+      if !arr.isEmpty {
+        // lets do something with the thing
+      }
+    }
+  }
+
+  // RIGHT
+  class MyClass {
+    var arr = [String]()
+    func doThings() {
+        guard !arr.isEmpty else { return }
+        // lets do something with the thing
+    }
+  }
+  
+  ```
+
+  </details>
+
+* **Prefer using `guard` at the beginning of a scope.**
 
   <details>
 
