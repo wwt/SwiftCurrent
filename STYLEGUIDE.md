@@ -929,6 +929,32 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
+* **Prefer implicitly unwrapped optionals when a value can be safely assumed.**
+  <details>
+  ### Why?
+  Implicitly unwrapped optionals aren't *bad*, contrary to some opinions. While Swift does give us a lot of safety implicitly unwrapped optionals merely mean "this likely has a value when you need it". You can still treat them like optionals, unwrap them, use optional chaining syntax. Or you can treat them as if they have an expected value. Use them where appropriate and write adequate tests.
+ 
+  ```swift
+  // WRONG
+  class ViewController {
+    @IBOutlet var textField: UITextField?
+  }
+
+  // RIGHT
+  class ViewController {
+    @IBOutlet var textField: UITextField!
+  }
+
+  // STILL RIGHT
+  class ViewModel {
+    // where we have a test proving that SomeAPI is registered in the container in the app lifecycle
+    @DependencyInjected var someAPI: SomeAPI!
+  }
+  
+  ```
+
+  </details>
+  
 * <a id='prefer-immutable-values'></a>(<a href='#prefer-immutable-values'>link</a>) **Prefer immutable values whenever possible.** Use `map` and `compactMap` instead of appending to a new collection. Use `filter` instead of removing elements from a mutable collection.
 
   <details>
