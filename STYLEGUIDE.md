@@ -831,7 +831,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* <a id='auto-enum-values'></a>(<a href='#auto-enum-values'>link</a>) **Use Swift's automatic enum values unless they map to an external source, or have a value type like string, that will not cause issues when inserted in the middle** Add a comment explaining why explicit values are defined. [![SwiftLint: redundant_string_enum_value](https://img.shields.io/badge/SwiftLint-redundant__string__enum__value-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#redundant-string-enum-value)
+* <a id='auto-enum-values'></a>(<a href='#auto-enum-values'>link</a>) **Use Swift's automatic enum values unless they map to an external source, or have a value type like string, that will not cause issues when inserted in the middle.** Add a comment explaining why explicit values are defined. [![SwiftLint: redundant_string_enum_value](https://img.shields.io/badge/SwiftLint-redundant__string__enum__value-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#redundant-string-enum-value)
 
   <details>
 
@@ -846,7 +846,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
     case error = "error"
     case warning = "warning"
   }
-
+ 
   enum Planet: Int {
     case mercury = 0
     case venus = 1
@@ -876,6 +876,8 @@ Note that brevity is not a primary goal. Code should be made more concise only i
     case member
   }
 
+  // These values are internal, so we do not need to explicity define the values/
+  // Planet is an Int to support sorting
   enum Planet: Int {
     case mercury
     case venus
