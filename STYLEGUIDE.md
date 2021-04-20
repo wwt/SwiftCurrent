@@ -847,6 +847,8 @@ Note that brevity is not a primary goal. Code should be made more concise only i
     case warning = "warning"
   }
  
+  // These values are internal, so we do not need to explicity define the values.
+  // Planet is an Int to support sorting
   enum Planet: Int {
     case mercury = 0
     case venus = 1
@@ -876,7 +878,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
     case member
   }
 
-  // These values are internal, so we do not need to explicity define the values/
+  // These values are internal, so we do not need to explicity define the values.
   // Planet is an Int to support sorting
   enum Planet: Int {
     case mercury
