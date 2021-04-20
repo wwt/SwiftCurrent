@@ -1,0 +1,2 @@
+### For Public APIs
+The [official swift API design guidelines](https://swift.org/documentation/api-design-guidelines/) are all unilaterally accepted for any public API and generally have good information for private or internal APIs. If you are not making a public API we do not require the same level of documentation, but the naming conventions and general design guidelines are still great and should be adhered to.
