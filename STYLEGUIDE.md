@@ -897,7 +897,37 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* <a id='semantic-optionals'></a>(<a href='#semantic-optionals'>link</a>) **Use optionals only when they have semantic meaning.**
+* **Prefer throwing or optional intializers over optional properties that should have a value.**
+  <details>
+ 
+  ```swift
+  // WRONG
+  struct Person {
+    var firstName: String? //firstName should have a value, but won't necessarily if we just create a new person
+    var lastName: String?  //lastName may, or may not have a value based on culture
+  }
+
+  // RIGHT
+  struct Person: Decodable {
+    var firstName: String //firstName should have a value, if an API does not return it Decodable has a throwing intializer that will well...throw
+    var lastName: String?  //lastName may, or may not have a value based on culture, so it should remain optional
+  }
+
+  // STILL RIGHT
+  struct Person: Decodable {
+    var firstName: String //firstName should have a value
+    var lastName: String?  //lastName may, or may not have a value based on culture, so it should remain optional
+
+    init?(_ dictionary: [String: Any]) {
+        guard let firstName = dictionary["firstName"] as? String else { return nil }
+        self.firstName = firstName
+        lastName = dictionary["lastName"] as? String
+    }
+  }
+  
+  ```
+
+  </details>
 
 * <a id='prefer-immutable-values'></a>(<a href='#prefer-immutable-values'>link</a>) **Prefer immutable values whenever possible.** Use `map` and `compactMap` instead of appending to a new collection. Use `filter` instead of removing elements from a mutable collection.
 
