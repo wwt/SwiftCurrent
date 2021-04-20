@@ -606,10 +606,9 @@ Note that brevity is not a primary goal. Code should be made more concise only i
   ```
 
   </details>
-  
-* **Prefer default values in property declarations over initializers setting values.**
 
-  <details>
+ * <a id='default-property-declarations'></a>(<a href='#default-property-declarations'>link</a>) **Prefer default values in property declarations over initializers setting values.**
+<details>
 
   ```swift
   // WRONG
@@ -626,10 +625,10 @@ Note that brevity is not a primary goal. Code should be made more concise only i
     init() { }
   }
   ```
-
+  
   </details>
 
-* <a id='time-intensive-init'></a>(<a href='#time-intensive-init'>link</a>) **Avoid performing any meaningful or time-intensive work in `init()`.** Avoid doing things like opening database connections, making network requests, reading large amounts of data from disk, etc. Create something like a `start()` method if these things need to be done before an object is ready for use.
+* <a id='time-intensive-init'></a>(<a href='#time-intensive-init'>link</a>) **Avoid performing any meaningful or time-intensive work in `init()`.** Avoid doing things like opening database connections, making network requests, reading large amounts of data from disk, etc. Create a factory if these things need to be done before an object is ready for use.
 
 * <a id='complex-property-observers'></a>(<a href='#complex-property-observers'>link</a>) **Extract complex property observers into methods.** This reduces nestedness, separates side-effects from property declarations, and makes the usage of implicitly-passed parameters like `oldValue` explicit.
 
