@@ -903,20 +903,20 @@ Note that brevity is not a primary goal. Code should be made more concise only i
   ```swift
   // WRONG
   struct Person {
-    var firstName: String? //firstName should have a value, but won't necessarily if we just create a new person
-    var lastName: String?  //lastName may, or may not have a value based on culture
+    var firstName: String? // firstName should have a value, but won't necessarily if we just create a new person
+    var lastName: String? // lastName may, or may not have a value based on culture
   }
 
   // RIGHT
   struct Person: Decodable {
-    var firstName: String //firstName should have a value, if an API does not return it Decodable has a throwing intializer that will well...throw
-    var lastName: String?  //lastName may, or may not have a value based on culture, so it should remain optional
+    var firstName: String // firstName should have a value, if a REST API does not return it Decodable has a throwing intializer that will well...throw
+    var lastName: String? // lastName may, or may not have a value based on culture, so it should remain optional
   }
 
   // STILL RIGHT
   struct Person: Decodable {
-    var firstName: String //firstName should have a value
-    var lastName: String?  //lastName may, or may not have a value based on culture, so it should remain optional
+    var firstName: String // firstName should have a value
+    var lastName: String? // lastName may, or may not have a value based on culture, so it should remain optional
 
     init?(_ dictionary: [String: Any]) {
         guard let firstName = dictionary["firstName"] as? String else { return nil }
