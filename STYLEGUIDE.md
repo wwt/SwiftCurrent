@@ -1152,6 +1152,57 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
+* <a id='use-anyobject'></a>(<a href='#use-anyobject'>link</a>) **Prefer a wrapped `Any` type over a subclass for type erasure.** [![SwiftFormat: anyObjectProtocol](https://img.shields.io/badge/SwiftFormat-anyObjectProtocol-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#anyobjectprotocol)
+
+  <details>
+
+  #### Why?
+  
+  Subclassing based type erasure inherantly exposes implemention details to the end user that should not be exposed. Wrapping our types in the same way that Combine and SwiftUI do type erasure, ensures that the final exposed API is clean and correct for the end user to consume.
+
+  ```swift
+  // WRONG
+  public protocol AnyStuff {
+      // cannot make internal
+      func erasedFoo(_ x: Any)
+  }
+
+  // End user should not see erasedFoo but can
+  public protocol Stuff: AnyStuff {
+      associatedtype T
+      func foo(_ x: T)
+  }
+
+  extension Stuff {
+      func foo(_ x: T) { erasedFoo(x) }
+  }
+
+  // RIGHT
+  class AnyStuffBase {
+      func foo(_ x: Any) { fatalError() }
+  }
+
+  class AnyStuffStorage<S: Stuff>: AnyStuffBase {
+      let holder: S
+      init(_ Stuff: S) { holder = Stuff }
+
+      override func foo(_ x: Any) { holder.foo(x as! S.T) }
+  }
+
+  public class AnyStuff {
+      private let base: AnyStuffBase
+      public init<S: Stuff>(_ stuff: S) { base = AnyStuffStorage(stuff) }
+      public func foo(_ x: Any) { base.foo(x) }
+  }
+
+  public protocol Stuff {
+      associatedtype T
+      func foo(_ x: T)
+  }
+  ```
+
+  </details>
+
 * <a id='extension-access-control'></a>(<a href='#extension-access-control'>link</a>) **Specify the access control for each declaration in an extension individually.** [![SwiftFormat: extensionAccessControl](https://img.shields.io/badge/SwiftFormat-extensionAccessControl-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#extensionaccesscontrol)
 
   <details>
