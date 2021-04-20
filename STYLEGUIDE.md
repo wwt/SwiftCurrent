@@ -30,8 +30,6 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 1. [Patterns](#patterns)
 1. [File Organization](#file-organization)
 1. [Objective-C Interoperability](#objective-c-interoperability)
-1. [Contributors](#contributors)
-1. [Amendments](#amendments)
 
 ## Xcode Formatting
 
@@ -40,10 +38,10 @@ Note that brevity is not a primary goal. Code should be made more concise only i
   <details>
 
   #### Why?
-  We feel this greatly increases readability. We find it a little surprising that isn't the default
+  We feel this greatly increases readability. We find it a little surprising that isn't the default.
   
   #### How?
-  Under `Xcode -> Preferences -> Text Editing -> Indentation` you can tell Xcode to indent case statements in Swift
+  Under `Xcode -> Preferences -> Text Editing -> Indentation` you can tell Xcode to indent case statements in Swift.
 
   </details>
 
@@ -447,6 +445,13 @@ Note that brevity is not a primary goal. Code should be made more concise only i
   // WRONG
   universe.generateStars(at: location, count: 5, color: starColor, withAverageDistance: 4)
 
+  // WRONG
+  universe.generateStars(at: location,
+                         count: 5,
+                         color: starColor,
+                         withAverageDistance: 4
+                         )
+
   // RIGHT
   universe.generateStars(at: location,
                          count: 5,
@@ -467,6 +472,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
   func method(completion: () -> ()) {
     ...
   }
+  
 
   // RIGHT
   func method(completion: () -> Void) {
@@ -497,8 +503,38 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
     // RIGHT
     someAsyncThing() {
-      print($3)
+      print($2)
     }
+    ```
+
+    </details>
+
+* **Prefer anonymous closure values when there are less than 2 arguments and it does not greatly increase cognitive complexity**
+
+    <details>
+
+    #### Why?
+    Anonymous closure values ($0, $1, $2, etc...) can make it hard to reason able what you're dealing with barring some very specific circumstances. If you have more than 2 anonymous closure arguments you should name them to decrease ambiguity.
+
+    ```swift
+    // WRONG
+    someAsyncThing() {
+        print($0)
+        modify($1)
+        if ($2 == someValue.flatMap ({ $0 })) { //wait which $0????? 
+        }
+    }
+
+    // RIGHT
+    someAsyncThing() { name, age, isWearingSunglasses in
+        print(name)
+        modify(age)
+        if (isWearingSunglasses == someValue.flatMap ({ $0 }).isEmpty) {
+        }
+    }
+
+    // RIGHT
+    [:].merging([:]) { $1 }
     ```
 
     </details>
