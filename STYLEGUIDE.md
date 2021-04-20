@@ -607,8 +607,8 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
- * <a id='default-property-declarations'></a>(<a href='#default-property-declarations'>link</a>) **Prefer default values in property declarations over initializers setting values.**
-<details>
+* **Prefer default values in property declarations over initializers setting values.**
+  <details>
 
   ```swift
   // WRONG
