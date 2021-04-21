@@ -412,6 +412,24 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
+* **DO omit `get` keyword on get-only computed properties.**
+
+  <details>
+
+  ```swift
+  // WRONG
+  var isEmpty: Bool {
+    get {
+      return count == 0
+    }
+  }
+
+  // RIGHT
+  var isEmpty: Bool { count == 0 }
+  ```
+
+  </details>
+
 * **DO have brackets on separate lines for multi-line.** Put the opening and closing brackets on separate lines from any of the elements of the array. Also add a trailing comma on the last element.
 
   <details>
