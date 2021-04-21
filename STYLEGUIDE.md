@@ -1362,4 +1362,4 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 ## Attribution:
 - This styleguide was forked from the [AirBnB styleguide](https://github.com/airbnb/swift). Thanks AirBnB!
-- Inspiration on format also came from [the effect dart docs](https://dart.dev/guides/language/effective-dart), Thanks google!
+- Inspiration on format also came from [the effective dart docs](https://dart.dev/guides/language/effective-dart), Thanks google!
