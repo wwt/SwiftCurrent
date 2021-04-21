@@ -999,6 +999,34 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
+* **DO use meaningful names when specializing with generics.**
+
+  <details>
+
+  #### Why?
+  Often times with generics we lazily write `T` and move on, in the right contexts a single letter generic is just fine however as you start getting into increasingly complex scenarios this drastically reduces readability.
+
+  ```swift
+  // WRONG
+  class Bookshelf<T> {
+
+  }
+
+  func<T, U, V> doThing() {
+
+  }
+
+  // RIGHT
+  class Bookshelf<ReadableContent> {
+
+  }
+
+  func<S: Sequence, T: Type, N: Numeric> doThing() {
+    
+  }
+  ```
+
+  </details>
   
 **[⬆ back to top](#table-of-contents)**
 
