@@ -1647,6 +1647,31 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
+* **AVOID force unwrapping optionals.**
+  <details>
+  
+  #### Why?
+  Remember, implicitly unwrapped optionals are a thing if you can safely assume a value. A core component to swift is its safety, don't ruin that safety just for conveniences sake.
+
+  ```swift
+  // WRONG
+  let index = [].index(of: "hello")!
+  // This is NOT thread safe
+  tableView?.dataSource?.tableView?(tableView!, commit: .delete, forRowAt: expectedIndexPath)
+
+  // RIGHT
+  if let index = [].index(of: "hello") {
+    // use index
+  }
+
+  if let tableView = tableView {
+    // thread safe
+    tableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: expectedIndexPath)
+  }
+
+  ```
+  </details>
+
 ### Immutability
 * **PREFER immutable values whenever possible.** Use `map` and `compactMap` instead of appending to a new collection. Use `filter` instead of removing elements from a mutable collection.
 
