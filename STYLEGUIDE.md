@@ -416,6 +416,23 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
+* **AVOID having 1-line functions unless they actually increase readability and trend towards english fluency.**
+
+  <details>
+ 
+  ## Why?
+  Overly terse code is often difficult to reason about or modify. 
+
+  ```swift
+  // WRONG
+  func didTapBookButton() { User.add(book: books[someIndex]) }
+
+  // RIGHT
+  var isEmpty: Bool { count == 0 }
+  ```
+
+  </details>
+  
 ### Functions
 
 * **PREFER omitting `Void` return types from function definitions.**
