@@ -1723,6 +1723,54 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   ```
 
   </details>
+
+* **AVOID excessive comments.**
+  <details>
+  We are big believers in self documenting code. Public API deserve documentation comments in all their glory and you should follow our guide on that. When dealing with internal code comments should be reserved for times when meaning is genuinely unclear or non-intuitive. This tends to only be true when you cannot extract to a private method and *increase* readability. 
+
+  ```swift
+  // WRONG
+  // calculates sum of all the ages of all the users
+  func allUserAges() {
+    users.reduce(0) { $0.ageInYears + $1.ageInYears }
+  }
+
+  // RIGHT
+  /// max: Returns the maximum value in the comparable LinkedList
+  /// - Returns: The maximum concrete value in the LinkedList or nil if there is none
+  public func max() -> Value? {
+      guard var m = first?.value else { return nil }
+      forEach { m = Swift.max(m, $0.value) }
+      return m
+  }
+
+  // STILL RIGHT
+  // Implementation of Luhn's Algorithm in Swift
+  // From the rightmost digit of your card number, double every other digit.
+  // If the doubled digit is larger than 9 (ex. 8 * 2 = 16), subtract 9 from the product (16 – 9 = 7).
+  // Sum the digits.
+  // If there is no remainder after dividing by 10 (sum % 10 == 0), the card is valid.
+  var isValidCreditCardNumber:Bool {
+      let digits = reversed().compactMap { Int(String($0)) }
+      guard digits.count == count, digits.count > 0 else { return false }
+      let sum = digits.enumerated().reduce(0) {
+          return $0 + ((($1.offset % 2) == 0) ? $1.element : (2 * $1.element - 1) % 9 + 1)
+      }
+      return sum % 10 == 0
+  }
+
+  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    // #warning Incomplete implementation, return the number of rows
+    return Database.contacts.count
+  }
+
+  // RIGHT
+  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return Database.contacts.count
+  }
+  ```
+
+  </details>  
 **[⬆ back to top](#table-of-contents)**
 
 ## Objective-C Interoperability
