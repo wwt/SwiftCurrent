@@ -1168,6 +1168,43 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
+* **DO use the "Golden Path" rule.** GOLDEN PATH RULE: When coding with conditionals, the left-hand margin of the code should be the "golden" or "happy" path. That is, don't nest if statements. Multiple return statements are OK. The guard statement is built for this.
+
+  <details>
+
+  ```swift
+  // WRONG
+  func computeFFT(context: Context?, inputData: InputData?) throws -> Frequencies {
+    if let context = context {
+      if let inputData = inputData {
+        // use context and input to compute the frequencies
+        // notice the "return" line is far to the right, this violates the 'left margin' idea.
+        return frequencies
+      } else {
+        throw FFTError.noInputData
+      }
+    } else {
+      throw FFTError.noContext
+    }
+  }
+
+  // RIGHT
+  func computeFFT(context: Context?, inputData: InputData?) throws -> Frequencies {
+    guard let context = context else {
+      throw FFTError.noContext
+    }
+    guard let inputData = inputData else {
+      throw FFTError.noInputData
+    }
+
+    // use context and input to compute the frequencies
+    // notice the return statement is as far left as it can be, this satisfies the golden path rule.
+    return frequencies
+  }
+
+  ```
+  </details>
+
 * **DON'T use the `default` case when `switch`ing over an enum.**
 
   <details>
@@ -1808,4 +1845,4 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 - This styleguide was forked from the [AirBnB styleguide](https://github.com/airbnb/swift). Thanks AirBnB!
 - Inspiration on format also came from [the effective dart docs](https://dart.dev/guides/language/effective-dart), Thanks google!
 - Parts of the styleguide also inspired by [the google swift styleguide](https://google.github.io/swift/#defining-new-operators), Thanks google!
- Parts of the styleguide also inspired by [The Official raywenderlich.com Swift Style Guide](https://github.com/raywenderlich/swift-style-guide), Thanks Ray Wenderlich!
+- Parts of the styleguide also inspired by [The Official raywenderlich.com Swift Style Guide](https://github.com/raywenderlich/swift-style-guide), Thanks Ray Wenderlich!
