@@ -19,6 +19,19 @@ Note that brevity is not a primary goal. Code should be made more concise only i
   * For rules that don't directly change the format of the code, we should have a lint rule that throws a warning.
   * For rules that cannot be handled directly with SwiftLint we will strive to have our own linter (for example, file names).
 
+## How to read the guides
+Each guide is broken into a few sections. Sections contain a list of guidelines. Each guideline starts with one of these words:
+
+**DO** guidelines describe practices that should always be followed. There will almost never be a valid reason to stray from them.
+
+**DON’T** guidelines are the converse: things that are almost never a good idea. 
+
+**PREFER** guidelines are practices that you should follow. However, there may be circumstances where it makes sense to do otherwise. Just make sure you understand the full implications of ignoring the guideline when you do.
+
+**AVOID** guidelines are the dual to “prefer”: stuff you shouldn’t do but where there may be good reasons to on rare occasions.
+
+**CONSIDER** guidelines are practices that you might or might not want to follow, depending on circumstances, precedents, and your own preference.
+
 ## Table of Contents
 
 1. [Xcode Formatting](#xcode-formatting)
@@ -40,8 +53,8 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
 ## Xcode Formatting
 
-* **Trim trailing whitespace in all lines.**
-* **Indent Case Statements in a Switch.**
+* **DO Trim trailing whitespace in all lines.**
+* **DO Indent Case Statements in a Switch.**
   <details>
 
   #### Why?
@@ -56,9 +69,9 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
 ## Naming
 
-* **Name booleans like `isSpaceship`, `hasSpacesuit`, `areTermsAccepted` etc.** This makes it clear that they are booleans and not other types.
+* **DO Name booleans like `isSpaceship`, `hasSpacesuit`, `areTermsAccepted` etc.** This makes it clear that they are booleans and not other types.
 
-* **Event-handling functions should be named like past-tense sentences.** The subject can be omitted if it's not needed for clarity.
+* **DO Event-handling functions should be named like past-tense sentences.** The subject can be omitted if it's not needed for clarity.
 
   <details>
 
@@ -90,7 +103,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* **Avoid `*Controller` in names of classes that aren't view controllers.**
+* **AVOID `*Controller` in names of classes that aren't view controllers.**
   <details>
 
   #### Why?
@@ -102,7 +115,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
 ## Style
 
-* **Don't include types where they can be easily inferred.**
+* **DON'T include types where they can be easily inferred.**
 
   <details>
 
@@ -144,7 +157,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* **Don't use `self` unless it's necessary for disambiguation or required by the language.**
+* **DON'T use `self` unless it's necessary for disambiguation or required by the language.**
 
   <details>
 
@@ -182,7 +195,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* **Bind to `self` when upgrading from a weak reference.** [![SwiftFormat: strongifiedSelf](https://img.shields.io/badge/SwiftFormat-strongifiedSelf-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#strongifiedSelf)
+* **DO bind to `self` when upgrading from a weak reference.** [![SwiftFormat: strongifiedSelf](https://img.shields.io/badge/SwiftFormat-strongifiedSelf-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#strongifiedSelf)
 
   <details>
 
@@ -214,7 +227,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* **Prefer `self` in argument capture lists.**
+* **PREFER `self` in argument capture lists.**
 
   <details>
 
@@ -244,7 +257,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* **Place the colon immediately after an identifier, followed by a space.** [![SwiftLint: colon](https://img.shields.io/badge/SwiftLint-colon-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#colon)
+* **DO place the colon immediately after an identifier, followed by a space.** [![SwiftLint: colon](https://img.shields.io/badge/SwiftLint-colon-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#colon)
 
   <details>
 
@@ -279,7 +292,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* **Place a space on either side of a return arrow for readability.** [![SwiftLint: return_arrow_whitespace](https://img.shields.io/badge/SwiftLint-return__arrow__whitespace-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#returning-whitespace)
+* **DO place a space on either side of a return arrow for readability.** [![SwiftLint: return_arrow_whitespace](https://img.shields.io/badge/SwiftLint-return__arrow__whitespace-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#returning-whitespace)
 
   <details>
 
@@ -309,7 +322,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* **Omit unnecessary parentheses.** [![SwiftFormat: redundantParens](https://img.shields.io/badge/SwiftFormat-redundantParens-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#redundantParens)
+* **DO omit unnecessary parentheses.** [![SwiftFormat: redundantParens](https://img.shields.io/badge/SwiftFormat-redundantParens-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#redundantParens)
 
   <details>
 
@@ -329,7 +342,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* <a id='unnecessary-enum-arguments'></a> (<a href='#unnecessary-enum-arguments'>link</a>) **Omit enum associated values from case statements when all arguments are unlabeled.** [![SwiftLint: empty_enum_arguments](https://img.shields.io/badge/SwiftLint-empty__enum__arguments-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#empty-enum-arguments)
+* <a id='unnecessary-enum-arguments'></a> (<a href='#unnecessary-enum-arguments'>link</a>) **DO omit enum associated values from case statements when all arguments are unlabeled.** [![SwiftLint: empty_enum_arguments](https://img.shields.io/badge/SwiftLint-empty__enum__arguments-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#empty-enum-arguments)
 
   <details>
 
@@ -354,7 +367,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
   </details>
 
 
-* **Multi-line arrays should have each bracket on a separate line.** Put the opening and closing brackets on separate lines from any of the elements of the array. Also add a trailing comma on the last element. [![SwiftFormat: wrapArguments](https://img.shields.io/badge/SwiftFormat-wrapArguments-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#wrapArguments)
+* **DO have brackets on separate lines for multi-line.** Put the opening and closing brackets on separate lines from any of the elements of the array. Also add a trailing comma on the last element. [![SwiftFormat: wrapArguments](https://img.shields.io/badge/SwiftFormat-wrapArguments-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#wrapArguments)
 
   <details>
 
@@ -372,7 +385,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
   ]
   ```
 
-* **Use constructors instead of Make() functions for NSRange and others.** [![SwiftLint: legacy_constructor](https://img.shields.io/badge/SwiftLint-legacy__constructor-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#legacy-constructor)
+* **PREFER constructors instead of Make() functions for NSRange and others.** [![SwiftLint: legacy_constructor](https://img.shields.io/badge/SwiftLint-legacy__constructor-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#legacy-constructor)
 
   <details>
 
@@ -388,7 +401,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
 ### Functions
 
-* **Omit `Void` return types from function definitions.** [![SwiftLint: redundant_void_return](https://img.shields.io/badge/SwiftLint-redundant__void__return-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#redundant-void-return)
+* **PREFER omitting `Void` return types from function definitions.** [![SwiftLint: redundant_void_return](https://img.shields.io/badge/SwiftLint-redundant__void__return-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#redundant-void-return)
 
   <details>
 
@@ -406,7 +419,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* **Separate long function declarations with line breaks before each argument label after the first, but not before the return signature.** Put the open curly brace on the next line so the first executable line doesn't look like it's another parameter.
+* **DO separate long function declarations with line breaks before each argument label after the first, but not before the return signature.** Put the open curly brace on the next line so the first executable line doesn't look like it's another parameter.
 
   <details>
 
@@ -457,7 +470,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* **Long function invocations should also break on each argument.** Put the closing parenthesis on the last line of the invocation. [![SwiftFormat: wrapArguments](https://img.shields.io/badge/SwiftFormat-wrapArguments-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#wrapArguments)
+* **DO break each argument on long function invocations.** Put the closing parenthesis on the last line of the invocation. [![SwiftFormat: wrapArguments](https://img.shields.io/badge/SwiftFormat-wrapArguments-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#wrapArguments)
 
   <details>
 
@@ -483,7 +496,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
 ### Closures
 
-* **Favor `Void` return types over `()` in closure declarations.** If you must specify a `Void` return type in a function declaration, use `Void` rather than `()` to improve readability. [![SwiftLint: void_return](https://img.shields.io/badge/SwiftLint-void__return-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#void-return)
+* **PREFER `Void` return types over `()` in closure declarations.** If you must specify a `Void` return type in a function declaration, use `Void` rather than `()` to improve readability. [![SwiftLint: void_return](https://img.shields.io/badge/SwiftLint-void__return-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#void-return)
 
   <details>
 
@@ -502,7 +515,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* **Name unused closure parameters as underscores (`_`) unless none are used.**
+* **DO name unused closure parameters as underscores (`_`) unless none are used.**
 
     <details>
 
@@ -529,7 +542,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
     </details>
 
-* **Prefer anonymous closure values when there are less than 2 arguments and it does not greatly increase cognitive complexity**
+* **PREFER anonymous closure values when there are less than 2 arguments and it does not greatly increase cognitive complexity**
 
     <details>
 
@@ -559,7 +572,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
     </details>
 
-* **Single-line closures should have a space inside each brace.** [![SwiftLint: closure_spacing](https://img.shields.io/badge/SwiftLint-closure__spacing-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#closure-spacing)
+* **DO put a space around single-line closures.** [![SwiftLint: closure_spacing](https://img.shields.io/badge/SwiftLint-closure__spacing-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#closure-spacing)
 
   <details>
 
@@ -575,7 +588,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
 ### Operators
 
-* **Infix operators should have a single space on either side.** Prefer parenthesis to visually group statements with many operators rather than varying widths of whitespace. This rule does not apply to range operators (e.g. `1...3`) and postfix or prefix operators (e.g. `guest?` or `-1`). [![SwiftLint: operator_usage_whitespace](https://img.shields.io/badge/SwiftLint-operator__usage__whitespace-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#operator-usage-whitespace)
+* **DO put a single space around infix operators.** Prefer parenthesis to visually group statements with many operators rather than varying widths of whitespace. This rule does not apply to range operators (e.g. `1...3`) and postfix or prefix operators (e.g. `guest?` or `-1`). [![SwiftLint: operator_usage_whitespace](https://img.shields.io/badge/SwiftLint-operator__usage__whitespace-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#operator-usage-whitespace)
 
   <details>
 
@@ -602,7 +615,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 ## Patterns
 
 ### Initializers
-* **Prefer initializing properties at `init` time whenever possible, rather than using implicitly unwrapped optionals.**  A notable exception is UIViewController's `view` property. [![SwiftLint: implicitly_unwrapped_optional](https://img.shields.io/badge/SwiftLint-implicitly__unwrapped__optional-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#implicitly-unwrapped-optional)
+* **PREFER initializing properties at `init` time whenever possible, rather than using implicitly unwrapped optionals.**  A notable exception is UIViewController's `view` property. [![SwiftLint: implicitly_unwrapped_optional](https://img.shields.io/badge/SwiftLint-implicitly__unwrapped__optional-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#implicitly-unwrapped-optional)
 
   <details>
 
@@ -628,7 +641,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* **Prefer default values in property declarations over initializers setting values.**
+* **PREFER default values in property declarations over initializers setting values.**
   <details>
 
   ```swift
@@ -649,10 +662,10 @@ Note that brevity is not a primary goal. Code should be made more concise only i
   
   </details>
 
-* **Avoid performing any meaningful or time-intensive work in `init()`.** Avoid doing things like opening database connections, making network requests, reading large amounts of data from disk, etc. Create a factory if these things need to be done before an object is ready for use.
+* **AVOID performing any meaningful or time-intensive work in `init()`.** Avoid doing things like opening database connections, making network requests, reading large amounts of data from disk, etc. Create a factory if these things need to be done before an object is ready for use.
 
 ### Method Complexity
-* **Extract complex property observers into methods.** This reduces nestedness, separates side-effects from property declarations, and makes the usage of implicitly-passed parameters like `oldValue` explicit.
+* **DO extract complex property observers into methods.** This reduces nestedness, separates side-effects from property declarations, and makes the usage of implicitly-passed parameters like `oldValue` explicit.
 
   <details>
 
@@ -688,9 +701,9 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
   
-* **Prefer Combine functional chains over completion handlers**. 
+* **PREFER Combine functional chains over completion handlers**. 
 
-* **Extract complex callback blocks into methods**. This limits the complexity introduced by weak-self in blocks and reduces nestedness. If you need to reference self in the method call, make use of `guard` to unwrap self for the duration of the callback.
+* **DO extract complex callback blocks into methods**. This limits the complexity introduced by weak-self in blocks and reduces nestedness. If you need to reference self in the method call, make use of `guard` to unwrap self for the duration of the callback.
 
   <details>
 
@@ -728,7 +741,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
   </details>
   
 ### Control Flow
-* **Prefer using `guard` over `if` for preconditions.**
+* **PREFER using `guard` over `if` for preconditions.**
 
   <details>
   
@@ -775,7 +788,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* **Prefer using `guard` at the beginning of a scope.**
+* **PREFER using `guard` at the beginning of a scope.**
 
   <details>
 
@@ -784,7 +797,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* **Never use the `default` case when `switch`ing over an enum.**
+* **DON'T use the `default` case when `switch`ing over an enum.**
 
   <details>
 
@@ -812,9 +825,9 @@ Note that brevity is not a primary goal. Code should be made more concise only i
   </details>
 
 ### Access Control
-* **Access control should be at the strictest level possible.** Prefer `public` to `open` and `private` to `fileprivate` unless you need that behavior.
+* **PREFER the strictest possible access control.** Prefer `public` to `open` and `private` to `fileprivate` unless you need that behavior.
 
-* **Avoid global functions whenever possible.** Prefer methods within type definitions.
+* **AVOID global functions whenever possible.** Prefer methods within type definitions.
 
   <details>
 
@@ -844,7 +857,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* **Use caseless `enum`s for organizing `public` or `internal` constants and functions into namespaces.**
+* **DO use caseless `enum`s for organizing `public` or `internal` constants and functions into namespaces.**
   * Avoid creating non-namespaced global constants and functions.
   * Feel free to nest namespaces where it adds clarity.
   * `private` globals are permitted, since they are scoped to a single file and do not pollute the global namespace. Consider placing private globals in an `enum` namespace to match the guidelines for other declaration types.
@@ -870,7 +883,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
   </details>
 
 ### Enumerations
-* **Use Swift's automatic enum values unless they map to an external source, or have a value type like String, that will not cause issues when inserted in the middle.** Add a comment explaining why explicit values are defined. [![SwiftLint: redundant_string_enum_value](https://img.shields.io/badge/SwiftLint-redundant__string__enum__value-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#redundant-string-enum-value)
+* **DO use Swift's automatic enum values unless they map to an external source, or have a value type like String, that will not cause issues when inserted in the middle.** Add a comment explaining why explicit values are defined. [![SwiftLint: redundant_string_enum_value](https://img.shields.io/badge/SwiftLint-redundant__string__enum__value-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#redundant-string-enum-value)
 
   <details>
 
@@ -948,7 +961,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
   </details>
 
 ### Optionals
-* **Prefer throwing or optional intializers over optional properties that should have a value.**
+* **PREFER throwing or optional intializers over optional properties that should have a value.**
   <details>
  
   ```swift
@@ -980,7 +993,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* **Prefer implicitly unwrapped optionals when a value can be safely assumed.**
+* **PREFER implicitly unwrapped optionals when a value can be safely assumed.**
   <details>
   ### Why?
   Implicitly unwrapped optionals aren't *bad*, contrary to some opinions. While Swift does give us a lot of safety implicitly unwrapped optionals merely mean "this likely has a value when you need it". You can still treat them like optionals, unwrap them, use optional chaining syntax. Or you can treat them as if they have an expected value. Use them where appropriate and write adequate tests.
@@ -1006,7 +1019,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
   
-* **Check for nil rather than using optional binding if you don't need to use the value.** [![SwiftLint: unused_optional_binding](https://img.shields.io/badge/SwiftLint-unused_optional_binding-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#unused-optional-binding)
+* **DO check for nil rather than using optional binding if you don't need to use the value.** [![SwiftLint: unused_optional_binding](https://img.shields.io/badge/SwiftLint-unused_optional_binding-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#unused-optional-binding)
 
   <details>
 
@@ -1030,7 +1043,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
   </details>
 
 ### OTHERS
-* **Prefer immutable values whenever possible.** Use `map` and `compactMap` instead of appending to a new collection. Use `filter` instead of removing elements from a mutable collection.
+* **PREFER immutable values whenever possible.** Use `map` and `compactMap` instead of appending to a new collection. Use `filter` instead of removing elements from a mutable collection.
 
   <details>
 
@@ -1064,7 +1077,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* **Default type methods to `static`.**
+* **DO default type methods to `static`.**
 
   <details>
 
@@ -1085,7 +1098,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* **Default classes to `final`.**
+* **DO default classes to `final`.**
 
   <details>
 
@@ -1106,7 +1119,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* **Omit the `return` keyword when not required by the language.** [![SwiftFormat: redundantReturn](https://img.shields.io/badge/SwiftFormat-redundantReturn-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#redundantReturn)
+* **DO omit the `return` keyword when not required by the language.** [![SwiftFormat: redundantReturn](https://img.shields.io/badge/SwiftFormat-redundantReturn-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#redundantReturn)
 
   <details>
 
@@ -1146,7 +1159,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* **Use `AnyObject` instead of `class` in protocol definitions.** [![SwiftFormat: anyObjectProtocol](https://img.shields.io/badge/SwiftFormat-anyObjectProtocol-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#anyobjectprotocol)
+* **DO use `AnyObject` instead of `class` in protocol definitions.** [![SwiftFormat: anyObjectProtocol](https://img.shields.io/badge/SwiftFormat-anyObjectProtocol-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#anyobjectprotocol)
 
   <details>
 
@@ -1166,7 +1179,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* **Prefer a wrapped `Any` type over a subclass for type erasure.** [![SwiftFormat: anyObjectProtocol](https://img.shields.io/badge/SwiftFormat-anyObjectProtocol-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#anyobjectprotocol)
+* **PREFER a wrapped `Any` type over a subclass for type erasure.** [![SwiftFormat: anyObjectProtocol](https://img.shields.io/badge/SwiftFormat-anyObjectProtocol-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#anyobjectprotocol)
 
   <details>
 
@@ -1217,7 +1230,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* **Specify the access control for each declaration in an extension individually.** [![SwiftFormat: extensionAccessControl](https://img.shields.io/badge/SwiftFormat-extensionAccessControl-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#extensionaccesscontrol)
+* **DO specify the access control for each declaration in an extension individually.** [![SwiftFormat: extensionAccessControl](https://img.shields.io/badge/SwiftFormat-extensionAccessControl-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#extensionaccesscontrol)
 
   <details>
 
@@ -1260,11 +1273,11 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
 ## File Organization
 
-* **Limit empty vertical whitespace to one line.** Favor the following formatting guidelines over whitespace of varying heights to divide files into logical groupings. [![SwiftLint: vertical_whitespace](https://img.shields.io/badge/SwiftLint-vertical__whitespace-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#vertical-whitespace)
+* **DO limit empty vertical whitespace to one line.** Favor the following formatting guidelines over whitespace of varying heights to divide files into logical groupings. [![SwiftLint: vertical_whitespace](https://img.shields.io/badge/SwiftLint-vertical__whitespace-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#vertical-whitespace)
 
-* **Files should end in a newline.** [![SwiftLint: trailing_newline](https://img.shields.io/badge/SwiftLint-trailing__newline-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#trailing-newline)
+* **DO end files with a newline.** [![SwiftLint: trailing_newline](https://img.shields.io/badge/SwiftLint-trailing__newline-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#trailing-newline)
 
-* **Within each top-level section, place content in the following order.** This allows a new reader of your code to more easily find what they are looking for. [![SwiftFormat: organizeDeclarations](https://img.shields.io/badge/SwiftFormat-organizeDeclarations-008489.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#organizeDeclarations)
+* **DO place content in the correct order within a file.** This allows a new reader of your code to more easily find what they are looking for. [![SwiftFormat: organizeDeclarations](https://img.shields.io/badge/SwiftFormat-organizeDeclarations-008489.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#organizeDeclarations)
   * Nested types and typealiases
   * Static Properties using propertywrappers (like `@State`, `@Binding`, `@Published`, etc...)
   * Static properties
@@ -1276,7 +1289,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
   * Class methods
   * Instance methods
 
-* **Add empty lines between property declarations by logical group.** (e.g. between static properties and instance properties.) [![SwiftFormat: organizeDeclarations](https://img.shields.io/badge/SwiftFormat-organizeDeclarations-008489.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#organizeDeclarations)
+* **DO add empty lines between property declarations by logical group.** (e.g. between static properties and instance properties.) [![SwiftFormat: organizeDeclarations](https://img.shields.io/badge/SwiftFormat-organizeDeclarations-008489.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#organizeDeclarations)
 
   <details>
 
@@ -1297,7 +1310,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
   </details>
 
-* **Computed properties and properties with property observers should appear at the end of the set of declarations of the same kind.** (e.g. instance properties.) [![SwiftFormat: organizeDeclarations](https://img.shields.io/badge/SwiftFormat-organizeDeclarations-008489.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#organizeDeclarations)
+* **DO put computed properties and properties with property observers at the end of the set of declarations of the same kind.** (e.g. instance properties.) [![SwiftFormat: organizeDeclarations](https://img.shields.io/badge/SwiftFormat-organizeDeclarations-008489.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#organizeDeclarations)
 
   <details>
 
@@ -1325,7 +1338,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
 ## Objective-C Interoperability
 
-* **Prefer pure Swift classes over subclasses of NSObject.** If your code needs to be used by some Objective-C code, wrap it to expose the desired functionality. Use `@objc` on individual methods and variables as necessary rather than exposing all API on a class to Objective-C via `@objcMembers`.
+* **PREFER pure Swift classes over subclasses of NSObject.** If your code needs to be used by some Objective-C code, wrap it to expose the desired functionality. Use `@objc` on individual methods and variables as necessary rather than exposing all API on a class to Objective-C via `@objcMembers`.
 
   <details>
 
@@ -1354,3 +1367,4 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
 ## Attribution:
 This styleguide was forked from the [AirBnB styleguide](https://github.com/airbnb/swift). Thanks AirBnB!
+Inspiration on format also came from [the effect dart docs](https://dart.dev/guides/language/effective-dart), Thanks google!
