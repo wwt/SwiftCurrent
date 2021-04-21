@@ -1246,6 +1246,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 * **DO write if/else statements starting with the happy path.**
 
   <details>
+  
   #### Why?
   Your code should read as a declaration of intent. Starting with the happy path case makes your intent more immediately apparent.
 
