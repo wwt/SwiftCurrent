@@ -1367,6 +1367,36 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
+* **PREFER structs over classes.** (e.g. instance properties.)
+  <details>
+  
+  #### Why?
+  This follows the previous rule of preferring immutability. Structs explicitly mark mutating members as mutating, they favor composition over inheritance, they have synthesized initializers, and they are copy-on-write meaning that unintended side-effects from modifying a reference are less prevelant.
+ 
+  ```swift
+  // WRONG
+  class User: Codable {
+      var username: String
+      var email: String
+      var dateOfBirth: Date
+
+      init(username: String, email: String, dateOfBirth: Date) {
+          self.username = username
+          self.email = email
+          self.dateOfBirth = dateOfBirth
+      }
+  }
+
+  // RIGHT
+  struct User: Codable {
+      var username: String
+      var email: String
+      var dateOfBirth: Date
+  }
+  ```
+
+  </details>
+
 **[⬆ back to top](#table-of-contents)**
 
 ## Objective-C Interoperability
