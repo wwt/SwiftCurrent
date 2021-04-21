@@ -539,7 +539,12 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
       // RIGHT
       let foo = "statement"
       let bar = "bar"
-      guard let x = name else { logFailure(); makeDebugBreadcrumbs(); completion(); return }
+      guard let x = name else {
+          logFailure()
+          makeDebugBreadcrumbs()
+          completion()
+          return
+      }
     }
   }
   ```
