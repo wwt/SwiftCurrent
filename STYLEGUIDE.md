@@ -1040,12 +1040,12 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   </details>
 
 ### Enumerations
-* **DO use Swift's automatic enum values unless they map to an external source, or have a value type like String, that will not cause issues when inserted in the middle.** Add a comment explaining why explicit values are defined.
+* **DO use Swift's automatic enum values unless they map to an external source. Unless the external source has a value type like String that will not cause issues when inserted in the middle.** Add a comment explaining why explicit values are defined.
 
   <details>
 
   #### Why?
-  To minimize user error, improve readability, and write code faster, rely on Swift's automatic enum values. If the value maps to an external source (e.g. it's coming from a network request) or is persisted across binaries, however, define the values explicity, and document what these values are mapping to. The exception to this is when the value type is like `String` that will not cause issues when inserted in the middle.
+  To minimize user error, improve readability, and write code faster, rely on Swift's automatic enum values. If the value maps to an external source (e.g. it's coming from a network request) or is persisted across binaries, define the values explicitly and document what these values are mapping to. The exception to this is when the value type is like `String` that will not cause issues when inserted in the middle.
 
   This ensures that if someone adds a new value in the middle, they won't accidentally break things.
 
