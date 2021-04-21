@@ -556,6 +556,20 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
+* **DO break apart numeric literals by groups of three, just like you would use commas.**
+  <details>
+  
+  ```swift
+  // WRONG
+  let val = 1000
+  let val2 = 10000000
+
+  // RIGHT
+  let val = 1_000
+  let val2 = 10_000_000
+  ```
+  </details>
+
 ### Functions
 
 * **PREFER omitting `Void` return types from function definitions.**
