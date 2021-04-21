@@ -522,6 +522,61 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
+  * **AVOID use semicolons after each statement in your code.** It is only required if you wish to combine multiple statements on a single line.
+
+  <details>
+
+  ```swift
+
+  class SomeClass {
+    var name:String?
+    private func fooy() {
+      // WRONG
+      let foo = "foo is a common term in programming";
+
+      // RIGHT
+      let foo = "foo is a common term in programming" 
+
+      // RIGHT
+      guard let x = name else { print("there is no name"); return;}
+    }
+  }
+  ```
+
+  </details>
+
+* **DO use trailing closure syntax.** If there are multiple trailing closure parameters, use the new syntax for multiple trailing closures available in Swift 5.x
+
+  <details>
+
+  ```swift
+
+  class SomeClass {
+    var name:String?
+    private func fooy() {
+      // WRONG
+      UIView.animate(withDuration: 0.6, animations: { _ in self.view.alpha = 0}) { _ in
+          self.view.removeFromSuperview()
+      }
+
+      // WRONG
+      UIView.animate(withDuration: 0.6, animations: { _ in self.view.alpha = 0}, completion: { _ in self.view.removeFromSuperview() })
+
+
+      // RIGHT
+      UIView.animate(withDuration: 0.3) {
+        self.view.alpha = 0
+      } completion: { _ in
+        self.view.removeFromSuperview()
+      }
+    }
+  }
+  ```
+
+  </details>
+
+* **AVOID multiple optional trailing closures.**
+
 ### Functions
 
 * **PREFER omitting `Void` return types from function definitions.**
