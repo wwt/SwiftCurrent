@@ -1948,8 +1948,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
         forControlEvents: .touchUpInside)
     }
 
-    @objc
-    private func didTapAcceptButton() {
+    @objc private func didTapAcceptButton() {
       // ...
     }
   }
