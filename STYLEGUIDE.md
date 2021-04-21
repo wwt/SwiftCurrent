@@ -1125,6 +1125,25 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 * **AVOID performing any meaningful or time-intensive work in `init()`.** Avoid doing things like opening database connections, making network requests, reading large amounts of data from disk, etc. Create a factory if these things need to be done before an object is ready for use.
 
+* **AVOID `.init` unless dealing with metatypes.**
+  <details>
+  
+  ```swift
+  // WRONG
+  let x = MyType.init(arguments)
+  let x: MyType = .init(arguments)
+
+  // RIGHT
+  let x = MyType(arguments)
+
+  let type = lookupType(context)
+  let x = type.init(arguments)
+
+  let x = makeValue(factory: MyType.init)
+
+  ```
+  </details>
+
 ### Method Complexity
 * **DO extract complex property observers into methods.** This reduces nestedness, separates side-effects from property declarations, and makes the usage of implicitly-passed parameters like `oldValue` explicit.
 
