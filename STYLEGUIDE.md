@@ -43,7 +43,9 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
     1. [Access Control](#access-control)
     1. [Enumerations](#enumerations)
     1. [Optionals](#optionals)
-    1. [OTHERS](#others)
+    1. [Immutability](#immutability)
+    1. [Protocols](#protocols)
+    1. [Type Erasure](#type-erasure)
 1. [File Organization](#file-organization)
 1. [Objective-C Interoperability](#objective-c-interoperability)
 
@@ -416,6 +418,46 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
   
+* **DO omit the `return` keyword when not required by the language.**
+
+  <details>
+
+  ```swift
+  // WRONG
+  ["1", "2", "3"].compactMap { return Int($0) }
+
+  var size: CGSize {
+    return CGSize(
+      width: 100.0,
+      height: 100.0)
+  }
+
+  func makeInfoAlert(message: String) -> UIAlertController {
+    return UIAlertController(
+      title: "ℹ️ Info",
+      message: message,
+      preferredStyle: .alert)
+  }
+
+  // RIGHT
+  ["1", "2", "3"].compactMap { Int($0) }
+
+  var size: CGSize {
+    CGSize(
+      width: 100.0,
+      height: 100.0)
+  }
+
+  func makeInfoAlert(message: String) -> UIAlertController {
+    UIAlertController(
+      title: "ℹ️ Info",
+      message: message,
+      preferredStyle: .alert)
+  }
+  ```
+
+  </details>
+
 ### Functions
 
 * **PREFER omitting `Void` return types from function definitions.**
@@ -916,6 +958,87 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
+* **DO default type methods to `static`.**
+
+  <details>
+
+  #### Why?
+  If a method needs to be overridden, the author should opt into that functionality by using the `class` keyword instead.
+
+  ```swift
+  // WRONG
+  class Fruit {
+    class func eatFruits(_ fruits: [Fruit]) { ... }
+  }
+
+  // RIGHT
+  class Fruit {
+    static func eatFruits(_ fruits: [Fruit]) { ... }
+  }
+  ```
+
+  </details>
+
+* **DO default classes to `final`.**
+
+  <details>
+
+  #### Why?
+  If a class needs to be overridden, the author should opt into that functionality by omitting the `final` keyword.
+
+  ```swift
+  // WRONG
+  class SettingsRepository {
+    // ...
+  }
+
+  // RIGHT
+  final class SettingsRepository {
+    // ...
+  }
+  ```
+
+  </details>
+
+* **DO specify the access control for each declaration in an extension individually.**
+
+  <details>
+
+  #### Why?
+
+  Specifying the access control on the declaration itself helps engineers more quickly determine the access control level of an individual declaration.
+
+  ```swift
+  // WRONG
+  public extension Universe {
+    // This declaration doesn't have an explicit access control level.
+    // In all other scopes, this would be an internal function,
+    // but because this is in a public extension, it's actually a public function.
+    func generateGalaxy() { }
+  }
+
+  // WRONG
+  private extension Spaceship {
+    func enableHyperdrive() { }
+  }
+
+  // RIGHT
+  extension Universe {
+    // It is immediately obvious that this is a public function,
+    // even if the start of the `extension Universe` scope is off-screen.
+    public func generateGalaxy() { }
+  }
+
+  // RIGHT
+  extension Spaceship {
+    // Recall that a private extension actually has fileprivate semantics,
+    // so a declaration in a private extension is fileprivate by default.
+    fileprivate func enableHyperdrive() { }
+  }
+  ```
+
+  </details>
+
 ### Enumerations
 * **DO use Swift's automatic enum values unless they map to an external source, or have a value type like String, that will not cause issues when inserted in the middle.** Add a comment explaining why explicit values are defined.
 
@@ -989,6 +1112,36 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
     case owner
     case manager
     case member
+  }
+  ```
+
+  </details>
+
+* **PREFER structs over classes.**
+  <details>
+  
+  #### Why?
+  This follows the previous rule of preferring immutability. Structs explicitly mark mutating members as mutating, they favor composition over inheritance, they have synthesized initializers, and they are copy-on-write meaning that unintended side-effects from modifying a reference are less prevalent.
+ 
+  ```swift
+  // WRONG
+  class User: Codable {
+      var username: String
+      var email: String
+      var dateOfBirth: Date
+
+      init(username: String, email: String, dateOfBirth: Date) {
+          self.username = username
+          self.email = email
+          self.dateOfBirth = dateOfBirth
+      }
+  }
+
+  // RIGHT
+  struct User: Codable {
+      var username: String
+      var email: String
+      var dateOfBirth: Date
   }
   ```
 
@@ -1076,7 +1229,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
-### OTHERS
+### Immutability
 * **PREFER immutable values whenever possible.** Use `map` and `compactMap` instead of appending to a new collection. Use `filter` instead of removing elements from a mutable collection.
 
   <details>
@@ -1111,88 +1264,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
-* **DO default type methods to `static`.**
-
-  <details>
-
-  #### Why?
-  If a method needs to be overridden, the author should opt into that functionality by using the `class` keyword instead.
-
-  ```swift
-  // WRONG
-  class Fruit {
-    class func eatFruits(_ fruits: [Fruit]) { ... }
-  }
-
-  // RIGHT
-  class Fruit {
-    static func eatFruits(_ fruits: [Fruit]) { ... }
-  }
-  ```
-
-  </details>
-
-* **DO default classes to `final`.**
-
-  <details>
-
-  #### Why?
-  If a class needs to be overridden, the author should opt into that functionality by omitting the `final` keyword.
-
-  ```swift
-  // WRONG
-  class SettingsRepository {
-    // ...
-  }
-
-  // RIGHT
-  final class SettingsRepository {
-    // ...
-  }
-  ```
-
-  </details>
-
-* **DO omit the `return` keyword when not required by the language.**
-
-  <details>
-
-  ```swift
-  // WRONG
-  ["1", "2", "3"].compactMap { return Int($0) }
-
-  var size: CGSize {
-    return CGSize(
-      width: 100.0,
-      height: 100.0)
-  }
-
-  func makeInfoAlert(message: String) -> UIAlertController {
-    return UIAlertController(
-      title: "ℹ️ Info",
-      message: message,
-      preferredStyle: .alert)
-  }
-
-  // RIGHT
-  ["1", "2", "3"].compactMap { Int($0) }
-
-  var size: CGSize {
-    CGSize(
-      width: 100.0,
-      height: 100.0)
-  }
-
-  func makeInfoAlert(message: String) -> UIAlertController {
-    UIAlertController(
-      title: "ℹ️ Info",
-      message: message,
-      preferredStyle: .alert)
-  }
-  ```
-
-  </details>
-
+### Protocols
 * **DO use `AnyObject` instead of `class` in protocol definitions.**
 
   <details>
@@ -1213,6 +1285,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
+### Type Erasure
 * **PREFER a wrapped `Any` type over a subclass for type erasure.**
 
   <details>
@@ -1259,45 +1332,6 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   public protocol Stuff {
       associatedtype T
       func foo(_ x: T)
-  }
-  ```
-
-  </details>
-
-* **DO specify the access control for each declaration in an extension individually.**
-
-  <details>
-
-  #### Why?
-
-  Specifying the access control on the declaration itself helps engineers more quickly determine the access control level of an individual declaration.
-
-  ```swift
-  // WRONG
-  public extension Universe {
-    // This declaration doesn't have an explicit access control level.
-    // In all other scopes, this would be an internal function,
-    // but because this is in a public extension, it's actually a public function.
-    func generateGalaxy() { }
-  }
-
-  // WRONG
-  private extension Spaceship {
-    func enableHyperdrive() { }
-  }
-
-  // RIGHT
-  extension Universe {
-    // It is immediately obvious that this is a public function,
-    // even if the start of the `extension Universe` scope is off-screen.
-    public func generateGalaxy() { }
-  }
-
-  // RIGHT
-  extension Spaceship {
-    // Recall that a private extension actually has fileprivate semantics,
-    // so a declaration in a private extension is fileprivate by default.
-    fileprivate func enableHyperdrive() { }
   }
   ```
 
@@ -1362,36 +1396,6 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
     didSet {
       print("oh my god, the atmosphere changed")
     }
-  }
-  ```
-
-  </details>
-
-* **PREFER structs over classes.**
-  <details>
-  
-  #### Why?
-  This follows the previous rule of preferring immutability. Structs explicitly mark mutating members as mutating, they favor composition over inheritance, they have synthesized initializers, and they are copy-on-write meaning that unintended side-effects from modifying a reference are less prevelant.
- 
-  ```swift
-  // WRONG
-  class User: Codable {
-      var username: String
-      var email: String
-      var dateOfBirth: Date
-
-      init(username: String, email: String, dateOfBirth: Date) {
-          self.username = username
-          self.email = email
-          self.dateOfBirth = dateOfBirth
-      }
-  }
-
-  // RIGHT
-  struct User: Codable {
-      var username: String
-      var email: String
-      var dateOfBirth: Date
   }
   ```
 
