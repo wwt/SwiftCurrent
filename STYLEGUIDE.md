@@ -1246,7 +1246,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 * **DO write if/else statements starting with the happy path.**
 
   <details>
-  
+
   #### Why?
   Your code should read as a declaration of intent. Starting with the happy path case makes your intent more immediately apparent.
 
@@ -1317,6 +1317,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 * **DON'T use nested ternaries.**
   <details>
+  
   #### Why?
   Ternaries can be great, they actually serve a functional purpose over an `if` statement because they are expressions, so you can assign them to a constant or return them as an expression. That being said if you find yourself nesting them you have gone too far.
 
