@@ -602,6 +602,20 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   ```
   </details>
 
+* **DON'T assign variables through a labeled tuple shuffle.** let (label: varName, label2: varName2) = tuple
+
+  <details>
+  Assigning variables through a tuple pattern (sometimes referred to as a tuple shuffle) is only permitted if the left-hand side of the assignment is unlabeled.
+
+  ```swift
+  // WRONG
+  let (x: a, y: b) = (y: 4, x: 5.0)
+
+  // RIGHT
+  let (b, a) = (y: 4, x: 5.0)
+  ```
+  </details>
+  
 ### Functions
 
 * **PREFER omitting `Void` return types from function definitions.**
