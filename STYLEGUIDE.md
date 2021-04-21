@@ -896,7 +896,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
-  * **DO put each `case` on its own line in an `enum`.** The expection to this is if none of the cases have associated values or raw values, all cases fit on a single line, and the cases do not need further documentaion because their meanins are obvious from their names.
+* **DO put each `case` on its own line in an `enum`.** The expectation to this is if none of the cases have associated values or raw values, all cases fit on a single line, and the cases do not need further documentation because their meanings are obvious from their names.
 
   <details>
 
@@ -929,6 +929,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 * **DO declare the `enum` as `indirect` when all cases must be indirect.** Omit the keyword on individual cases.
 
   <details>
+
   ```swift
     // WRONG
     public enum DependencyGraphNode {
@@ -941,32 +942,14 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
       case userDefined(dependencies: [DependencyGraphNode])
       case synthesized(dependencies: [DependencyGraphNode])
     }
-
   ```
+
   </details>
 
-* **DON'T put empty parentheses when a `case` does not have an associated value.** 
+* **DO order `enum` cases in a logical order.** If there is no obvious logical ordering, use a lexicographical odering based on the cases' names. 
 
   <details>
-  ```swift
-    // WRONG
-    public enum BinaryTree<Element> {
-      indirect case node(element: Element, left: BinaryTree, right: BinaryTree)
-      case empty()  // AVOID.
-    }
 
-    // RIGHT
-    public enum BinaryTree<Element> {
-      indirect case node(element: Element, left: BinaryTree, right: BinaryTree)
-      case empty  // GOOD.
-    }
-
-  ```
-  </details>
-
-  * **DO order `enum` cases in a logical order.** If there is no obvious logical ordering, use a lexicographical odering based on the cases' names. 
-
-  <details>
   ```swift
     // WRONG
     // These are sorted lexicographically, but the meaningful groupings of related values has been lost.
@@ -992,8 +975,8 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
       case internalServerError = 500
     }
-
   ```
+
   </details>
   
 **[⬆ back to top](#table-of-contents)**
