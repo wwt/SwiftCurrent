@@ -786,7 +786,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 * **AVOID creating custom operators.**
 
   <details>
-  
+
   #### Why?
   Custom operators can drastically decrease readability. While there are times when they can be beneficial, they should either follow other common language conventions (like how ~= is used for regex matching in many languages) or they should have a clear precedent inside the codebase (like a `%%` postfix operator that has an x percent change of executing, `if 10%%`)
 
@@ -915,16 +915,6 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
       case comma
       case semicolon
       case identifier
-    }
-
-    public enum Token {
-      case comma, semicolon, identifier
-    }
-
-    public enum Token {
-      case comma
-      case semicolon
-      case identifier(String)
     }
   ```
 
