@@ -809,6 +809,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 * **AVOID creating custom operators.**
 
   <details>
+
   #### Why?
   Custom operators can drastically decrease readability. While there are times when they can be beneficial, they should either follow other common language conventions (like how ~= is used for regex matching in many languages) or they should have a clear precedent inside the codebase (like a `%%` postfix operator that has an x percent change of executing, `if 10%%`)
 
@@ -937,16 +938,6 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
       case comma
       case semicolon
       case identifier
-    }
-
-    public enum Token {
-      case comma, semicolon, identifier
-    }
-
-    public enum Token {
-      case comma
-      case semicolon
-      case identifier(String)
     }
   ```
 
@@ -1283,6 +1274,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 * **DO write if/else statements starting with the happy path.**
 
   <details>
+
   #### Why?
   Your code should read as a declaration of intent. Starting with the happy path case makes your intent more immediately apparent.
 
@@ -1353,6 +1345,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 * **DON'T use nested ternaries.**
   <details>
+
   #### Why?
   Ternaries can be great, they actually serve a functional purpose over an `if` statement because they are expressions, so you can assign them to a constant or return them as an expression. That being said if you find yourself nesting them you have gone too far.
 
@@ -1545,7 +1538,8 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 * **PREFER implicitly unwrapped optionals when a value can be safely assumed.**
   <details>
-  ### Why?
+
+  #### Why?
   Implicitly unwrapped optionals aren't *bad*, contrary to some opinions. While Swift does give us a lot of safety implicitly unwrapped optionals merely mean "this likely has a value when you need it". You can still treat them like optionals, unwrap them, use optional chaining syntax. Or you can treat them as if they have an expected value. Use them where appropriate and write adequate tests.
  
   ```swift
