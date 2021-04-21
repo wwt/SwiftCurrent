@@ -500,7 +500,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
-  * **AVOID use semicolons after each statement in your code.** It is only required if you wish to combine multiple statements on a single line.
+* **AVOID using semicolons after each statement in your code.** It is only required if you wish to combine multiple statements on a single line.
 
   <details>
 
@@ -516,7 +516,30 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
       let foo = "foo is a common term in programming" 
 
       // RIGHT
-      guard let x = name else { print("there is no name"); return;}
+      guard let x = name else { print("there is no name"); return }
+    }
+  }
+  ```
+
+  </details>
+
+* **AVOID having more than 1 statement per line.** An exception is `guard` statements when you may need a single statement before the `return`.
+
+  <details>
+
+  ```swift
+
+  class SomeClass {
+    var name:String?
+    private func fooy() {
+      // WRONG
+      let foo = "statement"; let bar = "bar"
+      guard let x = name else { logFailure(); makeDebugBreadcrumbs(); completion(); return }
+
+      // RIGHT
+      let foo = "statement"
+      let bar = "bar"
+      guard let x = name else { logFailure(); makeDebugBreadcrumbs(); completion(); return }
     }
   }
   ```
@@ -983,18 +1006,23 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   </details>
 
 ### Generics
-* **DO WIP**
+* **DO use generic `where` clauses for constraints, and use the generic specialization for typing.**
 
   <details>
 
   #### Why?
+  We strive for code that delivers relevant information quickly. When reading the below examples from left to right, there is less cognitive load to provide the type of the specialization when the generic is introduced than to retain the generic, its uses, and then retroactively apply the type. It also creates a separation between specialization and restrictions when reading.
 
   ```swift
   // WRONG
-  init<T, S, O>(thing: T, stuff: S, other: O) where T: Thing, S: Stuff, O: Other, T.Output == String, O.Input == T.Output
+  class SpecializedGeneric<F, B, FB> where F: Foo, B: Bar, FB: FooBar, F.Input == FB.Input {
+    init<T, S, O>(thing: T, stuff: S, other: O) where T: Thing, S: Stuff, O: Other, T.Output == String, O.Input == T.Output {}
+  }
 
   // RIGHT
-  init<T: Thing, S: Stuff, O: Other>(thing: T, stuff: S, other: O) where T.Output == String, O.Input == T.Output
+  class SpecializedGeneric<F: Foo, B: Bar, FB: FooBar> where F.Input == FB.Input {
+    init<T: Thing, S: Stuff, O: Other>(thing: T, stuff: S, other: O) where T.Output == String, O.Input == T.Output {}
+  }
   ```
 
   </details>
