@@ -977,7 +977,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   ```
 
   </details>
-  
+
 * **DON'T use nested ternaries.**
   <details>
   #### Why?
@@ -1561,3 +1561,5 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 ## Attribution:
 - This styleguide was forked from the [AirBnB styleguide](https://github.com/airbnb/swift). Thanks AirBnB!
 - Inspiration on format also came from [the effective dart docs](https://dart.dev/guides/language/effective-dart), Thanks google!
+- Parts of the styleguide also inspired by [the google swift styleguide](https://google.github.io/swift/#defining-new-operators), Thanks google!
+ Parts of the styleguide also inspired by [The Official raywenderlich.com Swift Style Guide](https://github.com/raywenderlich/swift-style-guide), Thanks Ray Wenderlich!
