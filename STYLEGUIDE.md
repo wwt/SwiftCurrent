@@ -151,6 +151,8 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
+* **DO use US english spellings of words in code.** This is to fit with the convention of english spellings that is already part of the swift standard libraries
+
 **[⬆ back to top](#table-of-contents)**
 
 ## Style
