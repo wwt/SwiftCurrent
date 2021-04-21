@@ -1938,6 +1938,12 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
+* **DO name files after the primary class in the file**
+
+* **DO name extension files in the style `*Extensions`**
+
+* **PREFER grouping by logical types. If there are extensive related models, extensions, classes, other files, then group them together in a group named after their logical meaning.**
+
 * **DO put computed properties and properties with property observers at the end of the set of declarations of the same kind.** (e.g. instance properties.)
   <details>
 
