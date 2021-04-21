@@ -1527,6 +1527,34 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
+* **DON'T keep dead code around.**
+  <details>
+  On the surface this may seem obvious but dead code takes many forms. File templates can really hurt you here because when you say create a new UIViewController it has methods that do nothing but call `super` that counts as dead code and clutters up the codebase needlessly.
+
+  ```swift
+  // WRONG
+  override func didReceiveMemoryWarning() {
+  super.didReceiveMemoryWarning()
+    // Dispose of any resources that can be recreated.
+  }
+
+  override func numberOfSections(in tableView: UITableView) -> Int {
+    // #warning Incomplete implementation, return the number of sections
+    return 1
+  }
+
+  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    // #warning Incomplete implementation, return the number of rows
+    return Database.contacts.count
+  }
+
+  // RIGHT
+  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return Database.contacts.count
+  }
+  ```
+
+  </details>
 **[⬆ back to top](#table-of-contents)**
 
 ## Objective-C Interoperability
