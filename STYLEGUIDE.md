@@ -977,6 +977,26 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   ```
 
   </details>
+  
+* **DON'T use nested ternaries.**
+  <details>
+  #### Why?
+  Ternaries can be great, they actually serve a functional purpose over an `if` statement because they are expressions, so you can assign them to a constant or return them as an expression. That being said if you find yourself nesting them you have gone too far.
+
+  ```swift
+  // WRONG
+  result = a > b ? x = c > d ? c : d : y
+
+  // RIGHT
+  result = value != 0 ? x : y
+  ```
+  </details>
+
+* **DON'T use multi-line ternaries.**
+
+  <details>
+  A ternary is meant to be used for a very short conditional. If you find it cannot be reasonably expressed on one line then it should not be a ternary.
+  </details>
 
 ### Access Control
 * **PREFER the strictest possible access control.** Prefer `public` to `open` and `private` to `fileprivate` unless you need that behavior.
