@@ -161,6 +161,20 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 * **DO use US english spellings of words in code.** This is to fit with the convention of english spellings that is already part of the swift standard libraries
 
+* **PREFER short-hand type names.** 
+  <details>
+
+  ```swift
+  // WRONG
+  let x = Dictionary<AnyHashable, Any>()
+  let y = Array<String>()
+
+  // RIGHT
+  let x = [AnyHashable: Any]()
+  let y = [String]()
+  ```
+  </details>
+
 **[⬆ back to top](#table-of-contents)**
 
 ## Style
@@ -408,6 +422,24 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   switch someValue { ... }
   let evens = userCounts.filter { number in number % 2 == 0 }
   let squares = userCounts.map { $0 * $0 }
+  ```
+
+  </details>
+
+* **DO omit `get` keyword on get-only computed properties.**
+
+  <details>
+
+  ```swift
+  // WRONG
+  var isEmpty: Bool {
+    get {
+      return count == 0
+    }
+  }
+
+  // RIGHT
+  var isEmpty: Bool { count == 0 }
   ```
 
   </details>
@@ -1125,6 +1157,25 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 * **AVOID performing any meaningful or time-intensive work in `init()`.** Avoid doing things like opening database connections, making network requests, reading large amounts of data from disk, etc. Create a factory if these things need to be done before an object is ready for use.
 
+* **AVOID `.init` unless dealing with metatypes.**
+  <details>
+  
+  ```swift
+  // WRONG
+  let x = MyType.init(arguments)
+  let x: MyType = .init(arguments)
+
+  // RIGHT
+  let x = MyType(arguments)
+
+  let type = lookupType(context)
+  let x = type.init(arguments)
+
+  let x = makeValue(factory: MyType.init)
+
+  ```
+  </details>
+
 ### Method Complexity
 * **DO extract complex property observers into methods.** This reduces nestedness, separates side-effects from property declarations, and makes the usage of implicitly-passed parameters like `oldValue` explicit.
 
@@ -1608,6 +1659,31 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   }
   ```
 
+  </details>
+
+* **AVOID force unwrapping optionals.**
+  <details>
+  
+  #### Why?
+  Remember, implicitly unwrapped optionals are a thing if you can safely assume a value. A core component to swift is its safety, don't ruin that safety just for conveniences sake.
+
+  ```swift
+  // WRONG
+  let index = [].index(of: "hello")!
+  // This is NOT thread safe
+  tableView?.dataSource?.tableView?(tableView!, commit: .delete, forRowAt: expectedIndexPath)
+
+  // RIGHT
+  if let index = [].index(of: "hello") {
+    // use index
+  }
+
+  if let tableView = tableView {
+    // thread safe
+    tableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: expectedIndexPath)
+  }
+
+  ```
   </details>
 
 ### Immutability
