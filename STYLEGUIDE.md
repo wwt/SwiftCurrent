@@ -36,12 +36,12 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
     1. [Functions](#functions)
     1. [Closures](#closures)
     1. [Operators](#operators)
+    1. [Enumerations](#enumerations)
 1. [Patterns](#patterns)
     1. [Initializers](#initializers)
     1. [Method Complexity](#method-complexity)
     1. [Control Flow](#control-flow)
     1. [Access Control](#access-control)
-    1. [Enumerations](#enumerations)
     1. [Optionals](#optionals)
     1. [Immutability](#immutability)
     1. [Protocols](#protocols)
@@ -818,7 +818,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   ```
 
   </details>
-  
+
 * **DO use Swift's automatic enum values unless they map to an external source. Unless the external source has a value type like String that will not cause issues when inserted in the middle.** Add a comment explaining why explicit values are defined.
 
   <details>
@@ -924,6 +924,76 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
     }
   ```
 
+  </details>
+
+* **DO declare the `enum` as `indirect` when all cases must be indirect.** Omit the keyword on individual cases.
+
+  <details>
+  ```swift
+    // WRONG
+    public enum DependencyGraphNode {
+      indirect case userDefined(dependencies: [DependencyGraphNode])
+      indirect case synthesized(dependencies: [DependencyGraphNode])
+    }
+
+    // RIGHT
+    public indirect enum DependencyGraphNode {
+      case userDefined(dependencies: [DependencyGraphNode])
+      case synthesized(dependencies: [DependencyGraphNode])
+    }
+
+  ```
+  </details>
+
+* **DON'T put empty parentheses when a `case` does not have an associated value.** 
+
+  <details>
+  ```swift
+    // WRONG
+    public enum BinaryTree<Element> {
+      indirect case node(element: Element, left: BinaryTree, right: BinaryTree)
+      case empty()  // AVOID.
+    }
+
+    // RIGHT
+    public enum BinaryTree<Element> {
+      indirect case node(element: Element, left: BinaryTree, right: BinaryTree)
+      case empty  // GOOD.
+    }
+
+  ```
+  </details>
+
+  * **DO order `enum` cases in a logical order.** If there is no obvious logical ordering, use a lexicographical odering based on the cases' names. 
+
+  <details>
+  ```swift
+    // WRONG
+    // These are sorted lexicographically, but the meaningful groupings of related values has been lost.
+    public enum HTTPStatus: Int {
+      case badRequest = 400
+      case forbidden = 403
+      case internalServerError = 500
+      case notAuthorized = 401
+      case notFound = 404
+      case ok = 200
+      case paymentRequired = 402
+    }
+
+    // RIGHT
+    public enum HTTPStatus: Int {
+      case ok = 200
+
+      case badRequest = 400
+      case notAuthorized = 401
+      case paymentRequired = 402
+      case forbidden = 403
+      case notFound = 404
+
+      case internalServerError = 500
+    }
+
+  ```
   </details>
   
 **[⬆ back to top](#table-of-contents)**
