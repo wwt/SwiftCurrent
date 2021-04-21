@@ -63,6 +63,8 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
+* **DO use 4 spaces over tabs.** This is the Xcode default, and not something we will change.
+
 **[⬆ back to top](#table-of-contents)**
 
 ## Naming
