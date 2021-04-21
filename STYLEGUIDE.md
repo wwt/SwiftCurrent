@@ -109,6 +109,46 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
+* **PREFER prefixing types with modules over creating wrongly named classes.**
+
+  <details>
+
+  ```swift
+  // WRONG
+  // in module 1
+  struct Appointment {
+    var time: Date
+  }
+
+  // in module2
+  struct OtherAppointment {
+    var time: Date
+    var reason: String
+  }
+
+  // in calling code
+  Appointment(time: Date())
+  OtherAppointment(time: Date(), reason: "sick")
+
+  // RIGHT
+  // in module 1
+  struct Appointment {
+    var time: Date
+  }
+
+  // in module2
+  struct Appointment {
+    var time: Date
+    var reason: String
+  }
+
+  // in calling code
+  Module1.Appointment(time: Date())
+  Module2.Appointment(time: Date(), reason: "sick")
+  ```
+
+  </details>
+
 **[⬆ back to top](#table-of-contents)**
 
 ## Style
