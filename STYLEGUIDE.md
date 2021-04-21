@@ -399,7 +399,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   <details>
  
-  ## Why?
+  #### Why?
   Reserved keywords are well...reserved and usually very generic. If you find yourself using overly generic terms your code is likely less readable. A notable exception to this is when dot syntax clears up that ambiguity, for example: `Container.default`, or even `.default` in context.
 
   ```swift
@@ -420,7 +420,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   <details>
  
-  ## Why?
+  #### Why?
   Overly terse code is often difficult to reason about or modify. 
 
   ```swift
