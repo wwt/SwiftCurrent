@@ -1367,7 +1367,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
-* **PREFER structs over classes.** (e.g. instance properties.)
+* **PREFER structs over classes.**
   <details>
   
   #### Why?
