@@ -1626,35 +1626,65 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 * **DO end files with a newline.**
 
-* **DO place content in the correct order within a file.** This allows a new reader of your code to more easily find what they are looking for.
-  * Nested types and typealiases
-  * Static Properties using propertywrappers (like `@State`, `@Binding`, `@Published`, etc...)
-  * Static properties
-  * Class Properties using propertywrappers (like `@State`, `@Binding`, `@Published`, etc...)
-  * Class properties
-  * Instance Properties using propertywrappers (like `@State`, `@Binding`, `@Published`, etc...)
-  * Instance properties
-  * Static methods
-  * Class methods
-  * Instance methods
-
-* **DO add empty lines between property declarations by logical group.** (e.g. between static properties and instance properties.)
-
+* **DO place content in the correct order within a file based on impact to the codebase, grouped by similarity.** This allows a new reader of your code to more easily find what they are looking for.
   <details>
-
-  ```swift
-  // WRONG
-  var title: String
-  static let gravityEarth: CGFloat = 9.8
-  static let gravityMoon: CGFloat = 1.6
-  var gravity: CGFloat
-
-  // RIGHT
-  var title: String
   
-  static let gravityEarth: CGFloat = 9.8
-  static let gravityMoon: CGFloat = 1.6
-  var gravity: CGFloat
+  #### Why?
+  
+  Things that can potentially effect more of the codebase go first. Similarly, related things (like the same property wrappers) take sorting precedence over the below list.  e.g. `@EnvironmentObject` comes before `@State`; `public` comes before `private`; `typealias`'s are potentially more affecting and thus go at the start.
+
+  Still extract as necessary into extensions, but ensure those extensions also conform to the rule.
+
+  The order:
+  * Typealiases
+  * Class properties
+  * Static properties
+  * Instance properties
+  * Class methods
+  * Static methods
+  * Initializers
+  * Instance methods
+  * Nested types placed into extensions
+ 
+  ```swift
+  public struct ContentView: View {
+    // typealias goes first as it impacts the rest of this struct and all other objects.
+    // Also these are candidates for extraction into an extension
+    public typealias CustomTypeAlias1 = String
+    typealias CustomTypeAlias2 = String
+    private typealias CustomTypeAlias3 = String
+
+    // EnvironmentObject impacts this view and can impact all views beyond this one.
+    @EnvironmentObject private var appModel: AppModel
+
+    // ObservedObject impacts more than State and thus goes earlier even though hikeResult is public.
+    @ObservedObject private var viewModel = ViewModel()
+    @State var hikesResult: Result<[Hike], API.HikesService.Error>?
+
+    // inspection impacts everything in body so it goes before body
+    let inspection = Inspection<Self>()
+
+    var body: some View { Empty() }
+
+    // Candidates for extraction into an extension
+    public class func classMethods1() {}
+    class func classMethods2() {}
+    private class func classMethods3() {}
+
+    // Candidates for extraction into an extension
+    public static func staticMethods1() {}
+    static func staticMethods2() {}
+    private static func staticMethods3() {}
+
+    public init()
+    init()
+    init?()
+    private init()
+
+    public func instanceMethod1() {}
+    func instanceMethod2() {}
+    private func instanceMethod3() {}
+  }
   ```
 
   </details>
