@@ -404,31 +404,6 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
-* **DO omit enum associated values from case statements when all arguments are unlabeled.**
-
-  <details>
-
-  ```swift
-  // WRONG
-  if case .done(_) = result { ... }
-
-  switch animal {
-  case .dog(_, _, _):
-    ...
-  }
-
-  // RIGHT
-  if case .done = result { ... }
-
-  switch animal {
-  case .dog:
-    ...
-  }
-  ```
-
-  </details>
-
-
 * **DO have brackets on separate lines for multi-line.** Put the opening and closing brackets on separate lines from any of the elements of the array. Also add a trailing comma on the last element.
 
   <details>
@@ -544,38 +519,6 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   ```
 
   </details>
-
-* **DO use trailing closure syntax.** If there are multiple trailing closure parameters, use the new syntax for multiple trailing closures available in Swift 5.x
-
-  <details>
-
-  ```swift
-
-  class SomeClass {
-    var name:String?
-    private func fooy() {
-      // WRONG
-      UIView.animate(withDuration: 0.6, animations: { _ in self.view.alpha = 0}) { _ in
-          self.view.removeFromSuperview()
-      }
-
-      // WRONG
-      UIView.animate(withDuration: 0.6, animations: { _ in self.view.alpha = 0}, completion: { _ in self.view.removeFromSuperview() })
-
-
-      // RIGHT
-      UIView.animate(withDuration: 0.3) {
-        self.view.alpha = 0
-      } completion: { _ in
-        self.view.removeFromSuperview()
-      }
-    }
-  }
-  ```
-
-  </details>
-
-* **AVOID multiple optional trailing closures.**
 
 ### Functions
 
@@ -781,6 +724,38 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
+* **DO use trailing closure syntax.** If there are multiple trailing closure parameters, use the new syntax for multiple trailing closures available in Swift 5.x
+
+  <details>
+
+  ```swift
+
+  class SomeClass {
+    var name:String?
+    private func fooy() {
+      // WRONG
+      UIView.animate(withDuration: 0.6, animations: { _ in self.view.alpha = 0}) { _ in
+          self.view.removeFromSuperview()
+      }
+
+      // WRONG
+      UIView.animate(withDuration: 0.6, animations: { _ in self.view.alpha = 0}, completion: { _ in self.view.removeFromSuperview() })
+
+
+      // RIGHT
+      UIView.animate(withDuration: 0.3) {
+        self.view.alpha = 0
+      } completion: { _ in
+        self.view.removeFromSuperview()
+      }
+    }
+  }
+  ```
+
+  </details>
+
+* **AVOID multiple optional trailing closures.**
+
 ### Operators
 
 * **DO put a single space around infix operators.** Prefer parenthesis to visually group statements with many operators rather than varying widths of whitespace. This rule does not apply to range operators (e.g. `1...3`) and postfix or prefix operators (e.g. `guest?` or `-1`).
@@ -817,6 +792,138 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   <details>
   Overloading operators is permitted when your use of the operator is semantically equivalent to the existing uses in the standard library. Examples of permitted use cases are implementing the operator requirements for Equatable and Hashable, or defining a new Matrix type that supports arithmetic operations.
+  </details>
+
+### Enumerations
+* **DO omit enum associated values from case statements when all arguments are unlabeled.**
+
+  <details>
+
+  ```swift
+  // WRONG
+  if case .done(_) = result { ... }
+
+  switch animal {
+  case .dog(_, _, _):
+    ...
+  }
+
+  // RIGHT
+  if case .done = result { ... }
+
+  switch animal {
+  case .dog:
+    ...
+  }
+  ```
+
+  </details>
+  
+* **DO use Swift's automatic enum values unless they map to an external source. Unless the external source has a value type like String that will not cause issues when inserted in the middle.** Add a comment explaining why explicit values are defined.
+
+  <details>
+
+  #### Why?
+  To minimize user error, improve readability, and write code faster, rely on Swift's automatic enum values. If the value maps to an external source (e.g. it's coming from a network request) or is persisted across binaries, define the values explicitly and document what these values are mapping to. The exception to this is when the value type is like `String` that will not cause issues when inserted in the middle.
+
+  This ensures that if someone adds a new value in the middle, they won't accidentally break things.
+
+  ```swift
+  // WRONG
+  enum ErrorType: String {
+    case error = "error"
+    case warning = "warning"
+  }
+ 
+  // These values are internal, so we should not have explicity defined the values.
+  enum Planet: Int {
+    case mercury = 0
+    case venus = 1
+    case earth = 2
+    case mars = 3
+    case jupiter = 4
+    case saturn = 5
+    case uranus = 6
+    case neptune = 7
+  }
+
+  // These values come from a server, so we should have set them here explicitly to match those values.
+  enum ErrorCode: Int {
+    case notEnoughMemory
+    case invalidResource
+    case timeOut
+  }
+  
+  // These values also come from a server, but they are of string type so we should have continued to use the automatic values.
+  enum UserType: String {
+    case owner = "owner"
+    case manager = "manager"
+    case member = "member"
+  }
+
+  // RIGHT
+  enum ErrorType: String {
+    case error
+    case warning
+  }
+
+  // These values are internal, so we do not need to explicity define the values.
+  enum Planet: Int {
+    case mercury
+    case venus
+    case earth
+    case mars
+    case jupiter
+    case saturn
+    case uranus
+    case neptune
+  }
+
+  // These values come from a server, so we set them here explicitly to match those values.
+  enum ErrorCode: Int {
+    case notEnoughMemory = 0
+    case invalidResource = 1
+    case timeOut = 2
+  }
+  
+  // These values also come from a server, but they are of string type so we can continue to use the automatic values.
+  enum UserType: String {
+    case owner
+    case manager
+    case member
+  }
+  ```
+
+  </details>
+
+  * **DO put each `case` on its own line in an `enum`.** The expection to this is if none of the cases have associated values or raw values, all cases fit on a single line, and the cases do not need further documentaion because their meanins are obvious from their names.
+
+  <details>
+
+  ```swift
+    // WRONG
+    public enum Token {
+      case comma, semicolon, identifier(String)
+    }
+
+    // RIGHT
+    public enum Token {
+      case comma
+      case semicolon
+      case identifier
+    }
+
+    public enum Token {
+      case comma, semicolon, identifier
+    }
+
+    public enum Token {
+      case comma
+      case semicolon
+      case identifier(String)
+    }
+  ```
+
   </details>
   
 **[⬆ back to top](#table-of-contents)**
@@ -1192,114 +1299,6 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
-### Enumerations
-* **DO use Swift's automatic enum values unless they map to an external source. Unless the external source has a value type like String that will not cause issues when inserted in the middle.** Add a comment explaining why explicit values are defined.
-
-  <details>
-
-  #### Why?
-  To minimize user error, improve readability, and write code faster, rely on Swift's automatic enum values. If the value maps to an external source (e.g. it's coming from a network request) or is persisted across binaries, define the values explicitly and document what these values are mapping to. The exception to this is when the value type is like `String` that will not cause issues when inserted in the middle.
-
-  This ensures that if someone adds a new value in the middle, they won't accidentally break things.
-
-  ```swift
-  // WRONG
-  enum ErrorType: String {
-    case error = "error"
-    case warning = "warning"
-  }
- 
-  // These values are internal, so we should not have explicity defined the values.
-  enum Planet: Int {
-    case mercury = 0
-    case venus = 1
-    case earth = 2
-    case mars = 3
-    case jupiter = 4
-    case saturn = 5
-    case uranus = 6
-    case neptune = 7
-  }
-
-  // These values come from a server, so we should have set them here explicitly to match those values.
-  enum ErrorCode: Int {
-    case notEnoughMemory
-    case invalidResource
-    case timeOut
-  }
-  
-  // These values also come from a server, but they are of string type so we should have continued to use the automatic values.
-  enum UserType: String {
-    case owner = "owner"
-    case manager = "manager"
-    case member = "member"
-  }
-
-  // RIGHT
-  enum ErrorType: String {
-    case error
-    case warning
-  }
-
-  // These values are internal, so we do not need to explicity define the values.
-  enum Planet: Int {
-    case mercury
-    case venus
-    case earth
-    case mars
-    case jupiter
-    case saturn
-    case uranus
-    case neptune
-  }
-
-  // These values come from a server, so we set them here explicitly to match those values.
-  enum ErrorCode: Int {
-    case notEnoughMemory = 0
-    case invalidResource = 1
-    case timeOut = 2
-  }
-  
-  // These values also come from a server, but they are of string type so we can continue to use the automatic values.
-  enum UserType: String {
-    case owner
-    case manager
-    case member
-  }
-  ```
-
-  </details>
-
-* **PREFER structs over classes.**
-  <details>
-  
-  #### Why?
-  This follows the previous rule of preferring immutability. Structs explicitly mark mutating members as mutating, they favor composition over inheritance, they have synthesized initializers, and they are copy-on-write meaning that unintended side-effects from modifying a reference are less prevalent.
- 
-  ```swift
-  // WRONG
-  class User: Codable {
-      var username: String
-      var email: String
-      var dateOfBirth: Date
-
-      init(username: String, email: String, dateOfBirth: Date) {
-          self.username = username
-          self.email = email
-          self.dateOfBirth = dateOfBirth
-      }
-  }
-
-  // RIGHT
-  struct User: Codable {
-      var username: String
-      var email: String
-      var dateOfBirth: Date
-  }
-  ```
-
-  </details>
-
 ### Optionals
 * **PREFER throwing or optional intializers over optional properties that should have a value.**
   <details>
@@ -1413,6 +1412,37 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   // RIGHT
   let results = input.compactMap { transformThatReturnsAnOptional($0) }
+  ```
+
+  </details>
+
+
+* **PREFER structs over classes.**
+  <details>
+  
+  #### Why?
+  This follows the previous rule of preferring immutability. Structs explicitly mark mutating members as mutating, they favor composition over inheritance, they have synthesized initializers, and they are copy-on-write meaning that unintended side-effects from modifying a reference are less prevalent.
+ 
+  ```swift
+  // WRONG
+  class User: Codable {
+      var username: String
+      var email: String
+      var dateOfBirth: Date
+
+      init(username: String, email: String, dateOfBirth: Date) {
+          self.username = username
+          self.email = email
+          self.dateOfBirth = dateOfBirth
+      }
+  }
+
+  // RIGHT
+  struct User: Codable {
+      var username: String
+      var email: String
+      var dateOfBirth: Date
+  }
   ```
 
   </details>
