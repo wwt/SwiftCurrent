@@ -1363,6 +1363,34 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
+* **PREFER one conformance per extension or type declaration.**
+  <details>
+
+  #### Why?
+  Choosing to have multiple conformances in a type means it is more difficult to extract code later, it also makes your type harder to reason about. 
+
+  ```swift
+  // WRONG
+  class MyViewController: UIViewController, UITableViewDataSource, UIScrollViewDelegate {
+    // all methods
+  }
+
+  // RIGHT
+  class MyViewController: UIViewController {
+    // class stuff here
+  }
+
+  extension MyViewController: UITableViewDataSource {
+    // table view data source methods
+  }
+
+  extension MyViewController: UIScrollViewDelegate {
+    // scroll view delegate methods
+  }
+  ```
+
+  </details>
+
 ### Type Erasure
 * **PREFER a wrapped `Any` type over a subclass for type erasure.**
 
