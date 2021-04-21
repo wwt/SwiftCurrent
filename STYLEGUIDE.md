@@ -161,6 +161,20 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 * **DO use US english spellings of words in code.** This is to fit with the convention of english spellings that is already part of the swift standard libraries
 
+* **PREFER short-hand type names.** 
+  <details>
+
+  ```swift
+  // WRONG
+  let x = Dictionary<AnyHashable, Any>()
+  let y = Array<String>()
+
+  // RIGHT
+  let x = [AnyHashable: Any]()
+  let y = [String]()
+  ```
+  </details>
+
 **[⬆ back to top](#table-of-contents)**
 
 ## Style
