@@ -1750,7 +1750,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   // If the doubled digit is larger than 9 (ex. 8 * 2 = 16), subtract 9 from the product (16 – 9 = 7).
   // Sum the digits.
   // If there is no remainder after dividing by 10 (sum % 10 == 0), the card is valid.
-  var isValidCreditCardNumber:Bool {
+  var isValidCreditCardNumber: Bool {
       let digits = reversed().compactMap { Int(String($0)) }
       guard digits.count == count, digits.count > 0 else { return false }
       let sum = digits.enumerated().reduce(0) {
