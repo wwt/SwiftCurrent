@@ -1021,7 +1021,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   }
 
-  func<S: Sequence, T: Type, N: Numeric> doThing() {
+  func<S: Sequence, P: SomeType & SomeProtocol, N: Numeric> doThing() {
 
   }
   ```
