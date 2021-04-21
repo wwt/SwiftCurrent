@@ -37,6 +37,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
     1. [Closures](#closures)
     1. [Operators](#operators)
     1. [Enumerations](#enumerations)
+    1. [Generics](#generics)
 1. [Patterns](#patterns)
     1. [Initializers](#initializers)
     1. [Method Complexity](#method-complexity)
