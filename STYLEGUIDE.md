@@ -195,6 +195,26 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
+* **PREFER type inference over explicit typing.**
+
+  <details>
+  While similar to the rule on not including types when they can easily be inferred this is slightly different. When declaring properties prefer type inference over explicit typing.
+
+  ```swift
+  // WRONG
+  let host: Host = Host()
+  let arr: [String] = []
+  let dict: [AnyHashable: Any] = [:]
+
+  // RIGHT
+  let host = Host()
+  let arr = [String]()
+  let dict = [AnyHashable: Any]()
+  ```
+
+  </details>
+
+
 * **DON'T use `self` unless it's necessary for disambiguation or required by the language.**
 
   <details>
