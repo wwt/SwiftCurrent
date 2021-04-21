@@ -1022,7 +1022,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   }
 
   func<S: Sequence, T: Type, N: Numeric> doThing() {
-    
+
   }
   ```
 
@@ -1247,6 +1247,50 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
     // use context and input to compute the frequencies
     // notice the return statement is as far left as it can be, this satisfies the golden path rule.
     return frequencies
+  }
+
+  ```
+  </details>
+
+* **DO write if/else statements starting with the happy path.**
+
+  <details>
+  #### Why?
+  Your code should read as a declaration of intent. Starting with the happy path case makes your intent more immediately apparent.
+
+  NOTE: This does not conflict with the golden path rule for guards and early exits.
+
+  ```swift
+  // WRONG
+  if case .failure(let err) = result {
+    // handle error
+  } else {
+    // thing the code should really do
+  }
+
+  switch result {
+    case .failure(let err): throw err
+    case .success: //thing the code should do
+  }
+
+  if thingThatProbablyWillNotHappen || thingThatLikelyWillHappen {
+
+  }
+
+  // RIGHT
+  guard case .success = result else {
+    throw err
+  }
+
+  // thing the code should do
+
+  switch result {
+    case .success: // thing the code should do
+    case .failure(let err): throw err
+  }
+
+  if thingThatLikelyWillHappen || thingThatProbablyWillNotHappen {
+    
   }
 
   ```
