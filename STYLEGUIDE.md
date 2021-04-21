@@ -22,15 +22,11 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 ## How to read the guides
 Each guide is broken into a few sections. Sections contain a list of guidelines. Each guideline starts with one of these words:
 
-**DO** guidelines describe practices that should always be followed. There will almost never be a valid reason to stray from them.
-
-**DON’T** guidelines are the converse: things that are almost never a good idea. 
-
-**PREFER** guidelines are practices that you should follow. However, there may be circumstances where it makes sense to do otherwise. Just make sure you understand the full implications of ignoring the guideline when you do.
-
-**AVOID** guidelines are the dual to “prefer”: stuff you shouldn’t do but where there may be good reasons to on rare occasions.
-
-**CONSIDER** guidelines are practices that you might or might not want to follow, depending on circumstances, precedents, and your own preference.
+- **DO** guidelines describe practices that should always be followed. There will almost never be a valid reason to stray from them.
+- **DON’T** guidelines are the converse: things that are almost never a good idea. 
+- **PREFER** guidelines are practices that you should follow. However, there may be circumstances where it makes sense to do otherwise. Just make sure you understand the full implications of ignoring the guideline when you do.
+- **AVOID** guidelines are the dual to “prefer”: stuff you shouldn’t do but where there may be good reasons to on rare occasions.
+- **CONSIDER** guidelines are practices that you might or might not want to follow, depending on circumstances, precedents, and your own preference.
 
 ## Table of Contents
 
@@ -195,7 +191,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
-* **DO bind to `self` when upgrading from a weak reference.** [![SwiftFormat: strongifiedSelf](https://img.shields.io/badge/SwiftFormat-strongifiedSelf-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#strongifiedSelf)
+* **DO bind to `self` when upgrading from a weak reference.**
 
   <details>
 
@@ -257,7 +253,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
-* **DO place the colon immediately after an identifier, followed by a space.** [![SwiftLint: colon](https://img.shields.io/badge/SwiftLint-colon-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#colon)
+* **DO place the colon immediately after an identifier, followed by a space.**
 
   <details>
 
@@ -292,7 +288,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
-* **DO place a space on either side of a return arrow for readability.** [![SwiftLint: return_arrow_whitespace](https://img.shields.io/badge/SwiftLint-return__arrow__whitespace-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#returning-whitespace)
+* **DO place a space on either side of a return arrow for readability.**
 
   <details>
 
@@ -322,7 +318,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
-* **DO omit unnecessary parentheses.** [![SwiftFormat: redundantParens](https://img.shields.io/badge/SwiftFormat-redundantParens-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#redundantParens)
+* **DO omit unnecessary parentheses.**
 
   <details>
 
@@ -342,7 +338,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
-* <a id='unnecessary-enum-arguments'></a> (<a href='#unnecessary-enum-arguments'>link</a>) **DO omit enum associated values from case statements when all arguments are unlabeled.** [![SwiftLint: empty_enum_arguments](https://img.shields.io/badge/SwiftLint-empty__enum__arguments-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#empty-enum-arguments)
+* **DO omit enum associated values from case statements when all arguments are unlabeled.**
 
   <details>
 
@@ -367,7 +363,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   </details>
 
 
-* **DO have brackets on separate lines for multi-line.** Put the opening and closing brackets on separate lines from any of the elements of the array. Also add a trailing comma on the last element. [![SwiftFormat: wrapArguments](https://img.shields.io/badge/SwiftFormat-wrapArguments-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#wrapArguments)
+* **DO have brackets on separate lines for multi-line.** Put the opening and closing brackets on separate lines from any of the elements of the array. Also add a trailing comma on the last element.
 
   <details>
 
@@ -385,7 +381,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   ]
   ```
 
-* **PREFER constructors instead of Make() functions for NSRange and others.** [![SwiftLint: legacy_constructor](https://img.shields.io/badge/SwiftLint-legacy__constructor-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#legacy-constructor)
+* **PREFER constructors instead of Make() functions for NSRange and others.**
 
   <details>
 
@@ -401,7 +397,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 ### Functions
 
-* **PREFER omitting `Void` return types from function definitions.** [![SwiftLint: redundant_void_return](https://img.shields.io/badge/SwiftLint-redundant__void__return-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#redundant-void-return)
+* **PREFER omitting `Void` return types from function definitions.**
 
   <details>
 
@@ -470,7 +466,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
-* **DO break each argument on long function invocations.** Put the closing parenthesis on the last line of the invocation. [![SwiftFormat: wrapArguments](https://img.shields.io/badge/SwiftFormat-wrapArguments-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#wrapArguments)
+* **DO break each argument on long function invocations.** Put the closing parenthesis on the last line of the invocation.
 
   <details>
 
@@ -496,7 +492,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 ### Closures
 
-* **PREFER `Void` return types over `()` in closure declarations.** If you must specify a `Void` return type in a function declaration, use `Void` rather than `()` to improve readability. [![SwiftLint: void_return](https://img.shields.io/badge/SwiftLint-void__return-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#void-return)
+* **PREFER `Void` return types over `()` in closure declarations.** If you must specify a `Void` return type in a function declaration, use `Void` rather than `()` to improve readability.
 
   <details>
 
@@ -572,7 +568,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
     </details>
 
-* **DO put a space around single-line closures.** [![SwiftLint: closure_spacing](https://img.shields.io/badge/SwiftLint-closure__spacing-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#closure-spacing)
+* **DO put a space around single-line closures.**
 
   <details>
 
@@ -588,7 +584,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 ### Operators
 
-* **DO put a single space around infix operators.** Prefer parenthesis to visually group statements with many operators rather than varying widths of whitespace. This rule does not apply to range operators (e.g. `1...3`) and postfix or prefix operators (e.g. `guest?` or `-1`). [![SwiftLint: operator_usage_whitespace](https://img.shields.io/badge/SwiftLint-operator__usage__whitespace-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#operator-usage-whitespace)
+* **DO put a single space around infix operators.** Prefer parenthesis to visually group statements with many operators rather than varying widths of whitespace. This rule does not apply to range operators (e.g. `1...3`) and postfix or prefix operators (e.g. `guest?` or `-1`).
 
   <details>
 
@@ -615,7 +611,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 ## Patterns
 
 ### Initializers
-* **PREFER initializing properties at `init` time whenever possible, rather than using implicitly unwrapped optionals.**  A notable exception is UIViewController's `view` property. [![SwiftLint: implicitly_unwrapped_optional](https://img.shields.io/badge/SwiftLint-implicitly__unwrapped__optional-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#implicitly-unwrapped-optional)
+* **PREFER initializing properties at `init` time whenever possible, rather than using implicitly unwrapped optionals.**  A notable exception is UIViewController's `view` property.
 
   <details>
 
@@ -883,7 +879,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   </details>
 
 ### Enumerations
-* **DO use Swift's automatic enum values unless they map to an external source, or have a value type like String, that will not cause issues when inserted in the middle.** Add a comment explaining why explicit values are defined. [![SwiftLint: redundant_string_enum_value](https://img.shields.io/badge/SwiftLint-redundant__string__enum__value-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#redundant-string-enum-value)
+* **DO use Swift's automatic enum values unless they map to an external source, or have a value type like String, that will not cause issues when inserted in the middle.** Add a comment explaining why explicit values are defined.
 
   <details>
 
@@ -1019,7 +1015,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
   
-* **DO check for nil rather than using optional binding if you don't need to use the value.** [![SwiftLint: unused_optional_binding](https://img.shields.io/badge/SwiftLint-unused_optional_binding-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#unused-optional-binding)
+* **DO check for nil rather than using optional binding if you don't need to use the value.**
 
   <details>
 
@@ -1119,7 +1115,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
-* **DO omit the `return` keyword when not required by the language.** [![SwiftFormat: redundantReturn](https://img.shields.io/badge/SwiftFormat-redundantReturn-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#redundantReturn)
+* **DO omit the `return` keyword when not required by the language.**
 
   <details>
 
@@ -1159,7 +1155,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
-* **DO use `AnyObject` instead of `class` in protocol definitions.** [![SwiftFormat: anyObjectProtocol](https://img.shields.io/badge/SwiftFormat-anyObjectProtocol-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#anyobjectprotocol)
+* **DO use `AnyObject` instead of `class` in protocol definitions.**
 
   <details>
 
@@ -1179,7 +1175,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
-* **PREFER a wrapped `Any` type over a subclass for type erasure.** [![SwiftFormat: anyObjectProtocol](https://img.shields.io/badge/SwiftFormat-anyObjectProtocol-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#anyobjectprotocol)
+* **PREFER a wrapped `Any` type over a subclass for type erasure.**
 
   <details>
 
@@ -1230,7 +1226,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
-* **DO specify the access control for each declaration in an extension individually.** [![SwiftFormat: extensionAccessControl](https://img.shields.io/badge/SwiftFormat-extensionAccessControl-7B0051.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#extensionaccesscontrol)
+* **DO specify the access control for each declaration in an extension individually.**
 
   <details>
 
@@ -1273,11 +1269,11 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 ## File Organization
 
-* **DO limit empty vertical whitespace to one line.** Favor the following formatting guidelines over whitespace of varying heights to divide files into logical groupings. [![SwiftLint: vertical_whitespace](https://img.shields.io/badge/SwiftLint-vertical__whitespace-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#vertical-whitespace)
+* **DO limit empty vertical whitespace to one line.** Favor the following formatting guidelines over whitespace of varying heights to divide files into logical groupings.
 
-* **DO end files with a newline.** [![SwiftLint: trailing_newline](https://img.shields.io/badge/SwiftLint-trailing__newline-007A87.svg)](https://github.com/realm/SwiftLint/blob/master/Rules.md#trailing-newline)
+* **DO end files with a newline.**
 
-* **DO place content in the correct order within a file.** This allows a new reader of your code to more easily find what they are looking for. [![SwiftFormat: organizeDeclarations](https://img.shields.io/badge/SwiftFormat-organizeDeclarations-008489.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#organizeDeclarations)
+* **DO place content in the correct order within a file.** This allows a new reader of your code to more easily find what they are looking for.
   * Nested types and typealiases
   * Static Properties using propertywrappers (like `@State`, `@Binding`, `@Published`, etc...)
   * Static properties
@@ -1289,7 +1285,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   * Class methods
   * Instance methods
 
-* **DO add empty lines between property declarations by logical group.** (e.g. between static properties and instance properties.) [![SwiftFormat: organizeDeclarations](https://img.shields.io/badge/SwiftFormat-organizeDeclarations-008489.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#organizeDeclarations)
+* **DO add empty lines between property declarations by logical group.** (e.g. between static properties and instance properties.)
 
   <details>
 
@@ -1310,8 +1306,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
-* **DO put computed properties and properties with property observers at the end of the set of declarations of the same kind.** (e.g. instance properties.) [![SwiftFormat: organizeDeclarations](https://img.shields.io/badge/SwiftFormat-organizeDeclarations-008489.svg)](https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md#organizeDeclarations)
-
+* **DO put computed properties and properties with property observers at the end of the set of declarations of the same kind.** (e.g. instance properties.)
   <details>
 
   ```swift
