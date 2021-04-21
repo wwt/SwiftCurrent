@@ -67,7 +67,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 * **DO Name booleans like `isSpaceship`, `hasSpacesuit`, `areTermsAccepted` etc.** This makes it clear that they are booleans and not other types.
 
-* **DO Event-handling functions should be named like past-tense sentences.** The subject can be omitted if it's not needed for clarity.
+* **DO name event-handling like past-tense sentences.** The subject can be omitted if it's not needed for clarity.
 
   <details>
 
