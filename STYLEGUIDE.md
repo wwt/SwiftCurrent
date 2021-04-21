@@ -65,6 +65,8 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 * **DO use 4 spaces over tabs.** This is the Xcode default, and not something we will change.
 
+* **DON'T use #imageLiteral or #colorLiteral (don't drag colors or images from xcode into code).**
+
 **[⬆ back to top](#table-of-contents)**
 
 ## Naming
