@@ -980,6 +980,24 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   ```
 
   </details>
+
+### Generics
+* **DO WIP**
+
+  <details>
+
+  #### Why?
+
+  ```swift
+  // WRONG
+  init<T, S, O>(thing: T, stuff: S, other: O) where T: Thing, S: Stuff, O: Other, T.Output == String, O.Input == T.Output
+
+  // RIGHT
+  init<T: Thing, S: Stuff, O: Other>(thing: T, stuff: S, other: O) where T.Output == String, O.Input == T.Output
+  ```
+
+  </details>
+
   
 **[⬆ back to top](#table-of-contents)**
 
