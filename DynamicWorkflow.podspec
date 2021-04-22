@@ -25,6 +25,12 @@ iOS has a linear paradigm for navigation that doesn't support a lot of flexibili
     ss.source_files = 'Workflow/Sources/WorkflowUIKit/**/*.{swift,h,m}'
     ss.dependency 'DynamicWorkflow/Core'
   end
+  
+  # s.subspec 'SwiftUI' do |ss|
+  #   ss.ios.deployment_target = '11.0'
+  #   ss.source_files = 'Workflow/Sources/WorkflowSwiftUI/**/*.{swift,h,m}'
+  #   ss.dependency 'DynamicWorkflow/Core'
+  # end
 
   s.subspec 'Swinject' do |ss|
     ss.ios.deployment_target = '11.0'
