@@ -49,3 +49,9 @@ We strive to have this process automated. Patch increments with every commit to 
 We want to give consumers of our code the opportunity to adapt to changes, outright removal means we'll constantly be breaking down-stream teams and that's a good way to frustrate developers.
 
 We will do our best to support older methods, but we will also not hesitate to do something new and better if there's a new and better way of doing things. This is the same approach Apple tends to take.
+
+### Documentation
+
+### Sample App
+
+### Errors
