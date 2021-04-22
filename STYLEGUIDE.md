@@ -68,9 +68,11 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 * **DON'T use #imageLiteral or #colorLiteral (don't drag colors or images from xcode into code).**
 
-* **AVOID leaving compiler warning unattended.**
+* **AVOID leaving compiler warnings unattended.**
   <details>
+
   Every once in a while there's simply nothing reasonable you can do, because a generated file causes warnings. You also may deliberately use `#warning("")` in your code to draw attention to something.
+
   </details>
 
 **[⬆ back to top](#table-of-contents)**
@@ -173,6 +175,65 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   let x = [AnyHashable: Any]()
   let y = [String]()
   ```
+  </details>
+
+* **PREFER delegate naming conventions similar to the Cocoa's.**
+
+  <details>
+
+  Methods on delegate protocols and delegate-like protocols (such as data sources) are named using the linguistic syntax described below, which is inspired by Cocoa’s protocols.
+
+  The term “delegate’s source object” refers to the object that invokes methods on the delegate. For example, a UITableView is the source object that invokes methods on the UITableViewDelegate that is set as the view’s delegate property.
+
+  All methods take the delegate’s source object as the first argument.
+
+  For methods that take the delegate’s source object as their only argument:
+
+  If the method returns Void (such as those used to notify the delegate that an event has occurred), then the method’s base name is the delegate’s source type followed by an indicative verb phrase describing the event. The argument is unlabeled.
+  
+  ```swift
+  func scrollViewDidBeginScrolling(_ scrollView: UIScrollView)
+  ```
+  If the method returns Bool (such as those that make an assertion about the delegate’s source object itself), then the method’s name is the delegate’s source type followed by an indicative or conditional verb phrase describing the assertion. The argument is unlabeled.
+
+  ```swift
+  func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool
+  ```
+
+  If the method returns some other value (such as those querying for information about a property of the delegate’s source object), then the method’s base name is a noun phrase describing the property being queried. The argument is labeled with a preposition or phrase with a trailing preposition that appropriately combines the noun phrase and the delegate’s source object.
+
+  ```swift
+  func numberOfSections(in scrollView: UIScrollView) -> Int
+  ```
+  For methods that take additional arguments after the delegate’s source object, the method’s base name is the delegate’s source type by itself and the first argument is unlabeled. Then:
+
+  If the method returns Void, the second argument is labeled with an indicative verb phrase describing the event that has the argument as its direct object or prepositional object, and any other arguments (if present) provide further context.
+
+  ```swift
+  func tableView(
+    _ tableView: UITableView,
+    willDisplayCell cell: UITableViewCell,
+    forRowAt indexPath: IndexPath)
+  ```
+  If the method returns Bool, the second argument is labeled with an indicative or conditional verb phrase that describes the return value in terms of the argument, and any other arguments (if present) provide further context.
+
+  ```swift
+  func tableView(
+    _ tableView: UITableView,
+    shouldSpringLoadRowAt indexPath: IndexPath,
+    with context: UISpringLoadedInteractionContext
+  ) -> Bool
+  ```
+  If the method returns some other value, the second argument is labeled with a noun phrase and trailing preposition that describes the return value in terms of the argument, and any other arguments (if present) provide further context.
+
+  ```swift
+  func tableView(
+    _ tableView: UITableView,
+    heightForRowAt indexPath: IndexPath
+  ) -> CGFloat
+  ```
+  Apple’s documentation on [delegates and data sources](https://developer.apple.com/library/archive/documentation/General/Conceptual/CocoaEncyclopedia/DelegatesandDataSources/DelegatesandDataSources.html) also contains some good general guidance about such names.
+
   </details>
 
 **[⬆ back to top](#table-of-contents)**
@@ -602,6 +663,76 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   ```
   </details>
 
+* **DON'T assign variables through a labeled tuple shuffle.** let (label: varName, label2: varName2) = tuple
+
+  <details>
+
+  Assigning variables through a tuple pattern (sometimes referred to as a tuple shuffle) is only permitted if the left-hand side of the assignment is unlabeled.
+
+  ```swift
+  // WRONG
+  let (x: a, y: b) = (y: 4, x: 5.0)
+
+  // RIGHT
+  let (b, a) = (y: 4, x: 5.0)
+  ```
+  </details>
+
+* **PREFER escape sequences over unicode.**
+  <details>
+
+  For any character that has a special escape sequence (`\t`, `\n`, `\r`, `\"`, `\'`, `\\`, and `\0`), that sequence is used rather than the equivalent Unicode (e.g., `\u{000a}`) escape sequence.
+
+  </details>
+
+* **DON'T use invisible characters in code.** for example zero-width space characters are illegal
+
+* **PREFER multi-line strings to strings with multiple `\n` characters.**
+
+* **DO put `else` statements at the end of the last line of a `guard` clause.**
+  <details>
+
+  ```swift
+  // WRONG
+  guard let a = optional,
+        let b = otherOptional
+        else {
+          return
+        }
+
+  guard !isEmpty
+  else {
+    return
+  }
+
+  // RIGHT
+  guard let a = optional,
+        let b = otherOptional else {
+          return
+        }
+  
+  guard !isEmpty else { return }
+  ```
+  </details>
+
+* **DO use [the K&R brace style](https://en.wikipedia.org/wiki/Indentation_style#K&R_style) for braces.**
+
+  <details>
+
+  ```swift
+  // WRONG
+  func foo()
+  {
+    // statements
+  }
+
+  // RIGHT
+  func foo() {
+    // statements
+  }
+  ```
+  </details>
+
 ### Functions
 
 * **PREFER omitting `Void` return types from function definitions.**
@@ -871,7 +1002,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
-* **DO overload existing operators when your use of the operator is semantically equivalent to the existing uses in the standard library.**
+* **CONSIDER overloading existing operators when your use of the operator is semantically equivalent to the existing uses in the standard library.**
 
   <details>
   Overloading operators is permitted when your use of the operator is semantically equivalent to the existing uses in the standard library. Examples of permitted use cases are implementing the operator requirements for Equatable and Hashable, or defining a new Matrix type that supports arithmetic operations.
@@ -1176,6 +1307,32 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   ```
   </details>
 
+* **DON'T call `ExpressibleBy*Literal` compiler protocols directly.**
+
+  <details>
+
+  ```swift
+  // WRONG
+  struct Kilometers: ExpressibleByIntegerLiteral {
+    init(integerLiteral value: Int) {
+      // ...
+    }
+  }
+
+  let k = Kilometers(integerLiteral: 10)
+
+  // RIGHT
+  struct Kilometers: ExpressibleByIntegerLiteral {
+    init(integerLiteral value: Int) {
+      // ...
+    }
+  }
+
+  let k1: Kilometers = 10 // GOOD.
+  let k2 = 10 as Kilometers // ALSO GOOD.
+  ```
+  </details>
+
 ### Method Complexity
 * **DO extract complex property observers into methods.** This reduces nestedness, separates side-effects from property declarations, and makes the usage of implicitly-passed parameters like `oldValue` explicit.
 
@@ -1213,7 +1370,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
   
-* **PREFER Combine functional chains over completion handlers**. 
+* **CONSIDER Combine functional chains over completion handlers.**
 
 * **DO extract complex callback blocks into methods**. This limits the complexity introduced by weak-self in blocks and reduces nestedness. If you need to reference self in the method call, make use of `guard` to unwrap self for the duration of the callback.
 
@@ -1436,7 +1593,98 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 * **DON'T use multi-line ternaries.**
 
   <details>
+
   A ternary is meant to be used for a very short conditional. If you find it cannot be reasonably expressed on one line then it should not be a ternary.
+
+  </details>
+
+* **PREFER for where loops when the entirety of a for loop’s body would be a single if block testing a condition of the element.**
+
+  <details>
+
+  ```swift
+  // WRONG
+  for item in collection {
+    if item.hasProperty {
+      // ...
+    }
+  }
+
+  // RIGHT
+  for item in collection where item.hasProperty {
+    // ...
+  }
+  ```
+  </details>
+
+* **DO put a `var` or `let` before each element in a pattern that is being matched.**
+  <details>
+
+  The let and var keywords are placed individually in front of each element in a pattern that is being matched. The shorthand version of let/var that precedes and distributes across the entire pattern is forbidden because it can introduce unexpected behavior if a value being matched in a pattern is itself a variable.
+
+  ```swift
+  enum DataPoint {
+    case unlabeled(Int)
+    case labeled(String, Int)
+  }
+
+  let label = "goodbye"
+  // WRONG
+  // `label` is treated as a value here because it is not preceded by `let`, so
+  // the pattern below matches only data points that have the label "goodbye".
+  switch DataPoint.labeled("hello", 100) {
+  case .labeled(label, let value):
+    // ...
+  }
+
+  // RIGHT
+  // Writing `let` before each individual binding clarifies that the intent is to
+  // introduce a new binding (shadowing the local variable within the case) rather
+  // than to match against the value of the local variable. Thus, this pattern
+  // matches data points with any string label.
+  switch DataPoint.labeled("hello", 100) {
+  case .labeled(let label, let value):
+    // ...
+  }
+  ```
+  In the example below, if the author’s intention was to match using the value of the label variable above, that has been lost because let distributes across the entire pattern and thus shadows the variable with a binding that applies to any string value:
+  
+  ```swift
+  // WRONG
+  switch DataPoint.labeled("hello", 100) {
+  case let .labeled(label, value):
+    // ...
+  }
+  ```
+
+  Labels of tuple arguments and enum associated values are omitted when binding a value to a variable with the same name as the label.
+
+  ```swift
+  // RIGHT
+  enum BinaryTree<Element> {
+    indirect case subtree(left: BinaryTree<Element>, right: BinaryTree<Element>)
+    case leaf(element: Element)
+  }
+
+  switch treeNode {
+  case .subtree(let left, let right):
+    // ...
+  case .leaf(let element):
+    // ...
+  }
+  ```
+
+  Including the labels adds noise that is redundant and lacking useful information:
+
+  ```swift
+  // WRONG
+  switch treeNode {
+  case .subtree(left: let left, right: let right):
+    // ...
+  case .leaf(element: let element):
+    // ...
+  }
+  ```
   </details>
 
 ### Access Control
@@ -1924,9 +2172,15 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
-* **DO name files after the primary class in the file**
+* **DO name files after the primary type in the file.**
 
-* **DO name extension files in the style `*Extensions`**
+* **DO use utf8 string encoding for all your files.**
+
+* **DO name extension files in the style `*Extensions`.**
+
+* **PREFER one non-nested type per file.**
+
+* **DO use extensions to break apart code into logical groups/files.**
 
 * **PREFER grouping by logical types. If there are extensive related models, extensions, classes, other files, then group them together in a group named after their logical meaning.**
 
@@ -1976,6 +2230,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 * **DON'T keep dead code around.**
   <details>
+
   On the surface this may seem obvious but dead code takes many forms. File templates can really hurt you here because when you say create a new UIViewController it has methods that do nothing but call `super` that counts as dead code and clutters up the codebase needlessly.
 
   ```swift
@@ -2005,6 +2260,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 * **AVOID excessive comments.**
   <details>
+
   We are big believers in self documenting code. Public API deserve documentation comments in all their glory and you should follow our guide on that. When dealing with internal code comments should be reserved for times when meaning is genuinely unclear or non-intuitive. This tends to only be true when you cannot extract to a private method and *increase* readability. 
 
   ```swift
