@@ -1593,7 +1593,28 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 * **DON'T use multi-line ternaries.**
 
   <details>
+
   A ternary is meant to be used for a very short conditional. If you find it cannot be reasonably expressed on one line then it should not be a ternary.
+
+  </details>
+
+* **PREFER for where loops when the entirety of a for loop’s body would be a single if block testing a condition of the element.**
+
+  <details>
+
+  ```swift
+  // WRONG
+  for item in collection {
+    if item.hasProperty {
+      // ...
+    }
+  }
+
+  // RIGHT
+  for item in collection where item.hasProperty {
+    // ...
+  }
+  ```
   </details>
 
 ### Access Control
