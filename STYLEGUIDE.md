@@ -2140,7 +2140,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
     // EnvironmentObject impacts this view and can impact all views beyond this one.
     @EnvironmentObject private var appModel: AppModel
 
-    // ObservedObject impacts more than State and thus goes earlier even though hikeResult is public.
+    // ObservedObject impacts more than State and thus goes earlier even though hikeResult is internal.
     @ObservedObject private var viewModel = ViewModel()
     @State var hikesResult: Result<[Hike], API.HikesService.Error>?
 
