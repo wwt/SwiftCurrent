@@ -2184,6 +2184,8 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 * **PREFER grouping by logical types. If there are extensive related models, extensions, classes, other files, then group them together in a group named after their logical meaning.**
 
+* **DO sort files by type using the builtin sorting in Xcode File Explorer.**
+
 * **DO group imports according to the correct order with a line break between groups.** Alphabetizing after grouping is not required.
   <details>
 
