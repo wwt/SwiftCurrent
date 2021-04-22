@@ -616,6 +616,11 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   ```
   </details>
 
+* **PREFER escape sequences over unicode.**
+  <details>
+  For any character that has a special escape sequence (`\t`, `\n`, `\r`, `\"`, `\'`, `\\`, and `\0`), that sequence is used rather than the equivalent Unicode (e.g., `\u{000a}`) escape sequence.
+  </details>
+
 ### Functions
 
 * **PREFER omitting `Void` return types from function definitions.**
