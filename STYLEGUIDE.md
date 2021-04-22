@@ -2184,7 +2184,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 * **PREFER grouping by logical types. If there are extensive related models, extensions, classes, other files, then group them together in a group named after their logical meaning.**
 
-* **DO group imports according to the correct order and add single line before testable imports.** Alphabetizing after grouping is not required.
+* **DO group imports according to the correct order with a line break between groups.** Alphabetizing after grouping is not required.
   <details>
 
     The correct order:
@@ -2197,10 +2197,14 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
     ```swift
     import Foundation
     import Combine
-    import Swinject
-    import CustomLibraryWeMade
     
-    @testable import LibraryUnderTest
+    import Cuckoo
+    import Swinject
+    import ViewInspector
+
+    import WorkflowCore
+
+    @testable import WorkflowSwiftUI
     ```
 
   </details>
