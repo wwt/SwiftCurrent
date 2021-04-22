@@ -70,7 +70,9 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 * **AVOID leaving compiler warning unattended.**
   <details>
+
   Every once in a while there's simply nothing reasonable you can do, because a generated file causes warnings. You also may deliberately use `#warning("")` in your code to draw attention to something.
+
   </details>
 
 **[⬆ back to top](#table-of-contents)**
@@ -605,6 +607,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 * **DON'T assign variables through a labeled tuple shuffle.** let (label: varName, label2: varName2) = tuple
 
   <details>
+  
   Assigning variables through a tuple pattern (sometimes referred to as a tuple shuffle) is only permitted if the left-hand side of the assignment is unlabeled.
 
   ```swift
@@ -618,7 +621,9 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 * **PREFER escape sequences over unicode.**
   <details>
+
   For any character that has a special escape sequence (`\t`, `\n`, `\r`, `\"`, `\'`, `\\`, and `\0`), that sequence is used rather than the equivalent Unicode (e.g., `\u{000a}`) escape sequence.
+
   </details>
 
 * **DON'T use invisible characters in code.** for example zero-width space characters are illegal
@@ -627,6 +632,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 * **DO put `else` statements at the end of the last line of a `guard` clause.**
   <details>
+
   ```swift
   // WRONG
   guard let a = optional,
@@ -653,6 +659,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 * **DO use [the K&R brace style](https://en.wikipedia.org/wiki/Indentation_style#K&R_style) for braces.**
 
   <details>
+
   ```swift
   // WRONG
   func foo()
@@ -1238,6 +1245,32 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   let x = makeValue(factory: MyType.init)
 
+  ```
+  </details>
+
+* **DON'T call `ExpressibleBy*Literal` compiler protocols directly.**
+
+  <details>
+
+  ```swift
+  // WRONG
+  struct Kilometers: ExpressibleByIntegerLiteral {
+    init(integerLiteral value: Int) {
+      // ...
+    }
+  }
+
+  let k = Kilometers(integerLiteral: 10)
+
+  // RIGHT
+  struct Kilometers: ExpressibleByIntegerLiteral {
+    init(integerLiteral value: Int) {
+      // ...
+    }
+  }
+
+  let k1: Kilometers = 10 // GOOD.
+  let k2 = 10 as Kilometers // ALSO GOOD.
   ```
   </details>
 
@@ -2026,6 +2059,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 * **DON'T keep dead code around.**
   <details>
+
   On the surface this may seem obvious but dead code takes many forms. File templates can really hurt you here because when you say create a new UIViewController it has methods that do nothing but call `super` that counts as dead code and clutters up the codebase needlessly.
 
   ```swift
@@ -2055,6 +2089,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 * **AVOID excessive comments.**
   <details>
+
   We are big believers in self documenting code. Public API deserve documentation comments in all their glory and you should follow our guide on that. When dealing with internal code comments should be reserved for times when meaning is genuinely unclear or non-intuitive. This tends to only be true when you cannot extract to a private method and *increase* readability. 
 
   ```swift
