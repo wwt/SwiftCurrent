@@ -35,7 +35,8 @@ Please review our [style guide](STYLEGUIDE.md) to ensure the least amount of rew
 - When you are fixing a bug please write a test first that clearly reproduces the bug, then write the fix. Writing the test first for bugs is generally more important to us than writing the tests first for features.
 - As you're working in a section of the codebase look at the existing tests and make sure they're understandable. If your changes break any of them don't immediately assume they're wrong, it's more likely that you've broken something unexpected.
 
-## Versioning
+## Public API
+### Versioning
 We use a version of [semantic versioning](https://semver.org/#summary). Our semantic versioning can be summarized as:
 
 * Major version changes when there is a breaking change to the public API.
@@ -43,3 +44,8 @@ We use a version of [semantic versioning](https://semver.org/#summary). Our sema
 * Patch version always changes.
 
 We strive to have this process automated. Patch increments with every commit to trunk, through the CI/CD pipeline. Major and Minor are currently updated through a script when the `podspec`'s version is manually updated and your PR gets to trunk.
+
+### Deprecation
+We want to give consumers of our code the opportunity to adapt to changes, outright removal means we'll constantly be breaking down-stream teams and that's a good way to frustrate developers.
+
+We will do our best to support older methods, but we will also not hesitate to do something new and better if there's a new and better way of doing things. This is the same approach Apple tends to take.
