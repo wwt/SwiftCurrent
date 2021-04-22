@@ -15,4 +15,4 @@ jobs:
           swift build -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios14.0-simulator"
           cd ..
       - name: Validate Cocoapods Can Deploy (lib lint)
-      - run: ./libLint.sh
+        run: ./libLint.sh
