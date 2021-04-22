@@ -3,14 +3,12 @@ Thank you for your interest in Workflow!
 
 ## Submitting issues
 ### Filing bugs
----
 If you found a bug in Workflow, thank you!  Please go to [issues](https://github.com/Tyler-Keith-Thompson/Workflow/issues/new/choose) and use the `Bug report` template to file it.  We'll reach out to you as soon as we can.  Some things the template will ask for are:
 - Steps to reproduce
 - Context around your environment
 - Optional screenshots and debugging logs
 
 ### Feature requests
----
 If you have an idea or change you would like to request, please go to [issues](https://github.com/Tyler-Keith-Thompson/Workflow/issues/new/choose) and use the `Feature request` template to make your request.  We'll reach out to you as soon as we can to discuss.  The more "why" you put into your request, the better we will be able to help build a solution that meets our styling and achieves your goals.
 
 ## Pull Requests:
@@ -39,7 +37,6 @@ Please review our [style guide](STYLEGUIDE.md) to ensure the least amount of rew
 
 ## Public API
 ### Versioning
----
 We use a version of [semantic versioning](https://semver.org/#summary). Our semantic versioning can be summarized as:
 
 * Major version changes when there is a breaking change to the public API.
@@ -49,14 +46,12 @@ We use a version of [semantic versioning](https://semver.org/#summary). Our sema
 We strive to have this process automated. Patch increments with every commit to trunk, through the CI/CD pipeline. Major and Minor are currently updated through a script when the `podspec`'s version is manually updated and your PR gets to trunk.
 
 ### Deprecation
----
 We want to give consumers of our code the opportunity to adapt to changes, outright removal means we'll constantly be breaking down-stream teams and that's a good way to frustrate developers.
 
 We will do our best to support older methods, but we will also not hesitate to do something new and better if there's a new and better way of doing things. This is the same approach Apple tends to take.
 
 ## Documentation
 ### What needs documentation?
----
 If you make any changes to the public API, these changes need to be documented in code with documentation comments. In addition, all documentation that references the changed API or provides samples needs to be updated. For example:
 * Readme
 * Wiki
@@ -68,13 +63,11 @@ If you make any changes to the public API, these changes need to be documented i
 This is not just about code. If any change affects statements that we have made within our documentation, we need to update that too! 
 
 ### How do we write good documentation?
----
 Our documentation goal is to be clear and concise. We don't want superfluous statements; we also want to avoid ambiguity. We choose to use US English for our documentation. If you are going to include sample code in your documentation it is vital that code can be copied and pasted into Xcode and work with the latest version of our library.
 
 For an example of documentation that we like, look at our style guide. Our style guide communicates complex topics unambiguously. People should understand the value of what we are documenting. If they're reading documentation about Workflow they should understand why Workflow is valuable to them. If they're reading documentation about our choice to use a fluent API, then they should understand why we chose it and how it helps them.  
 
 ### What don't we document? 
----
 We do not document things that are irrelevent to our users. This means we do not document implementation details of our public methods, but we do document how to use those public methods. If we refactor internal workings of the library, our users are unaffected by that and therefore documenting it would be superfluous. We also don't document anything that the linter or compiler will tell you. For example, we will not document compiler errors unless they are unclear. 
 
 ## Sample App
