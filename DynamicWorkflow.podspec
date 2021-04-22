@@ -39,4 +39,7 @@ iOS has a linear paradigm for navigation that doesn't support a lot of flexibili
     ss.dependency 'Swinject'
   end
 
+  s.pod_target_xcconfig = {
+    'FRAMEWORK_SEARCH_PATHS' => '$(inherited) "$(PLATFORM_DIR)/Developer/Library/Frameworks"',
+  }
 end
