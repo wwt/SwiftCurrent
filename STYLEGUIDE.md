@@ -68,7 +68,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 * **DON'T use #imageLiteral or #colorLiteral (don't drag colors or images from xcode into code).**
 
-* **AVOID leaving compiler warning unattended.**
+* **AVOID leaving compiler warnings unattended.**
   <details>
 
   Every once in a while there's simply nothing reasonable you can do, because a generated file causes warnings. You also may deliberately use `#warning("")` in your code to draw attention to something.
