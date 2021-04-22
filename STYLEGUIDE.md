@@ -615,7 +615,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   let (b, a) = (y: 4, x: 5.0)
   ```
   </details>
-  
+
 ### Functions
 
 * **PREFER omitting `Void` return types from function definitions.**
@@ -1938,9 +1938,15 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   </details>
 
-* **DO name files after the primary class in the file**
+* **DO name files after the primary type in the file.**
 
-* **DO name extension files in the style `*Extensions`**
+* **DO use utf8 string encoding for all your files.**
+
+* **DO name extension files in the style `*Extensions`.**
+
+* **PREFER one non-nested type per file.**
+
+* **DO use extensions to break apart code into logical groups/files.**
 
 * **PREFER grouping by logical types. If there are extensive related models, extensions, classes, other files, then group them together in a group named after their logical meaning.**
 
