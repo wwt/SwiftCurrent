@@ -621,6 +621,52 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   For any character that has a special escape sequence (`\t`, `\n`, `\r`, `\"`, `\'`, `\\`, and `\0`), that sequence is used rather than the equivalent Unicode (e.g., `\u{000a}`) escape sequence.
   </details>
 
+* **DON'T use invisible characters in code.** for example zero-width space characters are illegal
+
+* **PREFER multi-line strings to strings with multiple `\n` characters.**
+
+* **DO put `else` statements at the end of the last line of a `guard` clause.**
+  <details>
+  ```swift
+  // WRONG
+  guard let a = optional,
+        let b = otherOptional
+        else {
+          return
+        }
+
+  guard !isEmpty
+  else {
+    return
+  }
+
+  // RIGHT
+  guard let a = optional,
+        let b = otherOptional else {
+          return
+        }
+  
+  guard !isEmpty else { return }
+  ```
+  </details>
+
+* **DO use [the K&R brace style](https://en.wikipedia.org/wiki/Indentation_style#K&R_style) for braces.**
+
+  <details>
+  ```swift
+  // WRONG
+  func foo()
+  {
+    // statements
+  }
+
+  // RIGHT
+  func foo() {
+    // statements
+  }
+  ```
+  </details>
+
 ### Functions
 
 * **PREFER omitting `Void` return types from function definitions.**
