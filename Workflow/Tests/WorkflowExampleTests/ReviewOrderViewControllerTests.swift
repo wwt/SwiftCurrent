@@ -12,24 +12,24 @@ import XCTest
 @testable import WorkflowExample
 
 class ReviewOrderViewControllerTests: ViewControllerTest<ReviewOrderViewController> {
-    
-    var locationNameLabel:UILabel!
-    var menuLabel:UILabel!
-    var orderTypeLabel:UILabel!
-    var foodChoiceLabel:UILabel!
-    
+
+    var locationNameLabel: UILabel!
+    var menuLabel: UILabel!
+    var orderTypeLabel: UILabel!
+    var foodChoiceLabel: UILabel!
+
     override func afterLoadFromStoryboard() {
         locationNameLabel = testViewController.locationNameLabel
         menuLabel = testViewController.menuLabel
         orderTypeLabel = testViewController.orderTypeLabel
         foodChoiceLabel = testViewController.foodChoiceLabel
     }
-    
+
     func testShouldLoad() {
         let order = Order(location: Location(name: "", address: Address(), orderTypes: [], menuTypes: []))
         XCTAssert(testViewController.shouldLoad(with: order))
     }
-    
+
     func testShowOrderInformation() {
         let locationName = UUID().uuidString
         var order = Order(location: Location(name: locationName, address: Address(), orderTypes: [.delivery(Address())], menuTypes: [.catering]))
@@ -39,7 +39,7 @@ class ReviewOrderViewControllerTests: ViewControllerTest<ReviewOrderViewControll
         loadFromStoryboard {
             XCTAssert($0.shouldLoad(with: order))
         }
-        
+
         XCTAssertEqual(locationNameLabel.text, locationName)
         XCTAssertEqual(menuLabel.text, "Catering Menu")
         XCTAssertEqual(orderTypeLabel.text, "Delivery")

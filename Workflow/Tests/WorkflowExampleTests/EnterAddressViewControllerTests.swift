@@ -16,19 +16,19 @@ class EnterAddressViewControllerTests: ViewControllerTest<EnterAddressViewContro
         let order = Order(location: nil)
         XCTAssert(testViewController.shouldLoad(with: order))
     }
-    
+
     func testSavingAddressProceedsInWorkflow() {
         var proceedInWorkflowCalled = false
         let order = Order(location: nil)
         testViewController.order = order
-        
+
         testViewController.proceedInWorkflowStorage = { data in
             proceedInWorkflowCalled = true
             XCTAssertEqual((data as? Order)?.orderType, .delivery(Address()))
         }
-        
+
         testViewController.saveAddress()
-        
+
         XCTAssert(proceedInWorkflowCalled)
     }
 }

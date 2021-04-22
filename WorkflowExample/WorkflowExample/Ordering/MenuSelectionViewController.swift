@@ -11,14 +11,14 @@ import Workflow
 import WorkflowUIKit
 
 class MenuSelectionViewController: UIWorkflowItem<Order, Order>, StoryboardLoadable {
-    var order:Order?
-    
+    var order: Order?
+
     @IBAction func cateringMenu() {
         order?.menuType = .catering
         guard let order = order else { return }
         proceedInWorkflow(order)
     }
-    
+
     @IBAction func regularMenu() {
         order?.menuType = .regular
         guard let order = order else { return }
@@ -32,7 +32,7 @@ extension MenuSelectionViewController: FlowRepresentable {
         defer {
             self.order = order
         }
-        if (order.location?.menuTypes.count == 1) {
+        if order.location?.menuTypes.count == 1 {
             order.menuType = order.location?.menuTypes.first
             proceedInWorkflow(order)
         }

@@ -14,4 +14,3 @@ func waitUntil(_ timeout: Double, _ checkSuccess: @autoclosure () -> Bool) {
         success = checkSuccess()
     }
 }
-

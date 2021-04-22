@@ -11,10 +11,10 @@ import Workflow
 
 @available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
 public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
-    @Published var view:AnyView = AnyView(EmptyView())
+    @Published var view: AnyView = AnyView(EmptyView())
     var stack = LinkedList<ViewHolder>()
 
-    var launchStyle:LaunchStyle.PresentationType = .default
+    var launchStyle: LaunchStyle.PresentationType = .default
 
     public func launch(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
         guard let next = to.instance.value?.underlyingInstance as? AnyView else { return }
@@ -40,16 +40,17 @@ public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
         self.view = v
     }
 
-    public func proceed(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData), from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
+    public func proceed(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData),
+                        from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
         guard let next = to.instance.value?.underlyingInstance as? AnyView else { return }
         stack.append(ViewHolder(view: next, metadata: to.metadata))
         present(view: next)
     }
 
-    private func present(view next:AnyView) {
+    private func present(view next: AnyView) {
         var v = next
         _ = stack.last?.traverse(direction: .backward, until: { node in
-            guard let nextNode = node.next else { return false } //NOTE: Barring some threading crazy, this should never be nil
+            guard let nextNode = node.next else { return false } // NOTE: Barring some threading crazy, this should never be nil
 
             switch LaunchStyle.PresentationType(rawValue: nextNode.value.metadata.launchStyle) ?? .default {
                 case .modal(let style): v = AnyView(ModalWrapper(next: v, current: node.value.view, style: style).environmentObject(self).environmentObject(node.value))
@@ -92,7 +93,8 @@ public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
     }
 
     #warning("TEST THIS")
-    public func proceedBackward(from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData), to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
+    public func proceedBackward(from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData),
+                                to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
         stack.removeLast()
         guard let prev = to.instance.value?.underlyingInstance as? AnyView,
               !stack.isEmpty else { return }
@@ -101,7 +103,7 @@ public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
             last.value = last.value.copy
         }
 
-        if (stack.count == 1) {
+        if stack.count == 1 {
             handleLaunch(prev, to)
         } else {
             present(view: prev)

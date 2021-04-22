@@ -12,14 +12,14 @@ import XCTest
 @testable import WorkflowExample
 @testable import Workflow
 
-class PickupOrDeliveryViewConrollerTests:ViewControllerTest<PickupOrDeliveryViewController> {
+class PickupOrDeliveryViewConrollerTests: ViewControllerTest<PickupOrDeliveryViewController> {
     func testShouldLoadOnlyIfThereAreMultipleOrderTypes() {
         let locationWithOne = Location(name: "", address: Address(), orderTypes: [.pickup], menuTypes: [])
         let locationWithMultiple = Location(name: "", address: Address(), orderTypes: [.pickup, .delivery(Address())], menuTypes: [])
         XCTAssertFalse(testViewController.shouldLoad(with: Order(location: locationWithOne)))
         XCTAssert(testViewController.shouldLoad(with: Order(location: locationWithMultiple)))
     }
-    
+
     func testShouldLoadWithOnlyOneOrderTypeCallsBackImmediately() {
         var callbackCalled = false
         let locationWithOne = Location(name: "", address: Address(), orderTypes: [.delivery(Address())], menuTypes: [])
@@ -31,10 +31,10 @@ class PickupOrDeliveryViewConrollerTests:ViewControllerTest<PickupOrDeliveryView
             }
             _ = viewController.shouldLoad(with: Order(location: locationWithOne))
         }
-        
+
         XCTAssert(callbackCalled)
     }
-    
+
     func testSelectingPickupSetsItOnOrder() {
         var callbackCalled = false
         let location = Location(name: "", address: Address(), orderTypes: [.pickup, .delivery(Address())], menuTypes: [])
@@ -46,25 +46,25 @@ class PickupOrDeliveryViewConrollerTests:ViewControllerTest<PickupOrDeliveryView
             }
             _ = viewController.shouldLoad(with: Order(location: location))
         }
-        
+
         testViewController.selectPickup()
-        
+
         XCTAssert(callbackCalled)
     }
-    
+
     func testSelectingDeliveryLaunchesWorkflowAndSetsSelectionOnOrder() {
         loadFromStoryboard()
         let unique = UUID().uuidString
         testViewController.order = Order(location: Location(name: unique, address: Address(), orderTypes: [], menuTypes: []))
         let listener = WorkflowListener()
         let orderOutput = Order(location: Location(name: unique, address: Address(), orderTypes: [], menuTypes: []))
-            
+
         testViewController.selectDelivery()
         XCTAssertWorkflowLaunched(listener: listener, workflow: Workflow(EnterAddressViewController.self))
-        
+
         let mock = MockOrchestrationResponder()
         listener.workflow?.applyOrchestrationResponder(mock)
-        
+
         var proceedInWorkflowCalled = false
         testViewController.proceedInWorkflowStorage = { data in
             proceedInWorkflowCalled = true
@@ -73,9 +73,9 @@ class PickupOrDeliveryViewConrollerTests:ViewControllerTest<PickupOrDeliveryView
         }
 
         listener.onFinish?(orderOutput)
-        
+
         XCTAssertEqual(mock.abandonCalled, 1)
-        
+
         XCTAssert(proceedInWorkflowCalled)
     }
 }

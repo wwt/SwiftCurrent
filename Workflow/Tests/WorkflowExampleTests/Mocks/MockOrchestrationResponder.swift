@@ -34,9 +34,8 @@ class MockOrchestrationResponder: AnyOrchestrationResponder {
         proceedBackwardCalled += 1
     }
 
-
     var abandonCalled = 0
-    var lastWorkflow:AnyWorkflow?
+    var lastWorkflow: AnyWorkflow?
     var lastOnFinish:(() -> Void)?
     func abandon(_ workflow: AnyWorkflow, animated: Bool, onFinish: (() -> Void)?) {
         lastWorkflow = workflow

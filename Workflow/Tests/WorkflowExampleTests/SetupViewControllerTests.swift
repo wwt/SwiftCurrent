@@ -21,7 +21,7 @@ class SetupViewControllerTests: XCTestCase {
 
     func testLaunchingMultiLocationWorkflow() {
         let listener = WorkflowListener()
-        
+
         testViewController.launchMultiLocationWorkflow()
 
         XCTAssertWorkflowLaunched(listener: listener, workflow: Workflow(LocationsViewController.self)

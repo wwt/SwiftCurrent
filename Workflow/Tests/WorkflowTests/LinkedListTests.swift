@@ -54,10 +54,10 @@ class LinkedListTests: XCTestCase {
 
         for (i, node) in list.enumerated() {
             XCTAssert(node.value === arr[i])
-            if (i > 0) {
+            if i > 0 {
                 XCTAssert(node.previous?.value === arr[i-1])
             }
-            if (i < arr.count-1) {
+            if i < arr.count-1 {
                 XCTAssert(node.next?.value === arr[i+1])
             }
         }
@@ -107,8 +107,8 @@ class LinkedListTests: XCTestCase {
 
     func testSortBy() {
         class Wrapper {
-            var int:Int
-            init(_ val:Int) {
+            var int: Int
+            init(_ val: Int) {
                 int = val
             }
         }
@@ -123,12 +123,12 @@ class LinkedListTests: XCTestCase {
 
     func testSortedBy() {
         class Wrapper {
-            var int:Int
-            init(_ val:Int) {
+            var int: Int
+            init(_ val: Int) {
                 int = val
             }
         }
-        let list:LinkedList = LinkedList([Wrapper(3), Wrapper(1), Wrapper(2)])
+        let list: LinkedList = LinkedList([Wrapper(3), Wrapper(1), Wrapper(2)])
                               .sorted(by: { $0.int <= $1.int })
 
         XCTAssertEqual(list.first?.value.int, 1)
@@ -150,7 +150,7 @@ class LinkedListTests: XCTestCase {
         let list = LinkedList((1...limit).map { _ in arc4random_uniform(UInt32(limit)) })
 
         measure {
-            let _ = list.sorted()
+            _ = list.sorted()
         }
     }
 
@@ -215,9 +215,9 @@ class LinkedListTests: XCTestCase {
 
     func testRemoveAllCleansUpMemory() {
         let list = LinkedList([ComplexObject(1), ComplexObject(2), ComplexObject(3)])
-        weak var first:LinkedList<ComplexObject>.Element? = list.first
-        weak var middle:ComplexObject? = list.first?.next?.value
-        weak var last:LinkedList<ComplexObject>.Element? = list.last
+        weak var first: LinkedList<ComplexObject>.Element? = list.first
+        weak var middle: ComplexObject? = list.first?.next?.value
+        weak var last: LinkedList<ComplexObject>.Element? = list.last
 
         list.removeAll()
 
@@ -490,9 +490,9 @@ class LinkedListTests: XCTestCase {
 
     func testTraversingUntilPreconditionIsMet() {
         let list = LinkedList([1, 2, 3, 4, 5, 6, 7, 8])
-        XCTAssertEqual(list.first?.traverse{ $0.value == 4 }?.value, 4)
+        XCTAssertEqual(list.first?.traverse { $0.value == 4 }?.value, 4)
         XCTAssertNil(list.first?.traverse { $0.value == 9 })
-        XCTAssertEqual(list.first?.traverse{ $0.value == 1 }?.value, 1)
+        XCTAssertEqual(list.first?.traverse { $0.value == 1 }?.value, 1)
     }
 
     func testTraversingBackwardsUntilPreconditionIsMet() {
@@ -509,8 +509,8 @@ class LinkedListTests: XCTestCase {
     }
 
     class ComplexObject {
-        var i:Int
-        init(_ i:Int) {
+        var i: Int
+        init(_ i: Int) {
             self.i = i
         }
     }

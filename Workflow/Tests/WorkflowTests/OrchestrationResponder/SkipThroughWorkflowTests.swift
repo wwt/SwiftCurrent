@@ -22,11 +22,11 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenPresent(FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
-        
+
         let expectation = self.expectation(description: "OnFinish called")
-        
+
         let launchedRepresentable = wf.launch { _ in expectation.fulfill() }
-        
+
         XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value?.underlyingInstance is FR2)
         XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR2)
@@ -34,7 +34,7 @@ class SkipThroughWorkflowTests: XCTestCase {
 
         let fr2 = (responder.lastTo?.instance.value?.underlyingInstance as? FR2)
         fr2?.proceedInWorkflow()
-        
+
         XCTAssertEqual(responder.proceedCalled, 1)
         XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR3)
         XCTAssertNotNil(responder.lastFrom)
@@ -42,10 +42,10 @@ class SkipThroughWorkflowTests: XCTestCase {
         XCTAssert((responder.lastFrom?.instance.value?.underlyingInstance as? FR2) === fr2)
 
         (responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.proceedInWorkflow()
-        
+
         wait(for: [expectation], timeout: 3)
     }
-    
+
     func testWorkflowCanSkipMiddleItem_AndStillProceedThroughFlow_AndCallOnFinish() {
         class FR1: TestPassthroughFlowRepresentable { }
         class FR2: TestFlowRepresentable<Never, Never>, FlowRepresentable {
@@ -57,11 +57,11 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenPresent(FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
-        
+
         let expectation = self.expectation(description: "OnFinish called")
-        
+
         let launchedRepresentable = wf.launch { _ in expectation.fulfill() }
-        
+
         XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value?.underlyingInstance is FR1)
         XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR1)
@@ -69,7 +69,7 @@ class SkipThroughWorkflowTests: XCTestCase {
 
         let fr1 = (responder.lastTo?.instance.value?.underlyingInstance as? FR1)
         fr1?.proceedInWorkflow()
-        
+
         XCTAssertEqual(responder.proceedCalled, 1)
         XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR3)
         XCTAssertNotNil(responder.lastFrom)
@@ -77,7 +77,7 @@ class SkipThroughWorkflowTests: XCTestCase {
         XCTAssert((responder.lastFrom?.instance.value?.underlyingInstance as? FR1) === fr1)
 
         (responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.proceedInWorkflow()
-        
+
         wait(for: [expectation], timeout: 3)
     }
 
@@ -131,7 +131,7 @@ class SkipThroughWorkflowTests: XCTestCase {
 
         wait(for: [expectation], timeout: 3)
     }
-    
+
     func testWorkflowCanSkipLastItem_AndStillProceedThroughFlow_AndCallOnFinish() {
         class FR1: TestPassthroughFlowRepresentable { }
         class FR2: TestPassthroughFlowRepresentable { }
@@ -143,11 +143,11 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenPresent(FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
-        
+
         let expectation = self.expectation(description: "OnFinish called")
-        
+
         let launchedRepresentable = wf.launch { _ in expectation.fulfill() }
-        
+
         XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value?.underlyingInstance is FR1)
         XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR1)
@@ -155,7 +155,7 @@ class SkipThroughWorkflowTests: XCTestCase {
 
         let fr1 = (responder.lastTo?.instance.value?.underlyingInstance as? FR1)
         fr1?.proceedInWorkflow()
-        
+
         XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR2)
         XCTAssertNotNil(responder.lastFrom)
@@ -163,10 +163,10 @@ class SkipThroughWorkflowTests: XCTestCase {
         XCTAssert((responder.lastFrom?.instance.value?.underlyingInstance as? FR1) === fr1)
 
         (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.proceedInWorkflow()
-        
+
         wait(for: [expectation], timeout: 3)
     }
-    
+
     func testWorkflowCanSkipFirstItem_AndStillProceedThroughFlow_PassingThroughCorrectArgsToNextWorkflowItem() {
         class FR1: TestFlowRepresentable<Never, String>, FlowRepresentable {
             static let id = UUID().uuidString
@@ -189,9 +189,9 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenPresent(FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
-        
+
         let launchedRepresentable = wf.launch()
-        
+
         XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value?.underlyingInstance is FR2)
         XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR2)
@@ -199,7 +199,7 @@ class SkipThroughWorkflowTests: XCTestCase {
 
         let fr2 = (responder.lastTo?.instance.value?.underlyingInstance as? FR2)
         fr2?.proceedInWorkflow()
-        
+
         XCTAssertEqual(responder.proceedCalled, 1)
         XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR3)
         XCTAssertNotNil(responder.lastFrom)
@@ -207,10 +207,10 @@ class SkipThroughWorkflowTests: XCTestCase {
         XCTAssert((responder.lastFrom?.instance.value?.underlyingInstance as? FR2) === fr2)
 
         (responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.proceedInWorkflow()
-        
+
         wait(for: [FR2.expectation], timeout: 3)
     }
-    
+
     func testWorkflowCanSkipMultipleItems_AndStillProceedThroughFlow_PassingThroughCorrectArgsToNextWorkflowItem() {
         class FR1: TestFlowRepresentable<Never, String>, FlowRepresentable {
             static let id = UUID().uuidString
@@ -241,19 +241,19 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenPresent(FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
-        
+
         let launchedRepresentable = wf.launch()
-        
+
         XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value?.underlyingInstance is FR3)
         XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR3)
         XCTAssertNil(responder.lastFrom)
 
         (responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.proceedInWorkflow()
-        
+
         wait(for: [FR2.expectation, FR3.expectation], timeout: 3)
     }
-    
+
     func testWorkflowCanSkipFirstItem_AndStillProceedThroughFlow_PassingThroughInitialArgsToNextWorkflowItem() {
         class FR1: TestFlowRepresentable<String, String>, FlowRepresentable {
             static let id = UUID().uuidString
@@ -273,9 +273,9 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenPresent(FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
-        
+
         let launchedRepresentable = wf.launch(with: FR1.id)
-        
+
         XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value?.underlyingInstance is FR2)
         XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR2)
@@ -283,7 +283,7 @@ class SkipThroughWorkflowTests: XCTestCase {
 
         let fr2 = (responder.lastTo?.instance.value?.underlyingInstance as? FR2)
         fr2?.proceedInWorkflow()
-        
+
         XCTAssertEqual(responder.proceedCalled, 1)
         XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR3)
         XCTAssertNotNil(responder.lastFrom)
@@ -291,10 +291,10 @@ class SkipThroughWorkflowTests: XCTestCase {
         XCTAssert((responder.lastFrom?.instance.value?.underlyingInstance as? FR2) === fr2)
 
         (responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.proceedInWorkflow()
-        
+
         wait(for: [FR2.expectation], timeout: 3)
     }
-    
+
     func testWorkflowCanSkipMultipleItems_AndStillProceedThroughFlow_PassingThroughInitialArgsToNextWorkflowItem() {
         class FR1: TestFlowRepresentable<String, String>, FlowRepresentable {
             static let id = UUID().uuidString
@@ -323,19 +323,19 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenPresent(FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
-        
+
         let launchedRepresentable = wf.launch(with: FR1.id)
-        
+
         XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value?.underlyingInstance is FR3)
         XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR3)
         XCTAssertNil(responder.lastFrom)
 
         (responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.proceedInWorkflow()
-        
+
         wait(for: [FR2.expectation, FR3.expectation], timeout: 3)
     }
-    
+
     func testWorkflowCanSkipAllItems_AndStillProceedThroughFlow_PassingThroughInitialArgsToNextWorkflowItem() {
         class FR1: TestFlowRepresentable<String, String>, FlowRepresentable {
             static let id = UUID().uuidString
@@ -365,20 +365,20 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenPresent(FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
-        
+
         let launchedRepresentable = wf.launch(with: FR1.id) { id in
             expectation.fulfill()
             XCTAssertEqual(id as? String, FR1.id)
         }
-        
+
         XCTAssertEqual(responder.proceedCalled, 0)
         XCTAssertNil(launchedRepresentable)
         XCTAssertNil(responder.lastTo)
         XCTAssertNil(responder.lastFrom)
-        
+
         wait(for: [FR2.expectation, FR3.expectation, expectation], timeout: 3)
     }
-    
+
     func testWorkflowCanSkipMiddleItem_AndStillProceedThroughFlow_PassingThroughCorrectArgsToNextWorkflowItem() {
         class FR1: TestFlowRepresentable<Never, String>, FlowRepresentable {
             static let id = UUID().uuidString
@@ -405,23 +405,23 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenPresent(FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
-        
+
         let launchedRepresentable = wf.launch()
-        
+
         XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value?.underlyingInstance is FR1)
         XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR1)
         XCTAssertNil(responder.lastFrom)
 
         (responder.lastTo?.instance.value?.underlyingInstance as? FR1)?.proceedInWorkflow(FR1.id)
-        
+
         XCTAssertEqual(responder.proceedCalled, 1)
         XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR3)
         XCTAssert(responder.lastFrom?.instance.value?.underlyingInstance is FR1)
 
         wait(for: [FR2.expectation, FR3.expectation], timeout: 3)
     }
-    
+
     func testWorkflowCanSkipAllExceptTheFirstItem_AndStillProceedThroughFlow_PassingThroughCorrectArgsToNextWorkflowItem() {
         class FR1: TestFlowRepresentable<Never, String>, FlowRepresentable {
             static let id = UUID().uuidString
@@ -450,19 +450,19 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenPresent(FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
-        
+
         let launchedRepresentable = wf.launch { id in
             expectation.fulfill()
             XCTAssertEqual(id as? String, FR1.id)
         }
-        
+
         XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value?.underlyingInstance is FR1)
         XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR1)
         XCTAssertNil(responder.lastFrom)
-        
+
         (launchedRepresentable?.value?.underlyingInstance as? FR1)?.proceedInWorkflow(FR1.id)
-                
+
         wait(for: [FR2.expectation, FR3.expectation, expectation], timeout: 3)
     }
 }
@@ -477,14 +477,14 @@ extension SkipThroughWorkflowTests {
         typealias WorkflowInput = Input
         typealias WorkflowOutput = Output
     }
-    
+
     class TestPassthroughFlowRepresentable: FlowRepresentable {
         weak var _workflowPointer: AnyFlowRepresentable?
-        
+
         required init() { }
-        
+
         static func instance() -> Self { Self() }
-        
+
         typealias WorkflowInput = Never
         typealias WorkflowOutput = Never
     }

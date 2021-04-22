@@ -23,7 +23,7 @@ class ModalTests: XCTestCase {
 
         let fr1 = try view.workflowModel.view.inspect().anyView().view(FR1.self).actualView()
         fr1.proceedInWorkflow()
-        //NOTE: The best we can really do here is assert the wrapper has the correct views set, we cannot really assert that it was presented modally per se
+        // NOTE: The best we can really do here is assert the wrapper has the correct views set, we cannot really assert that it was presented modally per se
         _ = try view.workflowModel.view.inspect().anyView().view(ModalWrapper.self).actualView().current.inspect().anyView().view(FR1.self)
         let fr2 = try view.workflowModel.view.inspect().anyView().view(ModalWrapper.self).actualView().next.inspect().anyView().view(FR2.self).actualView()
         fr2.proceedInWorkflow()
@@ -251,7 +251,7 @@ class ModalTests: XCTestCase {
 
         let fr1 = try view.workflowModel.view.inspect().anyView().view(FR1.self).actualView()
         fr1.proceedInWorkflow()
-        //NOTE: The best we can really do here is assert the wrapper has the correct views set, we cannot really assert that it was presented modally per se
+        // NOTE: The best we can really do here is assert the wrapper has the correct views set, we cannot really assert that it was presented modally per se
         _ = try view.workflowModel.view.inspect().anyView().view(ModalWrapper.self).actualView().current.inspect().anyView().view(FR1.self)
         let fr2 = try view.workflowModel.view.inspect().anyView().view(ModalWrapper.self).actualView().next.inspect().anyView().view(FR2.self).actualView()
         fr2.proceedInWorkflow()

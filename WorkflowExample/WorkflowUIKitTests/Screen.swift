@@ -10,17 +10,17 @@ import Foundation
 import UIKit
 
 class Screen<T: UIViewController> {
-    var view:UIView? {
+    var view: UIView? {
         return viewController?.view
     }
-    
-    var viewController:T?
-    
+
+    var viewController: T?
+
     func launch(usingCurrentViewStack: Bool = false) {
-        
+
     }
-    
-    func waitForVisibility(timeout:Double = 3) {
+
+    func waitForVisibility(timeout: Double = 3) {
         waitUntil(timeout, UIApplication.topViewController() is T)
         if let view = UIApplication.topViewController() as? T {
             viewController = view

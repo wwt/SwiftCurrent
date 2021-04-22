@@ -12,9 +12,9 @@ import UIUTest
 
 @testable import WorkflowExample
 
-class LocationsViewControllerTests:ViewControllerTest<LocationsViewController> {
-    var tableView:UITableView!
-    
+class LocationsViewControllerTests: ViewControllerTest<LocationsViewController> {
+    var tableView: UITableView!
+
     override func afterLoadFromStoryboard() {
         tableView = testViewController.tableView
     }
@@ -26,7 +26,7 @@ class LocationsViewControllerTests:ViewControllerTest<LocationsViewController> {
             Location(name: "", address: Address(line1: "", line2: "", city: "", state: "", zip: ""), orderTypes: [], menuTypes: [])
         ]), "LocationsViewController should load if there are multiple locations")
     }
-    
+
     func testLocationsShouldPassAlongOrderWithDefaultLocation_IfThereIsOnlyOne() {
         let rand = UUID().uuidString
         var callbackCalled = false
@@ -40,21 +40,21 @@ class LocationsViewControllerTests:ViewControllerTest<LocationsViewController> {
                 Location(name: rand, address: Address(line1: "", line2: "", city: "", state: "", zip: ""), orderTypes: [], menuTypes: [])
             ])
         }
-        
+
         XCTAssert(callbackCalled)
     }
-    
+
     func testViewShouldTakeInLocationsData() {
         let rand1 = UUID().uuidString
         let rand2 = UUID().uuidString
         let loc1 = Location(name: rand1, address: Address(line1: "", line2: "", city: "", state: "", zip: ""), orderTypes: [], menuTypes: [])
         let loc2 = Location(name: rand2, address: Address(line1: "", line2: "", city: "", state: "", zip: ""), orderTypes: [], menuTypes: [])
         _ = testViewController.shouldLoad(with: [loc1, loc2])
-        
+
         XCTAssertEqual(testViewController.locations.first?.name, rand1)
         XCTAssertEqual(testViewController.locations.last?.name, rand2)
     }
-    
+
     func testTableViewShouldHaveRowsEqualToNumberOfLocations() {
         loadFromStoryboard { viewController in
             _ = viewController.shouldLoad(with: [
@@ -62,10 +62,10 @@ class LocationsViewControllerTests:ViewControllerTest<LocationsViewController> {
                 Location(name: "", address: Address(line1: "", line2: "", city: "", state: "", zip: ""), orderTypes: [], menuTypes: [])
             ])
         }
-        
+
         XCTAssertEqual(testViewController.tableView(tableView, numberOfRowsInSection: 0), 2)
     }
-    
+
     func testTableViewCellShouldContainLocationName() {
         let rand = UUID().uuidString
         loadFromStoryboard { viewController in
@@ -74,12 +74,12 @@ class LocationsViewControllerTests:ViewControllerTest<LocationsViewController> {
                 Location(name: "", address: Address(line1: "", line2: "", city: "", state: "", zip: ""), orderTypes: [], menuTypes: [])
             ])
         }
-        
+
         let cell = testViewController.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0))
-        
+
         XCTAssertEqual(cell.textLabel?.text, rand)
     }
-    
+
     func testWhenTableViewIsSelectedAnOrderShouldBeCreatedAndPassedToTheNextView() {
         let rand = UUID().uuidString
         var callbackCalled = false
@@ -96,7 +96,7 @@ class LocationsViewControllerTests:ViewControllerTest<LocationsViewController> {
         }
 
         testViewController.tableView(tableView, didSelectRowAt: IndexPath(row: 0, section: 0))
-        
+
         XCTAssert(callbackCalled)
     }
 }

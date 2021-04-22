@@ -16,7 +16,7 @@ import Foundation
  */
 
 public protocol FlowRepresentable {
-    ///WorkflowInput: The data type required to be passed to your FlowRepresentable (use `Any?` if you don't care)
+    /// WorkflowInput: The data type required to be passed to your FlowRepresentable (use `Any?` if you don't care)
     associatedtype WorkflowInput
     associatedtype WorkflowOutput = Never
 
@@ -36,7 +36,7 @@ public protocol FlowRepresentable {
 }
 
 public extension FlowRepresentable {
-    var _workflowUnderlyingInstance:Any { self }
+    var _workflowUnderlyingInstance: Any { self }
 }
 
 public extension FlowRepresentable {

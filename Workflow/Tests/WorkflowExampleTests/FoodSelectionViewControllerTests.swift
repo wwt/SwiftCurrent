@@ -15,7 +15,7 @@ class FoodSelectionViewControllerTests: ViewControllerTest<FoodSelectionViewCont
     func testViewShouldAlwaysLoad() {
         XCTAssert(testViewController.shouldLoad(with: Order(location: Location(name: "", address: Address(), orderTypes: [], menuTypes: []))))
     }
-    
+
     func testSelectingFirstFoodChoice() {
         let order = Order(location: Location(name: "", address: Address(), orderTypes: [], menuTypes: []))
         testViewController.order = order
@@ -24,7 +24,7 @@ class FoodSelectionViewControllerTests: ViewControllerTest<FoodSelectionViewCont
             proceedInWorkflowCalled = true
             XCTAssertEqual((data as? Order)?.shoppingCart.last?.name, "Combo #1")
         }
-        
+
         testViewController.firstFoodChoice()
         XCTAssert(proceedInWorkflowCalled)
     }
@@ -37,11 +37,11 @@ class FoodSelectionViewControllerTests: ViewControllerTest<FoodSelectionViewCont
             proceedInWorkflowCalled = true
             XCTAssertEqual((data as? Order)?.shoppingCart.last?.name, "Combo #2")
         }
-        
+
         testViewController.secondFoodChoice()
         XCTAssert(proceedInWorkflowCalled)
     }
-    
+
     func testSelectingThirdFoodChoice() {
         let order = Order(location: Location(name: "", address: Address(), orderTypes: [], menuTypes: []))
         testViewController.order = order
@@ -50,7 +50,7 @@ class FoodSelectionViewControllerTests: ViewControllerTest<FoodSelectionViewCont
             proceedInWorkflowCalled = true
             XCTAssertEqual((data as? Order)?.shoppingCart.last?.name, "Combo #3")
         }
-        
+
         testViewController.thirdFoodChoice()
         XCTAssert(proceedInWorkflowCalled)
     }

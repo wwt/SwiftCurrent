@@ -23,7 +23,7 @@ struct ContentView: View {
 }
 
 struct T1: View {
-    @State var showing:Bool = false
+    @State var showing: Bool = false
 
     var body: some View {
         NavigationView {
@@ -47,7 +47,7 @@ struct T1: View {
 }
 
 struct T2: View {
-    @State var showing:Bool = false
+    @State var showing: Bool = false
 
     var body: some View {
         NavigationLink(
@@ -69,7 +69,7 @@ struct T2: View {
 }
 
 struct T3: View {
-    @State var showing:Bool = false
+    @State var showing: Bool = false
 
     var body: some View {
         NavigationLink(
@@ -91,7 +91,7 @@ struct T3: View {
 }
 
 struct T4: View {
-    @State var showing:Bool = false
+    @State var showing: Bool = false
 
     var body: some View {
         NavigationLink(
@@ -113,7 +113,7 @@ struct T4: View {
 }
 
 struct T5: View {
-    @State var showing:Bool = false
+    @State var showing: Bool = false
 
     var body: some View {
         Text("fin")

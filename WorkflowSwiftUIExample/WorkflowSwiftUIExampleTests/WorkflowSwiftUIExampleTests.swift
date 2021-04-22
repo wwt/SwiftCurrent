@@ -18,7 +18,7 @@ class WorkflowSwiftUIExampleTests: XCTestCase {
                                     .thenPresent(FR2.self)
                                     .thenPresent(FR3.self)
                                     .thenPresent(FR4.self)) { _ in expectation.fulfill() }
-        
+
         let fr1 = try view.workflowModel.view.inspect().anyView().view(FR1.self).actualView()
         fr1.proceedInWorkflow()
         let fr2 = try view.workflowModel.view.inspect().anyView().view(FR2.self).actualView()
@@ -59,7 +59,7 @@ extension WorkflowSwiftUIExampleTests {
             Button("Back", action: proceedBackwardInWorkflow)
         }
     }
-    
+
     struct FR3: View, FlowRepresentable, Inspectable {
         var _workflowPointer: AnyFlowRepresentable?
 

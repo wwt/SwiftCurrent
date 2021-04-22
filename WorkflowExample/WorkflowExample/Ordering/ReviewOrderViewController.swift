@@ -12,28 +12,28 @@ import WorkflowUIKit
 import UIKit
 
 class ReviewOrderViewController: UIWorkflowItem<Order, Order?>, StoryboardLoadable {
-    var order:Order?
-    
-    @IBOutlet weak var locationNameLabel:UILabel! {
+    var order: Order?
+
+    @IBOutlet weak var locationNameLabel: UILabel! {
         willSet(this) {
             this.text = order?.location?.name
         }
     }
-    
-    @IBOutlet weak var menuLabel:UILabel! {
+
+    @IBOutlet weak var menuLabel: UILabel! {
         willSet(this) {
             this.text = order?.menuType == .catering ? "Catering Menu" : "Regular Menu"
         }
     }
-    
-    @IBOutlet weak var orderTypeLabel:UILabel! {
+
+    @IBOutlet weak var orderTypeLabel: UILabel! {
         willSet(this) {
             guard let order = order else { return }
             this.text = order.orderType == .pickup ? "Pickup" : "Delivery"
         }
     }
-    
-    @IBOutlet weak var foodChoiceLabel:UILabel! {
+
+    @IBOutlet weak var foodChoiceLabel: UILabel! {
         willSet(this) {
             this.text = order?.shoppingCart.compactMap { $0.name }.joined(separator: ", ")
         }

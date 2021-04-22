@@ -30,7 +30,7 @@ class SetupViewController: UIViewController, StoryboardLoadable {
             Location(name: "Pickup And Delivery w/ all menu types",
                      address: Address(line1: "890 Fake St", line2: "", city: "Fakerton", state: "FK", zip: "00004"),
                      orderTypes: [OrderType.pickup, OrderType.delivery(Address(line1: "", line2: "", city: "", state: "", zip: ""))],
-                     menuTypes: [.catering, .regular]),
+                     menuTypes: [.catering, .regular])
         ]
         launchInto(
             Workflow(LocationsViewController.self)

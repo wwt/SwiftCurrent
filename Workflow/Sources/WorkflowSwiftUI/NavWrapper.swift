@@ -18,7 +18,7 @@ struct NavWrapper: View {
 
     @State var appearCount = 0
 
-    var isShowing:Bool {
+    var isShowing: Bool {
         appearCount > 0
     }
 

@@ -30,7 +30,7 @@ extension UIModalPresentationStyle {
 }
 
 public extension UIViewController {
-    ///launchInto: When using UIKit this is how you launch a workflow
+    /// launchInto: When using UIKit this is how you launch a workflow
     /// - Parameter workflow: `Workflow` to launch
     /// - Parameter args: Args to pass to the first `FlowRepresentable`
     /// - Parameter launchStyle: The `PresentationType` used to launch the workflow
@@ -52,7 +52,7 @@ public extension UIViewController {
         #endif
     }
 
-    ///launchInto: When using UIKit this is how you launch a workflow
+    /// launchInto: When using UIKit this is how you launch a workflow
     /// - Parameter workflow: `Workflow` to launch
     /// - Parameter launchStyle: The `PresentationType` used to launch the workflow
     /// - Parameter onFinish: A callback that is called when the last item in the workflow calls back

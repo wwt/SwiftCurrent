@@ -11,8 +11,8 @@ import Workflow
 import WorkflowUIKit
 
 class FoodSelectionViewController: UIWorkflowItem<Order, Order>, StoryboardLoadable {
-    var order:Order?
-    
+    var order: Order?
+
     @IBAction func firstFoodChoice() {
         order?.shoppingCart.append(Food(name: "Combo #1"))
         guard let order = order else { return }

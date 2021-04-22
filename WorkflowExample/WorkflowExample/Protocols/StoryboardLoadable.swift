@@ -12,10 +12,10 @@ import Workflow
 protocol StoryboardLoadable {}
 
 extension StoryboardLoadable {
-    static var storyboardId:String {
+    static var storyboardId: String {
         return String(describing: Self.self)
     }
-    
+
     static func instance() -> Self {
         return Storyboard.main.instantiateViewController(withIdentifier: storyboardId) as! Self
     }

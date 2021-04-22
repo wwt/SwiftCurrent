@@ -66,7 +66,7 @@ extension LaunchStyle.PresentationType {
                     return ._modal_fullscreen
                 }
             }
-            return ._modal //should never happen
+            return ._modal // should never happen
         }
     }
 }

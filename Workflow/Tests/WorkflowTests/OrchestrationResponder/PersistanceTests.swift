@@ -225,14 +225,14 @@ extension PersistanceTests {
         typealias WorkflowInput = Input
         typealias WorkflowOutput = Output
     }
-    
+
     class TestPassthroughFlowRepresentable: FlowRepresentable {
         weak var _workflowPointer: AnyFlowRepresentable?
-        
+
         required init() { }
-        
+
         static func instance() -> Self { Self() }
-        
+
         typealias WorkflowInput = Never
         typealias WorkflowOutput = Never
     }

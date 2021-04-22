@@ -14,17 +14,17 @@ import XCTest
 
 class ViewControllerTest<T: UIViewController & StoryboardLoadable & FlowRepresentable>: XCTestCase {
     typealias ControllerType = T
-    var testViewController:ControllerType!
-    var ref:AnyFlowRepresentable!
+    var testViewController: ControllerType!
+    var ref: AnyFlowRepresentable!
     override final func setUp() {
         loadFromStoryboard()
     }
-    
+
     final func loadFromStoryboard(configure: ((inout ControllerType) -> Void)? = nil) {
         var instance = T.instance()
         testViewController = instance
         ref = AnyFlowRepresentable(&instance)
-        
+
         let window = UIApplication.shared.windows.first
 
         window?.removeViewsFromRootViewController()
@@ -38,6 +38,6 @@ class ViewControllerTest<T: UIViewController & StoryboardLoadable & FlowRepresen
 
         afterLoadFromStoryboard()
     }
-    
+
     func afterLoadFromStoryboard() { }
 }

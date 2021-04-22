@@ -10,7 +10,7 @@ import XCTest
 
 import Workflow
 
-class OrchestrationResponderTests : XCTestCase {
+class OrchestrationResponderTests: XCTestCase {
     func testWorkflowCanProceedForwardThroughFlow() {
         class FR1: TestPassthroughFlowRepresentable { }
         class FR2: TestPassthroughFlowRepresentable { }
@@ -20,16 +20,16 @@ class OrchestrationResponderTests : XCTestCase {
             .thenPresent(FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
-        
+
         let launchedRepresentable = wf.launch()
-        
+
         XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value?.underlyingInstance is FR1)
         XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR1)
         XCTAssertNil(responder.lastFrom)
 
         (launchedRepresentable?.value?.underlyingInstance as? FR1)?.proceedInWorkflow()
-        
+
         XCTAssertEqual(responder.proceedCalled, 1)
         XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR2)
         XCTAssertNotNil(responder.lastFrom)
@@ -38,14 +38,14 @@ class OrchestrationResponderTests : XCTestCase {
 
         let fr2 = (responder.lastTo?.instance.value?.underlyingInstance as? FR2)
         fr2?.proceedInWorkflow()
-        
+
         XCTAssertEqual(responder.proceedCalled, 2)
         XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR3)
         XCTAssertNotNil(responder.lastFrom)
         XCTAssert(responder.lastFrom?.instance.value?.underlyingInstance is FR2)
         XCTAssert((responder.lastFrom?.instance.value?.underlyingInstance as? FR2) === fr2)
     }
-    
+
     func testWorkflowCallsOnFinishWhenItIsDone() {
         class FR1: TestPassthroughFlowRepresentable { }
         class FR2: TestPassthroughFlowRepresentable { }
@@ -56,16 +56,16 @@ class OrchestrationResponderTests : XCTestCase {
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
         let expectation = self.expectation(description: "OnFinish called")
-        
+
         let launchedRepresentable = wf.launch { _ in expectation.fulfill() }
-        
+
         (launchedRepresentable?.value?.underlyingInstance as? FR1)?.proceedInWorkflow()
         (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.proceedInWorkflow()
         (responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.proceedInWorkflow()
-        
+
         wait(for: [expectation], timeout: 3)
     }
-    
+
     func testWorkflowCallsOnFinishWhenItIsDone_andPassesForwardLastArguments() {
         class Object { }
         let val = Object()
@@ -78,16 +78,16 @@ class OrchestrationResponderTests : XCTestCase {
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
         let expectation = self.expectation(description: "OnFinish called")
-        
+
         let launchedRepresentable = wf.launch { args in
             XCTAssert(args as? Object === val)
             expectation.fulfill()
         }
-        
+
         (launchedRepresentable?.value?.underlyingInstance as? FR1)?.proceedInWorkflow()
         (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.proceedInWorkflow()
         (responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.proceedInWorkflow(val)
-        
+
         wait(for: [expectation], timeout: 3)
     }
 
@@ -160,14 +160,14 @@ class OrchestrationResponderTests : XCTestCase {
         class Object { }
         let val = Object()
         class FR1: TestFlowRepresentable<Object, Object>, FlowRepresentable {
-            var obj:Object!
+            var obj: Object!
             func shouldLoad(with args: Object) -> Bool {
                 obj = args
                 return true
             }
         }
         class FR2: TestFlowRepresentable<Object, Object>, FlowRepresentable {
-            var obj:Object!
+            var obj: Object!
             func shouldLoad(with args: Object) -> Bool {
                 obj = args
                 return true
@@ -175,7 +175,7 @@ class OrchestrationResponderTests : XCTestCase {
         }
         class FR3: TestFlowRepresentable<Object, Object>, FlowRepresentable {
             static var shouldMoveOn = false
-            var obj:Object!
+            var obj: Object!
             func shouldLoad(with args: Object) -> Bool {
                 defer {
                     FR3.shouldMoveOn.toggle()
@@ -229,14 +229,14 @@ extension OrchestrationResponderTests {
         typealias WorkflowInput = Input
         typealias WorkflowOutput = Output
     }
-    
+
     class TestPassthroughFlowRepresentable: FlowRepresentable {
         weak var _workflowPointer: AnyFlowRepresentable?
-        
+
         required init() { }
-        
+
         static func instance() -> Self { Self() }
-        
+
         typealias WorkflowInput = Never
         typealias WorkflowOutput = Never
     }

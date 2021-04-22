@@ -10,7 +10,7 @@ import Foundation
 import XCTest
 
 class TestFinder: XCTestCase {
-    
+
     override class var defaultTestSuite: XCTestSuite {
         let suite = XCTestSuite(forTestCaseClass: TestFinder.self)
         XCTestSuite(forTestCaseClass: LocationsViewControllerTests.self).tests.forEach { suite.addTest($0) }
@@ -22,6 +22,6 @@ class TestFinder: XCTestCase {
         XCTestSuite(forTestCaseClass: SetupViewControllerTests.self).tests.forEach { suite.addTest($0) }
         return suite
     }
-    
+
     func testingStarts() { XCTAssert(true) }
 }
