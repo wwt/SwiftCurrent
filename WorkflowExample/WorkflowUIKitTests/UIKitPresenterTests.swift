@@ -14,7 +14,12 @@ import XCTest
 
 class UIKitPresenterTests: XCTestCase {
     override func setUpWithError() throws {
+        UIView.setAnimationsEnabled(false)
         UIViewController.initializeTestable()
+    }
+
+    override func tearDownWithError() throws {
+        UIView.setAnimationsEnabled(true)
     }
 
     func testWorkflowCanLaunchViewController() {
@@ -699,7 +704,7 @@ class UIKitPresenterTests: XCTestCase {
         XCTAssert(UIApplication.topViewController() is FR1)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
         waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssert(UIApplication.topViewController() is FR2, "Expected top view controller to be FR1 but was: \(UIApplication.topViewController())")
         XCTAssert(UIApplication.topViewController()?.navigationController?.viewControllers.first is FR2)
     }
 
