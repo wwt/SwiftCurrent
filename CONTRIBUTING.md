@@ -50,8 +50,31 @@ We want to give consumers of our code the opportunity to adapt to changes, outri
 
 We will do our best to support older methods, but we will also not hesitate to do something new and better if there's a new and better way of doing things. This is the same approach Apple tends to take.
 
-### Documentation
+## Documentation
+### What needs documentation?
+If you make any changes to the public API, these changes need to be documented in code with documentation comments. In addition, all documentation that references the changed API or provides samples needs to be updated. For example:
+* Readme
+* Wiki
+* Installation guide
+* Any GitHub pages
+* GitHub discussions
+* Runtime errors and edge cases
+
+This is not just about code. If any change affects statements that we have made within our documentation, we need to update that too! 
+
+### How do we write good documentation?
+Our documentation goal is to be clear and concise. We don't want superfluous statements; we also want to avoid ambiguity. We choose to use US English for our documentation. 
+
+For an example of documentation that we like, look at our style guide. Our style guide communicates complex topics unambiguously. People should understand the value of what we are documenting. If they're reading documentation about Workflow they should understand why Workflow is valuable to them. If they're reading documentation about our choice to use a fluent API, then they should understand why we chose it and how it helps them.  
+
+### What don't we document? 
+We do not document things that are irrelevent to our users. If we refactor internal workings of the library, our users are unaffected by that and therefore documenting it would be superfluous. We also don't document that anything that the linter or compiler will tell you. For example, we will not document compiler errors unless they are unclear. 
+
+
 
 ### Sample App
+* Any additions/changes, etc. are represented in the sample app and how to use it
+* Don't do testable imports (for the framework you are consuming)
+* 
 
 ### Errors
