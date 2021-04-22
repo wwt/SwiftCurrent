@@ -79,6 +79,16 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 ## Naming
 
+* **PREFER deprecation over removal for public APIs.** 
+  <details>
+  
+  #### Why?
+
+  We want to give consumers of our code the opportunity to adapt to changes, outright removal means we'll constantly be breaking down-stream teams and that's a good way to frustrate developers.
+
+  We will do our best to support older methods, but we will also not hesitate to do something new and better if there's a new and better way of doing things. This is the same approach Apple tends to take.
+  </details>
+
 * **DO name booleans like `isSpaceship`, `hasSpacesuit`, `areTermsAccepted` etc.** This makes it clear that they are booleans and not other types.
 
 * **DO name event-handling like past-tense sentences.** The subject can be omitted if it's not needed for clarity.
