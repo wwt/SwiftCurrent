@@ -1930,6 +1930,27 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 * **PREFER grouping by logical types. If there are extensive related models, extensions, classes, other files, then group them together in a group named after their logical meaning.**
 
+* **DO group imports according to the correct order and add single line before testable imports.** Alphabetizing after grouping is not required.
+  <details>
+
+    The correct order:
+
+    1. Apple imports
+    1. 3rd party imports
+    1. 1st party imports
+    1. `@testable` and/or import under test
+
+    ```swift
+    import Foundation
+    import Combine
+    import Swinject
+    import CustomLibraryWeMade
+    
+    @testable import LibraryUnderTest
+    ```
+
+  </details>
+
 * **DO put computed properties and properties with property observers at the end of the set of declarations of the same kind.** (e.g. instance properties.)
   <details>
 
