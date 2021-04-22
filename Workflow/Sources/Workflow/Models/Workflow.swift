@@ -3,7 +3,7 @@
 //  Workflow
 //
 //  Created by Tyler Thompson on 8/26/19.
-//  Copyright © 2019 Tyler Tompson. All rights reserved.
+//  Copyright © 2019 Tyler Thompson. All rights reserved.
 //
 
 import Foundation
