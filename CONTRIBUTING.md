@@ -17,10 +17,12 @@ PRs have a checklist that walks you through the things that you should do for an
 ## Style guide
 Please review our [style guide](STYLEGUIDE.md) to ensure the least amount of rework and changes in your pull request.  If there are changes that you would like to make to the style guide, the process is:
 1. Propose your change as an issue for tracking.
-2. Create the Draft PR for changing STYLEGUIDE.md.
-3. The whole team discusses (including you) to reach concensus.
-5. The whole team (including you) works to refactor the entire codebase to adhear to the new style.
-6. The PR is reviewed and merged into master.
+1. Create the Draft PR for changing STYLEGUIDE.md.
+1. The whole team discusses (including you) to reach consensus.
+1. The whole team (including you) works to refactor the entire codebase to adhere to the new style.
+1. The PR is reviewed and merged into master.
+
+<!-- When a tool is selected for Static Analysis add a section here to document what we care about and the process to change the things about it that we don't like -->
 
 ## Test Etiquette
 - We are big believers in [TDD](https://en.wikipedia.org/wiki/Test-driven_development) and it is the practice we use for writing code. 

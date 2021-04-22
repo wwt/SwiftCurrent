@@ -7,7 +7,7 @@
 - [ ] Did you comply with our styleguide?
 - [ ] Is there adequate test coverage for your new code?
 - [ ] Does the CI pipeline pass?
-- [ ] Is the static analysis tool reporting 0 issues?
+- [ ] Is the [static analysis tool](https://sonarcloud.io/dashboard?id=Tyler-Keith-Thompson_Workflow) reporting 0 issues?
 - [ ] Did you update the documentation?
 - [ ] Did you update the sample app?
 - [ ] Do we need to increment the minor/major version?
