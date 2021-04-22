@@ -3,12 +3,14 @@ Thank you for your interest in Workflow!
 
 ## Submitting issues
 ### Filing bugs
+---
 If you found a bug in Workflow, thank you!  Please go to [issues](https://github.com/Tyler-Keith-Thompson/Workflow/issues/new/choose) and use the `Bug report` template to file it.  We'll reach out to you as soon as we can.  Some things the template will ask for are:
 - Steps to reproduce
 - Context around your environment
 - Optional screenshots and debugging logs
 
 ### Feature requests
+---
 If you have an idea or change you would like to request, please go to [issues](https://github.com/Tyler-Keith-Thompson/Workflow/issues/new/choose) and use the `Feature request` template to make your request.  We'll reach out to you as soon as we can to discuss.  The more "why" you put into your request, the better we will be able to help build a solution that meets our styling and achieves your goals.
 
 ## Pull Requests:
@@ -37,6 +39,7 @@ Please review our [style guide](STYLEGUIDE.md) to ensure the least amount of rew
 
 ## Public API
 ### Versioning
+---
 We use a version of [semantic versioning](https://semver.org/#summary). Our semantic versioning can be summarized as:
 
 * Major version changes when there is a breaking change to the public API.
@@ -46,12 +49,14 @@ We use a version of [semantic versioning](https://semver.org/#summary). Our sema
 We strive to have this process automated. Patch increments with every commit to trunk, through the CI/CD pipeline. Major and Minor are currently updated through a script when the `podspec`'s version is manually updated and your PR gets to trunk.
 
 ### Deprecation
+---
 We want to give consumers of our code the opportunity to adapt to changes, outright removal means we'll constantly be breaking down-stream teams and that's a good way to frustrate developers.
 
 We will do our best to support older methods, but we will also not hesitate to do something new and better if there's a new and better way of doing things. This is the same approach Apple tends to take.
 
 ## Documentation
 ### What needs documentation?
+---
 If you make any changes to the public API, these changes need to be documented in code with documentation comments. In addition, all documentation that references the changed API or provides samples needs to be updated. For example:
 * Readme
 * Wiki
@@ -63,18 +68,25 @@ If you make any changes to the public API, these changes need to be documented i
 This is not just about code. If any change affects statements that we have made within our documentation, we need to update that too! 
 
 ### How do we write good documentation?
-Our documentation goal is to be clear and concise. We don't want superfluous statements; we also want to avoid ambiguity. We choose to use US English for our documentation. 
+---
+Our documentation goal is to be clear and concise. We don't want superfluous statements; we also want to avoid ambiguity. We choose to use US English for our documentation. If you are going to include sample code in your documentation it is vital that code can be copied and pasted into Xcode and work with the latest version of our library.
 
 For an example of documentation that we like, look at our style guide. Our style guide communicates complex topics unambiguously. People should understand the value of what we are documenting. If they're reading documentation about Workflow they should understand why Workflow is valuable to them. If they're reading documentation about our choice to use a fluent API, then they should understand why we chose it and how it helps them.  
 
 ### What don't we document? 
-We do not document things that are irrelevent to our users. If we refactor internal workings of the library, our users are unaffected by that and therefore documenting it would be superfluous. We also don't document that anything that the linter or compiler will tell you. For example, we will not document compiler errors unless they are unclear. 
+---
+We do not document things that are irrelevent to our users. This means we do not document implementation details of our public methods, but we do document how to use those public methods. If we refactor internal workings of the library, our users are unaffected by that and therefore documenting it would be superfluous. We also don't document anything that the linter or compiler will tell you. For example, we will not document compiler errors unless they are unclear. 
 
+## Sample App
+Different consumers of our library prefer to learn how to use it in their own way. For some that means reading through sample code they can copy and paste, others prefer reading details about what our thought processes were and why we built this, and others still want a space to stand up our library and poke at it to see how it responds. This is where our sample app comes in.
 
+Our sample app is meant to showcase how we believe our users will consume our library. It should import like they would import (using a package manager), and it should have scenarios that are generally the kinds of scenarios our users want to use our library for.
 
-### Sample App
-* Any additions/changes, etc. are represented in the sample app and how to use it
-* Don't do testable imports (for the framework you are consuming)
-* 
+It also serves as our very own "best practice" guide. The code that's in there should be just as cared for as any other code we write. The sample app should be well-tested so that our users know how they can test our library effectively. Lastly it should be kept up-to-date with the latest versions of Xcode, Swift, and our Library.
 
-### Errors
+## Errors
+We believe the best developer experience for errors lies in their interactions with their compiler. Compiler errors force developers to solve for edge cases before the code is running, and long before the code is in production. They also reduce testing overhead, there's really not much point in unit testing an error that can't compile.
+
+Because of this we strive for compiler errors where possible, we will effectively use generics for type safety, we will use annotations like `@deprecated`, `@unavailable`, and `@available(*, unavailable, renamed:)`. When we run into situations where a runtime error is the only reasonable option we document it, and we write good tests around it. We also prefer the most noticeable errors we can have for the best developer experience.
+
+For example, sometimes a `throws` method is both a good developer experience and a clear error scenario. Other times making something throw just adds overhead. So we might prefer a `fatalError` with a clear description of the problem, fatal errors are noticeable when they happen, app execution stops. This means developers have a greater chance of noticing that something has gone wrong. We DO NOT like having errors that only print to the console, this is difficult to spot and generally unhelpful.
