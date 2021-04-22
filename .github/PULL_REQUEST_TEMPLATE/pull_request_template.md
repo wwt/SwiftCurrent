@@ -10,7 +10,7 @@
 - [ ] Is the [static analysis tool](https://sonarcloud.io/dashboard?id=Tyler-Keith-Thompson_Workflow) reporting 0 issues?
 - [ ] Did you update the documentation?
 - [ ] Did you update the sample app?
-- [ ] Do we need to increment the minor/major version?
+- [ ] Do we need to increment the [minor/major version](CODE_OF_CONDUCT.md#versioning)?
 - [ ] Did you change the public API?
 - [ ] Have you done everything you can to make sure that errors that can occur are compile-time errors, and if they have to be runtime do you have adequate tests and documentation around those runtime errors?
 
