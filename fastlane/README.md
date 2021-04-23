@@ -26,6 +26,11 @@ fastlane ios unit_test
 fastlane ios build_swiftpm
 ```
 
+### ios cocoapods_liblint
+```
+fastlane ios cocoapods_liblint
+```
+
 ### ios patch
 ```
 fastlane ios patch
