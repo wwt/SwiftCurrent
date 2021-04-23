@@ -10,12 +10,12 @@ import Foundation
 import XCTest
 @testable import CwlPreconditionTesting
 
-func XCTAssertThrowsFatalError(instructions: @escaping () -> Void) {
+func XCTAssertThrowsFatalError(instructions: @escaping () -> Void, file: StaticString = #file, line: UInt = #line) {
     var reached = false
     let exception = catchBadInstruction {
         instructions()
         reached = true
     }
-    XCTAssertNotNil(exception, "No fatal error thrown")
-    XCTAssertFalse(reached, "Code executed past expected fatal error")
+    XCTAssertNotNil(exception, "No fatal error thrown", file: file, line: line)
+    XCTAssertFalse(reached, "Code executed past expected fatal error", file: file, line: line)
 }

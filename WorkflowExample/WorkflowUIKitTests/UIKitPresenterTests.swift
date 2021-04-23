@@ -703,8 +703,7 @@ class UIKitPresenterTests: XCTestCase {
         waitUntil(UIApplication.topViewController() is FR1)
         XCTAssert(UIApplication.topViewController() is FR1)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2, "Expected top view controller to be FR1 but was: \(UIApplication.topViewController())")
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         XCTAssert(UIApplication.topViewController()?.navigationController?.viewControllers.first is FR2)
     }
 
@@ -978,6 +977,7 @@ class UIKitPresenterTests: XCTestCase {
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
         waitUntil(UIApplication.topViewController() is FR1)
         XCTAssert(UIApplication.topViewController() is FR1)
+        waitUntil(UIApplication.topViewController()?.view.willRespondToUser == true)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
         waitUntil(UIApplication.topViewController() is FR3)
         XCTAssert(UIApplication.topViewController() is FR3)
@@ -1855,4 +1855,11 @@ class MockFlowRepresentable: UIWorkflowItem<Never, Never>, FlowRepresentable {
     override func viewDidLoad() {
         UIKitPresenterTests.viewDidLoadOnMockCalled += 1
     }
+}
+
+#warning("This must be moved to a better location.")
+func XCTAssertUIViewControllerDisplayed<T: UIViewController>(ofType viewControllerType: T.Type, file: StaticString = #file, line: UInt = #line) {
+    waitUntil(UIApplication.topViewController() is T)
+    waitUntil(UIApplication.topViewController()?.view.willRespondToUser == true)
+    XCTAssert(UIApplication.topViewController() is T, "Expected top view controller to be \(T.self) but was: \(String(describing: UIApplication.topViewController()))", file: file, line: line)
 }
