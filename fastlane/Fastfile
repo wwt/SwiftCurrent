@@ -20,7 +20,7 @@ platform :ios do
   end
 
   lane :cocoapods_liblint do
-    sh('pod lib lint --include-podspecs="../DynamicWorkflow.podspec"')
+    sh('pod lib lint ../DynamicWorkflow.podspec')
   end
 
   desc "Release a new version with a patch bump_type"
