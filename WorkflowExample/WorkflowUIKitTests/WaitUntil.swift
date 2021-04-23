@@ -3,7 +3,7 @@
 import Foundation
 
 func waitUntil(_ checkSuccess: @autoclosure () -> Bool) {
-    return waitUntil(10.0, checkSuccess())
+    return waitUntil(1.0, checkSuccess())
 }
 
 func waitUntil(_ timeout: Double, _ checkSuccess: @autoclosure () -> Bool) {
