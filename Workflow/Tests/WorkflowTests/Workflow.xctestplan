@@ -9,7 +9,30 @@
     }
   ],
   "defaultOptions" : {
-
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:",
+          "identifier" : "Workflow",
+          "name" : "Workflow"
+        },
+        {
+          "containerPath" : "container:",
+          "identifier" : "WorkflowDI",
+          "name" : "WorkflowDI"
+        },
+        {
+          "containerPath" : "container:",
+          "identifier" : "WorkflowUIKit",
+          "name" : "WorkflowUIKit"
+        },
+        {
+          "containerPath" : "container:..\/WorkflowExample\/WorkflowExample.xcodeproj",
+          "identifier" : "CAF58529256CEE990044C864",
+          "name" : "WorkflowExample"
+        }
+      ]
+    }
   },
   "testTargets" : [
     {
