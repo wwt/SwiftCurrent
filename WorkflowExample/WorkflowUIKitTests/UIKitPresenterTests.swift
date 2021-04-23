@@ -1714,14 +1714,14 @@ class MockFlowRepresentable: UIWorkflowItem<Never, Never>, FlowRepresentable {
 
 #warning("These must be moved to a better location.")
 func XCTAssertUIViewControllerDisplayed<T: UIViewController>(ofType viewControllerType: T.Type, file: StaticString = #file, line: UInt = #line) {
-    waitUntil(UIApplication.topViewController() is T
-                && UIApplication.topViewController()?.view.willRespondToUser == true)
+    waitUntil(UIApplication.topViewController() is T)
+    waitUntil(UIApplication.topViewController()?.view.willRespondToUser == true)
     XCTAssert(UIApplication.topViewController() is T, "Expected top view controller to be \(T.self) but was: \(String(describing: UIApplication.topViewController()))", file: file, line: line)
 }
 
 func XCTAssertUIViewControllerDisplayed<T: UIViewController>(isInstance viewController: T, file: StaticString = #file, line: UInt = #line) {
-    waitUntil(UIApplication.topViewController() is T &&
-                UIApplication.topViewController()?.view.willRespondToUser == true)
+    waitUntil(UIApplication.topViewController() is T)
+    waitUntil(UIApplication.topViewController()?.view.willRespondToUser == true)
     XCTAssert(UIApplication.topViewController() is T, "Expected top view controller to be \(T.self) but was: \(String(describing: UIApplication.topViewController()))", file: file, line: line)
     XCTAssert(UIApplication.topViewController() === viewController, "Expected top view controller to be instance \(viewController) but was: \(String(describing: UIApplication.topViewController()))", file: file, line: line)
 }
