@@ -13,13 +13,35 @@ import XCTest
 @testable import WorkflowUIKit
 
 class UIKitPresenterTests: XCTestCase {
+    static var testCallbackCalled = false
+    let testCallback = {
+        UIKitPresenterTests.testCallbackCalled = true
+    }
+
     override func setUpWithError() throws {
+        UIKitPresenterTests.testCallbackCalled = false
+        UIKitPresenterTests.viewDidLoadOnMockCalled = 0
         UIView.setAnimationsEnabled(false)
         UIViewController.initializeTestable()
     }
 
     override func tearDownWithError() throws {
         UIView.setAnimationsEnabled(true)
+        UIViewController.flushPendingTestArtifacts()
+    }
+
+    private func loadView(controller: UIViewController) {
+        let window = UIApplication.shared.windows.first
+        window?.removeViewsFromRootViewController()
+
+        window?.rootViewController = controller
+        controller.loadViewIfNeeded()
+        controller.view.layoutIfNeeded()
+
+        controller.viewWillAppear(false)
+        controller.viewDidAppear(false)
+
+        CATransaction.flush()
     }
 
     func testWorkflowCanLaunchViewController() {
@@ -119,7 +141,7 @@ class UIKitPresenterTests: XCTestCase {
 
         root.launchInto(wf)
 
-        waitUntil(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
 
         (UIApplication.topViewController() as? FR1)?.abandonWorkflow()
 
@@ -150,7 +172,7 @@ class UIKitPresenterTests: XCTestCase {
 
         root.launchInto(wf)
 
-        waitUntil(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
 
         (UIApplication.topViewController() as? FR1)?.abandonWorkflow()
 
@@ -184,7 +206,7 @@ class UIKitPresenterTests: XCTestCase {
 
         root.launchInto(wf)
 
-        waitUntil(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
 
         (UIApplication.topViewController() as? FR1)?.abandonWorkflow()
 
@@ -216,7 +238,7 @@ class UIKitPresenterTests: XCTestCase {
 
         root.launchInto(wf, args: 1)
 
-        waitUntil(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
 
         XCTAssert(FR1.shouldLoadCalled)
     }
@@ -244,38 +266,9 @@ class UIKitPresenterTests: XCTestCase {
 
         root.launchInto(wf, args: 20000)
 
-        waitUntil(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
 
         XCTAssert(FR1.shouldLoadCalled)
-    }
-
-    private func loadView(controller: UIViewController) {
-        let window = UIApplication.shared.windows.first
-        window?.removeViewsFromRootViewController()
-
-        window?.rootViewController = controller
-        controller.loadViewIfNeeded()
-        controller.view.layoutIfNeeded()
-
-        controller.viewWillAppear(false)
-        controller.viewDidAppear(false)
-
-        CATransaction.flush()
-    }
-
-    static var testCallbackCalled = false
-    let testCallback = {
-        UIKitPresenterTests.testCallbackCalled = true
-    }
-    override func setUp() {
-        UIKitPresenterTests.testCallbackCalled = false
-        UIKitPresenterTests.viewDidLoadOnMockCalled = 0
-        UIViewController.initializeTestable()
-        UIView.setAnimationsEnabled(false)
-    }
-
-    override func tearDown() {
-        UIViewController.flushPendingTestArtifacts()
     }
 
     func testFlowCanBeFullyFollowed() {
@@ -293,17 +286,13 @@ class UIKitPresenterTests: XCTestCase {
             .thenPresent(FR3.self)
             .thenPresent(FR4.self))
 
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
         (UIApplication.topViewController() as? FR3)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR4)
-        XCTAssert(UIApplication.topViewController() is FR4)
+        XCTAssertUIViewControllerDisplayed(ofType: FR4.self)
     }
 
     func testFlowPresentsOnNavStackWhenNavHasNoRoot() {
@@ -313,8 +302,7 @@ class UIKitPresenterTests: XCTestCase {
         loadView(controller: nav)
 
         nav.launchInto(Workflow(FR1.self))
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         XCTAssertNil(nav.mostRecentlyPresentedViewController)
         XCTAssertNotNil(UIApplication.topViewController()?.navigationController)
         XCTAssertEqual(UIApplication.topViewController()?.navigationController?.viewControllers.count, 1)
@@ -328,8 +316,7 @@ class UIKitPresenterTests: XCTestCase {
         loadView(controller: nav)
 
         nav.launchInto(Workflow(FR1.self, presentationType: .navigationStack), withLaunchStyle: .navigationStack)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         XCTAssertNil(nav.mostRecentlyPresentedViewController)
         XCTAssertNotNil(UIApplication.topViewController()?.navigationController)
         XCTAssert(UIApplication.topViewController()?.navigationController === nav)
@@ -351,11 +338,9 @@ class UIKitPresenterTests: XCTestCase {
         root.launchInto(Workflow(FR1.self)
             .thenPresent(FR2.self)
             .thenPresent(FR3.self))
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
     }
 
     func testFlowThatSkipsScreenIfThatScreenIsFirst() {
@@ -375,14 +360,11 @@ class UIKitPresenterTests: XCTestCase {
             .thenPresent(FR3.self)
             .thenPresent(FR4.self))
 
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
         (UIApplication.topViewController() as? FR3)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR4)
-        XCTAssert(UIApplication.topViewController() is FR4)
+        XCTAssertUIViewControllerDisplayed(ofType: FR4.self)
     }
 
     func testFlowThatSkipsScreenButStillPassesData() {
@@ -403,11 +385,9 @@ class UIKitPresenterTests: XCTestCase {
             .thenPresent(FR2.self)
             .thenPresent(FR3.self))
 
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow("worked")
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
         XCTAssertEqual((UIApplication.topViewController() as? FR3)?.data as? String, "worked")
     }
 
@@ -433,21 +413,18 @@ class UIKitPresenterTests: XCTestCase {
             .thenPresent(FR2.self)
             .thenPresent(FR3.self))
 
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         (UIApplication.topViewController() as? FR2)?.launchSecondary()
-        waitUntil(UIApplication.topViewController() is FR_1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR_1.self)
         class Obj { }
         let obj = Obj()
         (UIApplication.topViewController() as? FR_1)?.proceedInWorkflow(obj)
-        waitUntil(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         XCTAssert((UIApplication.topViewController() as? FR2)?.data as? Obj === obj)
         (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
     }
 
     func testNavWorkflowLaunchingModalWorkflow_Abandoning_ThenProceedingInNav() {
@@ -471,21 +448,18 @@ class UIKitPresenterTests: XCTestCase {
             .thenPresent(FR2.self)
             .thenPresent(FR3.self))
 
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         (UIApplication.topViewController() as? FR2)?.launchSecondary()
-        waitUntil(UIApplication.topViewController() is FR_1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR_1.self)
         class Obj { }
         let obj = Obj()
         (UIApplication.topViewController() as? FR_1)?.proceedInWorkflow(obj)
-        waitUntil(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         XCTAssert((UIApplication.topViewController() as? FR2)?.data as? Obj === obj)
         (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
     }
 
     func testNavWorkflowLaunchingWorkflowModally_Abandoning_ThenProceedingInNav() {
@@ -509,21 +483,18 @@ class UIKitPresenterTests: XCTestCase {
             .thenPresent(FR2.self)
             .thenPresent(FR3.self))
 
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         (UIApplication.topViewController() as? FR2)?.launchSecondary()
-        waitUntil(UIApplication.topViewController() is FR_1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR_1.self)
         class Obj { }
         let obj = Obj()
         (UIApplication.topViewController() as? FR_1)?.proceedInWorkflow(obj)
-        waitUntil(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         XCTAssert((UIApplication.topViewController() as? FR2)?.data as? Obj === obj)
         (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
     }
 
     func testNavWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStack() {
@@ -540,14 +511,11 @@ class UIKitPresenterTests: XCTestCase {
         nav.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: .hiddenInitially)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
         (UIApplication.topViewController()?.navigationController)?.popViewController(animated: false)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
     }
 
     func testNavWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStack_BacksUp_ThenGoesForwardAgain() {
@@ -565,17 +533,13 @@ class UIKitPresenterTests: XCTestCase {
         nav.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: .hiddenInitially)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
         (UIApplication.topViewController()?.navigationController)?.popViewController(animated: false)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
     }
 
     func testNavWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStack_BacksUpUsingWorkflow_ThenGoesForwardAgain() {
@@ -593,17 +557,13 @@ class UIKitPresenterTests: XCTestCase {
         nav.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: .hiddenInitially)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
         (UIApplication.topViewController() as? FR3)?.proceedBackwardInWorkflow()
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
     }
 
     func testNavWorkflowWhichSkipsFirstScreen_ButKeepsItInTheViewStack() {
@@ -624,11 +584,9 @@ class UIKitPresenterTests: XCTestCase {
         nav.launchInto(Workflow(FR1.self, flowPersistance: .hiddenInitially)
                     .thenPresent(FR2.self)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         (UIApplication.topViewController()?.navigationController)?.popViewController(animated: false)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
     }
 
     func testNavWorkflowWhichSkipsFirstScreen_ButKeepsItInTheViewStack_BacksUp_ThenGoesForwardAgain() {
@@ -649,14 +607,11 @@ class UIKitPresenterTests: XCTestCase {
         nav.launchInto(Workflow(FR1.self, flowPersistance: .hiddenInitially)
                     .thenPresent(FR2.self)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         (UIApplication.topViewController()?.navigationController)?.popViewController(animated: false)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
     }
 
     func testNavWorkflowWhichDoesNotSkipAScreen_ButRemovesItFromTheViewStack() {
@@ -674,17 +629,13 @@ class UIKitPresenterTests: XCTestCase {
         nav.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: .removedAfterProceeding)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
         (UIApplication.topViewController()?.navigationController)?.popViewController(animated: false)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
     }
 
     func testNavWorkflowWhichDoesNotSkipFirstScreen_ButRemovesItFromTheViewStack() {
@@ -700,8 +651,7 @@ class UIKitPresenterTests: XCTestCase {
         nav.launchInto(Workflow(FR1.self, flowPersistance: .removedAfterProceeding)
                     .thenPresent(FR2.self)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
         XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         XCTAssert(UIApplication.topViewController()?.navigationController?.viewControllers.first is FR2)
@@ -721,14 +671,11 @@ class UIKitPresenterTests: XCTestCase {
         nav.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: .hiddenInitially)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
         (UIApplication.topViewController()?.navigationController)?.popViewController(animated: false)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
     }
 
     func testNavWorkflowWhichDoesNotSkipAScreen_ButRemovesItFromTheViewStackUsingAClsure() {
@@ -744,17 +691,13 @@ class UIKitPresenterTests: XCTestCase {
         nav.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: .removedAfterProceeding)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
         (UIApplication.topViewController()?.navigationController)?.popViewController(animated: false)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
     }
 
     func testNavWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStackUsingAClsureWithData() {
@@ -771,14 +714,11 @@ class UIKitPresenterTests: XCTestCase {
         nav.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: { _ in .hiddenInitially })
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow("blah")
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
         (UIApplication.topViewController()?.navigationController)?.popViewController(animated: false)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
     }
 
     func testNavWorkflowWhichDoesNotSkipAScreen_ButRemovesItFromTheViewStackUsingAClsureWithData() {
@@ -800,17 +740,13 @@ class UIKitPresenterTests: XCTestCase {
                         return .removedAfterProceeding
                     })
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow("blah")
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
         (UIApplication.topViewController()?.navigationController)?.popViewController(animated: false)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
     }
 
     func testModalWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStack() {
@@ -827,14 +763,11 @@ class UIKitPresenterTests: XCTestCase {
         root.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: .hiddenInitially)
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
         UIApplication.topViewController()?.dismiss(animated: true)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
     }
 
     func testModalWorkflowWhichSkipsAScreen_andBacksUpWithWorkflow() {
@@ -851,14 +784,11 @@ class UIKitPresenterTests: XCTestCase {
         root.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self)
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
         (UIApplication.topViewController() as? FR3)?.proceedBackwardInWorkflow()
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
     }
 
     func testModalWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStack_andBacksUpWithWorkflow() {
@@ -875,14 +805,11 @@ class UIKitPresenterTests: XCTestCase {
         root.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: .hiddenInitially)
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
         (UIApplication.topViewController() as? FR3)?.proceedBackwardInWorkflow()
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
     }
 
     func testModalWorkflowWhichSkipsFirstScreen_ButKeepsItInTheViewStack() {
@@ -903,11 +830,9 @@ class UIKitPresenterTests: XCTestCase {
         root.launchInto(Workflow(FR1.self, flowPersistance: .hiddenInitially)
                     .thenPresent(FR2.self)
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         UIApplication.topViewController()?.dismiss(animated: false)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
     }
 
     func testModalWorkflowWhichDoesNotSkipAScreen_ButRemovesItFromTheViewStack() {
@@ -924,17 +849,13 @@ class UIKitPresenterTests: XCTestCase {
         root.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: .removedAfterProceeding)
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
         UIApplication.topViewController()?.dismiss(animated: true)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
     }
 
     func testModalWorkflowWhichDoesNotSkipFirstScreen_ButRemovesItFromTheViewStack() {
@@ -951,14 +872,11 @@ class UIKitPresenterTests: XCTestCase {
                     .thenPresent(FR2.self)
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
 
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         UIApplication.topViewController()?.dismiss(animated: true)
-        waitUntil(UIApplication.topViewController() === root)
-        XCTAssert(UIApplication.topViewController() === root, "Expected top view controller to be root, but was: \(String(describing: UIApplication.topViewController()))")
+        XCTAssertUIViewControllerDisplayed(isInstance: root)
     }
 
     func testModalWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStackUsingAClosure() {
@@ -975,15 +893,11 @@ class UIKitPresenterTests: XCTestCase {
         root.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: .hiddenInitially)
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
-        waitUntil(UIApplication.topViewController()?.view.willRespondToUser == true)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
         UIApplication.topViewController()?.dismiss(animated: true)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
     }
 
     func testModalWorkflowWhichDoesNotSkipAScreen_ButRemovesItFromTheViewStackUsingAClsure() {
@@ -999,17 +913,13 @@ class UIKitPresenterTests: XCTestCase {
         root.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: .removedAfterProceeding)
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
         UIApplication.topViewController()?.dismiss(animated: true)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
     }
 
     func testModalWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStackUsingAClosureWithData() {
@@ -1026,14 +936,11 @@ class UIKitPresenterTests: XCTestCase {
         root.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: { _ in .hiddenInitially })
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow("blah")
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
         UIApplication.topViewController()?.dismiss(animated: true)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
     }
 
     func testModalWorkflowWhichDoesNotSkipAScreen_ButRemovesItFromTheViewStackUsingAClosureWithData() {
@@ -1055,17 +962,13 @@ class UIKitPresenterTests: XCTestCase {
                         return .removedAfterProceeding
                     })
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow("blah")
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
         UIApplication.topViewController()?.dismiss(animated: true)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
     }
 
     func testNavWorkflowLaunchingNewWorkflowWithNavigationStack_Abandoning_ThenProceedingInNav() {
@@ -1089,21 +992,18 @@ class UIKitPresenterTests: XCTestCase {
             .thenPresent(FR2.self)
             .thenPresent(FR3.self))
 
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         (UIApplication.topViewController() as? FR2)?.launchSecondary()
-        waitUntil(UIApplication.topViewController() is FR_1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR_1.self)
         class Obj { }
         let obj = Obj()
         (UIApplication.topViewController() as? FR_1)?.proceedInWorkflow(obj)
-        waitUntil(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         XCTAssert((UIApplication.topViewController() as? FR2)?.data as? Obj === obj)
         (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
     }
 
     func testCallingThroughMultipleSkippedWorkflowItems() {
@@ -1137,8 +1037,7 @@ class UIKitPresenterTests: XCTestCase {
             .thenPresent(FR2.self)
             .thenPresent(FR3.self)
             .thenPresent(FR4.self), args: obj)
-        waitUntil(UIApplication.topViewController() is FR4)
-        XCTAssert(UIApplication.topViewController() is FR4)
+        XCTAssertUIViewControllerDisplayed(ofType: FR4.self)
         XCTAssert((UIApplication.topViewController() as? FR4)?.data as? Obj === obj)
     }
 
@@ -1158,8 +1057,7 @@ class UIKitPresenterTests: XCTestCase {
 
         nav.launchInto(Workflow(FR1.self)
             .thenPresent(FR2.self), args: obj)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         XCTAssert((UIApplication.topViewController() as? FR2)?.data as? Obj === obj)
     }
 
@@ -1185,17 +1083,13 @@ class UIKitPresenterTests: XCTestCase {
             XCTAssert(args as? Obj === obj)
         }
 
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.next()
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         (UIApplication.topViewController() as? FR2)?.next()
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
         (UIApplication.topViewController() as? FR3)?.next()
-        waitUntil(UIApplication.topViewController() is FR4)
-        XCTAssert(UIApplication.topViewController() is FR4)
+        XCTAssertUIViewControllerDisplayed(ofType: FR4.self)
         (UIApplication.topViewController() as? FR4)?.next()
         XCTAssert(callbackCalled)
     }
@@ -1226,14 +1120,11 @@ class UIKitPresenterTests: XCTestCase {
             callbackCalled = true
             XCTAssert(args as? Obj === obj)
         }
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.next()
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         (UIApplication.topViewController() as? FR2)?.next()
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
         (UIApplication.topViewController() as? FR3)?.next()
         XCTAssert(callbackCalled)
     }
@@ -1255,33 +1146,30 @@ class UIKitPresenterTests: XCTestCase {
             .thenPresent(MockFlowRepresentable.self)
             .thenPresent(FR2.self))
 
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
 
         // Go forward to mock
         (UIApplication.topViewController() as? FR1)?.next()
-        waitUntil(UIApplication.topViewController() is MockFlowRepresentable)
+        XCTAssertUIViewControllerDisplayed(ofType: MockFlowRepresentable.self)
         XCTAssertEqual(UIKitPresenterTests.viewDidLoadOnMockCalled, 1)
 
         // Go to Final
         (UIApplication.topViewController() as? MockFlowRepresentable)?.proceedInWorkflow()
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         UIApplication.topViewController()?.navigationController?.popViewController(animated: false)
 
         // Go back to Mock
-        waitUntil(UIApplication.topViewController() is MockFlowRepresentable)
+        XCTAssertUIViewControllerDisplayed(ofType: MockFlowRepresentable.self)
         XCTAssertEqual(UIKitPresenterTests.viewDidLoadOnMockCalled, 1)
 
         // Go back to First
         UIApplication.topViewController()?.navigationController?.popViewController(animated: false)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
 
         // Go forward to Mock
         (UIApplication.topViewController() as? FR1)?.next()
 
-        waitUntil(UIApplication.topViewController() is MockFlowRepresentable)
+        XCTAssertUIViewControllerDisplayed(ofType: MockFlowRepresentable.self)
         XCTAssertEqual(UIKitPresenterTests.viewDidLoadOnMockCalled, 2)
     }
 
@@ -1306,7 +1194,7 @@ class UIKitPresenterTests: XCTestCase {
         XCTAssert(rootController.mostRecentlyPresentedViewController is ExpectedModal, "mostRecentlyPresentedViewController should be ExpectedModal: \(String(describing: controller.mostRecentlyPresentedViewController))")
     }
 
-    func testWorkflowLaunchModallyButSecondViewPreferrsANavController() {
+    func testWorkflowLaunchModallyButSecondViewPrefersANavController() {
         class ExpectedModal: UIWorkflowItem<Never, Never>, FlowRepresentable {
             static func instance() -> Self {
                 let modal = Self()
@@ -1338,8 +1226,7 @@ class UIKitPresenterTests: XCTestCase {
 
         XCTAssertEqual(controller.viewControllers.count, 1)
         XCTAssert(rootController.mostRecentlyPresentedViewController is ExpectedModal, "mostRecentlyPresentedViewController should be ExpectedModal: \(String(describing: controller.mostRecentlyPresentedViewController))")
-        waitUntil(UIApplication.topViewController() is ExpectedModalPreferNav)
-        XCTAssert(UIApplication.topViewController() is ExpectedModalPreferNav, "Top view controller should be ExpectedModalPresetNav:\(String(describing: UIApplication.topViewController()))")
+        XCTAssertUIViewControllerDisplayed(ofType: ExpectedModalPreferNav.self)
         XCTAssertNotNil(UIApplication.topViewController()?.navigationController)
     }
 
@@ -1377,8 +1264,7 @@ class UIKitPresenterTests: XCTestCase {
 
         XCTAssertEqual(controller.viewControllers.count, 1)
         XCTAssert(rootController.mostRecentlyPresentedViewController is ExpectedModal, "mostRecentlyPresentedViewController should be ExpectedModal: \(String(describing: controller.mostRecentlyPresentedViewController))")
-        waitUntil(UIApplication.topViewController() is ExpectedModalPreferNav)
-        XCTAssert(UIApplication.topViewController() is ExpectedModalPreferNav, "Top view controller should be ExpectedModalPresetNav:\(String(describing: UIApplication.topViewController()))")
+        XCTAssertUIViewControllerDisplayed(ofType: ExpectedModalPreferNav.self)
         XCTAssertNotNil(UIApplication.topViewController()?.navigationController)
     }
 
@@ -1442,12 +1328,11 @@ class UIKitPresenterTests: XCTestCase {
 
         rootController.launchInto(workflow)
 
-        waitUntil(UIApplication.topViewController() is TestViewController)
+        XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
 
         workflow.abandon(animated: false, onFinish: testCallback)
 
-        waitUntil(UIApplication.topViewController() === rootController)
-        XCTAssert(UIApplication.topViewController() === rootController, "Expected top view to be 'rootController' but got: \(String(describing: UIApplication.topViewController()))")
+        XCTAssertUIViewControllerDisplayed(isInstance: rootController)
         XCTAssertTrue(UIKitPresenterTests.testCallbackCalled)
     }
 
@@ -1459,13 +1344,12 @@ class UIKitPresenterTests: XCTestCase {
 
         controller.launchInto(workflow)
 
-        waitUntil(UIApplication.topViewController() is TestViewController)
+        XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
 
         workflow.abandon(animated: false, onFinish: testCallback)
 
-        waitUntil(UIApplication.topViewController() === controller)
+        XCTAssertUIViewControllerDisplayed(isInstance: controller)
         XCTAssert(controller.viewControllers.isEmpty)
-        XCTAssert(UIApplication.topViewController() === controller, "Expected top view to be 'controller' but got: \(String(describing: UIApplication.topViewController()))")
         XCTAssertTrue(UIKitPresenterTests.testCallbackCalled)
     }
 
@@ -1477,12 +1361,11 @@ class UIKitPresenterTests: XCTestCase {
 
         rootController.launchInto(workflow)
 
-        waitUntil(UIApplication.topViewController() is TestViewController)
+        XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
 
         workflow.abandon(animated: false, onFinish: testCallback)
 
-        waitUntil(UIApplication.topViewController() === rootController)
-        XCTAssert(UIApplication.topViewController() === rootController, "Expected top view to be 'rootController' but got: \(String(describing: UIApplication.topViewController()))")
+        XCTAssertUIViewControllerDisplayed(isInstance: rootController)
         XCTAssertTrue(UIKitPresenterTests.testCallbackCalled)
     }
 
@@ -1494,12 +1377,11 @@ class UIKitPresenterTests: XCTestCase {
 
         rootController.launchInto(workflow, withLaunchStyle: .navigationStack)
 
-        waitUntil(UIApplication.topViewController() is TestViewController)
+        XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
 
         workflow.abandon(animated: false, onFinish: testCallback)
 
-        waitUntil(UIApplication.topViewController() === rootController)
-        XCTAssert(UIApplication.topViewController() === rootController, "Expected top view to be 'rootController' but got: \(String(describing: UIApplication.topViewController()))")
+        XCTAssertUIViewControllerDisplayed(isInstance: rootController)
         XCTAssertTrue(UIKitPresenterTests.testCallbackCalled)
     }
 
@@ -1517,22 +1399,17 @@ class UIKitPresenterTests: XCTestCase {
             .thenPresent(FR3.self)
             .thenPresent(FR4.self), withLaunchStyle: .navigationStack)
 
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         XCTAssertNotNil(UIApplication.topViewController()?.navigationController)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         XCTAssertNil(UIApplication.topViewController()?.navigationController)
         (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
         (UIApplication.topViewController() as? FR3)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR4)
-        XCTAssert(UIApplication.topViewController() is FR4)
+        XCTAssertUIViewControllerDisplayed(ofType: FR4.self)
         (UIApplication.topViewController() as? FR4)?.abandonWorkflow()
-        waitUntil(UIApplication.topViewController() === root)
-        XCTAssert(UIApplication.topViewController() === root)
+        XCTAssertUIViewControllerDisplayed(isInstance: root)
     }
 
     func testAbandonWhenFluentWorkflowHasNavPresentingSubsequentViewsModally() {
@@ -1550,22 +1427,17 @@ class UIKitPresenterTests: XCTestCase {
                 .thenPresent(FR3.self)
                 .thenPresent(FR4.self),
             withLaunchStyle: .navigationStack)
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         XCTAssertNotNil(UIApplication.topViewController()?.navigationController)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         XCTAssertNil(UIApplication.topViewController()?.navigationController)
         (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
         (UIApplication.topViewController() as? FR3)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR4)
-        XCTAssert(UIApplication.topViewController() is FR4)
+        XCTAssertUIViewControllerDisplayed(ofType: FR4.self)
         (UIApplication.topViewController() as? FR4)?.abandonWorkflow()
-        waitUntil(UIApplication.topViewController() === root)
-        XCTAssert(UIApplication.topViewController() === root)
+        XCTAssertUIViewControllerDisplayed(isInstance: root)
     }
 
     func testAbandonWhenWorkflowHasNavPresentingSubsequentViewsModallyAndWithMoreNavigation() {
@@ -1582,22 +1454,17 @@ class UIKitPresenterTests: XCTestCase {
             .thenPresent(FR4.self, presentationType: .modal),
                         withLaunchStyle: .navigationStack)
 
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         XCTAssertNotNil(UIApplication.topViewController()?.navigationController)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         XCTAssertNil(UIApplication.topViewController()?.navigationController)
         (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
         (UIApplication.topViewController() as? FR3)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR4)
-        XCTAssert(UIApplication.topViewController() is FR4)
+        XCTAssertUIViewControllerDisplayed(ofType: FR4.self)
         (UIApplication.topViewController() as? FR4)?.abandonWorkflow()
-        waitUntil(UIApplication.topViewController() === root)
-        XCTAssert(UIApplication.topViewController() === root)
+        XCTAssertUIViewControllerDisplayed(isInstance: root)
     }
 
     func testAbandonWhenFluentWorkflowHasNavPresentingSubsequentViewsModallyAndWithMoreNavigation() {
@@ -1616,22 +1483,17 @@ class UIKitPresenterTests: XCTestCase {
                 .thenPresent(FR4.self, presentationType: .modal),
             withLaunchStyle: .navigationStack)
 
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         XCTAssertNotNil(UIApplication.topViewController()?.navigationController)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         XCTAssertNil(UIApplication.topViewController()?.navigationController)
         (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
         (UIApplication.topViewController() as? FR3)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR4)
-        XCTAssert(UIApplication.topViewController() is FR4)
+        XCTAssertUIViewControllerDisplayed(ofType: FR4.self)
         (UIApplication.topViewController() as? FR4)?.abandonWorkflow()
-        waitUntil(UIApplication.topViewController() === root)
-        XCTAssert(UIApplication.topViewController() === root)
+        XCTAssertUIViewControllerDisplayed(isInstance: root)
     }
 
     func testAbandonWhenWorkflowHasNavWithStartingViewPresentingSubsequentViewsModallyAndWithMoreNavigation() {
@@ -1650,22 +1512,17 @@ class UIKitPresenterTests: XCTestCase {
             .thenPresent(FR4.self, presentationType: .modal),
                         withLaunchStyle: .navigationStack)
 
-        waitUntil(UIApplication.topViewController() is FR1)
-        XCTAssert(UIApplication.topViewController() is FR1)
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         XCTAssertNotNil(UIApplication.topViewController()?.navigationController)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR2)
-        XCTAssert(UIApplication.topViewController() is FR2)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         XCTAssertNil(UIApplication.topViewController()?.navigationController)
         (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR3)
-        XCTAssert(UIApplication.topViewController() is FR3)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
         (UIApplication.topViewController() as? FR3)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is FR4)
-        XCTAssert(UIApplication.topViewController() is FR4)
+        XCTAssertUIViewControllerDisplayed(ofType: FR4.self)
         (UIApplication.topViewController() as? FR4)?.abandonWorkflow()
-        waitUntil(UIApplication.topViewController() === root)
-        XCTAssert(UIApplication.topViewController() === root)
+        XCTAssertUIViewControllerDisplayed(isInstance: root)
     }
 
     func testWorkflowLaunchModallyButFirstViewHasANavControllerAndThenDismiss() {
@@ -1685,14 +1542,13 @@ class UIKitPresenterTests: XCTestCase {
 
         rootController.launchInto(workflow)
 
-        waitUntil(UIApplication.topViewController() is TestViewController)
+        XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
         (UIApplication.topViewController() as? TestViewController)?.proceedInWorkflow(nil)
-        waitUntil(UIApplication.topViewController() is ExpectedModal)
+        XCTAssertUIViewControllerDisplayed(ofType: ExpectedModal.self)
 
         workflow.abandon(animated: false, onFinish: testCallback)
 
-        waitUntil(UIApplication.topViewController() === rootController)
-        XCTAssert(UIApplication.topViewController() === rootController, "Expected top view to be 'rootController' but got: \(String(describing: UIApplication.topViewController()))")
+        XCTAssertUIViewControllerDisplayed(isInstance: rootController)
         XCTAssertTrue(UIKitPresenterTests.testCallbackCalled)
     }
 
@@ -1736,7 +1592,7 @@ class UIKitPresenterTests: XCTestCase {
         XCTAssert((rootController.mostRecentlyPresentedViewController as? UINavigationController)?.viewControllers.first is ExpectedController)
     }
 
-    func testWorkflowLaunchesWithNavButHasAViewThatPreferrsModalBecauseItCan() {
+    func testWorkflowLaunchesWithNavButHasAViewThatPrefersModalBecauseItCan() {
         class ExpectedModal: UIWorkflowItem<Never, Never>, FlowRepresentable {
             static func instance() -> Self {
                 let modal = Self()
@@ -1758,11 +1614,10 @@ class UIKitPresenterTests: XCTestCase {
         rootController.launchInto(Workflow(ExpectedNav.self)
             .thenPresent(ExpectedModal.self, presentationType: .modal))
 
-        waitUntil(UIApplication.topViewController() is ExpectedNav)
+        XCTAssertUIViewControllerDisplayed(ofType: ExpectedNav.self)
         XCTAssertEqual(controller.viewControllers.count, 2)
         (UIApplication.topViewController() as? ExpectedNav)?.proceedInWorkflow()
-        waitUntil(UIApplication.topViewController() is ExpectedModal)
-        XCTAssert(UIApplication.topViewController() is ExpectedModal, "Top View was not a modal")
+        XCTAssertUIViewControllerDisplayed(ofType: ExpectedModal.self)
         XCTAssertNil((UIApplication.topViewController() as? ExpectedModal)?.navigationController, "You didn't present modally")
     }
 
@@ -1857,9 +1712,16 @@ class MockFlowRepresentable: UIWorkflowItem<Never, Never>, FlowRepresentable {
     }
 }
 
-#warning("This must be moved to a better location.")
+#warning("These must be moved to a better location.")
 func XCTAssertUIViewControllerDisplayed<T: UIViewController>(ofType viewControllerType: T.Type, file: StaticString = #file, line: UInt = #line) {
-    waitUntil(UIApplication.topViewController() is T)
-    waitUntil(UIApplication.topViewController()?.view.willRespondToUser == true)
+    waitUntil(UIApplication.topViewController() is T
+                && UIApplication.topViewController()?.view.willRespondToUser == true)
     XCTAssert(UIApplication.topViewController() is T, "Expected top view controller to be \(T.self) but was: \(String(describing: UIApplication.topViewController()))", file: file, line: line)
+}
+
+func XCTAssertUIViewControllerDisplayed<T: UIViewController>(isInstance viewController: T, file: StaticString = #file, line: UInt = #line) {
+    waitUntil(UIApplication.topViewController() is T &&
+                UIApplication.topViewController()?.view.willRespondToUser == true)
+    XCTAssert(UIApplication.topViewController() is T, "Expected top view controller to be \(T.self) but was: \(String(describing: UIApplication.topViewController()))", file: file, line: line)
+    XCTAssert(UIApplication.topViewController() === viewController, "Expected top view controller to be instance \(viewController) but was: \(String(describing: UIApplication.topViewController()))", file: file, line: line)
 }
