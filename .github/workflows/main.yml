@@ -10,7 +10,7 @@ jobs:
       - name: Run TESTS
         run: fastlane unit_test
       - name: SonarCloud Scan
-      - uses: mathrix-education/sonar-scanner@master
+        uses: mathrix-education/sonar-scanner@master
         with:
           version: 4.2.0.1873 # required
           scan: true
@@ -18,5 +18,5 @@ jobs:
       - name: Validate SwiftPM BUILDs
         run: fastlane build_swiftpm
       - name: Validate Cocoapods Can Deploy (lib lint)
-        run: ./libLint.sh
+        run: cocoapods_liblint
       
