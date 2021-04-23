@@ -3,7 +3,7 @@ name: CI
 on: [ push, workflow_dispatch, pull_request ]
 
 jobs:
-  build:
+  test:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
@@ -17,9 +17,9 @@ jobs:
           name: sq-generic.xml
           path: sq-generic.xml
           retention-days: 1
-          
+
   sonar_scan:
-    needs: build
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -34,11 +34,11 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   build_for_package_managers:
-    needs: build
+    needs: test
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
       - name: Validate SwiftPM BUILDs
         run: fastlane build_swiftpm
       - name: Validate Cocoapods Can Deploy (lib lint)
-        run: cocoapods_liblint
+        run: fastlane cocoapods_liblint
