@@ -21,6 +21,11 @@ or alternatively using `brew install fastlane`
 fastlane ios unit_test
 ```
 
+### ios build_swiftpm
+```
+fastlane ios build_swiftpm
+```
+
 ### ios patch
 ```
 fastlane ios patch

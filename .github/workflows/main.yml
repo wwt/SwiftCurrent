@@ -16,10 +16,7 @@ jobs:
           scan: true
           args: --debug -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       - name: Validate SwiftPM BUILDs
-        run: | 
-          cd Workflow
-          swift build -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios14.0-simulator"
-          cd ..
+        run: fastlane build_swiftpm
       - name: Validate Cocoapods Can Deploy (lib lint)
         run: ./libLint.sh
       
