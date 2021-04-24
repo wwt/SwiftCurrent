@@ -11,6 +11,6 @@ jobs:
       - name: Cocoapods Release
         run: |
           pod repo add-cdn trunk 'https://cdn.cocoapods.org/'
-          pod trunk push CucumberSwift.podspec --allow-warnings
+          pod trunk push DynamicWorkflow.podspec --allow-warnings
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
