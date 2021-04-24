@@ -1,0 +1,34 @@
+name: Version Bump
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: [ "CI" ]
+    branches: [ master ]
+    types: [ completed ]
+
+jobs:
+  version_bump:
+    runs-on: macos-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Bump version in Podspec and Plist
+        id: bump_version
+        run: fastlane patch
+      - name: Commit version changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v5.5
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag_prefix: ''
+          custom_tag: ${{ steps.bump_version.outputs.VERSION }}
+      - name: Create a GitHub release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.tag_version.outputs.new_tag }}
+          release_name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: ''

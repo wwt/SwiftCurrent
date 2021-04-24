@@ -1,0 +1,44 @@
+name: CI
+
+on: [ push, workflow_dispatch, pull_request ]
+
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run TESTS
+        run: fastlane unit_test
+      - name: Generate SonarCloud Friendly Coverage Report
+        run: ./xccov-to-sonarqube-generic.sh ~/Library/Developer/Xcode/DerivedData/*/Logs/Test/*.xcresult > sq-generic.xml
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: sq-generic.xml
+          path: sq-generic.xml
+          retention-days: 1
+
+  sonar_scan:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download Coverage Report
+        uses: actions/download-artifact@v2
+        with:
+          name: sq-generic.xml
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  build_for_package_managers:
+    needs: test
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Validate SwiftPM BUILDs
+        run: fastlane build_swiftpm
+      - name: Validate Cocoapods Can Deploy (lib lint)
+        run: fastlane cocoapods_liblint
