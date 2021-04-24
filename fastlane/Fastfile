@@ -8,10 +8,6 @@ platform :ios do
   end
 
   lane :unit_test do
-    cocoapods(
-      clean: true,
-      repo_update: true,
-    )
     scan(
       code_coverage: true,
       scheme:  'Workflow',
