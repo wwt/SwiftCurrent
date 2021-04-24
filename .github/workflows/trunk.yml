@@ -16,6 +16,8 @@ jobs:
       - name: Bump version in Podspec and Plist
         id: bump_version
         run: fastlane patch
+      - name: Print version
+        run: echo "The version is ${{ steps.bump_version.outputs.VERSION }}"
       - name: Commit version changes
         uses: stefanzweifel/git-auto-commit-action@v4
       - name: Bump version and push tag
