@@ -15,6 +15,14 @@ platform :ios do
     )
   end
 
+  lane :build_swiftpm do
+    sh('swift build --package-path="../Workflow" -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios14.0-simulator"')
+  end
+
+  lane :cocoapods_liblint do
+    pod_lib_lint(podspec: 'DynamicWorkflow.podspec', allow_warnings: true)
+  end
+
   desc "Release a new version with a patch bump_type"
   lane :patch do
     release("patch")
