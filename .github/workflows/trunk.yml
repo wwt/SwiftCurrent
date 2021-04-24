@@ -12,6 +12,7 @@ jobs:
     runs-on: macos-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
+      - uses: actions/checkout@v2
       - name: Bump version in Podspec and Plist
         id: bump_version
         run: fastlane patch
