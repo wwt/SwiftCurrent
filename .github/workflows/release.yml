@@ -1,0 +1,17 @@
+name: Release
+
+on:
+  release:
+    types: [released]
+
+jobs:
+  print:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cocoapods Release
+        run: |
+          pod repo add-cdn trunk 'https://cdn.cocoapods.org/'
+          pod trunk push DynamicWorkflow.podspec --allow-warnings
+        env:
+          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
