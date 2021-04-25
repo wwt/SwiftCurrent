@@ -38,7 +38,7 @@ jobs:
       - name: Rename Paths in Coverage
         run:  sed "s+$PATH_TO_PROJECT++g" artifacts/sq-generic.xml > sq-generic.xml
         env:
-          PATH_TO_PROJECT: ${{ steps.path_to_project.outputs.PATH_TO_PROJECT }}
+          PATH_TO_PROJECT: ${{ steps.path_to_project.outputs.path_to_project }}
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         env:
