@@ -23,10 +23,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Download Coverage Report
         uses: actions/download-artifact@v2
         with:
           name: sq-generic.xml
+          path: artifacts
+      - name: Rename Paths in Coverage
+        run:  sed 's+/Users/runner/work/CucumberSwift/CucumberSwift/++g' artifacts/sq-generic.xml > sq-generic.xml
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         env:
