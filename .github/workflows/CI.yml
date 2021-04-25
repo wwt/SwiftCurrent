@@ -11,11 +11,6 @@ jobs:
         run: fastlane unit_test
       - name: Generate SonarCloud Friendly Coverage Report
         run: ./xccov-to-sonarqube-generic.sh ~/Library/Developer/Xcode/DerivedData/*/Logs/Test/*.xcresult > sq-generic.xml
-      - name: Output Path
-        id: path_to_project
-        run: |
-          PATH_TO_PROJECT=`pwd`
-          echo "##[set-output name=path_to_project;]$PATH_TO_PROJECT"
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v2
         with:
@@ -36,9 +31,7 @@ jobs:
           name: sq-generic.xml
           path: artifacts
       - name: Rename Paths in Coverage
-        run:  sed "s+$PATH_TO_PROJECT++g" artifacts/sq-generic.xml > sq-generic.xml
-        env:
-          PATH_TO_PROJECT: ${{ steps.path_to_project.outputs.path_to_project }}
+        run:  sed 's+/Users/runner/work/Workflow/Workflow/++g' artifacts/sq-generic.xml > sq-generic.xml
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         env:
