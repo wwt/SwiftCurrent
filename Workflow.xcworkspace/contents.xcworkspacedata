@@ -22,4 +22,7 @@
    <FileRef
       location = "group:.travis.yml">
    </FileRef>
+   <FileRef
+      location = "group:Workflow.xctestplan">
+   </FileRef>
 </Workspace>
