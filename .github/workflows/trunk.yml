@@ -24,6 +24,15 @@ jobs:
         run: |
           git tag "${{ steps.bump_version.outputs.version }}"
           git push --tags
+      - name: Build Changelog
+        id: build_changelog
+        uses: mikepenz/release-changelog-builder-action@v1.7.3
+        with:
+          configuration: "changelog_configuration.json"
+          owner: "Tyler-Keith-Thompson"
+          ignorePreReleases: "false"
+          toTag: ${{ steps.bump_version.outputs.version }}
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Create a GitHub release
         uses: actions/create-release@v1
         env:
@@ -31,4 +40,4 @@ jobs:
         with:
           tag_name: ${{ steps.bump_version.outputs.version }}
           release_name: Release ${{ steps.bump_version.outputs.version }}
-          body: ''
+          body: ${{steps.build_changelog.outputs.changelog}}
