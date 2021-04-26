@@ -73,7 +73,7 @@ public final class Workflow<F: FlowRepresentable>: AnyWorkflow {
         self.init(FlowRepresentableMetaData(type,
                                             launchStyle: launchStyle,
                                             flowPersistance: { _ in
-                                                return flowPersistance()
+                                                flowPersistance()
         }))
     }
 
@@ -88,7 +88,7 @@ public final class Workflow<F: FlowRepresentable>: AnyWorkflow {
         self.init(FlowRepresentableMetaData(type,
                                             launchStyle: launchStyle,
                                             flowPersistance: { _ in
-                                                return flowPersistance()
+                                                flowPersistance()
         }))
     }
 }
@@ -106,7 +106,7 @@ extension Workflow where F.WorkflowOutput == Never {
         wf.append(FlowRepresentableMetaData(type,
                                             launchStyle: launchStyle,
                                             flowPersistance: { _ in
-                                                return flowPersistance()
+                                                flowPersistance()
         }))
         return wf
     }
@@ -124,7 +124,7 @@ extension Workflow where F.WorkflowOutput == Never {
         wf.append(FlowRepresentableMetaData(type,
                                             launchStyle: launchStyle,
                                             flowPersistance: { _ in
-                                                return flowPersistance()
+                                                flowPersistance()
         }))
         return wf
     }
@@ -177,7 +177,7 @@ extension Workflow {
         wf.append(FlowRepresentableMetaData(type,
                                             launchStyle: launchStyle,
                                             flowPersistance: { _ in
-                                                return flowPersistance()
+                                                flowPersistance()
         }))
         return wf
     }
@@ -195,7 +195,7 @@ extension Workflow {
         wf.append(FlowRepresentableMetaData(type,
                                             launchStyle: launchStyle,
                                             flowPersistance: { _ in
-                                                return flowPersistance()
+                                                flowPersistance()
         }))
         return wf
     }

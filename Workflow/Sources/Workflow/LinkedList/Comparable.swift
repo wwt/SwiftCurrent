@@ -14,7 +14,7 @@ extension LinkedList where Value: Comparable {
     }
 
     public func sorted() -> LinkedList<Value> {
-        return LinkedList(mergeSort(first, by: { $0 <= $1 }))
+        LinkedList(mergeSort(first, by: { $0 <= $1 }))
     }
 
     /// max: Returns the maximum value in the comparable LinkedList

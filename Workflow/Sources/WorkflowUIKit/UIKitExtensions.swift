@@ -79,7 +79,6 @@ extension FlowRepresentable where Self: UIViewController {
 }
 
 extension Workflow {
-
     /// init: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     /// - Parameter type: A reference to the class used to create the workflow
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
@@ -120,7 +119,7 @@ extension Workflow {
         self.init(FlowRepresentableMetaData(type,
                                             launchStyle: presentationType.rawValue,
                                             flowPersistance: { _ in
-                                                return flowPersistance()
+                                                flowPersistance()
                                             }))
     }
 
@@ -135,7 +134,7 @@ extension Workflow {
         self.init(FlowRepresentableMetaData(type,
                                             launchStyle: presentationType.rawValue,
                                             flowPersistance: { _ in
-                                                return flowPersistance()
+                                                flowPersistance()
                                             }))
     }
 }
@@ -153,7 +152,7 @@ extension Workflow where F.WorkflowOutput == Never {
         wf.append(FlowRepresentableMetaData(type,
                                             launchStyle: presentationType.rawValue,
                                             flowPersistance: { _ in
-                                                return flowPersistance()
+                                                flowPersistance()
                                             }))
         return wf
     }
@@ -171,7 +170,7 @@ extension Workflow where F.WorkflowOutput == Never {
         wf.append(FlowRepresentableMetaData(type,
                                             launchStyle: presentationType.rawValue,
                                             flowPersistance: { _ in
-                                                return flowPersistance()
+                                                flowPersistance()
                                             }))
         return wf
     }
@@ -224,7 +223,7 @@ extension Workflow {
         wf.append(FlowRepresentableMetaData(type,
                                             launchStyle: presentationType.rawValue,
                                             flowPersistance: { _ in
-                                                return flowPersistance()
+                                                flowPersistance()
                                             }))
         return wf
     }
@@ -242,7 +241,7 @@ extension Workflow {
         wf.append(FlowRepresentableMetaData(type,
                                             launchStyle: presentationType.rawValue,
                                             flowPersistance: { _ in
-                                                return flowPersistance()
+                                                flowPersistance()
                                             }))
         return wf
     }

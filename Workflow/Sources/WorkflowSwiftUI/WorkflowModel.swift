@@ -11,7 +11,7 @@ import Workflow
 
 @available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
 public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
-    @Published var view: AnyView = AnyView(EmptyView())
+    @Published var view = AnyView(EmptyView())
     var stack = LinkedList<ViewHolder>()
 
     var launchStyle: LaunchStyle.PresentationType = .default

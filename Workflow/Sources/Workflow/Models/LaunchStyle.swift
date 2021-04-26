@@ -20,6 +20,6 @@ public final class LaunchStyle {
 
 extension LaunchStyle: Equatable {
     public static func == (lhs: LaunchStyle, rhs: LaunchStyle) -> Bool {
-        return lhs === rhs
+        lhs === rhs
     }
 }

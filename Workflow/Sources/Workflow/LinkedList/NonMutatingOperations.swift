@@ -88,7 +88,7 @@ extension LinkedList {
     /// - Note: If you pass in an index that is greater than the size of the LinkedList you'll get the full list. If you send in an index smaller than the size of the LinkedList you'll get an empty list back.
     public func prefix(_ maxLength: Int) -> SubSequence {
         guard maxLength > 0 else { return SubSequence() }
-        let copy = first?.copy().traverse(maxLength-1)
+        let copy = first?.copy().traverse(maxLength - 1)
         copy?.next = nil
         return SubSequence(copy?.traverseToBeginning())
     }
@@ -113,7 +113,7 @@ extension LinkedList {
     /// - Returns: A new version of the LinkedList with just the last n items
     public func suffix(_ maxLength: Int) -> SubSequence {
         guard maxLength > 0 else { return SubSequence() }
-        let copy = last?.copy().traverse(-(maxLength-1))
+        let copy = last?.copy().traverse(-(maxLength - 1))
         copy?.previous = nil
         return LinkedList(copy)
     }

@@ -22,20 +22,20 @@ public class LinkedList<Value>: Sequence, CustomStringConvertible {
 
     /// startIndex: The beginning index of the linked list (0 indexed)
     /// - Complexity: O(1)
-    public var startIndex: LinkedList.Index { return 0 }
+    public var startIndex: LinkedList.Index { 0 }
     /// endIndex: The last index in the list
     /// - Complexity: O(n). The LinkedList must traverse to the end to determine the count
-    public var endIndex: LinkedList.Index { return count }
+    public var endIndex: LinkedList.Index { count }
     /// description: A property indicating what to show when the LinkedList is printed.
-    public var description: String { return toArray().description }
+    public var description: String { toArray().description }
     /// isEmpty: A boolean to indicate whether the linked list contains any values
     /// - Complexity: O(1)
-    public var isEmpty: Bool { return first == nil }
+    public var isEmpty: Bool { first == nil }
     /// endIndex: The last index in the list
     /// - Complexity: O(n). The linked list must traverse to the end to determine the count
     public var count: LinkedList.Index {
-        return reduce(0, { c, _ in
-            c+1
+        reduce(0, { c, _ in
+            c + 1
         })
     }
 
@@ -43,7 +43,7 @@ public class LinkedList<Value>: Sequence, CustomStringConvertible {
     public var first: Element?
     /// last: The last node in the list
     /// - Complexity: O(n). The LinkedList must traverse to the end to determine the count
-    public var last: Element? { return first?.traverseToEnd() }
+    public var last: Element? { first?.traverseToEnd() }
 
     public convenience init(_ elements: Value...) {
         self.init(elements)
@@ -52,23 +52,23 @@ public class LinkedList<Value>: Sequence, CustomStringConvertible {
     public convenience init(_ elements: [Value]) {
         let collection = elements.map { Element(with: $0) }
         for (i, node) in collection.enumerated() {
-            node.previous = collection[safe: i-1]
-            node.next = collection[safe: i+1]
+            node.previous = collection[safe: i - 1]
+            node.next = collection[safe: i + 1]
         }
 
         self.init(collection.first)
     }
 
     /// init(elements): A LinkedList can be instantiated simply by providing the first node in the list
-    required public init(_ node: Element?) {
+    public required init(_ node: Element?) {
         first = node
     }
 
     public func makeIterator() -> Iterator {
-        return LinkedListIterator(first)
+        LinkedListIterator(first)
     }
 
     func toArray() -> [Element.Value] {
-        return map { $0.value }
+        map { $0.value }
     }
 }

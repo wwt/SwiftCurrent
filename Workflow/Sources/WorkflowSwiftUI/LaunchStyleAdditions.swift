@@ -49,7 +49,7 @@ extension LaunchStyle {
         case `default`
 
         public static var modal: PresentationType {
-            return .modal(.default)
+            .modal(.default)
         }
     }
 }
@@ -73,6 +73,6 @@ extension LaunchStyle.PresentationType {
 
 extension LaunchStyle.PresentationType: Equatable {
     public static func == (lhs: LaunchStyle.PresentationType, rhs: LaunchStyle.PresentationType) -> Bool {
-        return lhs.rawValue === rhs.rawValue
+        lhs.rawValue === rhs.rawValue
     }
 }

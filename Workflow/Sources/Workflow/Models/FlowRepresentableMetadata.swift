@@ -10,8 +10,8 @@ import Foundation
 public class FlowRepresentableMetaData {
     private(set) var flowRepresentableFactory: () -> AnyFlowRepresentable
     private var flowPersistance: (AnyWorkflow.PassedArgs) -> FlowPersistance
-    private(set) public var launchStyle: LaunchStyle
-    private(set) public var persistance: FlowPersistance?
+    public private(set) var launchStyle: LaunchStyle
+    public private(set) var persistance: FlowPersistance?
 
     func calculatePersistance(_ args: AnyWorkflow.PassedArgs) -> FlowPersistance {
         let val = flowPersistance(args)

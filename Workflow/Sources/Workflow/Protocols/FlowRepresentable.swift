@@ -41,7 +41,7 @@ extension FlowRepresentable {
 
 extension FlowRepresentable {
     public mutating func shouldLoad() -> Bool {
-        return true
+        true
     }
 
     /// workflow: Access to the `Workflow` controlling the `FlowRepresentable`. A common use case may be a `FlowRepresentable` that wants to abandon the `Workflow` it's in.
@@ -62,7 +62,7 @@ extension FlowRepresentable where WorkflowInput == Never {
     /// - Returns: Bool
     /// - Note: This particular version of shouldLoad is only available when your `WorkflowInput` is `Never`, indicating you do not care about data passed to this view
     public mutating func shouldLoad() -> Bool {
-        return true
+        true
     }
 }
 

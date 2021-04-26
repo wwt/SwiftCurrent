@@ -34,7 +34,7 @@ class AnyFlowRepresentableStorage<FR: FlowRepresentable>: AnyFlowRepresentableSt
     }
 
     override var underlyingInstance: Any {
-        return holder._workflowUnderlyingInstance
+        holder._workflowUnderlyingInstance
     }
 
     override var _workflowPointer: AnyFlowRepresentable? {

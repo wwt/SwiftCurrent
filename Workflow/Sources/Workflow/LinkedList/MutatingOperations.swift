@@ -29,8 +29,8 @@ extension LinkedList {
     public func append<S>(contentsOf newElements: S) where S: Sequence, Value == S.Element {
         let collection = newElements.map { Element(with: $0) }
         for (i, node) in collection.enumerated() {
-            node.previous = collection[safe: i-1]
-            node.next = collection[safe: i+1]
+            node.previous = collection[safe: i - 1]
+            node.next = collection[safe: i + 1]
         }
         guard first != nil else {
             first = collection.first
@@ -65,8 +65,8 @@ extension LinkedList {
         let existingNode: Element? = first?.traverse(i)
         let collection = newElements.map { Element(with: $0) }
         for (i, node) in collection.enumerated() {
-            node.previous = collection[safe: i-1]
-            node.next = collection[safe: i+1]
+            node.previous = collection[safe: i - 1]
+            node.next = collection[safe: i + 1]
         }
 
         let newNode = collection.first

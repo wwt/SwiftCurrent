@@ -47,7 +47,7 @@ opt_in_rules: # some rules are turned off by default, so you need to opt-in
   - identical_operands # https://realm.github.io/SwiftLint/identical_operands.html
   - implicit_return # https://realm.github.io/SwiftLint/implicit_return.html
 #   - implicitly_unwrapped_optional # https://realm.github.io/SwiftLint/implicitly_unwrapped_optional.html
-  - indentation_width # https://realm.github.io/SwiftLint/indentation_width.html
+#   - indentation_width # https://realm.github.io/SwiftLint/indentation_width.html
   - joined_default_parameter # https://realm.github.io/SwiftLint/joined_default_parameter.html
   - last_where # https://realm.github.io/SwiftLint/last_where.html
 #   - legacy_multiple # https://realm.github.io/SwiftLint/legacy_multiple.html

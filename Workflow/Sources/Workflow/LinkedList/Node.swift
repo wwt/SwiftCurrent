@@ -146,6 +146,5 @@ extension LinkedList {
             node.copyRight()
             return node
         }
-
     }
 }

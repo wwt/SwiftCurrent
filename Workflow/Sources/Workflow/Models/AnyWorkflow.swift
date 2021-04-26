@@ -26,13 +26,13 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
 
     @discardableResult public func launch(withLaunchStyle launchStyle: LaunchStyle = .default,
                                           onFinish: ((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Element? {
-        return launch(passedArgs: .none, withLaunchStyle: launchStyle, onFinish: onFinish)
+        launch(passedArgs: .none, withLaunchStyle: launchStyle, onFinish: onFinish)
     }
 
     @discardableResult public func launch(with args: Any?,
                                           withLaunchStyle launchStyle: LaunchStyle = .default,
                                           onFinish: ((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Element? {
-        return launch(passedArgs: .args(args), withLaunchStyle: launchStyle, onFinish: onFinish)
+        launch(passedArgs: .args(args), withLaunchStyle: launchStyle, onFinish: onFinish)
     }
 
     @discardableResult public func launch(passedArgs: PassedArgs,
@@ -64,7 +64,6 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
                     orchestrationResponder?.launchOrProceed(to: (instance: instance, metadata: nextMetadata), from: convertInput(root))
                     root = (instance: flowRepresentable, metadata: nextMetadata)
                 }
-
             }
             return shouldLoad
         }?.value
@@ -145,7 +144,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
         guard let currentMetadataNode = first?.traverse(node.position) else { fatalError("Internal state of workflow completely mangled somehow...") }
         node.value?.proceedBackwardInWorkflowStorage = { [self] in
             let previousLoadedNode = node.traverse(direction: .backward) { previousNode in
-                return previousNode.value != nil
+                previousNode.value != nil
             }
 
             guard let previousNode = previousLoadedNode else { return }

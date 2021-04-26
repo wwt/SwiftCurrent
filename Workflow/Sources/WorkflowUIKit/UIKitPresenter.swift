@@ -11,7 +11,6 @@ import UIKit
 import Workflow
 
 open class UIKitPresenter: AnyOrchestrationResponder {
-
     let launchedFromVC: UIViewController
     let launchedPresentationType: LaunchStyle.PresentationType
 
@@ -56,7 +55,7 @@ open class UIKitPresenter: AnyOrchestrationResponder {
     private func destroy(_ view: UIViewController) {
         if let nav = view.navigationController {
             let vcs = nav.viewControllers.filter {
-                return $0 !== view
+                $0 !== view
             }
             nav.setViewControllers(vcs, animated: false)
         } else {

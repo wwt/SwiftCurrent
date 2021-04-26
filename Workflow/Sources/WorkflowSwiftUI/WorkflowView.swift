@@ -11,7 +11,7 @@ import Workflow
 
 @available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
 public struct WorkflowView: View {
-    @ObservedObject var workflowModel: WorkflowModel = WorkflowModel()
+    @ObservedObject var workflowModel = WorkflowModel()
 
     public init(_ workflow: AnyWorkflow, with args: Any? = nil, withLaunchStyle launchStyle: LaunchStyle.PresentationType = .default, onFinish: ((Any?) -> Void)? = nil) {
         workflowModel.launchStyle = launchStyle

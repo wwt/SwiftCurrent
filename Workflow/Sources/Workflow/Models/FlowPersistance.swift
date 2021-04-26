@@ -26,6 +26,6 @@ public final class FlowPersistance {
 
 extension FlowPersistance: Equatable {
     public static func == (lhs: FlowPersistance, rhs: FlowPersistance) -> Bool {
-        return lhs === rhs
+        lhs === rhs
     }
 }
