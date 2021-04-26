@@ -8,13 +8,13 @@
 import Foundation
 import Workflow
 
-public extension LaunchStyle {
-    static let _navigationStack = LaunchStyle.new
-    static let _modal = LaunchStyle.new
+extension LaunchStyle {
+    public static let _navigationStack = LaunchStyle.new
+    public static let _modal = LaunchStyle.new
     @available(iOS 14.0, *)
-    static let _modal_fullscreen = LaunchStyle.new
+    public static let _modal_fullscreen = LaunchStyle.new
 
-    enum PresentationType: RawRepresentable {
+    public enum PresentationType: RawRepresentable {
         public init?(rawValue: LaunchStyle) {
             if #available(iOS 14.0, *),
                rawValue == ._modal_fullscreen {

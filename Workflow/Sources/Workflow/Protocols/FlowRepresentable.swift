@@ -35,45 +35,45 @@ public protocol FlowRepresentable {
     mutating func shouldLoad() -> Bool
 }
 
-public extension FlowRepresentable {
-    var _workflowUnderlyingInstance: Any { self }
+extension FlowRepresentable {
+    public var _workflowUnderlyingInstance: Any { self }
 }
 
-public extension FlowRepresentable {
-    mutating func shouldLoad() -> Bool {
+extension FlowRepresentable {
+    public mutating func shouldLoad() -> Bool {
         return true
     }
 
     /// workflow: Access to the `Workflow` controlling the `FlowRepresentable`. A common use case may be a `FlowRepresentable` that wants to abandon the `Workflow` it's in.
     /// - Note: While not strictly necessary it would be wise to declare this property as `weak`
-    var workflow: AnyWorkflow? {
+    public var workflow: AnyWorkflow? {
         _workflowPointer?.workflow
     }
 
-    func proceedBackwardInWorkflow() {
+    public func proceedBackwardInWorkflow() {
         _workflowPointer?.proceedBackwardInWorkflowStorage?()
     }
 }
 
-public extension FlowRepresentable where WorkflowInput == Never {
-    mutating func shouldLoad(with args: Never) -> Bool { }
+extension FlowRepresentable where WorkflowInput == Never {
+    public mutating func shouldLoad(with args: Never) -> Bool { }
 
     /// shouldLoad: A method indicating whether it makes sense for this view to load in a workflow
     /// - Returns: Bool
     /// - Note: This particular version of shouldLoad is only available when your `WorkflowInput` is `Never`, indicating you do not care about data passed to this view
-    mutating func shouldLoad() -> Bool {
+    public mutating func shouldLoad() -> Bool {
         return true
     }
 }
 
-public extension FlowRepresentable where WorkflowOutput == Never {
-    func proceedInWorkflow() {
+extension FlowRepresentable where WorkflowOutput == Never {
+    public func proceedInWorkflow() {
         _workflowPointer?.proceedInWorkflowStorage?(.none)
     }
 }
 
-public extension FlowRepresentable {
-    func proceedInWorkflow(_ args: WorkflowOutput) {
+extension FlowRepresentable {
+    public func proceedInWorkflow(_ args: WorkflowOutput) {
         _workflowPointer?.proceedInWorkflowStorage?(.args(args))
     }
 }

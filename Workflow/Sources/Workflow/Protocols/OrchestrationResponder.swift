@@ -15,7 +15,7 @@ public protocol AnyOrchestrationResponder {
     func abandon(_ workflow: AnyWorkflow, animated: Bool, onFinish: (() -> Void)?)
 }
 
-internal extension AnyOrchestrationResponder {
+extension AnyOrchestrationResponder {
     func launchOrProceed(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData),
                          from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)?) {
         if let root = from {

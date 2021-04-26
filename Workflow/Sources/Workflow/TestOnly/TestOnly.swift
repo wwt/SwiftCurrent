@@ -9,14 +9,14 @@
 import Foundation
 
 #if canImport(XCTest)
-public extension Notification.Name {
-    static var workflowLaunched: Notification.Name {
-        return Notification.Name(rawValue: "WorkflowLaunched")
+extension Notification.Name {
+    public static var workflowLaunched: Notification.Name {
+        .init(rawValue: "WorkflowLaunched")
     }
 }
 
-public extension FlowRepresentable {
-    var proceedInWorkflowStorage: ((Any?) -> Void)? {
+extension FlowRepresentable {
+    public var proceedInWorkflowStorage: ((Any?) -> Void)? {
         get {
             {
                 _workflowPointer?.proceedInWorkflowStorage?(.args($0))
@@ -29,7 +29,7 @@ public extension FlowRepresentable {
         }
     }
 
-    var _proceedInWorkflow: ((Any?) -> Void)? {
+    public var _proceedInWorkflow: ((Any?) -> Void)? {
         get {
             {
                 _workflowPointer?.proceedInWorkflowStorage?(.args($0))

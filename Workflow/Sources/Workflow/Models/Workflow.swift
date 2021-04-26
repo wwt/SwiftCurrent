@@ -93,13 +93,13 @@ public final class Workflow<F: FlowRepresentable>: AnyWorkflow {
     }
 }
 
-public extension Workflow where F.WorkflowOutput == Never {
+extension Workflow where F.WorkflowOutput == Never {
     /// thenPresent: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     /// - Parameter type: A reference to the class used to create the workflow
     /// - Parameter launchStyle: A `LaunchStyle` the flow representable should use while it's part of this workflow
     /// - Parameter flowPersistance: An `FlowPersistance`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
-    func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
+    public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                             launchStyle: LaunchStyle = .default,
                                             flowPersistance:@escaping @autoclosure () -> FlowPersistance = .default) -> Workflow<FR> where FR.WorkflowInput == Never {
         let wf = Workflow<FR>(first)
@@ -116,7 +116,7 @@ public extension Workflow where F.WorkflowOutput == Never {
     /// - Parameter launchStyle: A `LaunchStyle` the flow representable should use while it's part of this workflow
     /// - Parameter flowPersistance: An `FlowPersistance`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
-    func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
+    public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                             launchStyle: LaunchStyle = .default,
                                             flowPersistance:@escaping @autoclosure () -> FlowPersistance = .default) -> Workflow<FR>
                                                                                          where FR.WorkflowInput == AnyWorkflow.PassedArgs {
@@ -130,13 +130,13 @@ public extension Workflow where F.WorkflowOutput == Never {
     }
 }
 
-public extension Workflow {
+extension Workflow {
     /// thenPresent: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     /// - Parameter type: A reference to the class used to create the workflow
     /// - Parameter launchStyle: A `LaunchStyle` the flow representable should use while it's part of this workflow
     /// - Parameter flowPersistance: An `FlowPersistance`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
-    func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
+    public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                             launchStyle: LaunchStyle = .default,
                                             flowPersistance:@escaping @autoclosure () -> FlowPersistance = .default) -> Workflow<FR> where F.WorkflowOutput == FR.WorkflowInput {
         let wf = Workflow<FR>(first)
@@ -151,7 +151,7 @@ public extension Workflow {
     /// - Parameter launchStyle: A `LaunchStyle` the flow representable should use while it's part of this workflow
     /// - Parameter flowPersistance: A closure taking in the generic type from the `FlowRepresentable` and returning a `FlowPersistance`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
-    func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
+    public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                             launchStyle: LaunchStyle = .default,
                                             flowPersistance:@escaping (FR.WorkflowInput) -> FlowPersistance) -> Workflow<FR> where F.WorkflowOutput == FR.WorkflowInput {
         let wf = Workflow<FR>(first)
@@ -170,7 +170,7 @@ public extension Workflow {
     /// - Parameter launchStyle: A `LaunchStyle` the flow representable should use while it's part of this workflow
     /// - Parameter flowPersistance: A closure returning a `FlowPersistance`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
-    func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
+    public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                             launchStyle: LaunchStyle = .default,
                                             flowPersistance:@escaping @autoclosure () -> FlowPersistance = .default) -> Workflow<FR> where FR.WorkflowInput == Never {
         let wf = Workflow<FR>(first)
@@ -187,7 +187,7 @@ public extension Workflow {
     /// - Parameter launchStyle: A `LaunchStyle` the flow representable should use while it's part of this workflow
     /// - Parameter flowPersistance: A closure returning a `FlowPersistance`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
-    func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
+    public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                             launchStyle: LaunchStyle = .default,
                                             flowPersistance:@escaping @autoclosure () -> FlowPersistance = .default) -> Workflow<FR>
                                                                                          where FR.WorkflowInput == AnyWorkflow.PassedArgs {

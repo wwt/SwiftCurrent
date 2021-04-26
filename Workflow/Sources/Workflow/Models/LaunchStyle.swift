@@ -8,8 +8,8 @@
 
 import Foundation
 /**
- LaunchStyle: An extendable class that indicates how FlowRepresentables should be launched
- */
+    LaunchStyle: An extendable class that indicates how FlowRepresentables should be launched
+*/
 
 public final class LaunchStyle {
     private init() { }

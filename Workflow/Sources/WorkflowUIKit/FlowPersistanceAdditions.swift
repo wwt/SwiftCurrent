@@ -8,6 +8,6 @@
 import Foundation
 import Workflow
 
-public extension FlowPersistance {
-    static let hiddenInitially = FlowPersistance.persistWhenSkipped
+extension FlowPersistance {
+    public static let hiddenInitially = FlowPersistance.persistWhenSkipped
 }

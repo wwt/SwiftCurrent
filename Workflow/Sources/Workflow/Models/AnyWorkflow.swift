@@ -173,8 +173,8 @@ extension AnyWorkflow {
     }
 }
 
-public extension AnyWorkflow {
-    enum PassedArgs {
+extension AnyWorkflow {
+    public enum PassedArgs {
         case none
         case args(Any?)
 
