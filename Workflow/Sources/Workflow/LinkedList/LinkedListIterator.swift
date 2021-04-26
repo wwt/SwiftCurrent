@@ -1,5 +1,5 @@
 //
-//  Iterator.swift
+//  LinkedListIterator.swift
 //  iOSCSS
 //
 //  Created by Tyler Thompson on 11/11/18.

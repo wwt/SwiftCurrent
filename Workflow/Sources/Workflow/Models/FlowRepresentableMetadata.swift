@@ -1,5 +1,5 @@
 //
-//  FlowRepresentableMetadata.swift
+//  FlowRepresentableMetaData.swift
 //  
 //
 //  Created by Tyler Thompson on 11/25/20.

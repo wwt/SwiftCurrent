@@ -1,5 +1,5 @@
 //
-//  Node.swift
+//  LinkedListNode.swift
 //  iOSCSS
 //
 //  Created by Tyler Thompson on 11/11/18.
