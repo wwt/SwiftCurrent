@@ -125,10 +125,10 @@ extension Workflow {
         let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetaData(type,
                                             launchStyle: presentationType.rawValue) { data in
-                                                guard case.args(let extracted) = data,
-                                                      let cast = extracted as? FR.WorkflowInput else { return .default }
-                                                return flowPersistance(cast)
-                                            })
+            guard case.args(let extracted) = data,
+                  let cast = extracted as? FR.WorkflowInput else { return .default }
+            return flowPersistance(cast)
+        })
         return wf
     }
 

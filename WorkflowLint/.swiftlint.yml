@@ -7,7 +7,7 @@ opt_in_rules: # some rules are turned off by default, so you need to opt-in
 #   - array_init # https://realm.github.io/SwiftLint/array_init.html
 #   - capture_variable
   - closure_body_length # https://realm.github.io/SwiftLint/closure_body_length.html
-#   - closure_end_indentation # https://realm.github.io/SwiftLint/closure_end_indentation.html
+  - closure_end_indentation # https://realm.github.io/SwiftLint/closure_end_indentation.html
   - closure_spacing # https://realm.github.io/SwiftLint/closure_spacing.html
   - collection_alignment # https://realm.github.io/SwiftLint/collection_alignment.html
 #   - conditional_returns_on_newline # https://realm.github.io/SwiftLint/conditional_returns_on_newline.html
