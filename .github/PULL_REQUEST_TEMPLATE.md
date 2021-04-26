@@ -1,5 +1,5 @@
 <!-- All PRs should have some kind of issue backing them. This means the community has had some opportunity to contribute ideas, or that the PR is fixing a problem that is being tracked -->
-### Linked Issue: #7 
+### Linked Issue: 
 
 <!-- (See our contributing guidelines for more details) -->
 ## Checklist:
