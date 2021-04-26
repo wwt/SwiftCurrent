@@ -30,20 +30,6 @@ class UIKitPresenterTests: XCTestCase {
         UIViewController.flushPendingTestArtifacts()
     }
 
-    private func loadView(controller: UIViewController) {
-        let window = UIApplication.shared.windows.first
-        window?.removeViewsFromRootViewController()
-
-        window?.rootViewController = controller
-        controller.loadViewIfNeeded()
-        controller.view.layoutIfNeeded()
-
-        controller.viewWillAppear(false)
-        controller.viewDidAppear(false)
-
-        CATransaction.flush()
-    }
-
     func testWorkflowCanLaunchViewController() {
         class FR1: UIViewController, FlowRepresentable {
             weak var _workflowPointer: AnyFlowRepresentable?
@@ -55,7 +41,7 @@ class UIKitPresenterTests: XCTestCase {
         let flow = Workflow(FR1.self)
 
         let root = UIViewController()
-        loadView(controller: root)
+        root.loadForTesting()
 
         root.launchInto(flow)
 
@@ -111,7 +97,7 @@ class UIKitPresenterTests: XCTestCase {
         let root = UIViewController()
         root.view.backgroundColor = .blue
         let nav = UINavigationController(rootViewController: root)
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         root.launchInto(Workflow(FR1.self))
 
@@ -135,7 +121,7 @@ class UIKitPresenterTests: XCTestCase {
 
         let root = UIViewController()
         root.view.backgroundColor = .blue
-        loadView(controller: root)
+        root.loadForTesting()
 
         let wf = Workflow(FR1.self)
 
@@ -166,7 +152,7 @@ class UIKitPresenterTests: XCTestCase {
         let root = UIViewController()
         root.view.backgroundColor = .blue
         let nav = UINavigationController(rootViewController: root)
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         let wf = Workflow(FR1.self)
 
@@ -200,7 +186,7 @@ class UIKitPresenterTests: XCTestCase {
         root.view.backgroundColor = .red
         let nav = UINavigationController(rootViewController: root)
         nav.pushViewController(second, animated: false)
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         let wf = Workflow(FR1.self)
 
@@ -232,7 +218,7 @@ class UIKitPresenterTests: XCTestCase {
 
         let root = UIViewController()
         root.view.backgroundColor = .blue
-        loadView(controller: root)
+        root.loadForTesting()
 
         let wf = Workflow(FR1.self)
 
@@ -260,7 +246,7 @@ class UIKitPresenterTests: XCTestCase {
 
         let root = UIViewController()
         root.view.backgroundColor = .blue
-        loadView(controller: root)
+        root.loadForTesting()
 
         let wf = Workflow(FR1.self)
 
@@ -279,7 +265,7 @@ class UIKitPresenterTests: XCTestCase {
 
         let root = UIViewController()
         let nav = UINavigationController(rootViewController: root)
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
             .thenPresent(FR2.self)
@@ -299,7 +285,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR1: TestViewController { }
 
         let nav = UINavigationController()
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self))
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
@@ -313,7 +299,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR1: TestViewController { }
 
         let nav = UINavigationController()
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self, presentationType: .navigationStack), withLaunchStyle: .navigationStack)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
@@ -333,7 +319,7 @@ class UIKitPresenterTests: XCTestCase {
 
         let root = UIViewController()
         let nav = UINavigationController(rootViewController: root)
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
             .thenPresent(FR2.self)
@@ -353,7 +339,7 @@ class UIKitPresenterTests: XCTestCase {
 
         let root = UIViewController()
         let nav = UINavigationController(rootViewController: root)
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
             .thenPresent(FR2.self)
@@ -379,7 +365,7 @@ class UIKitPresenterTests: XCTestCase {
 
         let root = UIViewController()
         let nav = UINavigationController(rootViewController: root)
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
             .thenPresent(FR2.self)
@@ -407,7 +393,7 @@ class UIKitPresenterTests: XCTestCase {
 
         let root = UIViewController()
         let nav = UINavigationController(rootViewController: root)
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
             .thenPresent(FR2.self)
@@ -442,7 +428,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR_1: TestViewController { }
 
         let nav = UINavigationController()
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
             .thenPresent(FR2.self)
@@ -477,7 +463,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR_1: TestViewController { }
 
         let nav = UINavigationController()
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
             .thenPresent(FR2.self)
@@ -506,7 +492,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR3: TestViewController { }
 
         let nav = UINavigationController()
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: .hiddenInitially)
@@ -528,7 +514,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR3: TestViewController { }
 
         let nav = UINavigationController()
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: .hiddenInitially)
@@ -552,7 +538,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR3: TestViewController { }
 
         let nav = UINavigationController()
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: .hiddenInitially)
@@ -579,7 +565,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR3: TestViewController { }
 
         let nav = UINavigationController()
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self, flowPersistance: .hiddenInitially)
                     .thenPresent(FR2.self)
@@ -602,7 +588,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR3: TestViewController { }
 
         let nav = UINavigationController()
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self, flowPersistance: .hiddenInitially)
                     .thenPresent(FR2.self)
@@ -624,7 +610,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR3: TestViewController { }
 
         let nav = UINavigationController()
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: .removedAfterProceeding)
@@ -646,7 +632,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR3: TestViewController { }
 
         let nav = UINavigationController()
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self, flowPersistance: .removedAfterProceeding)
                     .thenPresent(FR2.self)
@@ -666,7 +652,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR3: TestViewController { }
 
         let nav = UINavigationController()
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: .hiddenInitially)
@@ -686,7 +672,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR3: TestViewController { }
 
         let nav = UINavigationController()
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: .removedAfterProceeding)
@@ -709,7 +695,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR3: TestViewController { }
 
         let nav = UINavigationController()
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: { _ in .hiddenInitially })
@@ -732,7 +718,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR3: TestViewController { }
 
         let nav = UINavigationController()
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: { data in
@@ -758,7 +744,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR3: TestViewController { }
 
         let root = UIViewController()
-        loadView(controller: root)
+        root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: .hiddenInitially)
@@ -779,7 +765,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR3: TestViewController { }
 
         let root = UIViewController()
-        loadView(controller: root)
+        root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self)
@@ -800,7 +786,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR3: TestViewController { }
 
         let root = UIViewController()
-        loadView(controller: root)
+        root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: .hiddenInitially)
@@ -825,7 +811,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR3: TestViewController { }
 
         let root = UIViewController()
-        loadView(controller: root)
+        root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self, flowPersistance: .hiddenInitially)
                     .thenPresent(FR2.self)
@@ -844,7 +830,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR3: TestViewController { }
 
         let root = UIViewController()
-        loadView(controller: root)
+        root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: .removedAfterProceeding)
@@ -866,7 +852,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR3: TestViewController { }
 
         let root = UIViewController()
-        loadView(controller: root)
+        root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self, flowPersistance: .removedAfterProceeding)
                     .thenPresent(FR2.self)
@@ -888,7 +874,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR3: TestViewController { }
 
         let root = UIViewController()
-        loadView(controller: root)
+        root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: .hiddenInitially)
@@ -908,7 +894,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR3: TestViewController { }
 
         let root = UIViewController()
-        loadView(controller: root)
+        root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: .removedAfterProceeding)
@@ -931,7 +917,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR3: TestViewController { }
 
         let root = UIViewController()
-        loadView(controller: root)
+        root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: { _ in .hiddenInitially })
@@ -954,7 +940,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR3: TestViewController { }
 
         let root = UIViewController()
-        loadView(controller: root)
+        root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
                     .thenPresent(FR2.self, flowPersistance: { data in
@@ -986,7 +972,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR_1: TestViewController { }
 
         let nav = UINavigationController()
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
             .thenPresent(FR2.self)
@@ -1031,7 +1017,7 @@ class UIKitPresenterTests: XCTestCase {
 
         let root = UIViewController()
         let nav = UINavigationController(rootViewController: root)
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
             .thenPresent(FR2.self)
@@ -1053,7 +1039,7 @@ class UIKitPresenterTests: XCTestCase {
         let obj = Obj()
 
         let nav = UINavigationController()
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
             .thenPresent(FR2.self), args: obj)
@@ -1069,7 +1055,7 @@ class UIKitPresenterTests: XCTestCase {
 
         let root = UIViewController()
         let nav = UINavigationController(rootViewController: root)
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         class Obj { }
         let obj = Obj()
@@ -1107,7 +1093,7 @@ class UIKitPresenterTests: XCTestCase {
 
         let root = UIViewController()
         let nav = UINavigationController(rootViewController: root)
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         class Obj { }
         let obj = Obj()
@@ -1140,7 +1126,7 @@ class UIKitPresenterTests: XCTestCase {
 
         let root = UIViewController()
         let nav = UINavigationController(rootViewController: root)
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
             .thenPresent(MockFlowRepresentable.self)
@@ -1184,7 +1170,7 @@ class UIKitPresenterTests: XCTestCase {
 
         let rootController = UIViewController()
         let controller = UINavigationController(rootViewController: rootController)
-        loadView(controller: controller)
+        controller.loadForTesting()
 
         rootController.launchInto(Workflow(ExpectedModal.self), withLaunchStyle: .modal)
 
@@ -1217,7 +1203,7 @@ class UIKitPresenterTests: XCTestCase {
 
         let rootController = UIViewController()
         let controller = UINavigationController(rootViewController: rootController)
-        loadView(controller: controller)
+        controller.loadForTesting()
 
         rootController.launchInto(Workflow(ExpectedModal.self)
             .thenPresent(ExpectedModalPreferNav.self, presentationType: .navigationStack),
@@ -1253,7 +1239,7 @@ class UIKitPresenterTests: XCTestCase {
 
         let rootController = UIViewController()
         let controller = UINavigationController(rootViewController: rootController)
-        loadView(controller: controller)
+        controller.loadForTesting()
 
         rootController.launchInto(
             Workflow(ExpectedModal.self)
@@ -1280,7 +1266,7 @@ class UIKitPresenterTests: XCTestCase {
         let firstView = UIViewController()
         let rootController = UIViewController()
         let controller = UINavigationController(rootViewController: rootController)
-        loadView(controller: firstView)
+        firstView.loadForTesting()
         firstView.present(controller, animated: false)
 
         let workflow = Workflow(ExpectedModal.self, presentationType: .navigationStack)
@@ -1306,7 +1292,7 @@ class UIKitPresenterTests: XCTestCase {
         let firstView = UIViewController()
         let rootController = UIViewController()
         let controller = UINavigationController(rootViewController: rootController)
-        loadView(controller: firstView)
+        firstView.loadForTesting()
         firstView.present(controller, animated: false)
 
         let workflow = Workflow(ExpectedNav.self, presentationType: .navigationStack)
@@ -1322,7 +1308,7 @@ class UIKitPresenterTests: XCTestCase {
     func testWorkflowAbandonWhenNavControllerOnlyHasOneViewController() {
         let rootController = UIViewController()
         let controller = UINavigationController(rootViewController: rootController)
-        loadView(controller: controller)
+        controller.loadForTesting()
 
         let workflow = Workflow(TestViewController.self)
 
@@ -1338,7 +1324,7 @@ class UIKitPresenterTests: XCTestCase {
 
     func testWorkflowAbandonWhenLaunchedFromNavController_ExpectVCsToBeEmpty() {
         let controller = UINavigationController()
-        loadView(controller: controller)
+        controller.loadForTesting()
 
         let workflow = Workflow(TestViewController.self)
 
@@ -1355,7 +1341,7 @@ class UIKitPresenterTests: XCTestCase {
 
     func testWorkflowAbandonWhenNoNavigationControllerExists() {
         let rootController = UIViewController()
-        loadView(controller: rootController)
+        rootController.loadForTesting()
 
         let workflow = Workflow(TestViewController.self)
 
@@ -1371,7 +1357,7 @@ class UIKitPresenterTests: XCTestCase {
 
     func testWorkflowAbandonWhenLaunchStyleIsNavigationStack() {
         let rootController = UIViewController()
-        loadView(controller: rootController)
+        rootController.loadForTesting()
 
         let workflow = Workflow(TestViewController.self)
 
@@ -1392,7 +1378,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR4: TestViewController { }
 
         let root = UIViewController()
-        loadView(controller: root)
+        root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
             .thenPresent(FR2.self, presentationType: .modal)
@@ -1419,7 +1405,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR4: TestViewController { }
 
         let root = UIViewController()
-        loadView(controller: root)
+        root.loadForTesting()
 
         root.launchInto(
             Workflow(FR1.self)
@@ -1447,7 +1433,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR4: TestViewController { }
 
         let root = UIViewController()
-        loadView(controller: root)
+        root.loadForTesting()
         root.launchInto(Workflow(FR1.self)
             .thenPresent(FR2.self, presentationType: .modal)
             .thenPresent(FR3.self, presentationType: .navigationStack)
@@ -1474,7 +1460,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR4: TestViewController { }
 
         let root = UIViewController()
-        loadView(controller: root)
+        root.loadForTesting()
 
         root.launchInto(
             Workflow(FR1.self)
@@ -1504,7 +1490,7 @@ class UIKitPresenterTests: XCTestCase {
 
         let root = UIViewController()
         let nav = UINavigationController(rootViewController: root)
-        loadView(controller: nav)
+        nav.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
             .thenPresent(FR2.self, presentationType: .modal)
@@ -1535,7 +1521,7 @@ class UIKitPresenterTests: XCTestCase {
         }
         let rootController = UIViewController()
         let controller = UINavigationController(rootViewController: rootController)
-        loadView(controller: controller)
+        controller.loadForTesting()
 
         let workflow = Workflow(TestViewController.self)
             .thenPresent(ExpectedModal.self, presentationType: .modal)
@@ -1563,7 +1549,7 @@ class UIKitPresenterTests: XCTestCase {
 
         let rootController = UIViewController()
         let controller = UINavigationController(rootViewController: rootController)
-        loadView(controller: controller)
+        controller.loadForTesting()
 
         rootController.launchInto(Workflow(ExpectedController.self), withLaunchStyle: .navigationStack)
         RunLoop.current.singlePass()
@@ -1582,7 +1568,7 @@ class UIKitPresenterTests: XCTestCase {
         }
 
         let rootController = UIViewController()
-        loadView(controller: rootController)
+        rootController.loadForTesting()
 
         rootController.launchInto(Workflow(ExpectedController.self), withLaunchStyle: .navigationStack)
         RunLoop.current.singlePass()
@@ -1609,7 +1595,7 @@ class UIKitPresenterTests: XCTestCase {
         }
         let rootController = UIViewController()
         let controller = UINavigationController(rootViewController: rootController)
-        loadView(controller: controller)
+        controller.loadForTesting()
 
         rootController.launchInto(Workflow(ExpectedNav.self)
             .thenPresent(ExpectedModal.self, presentationType: .modal))
@@ -1631,7 +1617,7 @@ class UIKitPresenterTests: XCTestCase {
         }
 
         let rootController = UIViewController()
-        loadView(controller: rootController)
+        rootController.loadForTesting()
 
         rootController.launchInto(Workflow(ExpectedController.self), withLaunchStyle: .navigationStack)
         RunLoop.current.singlePass()
@@ -1652,7 +1638,7 @@ class UIKitPresenterTests: XCTestCase {
         }
 
         let rootController = UIViewController()
-        loadView(controller: rootController)
+        rootController.loadForTesting()
 
         rootController.launchInto(Workflow(ExpectedController.self))
 
@@ -1668,7 +1654,7 @@ class UIKitPresenterTests: XCTestCase {
 
         let wf = Workflow(FR1.self).thenPresent(FR2.self)
         let rootController = UIViewController()
-        loadView(controller: rootController)
+        rootController.loadForTesting()
 
         let presenter = UIKitPresenter(rootController, launchStyle: .modal)
 

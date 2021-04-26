@@ -23,7 +23,7 @@ class ModalStyleTests: XCTestCase {
     }
 
     func testShowModalFullScreen() {
-        loadView(controller: RootViewController.standard)
+        RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self,
@@ -35,7 +35,7 @@ class ModalStyleTests: XCTestCase {
 
     func testShowModalAsPageSheet() {
         let vc = RootViewController()
-        loadView(controller: vc)
+        vc.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self,
@@ -47,7 +47,7 @@ class ModalStyleTests: XCTestCase {
     }
 
     func testShowModalAsFormSheet() {
-        loadView(controller: RootViewController.standard)
+        RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self,
@@ -58,7 +58,7 @@ class ModalStyleTests: XCTestCase {
     }
 
     func testShowModalWithCurrentContext() {
-        loadView(controller: RootViewController.standard)
+        RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self,
@@ -69,7 +69,7 @@ class ModalStyleTests: XCTestCase {
     }
 
     func testShowModalAsCustom() {
-        loadView(controller: RootViewController.standard)
+        RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self,
@@ -80,7 +80,7 @@ class ModalStyleTests: XCTestCase {
     }
 
     func testShowModalOverFullScreen() {
-        loadView(controller: RootViewController.standard)
+        RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self,
@@ -91,7 +91,7 @@ class ModalStyleTests: XCTestCase {
     }
 
     func testShowModalOverCurrentContext() {
-        loadView(controller: RootViewController.standard)
+        RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self,
@@ -102,7 +102,7 @@ class ModalStyleTests: XCTestCase {
     }
 
     func testShowModalAsPopover() {
-        loadView(controller: RootViewController.standard)
+        RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self,
@@ -114,7 +114,7 @@ class ModalStyleTests: XCTestCase {
 
     @available(iOS 13.0, *)
     func testShowModalWithAutomaticStyle() {
-        loadView(controller: RootViewController.standard)
+        RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self,
@@ -125,7 +125,7 @@ class ModalStyleTests: XCTestCase {
     }
 
     func testShowModalFullScreen_FromLaunch() {
-        loadView(controller: RootViewController.standard)
+        RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self),
@@ -137,7 +137,7 @@ class ModalStyleTests: XCTestCase {
 
     func testShowModalAsPageSheet_FromLaunch() {
         let vc = RootViewController()
-        loadView(controller: vc)
+        vc.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self),
@@ -148,7 +148,7 @@ class ModalStyleTests: XCTestCase {
     }
 
     func testShowModalAsFormSheet_FromLaunch() {
-        loadView(controller: RootViewController.standard)
+        RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self),
@@ -159,7 +159,7 @@ class ModalStyleTests: XCTestCase {
     }
 
     func testShowModalWithCurrentContext_FromLaunch() {
-        loadView(controller: RootViewController.standard)
+        RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self),
@@ -170,7 +170,7 @@ class ModalStyleTests: XCTestCase {
     }
 
     func testShowModalAsCustom_FromLaunch() {
-        loadView(controller: RootViewController.standard)
+        RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self),
@@ -181,7 +181,7 @@ class ModalStyleTests: XCTestCase {
     }
 
     func testShowModalOverFullScreen_FromLaunch() {
-        loadView(controller: RootViewController.standard)
+        RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self),
@@ -192,7 +192,7 @@ class ModalStyleTests: XCTestCase {
     }
 
     func testShowModalOverCurrentContext_FromLaunch() {
-        loadView(controller: RootViewController.standard)
+        RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self),
@@ -203,7 +203,7 @@ class ModalStyleTests: XCTestCase {
     }
 
     func testShowModalAsPopover_FromLaunch() {
-        loadView(controller: RootViewController.standard)
+        RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self),
@@ -215,7 +215,7 @@ class ModalStyleTests: XCTestCase {
 
     @available(iOS 13.0, *)
     func testShowModalWithAutomaticStyle_FromLaunch() {
-        loadView(controller: RootViewController.standard)
+        RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self),
@@ -226,7 +226,7 @@ class ModalStyleTests: XCTestCase {
     }
 
     func testShowModalFullScreen_FromLaunch_WithFirstScreenOnANavController() {
-        loadView(controller: RootViewController.standard)
+        RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
@@ -238,7 +238,7 @@ class ModalStyleTests: XCTestCase {
 
     func testShowModalAsPageSheet_FromLaunch_WithFirstScreenOnANavController() {
         let vc = RootViewController()
-        loadView(controller: vc)
+        vc.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
@@ -249,7 +249,7 @@ class ModalStyleTests: XCTestCase {
     }
 
     func testShowModalAsFormSheet_FromLaunch_WithFirstScreenOnANavController() {
-        loadView(controller: RootViewController.standard)
+        RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
@@ -260,7 +260,7 @@ class ModalStyleTests: XCTestCase {
     }
 
     func testShowModalWithCurrentContext_FromLaunch_WithFirstScreenOnANavController() {
-        loadView(controller: RootViewController.standard)
+        RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
@@ -271,7 +271,7 @@ class ModalStyleTests: XCTestCase {
     }
 
     func testShowModalAsCustom_FromLaunch_WithFirstScreenOnANavController() {
-        loadView(controller: RootViewController.standard)
+        RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
@@ -282,7 +282,7 @@ class ModalStyleTests: XCTestCase {
     }
 
     func testShowModalOverFullScreen_FromLaunch_WithFirstScreenOnANavController() {
-        loadView(controller: RootViewController.standard)
+        RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
@@ -293,7 +293,7 @@ class ModalStyleTests: XCTestCase {
     }
 
     func testShowModalOverCurrentContext_FromLaunch_WithFirstScreenOnANavController() {
-        loadView(controller: RootViewController.standard)
+        RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
@@ -304,7 +304,7 @@ class ModalStyleTests: XCTestCase {
     }
 
     func testShowModalAsPopover_FromLaunch_WithFirstScreenOnANavController() {
-        loadView(controller: RootViewController.standard)
+        RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
@@ -316,7 +316,7 @@ class ModalStyleTests: XCTestCase {
 
     @available(iOS 13.0, *)
     func testShowModalWithAutomaticStyle_FromLaunch_WithFirstScreenOnANavController() {
-        loadView(controller: RootViewController.standard)
+        RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
@@ -324,20 +324,6 @@ class ModalStyleTests: XCTestCase {
 
         waitUntil(UIApplication.topViewController() is TestViewController)
         XCTAssertEqual(UIApplication.topViewController()?.navigationController?.modalPresentationStyle, UIViewController().modalPresentationStyle)
-    }
-
-    private func loadView(controller: UIViewController) {
-        let window = UIApplication.shared.windows.first
-        window?.removeViewsFromRootViewController()
-
-        window?.rootViewController = controller
-        controller.loadViewIfNeeded()
-        controller.view.layoutIfNeeded()
-
-        controller.viewWillAppear(false)
-        controller.viewDidAppear(false)
-
-        CATransaction.flush()
     }
 }
 
