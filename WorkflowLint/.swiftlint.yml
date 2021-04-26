@@ -143,4 +143,20 @@ switch_case_alignment:
 cyclomatic_complexity:
     ignores_case_statements: true
 
+type_contents_order:
+    order: [
+        [SwiftLintFramework.TypeContent.case], 
+        [SwiftLintFramework.TypeContent.typeAlias, SwiftLintFramework.TypeContent.associatedType], 
+        [SwiftLintFramework.TypeContent.subtype], 
+        [SwiftLintFramework.TypeContent.typeProperty], 
+        [SwiftLintFramework.TypeContent.instanceProperty], 
+        [SwiftLintFramework.TypeContent.typeMethod], 
+        # [SwiftLintFramework.TypeContent.ibInspectable], 
+        # [SwiftLintFramework.TypeContent.ibOutlet], 
+        [SwiftLintFramework.TypeContent.initializer], 
+        [SwiftLintFramework.TypeContent.deinitializer],
+        [SwiftLintFramework.TypeContent.viewLifeCycleMethod], 
+        [SwiftLintFramework.TypeContent.ibAction, SwiftLintFramework.TypeContent.otherMethod, SwiftLintFramework.TypeContent.subscript]
+    ]
+    
 reporter: "xcode" # reporter type (xcode, json, csv, checkstyle, codeclimate, junit, html, emoji, sonarqube, markdown, github-actions-logging)
