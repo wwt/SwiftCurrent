@@ -8,13 +8,16 @@
 
 import Foundation
 extension LinkedList where Value: Comparable {
+    /// sort: Sorts the linked list in place using a merge sort
     public func sort() {
         guard first?.next != nil else { return }
-        first = LinkedList(mergeSort(first, by: { $0 <= $1 })).first
+        first = LinkedList(mergeSort(first) { $0 <= $1 }).first
     }
 
+    /// sorted: A non-mutating sort method
+    /// - Returns: A sorted version of the LinkedList
     public func sorted() -> LinkedList<Value> {
-        LinkedList(mergeSort(first, by: { $0 <= $1 }))
+        LinkedList(mergeSort(first) { $0 <= $1 })
     }
 
     /// max: Returns the maximum value in the comparable LinkedList

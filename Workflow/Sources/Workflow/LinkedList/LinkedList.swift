@@ -34,9 +34,7 @@ public class LinkedList<Value>: Sequence, CustomStringConvertible {
     /// endIndex: The last index in the list
     /// - Complexity: O(n). The linked list must traverse to the end to determine the count
     public var count: LinkedList.Index {
-        reduce(0, { c, _ in
-            c + 1
-        })
+        reduce(0) { c, _ in c + 1 }
     }
 
     /// first: The first node in the list

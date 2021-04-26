@@ -27,20 +27,19 @@ struct NavWrapper: View {
             current
             NavigationLink(
                 destination: next,
-                isActive: .init(get: {
-                    model.stack.contains(where: { $0.value === holder })
-                }, set: { val in
+                isActive: .init {
+                    model.stack.contains { $0.value === holder }
+                } set: { val in
                     if isShowing && !val {
                         if let currentNode = model.stack.first(where: { $0.value === holder }) {
                             model.stack.remove { $0 === currentNode.next }
                             currentNode.value = holder.copy
                         }
                     }
-                }),
-                label: {
-                    EmptyView()
-                }).onAppear { appearCount = 1 }
-                .onDisappear { appearCount -= 1 }
+                }) {
+                EmptyView()
+            }.onAppear { appearCount = 1 }
+            .onDisappear { appearCount -= 1 }
         }
     }
 }

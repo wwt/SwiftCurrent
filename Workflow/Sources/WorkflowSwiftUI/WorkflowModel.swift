@@ -49,7 +49,7 @@ public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
 
     private func present(view next: AnyView) {
         var v = next
-        _ = stack.last?.traverse(direction: .backward, until: { node in
+        _ = stack.last?.traverse(direction: .backward) { node in
             guard let nextNode = node.next else { return false } // NOTE: Barring some threading crazy, this should never be nil
 
             switch LaunchStyle.PresentationType(rawValue: nextNode.value.metadata.launchStyle) ?? .default {
@@ -88,7 +88,7 @@ public class WorkflowModel: ObservableObject, AnyOrchestrationResponder {
             }
 
             return false
-        })
+        }
         view = v
     }
 

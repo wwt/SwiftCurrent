@@ -88,8 +88,7 @@ extension Workflow {
                             presentationType: LaunchStyle.PresentationType,
                             flowPersistance:@escaping @autoclosure () -> FlowPersistance = .default) {
         self.init(FlowRepresentableMetaData(type,
-                                            launchStyle: presentationType.rawValue,
-                                            flowPersistance: { _ in flowPersistance() }))
+                                            launchStyle: presentationType.rawValue) { _ in flowPersistance() })
     }
     /// init: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     /// - Parameter type: A reference to the class used to create the workflow
@@ -100,12 +99,11 @@ extension Workflow {
                             presentationType: LaunchStyle.PresentationType,
                             flowPersistance:@escaping (F.WorkflowInput) -> FlowPersistance) {
         self.init(FlowRepresentableMetaData(type,
-                                            launchStyle: presentationType.rawValue,
-                                            flowPersistance: { data in
+                                            launchStyle: presentationType.rawValue) { data in
                                                 guard case.args(let extracted) = data,
                                                       let cast = extracted as? F.WorkflowInput else { return .default }
                                                 return flowPersistance(cast)
-                                            }))
+                                            })
     }
 
     /// init: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements

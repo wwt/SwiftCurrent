@@ -28,8 +28,11 @@ extension LinkedList {
             value = element
         }
 
+        /// TraversalDirection: an enumeration indicating whether you'd like to traverse forwards or backwards through the LinkedList
         public enum TraversalDirection {
+            /// forward: Traverse "forward" i.e. traverse by calling .next
             case forward
+            /// backward: Traverse "backward" i.e. traverse by calling .previous
             case backward
         }
 

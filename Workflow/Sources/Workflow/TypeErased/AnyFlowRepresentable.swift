@@ -9,9 +9,9 @@
 import Foundation
 
 class AnyFlowRepresentableStorageBase {
-    var underlyingInstance: Any { fatalError() }
+    var underlyingInstance: Any { fatalError("AnyFlowRepresentableStorageBase called directly, only available internally so something has gone VERY wrong.") }
     var _workflowPointer: AnyFlowRepresentable?
-    func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool { fatalError() }
+    func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool { fatalError("AnyFlowRepresentableStorageBase called directly, only available internally so something has gone VERY wrong.") }
 
     var workflow: AnyWorkflow?
     var proceedInWorkflowStorage: ((AnyWorkflow.PassedArgs) -> Void)?
@@ -85,6 +85,7 @@ public class AnyFlowRepresentable {
 
     var _storage: AnyFlowRepresentableStorageBase
 
+    /// underlyingInstance: The erased instance that AnyFlowRepresentable wrapped
     public var underlyingInstance: Any {
         _storage.underlyingInstance
     }

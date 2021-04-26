@@ -16,6 +16,6 @@ extension LinkedList: Equatable where Value: Equatable {
     /// - Parameter element: The value to check against the LinkedList
     /// - Returns: A boolean indicating whether the supplied value is present
     public func contains(_ element: Element.Value) -> Bool {
-        contains(where: { $0.value == element })
+        contains { $0.value == element }
     }
 }

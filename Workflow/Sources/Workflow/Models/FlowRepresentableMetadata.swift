@@ -31,6 +31,6 @@ public class FlowRepresentableMetaData {
     }
 
     public convenience init<FR: FlowRepresentable>(with flowRepresentable: FR, launchStyle: LaunchStyle, persistance: FlowPersistance) {
-        self.init(FR.self, launchStyle: launchStyle, flowPersistance: { _ in persistance })
+        self.init(FR.self, launchStyle: launchStyle) { _ in persistance }
     }
 }
