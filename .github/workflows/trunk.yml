@@ -15,9 +15,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: Bump version in Podspec and Plist
         id: bump_version
-        run: fastlane patch
-      - name: Print version
-        run: echo "The version is ${{ steps.bump_version.outputs.VERSION }}"
+        run: |
+          fastlane patch
+          VERSION=`/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" ActionTesting/Info.plist`
+          echo "##[set-output name=version;]$VERSION"
       - name: Commit version changes
         uses: stefanzweifel/git-auto-commit-action@v4
       - name: Tag and push
