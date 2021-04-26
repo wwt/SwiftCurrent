@@ -11,11 +11,11 @@ import Foundation
 class AnyFlowRepresentableStorageBase {
     var underlyingInstance: Any { fatalError("AnyFlowRepresentableStorageBase called directly, only available internally so something has gone VERY wrong.") }
     var _workflowPointer: AnyFlowRepresentable?
-    func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool { fatalError("AnyFlowRepresentableStorageBase called directly, only available internally so something has gone VERY wrong.") }
-
     var workflow: AnyWorkflow?
     var proceedInWorkflowStorage: ((AnyWorkflow.PassedArgs) -> Void)?
     var proceedBackwardInWorkflowStorage: (() -> Void)?
+
+    func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool { fatalError("AnyFlowRepresentableStorageBase called directly, only available internally so something has gone VERY wrong.") }
 }
 
 class AnyFlowRepresentableStorage<FR: FlowRepresentable>: AnyFlowRepresentableStorageBase {
@@ -54,9 +54,9 @@ public class AnyFlowRepresentable {
     typealias WorkflowInput = Any
     typealias WorkflowOutput = Any
 
-    init<FR: FlowRepresentable>(_ instance: inout FR) {
-        _storage = AnyFlowRepresentableStorage(&instance)
-        _storage._workflowPointer = self
+    /// underlyingInstance: The erased instance that AnyFlowRepresentable wrapped
+    public var underlyingInstance: Any {
+        _storage.underlyingInstance
     }
 
     var workflow: AnyWorkflow? {
@@ -85,9 +85,9 @@ public class AnyFlowRepresentable {
 
     var _storage: AnyFlowRepresentableStorageBase
 
-    /// underlyingInstance: The erased instance that AnyFlowRepresentable wrapped
-    public var underlyingInstance: Any {
-        _storage.underlyingInstance
+    init<FR: FlowRepresentable>(_ instance: inout FR) {
+        _storage = AnyFlowRepresentableStorage(&instance)
+        _storage._workflowPointer = self
     }
 
     func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool { _storage.shouldLoad(with: args) }

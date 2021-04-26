@@ -20,7 +20,9 @@ extension LaunchStyle {
     public static let _modal_overCurrentContext = LaunchStyle.new
     public static let _modal_popover = LaunchStyle.new
     public static let _modal_automatic = LaunchStyle.new
+}
 
+extension LaunchStyle {
     public enum PresentationType: RawRepresentable {
         public init?(rawValue: LaunchStyle) {
             switch rawValue {

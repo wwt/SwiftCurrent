@@ -13,6 +13,10 @@ import Workflow
 public struct WorkflowView: View {
     @ObservedObject var workflowModel = WorkflowModel()
 
+    public var body: some View {
+        workflowModel.view
+    }
+
     public init(_ workflow: AnyWorkflow, with args: Any? = nil, withLaunchStyle launchStyle: LaunchStyle.PresentationType = .default, onFinish: ((Any?) -> Void)? = nil) {
         workflowModel.launchStyle = launchStyle
         workflow.applyOrchestrationResponder(workflowModel)
@@ -23,9 +27,5 @@ public struct WorkflowView: View {
         workflowModel.launchStyle = launchStyle
         workflow.applyOrchestrationResponder(workflowModel)
         workflow.launch(withLaunchStyle: launchStyle.rawValue, onFinish: onFinish)
-    }
-
-    public var body: some View {
-        workflowModel.view
     }
 }

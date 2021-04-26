@@ -15,6 +15,10 @@ public struct DependencyInjected<Value> {
     let name: String?
     let container: Container
 
+    public lazy var wrappedValue: Value? = {
+        container.resolve(Value.self, name: name)
+    }()
+
     public init(wrappedValue value: Value?) {
         name = nil
         container = AnyWorkflow.defaultContainer
@@ -28,8 +32,4 @@ public struct DependencyInjected<Value> {
         self.name = name
         container = containerGetter()
     }
-
-    public lazy var wrappedValue: Value? = {
-        container.resolve(Value.self, name: name)
-    }()
 }

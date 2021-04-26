@@ -13,12 +13,6 @@ public class FlowRepresentableMetaData {
     public private(set) var launchStyle: LaunchStyle
     public private(set) var persistance: FlowPersistance?
 
-    func calculatePersistance(_ args: AnyWorkflow.PassedArgs) -> FlowPersistance {
-        let val = flowPersistance(args)
-        persistance = val
-        return val
-    }
-
     public init<FR: FlowRepresentable>(_ flowRepresentableType: FR.Type,
                                        launchStyle: LaunchStyle = .default,
                                        flowPersistance:@escaping (AnyWorkflow.PassedArgs) -> FlowPersistance) {
@@ -32,5 +26,11 @@ public class FlowRepresentableMetaData {
 
     public convenience init<FR: FlowRepresentable>(with flowRepresentable: FR, launchStyle: LaunchStyle, persistance: FlowPersistance) {
         self.init(FR.self, launchStyle: launchStyle) { _ in persistance }
+    }
+
+    func calculatePersistance(_ args: AnyWorkflow.PassedArgs) -> FlowPersistance {
+        let val = flowPersistance(args)
+        persistance = val
+        return val
     }
 }

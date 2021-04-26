@@ -13,7 +13,9 @@ extension LaunchStyle {
     public static let _modal = LaunchStyle.new
     @available(iOS 14.0, *)
     public static let _modal_fullscreen = LaunchStyle.new
+}
 
+extension LaunchStyle {
     public enum PresentationType: RawRepresentable {
         public init?(rawValue: LaunchStyle) {
             if #available(iOS 14.0, *),

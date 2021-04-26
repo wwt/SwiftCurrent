@@ -13,7 +13,6 @@ import Foundation
 Used when you are creating a workflow
 */
 public final class FlowPersistance {
-    private init() { }
     public static var new: FlowPersistance { FlowPersistance() }
 
     /// default: Indicates a `FlowRepresentable` in a `Workflow` should persist in based on it's `shouldLoad` function
@@ -22,6 +21,8 @@ public final class FlowPersistance {
     public static let persistWhenSkipped = FlowPersistance()
     /// default: Indicates a `FlowRepresentable` in a `Workflow` who's `shouldLoad` function returns true should be removed from the viewstack after the workflow progresses past it
     public static let removedAfterProceeding = FlowPersistance()
+
+    private init() { }
 }
 
 extension FlowPersistance: Equatable {

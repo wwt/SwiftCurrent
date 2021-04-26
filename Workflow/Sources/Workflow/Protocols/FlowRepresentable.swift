@@ -40,10 +40,6 @@ extension FlowRepresentable {
 }
 
 extension FlowRepresentable {
-    public mutating func shouldLoad() -> Bool {
-        true
-    }
-
     /// workflow: Access to the `Workflow` controlling the `FlowRepresentable`. A common use case may be a `FlowRepresentable` that wants to abandon the `Workflow` it's in.
     /// - Note: While not strictly necessary it would be wise to declare this property as `weak`
     public var workflow: AnyWorkflow? {
@@ -53,6 +49,8 @@ extension FlowRepresentable {
     public func proceedBackwardInWorkflow() {
         _workflowPointer?.proceedBackwardInWorkflowStorage?()
     }
+
+    public mutating func shouldLoad() -> Bool { true }
 }
 
 extension FlowRepresentable where WorkflowInput == Never {
@@ -61,9 +59,7 @@ extension FlowRepresentable where WorkflowInput == Never {
     /// shouldLoad: A method indicating whether it makes sense for this view to load in a workflow
     /// - Returns: Bool
     /// - Note: This particular version of shouldLoad is only available when your `WorkflowInput` is `Never`, indicating you do not care about data passed to this view
-    public mutating func shouldLoad() -> Bool {
-        true
-    }
+    public mutating func shouldLoad() -> Bool { true }
 }
 
 extension FlowRepresentable where WorkflowOutput == Never {

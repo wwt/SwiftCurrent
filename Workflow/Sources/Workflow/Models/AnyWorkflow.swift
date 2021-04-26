@@ -15,11 +15,6 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
 
     public var firstLoadedInstance: LinkedList<AnyFlowRepresentable?>.Element?
 
-    deinit {
-        removeInstances()
-        orchestrationResponder = nil
-    }
-
     public func applyOrchestrationResponder(_ orchestrationResponder: AnyOrchestrationResponder) {
         self.orchestrationResponder = orchestrationResponder
     }
@@ -93,6 +88,11 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
             orchestrationResponder = nil
             onFinish?()
         }
+    }
+
+    deinit {
+        removeInstances()
+        orchestrationResponder = nil
     }
 
     private func removeInstances() {
