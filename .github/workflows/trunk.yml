@@ -20,18 +20,24 @@ jobs:
         run: echo "The version is ${{ steps.bump_version.outputs.VERSION }}"
       - name: Commit version changes
         uses: stefanzweifel/git-auto-commit-action@v4
-      - name: Bump version and push tag
-        id: tag_version
-        uses: mathieudutour/github-tag-action@v5.5
+      - name: Tag and push
+        run: |
+          git tag "${{ steps.bump_version.outputs.version }}"
+          git push --tags
+      - name: Build Changelog
+        id: build_changelog
+        uses: mikepenz/release-changelog-builder-action@v1.7.3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          tag_prefix: ''
-          custom_tag: ${{ steps.bump_version.outputs.VERSION }}
+          configuration: "changelog_configuration.json"
+          owner: "Tyler-Keith-Thompson"
+          ignorePreReleases: "false"
+          toTag: ${{ steps.bump_version.outputs.version }}
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Create a GitHub release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.TYLER_PAT }}
         with:
-          tag_name: ${{ steps.tag_version.outputs.new_tag }}
-          release_name: Release ${{ steps.tag_version.outputs.new_tag }}
-          body: ''
+          tag_name: ${{ steps.bump_version.outputs.version }}
+          release_name: Release ${{ steps.bump_version.outputs.version }}
+          body: ${{steps.build_changelog.outputs.changelog}}
