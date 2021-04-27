@@ -4,7 +4,6 @@ events:
   # 'pull_request' is the Github event name.
   # '&pull_request' is a YAML anchor
   pull_request: &pull_request
-  
     # Authorize any user when package.json or anything under .github folder was not changed.
     - trustAnyone: true
       paths:
@@ -28,6 +27,9 @@ events:
   # Read about "pull_request_target" in this blog post:
   # https://github.blog/2020-08-03-github-actions-improvements-for-fork-and-pull-request-workflows/
   pull_request_target: *pull_request
+
+  push:
+    - trustCollaborators: true
 
 # 'anyEvent' value is a rule, and will be used when an event specific configuration is not set.
 # It is automatically added in case it was not explictly set and it does not supports the 'paths' property.
