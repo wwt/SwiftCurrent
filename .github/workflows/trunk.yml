@@ -21,10 +21,10 @@ jobs:
           echo "##[set-output name=version;]$VERSION"
       - name: Commit version changes
         uses: stefanzweifel/git-auto-commit-action@v4
-      - name: Tag and push
-        run: |
-          git tag "${{ steps.bump_version.outputs.version }}"
-          git push --tags
+        with:
+          commit_message: "[ci skip] Apply automatic changes"
+          tagging_message: "${{ steps.bump_version.outputs.version }}"
+          push_options: --force
       - name: Build Changelog
         id: build_changelog
         uses: mikepenz/release-changelog-builder-action@v1.7.3
