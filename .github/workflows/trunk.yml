@@ -10,7 +10,7 @@ on:
 jobs:
   version_bump:
     runs-on: macos-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.pull_request.merged == 'true' }}
     steps:
       - uses: actions/checkout@v2
         with:
