@@ -33,4 +33,4 @@ events:
 anyEvent:
   trustAnyone: false
   trustCollaborators: true
-  trustedUserNames: []
+  trustedUserNames: ["Tyler-Keith-Thompson"]
