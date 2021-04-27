@@ -13,6 +13,8 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.TYLER_PAT }}
       - name: Bump version in Podspec and Plist
         id: bump_version
         run: |
