@@ -1,19 +1,19 @@
-![Build Status](https://github.com/Tyler-Keith-Thompson/Workflow/actions/workflows/CI.yml/badge.svg?branch=master)
+![Build Status](https://github.com/wwt/Workflow/actions/workflows/CI.yml/badge.svg?branch=main)
 ![Pod Version](https://img.shields.io/cocoapods/v/DynamicWorkflow.svg?style=popout)
-![Quality Gate](https://img.shields.io/sonar/quality_gate/Tyler-Keith-Thompson_Workflow?server=https%3A%2F%2Fsonarcloud.io)
+![Quality Gate](https://img.shields.io/sonar/quality_gate/wwt_Workflow?server=https%3A%2F%2Fsonarcloud.io)
 ![Coverage](https://img.shields.io/sonar/coverage/Tyler-Keith-Thompson_Workflow?server=http%3A%2F%2Fsonarcloud.io)
 
 ### Welcome to Workflow!
 Workflow is a library meant to handle complex user flows in iOS applications.
 
 #### Table of Contents:
-- [Insallation](https://github.com/Tyler-Keith-Thompson/Workflow/wiki/Installation)
-- [Why DynamicWorkflow?](https://github.com/Tyler-Keith-Thompson/Workflow/wiki/why-this-library)
-- [Getting Started](https://github.com/Tyler-Keith-Thompson/Workflow/wiki/getting-started)
-- [Testing Your Workflows](https://github.com/Tyler-Keith-Thompson/Workflow/wiki/testing)
-- [Advanced](https://github.com/Tyler-Keith-Thompson/Workflow/wiki/advanced)
-- [Developer Documentation](https://htmlpreview.github.io/?https://github.com/Tyler-Keith-Thompson/Workflow/blob/master/docs/index.html)
-- [FAQ](https://github.com/Tyler-Keith-Thompson/Workflow/wiki/faq)
+- [Insallation](https://github.com/wwt/Workflow/wiki/Installation)
+- [Why DynamicWorkflow?](https://github.com/wwt/Workflow/wiki/why-this-library)
+- [Getting Started](https://github.com/wwt/Workflow/wiki/getting-started)
+- [Testing Your Workflows](https://github.com/wwt/Workflow/wiki/testing)
+- [Advanced](https://github.com/wwt/Workflow/wiki/advanced)
+- [Developer Documentation](https://htmlpreview.github.io/?https://github.com/wwt/Workflow/blob/main/docs/index.html)
+- [FAQ](https://github.com/wwt/Workflow/wiki/faq)
 
 ### The problem DynamicWorkflow was built to solve:
 When developing for iOS one view controller has to know about the one following it in order to pass along daa. Imagine a workflow for a fast food app.

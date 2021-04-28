@@ -7,7 +7,7 @@ on:
 jobs:
   release:
     runs-on: macos-latest
-    if: ${{ github.repository == 'Tyler-Keith-Thompson/Workflow' }}
+    if: ${{ github.repository == 'wwt/Workflow' }}
     steps:
       - uses: actions/checkout@v2
       - name: Cocoapods Release
