@@ -18,7 +18,7 @@ jobs:
       - name: Bump version in Podspec and Plist
         id: bump_version
         run: |
-          fastlane patch
+          bundle exec fastlane patch
           VERSION=`/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" Workflow/Info.plist`
           echo "##[set-output name=version;]$VERSION"
       - name: Commit version changes
