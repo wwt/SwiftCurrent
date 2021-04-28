@@ -10,7 +10,7 @@ on:
 jobs:
   version_bump:
     runs-on: macos-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.repository == 'wwt/Workflow' }}
     steps:
       - uses: actions/checkout@v2
         with:
