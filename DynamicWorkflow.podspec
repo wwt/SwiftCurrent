@@ -8,7 +8,7 @@ iOS has a linear paradigm for navigation that doesn't support a lot of flexibili
 
   s.homepage         = 'https://github.com/wwt/Workflow'
   s.license          = { :type => 'Custom', :file => 'LICENSE' }
-  s.author           = { 'Tyler.Thompson' => 'Tyler.Thompson@wwt.com' }
+  s.author           = { 'World Wide Technology, Inc.' => 'Workflow@wwt.com' }
   s.source           = { :git => 'https://github.com/wwt/Workflow.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '11.0'
