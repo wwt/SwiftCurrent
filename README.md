@@ -16,7 +16,7 @@ Workflow is a library meant to handle complex user flows in iOS applications.
 - [FAQ](https://github.com/wwt/Workflow/wiki/faq)
 
 ### The problem DynamicWorkflow was built to solve:
-When developing for iOS one view controller has to know about the one following it in order to pass along daa. Imagine a workflow for a fast food app.
+When developing for iOS one view controller has to know about the one following it in order to pass along data. Imagine a workflow for a fast food app.
 
 Pick a location -> Pickup or Delivery -> Catering Menu or Normal Menu -> Choose Food -> Review Order -> Submit payment
 
