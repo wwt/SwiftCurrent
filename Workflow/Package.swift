@@ -16,12 +16,8 @@ let package = Package(
         .library(
             name: "WorkflowSwiftUI",
             targets: ["WorkflowSwiftUI"]),
-        .library(
-            name: "WorkflowDI",
-            targets: ["WorkflowDI"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Swinject/Swinject.git", .upToNextMajor(from: "2.7.1")),
         .package(url: "https://github.com/mattgallagher/CwlPreconditionTesting.git", from: Version("2.0.0-beta.1")),
         .package(url: "https://github.com/mattgallagher/CwlCatchException.git", from: Version("2.0.0-beta.1")),
         .package(url: "https://github.com/apple/swift-algorithms", .upToNextMajor(from: "0.0.1")),
@@ -36,10 +32,6 @@ let package = Package(
         .target(
             name: "WorkflowSwiftUI",
             dependencies: ["Workflow"]),
-        .target(
-            name: "WorkflowDI",
-            dependencies: ["Workflow", "Swinject"],
-            path: "Sources/DependencyInjection"),
         .testTarget(
             name: "WorkflowTests",
             dependencies: [
@@ -49,12 +41,5 @@ let package = Package(
                 .product(name: "Algorithms", package: "swift-algorithms")
             ],
             exclude: ["Info.plist", "Workflow.xctestplan"]),
-        .testTarget(
-            name: "DependencyInjectionTests",
-            dependencies: [
-                "Workflow",
-                "WorkflowDI",
-            ],
-            exclude: ["Info.plist"]),
     ]
 )

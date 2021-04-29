@@ -9,9 +9,7 @@
 import Foundation
 import UIKit
 import Workflow
-import WorkflowDI
 import WorkflowUIKit
-import Swinject
 
 class SetupViewController: UIViewController, StoryboardLoadable {
     @IBAction func launchMultiLocationWorkflow() {
@@ -34,11 +32,6 @@ class SetupViewController: UIViewController, StoryboardLoadable {
         ]
         launchInto(
             Workflow(LocationsViewController.self)
-                .dependencyInjectionSetup {
-                    $0.register(NetworkManager.self) { _ in
-                        SomeNetworkManager()
-                    }
-                }
                 .thenPresent(PickupOrDeliveryViewController.self)
                 .thenPresent(MenuSelectionViewController.self, flowPersistance: .persistWhenSkipped)
                 .thenPresent(FoodSelectionViewController.self)

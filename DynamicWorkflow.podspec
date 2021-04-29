@@ -32,13 +32,6 @@ iOS has a linear paradigm for navigation that doesn't support a lot of flexibili
   #   ss.dependency 'DynamicWorkflow/Core'
   # end
 
-  s.subspec 'Swinject' do |ss|
-    ss.ios.deployment_target = '11.0'
-    ss.source_files = 'Workflow/Sources/DependencyInjection/**/*.{swift,h}'
-    ss.dependency 'DynamicWorkflow/Core'
-    ss.dependency 'Swinject'
-  end
-
   s.pod_target_xcconfig = {
     'FRAMEWORK_SEARCH_PATHS' => '$(inherited) "$(PLATFORM_DIR)/Developer/Library/Frameworks"',
   }
