@@ -2,9 +2,21 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Workflow.xcodeproj">
+      location = "group:Workflow">
    </FileRef>
    <FileRef
-      location = "group:Pods/Pods.xcodeproj">
+      location = "group:WorkflowExample/WorkflowExample.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:WorkflowSwiftUIExample/WorkflowSwiftUIExample.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:WorkflowLint/WorkflowLint.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:DynamicWorkflow.podspec">
+   </FileRef>
+   <FileRef
+      location = "group:Workflow.xctestplan">
    </FileRef>
 </Workspace>

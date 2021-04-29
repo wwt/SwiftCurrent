@@ -3,7 +3,7 @@
 //  iOSCSS
 //
 //  Created by Tyler Thompson on 11/11/18.
-//  Copyright © 2018 Tyler Thompson. All rights reserved.
+//  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
 
 import Foundation
