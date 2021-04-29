@@ -3,7 +3,7 @@
 //  WorkflowExampleTests
 //
 //  Created by Tyler Thompson on 10/5/19.
-//  Copyright © 2019 Tyler Thompson. All rights reserved.
+//  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
 
 import Foundation

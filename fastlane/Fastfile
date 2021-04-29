@@ -42,7 +42,6 @@ platform :ios do
     podspec_name = "DynamicWorkflow.podspec"
     version = version_bump_podspec(path: podspec_name,
                                    bump_type: type)
-    puts '::set-output name=VERSION::' + version
     update_plist(
       plist_path: "Workflow/Info.plist",
       block: proc do |plist|

@@ -3,11 +3,12 @@
 //  WorkflowTests
 //
 //  Created by Tyler Thompson on 8/26/19.
-//  Copyright © 2019 Tyler Tompson. All rights reserved.
+//  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
 
 import Foundation
 import XCTest
+import UIUTest
 
 @testable import Workflow
 @testable import WorkflowUIKit
@@ -42,7 +43,6 @@ class UIKitPresenterTests: XCTestCase {
 
         let root = UIViewController()
         root.loadForTesting()
-
         root.launchInto(flow)
 
         XCTAssert(UIApplication.topViewController() is FR1)
@@ -1056,7 +1056,6 @@ class UIKitPresenterTests: XCTestCase {
         let root = UIViewController()
         let nav = UINavigationController(rootViewController: root)
         nav.loadForTesting()
-
         class Obj { }
         let obj = Obj()
 
@@ -1094,7 +1093,6 @@ class UIKitPresenterTests: XCTestCase {
         let root = UIViewController()
         let nav = UINavigationController(rootViewController: root)
         nav.loadForTesting()
-
         class Obj { }
         let obj = Obj()
 
@@ -1334,7 +1332,7 @@ class UIKitPresenterTests: XCTestCase {
 
         workflow.abandon(animated: false, onFinish: testCallback)
 
-        waitUntil(UIApplication.topViewController() === controller)
+        XCTAssertUIViewControllerDisplayed(isInstance: controller)
         XCTAssert(controller.viewControllers.isEmpty)
         XCTAssertTrue(UIKitPresenterTests.testCallbackCalled)
     }
@@ -1406,7 +1404,6 @@ class UIKitPresenterTests: XCTestCase {
 
         let root = UIViewController()
         root.loadForTesting()
-
         root.launchInto(
             Workflow(FR1.self)
                 .thenPresent(FR2.self, presentationType: .modal)
@@ -1461,7 +1458,6 @@ class UIKitPresenterTests: XCTestCase {
 
         let root = UIViewController()
         root.loadForTesting()
-
         root.launchInto(
             Workflow(FR1.self)
                 .thenPresent(FR2.self, presentationType: .modal)
