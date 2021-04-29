@@ -18,11 +18,6 @@
         },
         {
           "containerPath" : "container:",
-          "identifier" : "WorkflowDI",
-          "name" : "WorkflowDI"
-        },
-        {
-          "containerPath" : "container:",
           "identifier" : "WorkflowUIKit",
           "name" : "WorkflowUIKit"
         },
@@ -35,13 +30,6 @@
     }
   },
   "testTargets" : [
-    {
-      "target" : {
-        "containerPath" : "container:",
-        "identifier" : "DependencyInjectionTests",
-        "name" : "DependencyInjectionTests"
-      }
-    },
     {
       "target" : {
         "containerPath" : "container:",
@@ -61,13 +49,6 @@
         "containerPath" : "container:..\/WorkflowExample\/WorkflowExample.xcodeproj",
         "identifier" : "CAF58634256CF0E50044C864",
         "name" : "WorkflowUIKitTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/WorkflowSwiftUIExample\/WorkflowSwiftUIExample.xcodeproj",
-        "identifier" : "CAA88E372575F1DC001FC055",
-        "name" : "WorkflowSwiftUIExampleTests"
       }
     }
   ],
