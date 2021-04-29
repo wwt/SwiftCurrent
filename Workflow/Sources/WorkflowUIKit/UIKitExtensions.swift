@@ -191,7 +191,7 @@ extension Workflow {
                                                 guard case.args(let extracted) = data,
                                                       let cast = extracted as? FR.WorkflowInput else { return .default }
                                                 return flowPersistance(cast)
-                                            })
+        })
         return wf
     }
 
