@@ -1,3 +1,5 @@
+//  swiftlint:disable:this file_name
+//  Reason: False positive until additional extensions are added.
 //
 //  NSObjectExtensions.swift
 //  

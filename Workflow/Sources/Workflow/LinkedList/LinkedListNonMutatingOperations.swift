@@ -1,6 +1,8 @@
+//  swiftlint:disable:this file_name
+//  Reason: The file name reflects the contents of the file.
 //
 //  LinkedListNonMutatingOperations.swift
-//  iOSCSS
+//  Workflow
 //
 //  Created by Tyler Thompson on 11/11/18.
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.

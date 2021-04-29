@@ -1,6 +1,8 @@
+//  swiftlint:disable:this file_name
+//  Reason: The file name reflects the contents of the file.
 //
 //  LinkedListMutatingOperations.swift
-//  iOSCSS
+//  Workflow
 //
 //  Created by Tyler Thompson on 11/11/18.
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
@@ -9,7 +11,7 @@
 import Foundation
 extension LinkedList {
     /// append: Appends a new node to the end of the LinkedList
-    /// - Parameter element: The concrete value that should be appeneded
+    /// - Parameter element: The concrete value that should be appended
     /// - Note: This operation mutates the original LinkedList
     public func append(_ element: Value) {
         let node = Element(with: element)
@@ -133,7 +135,7 @@ extension LinkedList {
 
     /// popLast: Removes the last n nodes from the LinkedList and returns the removed concrete type
     /// - Note: This operation mutates the original LinkedList
-    /// - Returns: The concrete type the node encapulsated that was removed
+    /// - Returns: The concrete type the node encapsulated that was removed
     public func popLast() -> Value? {
         let l = last
         guard !(l === first) else {

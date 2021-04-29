@@ -1,6 +1,6 @@
 //
-//  Comparable.swift
-//  iOSCSS
+//  LinkedListComparable.swift
+//  Workflow
 //
 //  Created by Tyler Thompson on 11/11/18.
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
