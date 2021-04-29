@@ -2,9 +2,11 @@ theme: fullwidth
 skip_undocumented: true
 readme: README.md
 module: Workflow
+author_url: https://github.com/wwt/workflow
+github_url: https://github.com/wwt/workflow
 xcodebuild_arguments:
   - -workspace
   - Workflow.xcworkspace
   - -scheme
   - Workflow
-author: Tyler THompson
+author: WWT and Tyler THompson
