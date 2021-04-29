@@ -30,6 +30,10 @@ platform :ios do
     )
   end
 
+  lane :lintfix do 
+    sh('swiftlint --fix --config=../WorkflowLint/.swiftlint.yml')
+  end
+
   desc "Release a new version with a patch bump_type"
   lane :patch do
     release("patch")

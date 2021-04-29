@@ -36,6 +36,11 @@ fastlane ios cocoapods_liblint
 fastlane ios lint
 ```
 
+### ios lintfix
+```
+fastlane ios lintfix
+```
+
 ### ios patch
 ```
 fastlane ios patch
