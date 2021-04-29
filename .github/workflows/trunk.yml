@@ -32,7 +32,6 @@ jobs:
         uses: mikepenz/release-changelog-builder-action@v1.7.3
         with:
           configuration: "changelog_configuration.json"
-          owner: "Tyler-Keith-Thompson"
           ignorePreReleases: "false"
           toTag: ${{ steps.bump_version.outputs.version }}
           token: ${{ secrets.GITHUB_TOKEN }}
