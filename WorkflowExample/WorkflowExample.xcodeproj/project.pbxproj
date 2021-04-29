@@ -359,6 +359,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1220;
 				LastUpgradeCheck = 1220;
+				ORGANIZATIONNAME = "WWT and Tyler Thompson";
 				TargetAttributes = {
 					CAF58529256CEE990044C864 = {
 						CreatedOnToolsVersion = 12.2;
