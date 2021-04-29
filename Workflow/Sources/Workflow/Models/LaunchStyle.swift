@@ -15,7 +15,9 @@ public final class LaunchStyle {
     /// new: A new instance of LaunchStyle. This should really only be used if you are extending launch styles with your own.
     public static var new: LaunchStyle { LaunchStyle() }
 
-    private init() { }
+    private init() {
+        // LaunchStyle is designed to behave like an enum but be extensible. Enums cannot be initialized.
+    }
 }
 
 extension LaunchStyle: Equatable {

@@ -54,7 +54,9 @@ extension FlowRepresentable {
 }
 
 extension FlowRepresentable where WorkflowInput == Never {
-    public mutating func shouldLoad(with args: Never) -> Bool { }
+    public mutating func shouldLoad(with args: Never) -> Bool {
+        // This cannot execute because it takes in Never. There is no implementation possible for this function.
+    }
 
     /// shouldLoad: A method indicating whether it makes sense for this view to load in a workflow
     /// - Returns: Bool

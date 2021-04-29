@@ -22,7 +22,9 @@ public final class FlowPersistance {
     /// default: Indicates a `FlowRepresentable` in a `Workflow` who's `shouldLoad` function returns true should be removed from the viewstack after the workflow progresses past it
     public static let removedAfterProceeding = FlowPersistance()
 
-    private init() { }
+    private init() {
+        // FlowPersistance is designed to behave like an enum but be extensible. Enums cannot be initialized.
+    }
 }
 
 extension FlowPersistance: Equatable {
