@@ -103,7 +103,9 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
     }
 
     private func setupProceedCallbacks(_ node: LinkedList<AnyFlowRepresentable?>.Element, _ onFinish: ((Any?) -> Void)?) {
-        guard let currentMetadataNode = first?.traverse(node.position) else { fatalError("Internal state of workflow completely mangled during configuration of proceed callbacks.") }
+        guard let currentMetadataNode = first?.traverse(node.position) else {
+            fatalError("Internal state of workflow completely mangled during configuration of proceed callbacks.")
+        }
         node.value?.proceedInWorkflowStorage = { [self] args in
             var argsToPass = args
             var viewToPresent: (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetaData)?
@@ -142,7 +144,9 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
     }
 
     private func setupProceedBackwardCallbacks(_ node: LinkedList<AnyFlowRepresentable?>.Element, _ onFinish: ((Any?) -> Void)?) {
-        guard let currentMetadataNode = first?.traverse(node.position) else { fatalError("Internal state of workflow completely mangled during configuration of proceed backward callbacks.") }
+        guard let currentMetadataNode = first?.traverse(node.position) else {
+            fatalError("Internal state of workflow completely mangled during configuration of proceed backward callbacks.")
+        }
         node.value?.proceedBackwardInWorkflowStorage = { [self] in
             let previousLoadedNode = node.traverse(direction: .backward) { previousNode in
                 previousNode.value != nil

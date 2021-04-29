@@ -9,15 +9,19 @@
 import Foundation
 
 class AnyFlowRepresentableStorageBase {
-    var underlyingInstance: Any { fatalError("AnyFlowRepresentableStorageBase called directly, only available internally so something has gone VERY wrong.") }
     var _workflowPointer: AnyFlowRepresentable?
     var workflow: AnyWorkflow?
     var proceedInWorkflowStorage: ((AnyWorkflow.PassedArgs) -> Void)?
     var proceedBackwardInWorkflowStorage: (() -> Void)?
+    var underlyingInstance: Any {
+        fatalError("AnyFlowRepresentableStorageBase called directly, only available internally so something has gone VERY wrong.")
+    }
 
     // https://github.com/Tyler-Keith-Thompson/Workflow/blob/master/STYLEGUIDE.md#type-erasure
     // swiftlint:disable:next unavailable_function
-    func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool { fatalError("AnyFlowRepresentableStorageBase called directly, only available internally so something has gone VERY wrong.") }
+    func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool {
+        fatalError("AnyFlowRepresentableStorageBase called directly, only available internally so something has gone VERY wrong.")
+    }
 }
 
 class AnyFlowRepresentableStorage<FR: FlowRepresentable>: AnyFlowRepresentableStorageBase {

@@ -1,5 +1,7 @@
+//  swiftlint:disable:this file_name
+//  Reason: The file name reflects the contents of the file.
 //
-//  Sorting.swift
+//  LinkedListSorting.swift
 //  Workflow
 //
 //  Created by Tyler Thompson on 11/11/18.
