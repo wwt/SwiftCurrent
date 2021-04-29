@@ -17,12 +17,6 @@
       location = "group:DynamicWorkflow.podspec">
    </FileRef>
    <FileRef
-      location = "group:deploy_pod.sh">
-   </FileRef>
-   <FileRef
-      location = "group:.travis.yml">
-   </FileRef>
-   <FileRef
       location = "group:Workflow.xctestplan">
    </FileRef>
 </Workspace>
