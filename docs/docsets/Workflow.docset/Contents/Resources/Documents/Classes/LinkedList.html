@@ -21,9 +21,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
-          Workflow 1.0.28 Docs
+          Workflow 3.0.0 Docs
         </a>
-         (74% documented)
+         (83% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -54,13 +54,16 @@
             <a class="nav-group-name-link" href="../Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/FlowPersistance.html">FlowPersistance</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/LaunchStyle.html">LaunchStyle</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/LinkedList.html">LinkedList</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/LinkedList/Node.html">– Node</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes.html#/s:8Workflow14UIWorkflowItemC">UIWorkflowItem</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/Workflow.html">Workflow</a>
@@ -68,21 +71,13 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/PresentationType.html">PresentationType</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/ViewPersistance.html">ViewPersistance</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
             <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Extensions/UIViewController.html">UIViewController</a>
+                <a class="nav-group-task-link" href="../Extensions/Notification.html">Notification</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Notification/Name.html">– Name</a>
               </li>
             </ul>
           </li>
@@ -90,13 +85,7 @@
             <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/AnyFlowRepresentable.html">AnyFlowRepresentable</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/FlowRepresentable.html">FlowRepresentable</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/Presenter.html">Presenter</a>
               </li>
             </ul>
           </li>
@@ -111,7 +100,7 @@
                 <div class="language">
                   
                   <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">LinkedList</span><span class="o">&lt;</span><span class="kt">Value</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt">Sequence</span><span class="p">,</span> <span class="kt">CustomStringConvertible</span></code></pre>
-<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">LinkedList</span> <span class="p">:</span> <span class="kt">Equatable</span> <span class="k">where</span> <span class="kt">Value</span> <span class="p">:</span> <span class="kt">Equatable</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">LinkedList</span><span class="p">:</span> <span class="kt">Equatable</span> <span class="k">where</span> <span class="kt">Value</span><span class="p">:</span> <span class="kt">Equatable</span></code></pre>
 
                 </div>
               </div>
@@ -413,7 +402,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">node</span><span class="p">:</span> <span class="kt"><a href="../Classes/LinkedList.html#/s:ST7ElementQa">Element</a></span><span class="p">?)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">required</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">node</span><span class="p">:</span> <span class="kt"><a href="../Classes/LinkedList.html#/s:ST7ElementQa">Element</a></span><span class="p">?)</span></code></pre>
 
                         </div>
                       </div>
@@ -720,6 +709,57 @@
                               <td>
                                 <div>
                                   <p>The index the value should be removed from</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Workflow10LinkedListC6remove5whereySbAC4NodeCyx_xGXE_tF"></a>
+                    <a name="//apple_ref/swift/Method/remove(where:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow10LinkedListC6remove5whereySbAC4NodeCyx_xGXE_tF">remove(where:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>remove(where): Removes a node at the specified index</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This operation mutates the original LinkedList
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">remove</span><span class="p">(</span><span class="k">where</span> <span class="nv">predicate</span><span class="p">:</span> <span class="p">(</span><span class="kt"><a href="../Classes/LinkedList.html#/s:ST7ElementQa">Element</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>predicate</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure indicating whether that node should be removed</p>
                                 </div>
                               </td>
                             </tr>
@@ -1636,15 +1676,73 @@
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Available%20where%20%60Value%60%20%3A%20%60Comparable%60"></a>
-                <a name="//apple_ref/swift/Section/Available where `Value` : `Comparable`" class="dashAnchor"></a>
+                <a name="/Available%20where%20%60Value%60%3A%20%60Comparable%60"></a>
+                <a name="//apple_ref/swift/Section/Available where `Value`: `Comparable`" class="dashAnchor"></a>
                 <div class="section-name-container">
-                  <a class="section-name-link" href="#/Available%20where%20%60Value%60%20%3A%20%60Comparable%60"></a>
-                  <h3 class="section-name"><p>Available where <code>Value</code> : <code>Comparable</code></p>
+                  <a class="section-name-link" href="#/Available%20where%20%60Value%60%3A%20%60Comparable%60"></a>
+                  <h3 class="section-name"><p>Available where <code>Value</code>: <code>Comparable</code></p>
 </h3>
                 </div>
               </div>
               <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Workflow10LinkedListCAASLRzlE4sortyyF"></a>
+                    <a name="//apple_ref/swift/Method/sort()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow10LinkedListCAASLRzlE4sortyyF">sort()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>sort: Sorts the linked list in place using a merge sort</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">sort</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Workflow10LinkedListCAASLRzlE6sortedACyxGyF"></a>
+                    <a name="//apple_ref/swift/Method/sorted()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow10LinkedListCAASLRzlE6sortedACyxGyF">sorted()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>sorted: A non-mutating sort method</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">sorted</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">LinkedList</span><span class="o">&lt;</span><span class="kt">Value</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A sorted version of the LinkedList</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
                 <li class="item">
                   <div>
                     <code>
@@ -1711,11 +1809,11 @@
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Available%20where%20%60Value%60%20%3A%20%60Equatable%60"></a>
-                <a name="//apple_ref/swift/Section/Available where `Value` : `Equatable`" class="dashAnchor"></a>
+                <a name="/Available%20where%20%60Value%60%3A%20%60Equatable%60"></a>
+                <a name="//apple_ref/swift/Section/Available where `Value`: `Equatable`" class="dashAnchor"></a>
                 <div class="section-name-container">
-                  <a class="section-name-link" href="#/Available%20where%20%60Value%60%20%3A%20%60Equatable%60"></a>
-                  <h3 class="section-name"><p>Available where <code>Value</code> : <code>Equatable</code></p>
+                  <a class="section-name-link" href="#/Available%20where%20%60Value%60%3A%20%60Equatable%60"></a>
+                  <h3 class="section-name"><p>Available where <code>Value</code>: <code>Equatable</code></p>
 </h3>
                 </div>
               </div>

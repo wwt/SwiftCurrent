@@ -21,9 +21,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
-          Workflow 1.0.28 Docs
+          Workflow 3.0.0 Docs
         </a>
-         (74% documented)
+         (83% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -54,13 +54,16 @@
             <a class="nav-group-name-link" href="../Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/FlowPersistance.html">FlowPersistance</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/LaunchStyle.html">LaunchStyle</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/LinkedList.html">LinkedList</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/LinkedList/Node.html">– Node</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes.html#/s:8Workflow14UIWorkflowItemC">UIWorkflowItem</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/Workflow.html">Workflow</a>
@@ -68,21 +71,13 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/PresentationType.html">PresentationType</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/ViewPersistance.html">ViewPersistance</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
             <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Extensions/UIViewController.html">UIViewController</a>
+                <a class="nav-group-task-link" href="../Extensions/Notification.html">Notification</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Notification/Name.html">– Name</a>
               </li>
             </ul>
           </li>
@@ -90,13 +85,7 @@
             <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/AnyFlowRepresentable.html">AnyFlowRepresentable</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/FlowRepresentable.html">FlowRepresentable</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/Presenter.html">Presenter</a>
               </li>
             </ul>
           </li>
@@ -110,25 +99,23 @@
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Workflow</span> <span class="p">:</span> <span class="kt"><a href="../Classes/LinkedList.html">LinkedList</a></span><span class="o">&lt;</span><span class="kt">FlowRepresentableMetaData</span><span class="o">&gt;</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">Workflow</span><span class="o">&lt;</span><span class="kt">F</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt">AnyWorkflow</span> <span class="k">where</span> <span class="kt">F</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></span></code></pre>
 
                 </div>
               </div>
             <p>Workflow: A doubly linked list of AnyFlowRepresentable types. Can be used to create a user flow.</p>
 
 <p>Examples:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">workflow</span> <span class="o">=</span> <span class="kt">Workflow</span><span class="p">()</span>
-                   <span class="o">.</span><span class="nf">thenPresent</span><span class="p">(</span><span class="kt">SomeFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
-                   <span class="o">.</span><span class="nf">thenPResent</span><span class="p">(</span><span class="kt">SomeOtherFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">presentationType</span><span class="p">:</span> <span class="o">.</span><span class="n">navigationStack</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">workflow</span> <span class="o">=</span> <span class="kt">Workflow</span><span class="p">(</span><span class="kt">SomeFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+<span class="o">.</span><span class="nf">thenPresent</span><span class="p">(</span><span class="kt">SomeOtherFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">launchStyle</span><span class="p">:</span> <span class="o">.</span><span class="n">navigationStack</span><span class="p">)</span>
 </code></pre>
 <h3 id='discussion' class='heading'>Discussion:</h3>
 
 <p>In a sufficiently complex application it may make sense to create a structure to hold onto all the workflows in an application.
 Example</p>
 <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">Workflows</span> <span class="p">{</span>
-   <span class="kd">static</span> <span class="k">let</span> <span class="nv">schedulingFlow</span> <span class="o">=</span> <span class="kt">Workflow</span><span class="p">()</span>
-                                <span class="o">.</span><span class="nf">thenPresent</span><span class="p">(</span><span class="kt">SomeFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
-                                <span class="o">.</span><span class="nf">thenPResent</span><span class="p">(</span><span class="kt">SomeOtherFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">presentationType</span><span class="p">:</span> <span class="o">.</span><span class="n">navigationStack</span><span class="p">)</span>
+<span class="kd">static</span> <span class="k">let</span> <span class="nv">schedulingFlow</span> <span class="o">=</span> <span class="kt">Workflow</span><span class="p">(</span><span class="kt">SomeFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+<span class="o">.</span><span class="nf">thenPresent</span><span class="p">(</span><span class="kt">SomeOtherFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">launchStyle</span><span class="p">:</span> <span class="o">.</span><span class="n">navigationStack</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre>
 
@@ -142,9 +129,9 @@ Example</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WorkflowAAC11thenPresent_16presentationType16staysInViewStackABxm_AA012PresentationE0OAA0H11PersistanceOyXAtAA17FlowRepresentableRzlF"></a>
-                    <a name="//apple_ref/swift/Method/thenPresent(_:presentationType:staysInViewStack:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WorkflowAAC11thenPresent_16presentationType16staysInViewStackABxm_AA012PresentationE0OAA0H11PersistanceOyXAtAA17FlowRepresentableRzlF">thenPresent(_:<wbr>presentationType:<wbr>staysInViewStack:<wbr>)</a>
+                    <a name="/s:8WorkflowAACyAByxGAA10LinkedListC4NodeCyAA25FlowRepresentableMetaDataC_AIGSgcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WorkflowAACyAByxGAA10LinkedListC4NodeCyAA25FlowRepresentableMetaDataC_AIGSgcfc">init(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -152,14 +139,42 @@ Example</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>thenPresent: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements</p>
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">required</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">node</span><span class="p">:</span> <span class="kt">AnyWorkflow</span><span class="o">.</span><span class="kt">Element</span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WorkflowAAC_11launchStyle15flowPersistanceAByxGxm_AA06LaunchC0CAA04FlowE0CyXAtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(_:launchStyle:flowPersistance:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WorkflowAAC_11launchStyle15flowPersistanceAByxGxm_AA06LaunchC0CAA04FlowE0CyXAtcfc">init(_:<wbr>launchStyle:<wbr>flowPersistance:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>init: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">thenPresent</span><span class="o">&lt;</span><span class="kt">F</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">F</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">presentationType</span><span class="p">:</span> <span class="kt"><a href="../Enums/PresentationType.html">PresentationType</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span> <span class="nv">staysInViewStack</span><span class="p">:</span> <span class="kd">@autoclosure</span> <span class="kd">@escaping</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Enums/ViewPersistance.html">ViewPersistance</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Workflow</span> <span class="k">where</span> <span class="kt">F</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">F</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span>
+                        <span class="nv">launchStyle</span><span class="p">:</span> <span class="kt"><a href="../Classes/LaunchStyle.html">LaunchStyle</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span>
+                        <span class="nv">flowPersistance</span><span class="p">:</span><span class="kd">@escaping</span> <span class="kd">@autoclosure</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/FlowPersistance.html">FlowPersistance</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -182,24 +197,24 @@ Example</p>
                             <tr>
                               <td>
                                 <code>
-                                <em>presentationType</em>
+                                <em>launchStyle</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>A <code><a href="../Enums/PresentationType.html">PresentationType</a></code> the flow representable should use while it&rsquo;s part of this workflow</p>
+                                  <p>A <code><a href="../Classes/LaunchStyle.html">LaunchStyle</a></code> the flow representable should use while it&rsquo;s part of this workflow</p>
                                 </div>
                               </td>
                             </tr>
                             <tr>
                               <td>
                                 <code>
-                                <em>staysInViewStack</em>
+                                <em>flowPersistance</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>An <code><a href="../Enums/ViewPersistance.html">ViewPersistance</a></code>type representing how this item in the workflow should persist.</p>
+                                  <p>An <code><a href="../Classes/FlowPersistance.html">FlowPersistance</a></code>type representing how this item in the workflow should persist.</p>
                                 </div>
                               </td>
                             </tr>
@@ -216,9 +231,9 @@ Example</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WorkflowAAC11thenPresent_16presentationType16staysInViewStackABxm_AA012PresentationE0OAA0H11PersistanceO06IntakeE0QzctAA17FlowRepresentableRzlF"></a>
-                    <a name="//apple_ref/swift/Method/thenPresent(_:presentationType:staysInViewStack:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WorkflowAAC11thenPresent_16presentationType16staysInViewStackABxm_AA012PresentationE0OAA0H11PersistanceO06IntakeE0QzctAA17FlowRepresentableRzlF">thenPresent(_:<wbr>presentationType:<wbr>staysInViewStack:<wbr>)</a>
+                    <a name="/s:8WorkflowAAC_11launchStyle15flowPersistanceAByxGxm_AA06LaunchC0CAA04FlowE0C0A5InputQzctcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(_:launchStyle:flowPersistance:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WorkflowAAC_11launchStyle15flowPersistanceAByxGxm_AA06LaunchC0CAA04FlowE0C0A5InputQzctcfc">init(_:<wbr>launchStyle:<wbr>flowPersistance:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -226,14 +241,16 @@ Example</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>thenPresent: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements</p>
+                        <p>init: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">thenPresent</span><span class="o">&lt;</span><span class="kt">F</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">F</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">presentationType</span><span class="p">:</span> <span class="kt"><a href="../Enums/PresentationType.html">PresentationType</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span> <span class="nv">staysInViewStack</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">F</span><span class="o">.</span><span class="kt">IntakeType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Enums/ViewPersistance.html">ViewPersistance</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Workflow</span> <span class="k">where</span> <span class="kt">F</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">F</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span>
+                        <span class="nv">launchStyle</span><span class="p">:</span> <span class="kt"><a href="../Classes/LaunchStyle.html">LaunchStyle</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span>
+                        <span class="nv">flowPersistance</span><span class="p">:</span><span class="kd">@escaping</span> <span class="p">(</span><span class="kt">F</span><span class="o">.</span><span class="kt">WorkflowInput</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/FlowPersistance.html">FlowPersistance</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -256,24 +273,24 @@ Example</p>
                             <tr>
                               <td>
                                 <code>
-                                <em>presentationType</em>
+                                <em>launchStyle</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>A <code><a href="../Enums/PresentationType.html">PresentationType</a></code> the flow representable should use while it&rsquo;s part of this workflow</p>
+                                  <p>A <code><a href="../Classes/LaunchStyle.html">LaunchStyle</a></code> the flow representable should use while it&rsquo;s part of this workflow</p>
                                 </div>
                               </td>
                             </tr>
                             <tr>
                               <td>
                                 <code>
-                                <em>staysInViewStack</em>
+                                <em>flowPersistance</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>A closure taking in the generic type from the <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> and returning a <code><a href="../Enums/ViewPersistance.html">ViewPersistance</a></code>type representing how this item in the workflow should persist.</p>
+                                  <p>A closure taking in the generic type from the <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> and returning a <code><a href="../Classes/FlowPersistance.html">FlowPersistance</a></code>type representing how this item in the workflow should persist.</p>
                                 </div>
                               </td>
                             </tr>
@@ -290,9 +307,9 @@ Example</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WorkflowAAC11thenPresent_16presentationType16staysInViewStackABxm_AA012PresentationE0OAA0H11PersistanceOyctAA17FlowRepresentableRzs5NeverO06IntakeE0RtzlF"></a>
-                    <a name="//apple_ref/swift/Method/thenPresent(_:presentationType:staysInViewStack:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WorkflowAAC11thenPresent_16presentationType16staysInViewStackABxm_AA012PresentationE0OAA0H11PersistanceOyctAA17FlowRepresentableRzs5NeverO06IntakeE0RtzlF">thenPresent(_:<wbr>presentationType:<wbr>staysInViewStack:<wbr>)</a>
+                    <a name="/s:8WorkflowAAC_11launchStyle15flowPersistanceAByxGxm_AA06LaunchC0CAA04FlowE0Cyctcs5NeverO0A5InputRtzrlufc"></a>
+                    <a name="//apple_ref/swift/Method/init(_:launchStyle:flowPersistance:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WorkflowAAC_11launchStyle15flowPersistanceAByxGxm_AA06LaunchC0CAA04FlowE0Cyctcs5NeverO0A5InputRtzrlufc">init(_:<wbr>launchStyle:<wbr>flowPersistance:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -300,14 +317,16 @@ Example</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>thenPresent: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements</p>
+                        <p>init: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">thenPresent</span><span class="o">&lt;</span><span class="kt">F</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">F</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">presentationType</span><span class="p">:</span> <span class="kt"><a href="../Enums/PresentationType.html">PresentationType</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span> <span class="nv">staysInViewStack</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Enums/ViewPersistance.html">ViewPersistance</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Workflow</span> <span class="k">where</span> <span class="kt">F</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></span><span class="p">,</span> <span class="kt">F</span><span class="o">.</span><span class="kt">IntakeType</span> <span class="o">==</span> <span class="kt">Never</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">F</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span>
+                        <span class="nv">launchStyle</span><span class="p">:</span> <span class="kt"><a href="../Classes/LaunchStyle.html">LaunchStyle</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span>
+                        <span class="nv">flowPersistance</span><span class="p">:</span><span class="kd">@escaping</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/FlowPersistance.html">FlowPersistance</a></span><span class="p">)</span> <span class="k">where</span> <span class="kt">F</span><span class="o">.</span><span class="kt">WorkflowInput</span> <span class="o">==</span> <span class="kt">Never</span></code></pre>
 
                         </div>
                       </div>
@@ -330,24 +349,24 @@ Example</p>
                             <tr>
                               <td>
                                 <code>
-                                <em>presentationType</em>
+                                <em>launchStyle</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>A <code><a href="../Enums/PresentationType.html">PresentationType</a></code> the flow representable should use while it&rsquo;s part of this workflow</p>
+                                  <p>A <code><a href="../Classes/LaunchStyle.html">LaunchStyle</a></code> the flow representable should use while it&rsquo;s part of this workflow</p>
                                 </div>
                               </td>
                             </tr>
                             <tr>
                               <td>
                                 <code>
-                                <em>staysInViewStack</em>
+                                <em>flowPersistance</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>A closure returning a <code><a href="../Enums/ViewPersistance.html">ViewPersistance</a></code>type representing how this item in the workflow should persist.</p>
+                                  <p>A closure returning a <code><a href="../Classes/FlowPersistance.html">FlowPersistance</a></code>type representing how this item in the workflow should persist.</p>
                                 </div>
                               </td>
                             </tr>
@@ -364,9 +383,9 @@ Example</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WorkflowAAC7abandon8animated8onFinishySb_yycSgtF"></a>
-                    <a name="//apple_ref/swift/Method/abandon(animated:onFinish:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WorkflowAAC7abandon8animated8onFinishySb_yycSgtF">abandon(animated:<wbr>onFinish:<wbr>)</a>
+                    <a name="/s:8WorkflowAAC_11launchStyle15flowPersistanceAByxGxm_AA06LaunchC0CAA04FlowE0CyctcAA03AnyA0C10PassedArgsO0A5InputRtzrlufc"></a>
+                    <a name="//apple_ref/swift/Method/init(_:launchStyle:flowPersistance:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WorkflowAAC_11launchStyle15flowPersistanceAByxGxm_AA06LaunchC0CAA04FlowE0CyctcAA03AnyA0C10PassedArgsO0A5InputRtzrlufc">init(_:<wbr>launchStyle:<wbr>flowPersistance:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -374,81 +393,16 @@ Example</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>abandon: Called when the workflow should be terminated, and the app should return to the point before the workflow was launched</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    In order for this to function the workflow must have a presenter, presenters must call back to the workflow to inform when the abandon process has finished for the onFinish callback to be called.
-
-</div>
+                        <p>init: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">abandon</span><span class="p">(</span><span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">onFinish</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>animated</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>A boolean indicating whether abandoning the workflow should be animated</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>onFinish</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>A callback after the workflow has been abandoned.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>Void</p>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8WorkflowAAC11thenPresent_16presentationType16staysInViewStack24dependencyInjectionSetupABxm_AA012PresentationE0OAA0H11PersistanceOyXAy8Swinject9ContainerCcSgtAA17FlowRepresentableRzlF"></a>
-                    <a name="//apple_ref/swift/Method/thenPresent(_:presentationType:staysInViewStack:dependencyInjectionSetup:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WorkflowAAC11thenPresent_16presentationType16staysInViewStack24dependencyInjectionSetupABxm_AA012PresentationE0OAA0H11PersistanceOyXAy8Swinject9ContainerCcSgtAA17FlowRepresentableRzlF">thenPresent(_:<wbr>presentationType:<wbr>staysInViewStack:<wbr>dependencyInjectionSetup:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>thenPresent: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="n">thenPresent</span><span class="o">&lt;</span><span class="kt">F</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">F</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">presentationType</span><span class="p">:</span> <span class="kt"><a href="../Enums/PresentationType.html">PresentationType</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span> <span class="nv">staysInViewStack</span><span class="p">:</span> <span class="kd">@autoclosure</span> <span class="kd">@escaping</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Enums/ViewPersistance.html">ViewPersistance</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span> <span class="nv">dependencyInjectionSetup</span><span class="p">:</span> <span class="p">((</span><span class="kt">Container</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Workflow</span> <span class="k">where</span> <span class="kt">F</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">F</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span>
+                        <span class="nv">launchStyle</span><span class="p">:</span> <span class="kt"><a href="../Classes/LaunchStyle.html">LaunchStyle</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span>
+                        <span class="nv">flowPersistance</span><span class="p">:</span><span class="kd">@escaping</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/FlowPersistance.html">FlowPersistance</a></span><span class="p">)</span> <span class="k">where</span> <span class="kt">F</span><span class="o">.</span><span class="kt">WorkflowInput</span> <span class="o">==</span> <span class="kt">AnyWorkflow</span><span class="o">.</span><span class="kt">PassedArgs</span></code></pre>
 
                         </div>
                       </div>
@@ -471,36 +425,24 @@ Example</p>
                             <tr>
                               <td>
                                 <code>
-                                <em>presentationType</em>
+                                <em>launchStyle</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>A <code><a href="../Enums/PresentationType.html">PresentationType</a></code> the flow representable should use while it&rsquo;s part of this workflow</p>
+                                  <p>A <code><a href="../Classes/LaunchStyle.html">LaunchStyle</a></code> the flow representable should use while it&rsquo;s part of this workflow</p>
                                 </div>
                               </td>
                             </tr>
                             <tr>
                               <td>
                                 <code>
-                                <em>staysInViewStack</em>
+                                <em>flowPersistance</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>An <code><a href="../Enums/ViewPersistance.html">ViewPersistance</a></code>type representing how this item in the workflow should persist.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>dependencyInjectionSetup</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>A closure that hands off a <code>Container</code> for you to set up Dependency Injection</p>
+                                  <p>A closure returning a <code><a href="../Classes/FlowPersistance.html">FlowPersistance</a></code>type representing how this item in the workflow should persist.</p>
                                 </div>
                               </td>
                             </tr>
@@ -517,9 +459,9 @@ Example</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WorkflowAAC11thenPresent_16presentationType16staysInViewStack24dependencyInjectionSetupABxm_AA012PresentationE0OAA0H11PersistanceO06IntakeE0Qzcy8Swinject9ContainerCcSgtAA17FlowRepresentableRzlF"></a>
-                    <a name="//apple_ref/swift/Method/thenPresent(_:presentationType:staysInViewStack:dependencyInjectionSetup:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WorkflowAAC11thenPresent_16presentationType16staysInViewStack24dependencyInjectionSetupABxm_AA012PresentationE0OAA0H11PersistanceO06IntakeE0Qzcy8Swinject9ContainerCcSgtAA17FlowRepresentableRzlF">thenPresent(_:<wbr>presentationType:<wbr>staysInViewStack:<wbr>dependencyInjectionSetup:<wbr>)</a>
+                    <a name="/s:8WorkflowAAC11thenPresent_11launchStyle15flowPersistanceAByqd__Gqd__m_AA06LaunchE0CAA04FlowG0CyXAtAA0I13RepresentableRd__0A5InputQyd__0A6OutputRtzlF"></a>
+                    <a name="//apple_ref/swift/Method/thenPresent(_:launchStyle:flowPersistance:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WorkflowAAC11thenPresent_11launchStyle15flowPersistanceAByqd__Gqd__m_AA06LaunchE0CAA04FlowG0CyXAtAA0I13RepresentableRd__0A5InputQyd__0A6OutputRtzlF">thenPresent(_:<wbr>launchStyle:<wbr>flowPersistance:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -527,14 +469,16 @@ Example</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>thenPresent: A way of creating workflows with a fluid API. Useful for complex workflows with difficult requirements</p>
+                        <p>thenPresent: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="n">thenPresent</span><span class="o">&lt;</span><span class="kt">F</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">F</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">presentationType</span><span class="p">:</span> <span class="kt"><a href="../Enums/PresentationType.html">PresentationType</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span> <span class="nv">staysInViewStack</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">F</span><span class="o">.</span><span class="kt">IntakeType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Enums/ViewPersistance.html">ViewPersistance</a></span><span class="p">,</span> <span class="nv">dependencyInjectionSetup</span><span class="p">:</span> <span class="p">((</span><span class="kt">Container</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Workflow</span> <span class="k">where</span> <span class="kt">F</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">thenPresent</span><span class="o">&lt;</span><span class="kt">FR</span><span class="p">:</span> <span class="kt"><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">FR</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span>
+                                               <span class="nv">launchStyle</span><span class="p">:</span> <span class="kt"><a href="../Classes/LaunchStyle.html">LaunchStyle</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span>
+                                               <span class="nv">flowPersistance</span><span class="p">:</span><span class="kd">@escaping</span> <span class="kd">@autoclosure</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/FlowPersistance.html">FlowPersistance</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Workflow</span><span class="o">&lt;</span><span class="kt">FR</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">F</span><span class="o">.</span><span class="kt">WorkflowOutput</span> <span class="o">==</span> <span class="kt">FR</span><span class="o">.</span><span class="kt">WorkflowInput</span></code></pre>
 
                         </div>
                       </div>
@@ -557,36 +501,24 @@ Example</p>
                             <tr>
                               <td>
                                 <code>
-                                <em>presentationType</em>
+                                <em>launchStyle</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>A <code><a href="../Enums/PresentationType.html">PresentationType</a></code> the flow representable should use while it&rsquo;s part of this workflow</p>
+                                  <p>A <code><a href="../Classes/LaunchStyle.html">LaunchStyle</a></code> the flow representable should use while it&rsquo;s part of this workflow</p>
                                 </div>
                               </td>
                             </tr>
                             <tr>
                               <td>
                                 <code>
-                                <em>staysInViewStack</em>
+                                <em>flowPersistance</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>A closure taking in the generic type from the <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> and returning a <code><a href="../Enums/ViewPersistance.html">ViewPersistance</a></code>type representing how this item in the workflow should persist.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>dependencyInjectionSetup</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>A closure that hands off a <code>Container</code> for you to set up Dependency Injection</p>
+                                  <p>An <code><a href="../Classes/FlowPersistance.html">FlowPersistance</a></code>type representing how this item in the workflow should persist.</p>
                                 </div>
                               </td>
                             </tr>
@@ -603,9 +535,9 @@ Example</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WorkflowAAC11thenPresent_16presentationType16staysInViewStack24dependencyInjectionSetupABxm_AA012PresentationE0OAA0H11PersistanceOycy8Swinject9ContainerCcSgtAA17FlowRepresentableRzs5NeverO06IntakeE0RtzlF"></a>
-                    <a name="//apple_ref/swift/Method/thenPresent(_:presentationType:staysInViewStack:dependencyInjectionSetup:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WorkflowAAC11thenPresent_16presentationType16staysInViewStack24dependencyInjectionSetupABxm_AA012PresentationE0OAA0H11PersistanceOycy8Swinject9ContainerCcSgtAA17FlowRepresentableRzs5NeverO06IntakeE0RtzlF">thenPresent(_:<wbr>presentationType:<wbr>staysInViewStack:<wbr>dependencyInjectionSetup:<wbr>)</a>
+                    <a name="/s:8WorkflowAAC11thenPresent_11launchStyle15flowPersistanceAByqd__Gqd__m_AA06LaunchE0CAA04FlowG0C0A6OutputQzctAA0I13RepresentableRd__0A5InputQyd__ALRSlF"></a>
+                    <a name="//apple_ref/swift/Method/thenPresent(_:launchStyle:flowPersistance:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WorkflowAAC11thenPresent_11launchStyle15flowPersistanceAByqd__Gqd__m_AA06LaunchE0CAA04FlowG0C0A6OutputQzctAA0I13RepresentableRd__0A5InputQyd__ALRSlF">thenPresent(_:<wbr>launchStyle:<wbr>flowPersistance:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -620,7 +552,9 @@ Example</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="n">thenPresent</span><span class="o">&lt;</span><span class="kt">F</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">F</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">presentationType</span><span class="p">:</span> <span class="kt"><a href="../Enums/PresentationType.html">PresentationType</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span> <span class="nv">staysInViewStack</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Enums/ViewPersistance.html">ViewPersistance</a></span><span class="p">,</span> <span class="nv">dependencyInjectionSetup</span><span class="p">:</span> <span class="p">((</span><span class="kt">Container</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Workflow</span> <span class="k">where</span> <span class="kt">F</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></span><span class="p">,</span> <span class="kt">F</span><span class="o">.</span><span class="kt">IntakeType</span> <span class="o">==</span> <span class="kt">Never</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">thenPresent</span><span class="o">&lt;</span><span class="kt">FR</span><span class="p">:</span> <span class="kt"><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">FR</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span>
+                                               <span class="nv">launchStyle</span><span class="p">:</span> <span class="kt"><a href="../Classes/LaunchStyle.html">LaunchStyle</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span>
+                                               <span class="nv">flowPersistance</span><span class="p">:</span><span class="kd">@escaping</span> <span class="p">(</span><span class="kt">FR</span><span class="o">.</span><span class="kt">WorkflowInput</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/FlowPersistance.html">FlowPersistance</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Workflow</span><span class="o">&lt;</span><span class="kt">FR</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">F</span><span class="o">.</span><span class="kt">WorkflowOutput</span> <span class="o">==</span> <span class="kt">FR</span><span class="o">.</span><span class="kt">WorkflowInput</span></code></pre>
 
                         </div>
                       </div>
@@ -643,36 +577,343 @@ Example</p>
                             <tr>
                               <td>
                                 <code>
-                                <em>presentationType</em>
+                                <em>launchStyle</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>A <code><a href="../Enums/PresentationType.html">PresentationType</a></code> the flow representable should use while it&rsquo;s part of this workflow</p>
+                                  <p>A <code><a href="../Classes/LaunchStyle.html">LaunchStyle</a></code> the flow representable should use while it&rsquo;s part of this workflow</p>
                                 </div>
                               </td>
                             </tr>
                             <tr>
                               <td>
                                 <code>
-                                <em>staysInViewStack</em>
+                                <em>flowPersistance</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>A closure returning a <code><a href="../Enums/ViewPersistance.html">ViewPersistance</a></code>type representing how this item in the workflow should persist.</p>
+                                  <p>A closure taking in the generic type from the <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> and returning a <code><a href="../Classes/FlowPersistance.html">FlowPersistance</a></code>type representing how this item in the workflow should persist.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>Workflow</code></p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WorkflowAAC11thenPresent_11launchStyle15flowPersistanceAByqd__Gqd__m_AA06LaunchE0CAA04FlowG0CyXAtAA0I13RepresentableRd__s5NeverO0A5InputRtd__lF"></a>
+                    <a name="//apple_ref/swift/Method/thenPresent(_:launchStyle:flowPersistance:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WorkflowAAC11thenPresent_11launchStyle15flowPersistanceAByqd__Gqd__m_AA06LaunchE0CAA04FlowG0CyXAtAA0I13RepresentableRd__s5NeverO0A5InputRtd__lF">thenPresent(_:<wbr>launchStyle:<wbr>flowPersistance:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>thenPresent: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">thenPresent</span><span class="o">&lt;</span><span class="kt">FR</span><span class="p">:</span> <span class="kt"><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">FR</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span>
+                                               <span class="nv">launchStyle</span><span class="p">:</span> <span class="kt"><a href="../Classes/LaunchStyle.html">LaunchStyle</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span>
+                                               <span class="nv">flowPersistance</span><span class="p">:</span><span class="kd">@escaping</span> <span class="kd">@autoclosure</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/FlowPersistance.html">FlowPersistance</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Workflow</span><span class="o">&lt;</span><span class="kt">FR</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">FR</span><span class="o">.</span><span class="kt">WorkflowInput</span> <span class="o">==</span> <span class="kt">Never</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>type</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A reference to the class used to create the workflow</p>
                                 </div>
                               </td>
                             </tr>
                             <tr>
                               <td>
                                 <code>
-                                <em>dependencyInjectionSetup</em>
+                                <em>launchStyle</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>A closure that hands off a <code>Container</code> for you to set up Dependency Injection</p>
+                                  <p>A <code><a href="../Classes/LaunchStyle.html">LaunchStyle</a></code> the flow representable should use while it&rsquo;s part of this workflow</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>flowPersistance</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure returning a <code><a href="../Classes/FlowPersistance.html">FlowPersistance</a></code>type representing how this item in the workflow should persist.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>Workflow</code></p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WorkflowAAC11thenPresent_11launchStyle15flowPersistanceAByqd__Gqd__m_AA06LaunchE0CAA04FlowG0CyXAtAA0I13RepresentableRd__AA03AnyA0C10PassedArgsO0A5InputRtd__lF"></a>
+                    <a name="//apple_ref/swift/Method/thenPresent(_:launchStyle:flowPersistance:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WorkflowAAC11thenPresent_11launchStyle15flowPersistanceAByqd__Gqd__m_AA06LaunchE0CAA04FlowG0CyXAtAA0I13RepresentableRd__AA03AnyA0C10PassedArgsO0A5InputRtd__lF">thenPresent(_:<wbr>launchStyle:<wbr>flowPersistance:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>thenPresent: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">thenPresent</span><span class="o">&lt;</span><span class="kt">FR</span><span class="p">:</span> <span class="kt"><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">FR</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span>
+                                               <span class="nv">launchStyle</span><span class="p">:</span> <span class="kt"><a href="../Classes/LaunchStyle.html">LaunchStyle</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span>
+                                               <span class="nv">flowPersistance</span><span class="p">:</span><span class="kd">@escaping</span> <span class="kd">@autoclosure</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/FlowPersistance.html">FlowPersistance</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Workflow</span><span class="o">&lt;</span><span class="kt">FR</span><span class="o">&gt;</span>
+<span class="k">where</span> <span class="kt">FR</span><span class="o">.</span><span class="kt">WorkflowInput</span> <span class="o">==</span> <span class="kt">AnyWorkflow</span><span class="o">.</span><span class="kt">PassedArgs</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>type</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A reference to the class used to create the workflow</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>launchStyle</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A <code><a href="../Classes/LaunchStyle.html">LaunchStyle</a></code> the flow representable should use while it&rsquo;s part of this workflow</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>flowPersistance</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure returning a <code><a href="../Classes/FlowPersistance.html">FlowPersistance</a></code>type representing how this item in the workflow should persist.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>Workflow</code></p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Available%20where%20%60F.WorkflowOutput%60%20%3D%3D%20%60Never%60"></a>
+                <a name="//apple_ref/swift/Section/Available where `F.WorkflowOutput` == `Never`" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Available%20where%20%60F.WorkflowOutput%60%20%3D%3D%20%60Never%60"></a>
+                  <h3 class="section-name"><p>Available where <code>F.WorkflowOutput</code> == <code>Never</code></p>
+</h3>
+                </div>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WorkflowAACAAs5NeverO0A6OutputRtzrlE11thenPresent_11launchStyle15flowPersistanceAByqd__Gqd__m_AA06LaunchG0CAA04FlowI0CyXAtAA0K13RepresentableRd__AD0A5InputRtd__lF"></a>
+                    <a name="//apple_ref/swift/Method/thenPresent(_:launchStyle:flowPersistance:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WorkflowAACAAs5NeverO0A6OutputRtzrlE11thenPresent_11launchStyle15flowPersistanceAByqd__Gqd__m_AA06LaunchG0CAA04FlowI0CyXAtAA0K13RepresentableRd__AD0A5InputRtd__lF">thenPresent(_:<wbr>launchStyle:<wbr>flowPersistance:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>thenPresent: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">thenPresent</span><span class="o">&lt;</span><span class="kt">FR</span><span class="p">:</span> <span class="kt"><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">FR</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span>
+                                               <span class="nv">launchStyle</span><span class="p">:</span> <span class="kt"><a href="../Classes/LaunchStyle.html">LaunchStyle</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span>
+                                               <span class="nv">flowPersistance</span><span class="p">:</span><span class="kd">@escaping</span> <span class="kd">@autoclosure</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/FlowPersistance.html">FlowPersistance</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Workflow</span><span class="o">&lt;</span><span class="kt">FR</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">FR</span><span class="o">.</span><span class="kt">WorkflowInput</span> <span class="o">==</span> <span class="kt">Never</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>type</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A reference to the class used to create the workflow</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>launchStyle</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A <code><a href="../Classes/LaunchStyle.html">LaunchStyle</a></code> the flow representable should use while it&rsquo;s part of this workflow</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>flowPersistance</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An <code><a href="../Classes/FlowPersistance.html">FlowPersistance</a></code>type representing how this item in the workflow should persist.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>Workflow</code></p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WorkflowAACAAs5NeverO0A6OutputRtzrlE11thenPresent_11launchStyle15flowPersistanceAByqd__Gqd__m_AA06LaunchG0CAA04FlowI0CyXAtAA0K13RepresentableRd__AA03AnyA0C10PassedArgsO0A5InputRtd__lF"></a>
+                    <a name="//apple_ref/swift/Method/thenPresent(_:launchStyle:flowPersistance:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8WorkflowAACAAs5NeverO0A6OutputRtzrlE11thenPresent_11launchStyle15flowPersistanceAByqd__Gqd__m_AA06LaunchG0CAA04FlowI0CyXAtAA0K13RepresentableRd__AA03AnyA0C10PassedArgsO0A5InputRtd__lF">thenPresent(_:<wbr>launchStyle:<wbr>flowPersistance:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>thenPresent: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">thenPresent</span><span class="o">&lt;</span><span class="kt">FR</span><span class="p">:</span> <span class="kt"><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">FR</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span>
+                                               <span class="nv">launchStyle</span><span class="p">:</span> <span class="kt"><a href="../Classes/LaunchStyle.html">LaunchStyle</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span>
+                                               <span class="nv">flowPersistance</span><span class="p">:</span><span class="kd">@escaping</span> <span class="kd">@autoclosure</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/FlowPersistance.html">FlowPersistance</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Workflow</span><span class="o">&lt;</span><span class="kt">FR</span><span class="o">&gt;</span>
+<span class="k">where</span> <span class="kt">FR</span><span class="o">.</span><span class="kt">WorkflowInput</span> <span class="o">==</span> <span class="kt">AnyWorkflow</span><span class="o">.</span><span class="kt">PassedArgs</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>type</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A reference to the class used to create the workflow</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>launchStyle</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A <code><a href="../Classes/LaunchStyle.html">LaunchStyle</a></code> the flow representable should use while it&rsquo;s part of this workflow</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>flowPersistance</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An <code><a href="../Classes/FlowPersistance.html">FlowPersistance</a></code>type representing how this item in the workflow should persist.</p>
                                 </div>
                               </td>
                             </tr>

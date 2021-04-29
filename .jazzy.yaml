@@ -5,6 +5,7 @@ module: Workflow
 author_url: https://github.com/wwt/workflow
 github_url: https://github.com/wwt/workflow
 xcodebuild_arguments:
+  - -resolvePackageDependencies
   - -workspace
   - Workflow.xcworkspace
   - -scheme

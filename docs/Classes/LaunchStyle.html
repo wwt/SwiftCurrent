@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>AnyFlowRepresentable Protocol Reference</title>
+    <title>LaunchStyle Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,16 +14,16 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Protocol/AnyFlowRepresentable" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Class/LaunchStyle" class="dashAnchor"></a>
 
-    <a title="AnyFlowRepresentable Protocol Reference"></a>
+    <a title="LaunchStyle Class Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
-          Workflow 1.0.28 Docs
+          Workflow 3.0.0 Docs
         </a>
-         (74% documented)
+         (83% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -44,7 +44,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">Workflow Reference</a>
       <img class="carat" src="../img/carat.png" />
-      AnyFlowRepresentable Protocol Reference
+      LaunchStyle Class Reference
     </p>
 
     <div class="content-wrapper">
@@ -54,13 +54,16 @@
             <a class="nav-group-name-link" href="../Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/FlowPersistance.html">FlowPersistance</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/LaunchStyle.html">LaunchStyle</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/LinkedList.html">LinkedList</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/LinkedList/Node.html">– Node</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes.html#/s:8Workflow14UIWorkflowItemC">UIWorkflowItem</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/Workflow.html">Workflow</a>
@@ -68,21 +71,13 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/PresentationType.html">PresentationType</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/ViewPersistance.html">ViewPersistance</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
             <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Extensions/UIViewController.html">UIViewController</a>
+                <a class="nav-group-task-link" href="../Extensions/Notification.html">Notification</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Notification/Name.html">– Name</a>
               </li>
             </ul>
           </li>
@@ -90,13 +85,7 @@
             <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/AnyFlowRepresentable.html">AnyFlowRepresentable</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/FlowRepresentable.html">FlowRepresentable</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/Presenter.html">Presenter</a>
               </li>
             </ul>
           </li>
@@ -106,15 +95,16 @@
 
         <section class="section">
           <div class="section-content top-matter">
-            <h1>AnyFlowRepresentable</h1>
+            <h1>LaunchStyle</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">AnyFlowRepresentable</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">LaunchStyle</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">LaunchStyle</span><span class="p">:</span> <span class="kt">Equatable</span></code></pre>
 
                 </div>
               </div>
-            <p>AnyFlowRepresentable: A type erased version of &lsquo;FlowRepresentable&rsquo;. Generally speaking don&rsquo;t use this directly, use FlowRepresentable instead.</p>
+            <p>LaunchStyle: An extendable class that indicates how FlowRepresentables should be launched</p>
 
           </div>
         </section>
@@ -126,9 +116,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Workflow20AnyFlowRepresentableP8workflowA2ACSgvp"></a>
-                    <a name="//apple_ref/swift/Property/workflow" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Workflow20AnyFlowRepresentableP8workflowA2ACSgvp">workflow</a>
+                    <a name="/s:8Workflow11LaunchStyleC7defaultACvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/default" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow11LaunchStyleC7defaultACvpZ">default</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -136,19 +126,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>workflow: Access to the <code><a href="../Classes/Workflow.html">Workflow</a></code> controlling the <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code>. A common use case may be a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> that wants to abandon the <code><a href="../Classes/Workflow.html">Workflow</a></code> it&rsquo;s in.</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    While not strictly necessary it would be wise to declare this property as <code>weak</code>
-
-</div>
+                        <p>default: The launch style that is used if you do not specify one. This behavior is very dependent on the responder (for example: SwiftUI and UIKit presenters will think &ldquo;default&rdquo; means something contextual to themselves, but it won&rsquo;t necessarily be the same between them)</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">workflow</span><span class="p">:</span> <span class="kt"><a href="../Classes/Workflow.html">Workflow</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">let</span> <span class="p">`</span><span class="nv">default</span><span class="p">`:</span> <span class="kt">LaunchStyle</span></code></pre>
 
                         </div>
                       </div>
@@ -158,9 +143,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Workflow20AnyFlowRepresentableP8instanceAaB_pyFZ"></a>
-                    <a name="//apple_ref/swift/Method/instance()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Workflow20AnyFlowRepresentableP8instanceAaB_pyFZ">instance()</a>
+                    <a name="/s:8Workflow11LaunchStyleC3newACvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/new" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow11LaunchStyleC3newACvpZ">new</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -168,25 +153,42 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>instance: A method to return an instance of the <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code></p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    This needs to return a unique instance of your view. Whether programmatic or from the storyboard is irrelevant
-
-</div>
+                        <p>new: A new instance of LaunchStyle. This should really only be used if you are extending launch styles with your own.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="nf">instance</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">AnyFlowRepresentable</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">new</span><span class="p">:</span> <span class="kt">LaunchStyle</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p><code>AnyFlowRepresentable</code>. Specifically a new instance from the static class passed to a <code><a href="../Classes/Workflow.html">Workflow</a></code></p>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SQ2eeoiySbx_xtFZ"></a>
+                    <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SQ2eeoiySbx_xtFZ">==(_:<wbr>_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">LaunchStyle</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">LaunchStyle</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>

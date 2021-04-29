@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>PresentationType Enumeration Reference</title>
+    <title>FlowPersistance Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,16 +14,16 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Enum/PresentationType" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Class/FlowPersistance" class="dashAnchor"></a>
 
-    <a title="PresentationType Enumeration Reference"></a>
+    <a title="FlowPersistance Class Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
-          Workflow 1.0.28 Docs
+          Workflow 3.0.0 Docs
         </a>
-         (74% documented)
+         (83% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -44,7 +44,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">Workflow Reference</a>
       <img class="carat" src="../img/carat.png" />
-      PresentationType Enumeration Reference
+      FlowPersistance Class Reference
     </p>
 
     <div class="content-wrapper">
@@ -54,13 +54,16 @@
             <a class="nav-group-name-link" href="../Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/FlowPersistance.html">FlowPersistance</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/LaunchStyle.html">LaunchStyle</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/LinkedList.html">LinkedList</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/LinkedList/Node.html">– Node</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes.html#/s:8Workflow14UIWorkflowItemC">UIWorkflowItem</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/Workflow.html">Workflow</a>
@@ -68,21 +71,13 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/PresentationType.html">PresentationType</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/ViewPersistance.html">ViewPersistance</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
             <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Extensions/UIViewController.html">UIViewController</a>
+                <a class="nav-group-task-link" href="../Extensions/Notification.html">Notification</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Notification/Name.html">– Name</a>
               </li>
             </ul>
           </li>
@@ -90,13 +85,7 @@
             <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/AnyFlowRepresentable.html">AnyFlowRepresentable</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/FlowRepresentable.html">FlowRepresentable</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/Presenter.html">Presenter</a>
               </li>
             </ul>
           </li>
@@ -106,19 +95,19 @@
 
         <section class="section">
           <div class="section-content top-matter">
-            <h1>PresentationType</h1>
+            <h1>FlowPersistance</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">PresentationType</span></code></pre>
-<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">PresentationType</span><span class="p">:</span> <span class="kt">Equatable</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">FlowPersistance</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">FlowPersistance</span><span class="p">:</span> <span class="kt">Equatable</span></code></pre>
 
                 </div>
               </div>
-            <p>PresentationType: An enum that indicates how FlowRepresentables should be presented</p>
+            <p>FlowPersistance: An extendable class that indicates how FlowRepresentables should be persisted</p>
 <h3 id='discussion' class='heading'>Discussion:</h3>
 
-<p>Mostly used when you tell a workflow to launch, or on the <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> protocol if you have a view that preferrs to be launched with a certain style</p>
+<p>Used when you are creating a workflow</p>
 
           </div>
         </section>
@@ -130,9 +119,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Workflow16PresentationTypeO15navigationStackyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/navigationStack" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Workflow16PresentationTypeO15navigationStackyA2CmF">navigationStack</a>
+                    <a name="/s:8Workflow15FlowPersistanceC7defaultACvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/default" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow15FlowPersistanceC7defaultACvpZ">default</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -140,19 +129,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>navigationStack: Indicates a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> should be launched in a navigation stack of some kind (For example with UIKit this would use a UINavigationController)</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    If no current navigation stack is available, one will be created
-
-</div>
+                        <p>default: Indicates a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> in a <code><a href="../Classes/Workflow.html">Workflow</a></code> should persist in based on it&rsquo;s <code>shouldLoad</code> function</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">navigationStack</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">let</span> <span class="p">`</span><span class="nv">default</span><span class="p">`:</span> <span class="kt">FlowPersistance</span></code></pre>
 
                         </div>
                       </div>
@@ -162,9 +146,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Workflow16PresentationTypeO5modalyA2C05ModalB5StyleOcACmF"></a>
-                    <a name="//apple_ref/swift/Element/modal(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Workflow16PresentationTypeO5modalyA2C05ModalB5StyleOcACmF">modal(_:<wbr>)</a>
+                    <a name="/s:8Workflow15FlowPersistanceC18persistWhenSkippedACvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/persistWhenSkipped" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow15FlowPersistanceC18persistWhenSkippedACvpZ">persistWhenSkipped</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -172,14 +156,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>modally: Indicates a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> should be launched modally</p>
+                        <p>default: Indicates a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> in a <code><a href="../Classes/Workflow.html">Workflow</a></code> who&rsquo;s <code>shouldLoad</code> function returns false should still be persisted so if the workflow is navigated backwards it&rsquo;ll be there</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">modal</span><span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">ModalPresentationStyle</span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">persistWhenSkipped</span><span class="p">:</span> <span class="kt">FlowPersistance</span></code></pre>
 
                         </div>
                       </div>
@@ -189,9 +173,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Workflow16PresentationTypeO7defaultyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/default" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Workflow16PresentationTypeO7defaultyA2CmF">default</a>
+                    <a name="/s:8Workflow15FlowPersistanceC22removedAfterProceedingACvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/removedAfterProceeding" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow15FlowPersistanceC22removedAfterProceedingACvpZ">removedAfterProceeding</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -199,19 +183,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>default: Indicates a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> can be launched contextually</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    If there&rsquo;s already a navigation stack, it will be used. Otherwise views will present modally
-
-</div>
+                        <p>default: Indicates a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> in a <code><a href="../Classes/Workflow.html">Workflow</a></code> who&rsquo;s <code>shouldLoad</code> function returns true should be removed from the viewstack after the workflow progresses past it</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="p">`</span><span class="nv">default</span><span class="p">`</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">removedAfterProceeding</span><span class="p">:</span> <span class="kt">FlowPersistance</span></code></pre>
 
                         </div>
                       </div>
@@ -237,7 +216,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">PresentationType</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">PresentationType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">FlowPersistance</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">FlowPersistance</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
