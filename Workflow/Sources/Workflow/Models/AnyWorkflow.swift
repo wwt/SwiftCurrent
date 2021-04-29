@@ -47,7 +47,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
             let shouldLoad = flowRepresentable.shouldLoad(with: passedArgs)
 
             defer {
-                guard let instance = instances.first?.traverse(nextNode.position) else { fatalError("Internal state of workflow completely mangled somehow...") }
+                guard let instance = instances.first?.traverse(nextNode.position) else { fatalError("Internal state of workflow completely mangled during launch.") }
                 let persistance = nextMetadata.calculatePersistance(passedArgs)
                 if shouldLoad {
                     firstLoadedInstance = instance
@@ -102,7 +102,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
     }
 
     private func setupProceedCallbacks(_ node: LinkedList<AnyFlowRepresentable?>.Element, _ onFinish: ((Any?) -> Void)?) {
-        guard let currentMetadataNode = first?.traverse(node.position) else { fatalError("Internal state of workflow completely mangled somehow...") }
+        guard let currentMetadataNode = first?.traverse(node.position) else { fatalError("Internal state of workflow completely mangled during configuration of proceed callbacks.") }
         node.value?.proceedInWorkflowStorage = { [self] args in
             var argsToPass = args
             var viewToPresent: (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetaData)?
@@ -141,7 +141,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
     }
 
     private func setupProceedBackwardCallbacks(_ node: LinkedList<AnyFlowRepresentable?>.Element, _ onFinish: ((Any?) -> Void)?) {
-        guard let currentMetadataNode = first?.traverse(node.position) else { fatalError("Internal state of workflow completely mangled somehow...") }
+        guard let currentMetadataNode = first?.traverse(node.position) else { fatalError("Internal state of workflow completely mangled during configuration of proceed backward callbacks.") }
         node.value?.proceedBackwardInWorkflowStorage = { [self] in
             let previousLoadedNode = node.traverse(direction: .backward) { previousNode in
                 previousNode.value != nil
@@ -150,7 +150,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
             guard let previousNode = previousLoadedNode else { return }
 
             guard let previousMetaDataNode = first?.traverse(previousNode.position) else {
-                fatalError("Internal state of workflow completely mangled somehow...")
+                fatalError("Internal state of workflow completely mangled during execution of proceed backward callback.")
             }
 
             orchestrationResponder?.proceedBackward(from: (instance: node, metadata: currentMetadataNode.value), to: (instance: previousNode, metadata: previousMetaDataNode.value))
