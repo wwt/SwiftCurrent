@@ -3,7 +3,7 @@
 //  DependencyInjectionTests
 //
 //  Created by Tyler Thompson on 12/17/19.
-//  Copyright © 2019 Tyler Thompson. All rights reserved.
+//  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
 
 import XCTest

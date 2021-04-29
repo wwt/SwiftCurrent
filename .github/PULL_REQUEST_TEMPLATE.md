@@ -4,15 +4,15 @@
 <!-- (See our contributing guidelines for more details) -->
 ## Checklist:
 - [ ] Is the linter reporting 0 errors?
-- [ ] Did you comply with our [styleguide](https://github.com/Tyler-Keith-Thompson/Workflow/blob/master/STYLEGUIDE.md)?
-- [ ] Is there [adequate test coverage](https://github.com/Tyler-Keith-Thompson/Workflow/blob/master/CONTRIBUTING.md#test-etiquette) for your new code?
+- [ ] Did you comply with our [styleguide](https://github.com/wwt/Workflow/blob/main/STYLEGUIDE.md)?
+- [ ] Is there [adequate test coverage](https://github.com/wwt/Workflow/blob/main/CONTRIBUTING.md#test-etiquette) for your new code?
 - [ ] Does the CI pipeline pass?
-- [ ] Is the [static analysis tool](https://sonarcloud.io/dashboard?id=Tyler-Keith-Thompson_Workflow) reporting 0 issues?
-- [ ] Did you [update the documentation](https://github.com/Tyler-Keith-Thompson/Workflow/blob/master/CONTRIBUTING.md#documentation)?
-- [ ] Did you [update the sample app](https://github.com/Tyler-Keith-Thompson/Workflow/blob/master/CONTRIBUTING.md#sample-app)?
-- [ ] Do we need to [increment the minor/major version](https://github.com/Tyler-Keith-Thompson/Workflow/blob/master/CONTRIBUTING.md#versioning)?
-- [ ] Did you [change the public API](https://github.com/Tyler-Keith-Thompson/Workflow/blob/master/CONTRIBUTING.md#public-api)?
-- [ ] Have you done everything you can to make sure that errors that can occur are compile-time errors, and if they have to be runtime do you have adequate tests and documentation around those runtime errors? [For more details](https://github.com/Tyler-Keith-Thompson/Workflow/blob/master/CONTRIBUTING.md#errors).
+- [ ] Is the [static analysis tool](https://sonarcloud.io/dashboard?id=wwt_Workflow) reporting 0 issues?
+- [ ] Did you [update the documentation](https://github.com/wwt/Workflow/blob/main/CONTRIBUTING.md#documentation)?
+- [ ] Did you [update the sample app](https://github.com/wwt/Workflow/blob/main/CONTRIBUTING.md#sample-app)?
+- [ ] Do we need to [increment the minor/major version](https://github.com/wwt/Workflow/blob/main/CONTRIBUTING.md#versioning)?
+- [ ] Did you [change the public API](https://github.com/wwt/Workflow/blob/main/CONTRIBUTING.md#public-api)?
+- [ ] Have you done everything you can to make sure that errors that can occur are compile-time errors, and if they have to be runtime do you have adequate tests and documentation around those runtime errors? [For more details](https://github.com/wwt/Workflow/blob/main/CONTRIBUTING.md#errors).
 
 ----
 
@@ -26,6 +26,6 @@
 ----
 
 ### If Public API Has Changed:
-- [ ] Did you deprecate (rather than remove) any old methods/variables/etc? [Our philosophy for deprecation](https://github.com/Tyler-Keith-Thompson/Workflow/blob/master/CONTRIBUTING.md#deprecation).
+- [ ] Did you deprecate (rather than remove) any old methods/variables/etc? [Our philosophy for deprecation](https://github.com/wwt/Workflow/blob/main/CONTRIBUTING.md#deprecation).
 - [ ] Have you done the best that you can to make sure that the compiler guides people to changing to the new API? (Example: the renamed attribute)
 - [ ] If necessary, have you tested the upgrade path for at least N-1 versions? For example, if data persists between v1 and v2 then that upgrade should be tested and as easy as we can make it.

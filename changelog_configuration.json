@@ -5,19 +5,23 @@
         "labels": ["enhancement"]
       },
       {
-        "title": "## 🐛 Fixes",
+        "title": "## 🐞 Fixes",
         "labels": ["bug"]
       },
       {
-        "title": "## 🧪 Documentation",
+        "title": "## 📝 Documentation",
         "labels": ["documentation"]
+      },
+      {
+        "title": "## ❓ Uncategorized",
+        "labels": []
       }
     ],
     "ignore_labels": [
       "invalid"
     ],
     "sort": "ASC",
-    "template": "${{CHANGELOG}}\n\n<details>\n<summary>Uncategorized</summary>\n\n${{UNCATEGORIZED}}\n</details>",
+    "template": "${{CHANGELOG}}",
     "pr_template": "- #${{NUMBER}} - ${{TITLE}}",
     "empty_template": "- no changes",
     "label_extractor": [

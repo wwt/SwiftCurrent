@@ -4,13 +4,13 @@ on:
   workflow_dispatch:
   workflow_run:
     workflows: [ "CI" ]
-    branches: [ master ]
+    branches: [ main ]
     types: [ completed ]
 
 jobs:
   version_bump:
     runs-on: macos-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.repository == 'wwt/Workflow' }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -18,7 +18,7 @@ jobs:
       - name: Bump version in Podspec and Plist
         id: bump_version
         run: |
-          fastlane patch
+          bundle exec fastlane patch
           VERSION=`/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" Workflow/Info.plist`
           echo "##[set-output name=version;]$VERSION"
       - name: Commit version changes
@@ -32,7 +32,6 @@ jobs:
         uses: mikepenz/release-changelog-builder-action@v1.7.3
         with:
           configuration: "changelog_configuration.json"
-          owner: "Tyler-Keith-Thompson"
           ignorePreReleases: "false"
           toTag: ${{ steps.bump_version.outputs.version }}
           token: ${{ secrets.GITHUB_TOKEN }}
