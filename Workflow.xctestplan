@@ -15,13 +15,6 @@
     {
       "target" : {
         "containerPath" : "container:",
-        "identifier" : "DependencyInjectionTests",
-        "name" : "DependencyInjectionTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:",
         "identifier" : "WorkflowTests",
         "name" : "WorkflowTests"
       }

@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   s.version          = '3.0.0'
   s.summary          = 'Workflows that work, yo (blame Richard for this name)'
   s.description      = <<-DESC
-iOS has a linear paradigm for navigation that doesn't support a lot of flexibility. This library attempts to create a dynamic way to define your workflows in code allowing for easy reording.
+iOS has a linear paradigm for navigation that doesn't support a lot of flexibility. This library attempts to create a dynamic way to define your workflows in code allowing for easy reordering.
                        DESC
 
   s.homepage         = 'https://github.com/wwt/Workflow'
@@ -25,12 +25,6 @@ iOS has a linear paradigm for navigation that doesn't support a lot of flexibili
     ss.source_files = 'Workflow/Sources/WorkflowUIKit/**/*.{swift,h,m}'
     ss.dependency 'DynamicWorkflow/Core'
   end
-  
-  # s.subspec 'SwiftUI' do |ss|
-  #   ss.ios.deployment_target = '11.0'
-  #   ss.source_files = 'Workflow/Sources/WorkflowSwiftUI/**/*.{swift,h,m}'
-  #   ss.dependency 'DynamicWorkflow/Core'
-  # end
 
   s.pod_target_xcconfig = {
     'FRAMEWORK_SEARCH_PATHS' => '$(inherited) "$(PLATFORM_DIR)/Developer/Library/Frameworks"',
