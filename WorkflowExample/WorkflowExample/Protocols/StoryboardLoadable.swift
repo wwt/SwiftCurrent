@@ -9,6 +9,7 @@
 import Foundation
 import Workflow
 
+/// This makes the in-code assumption that you are following the convention that storyboard IDs are equivalent to UIViewController subclass names.
 protocol StoryboardLoadable {}
 
 extension StoryboardLoadable {

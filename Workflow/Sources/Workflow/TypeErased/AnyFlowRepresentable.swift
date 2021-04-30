@@ -26,11 +26,11 @@ class AnyFlowRepresentableStorageBase {
 
 class AnyFlowRepresentableStorage<FR: FlowRepresentable>: AnyFlowRepresentableStorageBase {
     var holder: FR
-
+    
     override func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool {
         switch args {
             case _ where FR.WorkflowInput.self == Never.self: return holder.shouldLoad()
-                // swiftlint:disable:next force_cast
+            // swiftlint:disable:next force_cast
             case _ where FR.WorkflowInput.self == AnyWorkflow.PassedArgs.self: return holder.shouldLoad(with: args as! FR.WorkflowInput)
             case .args(let extracted):
                 guard let cast = extracted as? FR.WorkflowInput else { fatalError("TYPE MISMATCH: \(String(describing: args)) is not type: \(FR.WorkflowInput.self)") }
@@ -38,7 +38,7 @@ class AnyFlowRepresentableStorage<FR: FlowRepresentable>: AnyFlowRepresentableSt
             default: fatalError("No arguments were passed to representable: \(FR.self), but it expected: \(FR.WorkflowInput.self)")
         }
     }
-
+    
     override var underlyingInstance: Any {
         holder._workflowUnderlyingInstance
     }
