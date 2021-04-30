@@ -81,41 +81,63 @@ open class UIKitPresenter: AnyOrchestrationResponder {
         let animated = to.metadata.persistence != .hiddenInitially
         switch LaunchStyle.PresentationType(rawValue: style) {
             case _ where style == .default:
-                if case .modal(let style) = LaunchStyle.PresentationType(rawValue: to.metadata.launchStyle) {
-                    if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
-                        view.modalPresentationStyle = modalPresentationStyle
-                    }
-                    root.present(view, animated: animated, completion: completion)
-                } else if let nav = root.navigationController
-                            ?? root as? UINavigationController {
-                    nav.pushViewController(view, animated: animated)
-                    completion?()
-                } else {
-                    root.present(view, animated: animated, completion: completion)
-                }
+                displayForDefaultPresentationType(to: to, root: root, view: view, animated: animated, completion: completion)
             case .modal(let style):
-                if LaunchStyle.PresentationType(rawValue: to.metadata.launchStyle) == .navigationStack {
-                    let nav = UINavigationController(rootViewController: view)
-                    if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
-                        nav.modalPresentationStyle = modalPresentationStyle
-                    }
-                    root.present(nav, animated: animated, completion: completion)
-                } else {
-                    if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
-                        view.modalPresentationStyle = modalPresentationStyle
-                    }
-                    root.present(view, animated: animated, completion: completion)
-                }
+                displayForModalPresentationType(to: to, view: view, style: style, root: root, animated: animated, completion: completion)
             case .navigationStack:
-                if let nav = root.navigationController
-                    ?? root as? UINavigationController {
-                    nav.pushViewController(view, animated: animated)
-                    completion?()
-                } else {
-                    let nav = UINavigationController(rootViewController: view)
-                    root.present(nav, animated: animated, completion: completion)
-                }
+                displayForNavigationStackPresentationType(root: root, view: view, animated: animated, completion: completion)
             default: fatalError("UNKNOWN LAUNCH STYLE: \(style) PASSED TO \(Self.self)")
+        }
+    }
+
+    fileprivate func displayForDefaultPresentationType(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
+                                                       root: UIViewController,
+                                                       view: UIViewController,
+                                                       animated: Bool,
+                                                       completion: (() -> Void)?) {
+        if case .modal(let style) = LaunchStyle.PresentationType(rawValue: to.metadata.launchStyle) {
+            if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
+                view.modalPresentationStyle = modalPresentationStyle
+            }
+            root.present(view, animated: animated, completion: completion)
+        } else if let nav = root.navigationController ?? root as? UINavigationController {
+            nav.pushViewController(view, animated: animated)
+            completion?()
+        } else {
+            root.present(view, animated: animated, completion: completion)
+        }
+    }
+
+    fileprivate func displayForModalPresentationType(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
+                                                     view: UIViewController,
+                                                     style: (LaunchStyle.PresentationType.ModalPresentationStyle),
+                                                     root: UIViewController,
+                                                     animated: Bool,
+                                                     completion: (() -> Void)?) {
+        if LaunchStyle.PresentationType(rawValue: to.metadata.launchStyle) == .navigationStack {
+            let nav = UINavigationController(rootViewController: view)
+            if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
+                nav.modalPresentationStyle = modalPresentationStyle
+            }
+            root.present(nav, animated: animated, completion: completion)
+        } else {
+            if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
+                view.modalPresentationStyle = modalPresentationStyle
+            }
+            root.present(view, animated: animated, completion: completion)
+        }
+    }
+
+    fileprivate func displayForNavigationStackPresentationType(root: UIViewController,
+                                                               view: UIViewController,
+                                                               animated: Bool,
+                                                               completion: (() -> Void)?) {
+        if let nav = root.navigationController ?? root as? UINavigationController {
+            nav.pushViewController(view, animated: animated)
+            completion?()
+        } else {
+            let nav = UINavigationController(rootViewController: view)
+            root.present(nav, animated: animated, completion: completion)
         }
     }
 
