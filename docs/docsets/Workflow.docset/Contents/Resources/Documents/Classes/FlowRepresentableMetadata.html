@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Notification Extension Reference</title>
+    <title>FlowRepresentableMetadata Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Extension/Notification" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Class/FlowRepresentableMetadata" class="dashAnchor"></a>
 
-    <a title="Notification Extension Reference"></a>
+    <a title="FlowRepresentableMetadata Class Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -44,7 +44,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">Workflow Reference</a>
       <img class="carat" src="../img/carat.png" />
-      Notification Extension Reference
+      FlowRepresentableMetadata Class Reference
     </p>
 
     <div class="content-wrapper">
@@ -98,26 +98,30 @@
 
         <section class="section">
           <div class="section-content top-matter">
-            <h1>Notification</h1>
-            
+            <h1>FlowRepresentableMetadata</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">FlowRepresentableMetadata</span></code></pre>
+
+                </div>
+              </div>
+            <p>Data about a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code>. Used to make an <code>AnyOrchestrationResponder</code>.</p>
+<h3 id='discussion' class='heading'>Discussion</h3>
+
+<p>Every time a <code><a href="../Classes/Workflow.html">Workflow</a></code> is created, the defining characteristics about a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> is stored in the <code>FlowRepresentableMetadata</code> to be used later.</p>
+<h4 id='example' class='heading'>Example</h4>
+<pre class="highlight swift"><code><span class="kt">Workflow</span><span class="p">(</span><span class="kt">SomeFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span> <span class="c1">// We now have a FlowRepresentableMetadata representing SomeFlowRepresentableClass</span>
+    <span class="o">.</span><span class="nf">thenPresent</span><span class="p">(</span><span class="kt">SomeOtherFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">launchStyle</span><span class="p">:</span> <span class="o">.</span><span class="n">navigationStack</span><span class="p">)</span> <span class="c1">// We now have a FlowRepresentableMetadata representing SomeOtherFlowRepresentableClass and its launch style of navigation stack</span>
+</code></pre>
+
+<p>Initially we create a <code>FlowRepresentableMetadata</code> representing SomeFlowRepresentableClass.  When we call <code>.thenPresent</code> we add a <code>FlowRepresentableMetadata</code> representing SomeOtherFlowRepresentableClass and its launch style of navigation stack to the <code><a href="../Classes/Workflow.html">Workflow</a></code>.</p>
+
           </div>
         </section>
 
         <section class="section">
           <div class="section-content">
-            <div class="task-group">
-              <ul class="item-container">
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:10Foundation12NotificationV4Namea"></a>
-                    <a name="//apple_ref/swift/Extension/Name" class="dashAnchor"></a>
-                    <a class="direct-link" href="../Extensions/Notification/Name.html">Name</a>
-                    </code>
-                  </div>
-                </li>
-              </ul>
-            </div>
           </div>
         </section>
 
