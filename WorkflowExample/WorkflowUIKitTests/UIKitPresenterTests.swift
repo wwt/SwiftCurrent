@@ -1657,7 +1657,7 @@ class UIKitPresenterTests: XCTestCase {
         wf.applyOrchestrationResponder(presenter)
         var fr1 = FR1()
         let node = AnyWorkflow.InstanceNode(with: AnyFlowRepresentable(&fr1))
-        let metadata = FlowRepresentableMetaData(FR1.self, launchStyle: ls, flowPersistance: { _ in .default })
+        let metadata = FlowRepresentableMetadata(FR1.self, launchStyle: ls, flowPersistance: { _ in .default })
 
         XCTAssertThrowsFatalError {
             presenter.proceed(to: (instance: node, metadata: metadata),

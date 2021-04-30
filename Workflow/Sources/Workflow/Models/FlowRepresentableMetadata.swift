@@ -1,5 +1,5 @@
 //
-//  FlowRepresentableMetaData.swift
+//  FlowRepresentableMetadata.swift
 //  
 //
 //  Created by Tyler Thompson on 11/25/20.
@@ -20,7 +20,7 @@ import Foundation
      .thenPresent(SomeOtherFlowRepresentableClass.self, launchStyle: .navigationStack) // We now have a FlowRepresentableMetadata representing SomeOtherFlowRepresentableClass and its launch style of navigation stack
  ```
  */
-public class FlowRepresentableMetaData {
+public class FlowRepresentableMetadata {
     private(set) var flowRepresentableFactory: () -> AnyFlowRepresentable
     private var flowPersistance: (AnyWorkflow.PassedArgs) -> FlowPersistance
     public private(set) var launchStyle: LaunchStyle

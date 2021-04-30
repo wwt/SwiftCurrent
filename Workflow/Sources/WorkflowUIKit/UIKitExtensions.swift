@@ -88,7 +88,7 @@ extension Workflow {
     public convenience init(_ type: F.Type,
                             presentationType: LaunchStyle.PresentationType,
                             flowPersistance: @escaping @autoclosure () -> FlowPersistance = .default) {
-        self.init(FlowRepresentableMetaData(type,
+        self.init(FlowRepresentableMetadata(type,
                                             launchStyle: presentationType.rawValue) { _ in flowPersistance() })
     }
     /// init: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
@@ -99,7 +99,7 @@ extension Workflow {
     public convenience init(_ type: F.Type,
                             presentationType: LaunchStyle.PresentationType,
                             flowPersistance: @escaping (F.WorkflowInput) -> FlowPersistance) {
-        self.init(FlowRepresentableMetaData(type,
+        self.init(FlowRepresentableMetadata(type,
                                             launchStyle: presentationType.rawValue) { data in
             guard case.args(let extracted) = data,
                   let cast = extracted as? F.WorkflowInput else { return .default }
@@ -115,7 +115,7 @@ extension Workflow {
     public convenience init(_ type: F.Type,
                             presentationType: LaunchStyle.PresentationType,
                             flowPersistance: @escaping () -> FlowPersistance) where F.WorkflowInput == Never {
-        self.init(FlowRepresentableMetaData(type,
+        self.init(FlowRepresentableMetadata(type,
                                             launchStyle: presentationType.rawValue) { _ in flowPersistance() })
     }
 
@@ -127,7 +127,7 @@ extension Workflow {
     public convenience init(_ type: F.Type,
                             presentationType: LaunchStyle.PresentationType,
                             flowPersistance: @escaping () -> FlowPersistance) where F.WorkflowInput == AnyWorkflow.PassedArgs {
-        self.init(FlowRepresentableMetaData(type,
+        self.init(FlowRepresentableMetadata(type,
                                             launchStyle: presentationType.rawValue) { _ in flowPersistance() })
     }
 }
@@ -142,7 +142,7 @@ extension Workflow where F.WorkflowOutput == Never {
                                                    presentationType: LaunchStyle.PresentationType,
                                                    flowPersistance: @escaping @autoclosure () -> FlowPersistance = .default) -> Workflow<FR> where FR.WorkflowInput == Never {
         let wf = Workflow<FR>(first)
-        wf.append(FlowRepresentableMetaData(type,
+        wf.append(FlowRepresentableMetadata(type,
                                             launchStyle: presentationType.rawValue) { _ in flowPersistance() })
         return wf
     }
@@ -157,7 +157,7 @@ extension Workflow where F.WorkflowOutput == Never {
                                                    flowPersistance: @escaping @autoclosure () -> FlowPersistance = .default) -> Workflow<FR>
     where FR.WorkflowInput == AnyWorkflow.PassedArgs {
         let wf = Workflow<FR>(first)
-        wf.append(FlowRepresentableMetaData(type,
+        wf.append(FlowRepresentableMetadata(type,
                                             launchStyle: presentationType.rawValue) { _ in flowPersistance() })
         return wf
     }
@@ -173,7 +173,7 @@ extension Workflow {
                                                    presentationType: LaunchStyle.PresentationType,
                                                    flowPersistance: @escaping @autoclosure () -> FlowPersistance = .default) -> Workflow<FR> where F.WorkflowOutput == FR.WorkflowInput {
         let wf = Workflow<FR>(first)
-        wf.append(FlowRepresentableMetaData(type,
+        wf.append(FlowRepresentableMetadata(type,
                                             launchStyle: presentationType.rawValue) { _ in flowPersistance() })
         return wf
     }
@@ -187,7 +187,7 @@ extension Workflow {
                                                    presentationType: LaunchStyle.PresentationType,
                                                    flowPersistance: @escaping (FR.WorkflowInput) -> FlowPersistance) -> Workflow<FR> where F.WorkflowOutput == FR.WorkflowInput {
         let wf = Workflow<FR>(first)
-        wf.append(FlowRepresentableMetaData(type,
+        wf.append(FlowRepresentableMetadata(type,
                                             launchStyle: presentationType.rawValue) { data in
                                                 guard case.args(let extracted) = data,
                                                       let cast = extracted as? FR.WorkflowInput else { return .default }
@@ -205,7 +205,7 @@ extension Workflow {
                                                    presentationType: LaunchStyle.PresentationType,
                                                    flowPersistance: @escaping @autoclosure () -> FlowPersistance = .default) -> Workflow<FR> where FR.WorkflowInput == Never {
         let wf = Workflow<FR>(first)
-        wf.append(FlowRepresentableMetaData(type,
+        wf.append(FlowRepresentableMetadata(type,
                                             launchStyle: presentationType.rawValue) { _ in flowPersistance() })
         return wf
     }
@@ -220,7 +220,7 @@ extension Workflow {
                                                    flowPersistance: @escaping @autoclosure () -> FlowPersistance = .default) -> Workflow<FR>
     where FR.WorkflowInput == AnyWorkflow.PassedArgs {
         let wf = Workflow<FR>(first)
-        wf.append(FlowRepresentableMetaData(type,
+        wf.append(FlowRepresentableMetadata(type,
                                             launchStyle: presentationType.rawValue) { _ in flowPersistance() })
         return wf
     }
