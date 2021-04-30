@@ -37,49 +37,35 @@
     },
     {
       "file": "/Users/tylerthompson/workspace/Workflow/Workflow/Sources/Workflow/Models/AnyWorkflow.swift",
-      "line": 11,
+      "line": 10,
       "symbol": "AnyWorkflow",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/tylerthompson/workspace/Workflow/Workflow/Sources/Workflow/Models/AnyWorkflow.swift",
-      "line": 180,
+      "line": 175,
       "symbol": "AnyWorkflow",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tylerthompson/workspace/Workflow/Workflow/Sources/Workflow/Models/FlowRepresentableMetadata.swift",
-      "line": 26,
-      "symbol": "FlowRepresentableMetaData.launchStyle",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "file": "/Users/tylerthompson/workspace/Workflow/Workflow/Sources/Workflow/Models/FlowPersistance.swift",
+      "line": 16,
+      "symbol": "FlowPersistance.new",
+      "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/tylerthompson/workspace/Workflow/Workflow/Sources/Workflow/Models/FlowRepresentableMetadata.swift",
-      "line": 27,
-      "symbol": "FlowRepresentableMetaData.persistance",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/tylerthompson/workspace/Workflow/Workflow/Sources/Workflow/Models/FlowRepresentableMetadata.swift",
-      "line": 29,
-      "symbol": "FlowRepresentableMetaData.init(_:launchStyle:flowPersistance:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/tylerthompson/workspace/Workflow/Workflow/Sources/Workflow/Models/FlowRepresentableMetadata.swift",
-      "line": 40,
-      "symbol": "FlowRepresentableMetaData.init(with:launchStyle:persistance:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "line": 10,
+      "symbol": "FlowRepresentableMetaData",
+      "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/tylerthompson/workspace/Workflow/Workflow/Sources/Workflow/Protocols/AnyOrchestrationResponder.swift",
-      "line": 10,
+      "line": 9,
       "symbol": "AnyOrchestrationResponder",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
@@ -135,21 +121,21 @@
     },
     {
       "file": "/Users/tylerthompson/workspace/Workflow/Workflow/Sources/Workflow/Protocols/FlowRepresentable.swift",
-      "line": 68,
+      "line": 66,
       "symbol": "FlowRepresentable.proceedInWorkflow()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/tylerthompson/workspace/Workflow/Workflow/Sources/Workflow/Protocols/FlowRepresentable.swift",
-      "line": 74,
+      "line": 72,
       "symbol": "FlowRepresentable.proceedInWorkflow(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/tylerthompson/workspace/Workflow/Workflow/Sources/Workflow/TypeErased/AnyFlowRepresentable.swift",
-      "line": 59,
+      "line": 55,
       "symbol": "AnyFlowRepresentable",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
