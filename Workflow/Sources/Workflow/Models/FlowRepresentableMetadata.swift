@@ -30,7 +30,7 @@ public class FlowRepresentableMetadata {
     public init<FR: FlowRepresentable>(_ flowRepresentableType: FR.Type,
                                        launchStyle: LaunchStyle = .default,
                                        flowPersistence:@escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) {
-        self.flowRepresentableFactory = {
+        flowRepresentableFactory = {
             var instance = FR.instance()
             return AnyFlowRepresentable(&instance)
         }

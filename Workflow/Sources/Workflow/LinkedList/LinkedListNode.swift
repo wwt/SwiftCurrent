@@ -60,14 +60,14 @@ extension LinkedList {
         }
 
         /// traverse(Until): A method to move forward through the nodes until a precondition is met
-        /// - Parameter direction: An enum indacting whether to traverse forward or backwards, defaults to foward.
+        /// - Parameter direction: An enum indicating whether to traverse forward or backwards, defaults to foward.
         /// - Parameter until: A function that takes in a Node<T> and returns a boolean to indicate whether traversal should continue
         /// - Note: If `true` is returned from `until` then traversal stops. e.g. `node.traverse { $0.value == 0 }` traverses until it finds a node who has a value of 0
         /// - Returns: Node<T>? where T is the specialized type of the LinkedList
         open func traverse(direction: TraversalDirection = .forward, until: ((Node<T>) -> Bool)) -> Node<T>? {
             var element: Node<T> = self
 
-            if direction == .forward, until(element) { return self }
+            if direction == .forward && until(element) { return self }
 
             switch direction {
                 case .forward:

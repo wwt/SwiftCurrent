@@ -20,9 +20,9 @@ extension AnyOrchestrationResponder {
     func launchOrProceed(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
                          from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata)?) {
         if let root = from {
-            self.proceed(to: to, from: root)
+            proceed(to: to, from: root)
         } else {
-            self.launch(to: to)
+            launch(to: to)
         }
     }
 }

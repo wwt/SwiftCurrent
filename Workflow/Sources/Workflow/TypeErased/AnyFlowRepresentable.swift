@@ -19,7 +19,7 @@ class AnyFlowRepresentableStorageBase {
 
     // https://github.com/Tyler-Keith-Thompson/Workflow/blob/master/STYLEGUIDE.md#type-erasure
     // swiftlint:disable:next unavailable_function
-    func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool {
+    func shouldLoad(with _: AnyWorkflow.PassedArgs) -> Bool {
         fatalError("AnyFlowRepresentableStorageBase called directly, only available internally so something has gone VERY wrong.")
     }
 }

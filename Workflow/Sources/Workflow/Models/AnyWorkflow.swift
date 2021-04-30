@@ -117,7 +117,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
 
                 flowRepresentable.proceedInWorkflowStorage = { argsToPass = $0 }
 
-                let shouldLoad = flowRepresentable.shouldLoad(with: argsToPass) == true
+                let shouldLoad = flowRepresentable.shouldLoad(with: argsToPass)
                 nextNode.value = (shouldLoad || (!shouldLoad && persistence == .persistWhenSkipped)) ? flowRepresentable : nil
 
                 if !shouldLoad && persistence == .persistWhenSkipped {
