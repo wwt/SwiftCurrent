@@ -21,7 +21,7 @@ public final class FlowPersistance {
     /// removedAfterProceeding: Indicates a `FlowRepresentable` in a `Workflow` who's `shouldLoad` function returns true should be removed from the viewstack after the workflow progresses past it
     public static let removedAfterProceeding = FlowPersistance()
 
-    /// new: A new instance of `FlowPersistance`. Only use for extending cases of `FlowPersistance`.
+    /// A new instance of `FlowPersistance`; only use for extending cases of `FlowPersistance`.
     public static var new: FlowPersistance { FlowPersistance() }
 
     private init() {
