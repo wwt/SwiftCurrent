@@ -15,7 +15,12 @@ import Foundation
  Used when you are creating a `Workflow`.
  */
 public final class LaunchStyle {
-    /// default: The launch style that is used if you do not specify one. This behavior is very dependent on the responder (for example: SwiftUI and UIKit presenters will think "default" means something contextual to themselves, but it won't necessarily be the same between them)
+    /**
+     The launch style used if you do not specify one; behavior is dependent on responder.
+
+     ### Discussion
+     The launch style behavior is dependent on the responder.  For example: SwiftUI and UIKit presenters will think `.default` means something contextual to themselves, but it won't necessarily be the same between them.
+     */
     public static let `default` = LaunchStyle()
 
     /// A new instance of `LaunchStyle`; only use for extending cases of `LaunchStyle`.
