@@ -14,11 +14,11 @@ import Foundation
  Used when you are creating a `Workflow`.
  */
 public final class FlowPersistence {
-    /// default: Indicates a `FlowRepresentable` in a `Workflow` should persist in based on it's `shouldLoad` function
+    /// Indicates a `FlowRepresentable` in a `Workflow` should persist based on its `shouldLoad` function.
     public static let `default` = FlowPersistence()
-    /// persistWhenSkipped: Indicates a `FlowRepresentable` in a `Workflow` who's `shouldLoad` function returns false should still be persisted so if the workflow is navigated backwards it'll be there
+    /// Indicates a `FlowRepresentable` in a `Workflow` who's `shouldLoad` function returns false should be persisted in the workflow for backwards navigation.
     public static let persistWhenSkipped = FlowPersistence()
-    /// removedAfterProceeding: Indicates a `FlowRepresentable` in a `Workflow` who's `shouldLoad` function returns true should be removed from the view stack after the workflow progresses past it
+    /// Indicates a `FlowRepresentable` in a `Workflow` who's `shouldLoad` function returns true should be removed from the view stack after the workflow progresses past it.
     public static let removedAfterProceeding = FlowPersistence()
 
     /// A new instance of `FlowPersistence`; only use for extending cases of `FlowPersistence`.
