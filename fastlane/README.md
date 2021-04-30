@@ -41,6 +41,11 @@ fastlane ios lint
 fastlane ios lintfix
 ```
 
+### ios document
+```
+fastlane ios document
+```
+
 ### ios patch
 ```
 fastlane ios patch
