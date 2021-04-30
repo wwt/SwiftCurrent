@@ -12,7 +12,7 @@ import WorkflowUIKit
 import UIKit
 
 class LocationsViewController: UIWorkflowItem<[Location], Order>, StoryboardLoadable {
-    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView!
 
     var locations: [Location] = []
 }
