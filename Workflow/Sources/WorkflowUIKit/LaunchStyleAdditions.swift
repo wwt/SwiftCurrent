@@ -10,17 +10,17 @@ import Foundation
 import Workflow
 
 extension LaunchStyle {
-    public static let _navigationStack = LaunchStyle.new
-    public static let _modal = LaunchStyle.new
-    public static let _modal_fullscreen = LaunchStyle.new
-    public static let _modal_pageSheet = LaunchStyle.new
-    public static let _modal_formSheet = LaunchStyle.new
-    public static let _modal_currentContext = LaunchStyle.new
-    public static let _modal_custom = LaunchStyle.new
-    public static let _modal_overFullScreen = LaunchStyle.new
-    public static let _modal_overCurrentContext = LaunchStyle.new
-    public static let _modal_popover = LaunchStyle.new
-    public static let _modal_automatic = LaunchStyle.new
+    static let _navigationStack = LaunchStyle.new
+    static let _modal = LaunchStyle.new
+    static let _modal_fullscreen = LaunchStyle.new
+    static let _modal_pageSheet = LaunchStyle.new
+    static let _modal_formSheet = LaunchStyle.new
+    static let _modal_currentContext = LaunchStyle.new
+    static let _modal_custom = LaunchStyle.new
+    static let _modal_overFullScreen = LaunchStyle.new
+    static let _modal_overCurrentContext = LaunchStyle.new
+    static let _modal_popover = LaunchStyle.new
+    static let _modal_automatic = LaunchStyle.new
 }
 
 extension LaunchStyle {
