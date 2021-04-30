@@ -8,6 +8,18 @@
 
 import Foundation
 
+/**
+ FlowRepresentableMetaData: Data about a `FlowRepresentable`. Used to make an `AnyOrchestrationResponder`.
+
+ ### Discussion:
+ Every time a `Workflow` is created, the defining characteristics about a `FlowRepresentable` is stored in the `FlowRepresentableMetadata` to be used later.
+
+ Example
+ ```swift
+ let flow = Workflow(SomeFlowRepresentableClass.self) // We now have a FlowRepresentableMetadata representing SomeFlowRepresentableClass
+     .thenPresent(SomeOtherFlowRepresentableClass.self, launchStyle: .navigationStack) // We now have a FlowRepresentableMetadata representing SomeOtherFlowRepresentableClass and its launch style of navigation stack
+ ```
+ */
 public class FlowRepresentableMetaData {
     private(set) var flowRepresentableFactory: () -> AnyFlowRepresentable
     private var flowPersistance: (AnyWorkflow.PassedArgs) -> FlowPersistance
