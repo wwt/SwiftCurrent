@@ -1,5 +1,5 @@
 //
-//  PersistanceTests.swift
+//  PersistenceTests.swift
 //  
 //
 //  Created by Tyler Thompson on 11/25/20.
@@ -10,12 +10,12 @@ import XCTest
 
 @testable import Workflow
 
-class PersistanceTests: XCTestCase {
+class PersistenceTests: XCTestCase {
 //    func testWorkflowCanDestroyFirstItem_AndStillProceedThroughFlow_AndCallOnFinish() {
 //        class FR1: TestPassthroughFlowRepresentable { }
 //        class FR2: TestPassthroughFlowRepresentable { }
 //        class FR3: TestPassthroughFlowRepresentable { }
-//        let wf = Workflow(FR1.self, flowPersistance: .removedAfterProceeding)
+//        let wf = Workflow(FR1.self, flowPersistence: .removedAfterProceeding)
 //            .thenPresent(FR2.self)
 //            .thenPresent(FR3.self)
 //        let responder = MockOrchestrationResponder()
@@ -44,7 +44,7 @@ class PersistanceTests: XCTestCase {
 //        class FR2: TestPassthroughFlowRepresentable { }
 //        class FR3: TestPassthroughFlowRepresentable { }
 //        let wf = Workflow(FR1.self)
-//            .thenPresent(FR2.self, flowPersistance: .removedAfterProceeding)
+//            .thenPresent(FR2.self, flowPersistence: .removedAfterProceeding)
 //            .thenPresent(FR3.self)
 //        let responder = MockOrchestrationResponder()
 //        wf.applyOrchestrationResponder(responder)
@@ -85,7 +85,7 @@ class PersistanceTests: XCTestCase {
 //        class FR3: TestPassthroughFlowRepresentable { }
 //        let wf = Workflow(FR1.self)
 //            .thenPresent(FR2.self)
-//            .thenPresent(FR3.self, flowPersistance: .removedAfterProceeding)
+//            .thenPresent(FR3.self, flowPersistence: .removedAfterProceeding)
 //        let responder = MockOrchestrationResponder()
 //        wf.applyOrchestrationResponder(responder)
 //
@@ -215,7 +215,7 @@ class PersistanceTests: XCTestCase {
 //    }
 }
 
-extension PersistanceTests {
+extension PersistenceTests {
     class TestFlowRepresentable<Input, Output> {
         weak var _workflowPointer: AnyFlowRepresentable?
 

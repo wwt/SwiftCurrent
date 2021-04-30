@@ -83,52 +83,52 @@ extension Workflow {
     /// init: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     /// - Parameter type: A reference to the class used to create the workflow
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
-    /// - Parameter flowPersistance: An `FlowPersistance`type representing how this item in the workflow should persist.
+    /// - Parameter flowPersistence: An `FlowPersistence`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
     public convenience init(_ type: F.Type,
                             presentationType: LaunchStyle.PresentationType,
-                            flowPersistance: @escaping @autoclosure () -> FlowPersistance = .default) {
+                            flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) {
         self.init(FlowRepresentableMetadata(type,
-                                            launchStyle: presentationType.rawValue) { _ in flowPersistance() })
+                                            launchStyle: presentationType.rawValue) { _ in flowPersistence() })
     }
     /// init: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     /// - Parameter type: A reference to the class used to create the workflow
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
-    /// - Parameter flowPersistance: A closure taking in the generic type from the `FlowRepresentable` and returning a `FlowPersistance`type representing how this item in the workflow should persist.
+    /// - Parameter flowPersistence: A closure taking in the generic type from the `FlowRepresentable` and returning a `FlowPersistence`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
     public convenience init(_ type: F.Type,
                             presentationType: LaunchStyle.PresentationType,
-                            flowPersistance: @escaping (F.WorkflowInput) -> FlowPersistance) {
+                            flowPersistence: @escaping (F.WorkflowInput) -> FlowPersistence) {
         self.init(FlowRepresentableMetadata(type,
                                             launchStyle: presentationType.rawValue) { data in
             guard case.args(let extracted) = data,
                   let cast = extracted as? F.WorkflowInput else { return .default }
-            return flowPersistance(cast)
+            return flowPersistence(cast)
         })
     }
 
     /// init: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     /// - Parameter type: A reference to the class used to create the workflow
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
-    /// - Parameter flowPersistance: A closure returning a `FlowPersistance`type representing how this item in the workflow should persist.
+    /// - Parameter flowPersistence: A closure returning a `FlowPersistence`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
     public convenience init(_ type: F.Type,
                             presentationType: LaunchStyle.PresentationType,
-                            flowPersistance: @escaping () -> FlowPersistance) where F.WorkflowInput == Never {
+                            flowPersistence: @escaping () -> FlowPersistence) where F.WorkflowInput == Never {
         self.init(FlowRepresentableMetadata(type,
-                                            launchStyle: presentationType.rawValue) { _ in flowPersistance() })
+                                            launchStyle: presentationType.rawValue) { _ in flowPersistence() })
     }
 
     /// init: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     /// - Parameter type: A reference to the class used to create the workflow
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
-    /// - Parameter flowPersistance: A closure returning a `FlowPersistance`type representing how this item in the workflow should persist.
+    /// - Parameter flowPersistence: A closure returning a `FlowPersistence`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
     public convenience init(_ type: F.Type,
                             presentationType: LaunchStyle.PresentationType,
-                            flowPersistance: @escaping () -> FlowPersistance) where F.WorkflowInput == AnyWorkflow.PassedArgs {
+                            flowPersistence: @escaping () -> FlowPersistence) where F.WorkflowInput == AnyWorkflow.PassedArgs {
         self.init(FlowRepresentableMetadata(type,
-                                            launchStyle: presentationType.rawValue) { _ in flowPersistance() })
+                                            launchStyle: presentationType.rawValue) { _ in flowPersistence() })
     }
 }
 
@@ -136,29 +136,29 @@ extension Workflow where F.WorkflowOutput == Never {
     /// thenPresent: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     /// - Parameter type: A reference to the class used to create the workflow
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
-    /// - Parameter flowPersistance: An `FlowPersistance`type representing how this item in the workflow should persist.
+    /// - Parameter flowPersistence: An `FlowPersistence`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: LaunchStyle.PresentationType,
-                                                   flowPersistance: @escaping @autoclosure () -> FlowPersistance = .default) -> Workflow<FR> where FR.WorkflowInput == Never {
+                                                   flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where FR.WorkflowInput == Never {
         let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetadata(type,
-                                            launchStyle: presentationType.rawValue) { _ in flowPersistance() })
+                                            launchStyle: presentationType.rawValue) { _ in flowPersistence() })
         return wf
     }
 
     /// thenPresent: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     /// - Parameter type: A reference to the class used to create the workflow
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
-    /// - Parameter flowPersistance: An `FlowPersistance`type representing how this item in the workflow should persist.
+    /// - Parameter flowPersistence: An `FlowPersistence`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: LaunchStyle.PresentationType,
-                                                   flowPersistance: @escaping @autoclosure () -> FlowPersistance = .default) -> Workflow<FR>
+                                                   flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR>
     where FR.WorkflowInput == AnyWorkflow.PassedArgs {
         let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetadata(type,
-                                            launchStyle: presentationType.rawValue) { _ in flowPersistance() })
+                                            launchStyle: presentationType.rawValue) { _ in flowPersistence() })
         return wf
     }
 }
@@ -167,31 +167,31 @@ extension Workflow {
     /// thenPresent: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     /// - Parameter type: A reference to the class used to create the workflow
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
-    /// - Parameter flowPersistance: An `FlowPersistance`type representing how this item in the workflow should persist.
+    /// - Parameter flowPersistence: An `FlowPersistence`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: LaunchStyle.PresentationType,
-                                                   flowPersistance: @escaping @autoclosure () -> FlowPersistance = .default) -> Workflow<FR> where F.WorkflowOutput == FR.WorkflowInput {
+                                                   flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where F.WorkflowOutput == FR.WorkflowInput {
         let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetadata(type,
-                                            launchStyle: presentationType.rawValue) { _ in flowPersistance() })
+                                            launchStyle: presentationType.rawValue) { _ in flowPersistence() })
         return wf
     }
 
     /// thenPresent: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     /// - Parameter type: A reference to the class used to create the workflow
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
-    /// - Parameter flowPersistance: A closure taking in the generic type from the `FlowRepresentable` and returning a `FlowPersistance`type representing how this item in the workflow should persist.
+    /// - Parameter flowPersistence: A closure taking in the generic type from the `FlowRepresentable` and returning a `FlowPersistence`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: LaunchStyle.PresentationType,
-                                                   flowPersistance: @escaping (FR.WorkflowInput) -> FlowPersistance) -> Workflow<FR> where F.WorkflowOutput == FR.WorkflowInput {
+                                                   flowPersistence: @escaping (FR.WorkflowInput) -> FlowPersistence) -> Workflow<FR> where F.WorkflowOutput == FR.WorkflowInput {
         let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetadata(type,
                                             launchStyle: presentationType.rawValue) { data in
                                                 guard case.args(let extracted) = data,
                                                       let cast = extracted as? FR.WorkflowInput else { return .default }
-                                                return flowPersistance(cast)
+                                                return flowPersistence(cast)
         })
         return wf
     }
@@ -199,29 +199,29 @@ extension Workflow {
     /// thenPresent: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     /// - Parameter type: A reference to the class used to create the workflow
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
-    /// - Parameter flowPersistance: A closure returning a `FlowPersistance`type representing how this item in the workflow should persist.
+    /// - Parameter flowPersistence: A closure returning a `FlowPersistence`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: LaunchStyle.PresentationType,
-                                                   flowPersistance: @escaping @autoclosure () -> FlowPersistance = .default) -> Workflow<FR> where FR.WorkflowInput == Never {
+                                                   flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where FR.WorkflowInput == Never {
         let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetadata(type,
-                                            launchStyle: presentationType.rawValue) { _ in flowPersistance() })
+                                            launchStyle: presentationType.rawValue) { _ in flowPersistence() })
         return wf
     }
 
     /// thenPresent: A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     /// - Parameter type: A reference to the class used to create the workflow
     /// - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
-    /// - Parameter flowPersistance: A closure returning a `FlowPersistance`type representing how this item in the workflow should persist.
+    /// - Parameter flowPersistence: A closure returning a `FlowPersistence`type representing how this item in the workflow should persist.
     /// - Returns: `Workflow`
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: LaunchStyle.PresentationType,
-                                                   flowPersistance: @escaping @autoclosure () -> FlowPersistance = .default) -> Workflow<FR>
+                                                   flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR>
     where FR.WorkflowInput == AnyWorkflow.PassedArgs {
         let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetadata(type,
-                                            launchStyle: presentationType.rawValue) { _ in flowPersistance() })
+                                            launchStyle: presentationType.rawValue) { _ in flowPersistence() })
         return wf
     }
 }

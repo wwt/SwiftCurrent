@@ -78,7 +78,7 @@ open class UIKitPresenter: AnyOrchestrationResponder {
                                      view: UIViewController,
                                      root: UIViewController,
                                      completion: (() -> Void)? = nil) {
-        let animated = !(to.metadata.persistance == .hiddenInitially)
+        let animated = !(to.metadata.persistence == .hiddenInitially)
         switch LaunchStyle.PresentationType(rawValue: style) {
             case _ where style == .default:
                 if case .modal(let style) = LaunchStyle.PresentationType(rawValue: to.metadata.launchStyle) {
@@ -124,7 +124,7 @@ open class UIKitPresenter: AnyOrchestrationResponder {
         guard let view = to.instance.value?.underlyingInstance as? UIViewController,
               let root = from.instance.value?.underlyingInstance as? UIViewController else { return }
         displayInstance(to, style: to.metadata.launchStyle, view: view, root: root) { [self] in
-            if from.metadata.persistance == .removedAfterProceeding {
+            if from.metadata.persistence == .removedAfterProceeding {
                 destroy(root)
             }
         }

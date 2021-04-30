@@ -33,7 +33,7 @@ class SetupViewController: UIViewController, StoryboardLoadable {
         launchInto(
             Workflow(LocationsViewController.self)
                 .thenPresent(PickupOrDeliveryViewController.self)
-                .thenPresent(MenuSelectionViewController.self, flowPersistance: .persistWhenSkipped)
+                .thenPresent(MenuSelectionViewController.self, flowPersistence: .persistWhenSkipped)
                 .thenPresent(FoodSelectionViewController.self)
                 .thenPresent(ReviewOrderViewController.self),
             args: locations,

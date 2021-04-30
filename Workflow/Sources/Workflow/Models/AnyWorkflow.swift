@@ -49,12 +49,12 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
 
             defer {
                 guard let instance = instances.first?.traverse(nextNode.position) else { fatalError("Internal state of workflow completely mangled during launch.") }
-                let persistance = nextMetadata.calculatePersistance(passedArgs)
+                let persistence = nextMetadata.calculatePersistence(passedArgs)
                 if shouldLoad {
                     firstLoadedInstance = instance
                     firstLoadedInstance?.value = flowRepresentable
                     setupCallbacks(for: instance, onFinish: onFinish)
-                } else if !shouldLoad && persistance == .persistWhenSkipped {
+                } else if !shouldLoad && persistence == .persistWhenSkipped {
                     instance.value = flowRepresentable
                     setupCallbacks(for: instance, onFinish: onFinish)
                     orchestrationResponder?.launchOrProceed(to: (instance: instance, metadata: nextMetadata), from: convertInput(root))
@@ -111,16 +111,16 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
             var viewToPresent: (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetadata)?
             let nextLoadedNode = node.next?.traverse { nextNode in
                 guard let metadata = first?.traverse(nextNode.position)?.value else { return false }
-                let persistance = metadata.calculatePersistance(argsToPass)
+                let persistence = metadata.calculatePersistence(argsToPass)
                 let flowRepresentable = metadata.flowRepresentableFactory()
                 flowRepresentable.workflow = self
 
                 flowRepresentable.proceedInWorkflowStorage = { argsToPass = $0 }
 
                 let shouldLoad = flowRepresentable.shouldLoad(with: argsToPass) == true
-                nextNode.value = (shouldLoad || (!shouldLoad && persistance == .persistWhenSkipped)) ? flowRepresentable : nil
+                nextNode.value = (shouldLoad || (!shouldLoad && persistence == .persistWhenSkipped)) ? flowRepresentable : nil
 
-                if !shouldLoad && persistance == .persistWhenSkipped {
+                if !shouldLoad && persistence == .persistWhenSkipped {
                     nextNode.value = flowRepresentable
                     viewToPresent = (instance: flowRepresentable, metadata: metadata)
                     setupCallbacks(for: nextNode, onFinish: onFinish)
