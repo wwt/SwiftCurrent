@@ -19,7 +19,7 @@ open class UIKitPresenter: AnyOrchestrationResponder {
         launchedPresentationType = launchStyle
     }
 
-    public func launch(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
+    public func launch(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata)) {
         guard let view = to.instance.value?.underlyingInstance as? UIViewController else { return }
         displayInstance(to, style: launchedPresentationType.rawValue, view: view, root: launchedFromVC)
     }
@@ -73,12 +73,12 @@ open class UIKitPresenter: AnyOrchestrationResponder {
         }
     }
 
-    fileprivate func displayInstance(_ to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData),
+    fileprivate func displayInstance(_ to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
                                      style: LaunchStyle,
                                      view: UIViewController,
                                      root: UIViewController,
                                      completion: (() -> Void)? = nil) {
-        let animated = !(to.metadata.persistance == .hiddenInitially)
+        let animated = !(to.metadata.persistence == .hiddenInitially)
         switch LaunchStyle.PresentationType(rawValue: style) {
             case _ where style == .default:
                 if case .modal(let style) = LaunchStyle.PresentationType(rawValue: to.metadata.launchStyle) {
@@ -119,19 +119,19 @@ open class UIKitPresenter: AnyOrchestrationResponder {
         }
     }
 
-    public func proceed(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData),
-                        from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
+    public func proceed(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
+                        from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata)) {
         guard let view = to.instance.value?.underlyingInstance as? UIViewController,
               let root = from.instance.value?.underlyingInstance as? UIViewController else { return }
         displayInstance(to, style: to.metadata.launchStyle, view: view, root: root) { [self] in
-            if from.metadata.persistance == .removedAfterProceeding {
+            if from.metadata.persistence == .removedAfterProceeding {
                 destroy(root)
             }
         }
     }
 
-    public func proceedBackward(from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData),
-                                to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
+    public func proceedBackward(from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
+                                to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata)) {
         guard let view = to.instance.value?.underlyingInstance as? UIViewController else { return }
         if let nav = view.navigationController {
             nav.popToViewController(view, animated: true)

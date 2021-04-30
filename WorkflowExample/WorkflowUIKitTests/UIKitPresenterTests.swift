@@ -495,7 +495,7 @@ class UIKitPresenterTests: XCTestCase {
         nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistance: .hiddenInitially)
+                    .thenPresent(FR2.self, flowPersistence: .hiddenInitially)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
@@ -517,7 +517,7 @@ class UIKitPresenterTests: XCTestCase {
         nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistance: .hiddenInitially)
+                    .thenPresent(FR2.self, flowPersistence: .hiddenInitially)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
@@ -541,7 +541,7 @@ class UIKitPresenterTests: XCTestCase {
         nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistance: .hiddenInitially)
+                    .thenPresent(FR2.self, flowPersistence: .hiddenInitially)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
@@ -567,7 +567,7 @@ class UIKitPresenterTests: XCTestCase {
         let nav = UINavigationController()
         nav.loadForTesting()
 
-        nav.launchInto(Workflow(FR1.self, flowPersistance: .hiddenInitially)
+        nav.launchInto(Workflow(FR1.self, flowPersistence: .hiddenInitially)
                     .thenPresent(FR2.self)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
         XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
@@ -590,7 +590,7 @@ class UIKitPresenterTests: XCTestCase {
         let nav = UINavigationController()
         nav.loadForTesting()
 
-        nav.launchInto(Workflow(FR1.self, flowPersistance: .hiddenInitially)
+        nav.launchInto(Workflow(FR1.self, flowPersistence: .hiddenInitially)
                     .thenPresent(FR2.self)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
         XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
@@ -613,7 +613,7 @@ class UIKitPresenterTests: XCTestCase {
         nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistance: .removedAfterProceeding)
+                    .thenPresent(FR2.self, flowPersistence: .removedAfterProceeding)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
@@ -634,7 +634,7 @@ class UIKitPresenterTests: XCTestCase {
         let nav = UINavigationController()
         nav.loadForTesting()
 
-        nav.launchInto(Workflow(FR1.self, flowPersistance: .removedAfterProceeding)
+        nav.launchInto(Workflow(FR1.self, flowPersistence: .removedAfterProceeding)
                     .thenPresent(FR2.self)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
@@ -655,7 +655,7 @@ class UIKitPresenterTests: XCTestCase {
         nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistance: .hiddenInitially)
+                    .thenPresent(FR2.self, flowPersistence: .hiddenInitially)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
@@ -675,7 +675,7 @@ class UIKitPresenterTests: XCTestCase {
         nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistance: .removedAfterProceeding)
+                    .thenPresent(FR2.self, flowPersistence: .removedAfterProceeding)
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
@@ -698,7 +698,7 @@ class UIKitPresenterTests: XCTestCase {
         nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistance: { _ in .hiddenInitially })
+                    .thenPresent(FR2.self, flowPersistence: { _ in .hiddenInitially })
                     .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow("blah")
@@ -721,7 +721,7 @@ class UIKitPresenterTests: XCTestCase {
         nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistance: { data in
+                    .thenPresent(FR2.self, flowPersistence: { data in
                         XCTAssertEqual(data as? String, "blah")
                         return .removedAfterProceeding
                     })
@@ -747,7 +747,7 @@ class UIKitPresenterTests: XCTestCase {
         root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistance: .hiddenInitially)
+                    .thenPresent(FR2.self, flowPersistence: .hiddenInitially)
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
@@ -789,7 +789,7 @@ class UIKitPresenterTests: XCTestCase {
         root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistance: .hiddenInitially)
+                    .thenPresent(FR2.self, flowPersistence: .hiddenInitially)
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
@@ -813,7 +813,7 @@ class UIKitPresenterTests: XCTestCase {
         let root = UIViewController()
         root.loadForTesting()
 
-        root.launchInto(Workflow(FR1.self, flowPersistance: .hiddenInitially)
+        root.launchInto(Workflow(FR1.self, flowPersistence: .hiddenInitially)
                     .thenPresent(FR2.self)
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
         XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
@@ -833,7 +833,7 @@ class UIKitPresenterTests: XCTestCase {
         root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistance: .removedAfterProceeding)
+                    .thenPresent(FR2.self, flowPersistence: .removedAfterProceeding)
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
@@ -854,7 +854,7 @@ class UIKitPresenterTests: XCTestCase {
         let root = UIViewController()
         root.loadForTesting()
 
-        root.launchInto(Workflow(FR1.self, flowPersistance: .removedAfterProceeding)
+        root.launchInto(Workflow(FR1.self, flowPersistence: .removedAfterProceeding)
                     .thenPresent(FR2.self)
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
 
@@ -877,7 +877,7 @@ class UIKitPresenterTests: XCTestCase {
         root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistance: .hiddenInitially)
+                    .thenPresent(FR2.self, flowPersistence: .hiddenInitially)
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
@@ -897,7 +897,7 @@ class UIKitPresenterTests: XCTestCase {
         root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistance: .removedAfterProceeding)
+                    .thenPresent(FR2.self, flowPersistence: .removedAfterProceeding)
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
@@ -920,7 +920,7 @@ class UIKitPresenterTests: XCTestCase {
         root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistance: { _ in .hiddenInitially })
+                    .thenPresent(FR2.self, flowPersistence: { _ in .hiddenInitially })
                     .thenPresent(FR3.self), withLaunchStyle: .modal)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow("blah")
@@ -943,7 +943,7 @@ class UIKitPresenterTests: XCTestCase {
         root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistance: { data in
+                    .thenPresent(FR2.self, flowPersistence: { data in
                         XCTAssertEqual(data as? String, "blah")
                         return .removedAfterProceeding
                     })
@@ -1657,7 +1657,7 @@ class UIKitPresenterTests: XCTestCase {
         wf.applyOrchestrationResponder(presenter)
         var fr1 = FR1()
         let node = AnyWorkflow.InstanceNode(with: AnyFlowRepresentable(&fr1))
-        let metadata = FlowRepresentableMetaData(FR1.self, launchStyle: ls, flowPersistance: { _ in .default })
+        let metadata = FlowRepresentableMetadata(FR1.self, launchStyle: ls, flowPersistence: { _ in .default })
 
         XCTAssertThrowsFatalError {
             presenter.proceed(to: (instance: node, metadata: metadata),

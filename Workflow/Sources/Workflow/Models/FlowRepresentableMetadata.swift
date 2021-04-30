@@ -1,5 +1,5 @@
 //
-//  FlowRepresentableMetaData.swift
+//  FlowRepresentableMetadata.swift
 //  
 //
 //  Created by Tyler Thompson on 11/25/20.
@@ -20,30 +20,30 @@ import Foundation
      .thenPresent(SomeOtherFlowRepresentableClass.self, launchStyle: .navigationStack) // We now have a FlowRepresentableMetadata representing SomeOtherFlowRepresentableClass and its launch style of navigation stack
  ```
  */
-public class FlowRepresentableMetaData {
+public class FlowRepresentableMetadata {
     private(set) var flowRepresentableFactory: () -> AnyFlowRepresentable
-    private var flowPersistance: (AnyWorkflow.PassedArgs) -> FlowPersistance
+    private var flowPersistence: (AnyWorkflow.PassedArgs) -> FlowPersistence
     public private(set) var launchStyle: LaunchStyle
-    public private(set) var persistance: FlowPersistance?
+    public private(set) var persistence: FlowPersistence?
 
     public init<FR: FlowRepresentable>(_ flowRepresentableType: FR.Type,
                                        launchStyle: LaunchStyle = .default,
-                                       flowPersistance:@escaping (AnyWorkflow.PassedArgs) -> FlowPersistance) {
+                                       flowPersistence:@escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) {
         self.flowRepresentableFactory = {
             var instance = FR.instance()
             return AnyFlowRepresentable(&instance)
         }
-        self.flowPersistance = flowPersistance
+        self.flowPersistence = flowPersistence
         self.launchStyle = launchStyle
     }
 
-    public convenience init<FR: FlowRepresentable>(with flowRepresentable: FR, launchStyle: LaunchStyle, persistance: FlowPersistance) {
-        self.init(FR.self, launchStyle: launchStyle) { _ in persistance }
+    public convenience init<FR: FlowRepresentable>(with flowRepresentable: FR, launchStyle: LaunchStyle, persistence: FlowPersistence) {
+        self.init(FR.self, launchStyle: launchStyle) { _ in persistence }
     }
 
-    func calculatePersistance(_ args: AnyWorkflow.PassedArgs) -> FlowPersistance {
-        let val = flowPersistance(args)
-        persistance = val
+    func calculatePersistence(_ args: AnyWorkflow.PassedArgs) -> FlowPersistence {
+        let val = flowPersistence(args)
+        persistence = val
         return val
     }
 }

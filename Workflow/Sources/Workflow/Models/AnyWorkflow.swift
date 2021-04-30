@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
+public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
     public typealias InstanceNode = LinkedList<AnyFlowRepresentable?>.Element
     public typealias ArrayLiteralElement = AnyFlowRepresentable.Type
     internal var instances = LinkedList<AnyFlowRepresentable?>()
@@ -36,7 +36,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
                                           onFinish: ((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Element? {
         removeInstances()
         instances = LinkedList(map { _ in nil })
-        var root: (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetaData)?
+        var root: (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetadata)?
         var passedArgs = passedArgs
 
         let metadata = first?.traverse { [self] nextNode in
@@ -49,12 +49,12 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
 
             defer {
                 guard let instance = instances.first?.traverse(nextNode.position) else { fatalError("Internal state of workflow completely mangled during launch.") }
-                let persistance = nextMetadata.calculatePersistance(passedArgs)
+                let persistence = nextMetadata.calculatePersistence(passedArgs)
                 if shouldLoad {
                     firstLoadedInstance = instance
                     firstLoadedInstance?.value = flowRepresentable
                     setupCallbacks(for: instance, onFinish: onFinish)
-                } else if !shouldLoad && persistance == .persistWhenSkipped {
+                } else if !shouldLoad && persistence == .persistWhenSkipped {
                     instance.value = flowRepresentable
                     setupCallbacks(for: instance, onFinish: onFinish)
                     orchestrationResponder?.launchOrProceed(to: (instance: instance, metadata: nextMetadata), from: convertInput(root))
@@ -108,19 +108,19 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
         }
         node.value?.proceedInWorkflowStorage = { [self] args in
             var argsToPass = args
-            var viewToPresent: (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetaData)?
+            var viewToPresent: (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetadata)?
             let nextLoadedNode = node.next?.traverse { nextNode in
                 guard let metadata = first?.traverse(nextNode.position)?.value else { return false }
-                let persistance = metadata.calculatePersistance(argsToPass)
+                let persistence = metadata.calculatePersistence(argsToPass)
                 let flowRepresentable = metadata.flowRepresentableFactory()
                 flowRepresentable.workflow = self
 
                 flowRepresentable.proceedInWorkflowStorage = { argsToPass = $0 }
 
                 let shouldLoad = flowRepresentable.shouldLoad(with: argsToPass) == true
-                nextNode.value = (shouldLoad || (!shouldLoad && persistance == .persistWhenSkipped)) ? flowRepresentable : nil
+                nextNode.value = (shouldLoad || (!shouldLoad && persistence == .persistWhenSkipped)) ? flowRepresentable : nil
 
-                if !shouldLoad && persistance == .persistWhenSkipped {
+                if !shouldLoad && persistence == .persistWhenSkipped {
                     nextNode.value = flowRepresentable
                     viewToPresent = (instance: flowRepresentable, metadata: metadata)
                     setupCallbacks(for: nextNode, onFinish: onFinish)
@@ -154,11 +154,11 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
 
             guard let previousNode = previousLoadedNode else { return }
 
-            guard let previousMetaDataNode = first?.traverse(previousNode.position) else {
+            guard let previousMetadataNode = first?.traverse(previousNode.position) else {
                 fatalError("Internal state of workflow completely mangled during execution of proceed backward callback.")
             }
 
-            orchestrationResponder?.proceedBackward(from: (instance: node, metadata: currentMetadataNode.value), to: (instance: previousNode, metadata: previousMetaDataNode.value))
+            orchestrationResponder?.proceedBackward(from: (instance: node, metadata: currentMetadataNode.value), to: (instance: previousNode, metadata: previousMetadataNode.value))
         }
     }
 
@@ -170,8 +170,8 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetaData> {
 
 extension AnyWorkflow {
     private func convertInput(_ old: (instance: AnyFlowRepresentable,
-                                      metadata: FlowRepresentableMetaData)?) -> (instance: AnyWorkflow.InstanceNode,
-                                                                                 metadata: FlowRepresentableMetaData)? {
+                                      metadata: FlowRepresentableMetadata)?) -> (instance: AnyWorkflow.InstanceNode,
+                                                                                 metadata: FlowRepresentableMetadata)? {
         guard let old = old else { return nil }
         return (instance: AnyWorkflow.InstanceNode(with: old.instance), metadata: old.metadata)
     }

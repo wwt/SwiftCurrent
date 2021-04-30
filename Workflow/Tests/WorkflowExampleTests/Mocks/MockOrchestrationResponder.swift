@@ -11,24 +11,24 @@ import Workflow
 
 class MockOrchestrationResponder: AnyOrchestrationResponder {
     var launchCalled = 0
-    var lastTo: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)?
-    func launch(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
+    var lastTo: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata)?
+    func launch(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata)) {
         lastTo = to
         launchCalled += 1
     }
 
     var proceedCalled = 0
-    var lastFrom: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)?
+    var lastFrom: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata)?
     var lastCompletion:(() -> Void)?
-    func proceed(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData),
-                 from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
+    func proceed(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
+                 from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata)) {
         lastTo = to
         lastFrom = from
         proceedCalled += 1
     }
 
     var proceedBackwardCalled = 0
-    func proceedBackward(from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData), to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetaData)) {
+    func proceedBackward(from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata), to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata)) {
         lastFrom = from
         lastTo = to
         proceedBackwardCalled += 1
