@@ -1,5 +1,6 @@
 theme: fullwidth 
 skip_undocumented: true
+separate_global_declarations: true
 readme: README.md
 module: Workflow
 author_url: https://github.com/wwt/workflow
