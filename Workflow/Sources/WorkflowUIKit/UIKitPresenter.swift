@@ -78,7 +78,7 @@ open class UIKitPresenter: AnyOrchestrationResponder {
                                      view: UIViewController,
                                      root: UIViewController,
                                      completion: (() -> Void)? = nil) {
-        let animated = !(to.metadata.persistence == .hiddenInitially)
+        let animated = to.metadata.persistence != .hiddenInitially
         switch LaunchStyle.PresentationType(rawValue: style) {
             case _ where style == .default:
                 if case .modal(let style) = LaunchStyle.PresentationType(rawValue: to.metadata.launchStyle) {
