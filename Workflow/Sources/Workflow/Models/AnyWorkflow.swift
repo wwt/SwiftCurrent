@@ -65,9 +65,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
 
         guard let first = firstLoadedInstance,
               let m = metadata else {
-            if let argsToPass = passedArgs.extract(nil) {
-                onFinish?(argsToPass)
-            }
+            if case .args(let argsToPass) = passedArgs { onFinish?(argsToPass) }
             return nil
         }
 
