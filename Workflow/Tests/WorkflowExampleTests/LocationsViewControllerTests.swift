@@ -13,12 +13,6 @@ import UIUTest
 @testable import WorkflowExample
 
 class LocationsViewControllerTests: ViewControllerTest<LocationsViewController> {
-    var tableView: UITableView!
-
-    override func afterLoadFromStoryboard() {
-        tableView = testViewController.tableView
-    }
-
     func testShouldLoadOnlyIfThereAreMultipleLocations() {
         XCTAssertFalse(testViewController.shouldLoad(with: []), "LocationsViewController should not load if there are less than 2 locations")
         XCTAssertTrue(testViewController.shouldLoad(with: [
@@ -63,7 +57,7 @@ class LocationsViewControllerTests: ViewControllerTest<LocationsViewController> 
             ])
         }
 
-        XCTAssertEqual(testViewController.tableView(tableView, numberOfRowsInSection: 0), 2)
+        XCTAssertEqual(testViewController.tableView(testViewController.tableView, numberOfRowsInSection: 0), 2)
     }
 
     func testTableViewCellShouldContainLocationName() {
@@ -75,7 +69,7 @@ class LocationsViewControllerTests: ViewControllerTest<LocationsViewController> 
             ])
         }
 
-        let cell = testViewController.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0))
+        let cell = testViewController.tableView(testViewController.tableView, cellForRowAt: IndexPath(row: 0, section: 0))
 
         XCTAssertEqual(cell.textLabel?.text, rand)
     }
@@ -95,8 +89,14 @@ class LocationsViewControllerTests: ViewControllerTest<LocationsViewController> 
             }
         }
 
-        testViewController.tableView(tableView, didSelectRowAt: IndexPath(row: 0, section: 0))
+        testViewController.tableView.simulateTouch(at: IndexPath(row: 0, section: 0))
 
         XCTAssert(callbackCalled)
+    }
+}
+
+fileprivate extension UIViewController {
+    var tableView: UITableView! {
+        view.viewWithAccessibilityIdentifier("tableView") as? UITableView
     }
 }

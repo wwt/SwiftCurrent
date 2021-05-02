@@ -17,6 +17,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QXx-In-AAY">
                                 <rect key="frame" x="20" y="64" width="374" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="launchWorkflowButton"/>
                                 <state key="normal" title="Launch multi location workflow"/>
                                 <connections>
                                     <action selector="launchMultiLocationWorkflow" destination="DkS-f3-MqN" eventType="touchUpInside" id="3kk-rp-Bxs"/>
@@ -93,6 +94,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JPS-g3-9R0">
                                 <rect key="frame" x="20" y="64" width="374" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="pickupButton"/>
                                 <state key="normal" title="Pickup"/>
                                 <connections>
                                     <action selector="selectPickup" destination="n66-oX-fj3" eventType="touchUpInside" id="pwC-Bc-bVr"/>
@@ -100,6 +102,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yhj-hL-Ljy">
                                 <rect key="frame" x="20" y="114" width="374" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="deliveryButton"/>
                                 <state key="normal" title="Delivery"/>
                                 <connections>
                                     <action selector="selectDelivery" destination="n66-oX-fj3" eventType="touchUpInside" id="F2v-Wd-lOP"/>
@@ -132,6 +135,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tCa-1a-jlE">
                                 <rect key="frame" x="20" y="64" width="374" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="cateringMenuButton"/>
                                 <state key="normal" title="Catering Menu"/>
                                 <connections>
                                     <action selector="cateringMenu" destination="WjK-u5-gZy" eventType="touchUpInside" id="6Zq-3p-6qh"/>
@@ -139,6 +143,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rNE-D2-3Me">
                                 <rect key="frame" x="20" y="114" width="374" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="regularMenuButton"/>
                                 <state key="normal" title="Regular Menu"/>
                                 <connections>
                                     <action selector="regularMenu" destination="WjK-u5-gZy" eventType="touchUpInside" id="5pr-V6-TGT"/>
@@ -171,6 +176,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YEi-bQ-CkI">
                                 <rect key="frame" x="20" y="64" width="374" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="firstFoodChoiceButton"/>
                                 <state key="normal" title="Combo #1"/>
                                 <connections>
                                     <action selector="firstFoodChoice" destination="0mc-nI-5G7" eventType="touchUpInside" id="1PF-mc-WbN"/>
@@ -178,6 +184,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K8g-gi-yWn">
                                 <rect key="frame" x="20" y="114" width="374" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="secondFoodChoiceButton"/>
                                 <state key="normal" title="Combo #2"/>
                                 <connections>
                                     <action selector="secondFoodChoice" destination="0mc-nI-5G7" eventType="touchUpInside" id="S2t-if-vvQ"/>
@@ -185,6 +192,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k7M-FX-z4U">
                                 <rect key="frame" x="20" y="164" width="374" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="thirdFoodChoiceButton"/>
                                 <state key="normal" title="Combo #3"/>
                                 <connections>
                                     <action selector="thirdFoodChoice" destination="0mc-nI-5G7" eventType="touchUpInside" id="2v3-y8-ex8"/>
@@ -322,6 +330,7 @@
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KNa-YE-KJO">
                                 <rect key="frame" x="20" y="118" width="374" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="saveAddressButton"/>
                                 <state key="normal" title="Save Address"/>
                                 <connections>
                                     <action selector="saveAddress" destination="1U9-wD-f9Q" eventType="touchUpInside" id="ong-Im-O0U"/>

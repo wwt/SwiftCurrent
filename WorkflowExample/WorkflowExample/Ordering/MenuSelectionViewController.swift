@@ -13,13 +13,13 @@ import WorkflowUIKit
 class MenuSelectionViewController: UIWorkflowItem<Order, Order>, StoryboardLoadable {
     var order: Order?
 
-    @IBAction func cateringMenu() {
+    @IBAction private func cateringMenu() {
         order?.menuType = .catering
         guard let order = order else { return }
         proceedInWorkflow(order)
     }
 
-    @IBAction func regularMenu() {
+    @IBAction private func regularMenu() {
         order?.menuType = .regular
         guard let order = order else { return }
         proceedInWorkflow(order)

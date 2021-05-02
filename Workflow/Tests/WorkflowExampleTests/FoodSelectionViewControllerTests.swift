@@ -25,7 +25,7 @@ class FoodSelectionViewControllerTests: ViewControllerTest<FoodSelectionViewCont
             XCTAssertEqual((data as? Order)?.shoppingCart.last?.name, "Combo #1")
         }
 
-        testViewController.firstFoodChoice()
+        testViewController.firstFoodChoiceButton?.simulateTouch()
         XCTAssert(proceedInWorkflowCalled)
     }
 
@@ -38,7 +38,7 @@ class FoodSelectionViewControllerTests: ViewControllerTest<FoodSelectionViewCont
             XCTAssertEqual((data as? Order)?.shoppingCart.last?.name, "Combo #2")
         }
 
-        testViewController.secondFoodChoice()
+        testViewController.secondFoodChoiceButton?.simulateTouch()
         XCTAssert(proceedInWorkflowCalled)
     }
 
@@ -51,7 +51,21 @@ class FoodSelectionViewControllerTests: ViewControllerTest<FoodSelectionViewCont
             XCTAssertEqual((data as? Order)?.shoppingCart.last?.name, "Combo #3")
         }
 
-        testViewController.thirdFoodChoice()
+        testViewController.thirdFoodChoiceButton?.simulateTouch()
         XCTAssert(proceedInWorkflowCalled)
+    }
+}
+
+fileprivate extension UIViewController {
+    var firstFoodChoiceButton: UIButton? {
+        view.viewWithAccessibilityIdentifier("firstFoodChoiceButton") as? UIButton
+    }
+
+    var secondFoodChoiceButton: UIButton? {
+        view.viewWithAccessibilityIdentifier("secondFoodChoiceButton") as? UIButton
+    }
+
+    var thirdFoodChoiceButton: UIButton? {
+        view.viewWithAccessibilityIdentifier("thirdFoodChoiceButton") as? UIButton
     }
 }

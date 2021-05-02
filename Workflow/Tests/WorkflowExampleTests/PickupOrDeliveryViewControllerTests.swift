@@ -47,7 +47,7 @@ class PickupOrDeliveryViewConrollerTests: ViewControllerTest<PickupOrDeliveryVie
             _ = viewController.shouldLoad(with: Order(location: location))
         }
 
-        testViewController.selectPickup()
+        testViewController.pickupButton?.simulateTouch()
 
         XCTAssert(callbackCalled)
     }
@@ -59,7 +59,7 @@ class PickupOrDeliveryViewConrollerTests: ViewControllerTest<PickupOrDeliveryVie
         let listener = WorkflowListener()
         let orderOutput = Order(location: Location(name: unique, address: Address(), orderTypes: [], menuTypes: []))
 
-        testViewController.selectDelivery()
+        testViewController.deliveryButton?.simulateTouch()
         XCTAssertWorkflowLaunched(listener: listener, workflow: Workflow(EnterAddressViewController.self))
 
         let mock = MockOrchestrationResponder()
@@ -77,5 +77,15 @@ class PickupOrDeliveryViewConrollerTests: ViewControllerTest<PickupOrDeliveryVie
         XCTAssertEqual(mock.abandonCalled, 1)
 
         XCTAssert(proceedInWorkflowCalled)
+    }
+}
+
+fileprivate extension UIViewController {
+    var pickupButton: UIButton? {
+        view.viewWithAccessibilityIdentifier("pickupButton") as? UIButton
+    }
+
+    var deliveryButton: UIButton? {
+        view.viewWithAccessibilityIdentifier("deliveryButton") as? UIButton
     }
 }

@@ -8,6 +8,7 @@
 
 import Foundation
 import XCTest
+import UIUTest
 
 @testable import WorkflowExample
 @testable import Workflow
@@ -25,19 +26,8 @@ class ViewControllerTest<T: UIViewController & StoryboardLoadable & FlowRepresen
         testViewController = instance
         ref = AnyFlowRepresentable(&instance)
 
-        let window = UIApplication.shared.windows.first
-
-        window?.removeViewsFromRootViewController()
-
         configure?(&instance)
-        window?.rootViewController = instance
-        instance.loadViewIfNeeded()
-        instance.view.layoutIfNeeded()
 
-        CATransaction.flush()
-
-        afterLoadFromStoryboard()
+        instance.loadForTesting()
     }
-
-    func afterLoadFromStoryboard() { }
 }

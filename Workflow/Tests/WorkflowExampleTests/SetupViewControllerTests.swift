@@ -13,21 +13,27 @@ import XCTest
 import Workflow
 
 class SetupViewControllerTests: XCTestCase {
-    var testViewController = SetupViewController()
+    var testViewController: SetupViewController!
 
     override func setUp() {
-        testViewController = SetupViewController()
+        testViewController = UIViewController.loadFromStoryboard(identifier: "SetupViewController")
     }
 
     func testLaunchingMultiLocationWorkflow() {
         let listener = WorkflowListener()
 
-        testViewController.launchMultiLocationWorkflow()
+        testViewController.launchWorkflowButton?.simulateTouch()
 
         XCTAssertWorkflowLaunched(listener: listener, workflow: Workflow(LocationsViewController.self)
                                     .thenPresent(PickupOrDeliveryViewController.self)
                                     .thenPresent(MenuSelectionViewController.self)
                                     .thenPresent(FoodSelectionViewController.self)
                                     .thenPresent(ReviewOrderViewController.self))
+    }
+}
+
+fileprivate extension UIViewController {
+    var launchWorkflowButton: UIButton? {
+        view.viewWithAccessibilityIdentifier("launchWorkflowButton") as? UIButton
     }
 }

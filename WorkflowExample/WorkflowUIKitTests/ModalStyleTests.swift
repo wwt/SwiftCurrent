@@ -15,11 +15,13 @@ import WorkflowUIKit
 
 class ModalStyleTests: XCTestCase {
     override func setUp() {
+        UIView.setAnimationsEnabled(false)
         UIViewController.initializeTestable()
     }
 
     override func tearDown() {
         UIViewController.flushPendingTestArtifacts()
+        UIView.setAnimationsEnabled(true)
     }
 
     func testShowModalFullScreen() {

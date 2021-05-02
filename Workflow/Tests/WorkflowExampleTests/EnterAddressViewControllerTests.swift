@@ -8,6 +8,7 @@
 
 import Foundation
 import XCTest
+import UIUTest
 
 @testable import WorkflowExample
 
@@ -27,8 +28,14 @@ class EnterAddressViewControllerTests: ViewControllerTest<EnterAddressViewContro
             XCTAssertEqual((data as? Order)?.orderType, .delivery(Address()))
         }
 
-        testViewController.saveAddress()
+        testViewController.saveAddressButton?.simulateTouch()
 
         XCTAssert(proceedInWorkflowCalled)
+    }
+}
+
+fileprivate extension UIViewController {
+    var saveAddressButton: UIButton? {
+        view.viewWithAccessibilityIdentifier("saveAddressButton") as? UIButton
     }
 }

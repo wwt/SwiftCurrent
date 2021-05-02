@@ -1332,7 +1332,7 @@ class UIKitPresenterTests: XCTestCase {
 
         workflow.abandon(animated: false, onFinish: testCallback)
 
-        XCTAssertUIViewControllerDisplayed(isInstance: controller)
+        waitUntil(UIApplication.topViewController() === controller)
         XCTAssert(controller.viewControllers.isEmpty)
         XCTAssertTrue(UIKitPresenterTests.testCallbackCalled)
     }

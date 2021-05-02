@@ -43,7 +43,7 @@ class MenuSelectionViewControllerTests: ViewControllerTest<MenuSelectionViewCont
             XCTAssertEqual((data as? Order)?.menuType, .catering)
         }
 
-        testViewController.cateringMenu()
+        testViewController.cateringMenuButton?.simulateTouch()
 
         XCTAssert(proceedInWorkflowCalled)
     }
@@ -58,8 +58,18 @@ class MenuSelectionViewControllerTests: ViewControllerTest<MenuSelectionViewCont
             XCTAssertEqual((data as? Order)?.menuType, .regular)
         }
 
-        testViewController.regularMenu()
+        testViewController.regularMenuButton?.simulateTouch()
 
         XCTAssert(proceedInWorkflowCalled)
+    }
+}
+
+fileprivate extension UIViewController {
+    var cateringMenuButton: UIButton? {
+        view.viewWithAccessibilityIdentifier("cateringMenuButton") as? UIButton
+    }
+
+    var regularMenuButton: UIButton? {
+        view.viewWithAccessibilityIdentifier("regularMenuButton") as? UIButton
     }
 }

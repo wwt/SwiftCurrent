@@ -12,7 +12,7 @@ import Workflow
 import WorkflowUIKit
 
 class SetupViewController: UIViewController, StoryboardLoadable {
-    @IBAction func launchMultiLocationWorkflow() {
+    @IBAction private func launchMultiLocationWorkflow() {
         let locations = [
             Location(name: "Just Pickup w/ just catering",
                      address: Address(line1: "123 Fake St", line2: "", city: "Fakerton", state: "FK", zip: "00001"),

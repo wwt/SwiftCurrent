@@ -13,18 +13,6 @@ import XCTest
 
 class ReviewOrderViewControllerTests: ViewControllerTest<ReviewOrderViewController> {
 
-    var locationNameLabel: UILabel!
-    var menuLabel: UILabel!
-    var orderTypeLabel: UILabel!
-    var foodChoiceLabel: UILabel!
-
-    override func afterLoadFromStoryboard() {
-        locationNameLabel = testViewController.locationNameLabel
-        menuLabel = testViewController.menuLabel
-        orderTypeLabel = testViewController.orderTypeLabel
-        foodChoiceLabel = testViewController.foodChoiceLabel
-    }
-
     func testShouldLoad() {
         let order = Order(location: Location(name: "", address: Address(), orderTypes: [], menuTypes: []))
         XCTAssert(testViewController.shouldLoad(with: order))
@@ -40,10 +28,28 @@ class ReviewOrderViewControllerTests: ViewControllerTest<ReviewOrderViewControll
             XCTAssert($0.shouldLoad(with: order))
         }
 
-        XCTAssertEqual(locationNameLabel.text, locationName)
-        XCTAssertEqual(menuLabel.text, "Catering Menu")
-        XCTAssertEqual(orderTypeLabel.text, "Delivery")
-        XCTAssertEqual(foodChoiceLabel.text, "Combo #1, Combo #2")
+        XCTAssertEqual(testViewController.locationNameLabel?.text, locationName)
+        XCTAssertEqual(testViewController.menuLabel?.text, "Catering Menu")
+        XCTAssertEqual(testViewController.orderTypeLabel?.text, "Delivery")
+        XCTAssertEqual(testViewController.foodChoiceLabel?.text, "Combo #1, Combo #2")
     }
 
+}
+
+fileprivate extension UIViewController {
+    var locationNameLabel: UILabel? {
+        view.viewWithAccessibilityIdentifier("locationNameLabel") as? UILabel
+    }
+
+    var menuLabel: UILabel? {
+        view.viewWithAccessibilityIdentifier("menuLabel") as? UILabel
+    }
+
+    var orderTypeLabel: UILabel? {
+        view.viewWithAccessibilityIdentifier("orderTypeLabel") as? UILabel
+    }
+
+    var foodChoiceLabel: UILabel? {
+        view.viewWithAccessibilityIdentifier("foodChoiceLabel") as? UILabel
+    }
 }
