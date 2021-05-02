@@ -13,21 +13,19 @@ import UIUTest
 @testable import WorkflowExample
 @testable import Workflow
 
-class ViewControllerTest<T: UIViewController & StoryboardLoadable & FlowRepresentable>: XCTestCase {
+class ViewControllerTest<T: StoryboardLoadable>: XCTestCase {
     typealias ControllerType = T
     var testViewController: ControllerType!
     var ref: AnyFlowRepresentable!
-    override final func setUp() {
-        loadFromStoryboard()
-    }
 
-    final func loadFromStoryboard(configure: ((inout ControllerType) -> Void)? = nil) {
-        var instance = T.instance()
-        testViewController = instance
-        ref = AnyFlowRepresentable(&instance)
+    final func loadFromStoryboard(args: AnyWorkflow.PassedArgs, configure: ((inout ControllerType) -> Void)? = nil) {
+        ref = AnyFlowRepresentable(T.self, args: args)
+        testViewController = (ref.underlyingInstance as! ControllerType)
 
-        configure?(&instance)
+        configure?(&testViewController)
 
-        instance.loadForTesting()
+        _ = ref.shouldLoad(with: args)
+
+        testViewController.loadForTesting()
     }
 }

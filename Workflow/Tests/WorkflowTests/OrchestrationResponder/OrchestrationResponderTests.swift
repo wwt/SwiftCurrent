@@ -71,7 +71,7 @@ class OrchestrationResponderTests: XCTestCase {
         let val = Object()
         class FR1: TestPassthroughFlowRepresentable { }
         class FR2: TestPassthroughFlowRepresentable { }
-        class FR3: TestFlowRepresentable<Never, Object>, FlowRepresentable { }
+        final class FR3: TestFlowRepresentable<Never, Object>, FlowRepresentable { }
         let wf = Workflow(FR1.self)
             .thenPresent(FR2.self)
             .thenPresent(FR3.self)
@@ -159,23 +159,32 @@ class OrchestrationResponderTests: XCTestCase {
     func testWorkflowCallsOnFinishWhenItIsDone_andPassesForwardInitialArguments_EvenWhenMovingBackwardsForABit() {
         class Object { }
         let val = Object()
-        class FR1: TestFlowRepresentable<Object, Object>, FlowRepresentable {
-            var obj: Object!
-            func shouldLoad(with args: Object) -> Bool {
-                obj = args
-                return true
+        final class FR1: TestFlowRepresentable<Object, Object>, FlowRepresentable {
+            var obj: Object
+
+            required init(with object: Object) {
+                self.obj = object
             }
+
+            func shouldLoad(with args: Object) -> Bool { true }
         }
         class FR2: TestFlowRepresentable<Object, Object>, FlowRepresentable {
-            var obj: Object!
-            func shouldLoad(with args: Object) -> Bool {
-                obj = args
-                return true
+            var obj: Object
+
+            required init(with object: Object) {
+                self.obj = object
             }
+
+            func shouldLoad(with args: Object) -> Bool { true }
         }
         class FR3: TestFlowRepresentable<Object, Object>, FlowRepresentable {
             static var shouldMoveOn = false
-            var obj: Object!
+            var obj: Object
+
+            required init(with object: Object) {
+                self.obj = object
+            }
+
             func shouldLoad(with args: Object) -> Bool {
                 defer {
                     FR3.shouldMoveOn.toggle()
@@ -222,9 +231,6 @@ class OrchestrationResponderTests: XCTestCase {
 extension OrchestrationResponderTests {
     class TestFlowRepresentable<Input, Output> {
         weak var _workflowPointer: AnyFlowRepresentable?
-
-        required init() { }
-        static func instance() -> Self { Self() }
 
         typealias WorkflowInput = Input
         typealias WorkflowOutput = Output

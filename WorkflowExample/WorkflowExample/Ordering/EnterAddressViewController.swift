@@ -11,9 +11,17 @@ import Workflow
 import WorkflowUIKit
 
 class EnterAddressViewController: UIWorkflowItem<Order, Order?>, StoryboardLoadable {
-    var order: Order?
+    var order: Order
+
+    required init?(coder: NSCoder, with order: Order) {
+        self.order = order
+        super.init(coder: coder)
+    }
+
+    required init?(coder: NSCoder) { nil }
+
     @IBAction private func saveAddress() {
-        order?.orderType = .delivery(Address(line1: "MyAddress", line2: "", city: "", state: "", zip: ""))
+        order.orderType = .delivery(Address(line1: "MyAddress", line2: "", city: "", state: "", zip: ""))
         proceedInWorkflow(order)
     }
 }

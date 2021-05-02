@@ -48,3 +48,8 @@ open class UIWorkflowItem<I, O>: UIViewController {
 
     public weak var _workflowPointer: AnyFlowRepresentable?
 }
+
+extension FlowRepresentable where Self: UIViewController {
+    public static func _factory() -> Self { Self.init() }
+    public static func _factory(with args: WorkflowInput) -> Self { Self.init(with: args) }
+}

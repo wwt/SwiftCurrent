@@ -13,11 +13,13 @@ import XCTest
 
 class FoodSelectionViewControllerTests: ViewControllerTest<FoodSelectionViewController> {
     func testViewShouldAlwaysLoad() {
+        loadFromStoryboard(args: .args(Order(location: Location(name: "", address: Address(), orderTypes: [], menuTypes: []))))
         XCTAssert(testViewController.shouldLoad(with: Order(location: Location(name: "", address: Address(), orderTypes: [], menuTypes: []))))
     }
 
     func testSelectingFirstFoodChoice() {
         let order = Order(location: Location(name: "", address: Address(), orderTypes: [], menuTypes: []))
+        loadFromStoryboard(args: .args(order))
         testViewController.order = order
         var proceedInWorkflowCalled = false
         testViewController.proceedInWorkflowStorage = { data in
@@ -31,6 +33,7 @@ class FoodSelectionViewControllerTests: ViewControllerTest<FoodSelectionViewCont
 
     func testSelectingSecondFoodChoice() {
         let order = Order(location: Location(name: "", address: Address(), orderTypes: [], menuTypes: []))
+        loadFromStoryboard(args: .args(order))
         testViewController.order = order
         var proceedInWorkflowCalled = false
         testViewController.proceedInWorkflowStorage = { data in
@@ -44,6 +47,7 @@ class FoodSelectionViewControllerTests: ViewControllerTest<FoodSelectionViewCont
 
     func testSelectingThirdFoodChoice() {
         let order = Order(location: Location(name: "", address: Address(), orderTypes: [], menuTypes: []))
+        loadFromStoryboard(args: .args(order))
         testViewController.order = order
         var proceedInWorkflowCalled = false
         testViewController.proceedInWorkflowStorage = { data in

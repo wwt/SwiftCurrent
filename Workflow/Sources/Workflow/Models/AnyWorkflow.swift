@@ -40,7 +40,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
 
         let metadata = first?.traverse { [self] nextNode in
             let nextMetadata = nextNode.value
-            let flowRepresentable = nextMetadata.flowRepresentableFactory()
+            let flowRepresentable = nextMetadata.flowRepresentableFactory(passedArgs)
             flowRepresentable.workflow = self
             flowRepresentable.proceedInWorkflowStorage = { passedArgs = $0 }
 
@@ -107,7 +107,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
             let nextLoadedNode = node.next?.traverse { nextNode in
                 guard let metadata = first?.traverse(nextNode.position)?.value else { return false }
                 let persistence = metadata.calculatePersistence(argsToPass)
-                let flowRepresentable = metadata.flowRepresentableFactory()
+                let flowRepresentable = metadata.flowRepresentableFactory(argsToPass)
                 flowRepresentable.workflow = self
 
                 flowRepresentable.proceedInWorkflowStorage = { argsToPass = $0 }
