@@ -14,8 +14,6 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
     internal var instances = LinkedList<AnyFlowRepresentable?>()
     internal var orchestrationResponder: AnyOrchestrationResponder?
 
-    public var firstLoadedInstance: LinkedList<AnyFlowRepresentable?>.Element?
-
     public func applyOrchestrationResponder(_ orchestrationResponder: AnyOrchestrationResponder) {
         self.orchestrationResponder = orchestrationResponder
     }
@@ -34,6 +32,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
     @discardableResult public func launch(passedArgs: PassedArgs,
                                           withLaunchStyle launchStyle: LaunchStyle = .default,
                                           onFinish: ((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Element? {
+        var firstLoadedInstance: LinkedList<AnyFlowRepresentable?>.Element?
         removeInstances()
         instances = LinkedList(map { _ in nil })
         var root: (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetadata)?
@@ -85,7 +84,6 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
     public func abandon(animated: Bool = true, onFinish:(() -> Void)? = nil) {
         orchestrationResponder?.abandon(self, animated: animated) { [self] in
             removeInstances()
-            firstLoadedInstance = nil
             orchestrationResponder = nil
             onFinish?()
         }
@@ -99,7 +97,6 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
     private func removeInstances() {
         instances.forEach { $0.value?.proceedInWorkflowStorage = nil }
         instances.removeAll()
-        firstLoadedInstance = nil
     }
 
     private func setupProceedCallbacks(_ node: LinkedList<AnyFlowRepresentable?>.Element, _ onFinish: ((Any?) -> Void)?) {

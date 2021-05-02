@@ -13,6 +13,7 @@ import Workflow
 open class UIKitPresenter: AnyOrchestrationResponder {
     let launchedFromVC: UIViewController
     let launchedPresentationType: LaunchStyle.PresentationType
+    var firstLoadedInstance: UIViewController?
 
     init(_ viewController: UIViewController, launchStyle: LaunchStyle.PresentationType) {
         launchedFromVC = viewController
@@ -21,11 +22,12 @@ open class UIKitPresenter: AnyOrchestrationResponder {
 
     public func launch(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata)) {
         guard let view = to.instance.value?.underlyingInstance as? UIViewController else { return }
+        firstLoadedInstance = view
         displayInstance(to, style: launchedPresentationType.rawValue, view: view, root: launchedFromVC)
     }
 
     public func abandon(_ workflow: AnyWorkflow, animated: Bool, onFinish: (() -> Void)?) {
-        guard let first = workflow.firstLoadedInstance?.value?.underlyingInstance as? UIViewController else { return }
+        guard let first = firstLoadedInstance else { return }
         if let nav = first.navigationController {
             if nav.viewControllers.first === first {
                 if let presenting = nav.presentingViewController {
