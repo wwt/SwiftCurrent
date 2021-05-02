@@ -41,7 +41,9 @@ extension FlowRepresentable {
 
     // swiftlint:disable:next line_length
     public init() { fatalError("This initializer was only designed to satisfy a protocol requirement on FlowRepresentables. You must implement your own custom intializer on \(String(describing: Self.self))") }
+    // swiftlint:disable:next force_cast
     public static func _factory<FR: FlowRepresentable>(_ type: FR.Type) -> FR { Self.init() as! FR }
+    // swiftlint:disable:next force_cast
     public static func _factory<FR: FlowRepresentable>(_ type: FR.Type, with args: WorkflowInput) -> FR { Self.init(with: args) as! FR }
 }
 
