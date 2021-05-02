@@ -24,6 +24,7 @@ extension LaunchStyle {
 }
 
 extension LaunchStyle {
+    #warning("Also needs docs, but swiftlint is not picking up on it, I think because all cases are documented")
     public enum PresentationType: RawRepresentable {
         public init?(rawValue: LaunchStyle) {
             switch rawValue {
