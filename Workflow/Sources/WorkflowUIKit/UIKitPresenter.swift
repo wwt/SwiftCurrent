@@ -81,16 +81,16 @@ open class UIKitPresenter: AnyOrchestrationResponder {
         let animated = to.metadata.persistence != .hiddenInitially
         switch LaunchStyle.PresentationType(rawValue: style) {
             case _ where style == .default:
-                displayForDefaultPresentationType(to: to, root: root, view: view, animated: animated, completion: completion)
+                displayDefaultPresentationType(to: to, root: root, view: view, animated: animated, completion: completion)
             case .modal(let style):
-                displayForModalPresentationType(to: to, view: view, style: style, root: root, animated: animated, completion: completion)
+                displayModalPresentationType(to: to, view: view, style: style, root: root, animated: animated, completion: completion)
             case .navigationStack:
-                displayForNavigationStackPresentationType(root: root, view: view, animated: animated, completion: completion)
+                displayNavigationStackPresentationType(root: root, view: view, animated: animated, completion: completion)
             default: fatalError("UNKNOWN LAUNCH STYLE: \(style) PASSED TO \(Self.self)")
         }
     }
 
-    fileprivate func displayForDefaultPresentationType(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
+    fileprivate func displayDefaultPresentationType(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
                                                        root: UIViewController,
                                                        view: UIViewController,
                                                        animated: Bool,
@@ -108,7 +108,7 @@ open class UIKitPresenter: AnyOrchestrationResponder {
         }
     }
 
-    fileprivate func displayForModalPresentationType(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
+    fileprivate func displayModalPresentationType(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
                                                      view: UIViewController,
                                                      style: (LaunchStyle.PresentationType.ModalPresentationStyle),
                                                      root: UIViewController,
@@ -128,7 +128,7 @@ open class UIKitPresenter: AnyOrchestrationResponder {
         }
     }
 
-    fileprivate func displayForNavigationStackPresentationType(root: UIViewController,
+    fileprivate func displayNavigationStackPresentationType(root: UIViewController,
                                                                view: UIViewController,
                                                                animated: Bool,
                                                                completion: (() -> Void)?) {
