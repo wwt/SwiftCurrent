@@ -79,3 +79,5 @@ dependency-check-report.html
 /Packages
 /*.xcodeproj
 xcuserdata/
+
+muter_logs
