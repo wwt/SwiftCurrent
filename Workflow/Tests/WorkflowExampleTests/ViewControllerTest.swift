@@ -10,8 +10,10 @@ import Foundation
 import XCTest
 import UIUTest
 
-@testable import WorkflowExample
+import WorkflowUIKit
+
 @testable import Workflow
+@testable import WorkflowExample
 
 class ViewControllerTest<T: StoryboardLoadable>: XCTestCase {
     typealias ControllerType = T
