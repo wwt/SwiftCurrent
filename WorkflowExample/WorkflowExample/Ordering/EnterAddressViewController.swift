@@ -10,7 +10,7 @@ import Foundation
 import Workflow
 import WorkflowUIKit
 
-class EnterAddressViewController: UIWorkflowItem<Order, Order?>, StoryboardLoadable {
+class EnterAddressViewController: UIWorkflowItem<Order, Order>, StoryboardLoadable {
     var order: Order
 
     required init?(coder: NSCoder, with order: Order) {

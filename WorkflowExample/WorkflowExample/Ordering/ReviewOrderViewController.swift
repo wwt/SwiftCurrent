@@ -11,7 +11,7 @@ import Workflow
 import WorkflowUIKit
 import UIKit
 
-class ReviewOrderViewController: UIWorkflowItem<Order, Order?>, StoryboardLoadable {
+class ReviewOrderViewController: UIWorkflowItem<Order, Order>, StoryboardLoadable {
     var order: Order
 
     required init?(coder: NSCoder, with order: Order) {
