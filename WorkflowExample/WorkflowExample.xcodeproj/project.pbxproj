@@ -21,7 +21,6 @@
 		CAC1C26F256D8FA500DBD0D4 /* CwlPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = CAC1C26E256D8FA500DBD0D4 /* CwlPreconditionTesting */; };
 		CAF5852E256CEE990044C864 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF5852D256CEE990044C864 /* AppDelegate.swift */; };
 		CAF58530256CEE990044C864 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF5852F256CEE990044C864 /* SceneDelegate.swift */; };
-		CAF58532256CEE990044C864 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF58531256CEE990044C864 /* ViewController.swift */; };
 		CAF58535256CEE990044C864 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAF58533256CEE990044C864 /* Main.storyboard */; };
 		CAF58537256CEE990044C864 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAF58536256CEE990044C864 /* Assets.xcassets */; };
 		CAF5853A256CEE990044C864 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAF58538256CEE990044C864 /* LaunchScreen.storyboard */; };
@@ -36,7 +35,6 @@
 		CAF58583256CEF2E0044C864 /* ReviewOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF5854B256CEECC0044C864 /* ReviewOrderViewController.swift */; };
 		CAF58585256CEF2F0044C864 /* PickupOrDeliveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF5854C256CEECC0044C864 /* PickupOrDeliveryViewController.swift */; };
 		CAF58587256CEF340044C864 /* StoryboardLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF58552256CEECC0044C864 /* StoryboardLoadable.swift */; };
-		CAF58589256CEF350044C864 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF58553256CEECC0044C864 /* NetworkManager.swift */; };
 		CAF58714256CF40C0044C864 /* UIUTest in Frameworks */ = {isa = PBXBuildFile; productRef = CAF58713256CF40C0044C864 /* UIUTest */; };
 		CAF5873F256CF55E0044C864 /* CwlPosixPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = CAF5873E256CF55E0044C864 /* CwlPosixPreconditionTesting */; };
 		CAF58741256CF55E0044C864 /* CwlPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = CAF58740256CF55E0044C864 /* CwlPreconditionTesting */; };
@@ -86,7 +84,6 @@
 		CAF5852A256CEE990044C864 /* WorkflowExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkflowExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAF5852D256CEE990044C864 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CAF5852F256CEE990044C864 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		CAF58531256CEE990044C864 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		CAF58534256CEE990044C864 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CAF58536256CEE990044C864 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CAF58539256CEE990044C864 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -102,7 +99,6 @@
 		CAF5854F256CEECC0044C864 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		CAF58550256CEECC0044C864 /* Storyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboard.swift; sourceTree = "<group>"; };
 		CAF58552256CEECC0044C864 /* StoryboardLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardLoadable.swift; sourceTree = "<group>"; };
-		CAF58553256CEECC0044C864 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		CAF58554256CEF080044C864 /* SetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewController.swift; sourceTree = "<group>"; };
 		CAF5858B256CEF9A0044C864 /* Workflow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Workflow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAF58635256CF0E50044C864 /* WorkflowUIKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorkflowUIKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -186,7 +182,6 @@
 				CAF58551256CEECC0044C864 /* Protocols */,
 				CAF5852D256CEE990044C864 /* AppDelegate.swift */,
 				CAF5852F256CEE990044C864 /* SceneDelegate.swift */,
-				CAF58531256CEE990044C864 /* ViewController.swift */,
 				CAF58554256CEF080044C864 /* SetupViewController.swift */,
 				CAF58533256CEE990044C864 /* Main.storyboard */,
 				CAF58536256CEE990044C864 /* Assets.xcassets */,
@@ -234,7 +229,6 @@
 			isa = PBXGroup;
 			children = (
 				CAF58552256CEECC0044C864 /* StoryboardLoadable.swift */,
-				CAF58553256CEECC0044C864 /* NetworkManager.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -436,12 +430,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAF58555256CEF080044C864 /* SetupViewController.swift in Sources */,
-				CAF58532256CEE990044C864 /* ViewController.swift in Sources */,
 				CAF5852E256CEE990044C864 /* AppDelegate.swift in Sources */,
 				CAF5857B256CEF290044C864 /* LocationsViewController.swift in Sources */,
 				CAF5857D256CEF2B0044C864 /* FoodSelectionViewController.swift in Sources */,
 				CAF58587256CEF340044C864 /* StoryboardLoadable.swift in Sources */,
-				CAF58589256CEF350044C864 /* NetworkManager.swift in Sources */,
 				CAF5857F256CEF2C0044C864 /* MenuSelectionViewController.swift in Sources */,
 				CAF58583256CEF2E0044C864 /* ReviewOrderViewController.swift in Sources */,
 				CAF58585256CEF2F0044C864 /* PickupOrDeliveryViewController.swift in Sources */,

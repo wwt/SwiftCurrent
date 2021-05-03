@@ -75,6 +75,20 @@ class WorkflowTests: XCTestCase {
             _ = rep.shouldLoad(with: 10.23)
         }
     }
+
+    func testFlowRepresentableThrowsFatalErrorIfNoCustomEmptyInitSupplied() {
+        class FR1: FlowRepresentable {
+            typealias WorkflowInput = String
+
+            weak var _workflowPointer: AnyFlowRepresentable?
+
+            required init(with name:String) { }
+        }
+
+        XCTAssertThrowsFatalError {
+            _ = FR1()
+        }
+    }
 }
 
 extension WorkflowTests {
