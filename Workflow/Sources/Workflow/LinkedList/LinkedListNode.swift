@@ -17,31 +17,33 @@ extension LinkedList {
      These nodes hold onto a value, the next node, and the previous node.
      */
     open class Node<T> {
-        /// Value: A typealias that is equivalent to the specialized type in the LinkedList
+        /// A typealias that is equivalent to the specialized type in the LinkedList
         public typealias Value = T
-        /// value: The concrete value the node is holding onto
+        /// The concrete value the node is holding onto
         public var value: Value
-        /// next: An optional reference to the next node in the LinkedList
+        /// An optional reference to the next node in the LinkedList
         public var next: Node<Value>?
-        /// previous: An optional reference to the previous node in the LinkedList
+        /// An optional reference to the previous node in the LinkedList
         public var previous: Node<Value>?
-        /// init(with element:Value): Nodes are initialized with the concrete value they should hold on to
+        /// Nodes are initialized with the concrete value they should hold on to
         init (with element: Value) {
             value = element
         }
 
-        /// TraversalDirection: an enumeration indicating whether you'd like to traverse forwards or backwards through the LinkedList
+        /// An enumeration indicating whether you'd like to traverse forwards or backwards through the LinkedList
         public enum TraversalDirection {
-            /// forward: Traverse "forward" i.e. traverse by calling .next
+            /// Traverse "forward" i.e. traverse by calling .next
             case forward
-            /// backward: Traverse "backward" i.e. traverse by calling .previous
+            /// Traverse "backward" i.e. traverse by calling .previous
             case backward
         }
 
-        /// traverse(distance): A method to move N spaces forwards or backwards through the nodes
-        /// - Parameter distance: An integer indicating how far to move through the nodes
-        /// - Note: If the distance is out of bounds nil will be returned
-        /// - Returns: Node<T>? where T is the specialized type of the LinkedList
+        /*
+        A method to move N spaces forwards or backwards through the nodes
+        - Parameter distance: An integer indicating how far to move through the nodes
+        - Note: If the distance is out of bounds nil will be returned
+        - Returns: Node<T>? where T is the specialized type of the LinkedList
+        */
         open func traverse(_ distance: Int) -> Node<T>? {
             guard distance > 0 || distance < 0 else { return self }
             let direction: TraversalDirection = (distance >= 0) ? .forward : .backward
@@ -59,11 +61,13 @@ extension LinkedList {
             return element
         }
 
-        /// traverse(Until): A method to move forward through the nodes until a precondition is met
-        /// - Parameter direction: An enum indicating whether to traverse forward or backwards, defaults to foward.
-        /// - Parameter until: A function that takes in a Node<T> and returns a boolean to indicate whether traversal should continue
-        /// - Note: If `true` is returned from `until` then traversal stops. e.g. `node.traverse { $0.value == 0 }` traverses until it finds a node who has a value of 0
-        /// - Returns: Node<T>? where T is the specialized type of the LinkedList
+        /**
+        A method to move forward through the nodes until a precondition is met
+        - Parameter direction: An enum indicating whether to traverse forward or backwards, defaults to foward.
+        - Parameter until: A function that takes in a Node<T> and returns a boolean to indicate whether traversal should continue
+        - Note: If `true` is returned from `until` then traversal stops. e.g. `node.traverse { $0.value == 0 }` traverses until it finds a node who has a value of 0
+        - Returns: Node<T>? where T is the specialized type of the LinkedList
+        */
         open func traverse(direction: TraversalDirection = .forward, until: ((Node<T>) -> Bool)) -> Node<T>? {
             var element: Node<T> = self
 
@@ -84,7 +88,7 @@ extension LinkedList {
             return nil
         }
 
-        /// traverseToEnd: A method to move forward through the nodes until there is no `next`
+        /// A method to move forward through the nodes until there is no `next`
         open func traverseToEnd() -> Node<T> {
             var element: Node<T> = self
             while let next = element.next {
@@ -101,7 +105,7 @@ extension LinkedList {
             }
         }
 
-        /// traverseToBeginning: A method to move backwards through the nodes until there is no `previous`
+        /// A method to move backwards through the nodes until there is no `previous`
         open func traverseToBeginning() -> Node<T> {
             var element: Node<T> = self
             while let next = element.previous {
@@ -110,8 +114,10 @@ extension LinkedList {
             return element
         }
 
-        /// position: A computed property that calculates a nodes position in the LinkedList
-        /// - Complexity: O(n) this has a worst case of having to traverse the entire list to determine its position
+        /**
+        A computed property that calculates a nodes position in the LinkedList
+        - Complexity: O(n) this has a worst case of having to traverse the entire list to determine its position
+         */
         open var position: Int {
             var counter = 0
             var element: Node<T> = self
@@ -142,7 +148,7 @@ extension LinkedList {
             next?.copyRight()
         }
 
-        /// copy: Creates an exact replica of the node, including the next and previous values, this essentially deep copies the entire LinkedList
+        /// Creates an exact replica of the node, including the next and previous values, this essentially deep copies the entire LinkedList
         open func copy() -> Node<T> {
             let node = Node<T>(with: value)
             node.previous = previous

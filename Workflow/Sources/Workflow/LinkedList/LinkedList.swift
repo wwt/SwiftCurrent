@@ -20,27 +20,36 @@ public class LinkedList<Value>: Sequence, CustomStringConvertible {
     public typealias SubSequence = LinkedList<Value>
     public typealias Iterator = LinkedListIterator<Element>
 
-    /// startIndex: The beginning index of the linked list (0 indexed)
-    /// - Complexity: O(1)
+    /**
+    The beginning index of the linked list (0 indexed)
+    - Complexity: O(1)
+     */
     public var startIndex: LinkedList.Index { 0 }
-    /// endIndex: The last index in the list
-    /// - Complexity: O(n). The LinkedList must traverse to the end to determine the count
+    /**
+    The last index in the list
+    - Complexity: O(n). The LinkedList must traverse to the end to determine the count
+     */
     public var endIndex: LinkedList.Index { count }
-    /// description: A property indicating what to show when the LinkedList is printed.
+    /// A property indicating what to show when the LinkedList is printed.
     public var description: String { toArray().description }
-    /// isEmpty: A boolean to indicate whether the linked list contains any values
-    /// - Complexity: O(1)
+    /**
+    A boolean to indicate whether the linked list contains any values
+    - Complexity: O(1)
+    */
     public var isEmpty: Bool { first == nil }
-    /// endIndex: The last index in the list
-    /// - Complexity: O(n). The linked list must traverse to the end to determine the count
+    /**
+    The last index in the list
+    - Complexity: O(n). The linked list must traverse to the end to determine the count
+    */
     public var count: LinkedList.Index {
         reduce(0) { c, _ in c + 1 }
     }
 
-    /// first: The first node in the list
+    /// The first node in the list
     public var first: Element?
-    /// last: The last node in the list
-    /// - Complexity: O(n). The LinkedList must traverse to the end to determine the count
+    /** The last node in the list
+    - Complexity: O(n). The LinkedList must traverse to the end to determine the count
+    */
     public var last: Element? { first?.traverseToEnd() }
 
     public convenience init(_ elements: Value...) {
@@ -57,7 +66,7 @@ public class LinkedList<Value>: Sequence, CustomStringConvertible {
         self.init(collection.first)
     }
 
-    /// init(elements): A LinkedList can be instantiated simply by providing the first node in the list
+    /// A LinkedList can be instantiated simply by providing the first node in the list
     public required init(_ node: Element?) {
         first = node
     }
