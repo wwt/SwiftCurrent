@@ -131,10 +131,12 @@ extension LinkedList {
         f?.removeTillEnd()
     }
 
-    /// removeLast: Removes the last n nodes from the LinkedList
-    /// - Parameter n: The number of nodes that should be removed
-    /// - Note: This operation mutates the original LinkedList
-    /// - Note: If you pass a value greater than the count of the LinkedList you will remove all items
+    /**
+    Removes the last n nodes from the LinkedList
+    - Parameter n: The number of nodes that should be removed
+    - Note: This operation mutates the original LinkedList
+    - Note: If you pass a value greater than the count of the LinkedList you will remove all items
+     */
     public func removeLast(_ n: Int = 1) {
         guard n > 0 else { return }
         guard !(last === first) else {
@@ -146,9 +148,11 @@ extension LinkedList {
         l?.next = nil
     }
 
-    /// popLast: Removes the last n nodes from the LinkedList and returns the removed concrete type
-    /// - Note: This operation mutates the original LinkedList
-    /// - Returns: The concrete type the node encapsulated that was removed
+    /**
+     Removes the last n nodes from the LinkedList and returns the removed concrete type
+     - Note: This operation mutates the original LinkedList
+     - Returns: The concrete type the node encapsulated that was removed
+     */
     public func popLast() -> Value? {
         let l = last
         guard !(l === first) else {
@@ -161,18 +165,22 @@ extension LinkedList {
         return v
     }
 
-    /// removeAll: Removes all nodes from the LinkedList
-    /// - Note: This operation mutates the original LinkedList
+    /**
+     Removes all nodes from the LinkedList
+     - Note: This operation mutates the original LinkedList
+     */
     public func removeAll() {
         first?.next?.removeTillEnd()
         first = nil
     }
 
-    /// swapAt: Swaps the concrete values of 2 nodes
-    /// - Parameter i: The index of one of the items to be swapped
-    /// - Parameter j: The index of the second item to be swapped
-    /// - Note: This operation mutates the original LinkedList
-    /// - Note: If you call this with an invalid index you will cause a `fatalError` and stop execution of the process
+    /**
+     Swaps the concrete values of 2 nodes
+     - Parameter i: The index of one of the items to be swapped
+     - Parameter j: The index of the second item to be swapped
+     - Note: This operation mutates the original LinkedList
+     - Note: If you call this with an invalid index you will cause a `fatalError` and stop execution of the process
+     */
     public func swapAt(_ i: Int, _ j: Int) {
         var firstElement: Element?
         var secondElement: Element?
@@ -193,25 +201,31 @@ extension LinkedList {
         swap(&f.value, &s.value)
     }
 
-    /// replace: Replaces the concrete value of the node at the specified index
-    /// - Parameter index: The index of the node with the value to be replaced
-    /// - Parameter newItem: The concrete value that should replace the old value
-    /// - Note: This operation mutates the original LinkedList
-    /// - Note: If you call this with an invalid index this will be a NO-OP
+    /**
+    Replaces the concrete value of the node at the specified index
+    - Parameter index: The index of the node with the value to be replaced
+    - Parameter newItem: The concrete value that should replace the old value
+    - Note: This operation mutates the original LinkedList
+    - Note: If you call this with an invalid index this will be a NO-OP
+    */
     public func replace(atIndex index: Int, withItem newItem: Value) {
         first?.traverse(index)?.value = newItem
     }
 
-    /// reverse: Reverse the LinkedList
-    /// - Note: This operation mutates the original LinkedList
+    /**
+    reverse: Reverse the LinkedList
+    - Note: This operation mutates the original LinkedList
+    */
     public func reverse() {
         first = reversed().first
     }
 
-    /// sort: Sorts the linkedList
-    /// - Parameter comparator: A function that takes in 2 concrete types and indicates how they should be sorted
-    /// - Note: This operation mutates the original LinkedList
-    /// - Complexity: O(nLogn) This uses Merge Sort under the covers and is more performant than the built in alternative
+    /**
+    Sorts the linkedList
+    - Parameter comparator: A function that takes in 2 concrete types and indicates how they should be sorted
+    - Note: This operation mutates the original LinkedList
+    - Complexity: O(nLogn) This uses Merge Sort under the covers and is more performant than the built in alternative
+    */
     public func sort(by comparator: (Value, Value) -> Bool) {
         guard first?.next != nil else { return }
         first = LinkedList(mergeSort(first, by: comparator)).first
