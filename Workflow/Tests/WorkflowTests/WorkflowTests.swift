@@ -12,7 +12,7 @@ import XCTest
 @testable import Workflow
 
 class WorkflowTests: XCTestCase {
-    func testFlowRepresentablesWithMultipleTypesCanBeStoredAndRetreived() {
+    func testFlowRepresentablesWithMultipleTypesCanBeStoredAndRetrieved() {
         struct FR1: FlowRepresentable {
             weak var _workflowPointer: AnyFlowRepresentable?
 

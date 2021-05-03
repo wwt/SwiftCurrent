@@ -34,24 +34,33 @@ import Workflow
 
 @available(iOS 13.0, *)
 public protocol StoryboardLoadable where Self: FlowRepresentable, Self: UIViewController {
-    /// the identifier that should be used to retrieve the UIViewController from the storyboard.
+    /// Identifier used to retrieve the UIViewController from `storyboard`.
     static var storyboardId: String { get }
-    /// the storyboard to retrieve the UIViewController from
+    /// Storyboard used to retrieve the UIViewController.
     static var storyboard: UIStoryboard { get }
 
-    /// this UIKit initializer you can use to pass arguments to the `FlowRepresentable`
+    /**
+     Creates the specified view controller from the storyboard and initializes it using your custom initialization code.
+
+     ### Discussion
+     This UIKit initializer can be used to pass arguments to the `FlowRepresentable`.
+     If you return nil, this creates the view controller using the default `init(coder:)` method.
+
+     - Parameter coder: An unarchiver object.
+     - Parameter with: `WorkflowInput` data provided by encompassing `Workflow`; parameter can be renamed.
+     */
     init?(coder: NSCoder, with args: WorkflowInput)
 }
 
 @available(iOS 13.0, *)
 extension StoryboardLoadable {
-    /// WARNING: Just a default implementation of the required `FlowRepresentable` initializer. **This will throw a fatal error on its own**, it's just meant to satisfy the protocol requirements
+    /// **WARNING: This will throw a fatal error.** Just a default implementation of the required `FlowRepresentable` initializer meant to satisfy the protocol requirements.
     public init(with args: WorkflowInput) { // swiftlint:disable:this unavailable_function
         // swiftlint:disable:next line_length
         fatalError("The StoryboardLoadable protocol provided a default implementation if this initializer so that consumers didn't have to worry about it in their UIViewController. If you encounter this error and need this initializer, simply add it to \(String(describing: Self.self))")
     }
 
-    // No public docs necessary, as this should not be used by consumers
+    // No public docs necessary, as this should not be used by consumers.
     // swiftlint:disable:next missing_docs
     public static func _factory<FR: FlowRepresentable>(_: FR.Type, with args: WorkflowInput) -> FR {
         guard let viewController = storyboard.instantiateViewController(identifier: storyboardId, creator: { Self(coder: $0, with: args) }) as? FR else {
@@ -63,11 +72,11 @@ extension StoryboardLoadable {
 
 @available(iOS 13.0, *)
 extension StoryboardLoadable where WorkflowInput == Never {
-    // No public docs necessary, as this should not be used by consumers
+    // No public docs necessary, this cannot be called.
     // swiftlint:disable:next missing_docs
     public init?(coder: NSCoder, with args: WorkflowInput) { self.init(coder: coder) }
 
-    // No public docs necessary, as this should not be used by consumers
+    // No public docs necessary, as this should not be used by consumers.
     // swiftlint:disable:next missing_docs
     public static func _factory<FR: FlowRepresentable>(_: FR.Type) -> FR {
         guard let viewController = storyboard.instantiateViewController(identifier: storyboardId, creator: { Self(coder: $0) }) as? FR else {
