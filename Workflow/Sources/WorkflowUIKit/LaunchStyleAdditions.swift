@@ -54,13 +54,17 @@ extension LaunchStyle {
 
         public typealias RawValue = LaunchStyle
 
-        /// navigationStack: Indicates a `FlowRepresentable` should be launched in a navigation stack of some kind (For example with UIKit this would use a UINavigationController)
-        /// - Note: If no current navigation stack is available, one will be created
+        /**
+        Indicates a `FlowRepresentable` should be launched in a navigation stack of some kind (For example with UIKit this would use a UINavigationController)
+        - Note: If no current navigation stack is available, one will be created
+        */
         case navigationStack
         /// modally: Indicates a `FlowRepresentable` should be launched modally
         case modal(ModalPresentationStyle)
-        /// default: Indicates a `FlowRepresentable` can be launched contextually
-        /// - Note: If there's already a navigation stack, it will be used. Otherwise views will present modally
+        /**
+        Indicates a `FlowRepresentable` can be launched contextually
+        - Note: If there's already a navigation stack, it will be used. Otherwise views will present modally
+        */
         case `default`
 
         public static var modal: PresentationType {

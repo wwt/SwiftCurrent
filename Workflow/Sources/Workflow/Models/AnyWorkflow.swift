@@ -74,11 +74,13 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
         return firstLoadedInstance
     }
 
-    /// abandon: Called when the workflow should be terminated, and the app should return to the point before the workflow was launched
-    /// - Parameter animated: A boolean indicating whether abandoning the workflow should be animated
-    /// - Parameter onFinish: A callback after the workflow has been abandoned.
-    /// - Returns: Void
-    /// - Note: In order for this to function the workflow must have a presenter, presenters must call back to the workflow to inform when the abandon process has finished for the onFinish callback to be called.
+    /**
+    Called when the workflow should be terminated, and the app should return to the point before the workflow was launched
+    - Parameter animated: A boolean indicating whether abandoning the workflow should be animated
+    - Parameter onFinish: A callback after the workflow has been abandoned.
+    - Returns: Void
+    - Note: In order for this to function the workflow must have a presenter, presenters must call back to the workflow to inform when the abandon process has finished for the onFinish callback to be called.
+    */
     public func abandon(animated: Bool = true, onFinish:(() -> Void)? = nil) {
         orchestrationResponder?.abandon(self, animated: animated) { [self] in
             removeInstances()

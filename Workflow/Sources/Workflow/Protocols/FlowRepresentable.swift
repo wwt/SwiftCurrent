@@ -28,10 +28,12 @@ public protocol FlowRepresentable {
     static func _factory<FR: FlowRepresentable>(_ type: FR.Type) -> FR
     static func _factory<FR: FlowRepresentable>(_ type: FR.Type, with args: WorkflowInput) -> FR
 
-    /// shouldLoad: A method indicating whether it makes sense for this view to load in a workflow
-    /// - Parameter args: Note you can rename this in your implementation if 'args' doesn't make sense.
-    /// - Returns: Bool
-    /// - Note: This method is called *before* your view loads. Do not attempt to do any UI work in this method. This is however a good place to set up data on your view.
+    /**
+    A method indicating whether it makes sense for this view to load in a workflow
+    - Parameter args: Note you can rename this in your implementation if 'args' doesn't make sense.
+    - Returns: Bool
+    - Note: This method is called *before* your view loads. Do not attempt to do any UI work in this method. This is however a good place to set up data on your view.
+    */
     mutating func shouldLoad(with args: WorkflowInput) -> Bool
     mutating func shouldLoad() -> Bool
 }
@@ -48,8 +50,10 @@ extension FlowRepresentable {
 }
 
 extension FlowRepresentable {
-    /// workflow: Access to the `Workflow` controlling the `FlowRepresentable`. A common use case may be a `FlowRepresentable` that wants to abandon the `Workflow` it's in.
-    /// - Note: While not strictly necessary it would be wise to declare this property as `weak`
+    /**
+    Access to the `Workflow` controlling the `FlowRepresentable`. A common use case may be a `FlowRepresentable` that wants to abandon the `Workflow` it's in.
+    - Note: While not strictly necessary it would be wise to declare this property as `weak`
+    */
     public var workflow: AnyWorkflow? {
         _workflowPointer?.workflow
     }
@@ -75,9 +79,11 @@ extension FlowRepresentable where WorkflowInput == Never {
     // swiftlint:disable:next unavailable_function
     public init(with args: WorkflowInput) { fatalError("Because the FlowRepresentable does not take an input this initializer will not work") }
 
-    /// shouldLoad: A method indicating whether it makes sense for this view to load in a workflow
-    /// - Returns: Bool
-    /// - Note: This particular version of shouldLoad is only available when your `WorkflowInput` is `Never`, indicating you do not care about data passed to this view
+    /**
+    A method indicating whether it makes sense for this view to load in a workflow
+    - Returns: Bool
+    - Note: This particular version of shouldLoad is only available when your `WorkflowInput` is `Never`, indicating you do not care about data passed to this view
+    */
     public mutating func shouldLoad() -> Bool { true }
 }
 
