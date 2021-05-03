@@ -25,7 +25,7 @@ extension StoryboardLoadable {
         fatalError()
     }
 
-    public static func _factory<FR: FlowRepresentable>(_ type: FR.Type, with args: WorkflowInput) -> FR {
+    public static func _factory<FR: FlowRepresentable>(_: FR.Type, with args: WorkflowInput) -> FR {
         return Storyboard.main.instantiateViewController(identifier: storyboardId) {
             Self.init(coder: $0, with: args)
         } as! FR
@@ -36,7 +36,7 @@ extension StoryboardLoadable where WorkflowInput == Never {
 
     public init?(coder: NSCoder, with args: WorkflowInput) { fatalError() }
 
-    public static func _factory<FR: FlowRepresentable>(_ type: FR.Type) -> FR {
+    public static func _factory<FR: FlowRepresentable>(_: FR.Type) -> FR {
         return Storyboard.main.instantiateViewController(identifier: storyboardId) {
             Self.init(coder: $0)
         } as! FR

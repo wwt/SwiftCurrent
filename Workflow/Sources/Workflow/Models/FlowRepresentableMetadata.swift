@@ -31,7 +31,7 @@ public class FlowRepresentableMetadata {
                                        launchStyle: LaunchStyle = .default,
                                        flowPersistence:@escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) {
         flowRepresentableFactory = { args in
-            return AnyFlowRepresentable(FR.self, args: args)
+            AnyFlowRepresentable(FR.self, args: args)
         }
         self.flowPersistence = flowPersistence
         self.launchStyle = launchStyle
