@@ -74,6 +74,12 @@ extension UIViewController {
 }
 
 extension FlowRepresentable where Self: UIViewController {
+    #warning("This should be updated. Probably needs abandon taken in and should also have a closure that is passed to abandon.")
+    /**
+     Ends the current workflow.
+
+     - Note: `Workflow` does not call `onFinish`.
+     */
     public func abandonWorkflow() {
         workflow?.abandon()
     }
