@@ -93,10 +93,10 @@ open class UIKitPresenter: AnyOrchestrationResponder {
     }
 
     fileprivate func displayDefaultPresentationType(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
-                                                       root: UIViewController,
-                                                       view: UIViewController,
-                                                       animated: Bool,
-                                                       completion: (() -> Void)?) {
+                                                    root: UIViewController,
+                                                    view: UIViewController,
+                                                    animated: Bool,
+                                                    completion: (() -> Void)?) {
         if case .modal(let style) = LaunchStyle.PresentationType(rawValue: to.metadata.launchStyle) {
             if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
                 view.modalPresentationStyle = modalPresentationStyle
@@ -111,11 +111,11 @@ open class UIKitPresenter: AnyOrchestrationResponder {
     }
 
     fileprivate func displayModalPresentationType(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
-                                                     view: UIViewController,
-                                                     style: (LaunchStyle.PresentationType.ModalPresentationStyle),
-                                                     root: UIViewController,
-                                                     animated: Bool,
-                                                     completion: (() -> Void)?) {
+                                                  view: UIViewController,
+                                                  style: (LaunchStyle.PresentationType.ModalPresentationStyle),
+                                                  root: UIViewController,
+                                                  animated: Bool,
+                                                  completion: (() -> Void)?) {
         if LaunchStyle.PresentationType(rawValue: to.metadata.launchStyle) == .navigationStack {
             let nav = UINavigationController(rootViewController: view)
             if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
@@ -131,9 +131,9 @@ open class UIKitPresenter: AnyOrchestrationResponder {
     }
 
     fileprivate func displayNavigationStackPresentationType(root: UIViewController,
-                                                               view: UIViewController,
-                                                               animated: Bool,
-                                                               completion: (() -> Void)?) {
+                                                            view: UIViewController,
+                                                            animated: Bool,
+                                                            completion: (() -> Void)?) {
         if let nav = root.navigationController ?? root as? UINavigationController {
             nav.pushViewController(view, animated: animated)
             completion?()
