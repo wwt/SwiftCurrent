@@ -10,9 +10,11 @@
 
 import Foundation
 extension LinkedList {
-    /// append: Appends a new node to the end of the LinkedList
-    /// - Parameter element: The concrete value that should be appended
-    /// - Note: This operation mutates the original LinkedList
+    /**
+     Appends a new node to the end of the LinkedList
+     - Parameter element: The concrete value that should be appended
+     - Note: This operation mutates the original LinkedList
+     */
     public func append(_ element: Value) {
         let node = Element(with: element)
 
@@ -24,10 +26,11 @@ extension LinkedList {
         node.previous = last
         last?.next = node
     }
-
-    /// append(ContentsOf): Appends a collection of nodes to the end of the LinkedList
-    /// - Parameter newElements: An sequence of concrete elements that should be appended
-    /// - Note: This operation mutates the original LinkedList
+    /**
+    Appends a collection of nodes to the end of the LinkedList
+    - Parameter newElements: An sequence of concrete elements that should be appended
+    - Note: This operation mutates the original LinkedList
+     */
     public func append<S>(contentsOf newElements: S) where S: Sequence, Value == S.Element {
         let collection = newElements.map { Element(with: $0) }
         for (i, node) in collection.enumerated() {
@@ -43,10 +46,12 @@ extension LinkedList {
         l?.next = collection.first
     }
 
-    /// insert: Inserts a new node at a specified location
-    /// - Parameter element: The concrete value that should be inserted
-    /// - Parameter i: The index the value should be inserted at
-    /// - Note: This operation mutates the original LinkedList
+    /**
+    Inserts a new node at a specified location
+    - Parameter element: The concrete value that should be inserted
+    - Parameter i: The index the value should be inserted at
+    - Note: This operation mutates the original LinkedList
+     */
     public func insert(_ element: Value, atIndex i: Index) {
         let existingNode: Element? = first?.traverse(i)
         let newNode = Element(with: element)
@@ -59,10 +64,12 @@ extension LinkedList {
         existingNode?.previous = newNode
     }
 
-    /// insert: Inserts a sequences of new nodes at a specified location
-    /// - Parameter newElements: A sequences of concrete values that should be inserted
-    /// - Parameter i: The index the value should be inserted at
-    /// - Note: This operation mutates the original LinkedList
+    /**
+     Inserts a sequences of new nodes at a specified location
+     - Parameter newElements: A sequences of concrete values that should be inserted
+     - Parameter i: The index the value should be inserted at
+     - Note: This operation mutates the original LinkedList
+     */
     public func insert<C>(contentsOf newElements: C, at i: Index) where C: Collection, Value == C.Element {
         let existingNode: Element? = first?.traverse(i)
         let collection = newElements.map { Element(with: $0) }
@@ -81,19 +88,23 @@ extension LinkedList {
         existingNode?.previous = collection.last
     }
 
-    /// remove(at): Removes a node at the specified index
-    /// - Parameter i: The index the value should be removed from
-    /// - Note: This operation mutates the original LinkedList
-    /// - Note: If you pass an index greater than the count of the LinkedList this will be a NO-OP
+    /**
+    Removes a node at the specified index
+    - Parameter i: The index the value should be removed from
+    - Note: This operation mutates the original LinkedList
+    - Note: If you pass an index greater than the count of the LinkedList this will be a NO-OP
+     */
     public func remove(at i: Index) {
         let node: Element? = first?.traverse(i)
         node?.previous?.next = node?.next
         node?.next?.previous = node?.previous
     }
 
-    /// remove(where): Removes a node at the specified index
-    /// - Parameter predicate: A closure indicating whether that node should be removed
-    /// - Note: This operation mutates the original LinkedList
+    /**
+    Removes a node at the specified index
+    - Parameter predicate: A closure indicating whether that node should be removed
+    - Note: This operation mutates the original LinkedList
+     */
     public func remove(where predicate: (Element) -> Bool) {
         _ = first?.traverse {
             if predicate($0) {
@@ -104,10 +115,12 @@ extension LinkedList {
         }
     }
 
-    /// removeFirst: Removes the first n nodes from the LinkedList
-    /// - Parameter n: The number of nodes that should be removed
-    /// - Note: This operation mutates the original LinkedList
-    /// - Note: If you pass a value greater than the count of the LinkedList you will remove all items
+    /**
+    Removes the first n nodes from the LinkedList
+    - Parameter n: The number of nodes that should be removed
+    - Note: This operation mutates the original LinkedList
+    - Note: If you pass a value greater than the count of the LinkedList you will remove all items
+     */
     public func removeFirst(_ n: Int = 1) {
         guard n > 0 else { return }
         let f = first
