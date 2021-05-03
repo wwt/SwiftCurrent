@@ -39,7 +39,7 @@ public protocol FlowRepresentable {
 extension FlowRepresentable {
     public var _workflowUnderlyingInstance: Any { self }
 
-    // swiftlint:disable:next line_length
+    // swiftlint:disable:next line_length unavailable_function
     public init() { fatalError("This initializer was only designed to satisfy a protocol requirement on FlowRepresentables. You must implement your own custom intializer on \(String(describing: Self.self))") }
     // swiftlint:disable:next force_cast
     public static func _factory<FR: FlowRepresentable>(_: FR.Type) -> FR { Self() as! FR }
@@ -58,7 +58,7 @@ extension FlowRepresentable {
         _workflowPointer?.proceedBackwardInWorkflowStorage?()
     }
 
-    public mutating func shouldLoad() -> Bool { true }
+    public mutating func shouldLoad() -> Bool { fatalError("This shouldLoad method should only be called if the WorkflowInput is Never") }
     public mutating func shouldLoad(with _: WorkflowInput) -> Bool { true }
 }
 
@@ -72,6 +72,7 @@ extension FlowRepresentable where WorkflowInput == Never {
     public init() { fatalError() }
 
     @available(*, renamed: "init()")
+    // swiftlint:disable:next unavailable_function
     public init(with args: WorkflowInput) { fatalError("Because the FlowRepresentable does not take an input this initializer will not work") }
 
     /// shouldLoad: A method indicating whether it makes sense for this view to load in a workflow

@@ -89,6 +89,21 @@ class WorkflowTests: XCTestCase {
             _ = FR1()
         }
     }
+
+    func testFlowRepresentableThrowsFatalError_IfShouldLoadIsCalledWithNoArguments_AndWorkflowHasInput() {
+        class FR1: FlowRepresentable {
+            typealias WorkflowInput = String
+
+            weak var _workflowPointer: AnyFlowRepresentable?
+
+            required init(with name:String) { }
+        }
+
+        XCTAssertThrowsFatalError {
+            var fr1 = FR1(with: "")
+            _ = fr1.shouldLoad()
+        }
+    }
 }
 
 extension WorkflowTests {
