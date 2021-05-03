@@ -7,17 +7,16 @@
 //
 
 import Foundation
-import Workflow
+import UIKit
 
-/// This makes the in-code assumption that you are following the convention that storyboard IDs are equivalent to UIViewController subclass names.
-protocol StoryboardLoadable {}
+import WorkflowUIKit
 
 extension StoryboardLoadable {
     static var storyboardId: String {
-        return String(describing: Self.self)
+        String(describing: Self.self)
     }
 
-    static func instance() -> Self {
-        return Storyboard.main.instantiateViewController(withIdentifier: storyboardId) as! Self
+    static var storyboard: UIStoryboard {
+        Storyboard.main
     }
 }

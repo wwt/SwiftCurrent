@@ -12,7 +12,7 @@ import Workflow
 
 class SkipThroughWorkflowTests: XCTestCase {
     func testWorkflowCanSkipFirstItem_AndStillProceedThroughFlow_AndCallOnFinish() {
-        class FR1: TestFlowRepresentable<Never, Never>, FlowRepresentable {
+        final class FR1: TestFlowRepresentable<Never, Never>, FlowRepresentable {
             func shouldLoad() -> Bool { false }
         }
         class FR2: TestPassthroughFlowRepresentable { }
@@ -48,7 +48,7 @@ class SkipThroughWorkflowTests: XCTestCase {
 
     func testWorkflowCanSkipMiddleItem_AndStillProceedThroughFlow_AndCallOnFinish() {
         class FR1: TestPassthroughFlowRepresentable { }
-        class FR2: TestFlowRepresentable<Never, Never>, FlowRepresentable {
+        final class FR2: TestFlowRepresentable<Never, Never>, FlowRepresentable {
             func shouldLoad() -> Bool { false }
         }
         class FR3: TestPassthroughFlowRepresentable { }
@@ -83,7 +83,7 @@ class SkipThroughWorkflowTests: XCTestCase {
 
     func testWorkflowCanSkipMiddleItem_AndStillProceedFowardAndBackwardThroughFlow_AndCallOnFinish() {
         class FR1: TestPassthroughFlowRepresentable { }
-        class FR2: TestFlowRepresentable<Never, Never>, FlowRepresentable {
+        final class FR2: TestFlowRepresentable<Never, Never>, FlowRepresentable {
             func shouldLoad() -> Bool { false }
         }
         class FR3: TestPassthroughFlowRepresentable { }
@@ -135,7 +135,7 @@ class SkipThroughWorkflowTests: XCTestCase {
     func testWorkflowCanSkipLastItem_AndStillProceedThroughFlow_AndCallOnFinish() {
         class FR1: TestPassthroughFlowRepresentable { }
         class FR2: TestPassthroughFlowRepresentable { }
-        class FR3: TestFlowRepresentable<Never, Never>, FlowRepresentable {
+        final class FR3: TestFlowRepresentable<Never, Never>, FlowRepresentable {
             func shouldLoad() -> Bool { false }
         }
         let wf = Workflow(FR1.self)
@@ -168,7 +168,7 @@ class SkipThroughWorkflowTests: XCTestCase {
     }
 
     func testWorkflowCanSkipFirstItem_AndStillProceedThroughFlow_PassingThroughCorrectArgsToNextWorkflowItem() {
-        class FR1: TestFlowRepresentable<Never, String>, FlowRepresentable {
+        final class FR1: TestFlowRepresentable<Never, String>, FlowRepresentable {
             static let id = UUID().uuidString
             func shouldLoad() -> Bool {
                 proceedInWorkflow(FR1.id)
@@ -176,6 +176,8 @@ class SkipThroughWorkflowTests: XCTestCase {
             }
         }
         class FR2: TestFlowRepresentable<String, Never>, FlowRepresentable {
+            required init(with id: String) { XCTAssertEqual(id, FR1.id) }
+
             static let expectation = XCTestExpectation(description: "shouldLoad called")
             func shouldLoad(with id: String) -> Bool {
                 FR2.expectation.fulfill()
@@ -212,7 +214,7 @@ class SkipThroughWorkflowTests: XCTestCase {
     }
 
     func testWorkflowCanSkipMultipleItems_AndStillProceedThroughFlow_PassingThroughCorrectArgsToNextWorkflowItem() {
-        class FR1: TestFlowRepresentable<Never, String>, FlowRepresentable {
+        final class FR1: TestFlowRepresentable<Never, String>, FlowRepresentable {
             static let id = UUID().uuidString
             func shouldLoad() -> Bool {
                 proceedInWorkflow(FR1.id)
@@ -220,6 +222,7 @@ class SkipThroughWorkflowTests: XCTestCase {
             }
         }
         class FR2: TestFlowRepresentable<String, String>, FlowRepresentable {
+            required init(with id: String) { XCTAssertEqual(id, FR1.id) }
             static let expectation = XCTestExpectation(description: "shouldLoad called")
             func shouldLoad(with id: String) -> Bool {
                 FR2.expectation.fulfill()
@@ -229,6 +232,7 @@ class SkipThroughWorkflowTests: XCTestCase {
             }
         }
         class FR3: TestFlowRepresentable<String, Never>, FlowRepresentable {
+            required init(with id: String) { XCTAssertEqual(id, FR1.id) }
             static let expectation = XCTestExpectation(description: "shouldLoad called")
             func shouldLoad(with id: String) -> Bool {
                 FR3.expectation.fulfill()
@@ -256,10 +260,13 @@ class SkipThroughWorkflowTests: XCTestCase {
 
     func testWorkflowCanSkipFirstItem_AndStillProceedThroughFlow_PassingThroughInitialArgsToNextWorkflowItem() {
         class FR1: TestFlowRepresentable<String, String>, FlowRepresentable {
+            required init(with args: String) { }
             static let id = UUID().uuidString
             func shouldLoad(with id: String) -> Bool { false }
         }
         class FR2: TestFlowRepresentable<String, Never>, FlowRepresentable {
+            required init(with id: String) { XCTAssertEqual(id, FR1.id) }
+
             static let expectation = XCTestExpectation(description: "shouldLoad called")
             func shouldLoad(with id: String) -> Bool {
                 FR2.expectation.fulfill()
@@ -297,12 +304,14 @@ class SkipThroughWorkflowTests: XCTestCase {
 
     func testWorkflowCanSkipMultipleItems_AndStillProceedThroughFlow_PassingThroughInitialArgsToNextWorkflowItem() {
         class FR1: TestFlowRepresentable<String, String>, FlowRepresentable {
+            required init(with args: String) { }
             static let id = UUID().uuidString
             func shouldLoad(with id: String) -> Bool {
                 return false
             }
         }
         class FR2: TestFlowRepresentable<String, String>, FlowRepresentable {
+            required init(with id: String) { XCTAssertEqual(id, FR1.id) }
             static let expectation = XCTestExpectation(description: "shouldLoad called")
             func shouldLoad(with id: String) -> Bool {
                 FR2.expectation.fulfill()
@@ -311,6 +320,7 @@ class SkipThroughWorkflowTests: XCTestCase {
             }
         }
         class FR3: TestFlowRepresentable<String, Never>, FlowRepresentable {
+            required init(with id: String) { XCTAssertEqual(id, FR1.id) }
             static let expectation = XCTestExpectation(description: "shouldLoad called")
             func shouldLoad(with id: String) -> Bool {
                 FR3.expectation.fulfill()
@@ -338,12 +348,14 @@ class SkipThroughWorkflowTests: XCTestCase {
 
     func testWorkflowCanSkipAllItems_AndStillProceedThroughFlow_PassingThroughInitialArgsToNextWorkflowItem() {
         class FR1: TestFlowRepresentable<String, String>, FlowRepresentable {
+            required init(with id: String) { }
             static let id = UUID().uuidString
             func shouldLoad(with id: String) -> Bool {
                 return false
             }
         }
         class FR2: TestFlowRepresentable<String, String>, FlowRepresentable {
+            required init(with id: String) { XCTAssertEqual(id, FR1.id) }
             static let expectation = XCTestExpectation(description: "shouldLoad called")
             func shouldLoad(with id: String) -> Bool {
                 FR2.expectation.fulfill()
@@ -352,6 +364,7 @@ class SkipThroughWorkflowTests: XCTestCase {
             }
         }
         class FR3: TestFlowRepresentable<String, String>, FlowRepresentable {
+            required init(with id: String) { XCTAssertEqual(id, FR1.id) }
             static let expectation = XCTestExpectation(description: "shouldLoad called")
             func shouldLoad(with id: String) -> Bool {
                 FR3.expectation.fulfill()
@@ -380,10 +393,11 @@ class SkipThroughWorkflowTests: XCTestCase {
     }
 
     func testWorkflowCanSkipMiddleItem_AndStillProceedThroughFlow_PassingThroughCorrectArgsToNextWorkflowItem() {
-        class FR1: TestFlowRepresentable<Never, String>, FlowRepresentable {
+        final class FR1: TestFlowRepresentable<Never, String>, FlowRepresentable {
             static let id = UUID().uuidString
         }
         class FR2: TestFlowRepresentable<String, String>, FlowRepresentable {
+            required init(with id: String) { XCTAssertEqual(id, FR1.id) }
             static let expectation = XCTestExpectation(description: "shouldLoad called")
             func shouldLoad(with id: String) -> Bool {
                 FR2.expectation.fulfill()
@@ -393,6 +407,7 @@ class SkipThroughWorkflowTests: XCTestCase {
             }
         }
         class FR3: TestFlowRepresentable<String, Never>, FlowRepresentable {
+            required init(with id: String) { XCTAssertEqual(id, FR1.id) }
             static let expectation = XCTestExpectation(description: "shouldLoad called")
             func shouldLoad(with id: String) -> Bool {
                 FR3.expectation.fulfill()
@@ -423,10 +438,11 @@ class SkipThroughWorkflowTests: XCTestCase {
     }
 
     func testWorkflowCanSkipAllExceptTheFirstItem_AndStillProceedThroughFlow_PassingThroughCorrectArgsToNextWorkflowItem() {
-        class FR1: TestFlowRepresentable<Never, String>, FlowRepresentable {
+        final class FR1: TestFlowRepresentable<Never, String>, FlowRepresentable {
             static let id = UUID().uuidString
         }
         class FR2: TestFlowRepresentable<String, String>, FlowRepresentable {
+            required init(with id: String) { XCTAssertEqual(id, FR1.id) }
             static let expectation = XCTestExpectation(description: "shouldLoad called")
             func shouldLoad(with id: String) -> Bool {
                 FR2.expectation.fulfill()
@@ -436,6 +452,7 @@ class SkipThroughWorkflowTests: XCTestCase {
             }
         }
         class FR3: TestFlowRepresentable<String, String>, FlowRepresentable {
+            required init(with id: String) { XCTAssertEqual(id, FR1.id) }
             static let expectation = XCTestExpectation(description: "shouldLoad called")
             func shouldLoad(with id: String) -> Bool {
                 FR3.expectation.fulfill()
@@ -471,9 +488,6 @@ extension SkipThroughWorkflowTests {
     class TestFlowRepresentable<Input, Output> {
         weak var _workflowPointer: AnyFlowRepresentable?
 
-        required init() { }
-        static func instance() -> Self { Self() }
-
         typealias WorkflowInput = Input
         typealias WorkflowOutput = Output
     }
@@ -482,8 +496,6 @@ extension SkipThroughWorkflowTests {
         weak var _workflowPointer: AnyFlowRepresentable?
 
         required init() { }
-
-        static func instance() -> Self { Self() }
 
         typealias WorkflowInput = Never
         typealias WorkflowOutput = Never

@@ -22,10 +22,11 @@ public protocol FlowRepresentable {
 
     var _workflowPointer: AnyFlowRepresentable? { get set }
     var _workflowUnderlyingInstance: Any { get }
-    /// instance: A method to return an instance of the `FlowRepresentable`
-    /// - Returns: `AnyFlowRepresentable`. Specifically a new instance from the static class passed to a `Workflow`
-    /// - Note: This needs to return a unique instance of your view. Whether programmatic or from the storyboard is irrelevant
-    static func instance() -> Self
+
+    init()
+    init(with args: WorkflowInput)
+    static func _factory<FR: FlowRepresentable>(_ type: FR.Type) -> FR
+    static func _factory<FR: FlowRepresentable>(_ type: FR.Type, with args: WorkflowInput) -> FR
 
     /// shouldLoad: A method indicating whether it makes sense for this view to load in a workflow
     /// - Parameter args: Note you can rename this in your implementation if 'args' doesn't make sense.
@@ -37,6 +38,13 @@ public protocol FlowRepresentable {
 
 extension FlowRepresentable {
     public var _workflowUnderlyingInstance: Any { self }
+
+    // swiftlint:disable:next line_length unavailable_function
+    public init() { fatalError("This initializer was only designed to satisfy a protocol requirement on FlowRepresentables. You must implement your own custom intializer on \(String(describing: Self.self))") }
+    // swiftlint:disable:next force_cast
+    public static func _factory<FR: FlowRepresentable>(_: FR.Type) -> FR { Self() as! FR }
+    // swiftlint:disable:next force_cast
+    public static func _factory<FR: FlowRepresentable>(_: FR.Type, with args: WorkflowInput) -> FR { Self(with: args) as! FR }
 }
 
 extension FlowRepresentable {
@@ -50,13 +58,22 @@ extension FlowRepresentable {
         _workflowPointer?.proceedBackwardInWorkflowStorage?()
     }
 
-    public mutating func shouldLoad() -> Bool { true }
+    public mutating func shouldLoad() -> Bool { fatalError("This shouldLoad method should only be called if the WorkflowInput is Never") }
+    public mutating func shouldLoad(with _: WorkflowInput) -> Bool { true }
 }
 
 extension FlowRepresentable where WorkflowInput == Never {
+    @available(*, renamed: "shouldLoad()")
     public mutating func shouldLoad(with _: Never) -> Bool {
         // This cannot execute because it takes in Never. There is no implementation possible for this function.
     }
+
+    @available(*, unavailable)
+    public init() { fatalError() }
+
+    @available(*, renamed: "init()")
+    // swiftlint:disable:next unavailable_function
+    public init(with args: WorkflowInput) { fatalError("Because the FlowRepresentable does not take an input this initializer will not work") }
 
     /// shouldLoad: A method indicating whether it makes sense for this view to load in a workflow
     /// - Returns: Bool

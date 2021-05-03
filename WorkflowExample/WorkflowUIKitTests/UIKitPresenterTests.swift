@@ -25,7 +25,7 @@ class UIKitPresenterTests: XCTestCase {
         let presenter = UIKitPresenter(rootController, launchStyle: .modal)
 
         wf.applyOrchestrationResponder(presenter)
-        var fr1 = FR1()
+        var fr1 = FR1(with: .none)
         let node = AnyWorkflow.InstanceNode(with: AnyFlowRepresentable(&fr1))
         let metadata = FlowRepresentableMetadata(FR1.self, launchStyle: ls, flowPersistence: { _ in .default })
 
@@ -39,15 +39,20 @@ class UIKitPresenterTests: XCTestCase {
 extension UIKitPresenterTests {
     class TestViewController: UIWorkflowItem<AnyWorkflow.PassedArgs, Any?>, FlowRepresentable {
         var data: Any?
-        static func instance() -> Self {
-            let controller = Self()
-            controller.view.backgroundColor = .red
-            return controller
+
+        required init(with args: AnyWorkflow.PassedArgs) {
+            super.init(nibName: nil, bundle: nil)
+            view.backgroundColor = .red
+            data = args.extract(nil)
         }
+
+        required init?(coder: NSCoder) { nil }
+
         func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool {
             self.data = args.extract(nil)
             return true
         }
+
         func next() {
             proceedInWorkflow(data)
         }

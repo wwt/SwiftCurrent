@@ -1,0 +1,15 @@
+theme: fullwidth
+output: docs/workflow
+skip_undocumented: true
+separate_global_declarations: true
+readme: README.md
+module: Workflow
+author_url: https://github.com/wwt/workflow
+github_url: https://github.com/wwt/workflow
+xcodebuild_arguments:
+  - -resolvePackageDependencies
+  - -workspace
+  - Workflow.xcworkspace
+  - -scheme
+  - Workflow
+author: WWT and Tyler Thompson

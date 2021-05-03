@@ -11,11 +11,17 @@ import Workflow
 import WorkflowUIKit
 
 class PickupOrDeliveryViewController: UIWorkflowItem<Order, Order>, StoryboardLoadable {
-    var order: Order?
+    var order: Order
+
+    required init?(coder: NSCoder, with order: Order) {
+        self.order = order
+        super.init(coder: coder)
+    }
+
+    required init?(coder: NSCoder) { fatalError() }
 
     @IBAction private func selectPickup() {
-        order?.orderType = .pickup
-        guard let order = order else { return }
+        order.orderType = .pickup
         proceedInWorkflow(order)
     }
 

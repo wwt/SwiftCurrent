@@ -15,6 +15,13 @@ class LocationsViewController: UIWorkflowItem<[Location], Order>, StoryboardLoad
     @IBOutlet private weak var tableView: UITableView!
 
     var locations: [Location] = []
+
+    required init?(coder: NSCoder, with locations: [Location]) {
+        self.locations = locations
+        super.init(coder: coder)
+    }
+
+    required init?(coder: NSCoder) { fatalError() }
 }
 
 extension LocationsViewController: FlowRepresentable {

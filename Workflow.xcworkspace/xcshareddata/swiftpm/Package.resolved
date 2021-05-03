@@ -20,6 +20,15 @@
         }
       },
       {
+        "package": "ExceptionCatcher",
+        "repositoryURL": "https://github.com/sindresorhus/ExceptionCatcher",
+        "state": {
+          "branch": null,
+          "revision": "9d99a736e17f67ab3aa333c0dad7ed2ee9d6b2b9",
+          "version": "2.0.0"
+        }
+      },
+      {
         "package": "swift-algorithms",
         "repositoryURL": "https://github.com/apple/swift-algorithms",
         "state": {

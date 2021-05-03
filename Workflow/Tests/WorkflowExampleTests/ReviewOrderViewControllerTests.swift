@@ -15,6 +15,7 @@ class ReviewOrderViewControllerTests: ViewControllerTest<ReviewOrderViewControll
 
     func testShouldLoad() {
         let order = Order(location: Location(name: "", address: Address(), orderTypes: [], menuTypes: []))
+        loadFromStoryboard(args: .args(order))
         XCTAssert(testViewController.shouldLoad(with: order))
     }
 
@@ -24,7 +25,7 @@ class ReviewOrderViewControllerTests: ViewControllerTest<ReviewOrderViewControll
         order.menuType = .catering
         order.shoppingCart.append(Food(name: "Combo #1"))
         order.shoppingCart.append(Food(name: "Combo #2"))
-        loadFromStoryboard {
+        loadFromStoryboard(args: .args(order)) {
             XCTAssert($0.shouldLoad(with: order))
         }
 

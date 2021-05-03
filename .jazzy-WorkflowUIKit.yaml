@@ -1,0 +1,16 @@
+theme: fullwidth 
+output: docs/workflowuikit
+skip_undocumented: true
+separate_global_declarations: true
+readme: README.md
+module: WorkflowUIKit
+author_url: https://github.com/wwt/workflow
+github_url: https://github.com/wwt/workflow
+xcodebuild_arguments:
+  - -workspace
+  - Workflow.xcworkspace
+  - -scheme
+  - WorkflowUIKit
+  - -destination
+  - "platform=iOS Simulator,name=iPhone 12"
+author: WWT and Tyler Thompson

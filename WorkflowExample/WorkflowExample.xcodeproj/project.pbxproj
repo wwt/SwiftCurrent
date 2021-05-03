@@ -11,6 +11,9 @@
 		CA357F1F263E68AD003D1ACB /* UIKitAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA357F1E263E68AD003D1ACB /* UIKitAssertions.swift */; };
 		CA875A89256F7B9200243FA4 /* MockOrchestrationResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA875A88256F7B9200243FA4 /* MockOrchestrationResponder.swift */; };
 		CA875AC0257353B300243FA4 /* CustomAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA875ABF257353B300243FA4 /* CustomAssertions.swift */; };
+		CA9226EB26406C5B00BD0366 /* StoryboardLoadableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9226EA26406C5B00BD0366 /* StoryboardLoadableTests.swift */; };
+		CA9226F326406F2000BD0366 /* TestStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA9226F226406F2000BD0366 /* TestStoryboard.storyboard */; };
+		CA9226F92640724D00BD0366 /* ExceptionCatcher in Frameworks */ = {isa = PBXBuildFile; productRef = CA9226F82640724D00BD0366 /* ExceptionCatcher */; };
 		CAC1C22B256D8B0700DBD0D4 /* WorkflowUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = CAC1C22A256D8B0700DBD0D4 /* WorkflowUIKit */; };
 		CAC1C234256D8DA300DBD0D4 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1C233256D8DA300DBD0D4 /* Screen.swift */; };
 		CAC1C235256D8DA300DBD0D4 /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1C232256D8DA300DBD0D4 /* TopViewController.swift */; };
@@ -21,7 +24,6 @@
 		CAC1C26F256D8FA500DBD0D4 /* CwlPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = CAC1C26E256D8FA500DBD0D4 /* CwlPreconditionTesting */; };
 		CAF5852E256CEE990044C864 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF5852D256CEE990044C864 /* AppDelegate.swift */; };
 		CAF58530256CEE990044C864 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF5852F256CEE990044C864 /* SceneDelegate.swift */; };
-		CAF58532256CEE990044C864 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF58531256CEE990044C864 /* ViewController.swift */; };
 		CAF58535256CEE990044C864 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAF58533256CEE990044C864 /* Main.storyboard */; };
 		CAF58537256CEE990044C864 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAF58536256CEE990044C864 /* Assets.xcassets */; };
 		CAF5853A256CEE990044C864 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAF58538256CEE990044C864 /* LaunchScreen.storyboard */; };
@@ -36,7 +38,6 @@
 		CAF58583256CEF2E0044C864 /* ReviewOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF5854B256CEECC0044C864 /* ReviewOrderViewController.swift */; };
 		CAF58585256CEF2F0044C864 /* PickupOrDeliveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF5854C256CEECC0044C864 /* PickupOrDeliveryViewController.swift */; };
 		CAF58587256CEF340044C864 /* StoryboardLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF58552256CEECC0044C864 /* StoryboardLoadable.swift */; };
-		CAF58589256CEF350044C864 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF58553256CEECC0044C864 /* NetworkManager.swift */; };
 		CAF58714256CF40C0044C864 /* UIUTest in Frameworks */ = {isa = PBXBuildFile; productRef = CAF58713256CF40C0044C864 /* UIUTest */; };
 		CAF5873F256CF55E0044C864 /* CwlPosixPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = CAF5873E256CF55E0044C864 /* CwlPosixPreconditionTesting */; };
 		CAF58741256CF55E0044C864 /* CwlPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = CAF58740256CF55E0044C864 /* CwlPreconditionTesting */; };
@@ -78,6 +79,8 @@
 		CA357F1E263E68AD003D1ACB /* UIKitAssertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitAssertions.swift; sourceTree = "<group>"; };
 		CA875A88256F7B9200243FA4 /* MockOrchestrationResponder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockOrchestrationResponder.swift; sourceTree = "<group>"; };
 		CA875ABF257353B300243FA4 /* CustomAssertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomAssertions.swift; path = ../../Workflow/Tests/WorkflowTests/CustomAssertions.swift; sourceTree = "<group>"; };
+		CA9226EA26406C5B00BD0366 /* StoryboardLoadableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardLoadableTests.swift; sourceTree = "<group>"; };
+		CA9226F226406F2000BD0366 /* TestStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TestStoryboard.storyboard; sourceTree = "<group>"; };
 		CAC1C232256D8DA300DBD0D4 /* TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
 		CAC1C233256D8DA300DBD0D4 /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		CAC1C23C256D8DB100DBD0D4 /* WaitUntil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitUntil.swift; sourceTree = "<group>"; };
@@ -86,7 +89,6 @@
 		CAF5852A256CEE990044C864 /* WorkflowExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkflowExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAF5852D256CEE990044C864 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CAF5852F256CEE990044C864 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		CAF58531256CEE990044C864 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		CAF58534256CEE990044C864 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CAF58536256CEE990044C864 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CAF58539256CEE990044C864 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -102,7 +104,6 @@
 		CAF5854F256CEECC0044C864 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		CAF58550256CEECC0044C864 /* Storyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboard.swift; sourceTree = "<group>"; };
 		CAF58552256CEECC0044C864 /* StoryboardLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardLoadable.swift; sourceTree = "<group>"; };
-		CAF58553256CEECC0044C864 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		CAF58554256CEF080044C864 /* SetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewController.swift; sourceTree = "<group>"; };
 		CAF5858B256CEF9A0044C864 /* Workflow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Workflow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAF58635256CF0E50044C864 /* WorkflowUIKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorkflowUIKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -139,6 +140,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAC1C26D256D8FA500DBD0D4 /* CwlPosixPreconditionTesting in Frameworks */,
+				CA9226F92640724D00BD0366 /* ExceptionCatcher in Frameworks */,
 				CAF58714256CF40C0044C864 /* UIUTest in Frameworks */,
 				CAC1C26F256D8FA500DBD0D4 /* CwlPreconditionTesting in Frameworks */,
 			);
@@ -186,7 +188,6 @@
 				CAF58551256CEECC0044C864 /* Protocols */,
 				CAF5852D256CEE990044C864 /* AppDelegate.swift */,
 				CAF5852F256CEE990044C864 /* SceneDelegate.swift */,
-				CAF58531256CEE990044C864 /* ViewController.swift */,
 				CAF58554256CEF080044C864 /* SetupViewController.swift */,
 				CAF58533256CEE990044C864 /* Main.storyboard */,
 				CAF58536256CEE990044C864 /* Assets.xcassets */,
@@ -234,7 +235,6 @@
 			isa = PBXGroup;
 			children = (
 				CAF58552256CEECC0044C864 /* StoryboardLoadable.swift */,
-				CAF58553256CEECC0044C864 /* NetworkManager.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -242,6 +242,7 @@
 		CAF58636256CF0E50044C864 /* WorkflowUIKitTests */ = {
 			isa = PBXGroup;
 			children = (
+				CA9226EA26406C5B00BD0366 /* StoryboardLoadableTests.swift */,
 				CAC1C24E256D8F0400DBD0D4 /* ModalStyleTests.swift */,
 				CAC1C24D256D8F0300DBD0D4 /* UIKitConsumerTests.swift */,
 				CA875ABF257353B300243FA4 /* CustomAssertions.swift */,
@@ -252,6 +253,7 @@
 				CAF58806256D72BD0044C864 /* XCTestManifests.swift */,
 				CA357F19263E67DE003D1ACB /* UIKitPresenterTests.swift */,
 				CA357F1E263E68AD003D1ACB /* UIKitAssertions.swift */,
+				CA9226F226406F2000BD0366 /* TestStoryboard.storyboard */,
 			);
 			path = WorkflowUIKitTests;
 			sourceTree = "<group>";
@@ -326,6 +328,7 @@
 				CAF58713256CF40C0044C864 /* UIUTest */,
 				CAC1C26C256D8FA500DBD0D4 /* CwlPosixPreconditionTesting */,
 				CAC1C26E256D8FA500DBD0D4 /* CwlPreconditionTesting */,
+				CA9226F82640724D00BD0366 /* ExceptionCatcher */,
 			);
 			productName = WorkflowTests;
 			productReference = CAF58635256CF0E50044C864 /* WorkflowUIKitTests.xctest */;
@@ -391,6 +394,7 @@
 			packageReferences = (
 				CAF586A0256CF2560044C864 /* XCRemoteSwiftPackageReference "CwlPreconditionTesting" */,
 				CAF58712256CF40C0044C864 /* XCRemoteSwiftPackageReference "UIUTest" */,
+				CA9226F72640724D00BD0366 /* XCRemoteSwiftPackageReference "ExceptionCatcher" */,
 			);
 			productRefGroup = CAF5852B256CEE990044C864 /* Products */;
 			projectDirPath = "";
@@ -418,6 +422,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA9226F326406F2000BD0366 /* TestStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,12 +441,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAF58555256CEF080044C864 /* SetupViewController.swift in Sources */,
-				CAF58532256CEE990044C864 /* ViewController.swift in Sources */,
 				CAF5852E256CEE990044C864 /* AppDelegate.swift in Sources */,
 				CAF5857B256CEF290044C864 /* LocationsViewController.swift in Sources */,
 				CAF5857D256CEF2B0044C864 /* FoodSelectionViewController.swift in Sources */,
 				CAF58587256CEF340044C864 /* StoryboardLoadable.swift in Sources */,
-				CAF58589256CEF350044C864 /* NetworkManager.swift in Sources */,
 				CAF5857F256CEF2C0044C864 /* MenuSelectionViewController.swift in Sources */,
 				CAF58583256CEF2E0044C864 /* ReviewOrderViewController.swift in Sources */,
 				CAF58585256CEF2F0044C864 /* PickupOrDeliveryViewController.swift in Sources */,
@@ -461,6 +464,7 @@
 				CAC1C24F256D8F0400DBD0D4 /* ModalStyleTests.swift in Sources */,
 				CA357F1F263E68AD003D1ACB /* UIKitAssertions.swift in Sources */,
 				CAC1C250256D8F0400DBD0D4 /* UIKitConsumerTests.swift in Sources */,
+				CA9226EB26406C5B00BD0366 /* StoryboardLoadableTests.swift in Sources */,
 				CAC1C235256D8DA300DBD0D4 /* TopViewController.swift in Sources */,
 				CA875AC0257353B300243FA4 /* CustomAssertions.swift in Sources */,
 				CA357F1A263E67DE003D1ACB /* UIKitPresenterTests.swift in Sources */,
@@ -807,6 +811,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		CA9226F72640724D00BD0366 /* XCRemoteSwiftPackageReference "ExceptionCatcher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/ExceptionCatcher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		CAF586A0256CF2560044C864 /* XCRemoteSwiftPackageReference "CwlPreconditionTesting" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mattgallagher/CwlPreconditionTesting.git";
@@ -826,6 +838,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		CA9226F82640724D00BD0366 /* ExceptionCatcher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA9226F72640724D00BD0366 /* XCRemoteSwiftPackageReference "ExceptionCatcher" */;
+			productName = ExceptionCatcher;
+		};
 		CAC1C22A256D8B0700DBD0D4 /* WorkflowUIKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = WorkflowUIKit;

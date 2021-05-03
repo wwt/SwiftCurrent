@@ -50,13 +50,14 @@ class UIKitConsumerTests: XCTestCase {
     }
 
     func testWorkflowCanSkipTheFirstView() {
-        class FR1: UIViewController, FlowRepresentable {
+        final class FR1: UIViewController, FlowRepresentable {
             weak var _workflowPointer: AnyFlowRepresentable?
 
             typealias WorkflowInput = String?
             typealias WorkflowOutput = Int?
 
-            static func instance() -> Self { Self() }
+            init(with args: String?) { super.init(nibName: nil, bundle: nil) }
+            required init?(coder: NSCoder) { nil }
 
             func shouldLoad(with args: String?) -> Bool {
                 proceedInWorkflow(1)
@@ -68,9 +69,8 @@ class UIKitConsumerTests: XCTestCase {
 
             typealias WorkflowInput = Int?
 
-            static func instance() -> Self { Self() }
-
-            func shouldLoad(with args: Int?) -> Bool { true }
+            required init(with args: Int?) { super.init(nibName: nil, bundle: nil) }
+            required init?(coder: NSCoder) { nil }
         }
         let flow = Workflow(FR1.self)
             .thenPresent(FR2.self)
@@ -205,11 +205,11 @@ class UIKitConsumerTests: XCTestCase {
     func testLaunchWorkflowWithArguments() {
         class FR1: UIWorkflowItem<Int, Never>, FlowRepresentable {
             static var shouldLoadCalled = false
-            static func instance() -> Self {
-                let vc = Self()
-                vc.view.backgroundColor = .green
-                return vc
+            required init(with args: Int) {
+                super.init(nibName: nil, bundle: nil)
+                view.backgroundColor = .green
             }
+            required init?(coder: NSCoder) { nil }
 
             func shouldLoad(with args: Int) -> Bool {
                 FR1.shouldLoadCalled = true
@@ -233,11 +233,11 @@ class UIKitConsumerTests: XCTestCase {
     func testCreateViewControllerWithBaseClassForEase() {
         class FR1: UIWorkflowItem<Int, Never>, FlowRepresentable {
             static var shouldLoadCalled = false
-            static func instance() -> Self {
-                let vc = Self()
-                vc.view.backgroundColor = .green
-                return vc
+            required init(with args: Int) {
+                super.init(nibName: nil, bundle: nil)
+                view.backgroundColor = .green
             }
+            required init?(coder: NSCoder) { nil }
 
             func shouldLoad(with args: Int) -> Bool {
                 FR1.shouldLoadCalled = true
@@ -487,7 +487,8 @@ class UIKitConsumerTests: XCTestCase {
     func testNavWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStack() {
         class FR1: TestViewController { }
         class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
-            static func instance() -> Self { Self() }
+            required init(with args: Any?) { super.init(nibName: nil, bundle: nil) }
+            required init?(coder: NSCoder) { nil }
             func shouldLoad(with args: Any?) -> Bool { false }
         }
         class FR3: TestViewController { }
@@ -508,9 +509,10 @@ class UIKitConsumerTests: XCTestCase {
     func testNavWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStack_BacksUp_ThenGoesForwardAgain() {
         class FR1: TestViewController { }
         class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
-            func shouldLoad(with args: Any?) -> Bool { false }
+            required init(with args: Any?) { super.init(nibName: nil, bundle: nil) }
+            required init?(coder: NSCoder) { nil }
 
-            static func instance() -> Self { Self() }
+            func shouldLoad(with args: Any?) -> Bool { false }
         }
         class FR3: TestViewController { }
 
@@ -532,9 +534,9 @@ class UIKitConsumerTests: XCTestCase {
     func testNavWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStack_BacksUpUsingWorkflow_ThenGoesForwardAgain() {
         class FR1: TestViewController { }
         class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
+            required init(with args: Any?) { super.init(nibName: nil, bundle: nil) }
+            required init?(coder: NSCoder) { nil }
             func shouldLoad(with args: Any?) -> Bool { false }
-
-            static func instance() -> Self { Self() }
         }
         class FR3: TestViewController { }
 
@@ -560,9 +562,7 @@ class UIKitConsumerTests: XCTestCase {
                 return false
             }
         }
-        class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable {
-            static func instance() -> Self { Self() }
-        }
+        final class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable { }
         class FR3: TestViewController { }
 
         let nav = UINavigationController()
@@ -583,9 +583,7 @@ class UIKitConsumerTests: XCTestCase {
                 return false
             }
         }
-        class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable {
-            static func instance() -> Self { Self() }
-        }
+        final class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable { }
         class FR3: TestViewController { }
 
         let nav = UINavigationController()
@@ -604,9 +602,8 @@ class UIKitConsumerTests: XCTestCase {
     func testNavWorkflowWhichDoesNotSkipAScreen_ButRemovesItFromTheViewStack() {
         class FR1: TestViewController { }
         class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
-            func shouldLoad(with args: Any?) -> Bool { true }
-
-            static func instance() -> Self { Self() }
+            required init(with args: Any?) { super.init(nibName: nil, bundle: nil) }
+            required init?(coder: NSCoder) { nil }
         }
         class FR3: TestViewController { }
 
@@ -627,9 +624,7 @@ class UIKitConsumerTests: XCTestCase {
 
     func testNavWorkflowWhichDoesNotSkipFirstScreen_ButRemovesItFromTheViewStack() {
         class FR1: TestViewController { }
-        class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable {
-            static func instance() -> Self { Self() }
-        }
+        final class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable { }
         class FR3: TestViewController { }
 
         let nav = UINavigationController()
@@ -646,8 +641,7 @@ class UIKitConsumerTests: XCTestCase {
 
     func testNavWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStackUsingAClsure() {
         class FR1: TestViewController { }
-        class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable {
-            static func instance() -> Self { Self() }
+        final class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable {
             func shouldLoad() -> Bool { false }
         }
         class FR3: TestViewController { }
@@ -667,9 +661,7 @@ class UIKitConsumerTests: XCTestCase {
 
     func testNavWorkflowWhichDoesNotSkipAScreen_ButRemovesItFromTheViewStackUsingAClsure() {
         class FR1: TestViewController { }
-        class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable {
-            static func instance() -> Self { Self() }
-        }
+        final class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable { }
         class FR3: TestViewController { }
 
         let nav = UINavigationController()
@@ -689,8 +681,9 @@ class UIKitConsumerTests: XCTestCase {
 
     func testNavWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStackUsingAClsureWithData() {
         class FR1: TestViewController { }
-        class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
-            static func instance() -> Self { Self() }
+        final class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
+            init(with args: Any?) { super.init(nibName: nil, bundle: nil) }
+            required init?(coder: NSCoder) { nil }
             func shouldLoad(with args: Any?) -> Bool { false }
         }
         class FR3: TestViewController { }
@@ -711,10 +704,8 @@ class UIKitConsumerTests: XCTestCase {
     func testNavWorkflowWhichDoesNotSkipAScreen_ButRemovesItFromTheViewStackUsingAClsureWithData() {
         class FR1: TestViewController { }
         class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
-            func shouldLoad(with args: Any?) -> Bool {
-                return true
-            }
-            static func instance() -> Self { Self() }
+            required init(with args: Any?) { super.init(nibName: nil, bundle: nil) }
+            required init?(coder: NSCoder) { nil }
         }
         class FR3: TestViewController { }
 
@@ -739,7 +730,8 @@ class UIKitConsumerTests: XCTestCase {
     func testModalWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStack() {
         class FR1: TestViewController { }
         class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
-            static func instance() -> Self { Self() }
+            required init(with args: Any?) { super.init(nibName: nil, bundle: nil) }
+            required init?(coder: NSCoder) { nil }
             func shouldLoad(with args: Any?) -> Bool { false }
         }
         class FR3: TestViewController { }
@@ -760,7 +752,8 @@ class UIKitConsumerTests: XCTestCase {
     func testModalWorkflowWhichSkipsAScreen_andBacksUpWithWorkflow() {
         class FR1: TestViewController { }
         class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
-            static func instance() -> Self { Self() }
+            required init(with args: Any?) { super.init(nibName: nil, bundle: nil) }
+            required init?(coder: NSCoder) { nil }
             func shouldLoad(with args: Any?) -> Bool { false }
         }
         class FR3: TestViewController { }
@@ -781,7 +774,8 @@ class UIKitConsumerTests: XCTestCase {
     func testModalWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStack_andBacksUpWithWorkflow() {
         class FR1: TestViewController { }
         class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
-            static func instance() -> Self { Self() }
+            required init(with args: Any?) { super.init(nibName: nil, bundle: nil) }
+            required init?(coder: NSCoder) { nil }
             func shouldLoad(with args: Any?) -> Bool { false }
         }
         class FR3: TestViewController { }
@@ -806,7 +800,7 @@ class UIKitConsumerTests: XCTestCase {
                 return false
             }
         }
-        class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable {
+        final class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable {
             static func instance() -> Self { Self() }
         }
         class FR3: TestViewController { }
@@ -825,8 +819,8 @@ class UIKitConsumerTests: XCTestCase {
     func testModalWorkflowWhichDoesNotSkipAScreen_ButRemovesItFromTheViewStack() {
         class FR1: TestViewController { }
         class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
-            static func instance() -> Self { Self() }
-            func shouldLoad(with args: Any?) -> Bool { true }
+            required init(with args: Any?) { super.init(nibName: nil, bundle: nil) }
+            required init?(coder: NSCoder) { nil }
         }
         class FR3: TestViewController { }
 
@@ -847,9 +841,7 @@ class UIKitConsumerTests: XCTestCase {
 
     func testModalWorkflowWhichDoesNotSkipFirstScreen_ButRemovesItFromTheViewStack() {
         class FR1: TestViewController { }
-        class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable {
-            static func instance() -> Self { Self() }
-        }
+        final class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable { }
         class FR3: TestViewController { }
 
         let root = UIViewController()
@@ -868,8 +860,7 @@ class UIKitConsumerTests: XCTestCase {
 
     func testModalWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStackUsingAClosure() {
         class FR1: TestViewController { }
-        class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable {
-            static func instance() -> Self { Self() }
+        final class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable {
             func shouldLoad() -> Bool { false }
         }
         class FR3: TestViewController { }
@@ -889,9 +880,7 @@ class UIKitConsumerTests: XCTestCase {
 
     func testModalWorkflowWhichDoesNotSkipAScreen_ButRemovesItFromTheViewStackUsingAClsure() {
         class FR1: TestViewController { }
-        class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable {
-            static func instance() -> Self { Self() }
-        }
+        final class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable { }
         class FR3: TestViewController { }
 
         let root = UIViewController()
@@ -912,7 +901,8 @@ class UIKitConsumerTests: XCTestCase {
     func testModalWorkflowWhichSkipsAScreen_ButKeepsItInTheViewStackUsingAClosureWithData() {
         class FR1: TestViewController { }
         class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
-            static func instance() -> Self { Self() }
+            required init(with args: Any?) { super.init(nibName: nil, bundle: nil) }
+            required init?(coder: NSCoder) { nil }
             func shouldLoad(with args: Any?) -> Bool { false }
         }
         class FR3: TestViewController { }
@@ -933,10 +923,11 @@ class UIKitConsumerTests: XCTestCase {
     func testModalWorkflowWhichDoesNotSkipAScreen_ButRemovesItFromTheViewStackUsingAClosureWithData() {
         class FR1: TestViewController { }
         class FR2: UIWorkflowItem<Any?, Any?>, FlowRepresentable {
+            required init(with args: Any?) { super.init(nibName: nil, bundle: nil) }
+            required init?(coder: NSCoder) { nil }
             func shouldLoad(with args: Any?) -> Bool {
                 return true
             }
-            static func instance() -> Self { Self() }
         }
         class FR3: TestViewController { }
 
@@ -1119,9 +1110,7 @@ class UIKitConsumerTests: XCTestCase {
         UIKitConsumerTests.viewDidLoadOnMockCalled = 0
 
         class FR1: TestViewController { }
-        class FR2: UIWorkflowItem<Never, Never>, FlowRepresentable {
-            static func instance() -> Self { Self() }
-        }
+        final class FR2: UIWorkflowItem<Never, Never>, FlowRepresentable { }
 
         let root = UIViewController()
         let nav = UINavigationController(rootViewController: root)
@@ -1160,11 +1149,12 @@ class UIKitConsumerTests: XCTestCase {
 
     func testWorkflowLaunchModally() {
         class ExpectedModal: UIWorkflowItem<Never, Never>, FlowRepresentable {
-            static func instance() -> Self {
-                let modal = Self()
-                modal.view.backgroundColor = .green
-                return modal
+            required init() {
+                super.init(nibName: nil, bundle: nil)
+                view.backgroundColor = .green
             }
+
+            required init?(coder: NSCoder) { nil }
         }
 
         let rootController = UIViewController()
@@ -1181,11 +1171,12 @@ class UIKitConsumerTests: XCTestCase {
 
     func testWorkflowLaunchModallyButSecondViewPrefersANavController() {
         class ExpectedModal: UIWorkflowItem<Never, Never>, FlowRepresentable {
-            static func instance() -> Self {
-                let modal = Self()
-                modal.view.backgroundColor = .green
-                return modal
+            required init() {
+                super.init(nibName: nil, bundle: nil)
+                view.backgroundColor = .green
             }
+
+            required init?(coder: NSCoder) { nil }
 
             override func viewDidAppear(_ animated: Bool) {
                 proceedInWorkflow()
@@ -1193,11 +1184,12 @@ class UIKitConsumerTests: XCTestCase {
         }
 
         class ExpectedModalPreferNav: UIWorkflowItem<Never, Never>, FlowRepresentable {
-            static func instance() -> Self {
-                let modal = Self()
-                modal.view.backgroundColor = .blue
-                return modal
+            required init() {
+                super.init(nibName: nil, bundle: nil)
+                view.backgroundColor = .blue
             }
+
+            required init?(coder: NSCoder) { nil }
         }
 
         let rootController = UIViewController()
@@ -1217,11 +1209,12 @@ class UIKitConsumerTests: XCTestCase {
 
     func testFluentWorkflowLaunchModallyButSecondViewPreferrsANavController() {
         class ExpectedModal: UIWorkflowItem<Never, Never>, FlowRepresentable {
-            static func instance() -> Self {
-                let modal = Self()
-                modal.view.backgroundColor = .green
-                return modal
+            required init() {
+                super.init(nibName: nil, bundle: nil)
+                view.backgroundColor = .green
             }
+
+            required init?(coder: NSCoder) { nil }
 
             override func viewDidAppear(_ animated: Bool) {
                 proceedInWorkflow()
@@ -1229,11 +1222,12 @@ class UIKitConsumerTests: XCTestCase {
         }
 
         class ExpectedModalPreferNav: UIWorkflowItem<Never, Never>, FlowRepresentable {
-            static func instance() -> Self {
-                let modal = Self()
-                modal.view.backgroundColor = .blue
-                return modal
+            required init() {
+                super.init(nibName: nil, bundle: nil)
+                view.backgroundColor = .blue
             }
+
+            required init?(coder: NSCoder) { nil }
         }
 
         let rootController = UIViewController()
@@ -1255,11 +1249,12 @@ class UIKitConsumerTests: XCTestCase {
 
     func testWorkflowLaunchModallyButFirstViewHasANavController() {
         class ExpectedModal: UIWorkflowItem<Never, Never>, FlowRepresentable {
-            static func instance() -> Self {
-                let modal = Self()
-                modal.view.backgroundColor = .green
-                return modal
+            required init() {
+                super.init(nibName: nil, bundle: nil)
+                view.backgroundColor = .green
             }
+
+            required init?(coder: NSCoder) { nil }
         }
 
         let firstView = UIViewController()
@@ -1281,11 +1276,12 @@ class UIKitConsumerTests: XCTestCase {
 
     func testFluentWorkflowLaunchModallyButFirstViewHasANavController() {
         class ExpectedNav: UIWorkflowItem<Never, Never>, FlowRepresentable {
-            static func instance() -> Self {
-                let modal = Self()
-                modal.view.backgroundColor = .green
-                return modal
+            required init() {
+                super.init(nibName: nil, bundle: nil)
+                view.backgroundColor = .green
             }
+
+            required init?(coder: NSCoder) { nil }
         }
 
         let firstView = UIViewController()
@@ -1510,11 +1506,12 @@ class UIKitConsumerTests: XCTestCase {
 
     func testWorkflowLaunchModallyButFirstViewHasANavControllerAndThenDismiss() {
         class ExpectedModal: UIWorkflowItem<Never, Never>, FlowRepresentable {
-            static func instance() -> Self {
-                let modal = Self()
-                modal.view.backgroundColor = .green
-                return modal
+            required init() {
+                super.init(nibName: nil, bundle: nil)
+                view.backgroundColor = .green
             }
+
+            required init?(coder: NSCoder) { nil }
         }
         let rootController = UIViewController()
         let controller = UINavigationController(rootViewController: rootController)
@@ -1537,11 +1534,12 @@ class UIKitConsumerTests: XCTestCase {
 
     func testWorkflowLaunchWithNavigationStack() {
         class ExpectedController: UIWorkflowItem<Never, Never>, FlowRepresentable {
-            static func instance() -> Self {
-                let controller = Self()
-                controller.view.backgroundColor = .green
-                return controller
+            required init() {
+                super.init(nibName: nil, bundle: nil)
+                view.backgroundColor = .green
             }
+
+            required init?(coder: NSCoder) { nil }
         }
 
         let rootController = UIViewController()
@@ -1557,11 +1555,12 @@ class UIKitConsumerTests: XCTestCase {
 
     func testWorkflowLaunchWithNavigationStackWhenLauncherDoesNotHavNavController() {
         class ExpectedController: UIWorkflowItem<Never, Never>, FlowRepresentable {
-            static func instance() -> Self {
-                let controller = Self()
-                controller.view.backgroundColor = .green
-                return controller
+            required init() {
+                super.init(nibName: nil, bundle: nil)
+                view.backgroundColor = .green
             }
+
+            required init?(coder: NSCoder) { nil }
         }
 
         let rootController = UIViewController()
@@ -1577,18 +1576,20 @@ class UIKitConsumerTests: XCTestCase {
 
     func testWorkflowLaunchesWithNavButHasAViewThatPrefersModalBecauseItCan() {
         class ExpectedModal: UIWorkflowItem<Never, Never>, FlowRepresentable {
-            static func instance() -> Self {
-                let modal = Self()
-                modal.view.backgroundColor = .green
-                return modal
+            required init() {
+                super.init(nibName: nil, bundle: nil)
+                view.backgroundColor = .green
             }
+
+            required init?(coder: NSCoder) { nil }
         }
         class ExpectedNav: UIWorkflowItem<Never, Never>, FlowRepresentable {
-            static func instance() -> Self {
-                let modal = Self()
-                modal.view.backgroundColor = .blue
-                return modal
+            required init() {
+                super.init(nibName: nil, bundle: nil)
+                view.backgroundColor = .blue
             }
+
+            required init?(coder: NSCoder) { nil }
         }
         let rootController = UIViewController()
         let controller = UINavigationController(rootViewController: rootController)
@@ -1606,11 +1607,12 @@ class UIKitConsumerTests: XCTestCase {
 
     func testFlowRepresentableThatDoesNotTakeInData() {
         class ExpectedController: UIWorkflowItem<Never, Never>, FlowRepresentable {
-            static func instance() -> Self {
-                let controller = Self()
-                controller.view.backgroundColor = .green
-                return controller
+            required init() {
+                super.init(nibName: nil, bundle: nil)
+                view.backgroundColor = .green
             }
+
+            required init?(coder: NSCoder) { nil }
         }
 
         let rootController = UIViewController()
@@ -1626,11 +1628,12 @@ class UIKitConsumerTests: XCTestCase {
 
     func testFlowRepresentableThatDoesNotTakeInDataAndOverridesShouldLoad() {
         class ExpectedController: UIWorkflowItem<Never, Never>, FlowRepresentable {
-            static func instance() -> Self {
-                let controller = Self()
-                controller.view.backgroundColor = .green
-                return controller
+            required init() {
+                super.init(nibName: nil, bundle: nil)
+                view.backgroundColor = .green
             }
+
+            required init?(coder: NSCoder) { nil }
             func shouldLoad() -> Bool { false }
         }
 
@@ -1648,24 +1651,22 @@ class UIKitConsumerTests: XCTestCase {
 extension UIKitConsumerTests {
     class TestViewController: UIWorkflowItem<AnyWorkflow.PassedArgs, Any?>, FlowRepresentable {
         var data: Any?
-        static func instance() -> Self {
-            let controller = Self()
-            controller.view.backgroundColor = .red
-            return controller
+        required init(with args: AnyWorkflow.PassedArgs) {
+            super.init(nibName: nil, bundle: nil)
+            view.backgroundColor = .red
+            data = args.extract(nil)
         }
-        func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool {
-            self.data = args.extract(nil)
-            return true
-        }
+
+        required init?(coder: NSCoder) { nil }
+
+        func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool { true }
         func next() {
             proceedInWorkflow(data)
         }
     }
 }
 
-class MockFlowRepresentable: UIWorkflowItem<Never, Never>, FlowRepresentable {
-    static func instance() -> Self { Self() }
-
+final class MockFlowRepresentable: UIWorkflowItem<Never, Never>, FlowRepresentable {
     func shouldLoad() -> Bool { true }
 
     override func viewDidLoad() {

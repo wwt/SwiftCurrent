@@ -16,6 +16,7 @@ class PickupOrDeliveryViewConrollerTests: ViewControllerTest<PickupOrDeliveryVie
     func testShouldLoadOnlyIfThereAreMultipleOrderTypes() {
         let locationWithOne = Location(name: "", address: Address(), orderTypes: [.pickup], menuTypes: [])
         let locationWithMultiple = Location(name: "", address: Address(), orderTypes: [.pickup, .delivery(Address())], menuTypes: [])
+        loadFromStoryboard(args: .args(Order(location: locationWithOne)))
         XCTAssertFalse(testViewController.shouldLoad(with: Order(location: locationWithOne)))
         XCTAssert(testViewController.shouldLoad(with: Order(location: locationWithMultiple)))
     }
@@ -23,13 +24,12 @@ class PickupOrDeliveryViewConrollerTests: ViewControllerTest<PickupOrDeliveryVie
     func testShouldLoadWithOnlyOneOrderTypeCallsBackImmediately() {
         var callbackCalled = false
         let locationWithOne = Location(name: "", address: Address(), orderTypes: [.delivery(Address())], menuTypes: [])
-        loadFromStoryboard { viewController in
+        loadFromStoryboard(args: .args(Order(location: locationWithOne))) { viewController in
             viewController.proceedInWorkflowStorage = { data in
                 callbackCalled = true
                 XCTAssert(data is Order)
                 XCTAssertEqual((data as? Order)?.orderType, .delivery(Address()))
             }
-            _ = viewController.shouldLoad(with: Order(location: locationWithOne))
         }
 
         XCTAssert(callbackCalled)
@@ -38,13 +38,12 @@ class PickupOrDeliveryViewConrollerTests: ViewControllerTest<PickupOrDeliveryVie
     func testSelectingPickupSetsItOnOrder() {
         var callbackCalled = false
         let location = Location(name: "", address: Address(), orderTypes: [.pickup, .delivery(Address())], menuTypes: [])
-        loadFromStoryboard { viewController in
+        loadFromStoryboard(args: .args(Order(location: location))) { viewController in
             viewController.proceedInWorkflowStorage = { data in
                 callbackCalled = true
                 XCTAssert(data is Order)
                 XCTAssertEqual((data as? Order)?.orderType, .pickup)
             }
-            _ = viewController.shouldLoad(with: Order(location: location))
         }
 
         testViewController.pickupButton?.simulateTouch()
@@ -53,9 +52,8 @@ class PickupOrDeliveryViewConrollerTests: ViewControllerTest<PickupOrDeliveryVie
     }
 
     func testSelectingDeliveryLaunchesWorkflowAndSetsSelectionOnOrder() {
-        loadFromStoryboard()
         let unique = UUID().uuidString
-        testViewController.order = Order(location: Location(name: unique, address: Address(), orderTypes: [], menuTypes: []))
+        loadFromStoryboard(args: .args(Order(location: Location(name: unique, address: Address(), orderTypes: [], menuTypes: []))))
         let listener = WorkflowListener()
         let orderOutput = Order(location: Location(name: unique, address: Address(), orderTypes: [], menuTypes: []))
 

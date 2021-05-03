@@ -11,17 +11,22 @@ import Workflow
 import WorkflowUIKit
 
 class MenuSelectionViewController: UIWorkflowItem<Order, Order>, StoryboardLoadable {
-    var order: Order?
+    var order: Order
+
+    required init?(coder: NSCoder, with order: Order) {
+        self.order = order
+        super.init(coder: coder)
+    }
+
+    required init?(coder: NSCoder) { fatalError() }
 
     @IBAction private func cateringMenu() {
-        order?.menuType = .catering
-        guard let order = order else { return }
+        order.menuType = .catering
         proceedInWorkflow(order)
     }
 
     @IBAction private func regularMenu() {
-        order?.menuType = .regular
-        guard let order = order else { return }
+        order.menuType = .regular
         proceedInWorkflow(order)
     }
 }
