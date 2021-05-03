@@ -26,7 +26,7 @@ class AnyFlowRepresentableStorageBase {
 
 class AnyFlowRepresentableStorage<FR: FlowRepresentable>: AnyFlowRepresentableStorageBase {
     var holder: FR
-    
+
     override func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool {
         switch args {
             case _ where FR.WorkflowInput.self == Never.self: return holder.shouldLoad()
@@ -38,7 +38,7 @@ class AnyFlowRepresentableStorage<FR: FlowRepresentable>: AnyFlowRepresentableSt
             default: fatalError("No arguments were passed to representable: \(FR.self), but it expected: \(FR.WorkflowInput.self)")
         }
     }
-    
+
     override var underlyingInstance: Any {
         holder._workflowUnderlyingInstance
     }
