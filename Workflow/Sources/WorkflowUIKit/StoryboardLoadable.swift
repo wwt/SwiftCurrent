@@ -65,9 +65,7 @@ extension StoryboardLoadable {
 extension StoryboardLoadable where WorkflowInput == Never {
     // No public docs necessary, as this should not be used by consumers
     // swiftlint:disable:next missing_docs
-    public init?(coder: NSCoder, with args: WorkflowInput) {
-        self.init(coder: coder)
-    }
+    public init?(coder: NSCoder, with args: WorkflowInput) { self.init(coder: coder) }
 
     // No public docs necessary, as this should not be used by consumers
     // swiftlint:disable:next missing_docs
