@@ -1,0 +1,215 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/LinkedList/LinkedList.swift",
+      "line": 19,
+      "symbol": "LinkedList.Index",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/LinkedList/LinkedList.swift",
+      "line": 20,
+      "symbol": "LinkedList.SubSequence",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/LinkedList/LinkedList.swift",
+      "line": 46,
+      "symbol": "LinkedList.init(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/LinkedList/LinkedList.swift",
+      "line": 50,
+      "symbol": "LinkedList.init(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/LinkedList/LinkedListIterator.swift",
+      "line": 11,
+      "symbol": "LinkedList.LinkedListIterator",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/Models/AnyWorkflow.swift",
+      "line": 11,
+      "symbol": "AnyWorkflow",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/Models/AnyWorkflow.swift",
+      "line": 175,
+      "symbol": "AnyWorkflow",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/Models/FlowRepresentableMetadata.swift",
+      "line": 27,
+      "symbol": "FlowRepresentableMetadata.launchStyle",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/Models/FlowRepresentableMetadata.swift",
+      "line": 28,
+      "symbol": "FlowRepresentableMetadata.persistence",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/Models/FlowRepresentableMetadata.swift",
+      "line": 30,
+      "symbol": "FlowRepresentableMetadata.init(_:launchStyle:flowPersistence:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/Models/FlowRepresentableMetadata.swift",
+      "line": 40,
+      "symbol": "FlowRepresentableMetadata.init(with:launchStyle:persistence:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/Protocols/AnyOrchestrationResponder.swift",
+      "line": 10,
+      "symbol": "AnyOrchestrationResponder",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/Protocols/FlowRepresentable.swift",
+      "line": 21,
+      "symbol": "FlowRepresentable.WorkflowOutput",
+      "symbol_kind": "source.lang.swift.decl.associatedtype",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/Protocols/FlowRepresentable.swift",
+      "line": 23,
+      "symbol": "FlowRepresentable._workflowPointer",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/Protocols/FlowRepresentable.swift",
+      "line": 24,
+      "symbol": "FlowRepresentable._workflowUnderlyingInstance",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/Protocols/FlowRepresentable.swift",
+      "line": 26,
+      "symbol": "FlowRepresentable.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/Protocols/FlowRepresentable.swift",
+      "line": 27,
+      "symbol": "FlowRepresentable.init(with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/Protocols/FlowRepresentable.swift",
+      "line": 28,
+      "symbol": "FlowRepresentable._factory(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/Protocols/FlowRepresentable.swift",
+      "line": 29,
+      "symbol": "FlowRepresentable._factory(_:with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/Protocols/FlowRepresentable.swift",
+      "line": 36,
+      "symbol": "FlowRepresentable.shouldLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/Protocols/FlowRepresentable.swift",
+      "line": 40,
+      "symbol": "FlowRepresentable._workflowUnderlyingInstance",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/Protocols/FlowRepresentable.swift",
+      "line": 43,
+      "symbol": "FlowRepresentable.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/Protocols/FlowRepresentable.swift",
+      "line": 45,
+      "symbol": "FlowRepresentable._factory(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/Protocols/FlowRepresentable.swift",
+      "line": 47,
+      "symbol": "FlowRepresentable._factory(_:with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/Protocols/FlowRepresentable.swift",
+      "line": 57,
+      "symbol": "FlowRepresentable.proceedBackwardInWorkflow()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/Protocols/FlowRepresentable.swift",
+      "line": 61,
+      "symbol": "FlowRepresentable.shouldLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/Protocols/FlowRepresentable.swift",
+      "line": 76,
+      "symbol": "FlowRepresentable.init(with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/Protocols/FlowRepresentable.swift",
+      "line": 85,
+      "symbol": "FlowRepresentable.proceedInWorkflow()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/Protocols/FlowRepresentable.swift",
+      "line": 91,
+      "symbol": "FlowRepresentable.proceedInWorkflow(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/TypeErased/AnyFlowRepresentable.swift",
+      "line": 59,
+      "symbol": "AnyFlowRepresentable",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/gistr/workspaces/wwt/Workflow"
+}

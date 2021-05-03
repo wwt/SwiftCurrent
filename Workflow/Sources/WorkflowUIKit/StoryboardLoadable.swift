@@ -44,7 +44,7 @@ public protocol StoryboardLoadable where Self: FlowRepresentable, Self: UIViewCo
 
      ### Discussion
      This UIKit initializer can be used to pass arguments to the `FlowRepresentable`.
-     If you return nil, this creates the view controller using the default `init(coder:)` method.
+     If you return `nil`, this creates the view controller using the default `init(coder:)` method.
 
      - Parameter coder: An unarchiver object.
      - Parameter with: `WorkflowInput` data provided by encompassing `Workflow`; parameter can be renamed.
@@ -54,7 +54,7 @@ public protocol StoryboardLoadable where Self: FlowRepresentable, Self: UIViewCo
 
 @available(iOS 13.0, *)
 extension StoryboardLoadable {
-    /// **WARNING: This will throw a fatal error.** Just a default implementation of the required `FlowRepresentable` initializer meant to satisfy the protocol requirements.
+    /// :nodoc: **WARNING: This will throw a fatal error.** Just a default implementation of the required `FlowRepresentable` initializer meant to satisfy the protocol requirements.
     public init(with args: WorkflowInput) { // swiftlint:disable:this unavailable_function
         // swiftlint:disable:next line_length
         fatalError("The StoryboardLoadable protocol provided a default implementation if this initializer so that consumers didn't have to worry about it in their UIViewController. If you encounter this error and need this initializer, simply add it to \(String(describing: Self.self))")
