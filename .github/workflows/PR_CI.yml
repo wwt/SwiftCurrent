@@ -57,5 +57,5 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Run TESTS
+      - name: Swiftlint
         run: bundle exec fastlane lint
