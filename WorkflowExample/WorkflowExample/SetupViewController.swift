@@ -41,7 +41,7 @@ class SetupViewController: UIViewController {
     }
 
     override func viewDidLoad() {
-        print("!!!! \(Date().timeIntervalSince1970) - debugging weird test")
+        print("!!!! \(Date().timeIntervalSince1970) - SetupViewController - viewDidLoad - debugging weird test")
         super.viewDidLoad()
     }
 }

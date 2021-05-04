@@ -82,6 +82,7 @@ class ModalStyleTests: XCTestCase {
 
         XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
         XCTAssertEqual(UIApplication.topViewController()?.modalPresentationStyle, .custom)
+        print("!!!! \(Date().timeIntervalSince1970) - testShowModalAsCustom - RawValue: \(String(describing: UIApplication.topViewController()?.modalPresentationStyle.rawValue))")
     }
 
     func testShowModalOverFullScreen() {
