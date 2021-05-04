@@ -8,6 +8,7 @@
 
 import Foundation
 
+#warning("This documentation still needs more love")
 /**
  A component in a `Workflow`; should be independent of the workflow context.
  
@@ -28,11 +29,19 @@ public protocol FlowRepresentable {
     /// The type of data passed forward from the `FlowRepresentable`; `Never` means data will not be passed forward.
     associatedtype WorkflowOutput = Never
 
-    /// - Note: While not strictly necessary it would be wise to declare this property as `weak`
+    #warning("Discuss about renaming to `workflowPointer`")
+    // - Note: While not strictly necessary it would be wise to declare this property as `weak`
     var _workflowPointer: AnyFlowRepresentable? { get set }
+    // No public docs necessary, as this should not be used by consumers.
+    // swiftlint:disable:next missing_docs
     var _workflowUnderlyingInstance: Any { get }
 
+    /**
+     Creates a `FlowRepresentable`.
+     - Note: This is auto synthesized by FlowRepresentable, and is only called when `WorkflowInput` is `Never`.
+     */
     init()
+    /// Creates a `FlowRepresentable` with the specified `WorkflowInput`.
     init(with args: WorkflowInput)
 
     // No public docs necessary, as this should not be used by consumers.
