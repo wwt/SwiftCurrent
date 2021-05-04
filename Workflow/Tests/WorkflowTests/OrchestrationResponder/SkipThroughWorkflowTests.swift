@@ -179,9 +179,8 @@ class SkipThroughWorkflowTests: XCTestCase {
             required init(with id: String) { XCTAssertEqual(id, FR1.id) }
 
             static let expectation = XCTestExpectation(description: "shouldLoad called")
-            func shouldLoad(with id: String) -> Bool {
+            func shouldLoad() -> Bool {
                 FR2.expectation.fulfill()
-                XCTAssertEqual(id, FR1.id)
                 return true
             }
         }
@@ -222,11 +221,14 @@ class SkipThroughWorkflowTests: XCTestCase {
             }
         }
         class FR2: TestFlowRepresentable<String, String>, FlowRepresentable {
-            required init(with id: String) { XCTAssertEqual(id, FR1.id) }
-            static let expectation = XCTestExpectation(description: "shouldLoad called")
-            func shouldLoad(with id: String) -> Bool {
-                FR2.expectation.fulfill()
+            let id: String
+            required init(with id: String) {
+                self.id = id
                 XCTAssertEqual(id, FR1.id)
+            }
+            static let expectation = XCTestExpectation(description: "shouldLoad called")
+            func shouldLoad() -> Bool {
+                FR2.expectation.fulfill()
                 proceedInWorkflow(id)
                 return false
             }
@@ -234,9 +236,8 @@ class SkipThroughWorkflowTests: XCTestCase {
         class FR3: TestFlowRepresentable<String, Never>, FlowRepresentable {
             required init(with id: String) { XCTAssertEqual(id, FR1.id) }
             static let expectation = XCTestExpectation(description: "shouldLoad called")
-            func shouldLoad(with id: String) -> Bool {
+            func shouldLoad() -> Bool {
                 FR3.expectation.fulfill()
-                XCTAssertEqual(id, FR1.id)
                 return true
             }
         }
@@ -262,15 +263,14 @@ class SkipThroughWorkflowTests: XCTestCase {
         class FR1: TestFlowRepresentable<String, String>, FlowRepresentable {
             required init(with args: String) { }
             static let id = UUID().uuidString
-            func shouldLoad(with id: String) -> Bool { false }
+            func shouldLoad() -> Bool { false }
         }
         class FR2: TestFlowRepresentable<String, Never>, FlowRepresentable {
             required init(with id: String) { XCTAssertEqual(id, FR1.id) }
 
             static let expectation = XCTestExpectation(description: "shouldLoad called")
-            func shouldLoad(with id: String) -> Bool {
+            func shouldLoad() -> Bool {
                 FR2.expectation.fulfill()
-                XCTAssertEqual(id, FR1.id)
                 return true
             }
         }
@@ -306,25 +306,21 @@ class SkipThroughWorkflowTests: XCTestCase {
         class FR1: TestFlowRepresentable<String, String>, FlowRepresentable {
             required init(with args: String) { }
             static let id = UUID().uuidString
-            func shouldLoad(with id: String) -> Bool {
-                return false
-            }
+            func shouldLoad() -> Bool { false }
         }
         class FR2: TestFlowRepresentable<String, String>, FlowRepresentable {
             required init(with id: String) { XCTAssertEqual(id, FR1.id) }
             static let expectation = XCTestExpectation(description: "shouldLoad called")
-            func shouldLoad(with id: String) -> Bool {
+            func shouldLoad() -> Bool {
                 FR2.expectation.fulfill()
-                XCTAssertEqual(id, FR1.id)
                 return false
             }
         }
         class FR3: TestFlowRepresentable<String, Never>, FlowRepresentable {
             required init(with id: String) { XCTAssertEqual(id, FR1.id) }
             static let expectation = XCTestExpectation(description: "shouldLoad called")
-            func shouldLoad(with id: String) -> Bool {
+            func shouldLoad() -> Bool {
                 FR3.expectation.fulfill()
-                XCTAssertEqual(id, FR1.id)
                 return true
             }
         }
@@ -350,25 +346,21 @@ class SkipThroughWorkflowTests: XCTestCase {
         class FR1: TestFlowRepresentable<String, String>, FlowRepresentable {
             required init(with id: String) { }
             static let id = UUID().uuidString
-            func shouldLoad(with id: String) -> Bool {
-                return false
-            }
+            func shouldLoad() -> Bool { false }
         }
         class FR2: TestFlowRepresentable<String, String>, FlowRepresentable {
             required init(with id: String) { XCTAssertEqual(id, FR1.id) }
             static let expectation = XCTestExpectation(description: "shouldLoad called")
-            func shouldLoad(with id: String) -> Bool {
+            func shouldLoad() -> Bool {
                 FR2.expectation.fulfill()
-                XCTAssertEqual(id, FR1.id)
                 return false
             }
         }
         class FR3: TestFlowRepresentable<String, String>, FlowRepresentable {
             required init(with id: String) { XCTAssertEqual(id, FR1.id) }
             static let expectation = XCTestExpectation(description: "shouldLoad called")
-            func shouldLoad(with id: String) -> Bool {
+            func shouldLoad() -> Bool {
                 FR3.expectation.fulfill()
-                XCTAssertEqual(id, FR1.id)
                 return false
             }
         }
@@ -397,11 +389,14 @@ class SkipThroughWorkflowTests: XCTestCase {
             static let id = UUID().uuidString
         }
         class FR2: TestFlowRepresentable<String, String>, FlowRepresentable {
-            required init(with id: String) { XCTAssertEqual(id, FR1.id) }
-            static let expectation = XCTestExpectation(description: "shouldLoad called")
-            func shouldLoad(with id: String) -> Bool {
-                FR2.expectation.fulfill()
+            let id: String
+            required init(with id: String) {
+                self.id = id
                 XCTAssertEqual(id, FR1.id)
+            }
+            static let expectation = XCTestExpectation(description: "shouldLoad called")
+            func shouldLoad() -> Bool {
+                FR2.expectation.fulfill()
                 proceedInWorkflow(id)
                 return false
             }
@@ -409,9 +404,8 @@ class SkipThroughWorkflowTests: XCTestCase {
         class FR3: TestFlowRepresentable<String, Never>, FlowRepresentable {
             required init(with id: String) { XCTAssertEqual(id, FR1.id) }
             static let expectation = XCTestExpectation(description: "shouldLoad called")
-            func shouldLoad(with id: String) -> Bool {
+            func shouldLoad() -> Bool {
                 FR3.expectation.fulfill()
-                XCTAssertEqual(id, FR1.id)
                 return true
             }
         }
@@ -442,21 +436,27 @@ class SkipThroughWorkflowTests: XCTestCase {
             static let id = UUID().uuidString
         }
         class FR2: TestFlowRepresentable<String, String>, FlowRepresentable {
-            required init(with id: String) { XCTAssertEqual(id, FR1.id) }
-            static let expectation = XCTestExpectation(description: "shouldLoad called")
-            func shouldLoad(with id: String) -> Bool {
-                FR2.expectation.fulfill()
+            let id: String
+            required init(with id: String) {
+                self.id = id
                 XCTAssertEqual(id, FR1.id)
+            }
+            static let expectation = XCTestExpectation(description: "shouldLoad called")
+            func shouldLoad() -> Bool {
+                FR2.expectation.fulfill()
                 proceedInWorkflow(id)
                 return false
             }
         }
         class FR3: TestFlowRepresentable<String, String>, FlowRepresentable {
-            required init(with id: String) { XCTAssertEqual(id, FR1.id) }
-            static let expectation = XCTestExpectation(description: "shouldLoad called")
-            func shouldLoad(with id: String) -> Bool {
-                FR3.expectation.fulfill()
+            let id: String
+            required init(with id: String) {
+                self.id = id
                 XCTAssertEqual(id, FR1.id)
+            }
+            static let expectation = XCTestExpectation(description: "shouldLoad called")
+            func shouldLoad() -> Bool {
+                FR3.expectation.fulfill()
                 proceedInWorkflow(id)
                 return false
             }

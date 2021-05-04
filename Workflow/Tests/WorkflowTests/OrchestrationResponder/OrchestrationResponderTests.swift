@@ -165,8 +165,6 @@ class OrchestrationResponderTests: XCTestCase {
             required init(with object: Object) {
                 self.obj = object
             }
-
-            func shouldLoad(with args: Object) -> Bool { true }
         }
         class FR2: TestFlowRepresentable<Object, Object>, FlowRepresentable {
             var obj: Object
@@ -174,8 +172,6 @@ class OrchestrationResponderTests: XCTestCase {
             required init(with object: Object) {
                 self.obj = object
             }
-
-            func shouldLoad(with args: Object) -> Bool { true }
         }
         class FR3: TestFlowRepresentable<Object, Object>, FlowRepresentable {
             static var shouldMoveOn = false
@@ -185,12 +181,10 @@ class OrchestrationResponderTests: XCTestCase {
                 self.obj = object
             }
 
-            func shouldLoad(with args: Object) -> Bool {
+            func shouldLoad() -> Bool {
                 defer {
                     FR3.shouldMoveOn.toggle()
                 }
-
-                obj = args
 
                 if FR3.shouldMoveOn {
                     return false
