@@ -104,6 +104,19 @@ class WorkflowTests: XCTestCase {
             _ = fr1.shouldLoad()
         }
     }
+
+    func testAnyWorkflowThrowsFatalErrorWhenMetadataGetsMangledOnProceed() {
+        final class FR1: FlowRepresentable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+        }
+
+        XCTAssertThrowsFatalError {
+            let wf = Workflow(FR1.self)
+            wf.removeAll()
+            (wf.instances.first?.value?.underlyingInstance as! FR1).proceedInWorkflow()
+            wf.launch()
+        }
+    }
 }
 
 extension WorkflowTests {

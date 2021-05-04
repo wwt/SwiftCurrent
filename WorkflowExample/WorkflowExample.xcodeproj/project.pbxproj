@@ -15,7 +15,6 @@
 		CA9226F326406F2000BD0366 /* TestStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA9226F226406F2000BD0366 /* TestStoryboard.storyboard */; };
 		CA9226F92640724D00BD0366 /* ExceptionCatcher in Frameworks */ = {isa = PBXBuildFile; productRef = CA9226F82640724D00BD0366 /* ExceptionCatcher */; };
 		CAC1C22B256D8B0700DBD0D4 /* WorkflowUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = CAC1C22A256D8B0700DBD0D4 /* WorkflowUIKit */; };
-		CAC1C234256D8DA300DBD0D4 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1C233256D8DA300DBD0D4 /* Screen.swift */; };
 		CAC1C235256D8DA300DBD0D4 /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1C232256D8DA300DBD0D4 /* TopViewController.swift */; };
 		CAC1C23D256D8DB100DBD0D4 /* WaitUntil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1C23C256D8DB100DBD0D4 /* WaitUntil.swift */; };
 		CAC1C24F256D8F0400DBD0D4 /* ModalStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1C24E256D8F0400DBD0D4 /* ModalStyleTests.swift */; };
@@ -78,11 +77,10 @@
 		CA357F19263E67DE003D1ACB /* UIKitPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitPresenterTests.swift; sourceTree = "<group>"; };
 		CA357F1E263E68AD003D1ACB /* UIKitAssertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitAssertions.swift; sourceTree = "<group>"; };
 		CA875A88256F7B9200243FA4 /* MockOrchestrationResponder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockOrchestrationResponder.swift; sourceTree = "<group>"; };
-		CA875ABF257353B300243FA4 /* CustomAssertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomAssertions.swift; path = ../../Workflow/Tests/WorkflowTests/CustomAssertions.swift; sourceTree = "<group>"; };
+		CA875ABF257353B300243FA4 /* CustomAssertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAssertions.swift; sourceTree = "<group>"; };
 		CA9226EA26406C5B00BD0366 /* StoryboardLoadableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardLoadableTests.swift; sourceTree = "<group>"; };
 		CA9226F226406F2000BD0366 /* TestStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TestStoryboard.storyboard; sourceTree = "<group>"; };
 		CAC1C232256D8DA300DBD0D4 /* TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
-		CAC1C233256D8DA300DBD0D4 /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		CAC1C23C256D8DB100DBD0D4 /* WaitUntil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitUntil.swift; sourceTree = "<group>"; };
 		CAC1C24D256D8F0300DBD0D4 /* UIKitConsumerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitConsumerTests.swift; sourceTree = "<group>"; };
 		CAC1C24E256D8F0400DBD0D4 /* ModalStyleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalStyleTests.swift; sourceTree = "<group>"; };
@@ -159,6 +157,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CA087B422640E7A100A994D8 /* TestUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				CA875ABF257353B300243FA4 /* CustomAssertions.swift */,
+				CAC1C232256D8DA300DBD0D4 /* TopViewController.swift */,
+				CA357F1E263E68AD003D1ACB /* UIKitAssertions.swift */,
+				CAC1C23C256D8DB100DBD0D4 /* WaitUntil.swift */,
+			);
+			path = TestUtilities;
+			sourceTree = "<group>";
+		};
+		CA50C90E2640E78000FAA8FE /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				CA9226F226406F2000BD0366 /* TestStoryboard.storyboard */,
+				CA9226EA26406C5B00BD0366 /* StoryboardLoadableTests.swift */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
 		CAF58521256CEE990044C864 = {
 			isa = PBXGroup;
 			children = (
@@ -242,18 +260,13 @@
 		CAF58636256CF0E50044C864 /* WorkflowUIKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				CA9226EA26406C5B00BD0366 /* StoryboardLoadableTests.swift */,
+				CAF58803256D72BD0044C864 /* Info.plist */,
 				CAC1C24E256D8F0400DBD0D4 /* ModalStyleTests.swift */,
 				CAC1C24D256D8F0300DBD0D4 /* UIKitConsumerTests.swift */,
-				CA875ABF257353B300243FA4 /* CustomAssertions.swift */,
-				CAC1C233256D8DA300DBD0D4 /* Screen.swift */,
-				CAC1C23C256D8DB100DBD0D4 /* WaitUntil.swift */,
-				CAC1C232256D8DA300DBD0D4 /* TopViewController.swift */,
-				CAF58803256D72BD0044C864 /* Info.plist */,
-				CAF58806256D72BD0044C864 /* XCTestManifests.swift */,
 				CA357F19263E67DE003D1ACB /* UIKitPresenterTests.swift */,
-				CA357F1E263E68AD003D1ACB /* UIKitAssertions.swift */,
-				CA9226F226406F2000BD0366 /* TestStoryboard.storyboard */,
+				CAF58806256D72BD0044C864 /* XCTestManifests.swift */,
+				CA50C90E2640E78000FAA8FE /* Storyboard */,
+				CA087B422640E7A100A994D8 /* TestUtilities */,
 			);
 			path = WorkflowUIKitTests;
 			sourceTree = "<group>";
@@ -460,7 +473,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CAC1C234256D8DA300DBD0D4 /* Screen.swift in Sources */,
 				CAC1C24F256D8F0400DBD0D4 /* ModalStyleTests.swift in Sources */,
 				CA357F1F263E68AD003D1ACB /* UIKitAssertions.swift in Sources */,
 				CAC1C250256D8F0400DBD0D4 /* UIKitConsumerTests.swift in Sources */,
