@@ -12,13 +12,15 @@ import XCTest
 @testable import WorkflowExample
 @testable import Workflow
 
-class PickupOrDeliveryViewConrollerTests: ViewControllerTest<PickupOrDeliveryViewController> {
+class PickupOrDeliveryViewControllerTests: ViewControllerTest<PickupOrDeliveryViewController> {
     func testShouldLoadOnlyIfThereAreMultipleOrderTypes() {
         let locationWithOne = Location(name: "", address: Address(), orderTypes: [.pickup], menuTypes: [])
         let locationWithMultiple = Location(name: "", address: Address(), orderTypes: [.pickup, .delivery(Address())], menuTypes: [])
         loadFromStoryboard(args: .args(Order(location: locationWithOne)))
-        XCTAssertFalse(testViewController.shouldLoad(with: Order(location: locationWithOne)))
-        XCTAssert(testViewController.shouldLoad(with: Order(location: locationWithMultiple)))
+        XCTAssertFalse(testViewController.shouldLoad())
+
+        loadFromStoryboard(args: .args(Order(location: locationWithMultiple)))
+        XCTAssert(testViewController.shouldLoad())
     }
 
     func testShouldLoadWithOnlyOneOrderTypeCallsBackImmediately() {
