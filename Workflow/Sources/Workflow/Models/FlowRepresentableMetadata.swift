@@ -24,9 +24,18 @@ import Foundation
 public class FlowRepresentableMetadata {
     private(set) var flowRepresentableFactory: (AnyWorkflow.PassedArgs) -> AnyFlowRepresentable
     private var flowPersistence: (AnyWorkflow.PassedArgs) -> FlowPersistence
+    /// Preferred `LaunchStyle` of the associated `FlowRepresentable`.
     public private(set) var launchStyle: LaunchStyle
+    /// Preferred `FlowPersistence` of  the associated `FlowRepresentable`.
     public private(set) var persistence: FlowPersistence?
 
+    /**
+     Creates an instance that holds onto metadata associated with the `FlowRepresentable`.
+
+     - Parameter flowRepresentableType: specific type of the associated `FlowRepresentable`.
+     - Parameter launchStyle: the style to use when launching the `FlowRepresentable`.
+     - Parameter flowPersistence: a closure passing arguments to the caller and returning the preferred `FlowPersistence`.
+     */
     public init<FR: FlowRepresentable>(_ flowRepresentableType: FR.Type,
                                        launchStyle: LaunchStyle = .default,
                                        flowPersistence:@escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) {
@@ -35,10 +44,6 @@ public class FlowRepresentableMetadata {
         }
         self.flowPersistence = flowPersistence
         self.launchStyle = launchStyle
-    }
-
-    public convenience init<FR: FlowRepresentable>(with flowRepresentable: FR, launchStyle: LaunchStyle, persistence: FlowPersistence) {
-        self.init(FR.self, launchStyle: launchStyle) { _ in persistence }
     }
 
     func calculatePersistence(_ args: AnyWorkflow.PassedArgs) -> FlowPersistence {
