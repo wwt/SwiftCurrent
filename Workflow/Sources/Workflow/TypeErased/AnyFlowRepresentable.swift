@@ -5,6 +5,7 @@
 //  Created by Tyler Thompson on 8/25/19.
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
+// swiftlint:disable private_over_fileprivate
 
 import Foundation
 

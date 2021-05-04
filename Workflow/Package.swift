@@ -33,6 +33,7 @@ let package = Package(
                 "Workflow",
                 "CwlPreconditionTesting",
                 "CwlCatchException",
+                "ExceptionCatcher",
                 .product(name: "Algorithms", package: "swift-algorithms")
             ],
             exclude: ["Info.plist", "Workflow.xctestplan"]),
