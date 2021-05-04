@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AnyFlowRepresentableStorageBase {
+fileprivate class AnyFlowRepresentableStorageBase {
     var _workflowPointer: AnyFlowRepresentable?
     var workflow: AnyWorkflow?
     var proceedInWorkflowStorage: ((AnyWorkflow.PassedArgs) -> Void)?
@@ -24,7 +24,7 @@ class AnyFlowRepresentableStorageBase {
     }
 }
 
-class AnyFlowRepresentableStorage<FR: FlowRepresentable>: AnyFlowRepresentableStorageBase {
+fileprivate class AnyFlowRepresentableStorage<FR: FlowRepresentable>: AnyFlowRepresentableStorageBase {
     var holder: FR
 
     override func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool {
@@ -89,7 +89,7 @@ public class AnyFlowRepresentable {
         }
     }
 
-    var _storage: AnyFlowRepresentableStorageBase
+    fileprivate var _storage: AnyFlowRepresentableStorageBase
 
     init<FR: FlowRepresentable>(_ instance: inout FR) {
         _storage = AnyFlowRepresentableStorage(&instance)
