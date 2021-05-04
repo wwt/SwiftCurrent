@@ -74,16 +74,27 @@ extension LaunchStyle {
 }
 
 extension LaunchStyle.PresentationType {
+    /// Modal presentation styles available when presenting view controllers.
     public enum ModalPresentationStyle {
+        /// The default presentation style chosen by the system.
         case `default`
+        /// A presentation style in which the presented view covers the screen.
         case fullScreen
+        /// A presentation style that partially covers the underlying content.
         case pageSheet
+        /// A presentation style that displays the content centered in the screen.
         case formSheet
+        /// A presentation style where the content is displayed over another view controller’s content.
         case currentContext
+        /// A custom view presentation style that is managed by a custom presentation controller and one or more custom animator objects.
         case custom
+        /// A view presentation style in which the presented view covers the screen.
         case overFullScreen
+        /// A presentation style where the content is displayed over another view controller’s content.
         case overCurrentContext
+        /// A presentation style where the content is displayed in a popover view.
         case popover
+        /// The default presentation style chosen by the system.
         case automatic
 
         var launchStyle: LaunchStyle {
