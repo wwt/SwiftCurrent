@@ -39,4 +39,9 @@ class SetupViewController: UIViewController {
             args: locations,
             withLaunchStyle: .navigationStack)
     }
+
+    override func viewDidLoad() {
+        print("!!!! \(Date().timeIntervalSince1970) - debugging weird test")
+        super.viewDidLoad()
+    }
 }

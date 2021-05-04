@@ -70,11 +70,15 @@ class ModalStyleTests: XCTestCase {
     }
 
     func testShowModalAsCustom() {
+        print("!!!! \(Date().timeIntervalSince1970) - testShowModalAsCustom - About to loadForTesting")
         RootViewController.standard.loadForTesting()
+        print("!!!! \(Date().timeIntervalSince1970) - testShowModalAsCustom - Completed loadForTesting")
 
+        print("!!!! \(Date().timeIntervalSince1970) - testShowModalAsCustom - about to launchInto from: \(String(describing: UIApplication.topViewController()))")
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self,
                              presentationType: .modal(.custom)))
+        print("!!!! \(Date().timeIntervalSince1970) - testShowModalAsCustom - Completed launchInto")
 
         XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
         XCTAssertEqual(UIApplication.topViewController()?.modalPresentationStyle, .custom)
