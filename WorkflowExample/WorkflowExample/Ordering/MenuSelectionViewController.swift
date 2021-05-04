@@ -32,11 +32,7 @@ class MenuSelectionViewController: UIWorkflowItem<Order, Order>, StoryboardLoada
 }
 
 extension MenuSelectionViewController: FlowRepresentable {
-    func shouldLoad(with order: Order) -> Bool {
-        var order = order
-        defer {
-            self.order = order
-        }
+    func shouldLoad() -> Bool {
         if order.location?.menuTypes.count == 1 {
             order.menuType = order.location?.menuTypes.first
             proceedInWorkflow(order)

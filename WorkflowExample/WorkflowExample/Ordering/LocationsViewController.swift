@@ -25,8 +25,7 @@ class LocationsViewController: UIWorkflowItem<[Location], Order>, StoryboardLoad
 }
 
 extension LocationsViewController: FlowRepresentable {
-    func shouldLoad(with locations: [Location]) -> Bool {
-        self.locations = locations
+    func shouldLoad() -> Bool {
         if let location = locations.first,
             locations.count == 1 {
             proceedInWorkflow(Order(location: location))

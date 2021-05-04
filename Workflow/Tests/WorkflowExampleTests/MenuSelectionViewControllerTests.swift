@@ -17,8 +17,10 @@ class MenuSelectionViewControllerTests: ViewControllerTest<MenuSelectionViewCont
         let locationWithMultiple = Location(name: "", address: Address(), orderTypes: [], menuTypes: [.regular, .catering])
 
         loadFromStoryboard(args: .args(Order(location: locationWithNone)))
-        XCTAssertFalse(testViewController.shouldLoad(with: Order(location: locationWithNone)))
-        XCTAssert(testViewController.shouldLoad(with: Order(location: locationWithMultiple)))
+        XCTAssertFalse(testViewController.shouldLoad())
+
+        loadFromStoryboard(args: .args(Order(location: locationWithMultiple)))
+        XCTAssert(testViewController.shouldLoad())
     }
 
     func testShouldNotLoadIfThereIsOnlyOneMenuType() {
@@ -31,7 +33,7 @@ class MenuSelectionViewControllerTests: ViewControllerTest<MenuSelectionViewCont
             XCTAssertEqual((data as? Order)?.menuType, .catering)
         }
 
-        XCTAssertFalse(testViewController.shouldLoad(with: Order(location: locationWithOne)))
+        XCTAssertFalse(testViewController.shouldLoad())
         XCTAssert(proceedInWorkflowCalled)
     }
 
@@ -39,7 +41,6 @@ class MenuSelectionViewControllerTests: ViewControllerTest<MenuSelectionViewCont
         var proceedInWorkflowCalled = false
         let locationWithMultiple = Location(name: "", address: Address(), orderTypes: [], menuTypes: [.regular, .catering])
         loadFromStoryboard(args: .args(Order(location: locationWithMultiple)))
-        testViewController.order = Order(location: locationWithMultiple)
 
         testViewController.proceedInWorkflowStorage = { data in
             proceedInWorkflowCalled = true
@@ -55,7 +56,6 @@ class MenuSelectionViewControllerTests: ViewControllerTest<MenuSelectionViewCont
         var proceedInWorkflowCalled = false
         let locationWithMultiple = Location(name: "", address: Address(), orderTypes: [], menuTypes: [.regular, .catering])
         loadFromStoryboard(args: .args(Order(location: locationWithMultiple)))
-        testViewController.order = Order(location: locationWithMultiple)
 
         testViewController.proceedInWorkflowStorage = { data in
             proceedInWorkflowCalled = true

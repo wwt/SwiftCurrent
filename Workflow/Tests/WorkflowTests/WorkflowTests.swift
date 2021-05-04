@@ -21,7 +21,7 @@ class WorkflowTests: XCTestCase {
 
             init(with args: String) { }
 
-            func shouldLoad(with args: String) -> Bool {
+            func shouldLoad() -> Bool {
                 FR1.shouldLoadCalledOnFR1 = true
                 return true
             }
@@ -33,16 +33,14 @@ class WorkflowTests: XCTestCase {
 
             init(with args: Int) { }
 
-            func shouldLoad(with args: Int) -> Bool {
+            func shouldLoad() -> Bool {
                 FR2.shouldLoadCalledOnFR2 = true
                 return true
             }
         }
         let flow = Workflow(FR1.self).thenPresent(FR2.self)
-        let first = flow.first?.value.flowRepresentableFactory(.args("str"))
-        let last = flow.last?.value.flowRepresentableFactory(.args(1))
-        _ = first?.shouldLoad(with: "str")
-        _ = last?.shouldLoad(with: 1)
+        _ = flow.first?.value.flowRepresentableFactory(.args("str")).shouldLoad()
+        _ = flow.last?.value.flowRepresentableFactory(.args(1)).shouldLoad()
 
         XCTAssert(FR1.shouldLoadCalledOnFR1, "Should load not called on flow representable 1 with correct corresponding type")
         XCTAssert(FR2.shouldLoadCalledOnFR2, "Should load not called on flow representable 2 with correct corresponding type")
@@ -58,7 +56,7 @@ class WorkflowTests: XCTestCase {
         }
 
         let instance = AnyFlowRepresentable(FR1.self, args: .args("str"))
-        XCTAssert(instance.shouldLoad(with: "str") == true)
+        XCTAssert(instance.shouldLoad() == true)
     }
 
     func testAnyFlowRepresentableThrowsFatalErrorIfItSomehowHasATypeMismatch() {
@@ -66,10 +64,8 @@ class WorkflowTests: XCTestCase {
             required init(with args: String) { }
         }
 
-        let rep = AnyFlowRepresentable(FR1.self, args: .args(""))
-
         XCTAssertThrowsFatalError {
-            _ = rep.shouldLoad(with: 10.23)
+            _ = AnyFlowRepresentable(FR1.self, args: .args(12.34))
         }
     }
 
@@ -82,19 +78,6 @@ class WorkflowTests: XCTestCase {
 
         XCTAssertThrowsFatalError {
             _ = FR1()
-        }
-    }
-
-    func testFlowRepresentableThrowsFatalError_IfShouldLoadIsCalledWithNoArguments_AndWorkflowHasInput() {
-        class FR1: FlowRepresentable {
-            weak var _workflowPointer: AnyFlowRepresentable?
-
-            required init(with name:String) { }
-        }
-
-        XCTAssertThrowsFatalError {
-            var fr1 = FR1(with: "")
-            _ = fr1.shouldLoad()
         }
     }
 

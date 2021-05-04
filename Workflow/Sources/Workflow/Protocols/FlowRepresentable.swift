@@ -39,8 +39,7 @@ public protocol FlowRepresentable {
     - Returns: Bool
     - Note: This method is called *before* your view loads. Do not attempt to do any UI work in this method. This is however a good place to set up data on your view.
     */
-    mutating func shouldLoad(with args: WorkflowInput) -> Bool
-    mutating func shouldLoad() -> Bool
+    func shouldLoad() -> Bool
 }
 
 extension FlowRepresentable {
@@ -63,8 +62,7 @@ extension FlowRepresentable {
         _workflowPointer?.workflow
     }
 
-    public mutating func shouldLoad() -> Bool { fatalError("This shouldLoad method should only be called if the WorkflowInput is Never") }
-    public mutating func shouldLoad(with _: WorkflowInput) -> Bool { true }
+    public func shouldLoad() -> Bool { true }
 }
 
 extension FlowRepresentable where WorkflowInput == Never {
@@ -74,13 +72,6 @@ extension FlowRepresentable where WorkflowInput == Never {
     @available(*, renamed: "init()")
     // swiftlint:disable:next unavailable_function
     public init(with args: WorkflowInput) { fatalError("Because the FlowRepresentable does not take an input this initializer will not work") }
-
-    /**
-    A method indicating whether it makes sense for this view to load in a workflow
-    - Returns: Bool
-    - Note: This particular version of shouldLoad is only available when your `WorkflowInput` is `Never`, indicating you do not care about data passed to this view
-    */
-    public mutating func shouldLoad() -> Bool { true }
 }
 
 extension FlowRepresentable where WorkflowOutput == Never {

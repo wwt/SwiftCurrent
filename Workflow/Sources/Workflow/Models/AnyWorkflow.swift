@@ -45,7 +45,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
             flowRepresentable.workflow = self
             flowRepresentable.proceedInWorkflowStorage = { passedArgs = $0 }
 
-            let shouldLoad = flowRepresentable.shouldLoad(with: passedArgs)
+            let shouldLoad = flowRepresentable.shouldLoad()
 
             defer {
                 guard let instance = instances.first?.traverse(nextNode.position) else { fatalError("Internal state of workflow completely mangled during launch.") }
@@ -115,7 +115,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
 
                 flowRepresentable.proceedInWorkflowStorage = { argsToPass = $0 }
 
-                let shouldLoad = flowRepresentable.shouldLoad(with: argsToPass)
+                let shouldLoad = flowRepresentable.shouldLoad()
                 nextNode.value = (shouldLoad || (!shouldLoad && persistence == .persistWhenSkipped)) ? flowRepresentable : nil
 
                 if !shouldLoad && persistence == .persistWhenSkipped {

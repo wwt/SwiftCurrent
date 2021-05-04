@@ -26,7 +26,8 @@ class ViewControllerTest<T: StoryboardLoadable>: XCTestCase {
 
         configure?(&testViewController)
 
-        _ = ref.shouldLoad(with: args)
+        // Mimicking the lifecycle of a storyboard.
+        _ = ref.shouldLoad()
 
         testViewController.loadForTesting()
     }
