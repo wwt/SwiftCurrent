@@ -29,7 +29,7 @@ import Workflow
  }
  ```
  
- ### Discussion:
+ ### Discussion
  If you would like the same convenience for other UIKit types this class is very straightforward to create:
  ```
  open class UITableViewWorkflowItem<I>: UITableViewController {
