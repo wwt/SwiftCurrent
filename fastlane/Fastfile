@@ -26,7 +26,8 @@ platform :ios do
   lane :lint do 
     swiftlint(
       config_file: 'WorkflowLint/.swiftlint.yml',
-      raise_if_swiftlint_error: true
+      raise_if_swiftlint_error: true,
+      strict: true
     )
   end
 
