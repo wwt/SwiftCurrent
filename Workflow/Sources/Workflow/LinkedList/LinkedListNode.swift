@@ -38,7 +38,7 @@ extension LinkedList {
             case backward
         }
 
-        /*
+        /**
         A method to move N spaces forwards or backwards through the nodes
         - Parameter distance: An integer indicating how far to move through the nodes
         - Note: If the distance is out of bounds nil will be returned
