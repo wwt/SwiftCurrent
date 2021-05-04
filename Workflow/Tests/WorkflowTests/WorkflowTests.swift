@@ -14,11 +14,10 @@ import XCTest
 class WorkflowTests: XCTestCase {
     func testFlowRepresentablesWithMultipleTypesCanBeStoredAndRetrieved() {
         struct FR1: FlowRepresentable {
-            weak var _workflowPointer: AnyFlowRepresentable?
-
-            static var shouldLoadCalledOnFR1 = false
-            typealias WorkflowInput = String
             typealias WorkflowOutput = Int
+            static var shouldLoadCalledOnFR1 = false
+
+            weak var _workflowPointer: AnyFlowRepresentable?
 
             init(with args: String) { }
 
@@ -28,10 +27,9 @@ class WorkflowTests: XCTestCase {
             }
         }
         struct FR2: FlowRepresentable {
-            weak var _workflowPointer: AnyFlowRepresentable?
-
             static var shouldLoadCalledOnFR2 = false
-            typealias WorkflowInput = Int
+
+            weak var _workflowPointer: AnyFlowRepresentable?
 
             init(with args: Int) { }
 
@@ -52,12 +50,11 @@ class WorkflowTests: XCTestCase {
 
     func testFlowRepresentablesThatDefineAWorkflowInputOfOptionalAnyDoesNotRecurseForever() {
         class FR1: FlowRepresentable {
-            required init(with args: Any?) { }
+            static var shouldLoadCalledOnFR1 = false
 
             weak var _workflowPointer: AnyFlowRepresentable?
 
-            static var shouldLoadCalledOnFR1 = false
-            typealias WorkflowInput = Any?
+            required init(with args: Any?) { }
         }
 
         let instance = AnyFlowRepresentable(FR1.self, args: .args("str"))
@@ -78,8 +75,6 @@ class WorkflowTests: XCTestCase {
 
     func testFlowRepresentableThrowsFatalErrorIfNoCustomEmptyInitSupplied() {
         class FR1: FlowRepresentable {
-            typealias WorkflowInput = String
-
             weak var _workflowPointer: AnyFlowRepresentable?
 
             required init(with name:String) { }
@@ -92,8 +87,6 @@ class WorkflowTests: XCTestCase {
 
     func testFlowRepresentableThrowsFatalError_IfShouldLoadIsCalledWithNoArguments_AndWorkflowHasInput() {
         class FR1: FlowRepresentable {
-            typealias WorkflowInput = String
-
             weak var _workflowPointer: AnyFlowRepresentable?
 
             required init(with name:String) { }
@@ -107,6 +100,7 @@ class WorkflowTests: XCTestCase {
 
     func testAnyWorkflowThrowsFatalErrorWhenMetadataGetsMangledOnProceed() {
         final class FR1: FlowRepresentable {
+            typealias WorkflowInput = Never
             weak var _workflowPointer: AnyFlowRepresentable?
         }
 
