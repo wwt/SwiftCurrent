@@ -17,7 +17,7 @@ import Foundation
  .thenPresent(SomeOtherFlowRepresentableClass.self, launchStyle: .navigationStack)
  ```
 
- ### Discussion:
+ ### Discussion
  In a sufficiently complex application it may make sense to create a structure to hold onto all the workflows in an application.
  Example
  ```swift

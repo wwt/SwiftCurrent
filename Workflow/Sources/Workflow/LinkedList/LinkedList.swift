@@ -10,7 +10,7 @@ import Foundation
 /**
  LinkedList: A sequence type used to create a doubly linked list
  
- ### Discussion:
+ ### Discussion
  A workflow is ultimately a doubly linked list. This is the underlying sequence type used.
  */
 

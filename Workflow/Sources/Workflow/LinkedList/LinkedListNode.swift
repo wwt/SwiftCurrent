@@ -13,7 +13,7 @@ extension LinkedList {
     /**
      LinkedList.Node: A type to hold onto elements in a LinkedList
      
-     ### Discussion:
+     ### Discussion
      These nodes hold onto a value, the next node, and the previous node.
      */
     open class Node<T> {
