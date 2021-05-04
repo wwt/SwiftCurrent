@@ -22,7 +22,9 @@ import Foundation
  */
 
 public protocol FlowRepresentable {
+    /// The type of data coming into the `FlowRepresentable`; use `Never` when the `FlowRepresentable` will ignore the data.
     associatedtype WorkflowInput
+    /// The type of data passed forward from the `FlowRepresentable`; `Never` means data will not be passed forward.
     associatedtype WorkflowOutput = Never
 
     var _workflowPointer: AnyFlowRepresentable? { get set }
@@ -30,14 +32,19 @@ public protocol FlowRepresentable {
 
     init()
     init(with args: WorkflowInput)
+
+    // No public docs necessary, as this should not be used by consumers.
+    // swiftlint:disable:next missing_docs
     static func _factory<FR: FlowRepresentable>(_ type: FR.Type) -> FR
+    // No public docs necessary, as this should not be used by consumers.
+    // swiftlint:disable:next missing_docs
     static func _factory<FR: FlowRepresentable>(_ type: FR.Type, with args: WorkflowInput) -> FR
 
     /**
-    A method indicating whether it makes sense for this view to load in a workflow
-    - Parameter args: Note you can rename this in your implementation if 'args' doesn't make sense.
+    A method indicating whether it makes sense for this `FlowRepresentable` to load in a `Workflow`
     - Returns: Bool
     - Note: This method is called *before* your view loads. Do not attempt to do any UI work in this method. This is however a good place to set up data on your view.
+    - Note: This method is called *after* `init` but *before* any other lifecycle events. It is non-mutating
     */
     func shouldLoad() -> Bool
 }
@@ -47,9 +54,11 @@ extension FlowRepresentable {
 
     // swiftlint:disable:next line_length unavailable_function
     public init() { fatalError("This initializer was only designed to satisfy a protocol requirement on FlowRepresentables. You must implement your own custom intializer on \(String(describing: Self.self))") }
-    // swiftlint:disable:next force_cast
+    // No public docs necessary, as this should not be used by consumers.
+    // swiftlint:disable:next missing_docs force_cast
     public static func _factory<FR: FlowRepresentable>(_: FR.Type) -> FR { Self() as! FR }
-    // swiftlint:disable:next force_cast
+    // No public docs necessary, as this should not be used by consumers.
+    // swiftlint:disable:next missing_docs force_cast
     public static func _factory<FR: FlowRepresentable>(_: FR.Type, with args: WorkflowInput) -> FR { Self(with: args) as! FR }
 }
 
@@ -75,12 +84,14 @@ extension FlowRepresentable where WorkflowInput == Never {
 }
 
 extension FlowRepresentable where WorkflowOutput == Never {
+    /// Moves forward in the `Workflow`; if at the end, completes the workflow.
     public func proceedInWorkflow() {
         _workflowPointer?.proceedInWorkflowStorage?(.none)
     }
 }
 
 extension FlowRepresentable {
+    /// Moves forward in the `Workflow` passing arguments forward; if at the end, completes the workflow.
     public func proceedInWorkflow(_ args: WorkflowOutput) {
         _workflowPointer?.proceedInWorkflowStorage?(.args(args))
     }
