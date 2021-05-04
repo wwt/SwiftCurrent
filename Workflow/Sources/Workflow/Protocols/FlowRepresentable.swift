@@ -51,15 +51,11 @@ extension FlowRepresentable {
 
 extension FlowRepresentable {
     /**
-    Access to the `Workflow` controlling the `FlowRepresentable`. A common use case may be a `FlowRepresentable` that wants to abandon the `Workflow` it's in.
+    Access to the `AnyWorkflow` controlling the `FlowRepresentable`. A common use case may be a `FlowRepresentable` that wants to abandon the `Workflow` it's in.
     - Note: While not strictly necessary it would be wise to declare this property as `weak`
     */
     public var workflow: AnyWorkflow? {
         _workflowPointer?.workflow
-    }
-
-    public func proceedBackwardInWorkflow() {
-        _workflowPointer?.proceedBackwardInWorkflowStorage?()
     }
 
     public mutating func shouldLoad() -> Bool { fatalError("This shouldLoad method should only be called if the WorkflowInput is Never") }
@@ -91,5 +87,9 @@ extension FlowRepresentable where WorkflowOutput == Never {
 extension FlowRepresentable {
     public func proceedInWorkflow(_ args: WorkflowOutput) {
         _workflowPointer?.proceedInWorkflowStorage?(.args(args))
+    }
+
+    public func proceedBackwardInWorkflow() {
+        _workflowPointer?.proceedBackwardInWorkflowStorage?()
     }
 }
