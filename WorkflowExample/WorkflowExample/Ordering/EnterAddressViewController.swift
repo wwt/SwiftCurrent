@@ -25,10 +25,3 @@ class EnterAddressViewController: UIWorkflowItem<Order, Order>, StoryboardLoadab
         proceedInWorkflow(order)
     }
 }
-
-extension EnterAddressViewController: FlowRepresentable {
-    func shouldLoad(with order: Order) -> Bool {
-        self.order = order
-        return true
-    }
-}

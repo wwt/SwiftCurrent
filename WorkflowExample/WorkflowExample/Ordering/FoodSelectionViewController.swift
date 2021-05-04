@@ -35,12 +35,3 @@ class FoodSelectionViewController: UIWorkflowItem<Order, Order>, StoryboardLoada
         proceedInWorkflow(order)
     }
 }
-
-extension FoodSelectionViewController: FlowRepresentable {
-    func shouldLoad(with order: Order) -> Bool {
-        defer {
-            self.order = order
-        }
-        return true
-    }
-}

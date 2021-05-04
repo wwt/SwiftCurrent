@@ -48,11 +48,6 @@ extension UIKitPresenterTests {
 
         required init?(coder: NSCoder) { nil }
 
-        func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool {
-            self.data = args.extract(nil)
-            return true
-        }
-
         func next() {
             proceedInWorkflow(data)
         }

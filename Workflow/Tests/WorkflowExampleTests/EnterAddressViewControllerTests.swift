@@ -16,14 +16,13 @@ class EnterAddressViewControllerTests: ViewControllerTest<EnterAddressViewContro
     func testViewShouldAlwaysLoad() {
         let order = Order(location: nil)
         loadFromStoryboard(args: .args(order))
-        XCTAssert(testViewController.shouldLoad(with: order))
+        XCTAssert(testViewController.shouldLoad())
     }
 
     func testSavingAddressProceedsInWorkflow() {
         var proceedInWorkflowCalled = false
         let order = Order(location: nil)
         loadFromStoryboard(args: .args(order))
-        testViewController.order = order
 
         testViewController.proceedInWorkflowStorage = { data in
             proceedInWorkflowCalled = true

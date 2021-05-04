@@ -15,11 +15,13 @@ import UIUTest
 class LocationsViewControllerTests: ViewControllerTest<LocationsViewController> {
     func testShouldLoadOnlyIfThereAreMultipleLocations() {
         loadFromStoryboard(args: .args([Location]()))
-        XCTAssertFalse(testViewController.shouldLoad(with: []), "LocationsViewController should not load if there are less than 2 locations")
-        XCTAssertTrue(testViewController.shouldLoad(with: [
+        XCTAssertFalse(testViewController.shouldLoad(), "LocationsViewController should not load if there are less than 2 locations")
+
+        loadFromStoryboard(args: .args([
             Location(name: "", address: Address(line1: "", line2: "", city: "", state: "", zip: ""), orderTypes: [], menuTypes: []),
             Location(name: "", address: Address(line1: "", line2: "", city: "", state: "", zip: ""), orderTypes: [], menuTypes: [])
-        ]), "LocationsViewController should load if there are multiple locations")
+        ]))
+        XCTAssertTrue(testViewController.shouldLoad(), "LocationsViewController should load if there are multiple locations")
     }
 
     func testLocationsShouldPassAlongOrderWithDefaultLocation_IfThereIsOnlyOne() {
@@ -45,7 +47,6 @@ class LocationsViewControllerTests: ViewControllerTest<LocationsViewController> 
         let loc1 = Location(name: rand1, address: Address(line1: "", line2: "", city: "", state: "", zip: ""), orderTypes: [], menuTypes: [])
         let loc2 = Location(name: rand2, address: Address(line1: "", line2: "", city: "", state: "", zip: ""), orderTypes: [], menuTypes: [])
         loadFromStoryboard(args: .args([loc1, loc2]))
-        _ = testViewController.shouldLoad(with: [loc1, loc2])
 
         XCTAssertEqual(testViewController.locations.first?.name, rand1)
         XCTAssertEqual(testViewController.locations.last?.name, rand2)

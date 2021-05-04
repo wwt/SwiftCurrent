@@ -9,10 +9,16 @@
 import Foundation
 
 /**
- FlowRepresentable: A typed version of 'AnyFlowRepresentable'. Use this on views that you want to add to a workflow.
+ A component in a `Workflow`; should be independent of the workflow context.
  
  ### Discussion:
- It's important to make sure your FlowRepresentable is not dependent on other views. It's okay to specify that a certain kind of data needs to be passed in, but keep your views from knowing what came before or what's likely to come after. In that way you'll end up with pieces of a workflow that can be moved, or put into multiple places with ease. Notice the 'Instance' method. This is needed for Workflow to create a new instance of your view. Make sure that this function always returns a new, unique instance of your class. Note that this is still accomplishable whether the view is created programmatically or in a storyboard.
+ It's important to make sure your `FlowRepresentable` is not dependent on other `FlowRepresentable`s.
+ It's okay to specify that a certain kind of data needs to be passed in and passed out, but keep your `FlowRepresentable` from knowing what came before, or what's likely to come after.
+ In that way you'll end up with pieces of a workflow that can be moved or put into multiple places with ease.
+ Declare an input type of `Never` when your `FlowRepresentable` does not care about data passed in.
+ Declare an output type of `Never` when your `FlowRepresentable` will not pass data forward in the `Workflow`.
+ SOMETHING HERE ABOUT _workflowPointer
+
  */
 
 public protocol FlowRepresentable {
@@ -33,8 +39,7 @@ public protocol FlowRepresentable {
     - Returns: Bool
     - Note: This method is called *before* your view loads. Do not attempt to do any UI work in this method. This is however a good place to set up data on your view.
     */
-    mutating func shouldLoad(with args: WorkflowInput) -> Bool
-    mutating func shouldLoad() -> Bool
+    func shouldLoad() -> Bool
 }
 
 extension FlowRepresentable {
@@ -57,8 +62,7 @@ extension FlowRepresentable {
         _workflowPointer?.workflow
     }
 
-    public mutating func shouldLoad() -> Bool { fatalError("This shouldLoad method should only be called if the WorkflowInput is Never") }
-    public mutating func shouldLoad(with _: WorkflowInput) -> Bool { true }
+    public func shouldLoad() -> Bool { true }
 }
 
 extension FlowRepresentable where WorkflowInput == Never {
@@ -68,13 +72,6 @@ extension FlowRepresentable where WorkflowInput == Never {
     @available(*, renamed: "init()")
     // swiftlint:disable:next unavailable_function
     public init(with args: WorkflowInput) { fatalError("Because the FlowRepresentable does not take an input this initializer will not work") }
-
-    /**
-    A method indicating whether it makes sense for this view to load in a workflow
-    - Returns: Bool
-    - Note: This particular version of shouldLoad is only available when your `WorkflowInput` is `Never`, indicating you do not care about data passed to this view
-    */
-    public mutating func shouldLoad() -> Bool { true }
 }
 
 extension FlowRepresentable where WorkflowOutput == Never {

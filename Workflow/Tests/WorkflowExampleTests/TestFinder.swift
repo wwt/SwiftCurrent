@@ -14,7 +14,7 @@ class TestFinder: XCTestCase {
     override class var defaultTestSuite: XCTestSuite {
         let suite = XCTestSuite(forTestCaseClass: TestFinder.self)
         XCTestSuite(forTestCaseClass: LocationsViewControllerTests.self).tests.forEach { suite.addTest($0) }
-        XCTestSuite(forTestCaseClass: PickupOrDeliveryViewConrollerTests.self).tests.forEach { suite.addTest($0) }
+        XCTestSuite(forTestCaseClass: PickupOrDeliveryViewControllerTests.self).tests.forEach { suite.addTest($0) }
         XCTestSuite(forTestCaseClass: MenuSelectionViewControllerTests.self).tests.forEach { suite.addTest($0) }
         XCTestSuite(forTestCaseClass: FoodSelectionViewControllerTests.self).tests.forEach { suite.addTest($0) }
         XCTestSuite(forTestCaseClass: ReviewOrderViewControllerTests.self).tests.forEach { suite.addTest($0) }

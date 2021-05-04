@@ -20,7 +20,7 @@ fileprivate class AnyFlowRepresentableStorageBase {
 
     // https://github.com/Tyler-Keith-Thompson/Workflow/blob/master/STYLEGUIDE.md#type-erasure
     // swiftlint:disable:next unavailable_function
-    func shouldLoad(with _: AnyWorkflow.PassedArgs) -> Bool {
+    func shouldLoad() -> Bool {
         fatalError("AnyFlowRepresentableStorageBase called directly, only available internally so something has gone VERY wrong.")
     }
 }
@@ -28,16 +28,8 @@ fileprivate class AnyFlowRepresentableStorageBase {
 fileprivate class AnyFlowRepresentableStorage<FR: FlowRepresentable>: AnyFlowRepresentableStorageBase {
     var holder: FR
 
-    override func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool {
-        switch args {
-            case _ where FR.WorkflowInput.self == Never.self: return holder.shouldLoad()
-            // swiftlint:disable:next force_cast
-            case _ where FR.WorkflowInput.self == AnyWorkflow.PassedArgs.self: return holder.shouldLoad(with: args as! FR.WorkflowInput)
-            case .args(let extracted):
-                guard let cast = extracted as? FR.WorkflowInput else { fatalError("TYPE MISMATCH: \(String(describing: args)) is not type: \(FR.WorkflowInput.self)") }
-                return holder.shouldLoad(with: cast)
-            default: fatalError("No arguments were passed to representable: \(FR.self), but it expected: \(FR.WorkflowInput.self)")
-        }
+    override func shouldLoad() -> Bool {
+        holder.shouldLoad()
     }
 
     override var underlyingInstance: Any {
@@ -115,6 +107,5 @@ public class AnyFlowRepresentable {
         _storage._workflowPointer = self
     }
 
-    func shouldLoad(with args: AnyWorkflow.PassedArgs) -> Bool { _storage.shouldLoad(with: args) }
-    func shouldLoad<T>(with args: T) -> Bool { _storage.shouldLoad(with: .args(args)) }
+    func shouldLoad() -> Bool { _storage.shouldLoad() }
 }
