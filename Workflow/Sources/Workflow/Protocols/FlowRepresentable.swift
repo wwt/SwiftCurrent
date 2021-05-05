@@ -54,9 +54,8 @@ public protocol FlowRepresentable {
     /// The type of data passed forward from the `FlowRepresentable`; Defaulted to `Never`; `Never` means data will not be passed forward.
     associatedtype WorkflowOutput = Never
 
-    #warning("Discuss about renaming to `workflowPointer`")
     /**
-     A pointer to the `AnyFlowRepresentable` that erases this `FlowRepresentable`
+     A pointer to the `AnyFlowRepresentable` that erases this `FlowRepresentable`; will automatically be set.
 
      ### Discussion
      This property is automatically set by a `Workflow`, it simply needs to be declared on a `FlowRepresentable`.
