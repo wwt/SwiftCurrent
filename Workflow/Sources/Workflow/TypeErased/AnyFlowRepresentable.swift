@@ -49,11 +49,12 @@ fileprivate class AnyFlowRepresentableStorage<FR: FlowRepresentable>: AnyFlowRep
     }
 }
 
+/// A type erased `FlowRepresentable`.
 public class AnyFlowRepresentable {
     typealias WorkflowInput = Any
     typealias WorkflowOutput = Any
 
-    /// underlyingInstance: The erased instance that AnyFlowRepresentable wrapped
+    /// Erased instance that `AnyFlowRepresentable` wrapped.
     public var underlyingInstance: Any {
         _storage.underlyingInstance
     }
@@ -89,6 +90,9 @@ public class AnyFlowRepresentable {
         _storage._workflowPointer = self
     }
 
+    /**
+        
+     */
     public init<FR: FlowRepresentable>(_ type: FR.Type, args: AnyWorkflow.PassedArgs) {
         switch args {
             case _ where FR.WorkflowInput.self == Never.self:
