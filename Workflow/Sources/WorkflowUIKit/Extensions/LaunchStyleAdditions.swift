@@ -28,8 +28,27 @@ extension LaunchStyle {
 }
 
 extension LaunchStyle {
-    #warning("Also needs docs, but swiftlint is not picking up on it, I think because all cases are documented")
+    /// A type indicating how a `FlowRepresentable` should be presented.
     public enum PresentationType: RawRepresentable {
+        /**
+        Indicates a `FlowRepresentable` should be launched in a navigation stack of some kind (For example with UIKit this would use a UINavigationController)
+        - Note: If no current navigation stack is available, one will be created
+        */
+        case navigationStack
+        /// Indicates a `FlowRepresentable` should be launched modally
+        case modal(ModalPresentationStyle)
+        /**
+        Indicates a `FlowRepresentable` can be launched contextually
+        - Note: If there's already a navigation stack, it will be used. Otherwise views will present modally
+        */
+        case `default`
+
+        /// An alias for PresentationType.modal(.default)
+        public static var modal: PresentationType {
+            .modal(.default)
+        }
+
+        /// Creates a `PresentationType` from a `LaunchStyle`, or returns nil if no mapping exists.
         public init?(rawValue: LaunchStyle) {
             switch rawValue {
                 case .default: self = .default
@@ -48,31 +67,13 @@ extension LaunchStyle {
             }
         }
 
+        /// The corresponding `LaunchStyle` for this `PresentationType`
         public var rawValue: LaunchStyle {
             switch self {
                 case .navigationStack: return ._navigationStack
                 case .modal(let style): return style.launchStyle
                 case .default: return .default
             }
-        }
-
-        public typealias RawValue = LaunchStyle
-
-        /**
-        Indicates a `FlowRepresentable` should be launched in a navigation stack of some kind (For example with UIKit this would use a UINavigationController)
-        - Note: If no current navigation stack is available, one will be created
-        */
-        case navigationStack
-        /// modally: Indicates a `FlowRepresentable` should be launched modally
-        case modal(ModalPresentationStyle)
-        /**
-        Indicates a `FlowRepresentable` can be launched contextually
-        - Note: If there's already a navigation stack, it will be used. Otherwise views will present modally
-        */
-        case `default`
-
-        public static var modal: PresentationType {
-            .modal(.default)
         }
     }
 }
