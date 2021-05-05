@@ -12,5 +12,6 @@ import Foundation
 import Workflow
 
 extension FlowPersistence {
+    /// Indicates a `FlowRepresentable` in a `Workflow` who's `shouldLoad` function returns false should be persisted in the workflow for backwards navigation.
     public static let hiddenInitially = FlowPersistence.persistWhenSkipped
 }
