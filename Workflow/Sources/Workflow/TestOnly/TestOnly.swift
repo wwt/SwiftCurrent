@@ -1,3 +1,5 @@
+// swiftlint:disable:this file_name
+// https://github.com/wwt/Workflow/issues/17
 //
 //  TestOnly.swift
 //  Workflow

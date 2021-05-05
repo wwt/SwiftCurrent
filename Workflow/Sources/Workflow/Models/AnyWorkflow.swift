@@ -109,6 +109,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
         return firstLoadedInstance
     }
 
+    #warning("Remove animated, cuz bad")
     /**
     Called when the workflow should be terminated, and the app should return to the point before the workflow was launched
     - Parameter animated: A boolean indicating whether abandoning the workflow should be animated

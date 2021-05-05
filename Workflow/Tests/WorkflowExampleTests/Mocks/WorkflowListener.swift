@@ -35,7 +35,7 @@ class WorkflowListener {
     }
 }
 
-func XCTAssertWorkflowLaunched(listener: WorkflowListener, workflow: AnyWorkflow) {
+func XCTAssertWorkflowLaunched(listener: WorkflowListener, workflow: AnyWorkflow, passedArgs: [AnyWorkflow.PassedArgs]) {
     XCTAssertNotNil(listener.workflow, "No workflow found")
     guard let listenerWorkflow = listener.workflow,
           listenerWorkflow.count == workflow.count else {
@@ -43,19 +43,18 @@ func XCTAssertWorkflowLaunched(listener: WorkflowListener, workflow: AnyWorkflow
         return
     }
 
-//    for node in listenerWorkflow {
-//        let actual = type(of: node.value.flowRepresentableFactory().underlyingInstance)
-//        guard let workflowNode = workflow.first?.traverse(node.position) else {
-//            XCTFail("expected workflow not as long as actual workflow")
-//            return
-//        }
-//        let expected = type(of: workflowNode.value.flowRepresentableFactory().underlyingInstance)
-//        XCTAssert(actual == expected, "Expected type: \(expected), but got: \(actual)")
-//    }
+    for node in listenerWorkflow {
+        let position = node.position
+        guard passedArgs.indices.contains(position) else {
+            XCTFail("Could not determine correct passedArgs to use, please make sure you have PassedArgs for every FlowRepresentable in your expected Workflow")
+            return
+        }
+        let actual = type(of: node.value.flowRepresentableFactory(passedArgs[position]).underlyingInstance)
+        guard let workflowNode = workflow.first?.traverse(node.position) else {
+            XCTFail("expected workflow not as long as actual workflow")
+            return
+        }
+        let expected = type(of: workflowNode.value.flowRepresentableFactory(passedArgs[position]).underlyingInstance)
+        XCTAssert(actual == expected, "Expected type: \(expected), but got: \(actual)")
+    }
 }
-
-//extension AnyWorkflow {
-//    var flowRepresentableTypes: [Any.Type?] {
-//        compactMap { type(of: $0.value.flowRepresentableFactory().underlyingInstance) }
-//    }
-//}

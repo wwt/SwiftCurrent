@@ -28,7 +28,14 @@ class SetupViewControllerTests: XCTestCase {
                                     .thenPresent(PickupOrDeliveryViewController.self)
                                     .thenPresent(MenuSelectionViewController.self)
                                     .thenPresent(FoodSelectionViewController.self)
-                                    .thenPresent(ReviewOrderViewController.self))
+                                    .thenPresent(ReviewOrderViewController.self),
+                                  passedArgs: [
+                                    .args([Location]()),
+                                    .args(Order(location: nil)),
+                                    .args(Order(location: nil)),
+                                    .args(Order(location: nil)),
+                                    .args(Order(location: nil)),
+                                  ])
     }
 }
 
