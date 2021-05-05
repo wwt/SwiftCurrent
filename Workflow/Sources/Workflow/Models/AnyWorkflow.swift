@@ -66,8 +66,8 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
      */
     @discardableResult public func launch(passedArgs: PassedArgs,
                                           withLaunchStyle launchStyle: LaunchStyle = .default,
-                                          onFinish: ((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Element? {
-        var firstLoadedInstance: LinkedList<AnyFlowRepresentable?>.Element?
+                                          onFinish: ((Any?) -> Void)? = nil) -> InstanceNode? {
+        var firstLoadedInstance: InstanceNode?
         removeInstances()
         instances = LinkedList(map { _ in nil })
         var root: (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetadata)?
