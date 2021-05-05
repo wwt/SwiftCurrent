@@ -141,11 +141,11 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
         }
     }
 
-    private func setupProceedBackwardCallbacks(_ node: LinkedList<AnyFlowRepresentable?>.Element, _ onFinish: ((Any?) -> Void)?) {
+    private func setupBackUpCallbacks(_ node: LinkedList<AnyFlowRepresentable?>.Element, _ onFinish: ((Any?) -> Void)?) {
         guard let currentMetadataNode = first?.traverse(node.position) else {
             fatalError("Internal state of workflow completely mangled during configuration of proceed backward callbacks.")
         }
-        node.value?.proceedBackwardInWorkflowStorage = { [self] in
+        node.value?.backUpInWorkflowStorage = { [self] in
             let previousLoadedNode = node.traverse(direction: .backward) { previousNode in
                 previousNode.value != nil
             }
@@ -156,13 +156,13 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
                 fatalError("Internal state of workflow completely mangled during execution of proceed backward callback.")
             }
 
-            orchestrationResponder?.proceedBackward(from: (instance: node, metadata: currentMetadataNode.value), to: (instance: previousNode, metadata: previousMetadataNode.value))
+            orchestrationResponder?.backUp(from: (instance: node, metadata: currentMetadataNode.value), to: (instance: previousNode, metadata: previousMetadataNode.value))
         }
     }
 
     private func setupCallbacks(for node: LinkedList<AnyFlowRepresentable?>.Element, onFinish: ((Any?) -> Void)?) {
         setupProceedCallbacks(node, onFinish)
-        setupProceedBackwardCallbacks(node, onFinish)
+        setupBackUpCallbacks(node, onFinish)
     }
 }
 

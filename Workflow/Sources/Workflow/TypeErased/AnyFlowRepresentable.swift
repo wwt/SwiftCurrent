@@ -13,7 +13,7 @@ fileprivate class AnyFlowRepresentableStorageBase {
     var _workflowPointer: AnyFlowRepresentable?
     var workflow: AnyWorkflow?
     var proceedInWorkflowStorage: ((AnyWorkflow.PassedArgs) -> Void)?
-    var proceedBackwardInWorkflowStorage: (() -> Void)?
+    var backUpInWorkflowStorage: (() -> Void)?
     var underlyingInstance: Any {
         fatalError("AnyFlowRepresentableStorageBase called directly, only available internally so something has gone VERY wrong.")
     }
@@ -74,11 +74,11 @@ public class AnyFlowRepresentable {
         }
     }
 
-    var proceedBackwardInWorkflowStorage: (() -> Void)? {
+    var backUpInWorkflowStorage: (() -> Void)? {
         get {
-            _storage.proceedBackwardInWorkflowStorage
+            _storage.backUpInWorkflowStorage
         } set {
-            _storage.proceedBackwardInWorkflowStorage = newValue
+            _storage.backUpInWorkflowStorage = newValue
         }
     }
 

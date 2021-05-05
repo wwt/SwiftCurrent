@@ -523,7 +523,7 @@ class UIKitConsumerTests: XCTestCase {
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
         XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
-        (UIApplication.topViewController() as? FR3)?.proceedBackwardInWorkflow()
+        (UIApplication.topViewController() as? FR3)?.backUpInWorkflow()
         XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
         XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
@@ -735,7 +735,7 @@ class UIKitConsumerTests: XCTestCase {
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
         XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
-        (UIApplication.topViewController() as? FR3)?.proceedBackwardInWorkflow()
+        (UIApplication.topViewController() as? FR3)?.backUpInWorkflow()
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
     }
 
@@ -757,7 +757,7 @@ class UIKitConsumerTests: XCTestCase {
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
         XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
-        (UIApplication.topViewController() as? FR3)?.proceedBackwardInWorkflow()
+        (UIApplication.topViewController() as? FR3)?.backUpInWorkflow()
         XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
     }
 

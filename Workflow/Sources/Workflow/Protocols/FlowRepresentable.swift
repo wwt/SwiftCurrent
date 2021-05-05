@@ -146,9 +146,9 @@ extension FlowRepresentable {
         _workflowPointer?.proceedInWorkflowStorage?(.args(args))
     }
 
-    #warning("Discuss more what it means to move backwards at the beginning of a workflow. Throws?")
-    /// Moves backward in the `Workflow`.
-    public func proceedBackwardInWorkflow() {
-        _workflowPointer?.proceedBackwardInWorkflowStorage?()
+    #warning("Needs to throw when it cannot back up")
+    /// Backs up in the `Workflow`.
+    public func backUpInWorkflow() {
+        _workflowPointer?.backUpInWorkflowStorage?()
     }
 }

@@ -117,8 +117,8 @@ class OrchestrationResponderTests: XCTestCase {
         XCTAssert((responder.lastFrom?.instance.value?.underlyingInstance as? FR1) === (launchedRepresentable?.value?.underlyingInstance as? FR1))
 
         let fr2 = (responder.lastTo?.instance.value?.underlyingInstance as? FR2)
-        fr2?.proceedBackwardInWorkflow()
-        XCTAssertEqual(responder.proceedBackwardCalled, 1)
+        fr2?.backUpInWorkflow()
+        XCTAssertEqual(responder.backUpCalled, 1)
         XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR1)
         XCTAssertNotNil(responder.lastTo)
         XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR1)
@@ -148,7 +148,7 @@ class OrchestrationResponderTests: XCTestCase {
 
         (launchedRepresentable?.value?.underlyingInstance as? FR1)?.proceedInWorkflow()
         (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.proceedInWorkflow()
-        (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.proceedBackwardInWorkflow()
+        (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.backUpInWorkflow()
         (responder.lastTo?.instance.value?.underlyingInstance as? FR1)?.proceedInWorkflow()
         (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.proceedInWorkflow()
         (responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.proceedInWorkflow()
@@ -189,7 +189,7 @@ class OrchestrationResponderTests: XCTestCase {
                 if FR3.shouldMoveOn {
                     return false
                 }
-                proceedBackwardInWorkflow()
+                backUpInWorkflow()
                 return true
             }
         }
@@ -210,7 +210,7 @@ class OrchestrationResponderTests: XCTestCase {
         XCTAssert((responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.obj === val)
         (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.proceedInWorkflow(val)
         XCTAssert((responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.obj === val)
-        (responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.proceedBackwardInWorkflow()
+        (responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.backUpInWorkflow()
         XCTAssert((responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.obj === val)
         (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.proceedInWorkflow(val)
         XCTAssert((responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.obj === val)

@@ -27,11 +27,11 @@ class MockOrchestrationResponder: AnyOrchestrationResponder {
         proceedCalled += 1
     }
 
-    var proceedBackwardCalled = 0
-    func proceedBackward(from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata), to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata)) {
+    var backUpCalled = 0
+    func backUp(from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata), to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata)) {
         lastFrom = from
         lastTo = to
-        proceedBackwardCalled += 1
+        backUpCalled += 1
     }
 
     var abandonCalled = 0

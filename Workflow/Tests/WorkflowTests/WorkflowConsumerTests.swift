@@ -79,24 +79,18 @@ class WorkflowConsumerTests: XCTestCase {
         XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR3)
     }
 
-    func testProceedBackwardThrowsFatalErrorIfInternalStateIsMangled() {
+    func testBackUpThrowsFatalErrorIfInternalStateIsMangled() {
         struct FR1: FlowRepresentable {
             typealias WorkflowInput = Never
-            typealias WorkflowOutput = Never
             var _workflowPointer: AnyFlowRepresentable?
-            static func instance() -> Self { Self() }
         }
         struct FR2: FlowRepresentable {
             typealias WorkflowInput = Never
-            typealias WorkflowOutput = Never
             var _workflowPointer: AnyFlowRepresentable?
-            static func instance() -> Self { Self() }
         }
         struct FR3: FlowRepresentable {
             typealias WorkflowInput = Never
-            typealias WorkflowOutput = Never
             var _workflowPointer: AnyFlowRepresentable?
-            static func instance() -> Self { Self() }
         }
 
         let responder = MockOrchestrationResponder()
@@ -113,7 +107,7 @@ class WorkflowConsumerTests: XCTestCase {
         wf.first = nil
 
         XCTAssertThrowsFatalError {
-            (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.proceedBackwardInWorkflow()
+            (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.backUpInWorkflow()
         }
     }
 
