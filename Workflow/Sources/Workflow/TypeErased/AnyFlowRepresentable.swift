@@ -91,7 +91,9 @@ public class AnyFlowRepresentable {
     }
 
     /**
-        
+     Creates an erased `FlowRepresentable` by using its initializer
+     - Parameter type: The `FlowRepresentable` type to create an instance of
+     - Parameter args: The `AnyWorkflow.PassedArgs` to create the instance with. This ends up being case into the `WorkflowInput` type of the `FlowRepresentable`
      */
     public init<FR: FlowRepresentable>(_ type: FR.Type, args: AnyWorkflow.PassedArgs) {
         switch args {
