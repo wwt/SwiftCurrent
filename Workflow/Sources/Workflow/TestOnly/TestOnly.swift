@@ -10,14 +10,14 @@ import Foundation
 
 #if canImport(XCTest)
 extension Notification.Name {
-    /// workflowLaunched: A notification only available when tests are being run that lets you know a workflow has been launched.
+    /// :nodoc: A notification only available when tests are being run that lets you know a workflow has been launched.
     public static var workflowLaunched: Notification.Name {
         .init(rawValue: "WorkflowLaunched")
     }
 }
 
 extension FlowRepresentable {
-    /// proceedInWorkflowStorage: Your tests may want to manually set the closure so they can make assertions it was called, this is simply a convenience available for that.
+    /// :nodoc: Your tests may want to manually set the closure so they can make assertions it was called, this is simply a convenience available for that.
     public var proceedInWorkflowStorage: ((Any?) -> Void)? {
         get {
             {
@@ -31,7 +31,7 @@ extension FlowRepresentable {
         }
     }
 
-    /// proceedInWorkflow: An alias for proceedInWorkflowStorage.
+    /// :nodoc: An alias for proceedInWorkflowStorage.
     public var _proceedInWorkflow: ((Any?) -> Void)? {
         get {
             {

@@ -16,7 +16,7 @@ import Foundation
  It's okay to specify that a certain kind of data needs to be passed in and passed out, but keep your `FlowRepresentable` from knowing what came before, or what's likely to come after.
  In that way you'll end up with pieces of a workflow that can be moved or put into multiple places with ease.
 
- - Important: Declare an input type of `Never` when the `FlowRepresentable` will ignore data passed in from the `Workflow`.  An output type of `Never` means data will not be passed forward.
+ - Important: Declare an **input** type of `Never` when the `FlowRepresentable` will ignore data passed in from the `Workflow`.  An **output** type of `Never` means data will not be passed forward.
  - Important: A `_workflowPointer` has to be declared as a property on the type conforming to `FlowRepresentable` but it is set by the `Workflow`, and should not be set by anything else.
 
  #### Example
@@ -50,7 +50,7 @@ import Foundation
 public protocol FlowRepresentable {
     /// The type of data coming into the `FlowRepresentable`; use `Never` when the `FlowRepresentable` will ignore data passed in from the `Workflow`.
     associatedtype WorkflowInput
-    /// The type of data passed forward from the `FlowRepresentable`; Defaulted to `Never`; `Never` means data will not be passed forward.
+    /// The type of data passed forward from the `FlowRepresentable`; defaulted to `Never`; `Never` means data will not be passed forward.
     associatedtype WorkflowOutput = Never
 
     /**
@@ -59,13 +59,17 @@ public protocol FlowRepresentable {
      ### Discussion
      This property is automatically set by a `Workflow`, it simply needs to be declared on a `FlowRepresentable`.
      In order for a `FlowRepresentable` to have access to the `Workflow` that launched it, store the closures for proceeding forward and backward, and provide type safety, it needs this property available for writing.
-     - Note: While not strictly necessary it would be wise to declare this property as `weak`
+
+     #### Note
+     While not strictly necessary it would be wise to declare this property as `weak`.
      */
     var _workflowPointer: AnyFlowRepresentable? { get set }
 
     /**
      Creates a `FlowRepresentable`.
-     - Note: This is auto synthesized by FlowRepresentable, and is only called when `WorkflowInput` is `Never`.
+
+     #### Note
+     This is auto synthesized by FlowRepresentable, and is only called when `WorkflowInput` is `Never`.
      */
     init()
     /// Creates a `FlowRepresentable` with the specified `WorkflowInput`.
@@ -83,7 +87,9 @@ public protocol FlowRepresentable {
 
      ### Discussion
      This method is called *after* `init` but *before* any other lifecycle events. It is non-mutating and should not change the `FlowRepresentable`.
-     - Note: Returning `false` can have different behaviors depending on the `FlowPersistence`.
+
+     #### Note
+     Returning `false` can have different behaviors depending on the `FlowPersistence`.
      */
     func shouldLoad() -> Bool
 }
