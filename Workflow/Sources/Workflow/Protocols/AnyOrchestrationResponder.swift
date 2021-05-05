@@ -12,7 +12,7 @@ public protocol AnyOrchestrationResponder {
     func proceed(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
                  from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata))
     func backUp(from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
-                         to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata))
+                to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata))
     func abandon(_ workflow: AnyWorkflow, animated: Bool, onFinish: (() -> Void)?)
 }
 

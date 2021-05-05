@@ -68,7 +68,7 @@ open class UIKitPresenter: AnyOrchestrationResponder {
             }
             parent?.dismiss(animated: false) {
                 if let p = parent,
-                    let c = child {
+                   let c = child {
                     p.present(c, animated: false)
                 }
             }
@@ -155,7 +155,7 @@ open class UIKitPresenter: AnyOrchestrationResponder {
     }
 
     public func backUp(from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
-                                to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata)) {
+                       to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata)) {
         guard let view = to.instance.value?.underlyingInstance as? UIViewController else { return }
         if let nav = view.navigationController {
             nav.popToViewController(view, animated: true)

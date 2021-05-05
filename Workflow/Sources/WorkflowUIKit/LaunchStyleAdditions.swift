@@ -1,3 +1,5 @@
+//  swiftlint:disable:this file_name
+//  Reason: The file name reflects the contents of the file.
 //
 //  LaunchStyleAdditions.swift
 //  
