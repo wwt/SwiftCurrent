@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
           Workflow 3.0.0 Docs
         </a>
-         (79% documented)
+         (88% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -74,13 +74,10 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Extensions/Notification.html">Notification</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Extensions/Notification/Name.html">– Name</a>
+                <a class="nav-group-task-link" href="../Enums/WorkflowError.html">WorkflowError</a>
               </li>
             </ul>
           </li>
@@ -106,10 +103,46 @@
 
                 </div>
               </div>
-            <p>FlowRepresentable: A typed version of &lsquo;AnyFlowRepresentable&rsquo;. Use this on views that you want to add to a workflow.</p>
-<h3 id='discussion' class='heading'>Discussion:</h3>
+            <p>A component in a <code><a href="../Classes/Workflow.html">Workflow</a></code>; should be independent of the workflow context.</p>
+<h3 id='discussion' class='heading'>Discussion</h3>
 
-<p>It&rsquo;s important to make sure your FlowRepresentable is not dependent on other views. It&rsquo;s okay to specify that a certain kind of data needs to be passed in, but keep your views from knowing what came before or what&rsquo;s likely to come after. In that way you&rsquo;ll end up with pieces of a workflow that can be moved, or put into multiple places with ease. Notice the &lsquo;Instance&rsquo; method. This is needed for Workflow to create a new instance of your view. Make sure that this function always returns a new, unique instance of your class. Note that this is still accomplishable whether the view is created programmatically or in a storyboard.</p>
+<p>It&rsquo;s important to make sure your <code>FlowRepresentable</code> is not dependent on other <code>FlowRepresentable</code>s.
+It&rsquo;s okay to specify that a certain kind of data needs to be passed in and passed out, but keep your <code>FlowRepresentable</code> from knowing what came before, or what&rsquo;s likely to come after.
+In that way you&rsquo;ll end up with pieces of a workflow that can be moved or put into multiple places with ease.</p>
+<div class="aside aside-important">
+    <p class="aside-title">Important</p>
+    Declare an <strong>input</strong> type of <code>Never</code> when the <code>FlowRepresentable</code> will ignore data passed in from the <code><a href="../Classes/Workflow.html">Workflow</a></code>.  An <strong>output</strong> type of <code>Never</code> means data will not be passed forward.
+
+</div><div class="aside aside-important">
+    <p class="aside-title">Important</p>
+    A <code>_workflowPointer</code> has to be declared as a property on the type conforming to <code>FlowRepresentable</code> but it is set by the <code><a href="../Classes/Workflow.html">Workflow</a></code>, and should not be set by anything else.
+
+</div>
+<h4 id='example' class='heading'>Example</h4>
+
+<p>A <code>FlowRepresentable</code> with a <code>WorkflowInput</code> of <code>String</code> and a <code>WorkflowOutput</code> of <code>Never</code></p>
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">FR1</span><span class="p">:</span> <span class="kt">FlowRepresentable</span> <span class="p">{</span> <span class="c1">// Mark this class as `final` to avoid the required keyword on init</span>
+   <span class="k">weak</span> <span class="k">var</span> <span class="nv">_workflowPointer</span><span class="p">:</span> <span class="kt">AnyFlowRepresentable</span><span class="p">?</span>
+   <span class="kd">required</span> <span class="nf">init</span><span class="p">(</span><span class="n">with</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>A <code>FlowRepresentable</code> with a <code>WorkflowInput</code> of <code>Never</code> and a <code>WorkflowOutput</code> of <code>Never</code></p>
+<pre class="highlight swift"><code><span class="kd">final</span> <span class="kd">class</span> <span class="kt">FR1</span><span class="p">:</span> <span class="kt">FlowRepresentable</span> <span class="p">{</span> <span class="c1">// Classes synthesize an empty initializer already, you are good!</span>
+   <span class="kd">typealias</span> <span class="kt">WorkflowInput</span> <span class="o">=</span> <span class="kt">Never</span>
+   <span class="k">weak</span> <span class="k">var</span> <span class="nv">_workflowPointer</span><span class="p">:</span> <span class="kt">AnyFlowRepresentable</span><span class="p">?</span>
+<span class="p">}</span>
+</code></pre>
+<h4 id='note' class='heading'>Note</h4>
+
+<p>Declaring your own custom initializer can result in a compiler error with an unfriendly message</p>
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">FR1</span><span class="p">:</span> <span class="kt">FlowRepresentable</span> <span class="p">{</span> <span class="c1">// Results in compiler error for 'init()' being unavailable</span>
+   <span class="kd">typealias</span> <span class="kt">WorkflowInput</span> <span class="o">=</span> <span class="kt">Never</span>
+   <span class="k">weak</span> <span class="k">var</span> <span class="nv">_workflowPointer</span><span class="p">:</span> <span class="kt">AnyFlowRepresentable</span><span class="p">?</span>
+   <span class="nf">init</span><span class="p">(</span><span class="n">myCustomInitializer</span> <span class="nv">property</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+   <span class="c1">// required init() { } // declare your own init() to satisfy the protocol requirements and handle the compiler error</span>
+<span class="p">}</span>
+</code></pre>
 
           </div>
         </section>
@@ -131,7 +164,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>WorkflowInput: The data type required to be passed to your FlowRepresentable (use <code>Any?</code> if you don&rsquo;t care)</p>
+                        <p>The type of data coming into the <code>FlowRepresentable</code>; use <code>Never</code> when the <code>FlowRepresentable</code> will ignore data passed in from the <code><a href="../Classes/Workflow.html">Workflow</a></code>.</p>
 
                       </div>
                       <div class="declaration">
@@ -148,9 +181,127 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Workflow17FlowRepresentableP10shouldLoad4withSb0A5InputQz_tF"></a>
-                    <a name="//apple_ref/swift/Method/shouldLoad(with:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Workflow17FlowRepresentableP10shouldLoad4withSb0A5InputQz_tF">shouldLoad(with:<wbr>)</a>
+                    <a name="/s:8Workflow17FlowRepresentableP0A6OutputQa"></a>
+                    <a name="//apple_ref/swift/Alias/WorkflowOutput" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow17FlowRepresentableP0A6OutputQa">WorkflowOutput</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The type of data passed forward from the <code>FlowRepresentable</code>; defaulted to <code>Never</code>; <code>Never</code> means data will not be passed forward.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">associatedtype</span> <span class="kt">WorkflowOutput</span> <span class="o">=</span> <span class="kt">Never</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Workflow17FlowRepresentableP16_workflowPointerAA03AnybC0CSgvp"></a>
+                    <a name="//apple_ref/swift/Property/_workflowPointer" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow17FlowRepresentableP16_workflowPointerAA03AnybC0CSgvp">_workflowPointer</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A pointer to the <code>AnyFlowRepresentable</code> that erases this <code>FlowRepresentable</code>; will automatically be set.</p>
+<h3 id='discussion' class='heading'>Discussion</h3>
+
+<p>This property is automatically set by a <code><a href="../Classes/Workflow.html">Workflow</a></code>, it simply needs to be declared on a <code>FlowRepresentable</code>.
+In order for a <code>FlowRepresentable</code> to have access to the <code><a href="../Classes/Workflow.html">Workflow</a></code> that launched it, store the closures for proceeding forward and backward, and provide type safety, it needs this property available for writing.</p>
+<h4 id='note' class='heading'>Note</h4>
+
+<p>While not strictly necessary it would be wise to declare this property as <code>weak</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">_workflowPointer</span><span class="p">:</span> <span class="kt">AnyFlowRepresentable</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Workflow17FlowRepresentablePxycfc"></a>
+                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow17FlowRepresentablePxycfc">init()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates a <code>FlowRepresentable</code>.</p>
+<h4 id='note' class='heading'>Note</h4>
+
+<p>This is auto synthesized by FlowRepresentable, and is only called when <code><a href="../Protocols/FlowRepresentable.html#/s:8Workflow17FlowRepresentableP0A5InputQa">WorkflowInput</a></code> is <code>Never</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="nf">init</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Workflow17FlowRepresentableP4withx0A5InputQz_tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow17FlowRepresentableP4withx0A5InputQz_tcfc">init(with:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates a <code>FlowRepresentable</code> with the specified <code><a href="../Protocols/FlowRepresentable.html#/s:8Workflow17FlowRepresentableP0A5InputQa">WorkflowInput</a></code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="nf">init</span><span class="p">(</span><span class="n">with</span> <span class="nv">args</span><span class="p">:</span> <span class="kt"><a href="../Protocols/FlowRepresentable.html#/s:8Workflow17FlowRepresentableP0A5InputQa">WorkflowInput</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Workflow17FlowRepresentableP10shouldLoadSbyF"></a>
+                    <a name="//apple_ref/swift/Method/shouldLoad()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow17FlowRepresentableP10shouldLoadSbyF">shouldLoad()</a>
                     </code>
                       <span class="declaration-note">
                         Default implementation
@@ -161,12 +312,13 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A method indicating whether it makes sense for this view to load in a workflow</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    This method is called <em>before</em> your view loads. Do not attempt to do any UI work in this method. This is however a good place to set up data on your view.
+                        <p>Returns a Boolean indicating the <code><a href="../Classes/Workflow.html">Workflow</a></code> should load the <code>FlowRepresentable</code>; defaults to <code>true</code>.</p>
+<h3 id='discussion' class='heading'>Discussion</h3>
 
-</div>
+<p>This method is called <em>after</em> <code>init</code> but <em>before</em> any other lifecycle events. It is non-mutating and should not change the <code>FlowRepresentable</code>.</p>
+<h4 id='note' class='heading'>Note</h4>
+
+<p>Returning <code>false</code> can have different behaviors depending on the <code><a href="../Classes/FlowPersistence.html">FlowPersistence</a></code>.</p>
 
                       </div>
                       <h4>Default Implementation</h4>
@@ -177,32 +329,9 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">mutating</span> <span class="kd">func</span> <span class="nf">shouldLoad</span><span class="p">(</span><span class="n">with</span> <span class="nv">args</span><span class="p">:</span> <span class="kt"><a href="../Protocols/FlowRepresentable.html#/s:8Workflow17FlowRepresentableP0A5InputQa">WorkflowInput</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">shouldLoad</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>args</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Note you can rename this in your implementation if &lsquo;args&rsquo; doesn&rsquo;t make sense.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>Bool</p>
                       </div>
                     </section>
                   </div>
@@ -223,12 +352,10 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Access to the <code><a href="../Classes/Workflow.html">Workflow</a></code> controlling the <code>FlowRepresentable</code>. A common use case may be a <code>FlowRepresentable</code> that wants to abandon the <code><a href="../Classes/Workflow.html">Workflow</a></code> it&rsquo;s in.</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    While not strictly necessary it would be wise to declare this property as <code>weak</code>
+                        <p>Access to the <code>AnyWorkflow</code> controlling the <code>FlowRepresentable</code>.</p>
+<h3 id='discussion' class='heading'>Discussion</h3>
 
-</div>
+<p>A common use case may be a <code>FlowRepresentable</code> that wants to abandon the <code><a href="../Classes/Workflow.html">Workflow</a></code> it&rsquo;s in.</p>
 
                       </div>
                       <div class="declaration">
@@ -245,9 +372,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Workflow17FlowRepresentablePAAE09proceedInA7StorageyypSgcSgvp"></a>
-                    <a name="//apple_ref/swift/Property/proceedInWorkflowStorage" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Workflow17FlowRepresentablePAAE09proceedInA7StorageyypSgcSgvp">proceedInWorkflowStorage</a>
+                    <a name="/s:8Workflow17FlowRepresentablePAAE09proceedInA0yy0A6OutputQzF"></a>
+                    <a name="//apple_ref/swift/Method/proceedInWorkflow(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow17FlowRepresentablePAAE09proceedInA0yy0A6OutputQzF">proceedInWorkflow(_:<wbr>)</a>
                     </code>
                       <span class="declaration-note">
                         Extension method
@@ -258,14 +385,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>proceedInWorkflowStorage: Your tests may want to manually set the closure so they can make assertions it was called, this is simply a convenience available for that.</p>
+                        <p>Moves forward while passing arguments forward in the <code><a href="../Classes/Workflow.html">Workflow</a></code>; if at the end, calls the <code>onFinish</code> closure used when launching the workflow.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">proceedInWorkflowStorage</span><span class="p">:</span> <span class="p">((</span><span class="kt">Any</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">proceedInWorkflow</span><span class="p">(</span><span class="n">_</span> <span class="nv">args</span><span class="p">:</span> <span class="kt"><a href="../Protocols/FlowRepresentable.html#/s:8Workflow17FlowRepresentableP0A6OutputQa">WorkflowOutput</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -275,9 +402,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Workflow17FlowRepresentablePAAE010_proceedInA0yypSgcSgvp"></a>
-                    <a name="//apple_ref/swift/Property/_proceedInWorkflow" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Workflow17FlowRepresentablePAAE010_proceedInA0yypSgcSgvp">_proceedInWorkflow</a>
+                    <a name="/s:8Workflow17FlowRepresentablePAAE08backUpInA0yyKF"></a>
+                    <a name="//apple_ref/swift/Method/backUpInWorkflow()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow17FlowRepresentablePAAE08backUpInA0yyKF">backUpInWorkflow()</a>
                     </code>
                       <span class="declaration-note">
                         Extension method
@@ -288,14 +415,19 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>proceedInWorkflow: An alias for proceedInWorkflowStorage.</p>
+                        <p>Backs up in the <code><a href="../Classes/Workflow.html">Workflow</a></code>.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <code><a href="../Enums/WorkflowError.html">WorkflowError</a></code> when the <code><a href="../Classes/Workflow.html">Workflow</a></code> is unable to back up.
+
+</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">_proceedInWorkflow</span><span class="p">:</span> <span class="p">((</span><span class="kt">Any</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">backUpInWorkflow</span><span class="p">()</span> <span class="k">throws</span></code></pre>
 
                         </div>
                       </div>
@@ -306,11 +438,11 @@
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Available%20where%20%60WorkflowInput%60%20%3D%3D%20%60Never%60"></a>
-                <a name="//apple_ref/swift/Section/Available where `WorkflowInput` == `Never`" class="dashAnchor"></a>
+                <a name="/Available%20where%20%60WorkflowOutput%60%20%3D%3D%20%60Never%60"></a>
+                <a name="//apple_ref/swift/Section/Available where `WorkflowOutput` == `Never`" class="dashAnchor"></a>
                 <div class="section-name-container">
-                  <a class="section-name-link" href="#/Available%20where%20%60WorkflowInput%60%20%3D%3D%20%60Never%60"></a>
-                  <h3 class="section-name"><p>Available where <code><a href="../Protocols/FlowRepresentable.html#/s:8Workflow17FlowRepresentableP0A5InputQa">WorkflowInput</a></code> == <code>Never</code></p>
+                  <a class="section-name-link" href="#/Available%20where%20%60WorkflowOutput%60%20%3D%3D%20%60Never%60"></a>
+                  <h3 class="section-name"><p>Available where <code><a href="../Protocols/FlowRepresentable.html#/s:8Workflow17FlowRepresentableP0A6OutputQa">WorkflowOutput</a></code> == <code>Never</code></p>
 </h3>
                 </div>
               </div>
@@ -318,9 +450,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Workflow17FlowRepresentablePAAs5NeverO0A5InputRtzrlE10shouldLoadSbyF"></a>
-                    <a name="//apple_ref/swift/Method/shouldLoad()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Workflow17FlowRepresentablePAAs5NeverO0A5InputRtzrlE10shouldLoadSbyF">shouldLoad()</a>
+                    <a name="/s:8Workflow17FlowRepresentablePAAs5NeverO0A6OutputRtzrlE09proceedInA0yyF"></a>
+                    <a name="//apple_ref/swift/Method/proceedInWorkflow()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow17FlowRepresentablePAAs5NeverO0A6OutputRtzrlE09proceedInA0yyF">proceedInWorkflow()</a>
                     </code>
                       <span class="declaration-note">
                         Extension method
@@ -331,25 +463,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A method indicating whether it makes sense for this view to load in a workflow</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    This particular version of shouldLoad is only available when your <code><a href="../Protocols/FlowRepresentable.html#/s:8Workflow17FlowRepresentableP0A5InputQa">WorkflowInput</a></code> is <code>Never</code>, indicating you do not care about data passed to this view
-
-</div>
+                        <p>Moves forward in the <code><a href="../Classes/Workflow.html">Workflow</a></code>; if at the end, calls the <code>onFinish</code> closure used when launching the workflow.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">shouldLoad</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">proceedInWorkflow</span><span class="p">()</span></code></pre>
 
                         </div>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>Bool</p>
                       </div>
                     </section>
                   </div>
@@ -362,7 +485,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://github.com/wwt/workflow" target="_blank" rel="external">WWT and Tyler Thompson</a>. All rights reserved. (Last updated: 2021-05-03)</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/wwt/workflow" target="_blank" rel="external">WWT and Tyler Thompson</a>. All rights reserved. (Last updated: 2021-05-05)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

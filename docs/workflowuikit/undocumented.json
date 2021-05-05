@@ -2,28 +2,28 @@
   "warnings": [
     {
       "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/WorkflowUIKit/FlowPersistenceAdditions.swift",
-      "line": 13,
+      "line": 15,
       "symbol": "FlowPersistence.hiddenInitially",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/WorkflowUIKit/LaunchStyleAdditions.swift",
-      "line": 28,
+      "line": 30,
       "symbol": "LaunchStyle.PresentationType",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/WorkflowUIKit/LaunchStyleAdditions.swift",
-      "line": 76,
+      "line": 78,
       "symbol": "LaunchStyle.PresentationType",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/WorkflowUIKit/LaunchStyleAdditions.swift",
-      "line": 106,
+      "line": 119,
       "symbol": "LaunchStyle.PresentationType",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
