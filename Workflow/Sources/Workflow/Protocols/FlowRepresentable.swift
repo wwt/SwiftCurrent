@@ -8,7 +8,6 @@
 
 import Foundation
 
-#warning("This documentation still needs more love")
 /**
  A component in a `Workflow`; should be independent of the workflow context.
  
@@ -16,14 +15,14 @@ import Foundation
  It's important to make sure your `FlowRepresentable` is not dependent on other `FlowRepresentable`s.
  It's okay to specify that a certain kind of data needs to be passed in and passed out, but keep your `FlowRepresentable` from knowing what came before, or what's likely to come after.
  In that way you'll end up with pieces of a workflow that can be moved or put into multiple places with ease.
- Declare an input type of `Never` when the `FlowRepresentable` will ignore data passed in from the `Workflow`.
- An output type of `Never` means data will not be passed forward.
- A `_workflowPointer` has to be declared as a property on the type conforming to `FlowRepresentable` but it is set by the `Workflow`, and should not be set by anything else.
+
+ - Important: Declare an input type of `Never` when the `FlowRepresentable` will ignore data passed in from the `Workflow`.  An output type of `Never` means data will not be passed forward.
+ - Important: A `_workflowPointer` has to be declared as a property on the type conforming to `FlowRepresentable` but it is set by the `Workflow`, and should not be set by anything else.
 
  #### Example
  A `FlowRepresentable` with a `WorkflowInput` of `String` and a `WorkflowOutput` of `Never`
  ```swift
- class FR1: FlowRepresentable { // Mark this class as `final` to avoid the required init
+ class FR1: FlowRepresentable { // Mark this class as `final` to avoid the required keyword on init
     weak var _workflowPointer: AnyFlowRepresentable?
     required init(with name: String) { }
  }
@@ -37,10 +36,10 @@ import Foundation
  }
  ```
 
- #### NOTE
+ #### Note
  Declaring your own custom initializer can result in a compiler error with an unfriendly message
  ```swift
- class FR1: FlowRepresentable { // Compiler error here
+ class FR1: FlowRepresentable { // Results in compiler error for 'init()' being unavailable
     typealias WorkflowInput = Never
     weak var _workflowPointer: AnyFlowRepresentable?
     init(myCustomInitializer property: Int) { }
