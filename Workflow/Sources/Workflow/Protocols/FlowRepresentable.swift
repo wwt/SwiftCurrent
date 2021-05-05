@@ -146,9 +146,12 @@ extension FlowRepresentable {
         _workflowPointer?.proceedInWorkflowStorage?(.args(args))
     }
 
-    #warning("Needs to throw when it cannot back up")
-    /// Backs up in the `Workflow`.
-    public func backUpInWorkflow() {
-        _workflowPointer?.backUpInWorkflowStorage?()
+    /**
+     Backs up in the `Workflow`.
+
+     - Throws: `WorkflowError` when the `Workflow` is unable to back up.
+     */
+    public func backUpInWorkflow() throws {
+        try _workflowPointer?.backUpInWorkflowStorage?()
     }
 }

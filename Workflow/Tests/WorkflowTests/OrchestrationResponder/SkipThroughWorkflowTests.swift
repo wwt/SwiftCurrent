@@ -111,7 +111,7 @@ class SkipThroughWorkflowTests: XCTestCase {
         XCTAssert(responder.lastFrom?.instance.value?.underlyingInstance is FR1)
         XCTAssert((responder.lastFrom?.instance.value?.underlyingInstance as? FR1) === fr1)
 
-        (responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.backUpInWorkflow()
+        try? (responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.backUpInWorkflow()
 
         XCTAssertEqual(responder.backUpCalled, 1)
         XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR1)

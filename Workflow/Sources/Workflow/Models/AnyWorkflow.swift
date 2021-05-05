@@ -150,7 +150,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
                 previousNode.value != nil
             }
 
-            guard let previousNode = previousLoadedNode else { return }
+            guard let previousNode = previousLoadedNode else { throw WorkflowError.failedToBackUp }
 
             guard let previousMetadataNode = first?.traverse(previousNode.position) else {
                 fatalError("Internal state of workflow completely mangled during execution of proceed backward callback.")

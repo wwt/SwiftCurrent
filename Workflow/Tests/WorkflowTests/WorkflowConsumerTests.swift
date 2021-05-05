@@ -107,7 +107,24 @@ class WorkflowConsumerTests: XCTestCase {
         wf.first = nil
 
         XCTAssertThrowsFatalError {
-            (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.backUpInWorkflow()
+            try? (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.backUpInWorkflow()
+        }
+    }
+
+    func testBackUpThrowsErrorIfAtBeginningOfWorkflow() {
+        struct FR1: FlowRepresentable {
+            typealias WorkflowInput = Never
+            var _workflowPointer: AnyFlowRepresentable?
+        }
+
+        let responder = MockOrchestrationResponder()
+        let wf = Workflow(FR1.self)
+        wf.applyOrchestrationResponder(responder)
+        wf.launch()
+
+        XCTAssertThrowsError(try (responder.lastTo?.instance.value?.underlyingInstance as? FR1)?.backUpInWorkflow()) { actualError in
+            XCTAssertNotNil(actualError as? WorkflowError, "Expected \(actualError) to be WorkflowError")
+            XCTAssertEqual(actualError as? WorkflowError, .failedToBackUp, "Expected \(actualError) to be failedToBackUp")
         }
     }
 
