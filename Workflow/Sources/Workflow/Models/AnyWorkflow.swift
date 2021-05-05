@@ -39,7 +39,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
 
      ### Discussion
      Args are passed to the first instance, it has the opportunity to load, not load and transform them, or just not load.
-     In the event an instance does not load and does not transform args, they are passed unmodified to the next instance in the `Workflow` until one loads
+     In the event an instance does not load and does not transform args, they are passed unmodified to the next instance in the `Workflow` until one loads.
 
      - Parameter args: The arguments to pass to the first instance(s).
      - Parameter launchStyle: The launch style to use.
@@ -57,7 +57,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
 
      ### Discussion
      passedArgs are passed to the first instance, it has the opportunity to load, not load and transform them, or just not load.
-     In the event an instance does not load and does not transform args, they are passed unmodified to the next instance in the `Workflow` until one loads
+     In the event an instance does not load and does not transform args, they are passed unmodified to the next instance in the `Workflow` until one loads.
 
      - Parameter passedArgs: The arguments to pass to the first instance(s).
      - Parameter launchStyle: The launch style to use.

@@ -1,13 +1,6 @@
 {
   "warnings": [
     {
-      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/WorkflowUIKit/FlowPersistenceAdditions.swift",
-      "line": 15,
-      "symbol": "FlowPersistence.hiddenInitially",
-      "symbol_kind": "source.lang.swift.decl.var.static",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/WorkflowUIKit/LaunchStyleAdditions.swift",
       "line": 30,
       "symbol": "LaunchStyle.PresentationType",
