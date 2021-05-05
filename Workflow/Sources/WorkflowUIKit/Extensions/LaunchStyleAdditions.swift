@@ -9,6 +9,8 @@
 //
 
 import Foundation
+import UIKit
+
 import Workflow
 
 extension LaunchStyle {
@@ -113,6 +115,26 @@ extension LaunchStyle.PresentationType {
                 case .automatic: return ._modal_automatic
             }
         }
+    }
+}
+
+extension UIModalPresentationStyle {
+    static func styleFor(_ style: LaunchStyle.PresentationType.ModalPresentationStyle) -> UIModalPresentationStyle? {
+        switch style {
+            case .fullScreen: return .fullScreen
+            case .pageSheet: return .pageSheet
+            case .formSheet: return .formSheet
+            case .currentContext: return .currentContext
+            case .custom: return .custom
+            case .overFullScreen: return .overFullScreen
+            case .overCurrentContext: return .overCurrentContext
+            case .popover: return .popover
+            case .automatic: if #available(iOS 13.0, *) {
+                return .automatic
+            }
+            default: return nil
+        }
+        return nil
     }
 }
 

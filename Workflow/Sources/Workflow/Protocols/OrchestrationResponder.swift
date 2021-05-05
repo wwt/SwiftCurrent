@@ -1,5 +1,5 @@
 //
-//  AnyOrchestrationResponder.swift
+//  OrchestrationResponder.swift
 //  
 //
 //  Created by Tyler Thompson on 11/24/20.
@@ -7,7 +7,7 @@
 //
 
 import Foundation
-public protocol AnyOrchestrationResponder {
+public protocol OrchestrationResponder {
     func launch(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata))
     func proceed(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
                  from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata))
@@ -16,7 +16,7 @@ public protocol AnyOrchestrationResponder {
     func abandon(_ workflow: AnyWorkflow, animated: Bool, onFinish: (() -> Void)?)
 }
 
-extension AnyOrchestrationResponder {
+extension OrchestrationResponder {
     func launchOrProceed(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
                          from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata)?) {
         if let root = from {

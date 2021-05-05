@@ -8,28 +8,62 @@
 
 import Foundation
 
-#warning("Needs documentation but swiftlint isn't flagging")
+/// A type erased `Workflow`
 public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
+    /// A `LinkedList.Node` that holds onto the loaded `AnyFlowRepresentable`s.
     public typealias InstanceNode = LinkedList<AnyFlowRepresentable?>.Element
-    public typealias ArrayLiteralElement = AnyFlowRepresentable.Type
     internal var instances = LinkedList<AnyFlowRepresentable?>()
-    internal var orchestrationResponder: AnyOrchestrationResponder?
+    internal var orchestrationResponder: OrchestrationResponder?
 
-    public func applyOrchestrationResponder(_ orchestrationResponder: AnyOrchestrationResponder) {
+    /**
+     Sets the `OrchestrationResponder` on the workflow.
+     - Parameter orchestrationResponder: The `OrchestrationResponder` to notify when the `Workflow` proceeds or backs up.
+    */
+    public func applyOrchestrationResponder(_ orchestrationResponder: OrchestrationResponder) {
         self.orchestrationResponder = orchestrationResponder
     }
 
+    /**
+     Launches the `Workflow`.
+     - Parameter launchStyle: The launch style to use.
+     - Parameter onFinish: The closure to call when the last element in the `Workflow` proceeds.
+     - Returns: The first loaded instance or nil, if none was loaded.
+     */
     @discardableResult public func launch(withLaunchStyle launchStyle: LaunchStyle = .default,
-                                          onFinish: ((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Element? {
+                                          onFinish: ((Any?) -> Void)? = nil) -> InstanceNode? {
         launch(passedArgs: .none, withLaunchStyle: launchStyle, onFinish: onFinish)
     }
 
+    /**
+     Launches the `Workflow`.
+
+     ### Discussion
+     Args are passed to the first instance, it has the opportunity to load, not load and transform them, or just not load.
+     In the event an instance does not load and does not transform args, they are passed unmodified to the next instance in the `Workflow` until one loads
+
+     - Parameter args: The arguments to pass to the first instance(s).
+     - Parameter launchStyle: The launch style to use.
+     - Parameter onFinish: The closure to call when the last element in the `Workflow` proceeds.
+     - Returns: The first loaded instance or nil, if none was loaded.
+     */
     @discardableResult public func launch(with args: Any?,
                                           withLaunchStyle launchStyle: LaunchStyle = .default,
-                                          onFinish: ((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Element? {
+                                          onFinish: ((Any?) -> Void)? = nil) -> InstanceNode? {
         launch(passedArgs: .args(args), withLaunchStyle: launchStyle, onFinish: onFinish)
     }
 
+    /**
+     Launches the `Workflow`.
+
+     ### Discussion
+     passedArgs are passed to the first instance, it has the opportunity to load, not load and transform them, or just not load.
+     In the event an instance does not load and does not transform args, they are passed unmodified to the next instance in the `Workflow` until one loads
+
+     - Parameter passedArgs: The arguments to pass to the first instance(s).
+     - Parameter launchStyle: The launch style to use.
+     - Parameter onFinish: The closure to call when the last element in the `Workflow` proceeds.
+     - Returns: The first loaded instance or nil, if none was loaded.
+     */
     @discardableResult public func launch(passedArgs: PassedArgs,
                                           withLaunchStyle launchStyle: LaunchStyle = .default,
                                           onFinish: ((Any?) -> Void)? = nil) -> LinkedList<AnyFlowRepresentable?>.Element? {
@@ -79,7 +113,6 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
     Called when the workflow should be terminated, and the app should return to the point before the workflow was launched
     - Parameter animated: A boolean indicating whether abandoning the workflow should be animated
     - Parameter onFinish: A callback after the workflow has been abandoned.
-    - Returns: Void
     - Note: In order for this to function the workflow must have a presenter, presenters must call back to the workflow to inform when the abandon process has finished for the onFinish callback to be called.
     */
     public func abandon(animated: Bool = true, onFinish:(() -> Void)? = nil) {

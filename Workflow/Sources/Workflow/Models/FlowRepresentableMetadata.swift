@@ -9,7 +9,7 @@
 import Foundation
 
 /**
- Data about a `FlowRepresentable`. Used to make an `AnyOrchestrationResponder`.
+ Data about a `FlowRepresentable`. Used to make an `OrchestrationResponder`.
 
  ### Discussion
  Every time a `Workflow` is created, the defining characteristics about a `FlowRepresentable` is stored in the `FlowRepresentableMetadata` to be used later.

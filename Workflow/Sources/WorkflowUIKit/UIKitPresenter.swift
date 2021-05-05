@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Workflow
 
-open class UIKitPresenter: AnyOrchestrationResponder {
+open class UIKitPresenter: OrchestrationResponder {
     let launchedFromVC: UIViewController
     let launchedPresentationType: LaunchStyle.PresentationType
     var firstLoadedInstance: UIViewController?

@@ -8,7 +8,7 @@
 import Foundation
 import Workflow
 
-class MockOrchestrationResponder: AnyOrchestrationResponder {
+class MockOrchestrationResponder: OrchestrationResponder {
     var launchCalled = 0
     var lastTo: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata)?
     func launch(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata)) {

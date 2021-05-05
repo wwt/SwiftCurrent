@@ -5,49 +5,9 @@
 //  Created by Tyler Thompson on 8/25/19.
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
-// swiftlint:disable private_over_fileprivate
+// swiftlint:disable private_over_fileprivate file_types_order
 
 import Foundation
-
-fileprivate class AnyFlowRepresentableStorageBase {
-    var _workflowPointer: AnyFlowRepresentable?
-    var workflow: AnyWorkflow?
-    var proceedInWorkflowStorage: ((AnyWorkflow.PassedArgs) -> Void)?
-    var backUpInWorkflowStorage: (() throws -> Void)?
-    var underlyingInstance: Any {
-        fatalError("AnyFlowRepresentableStorageBase called directly, only available internally so something has gone VERY wrong.")
-    }
-
-    // https://github.com/Tyler-Keith-Thompson/Workflow/blob/master/STYLEGUIDE.md#type-erasure
-    // swiftlint:disable:next unavailable_function
-    func shouldLoad() -> Bool {
-        fatalError("AnyFlowRepresentableStorageBase called directly, only available internally so something has gone VERY wrong.")
-    }
-}
-
-fileprivate class AnyFlowRepresentableStorage<FR: FlowRepresentable>: AnyFlowRepresentableStorageBase {
-    var holder: FR
-
-    override func shouldLoad() -> Bool {
-        holder.shouldLoad()
-    }
-
-    override var underlyingInstance: Any {
-        holder._workflowUnderlyingInstance
-    }
-
-    override var _workflowPointer: AnyFlowRepresentable? {
-        get {
-            holder._workflowPointer
-        } set {
-            holder._workflowPointer = newValue
-        }
-    }
-
-    init(_ instance: inout FR) {
-        holder = instance
-    }
-}
 
 /// A type erased `FlowRepresentable`.
 public class AnyFlowRepresentable {
@@ -114,4 +74,44 @@ public class AnyFlowRepresentable {
     }
 
     func shouldLoad() -> Bool { _storage.shouldLoad() }
+}
+
+fileprivate class AnyFlowRepresentableStorageBase {
+    var _workflowPointer: AnyFlowRepresentable?
+    var workflow: AnyWorkflow?
+    var proceedInWorkflowStorage: ((AnyWorkflow.PassedArgs) -> Void)?
+    var backUpInWorkflowStorage: (() throws -> Void)?
+    var underlyingInstance: Any {
+        fatalError("AnyFlowRepresentableStorageBase called directly, only available internally so something has gone VERY wrong.")
+    }
+
+    // https://github.com/Tyler-Keith-Thompson/Workflow/blob/master/STYLEGUIDE.md#type-erasure
+    // swiftlint:disable:next unavailable_function
+    func shouldLoad() -> Bool {
+        fatalError("AnyFlowRepresentableStorageBase called directly, only available internally so something has gone VERY wrong.")
+    }
+}
+
+fileprivate class AnyFlowRepresentableStorage<FR: FlowRepresentable>: AnyFlowRepresentableStorageBase {
+    var holder: FR
+
+    override func shouldLoad() -> Bool {
+        holder.shouldLoad()
+    }
+
+    override var underlyingInstance: Any {
+        holder._workflowUnderlyingInstance
+    }
+
+    override var _workflowPointer: AnyFlowRepresentable? {
+        get {
+            holder._workflowPointer
+        } set {
+            holder._workflowPointer = newValue
+        }
+    }
+
+    init(_ instance: inout FR) {
+        holder = instance
+    }
 }
