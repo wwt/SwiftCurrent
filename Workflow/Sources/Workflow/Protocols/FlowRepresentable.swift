@@ -30,11 +30,15 @@ public protocol FlowRepresentable {
     associatedtype WorkflowOutput = Never
 
     #warning("Discuss about renaming to `workflowPointer`")
-    // - Note: While not strictly necessary it would be wise to declare this property as `weak`
+    /**
+     A pointer to the `AnyFlowRepresentable` that erases this `FlowRepresentable`
+
+     ### Discussion
+     This property is automatically set by a `Workflow`, it simply needs to be declared on a `FlowRepresentable`.
+     In order for a `FlowRepresentable` to have access to the `Workflow` that launched it, store the closures for proceeding forward and backward, and provide type safety, it needs this property available for writing.
+     - Note: While not strictly necessary it would be wise to declare this property as `weak`
+     */
     var _workflowPointer: AnyFlowRepresentable? { get set }
-    // No public docs necessary, as this should not be used by consumers.
-    // swiftlint:disable:next missing_docs
-    var _workflowUnderlyingInstance: Any { get }
 
     /**
      Creates a `FlowRepresentable`.
