@@ -1618,8 +1618,7 @@ extension UIKitConsumerTests {
 
         required init?(coder: NSCoder) { nil }
 
-        #warning("Come back to this because it's dangerous")
-        // The protocol synthesizes a shouldLoad function that returns true. The super class (this) is considered to have it by Swift.  When you inherit and declare it again, Swift considers the subclass to not have overwritten but instead declared a new function.  By declaring here we say that we don't care about the synthesized function and our subclass can then override.  This only matters if your superclass is a FlowRepresentable.
+        // See important documentation on FlowRepresentable
         func shouldLoad() -> Bool { true }
 
         func next() {

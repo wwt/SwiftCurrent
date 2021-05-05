@@ -18,6 +18,7 @@ import Foundation
 
  - Important: Declare an **input** type of `Never` when the `FlowRepresentable` will ignore data passed in from the `Workflow`.  An **output** type of `Never` means data will not be passed forward.
  - Important: A `_workflowPointer` has to be declared as a property on the type conforming to `FlowRepresentable` but it is set by the `Workflow`, and should not be set by anything else.
+ - Important: If you create a superclass that is a `FlowRepresentable` and expect subclasses to be able to define their own methods, such as `shouldLoad`, the superclass should declare those methods, and the subclasses should override them. Otherwise you will find the subclasses do not behave as expected.
 
  #### Example
  A `FlowRepresentable` with a `WorkflowInput` of `String` and a `WorkflowOutput` of `Never`
@@ -87,6 +88,8 @@ public protocol FlowRepresentable {
 
      ### Discussion
      This method is called *after* `init` but *before* any other lifecycle events. It is non-mutating and should not change the `FlowRepresentable`.
+
+     - Important: If you create a superclass that is a `FlowRepresentable` and expect subclasses to define their own `shouldLoad` the superclass should declare `shouldLoad`, and the subclasses should override it. Otherwise you will find the subclasses do not behave as expected.
 
      #### Note
      Returning `false` can have different behaviors depending on the `FlowPersistence`.
