@@ -18,15 +18,40 @@ import Foundation
  In that way you'll end up with pieces of a workflow that can be moved or put into multiple places with ease.
  Declare an input type of `Never` when the `FlowRepresentable` will ignore data passed in from the `Workflow`.
  An output type of `Never` means data will not be passed forward.
+ A `_workflowPointer` has to be declared as a property on the type conforming to `FlowRepresentable` but it is set by the `Workflow`, and should not be set by anything else.
 
- SOMETHING HERE ABOUT _workflowPointer
+ #### Example
+ A `FlowRepresentable` with a `WorkflowInput` of `String` and a `WorkflowOutput` of `Never`
+ ```swift
+ class FR1: FlowRepresentable { // Mark this class as `final` to avoid the required init
+    weak var _workflowPointer: AnyFlowRepresentable?
+    required init(with name: String) { }
+ }
+ ```
 
+ A `FlowRepresentable` with a `WorkflowInput` of `Never` and a `WorkflowOutput` of `Never`
+ ```swift
+ final class FR1: FlowRepresentable { // Classes synthesize an empty initializer already, you are good!
+    typealias WorkflowInput = Never
+    weak var _workflowPointer: AnyFlowRepresentable?
+ }
+ ```
+
+ #### NOTE
+ Declaring your own custom initializer can result in a compiler error with an unfriendly message
+ ```swift
+ class FR1: FlowRepresentable { // Compiler error here
+    typealias WorkflowInput = Never
+    weak var _workflowPointer: AnyFlowRepresentable?
+    init(myCustomInitializer property: Int) { }
+    // required init() { } // declare your own init() to satisfy the protocol requirements and handle the compiler error
+ }
+ ```
  */
-
 public protocol FlowRepresentable {
     /// The type of data coming into the `FlowRepresentable`; use `Never` when the `FlowRepresentable` will ignore data passed in from the `Workflow`.
     associatedtype WorkflowInput
-    /// The type of data passed forward from the `FlowRepresentable`; `Never` means data will not be passed forward.
+    /// The type of data passed forward from the `FlowRepresentable`; Defaulted to `Never`; `Never` means data will not be passed forward.
     associatedtype WorkflowOutput = Never
 
     #warning("Discuss about renaming to `workflowPointer`")
