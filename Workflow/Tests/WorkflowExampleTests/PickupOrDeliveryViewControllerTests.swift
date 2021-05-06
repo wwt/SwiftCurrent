@@ -74,7 +74,7 @@ class PickupOrDeliveryViewControllerTests: ViewControllerTest<PickupOrDeliveryVi
             XCTAssertEqual(data as? Order, orderOutput)
         }
 
-        listener.onFinish?(orderOutput)
+        listener.onFinish?(.args(orderOutput))
 
         XCTAssertEqual(mock.abandonCalled, 1)
 

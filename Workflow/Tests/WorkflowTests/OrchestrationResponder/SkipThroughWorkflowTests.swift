@@ -373,7 +373,7 @@ class SkipThroughWorkflowTests: XCTestCase {
 
         let launchedRepresentable = wf.launch(with: FR1.id) { id in
             expectation.fulfill()
-            XCTAssertEqual(id as? String, FR1.id)
+            XCTAssertEqual(id.extract(nil) as? String, FR1.id)
         }
 
         XCTAssertEqual(responder.proceedCalled, 0)
@@ -470,7 +470,7 @@ class SkipThroughWorkflowTests: XCTestCase {
 
         let launchedRepresentable = wf.launch { id in
             expectation.fulfill()
-            XCTAssertEqual(id as? String, FR1.id)
+            XCTAssertEqual(id.extract(nil) as? String, FR1.id)
         }
 
         XCTAssertEqual(responder.launchCalled, 1)

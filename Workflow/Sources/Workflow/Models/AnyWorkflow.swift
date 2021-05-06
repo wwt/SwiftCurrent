@@ -23,15 +23,14 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
         self.orchestrationResponder = orchestrationResponder
     }
 
-    #warning("Maybe OnFinish should take a AnyWorkflow.PassedArgs")
     /**
      Launches the `Workflow`.
      - Parameter launchStyle: The launch style to use.
-     - Parameter onFinish: The closure to call when the last element in the `Workflow` proceeds.
+     - Parameter onFinish: The closure to call when the last element in the workflow proceeds; called with the `AnyWorkflow.PassedArgs` the workflow finished with.
      - Returns: The first loaded instance or nil, if none was loaded.
      */
     @discardableResult public func launch(withLaunchStyle launchStyle: LaunchStyle = .default,
-                                          onFinish: ((Any?) -> Void)? = nil) -> InstanceNode? {
+                                          onFinish: ((AnyWorkflow.PassedArgs) -> Void)? = nil) -> InstanceNode? {
         launch(passedArgs: .none, withLaunchStyle: launchStyle, onFinish: onFinish)
     }
 
@@ -44,12 +43,12 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
 
      - Parameter args: The arguments to pass to the first instance(s).
      - Parameter launchStyle: The launch style to use.
-     - Parameter onFinish: The closure to call when the last element in the `Workflow` proceeds.
+     - Parameter onFinish: The closure to call when the last element in the workflow proceeds; called with the `AnyWorkflow.PassedArgs` the workflow finished with.
      - Returns: The first loaded instance or nil, if none was loaded.
      */
     @discardableResult public func launch(with args: Any?,
                                           withLaunchStyle launchStyle: LaunchStyle = .default,
-                                          onFinish: ((Any?) -> Void)? = nil) -> InstanceNode? {
+                                          onFinish: ((AnyWorkflow.PassedArgs) -> Void)? = nil) -> InstanceNode? {
         launch(passedArgs: .args(args), withLaunchStyle: launchStyle, onFinish: onFinish)
     }
 
@@ -62,12 +61,12 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
 
      - Parameter passedArgs: The arguments to pass to the first instance(s).
      - Parameter launchStyle: The launch style to use.
-     - Parameter onFinish: The closure to call when the last element in the `Workflow` proceeds.
+     - Parameter onFinish: The closure to call when the last element in the workflow proceeds; called with the `AnyWorkflow.PassedArgs` the workflow finished with.
      - Returns: The first loaded instance or nil, if none was loaded.
      */
     @discardableResult public func launch(passedArgs: PassedArgs,
                                           withLaunchStyle launchStyle: LaunchStyle = .default,
-                                          onFinish: ((Any?) -> Void)? = nil) -> InstanceNode? {
+                                          onFinish: ((AnyWorkflow.PassedArgs) -> Void)? = nil) -> InstanceNode? {
         var firstLoadedInstance: InstanceNode?
         removeInstances()
         instances = LinkedList(map { _ in nil })
@@ -101,7 +100,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
 
         guard let first = firstLoadedInstance,
               let m = metadata else {
-            if case .args(let argsToPass) = passedArgs { onFinish?(argsToPass) }
+            onFinish?(passedArgs)
             return nil
         }
 
@@ -125,7 +124,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
         instances.removeAll()
     }
 
-    private func setupProceedCallbacks(_ node: LinkedList<AnyFlowRepresentable?>.Element, _ onFinish: ((Any?) -> Void)?) {
+    private func setupProceedCallbacks(_ node: LinkedList<AnyFlowRepresentable?>.Element, _ onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
         guard let currentMetadataNode = first?.traverse(node.position) else {
             fatalError("Internal state of workflow completely mangled during configuration of proceed callbacks.")
         }
@@ -156,7 +155,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
 
             guard let nextNode = nextLoadedNode,
                   let nextMetadataNode = first?.traverse(nextNode.position) else {
-                onFinish?(argsToPass.extract(nil))
+                onFinish?(argsToPass)
                 return
             }
 
@@ -166,7 +165,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
         }
     }
 
-    private func setupBackUpCallbacks(_ node: LinkedList<AnyFlowRepresentable?>.Element, _ onFinish: ((Any?) -> Void)?) {
+    private func setupBackUpCallbacks(_ node: LinkedList<AnyFlowRepresentable?>.Element, _ onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
         guard let currentMetadataNode = first?.traverse(node.position) else {
             fatalError("Internal state of workflow completely mangled during configuration of proceed backward callbacks.")
         }
@@ -185,7 +184,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
         }
     }
 
-    private func setupCallbacks(for node: LinkedList<AnyFlowRepresentable?>.Element, onFinish: ((Any?) -> Void)?) {
+    private func setupCallbacks(for node: LinkedList<AnyFlowRepresentable?>.Element, onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
         setupProceedCallbacks(node, onFinish)
         setupBackUpCallbacks(node, onFinish)
     }
@@ -208,6 +207,7 @@ extension AnyWorkflow {
         /// The type erased value passed forward.
         case args(Any?)
 
+        #warning("More better name for this???")
         /**
          Performs a coalescing operation, returning the type erased value of a `PassedArgs` instance or a default value.
 

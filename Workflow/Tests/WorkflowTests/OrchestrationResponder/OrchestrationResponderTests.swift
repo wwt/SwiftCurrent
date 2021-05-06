@@ -80,7 +80,7 @@ class OrchestrationResponderTests: XCTestCase {
         let expectation = self.expectation(description: "OnFinish called")
 
         let launchedRepresentable = wf.launch { args in
-            XCTAssert(args as? Object === val)
+            XCTAssert(args.extract(nil) as? Object === val)
             expectation.fulfill()
         }
 
@@ -201,7 +201,7 @@ class OrchestrationResponderTests: XCTestCase {
         let expectation = self.expectation(description: "OnFinish called")
 
         let launchedRepresentable = wf.launch(with: val) { args in
-            XCTAssert(args as? Object === val)
+            XCTAssert(args.extract(nil) as? Object === val)
             expectation.fulfill()
         }
 

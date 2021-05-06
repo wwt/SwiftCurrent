@@ -16,7 +16,7 @@ class WorkflowListener {
     var launchStyle: LaunchStyle?
     var args: Any?
     var launchedFrom: AnyFlowRepresentable?
-    var onFinish: ((Any?) -> Void)?
+    var onFinish: ((AnyWorkflow.PassedArgs) -> Void)?
     init() {
         NotificationCenter.default.addObserver(self, selector: #selector(workflowLaunched(notification:)), name: .workflowLaunched, object: nil)
     }
@@ -29,7 +29,7 @@ class WorkflowListener {
         let dict = notification.object as? [String: Any?]
         workflow = dict?["workflow"] as? AnyWorkflow
         launchStyle = dict?["style"] as? LaunchStyle
-        onFinish = dict?["onFinish"] as? ((Any?) -> Void)
+        onFinish = dict?["onFinish"] as? ((AnyWorkflow.PassedArgs) -> Void)
         launchedFrom = dict?["launchFrom"] as? AnyFlowRepresentable
         args = dict?["args"] as Any?
     }
