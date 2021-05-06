@@ -123,6 +123,33 @@ class UIKitConsumerTests: XCTestCase {
         XCTAssert(UIApplication.topViewController() === root)
     }
 
+    func testAbandonWorkflowCallsOnFinishCallback() {
+        class FR1: UIViewController, FlowRepresentable {
+            typealias WorkflowInput = Never
+
+            weak var _workflowPointer: AnyFlowRepresentable?
+        }
+
+        let expectation = self.expectation(description: "Abandon callback called")
+        let root = UIViewController()
+        root.view.backgroundColor = .blue
+        root.loadForTesting()
+
+        let wf = Workflow(FR1.self)
+        root.launchInto(wf)
+
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
+
+        (UIApplication.topViewController() as? FR1)?.abandonWorkflow {
+            expectation.fulfill()
+        }
+
+        waitUntil(!(UIApplication.topViewController() is FR1))
+
+        XCTAssert(UIApplication.topViewController() === root)
+        wait(for: [expectation], timeout: 0.1)
+    }
+
     func testAbandonWorkflowWithNavigationController() {
         class FR1: UIViewController, FlowRepresentable {
             typealias WorkflowInput = Never

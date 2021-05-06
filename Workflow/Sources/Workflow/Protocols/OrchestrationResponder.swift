@@ -28,7 +28,12 @@ public protocol OrchestrationResponder {
      */
     func backUp(from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
                 to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata))
-    func abandon(_ workflow: AnyWorkflow, animated: Bool, onFinish: (() -> Void)?)
+    /**
+     Respond to the `Workflow` getting abandoned.
+     - Parameter workflow: The `AnyWorkflow` that is being abandoned.
+     - Parameter onFinish: A closure that is executed when the responder is finished abandoning.
+     */
+    func abandon(_ workflow: AnyWorkflow, onFinish: (() -> Void)?)
 }
 
 extension OrchestrationResponder {

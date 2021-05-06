@@ -34,6 +34,16 @@ class UIKitPresenterTests: XCTestCase {
                               from: (instance: node, metadata: metadata))
         }
     }
+
+    func testEvenWithoutAResponder_WorkflowStillAbandons() {
+        class FR1: TestViewController { }
+        let wf = Workflow(FR1.self)
+        wf.launch()
+
+        wf.abandon()
+
+        XCTAssertNil(wf.instances.first?.value)
+    }
 }
 
 extension UIKitPresenterTests {

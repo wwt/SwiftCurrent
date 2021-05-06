@@ -73,6 +73,30 @@ extension Workflow {
     }
 }
 
+extension AnyWorkflow {
+    /**
+    Called when the workflow should be terminated, and the app should return to the point before the workflow was launched
+    - Parameter animated: A boolean indicating whether abandoning the workflow should be animated
+    - Parameter onFinish: A callback after the workflow has been abandoned.
+    - Note: In order to dismiss UIKit views the workflow must have an `OrchestrationResponder` that is a `UIKitPresenter`.
+    */
+    public func abandon(animated: Bool = true, onFinish:(() -> Void)? = nil) {
+        if let presenter = orchestrationResponder as? UIKitPresenter {
+            presenter.abandon(self, animated: animated) { [weak self] in
+                self?._abandon()
+                onFinish?()
+            }
+        } else if let responder = orchestrationResponder {
+            responder.abandon(self) { [weak self] in
+                self?._abandon()
+                onFinish?()
+            }
+        } else {
+            _abandon()
+        }
+    }
+}
+
 extension Workflow where F.WorkflowOutput == Never {
     /**
     A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
