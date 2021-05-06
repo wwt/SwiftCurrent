@@ -16,8 +16,8 @@ class OrchestrationResponderTests: XCTestCase {
         class FR2: TestPassthroughFlowRepresentable { }
         class FR3: TestPassthroughFlowRepresentable { }
         let wf = Workflow(FR1.self)
-            .thenPresent(FR2.self)
-            .thenPresent(FR3.self)
+            .then(FR2.self)
+            .then(FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
 
@@ -51,8 +51,8 @@ class OrchestrationResponderTests: XCTestCase {
         class FR2: TestPassthroughFlowRepresentable { }
         class FR3: TestPassthroughFlowRepresentable { }
         let wf = Workflow(FR1.self)
-            .thenPresent(FR2.self)
-            .thenPresent(FR3.self)
+            .then(FR2.self)
+            .then(FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
         let expectation = self.expectation(description: "OnFinish called")
@@ -73,8 +73,8 @@ class OrchestrationResponderTests: XCTestCase {
         class FR2: TestPassthroughFlowRepresentable { }
         final class FR3: TestFlowRepresentable<Never, Object>, FlowRepresentable { }
         let wf = Workflow(FR1.self)
-            .thenPresent(FR2.self)
-            .thenPresent(FR3.self)
+            .then(FR2.self)
+            .then(FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
         let expectation = self.expectation(description: "OnFinish called")
@@ -96,8 +96,8 @@ class OrchestrationResponderTests: XCTestCase {
         class FR2: TestPassthroughFlowRepresentable { }
         class FR3: TestPassthroughFlowRepresentable { }
         let wf = Workflow(FR1.self)
-            .thenPresent(FR2.self)
-            .thenPresent(FR3.self)
+            .then(FR2.self)
+            .then(FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
 
@@ -138,8 +138,8 @@ class OrchestrationResponderTests: XCTestCase {
         class FR2: TestPassthroughFlowRepresentable { }
         class FR3: TestPassthroughFlowRepresentable { }
         let wf = Workflow(FR1.self)
-            .thenPresent(FR2.self)
-            .thenPresent(FR3.self)
+            .then(FR2.self)
+            .then(FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
         let expectation = self.expectation(description: "OnFinish called")
@@ -194,8 +194,8 @@ class OrchestrationResponderTests: XCTestCase {
             }
         }
         let wf = Workflow(FR1.self)
-            .thenPresent(FR2.self)
-            .thenPresent(FR3.self)
+            .then(FR2.self)
+            .then(FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
         let expectation = self.expectation(description: "OnFinish called")

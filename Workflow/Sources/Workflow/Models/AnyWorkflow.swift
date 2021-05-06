@@ -131,7 +131,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
         }
         node.value?.proceedInWorkflowStorage = { [self] args in
             var argsToPass = args
-            var viewToPresent: (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetadata)?
+            var root: (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetadata)?
             let nextLoadedNode = node.next?.traverse { nextNode in
                 guard let metadata = first?.traverse(nextNode.position)?.value else { return false }
                 let persistence = metadata.calculatePersistence(argsToPass)
@@ -145,7 +145,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
 
                 if !shouldLoad && persistence == .persistWhenSkipped {
                     nextNode.value = flowRepresentable
-                    viewToPresent = (instance: flowRepresentable, metadata: metadata)
+                    root = (instance: flowRepresentable, metadata: metadata)
                     setupCallbacks(for: nextNode, onFinish: onFinish)
                     orchestrationResponder?.proceed(to: (instance: nextNode, metadata: metadata),
                                                     from: (instance: node, metadata: currentMetadataNode.value))
@@ -162,7 +162,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
 
             setupCallbacks(for: nextNode, onFinish: onFinish)
             orchestrationResponder?.proceed(to: (instance: nextNode, metadata:nextMetadataNode.value),
-                                            from: convertInput(viewToPresent) ?? (instance: node, metadata:currentMetadataNode.value))
+                                            from: convertInput(root) ?? (instance: node, metadata:currentMetadataNode.value))
         }
     }
 
