@@ -53,7 +53,7 @@ extension UIKitPresenterTests {
         required init(with args: AnyWorkflow.PassedArgs) {
             super.init(nibName: nil, bundle: nil)
             view.backgroundColor = .red
-            data = args.extract(nil)
+            data = args.extractArgs(defaultValue: nil)
         }
 
         required init?(coder: NSCoder) { nil }

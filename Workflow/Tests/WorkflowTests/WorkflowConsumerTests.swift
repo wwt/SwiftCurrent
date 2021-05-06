@@ -148,7 +148,7 @@ class WorkflowConsumerTests: XCTestCase {
         var callbackCalled = false
         let firstInstance = wf.launch(with: 1) { args in
             callbackCalled = true
-            XCTAssertEqual(args.extract(nil) as? String, "args")
+            XCTAssertEqual(args.extractArgs(defaultValue: nil) as? String, "args")
         }
         XCTAssert(firstInstance?.value?.underlyingInstance is FR1)
         (firstInstance?.value?.underlyingInstance as? FR1)?.proceedInWorkflow("test")
@@ -174,7 +174,7 @@ class WorkflowConsumerTests: XCTestCase {
         var callbackCalled = false
         let firstInstance = wf.launch(with: 1) { args in
             callbackCalled = true
-            XCTAssertEqual(args.extract(nil) as? String, "args")
+            XCTAssertEqual(args.extractArgs(defaultValue: nil) as? String, "args")
         }
         XCTAssert(firstInstance?.value?.underlyingInstance is FR1)
         (firstInstance?.value?.underlyingInstance as? FR1)?.proceedInWorkflow("test")
@@ -195,7 +195,7 @@ class WorkflowConsumerTests: XCTestCase {
         var callbackCalled = false
         _ = wf.launch(with: 1) { args in
             callbackCalled = true
-            XCTAssertEqual(args.extract(nil) as? String, "args")
+            XCTAssertEqual(args.extractArgs(defaultValue: nil) as? String, "args")
         }
         XCTAssert(callbackCalled)
     }

@@ -207,14 +207,13 @@ extension AnyWorkflow {
         /// The type erased value passed forward.
         case args(Any?)
 
-        #warning("More better name for this???")
         /**
          Performs a coalescing operation, returning the type erased value of a `PassedArgs` instance or a default value.
 
          - Parameter defaultValue: the default value to use if there are no args.
          - Returns: type erased value of a `PassedArgs` instance or a default value.
          */
-        public func extract(_ defaultValue: Any?) -> Any? {
+        public func extractArgs(defaultValue: Any?) -> Any? {
             if case .args(let value) = self {
                 return value
             }

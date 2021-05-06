@@ -385,7 +385,7 @@ class UIKitConsumerTests: XCTestCase {
             func launchSecondary() {
                 let wf = Workflow(FR_1.self)
                 launchInto(wf) { args in
-                    self.data = args.extract(nil)
+                    self.data = args.extractArgs(defaultValue: nil)
                     wf.abandon(animated: false)
                 }
             }
@@ -421,7 +421,7 @@ class UIKitConsumerTests: XCTestCase {
             func launchSecondary() {
                 let wf = Workflow(FR_1.self, presentationType: .modal)
                 launchInto(wf) { args in
-                    self.data = args.extract(nil)
+                    self.data = args.extractArgs(defaultValue: nil)
                     wf.abandon(animated: false)
                 }
             }
@@ -456,7 +456,7 @@ class UIKitConsumerTests: XCTestCase {
             func launchSecondary() {
                 let wf = Workflow(FR_1.self)
                 launchInto(wf, withLaunchStyle: .modal) { args in
-                    self.data = args.extract(nil)
+                    self.data = args.extractArgs(defaultValue: nil)
                     wf.abandon(animated: false)
                 }
             }
@@ -944,7 +944,7 @@ class UIKitConsumerTests: XCTestCase {
             func launchSecondary() {
                 let wf = Workflow(FR_1.self)
                 launchInto(wf, withLaunchStyle: .navigationStack) { args in
-                    self.data = args.extract(nil)
+                    self.data = args.extractArgs(defaultValue: nil)
                     wf.abandon(animated: false)
                 }
             }
@@ -1046,7 +1046,7 @@ class UIKitConsumerTests: XCTestCase {
             .thenPresent(FR3.self)
             .thenPresent(FR4.self), args: obj) { args in
             callbackCalled = true
-            XCTAssert(args.extract(nil) as? Obj === obj)
+            XCTAssert(args.extractArgs(defaultValue: nil) as? Obj === obj)
         }
 
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
@@ -1080,7 +1080,7 @@ class UIKitConsumerTests: XCTestCase {
             .thenPresent(FR3.self)
             .thenPresent(FR4.self), args: obj) { args in
             callbackCalled = true
-            XCTAssert(args.extract(nil) as? Obj === obj)
+            XCTAssert(args.extractArgs(defaultValue: nil) as? Obj === obj)
         }
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.next()
@@ -1640,7 +1640,7 @@ extension UIKitConsumerTests {
         required init(with args: AnyWorkflow.PassedArgs) {
             super.init(nibName: nil, bundle: nil)
             view.backgroundColor = .red
-            data = args.extract(nil)
+            data = args.extractArgs(defaultValue: nil)
         }
 
         required init?(coder: NSCoder) { nil }

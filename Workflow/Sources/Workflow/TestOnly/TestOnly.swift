@@ -28,7 +28,7 @@ extension FlowRepresentable {
         }
         set {
             _workflowPointer?.proceedInWorkflowStorage = { args in
-                newValue?(args.extract(nil))
+                newValue?(args.extractArgs(defaultValue: nil))
             }
         }
     }
@@ -42,7 +42,7 @@ extension FlowRepresentable {
         }
         set {
             _workflowPointer?.proceedInWorkflowStorage = { args in
-                newValue?(args.extract(nil))
+                newValue?(args.extractArgs(defaultValue: nil))
             }
         }
     }
