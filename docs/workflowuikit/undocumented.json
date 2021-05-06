@@ -15,13 +15,6 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/tylerthompson/workspace/Workflow/Workflow/Sources/WorkflowUIKit/UIKitPresenter.swift",
-      "line": 13,
-      "symbol": "UIKitPresenter",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/tylerthompson/workspace/Workflow/Workflow/Sources/WorkflowUIKit/UIWorkflowItem.swift",
       "line": 46,
       "symbol": "UIWorkflowItem.WorkflowInput",

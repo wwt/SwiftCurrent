@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>FlowRepresentable Extension Reference</title>
+    <title>AnyWorkflow Extension Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Extension/FlowRepresentable" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Extension/AnyWorkflow" class="dashAnchor"></a>
 
-    <a title="FlowRepresentable Extension Reference"></a>
+    <a title="AnyWorkflow Extension Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -44,7 +44,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">WorkflowUIKit Reference</a>
       <img class="carat" src="../img/carat.png" />
-      FlowRepresentable Extension Reference
+      AnyWorkflow Extension Reference
     </p>
 
     <div class="content-wrapper">
@@ -101,11 +101,11 @@
 
         <section class="section">
           <div class="section-content top-matter">
-            <h1>FlowRepresentable</h1>
+            <h1>AnyWorkflow</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">FlowRepresentable</span> <span class="k">where</span> <span class="k">Self</span><span class="p">:</span> <span class="kt">UIViewController</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">AnyWorkflow</span></code></pre>
 
                 </div>
               </div>
@@ -116,22 +116,13 @@
         <section class="section">
           <div class="section-content">
             <div class="task-group">
-              <div class="task-name-container">
-                <a name="/Available%20where%20%60Self%60%3A%20%60UIViewController%60"></a>
-                <a name="//apple_ref/swift/Section/Available where `Self`: `UIViewController`" class="dashAnchor"></a>
-                <div class="section-name-container">
-                  <a class="section-name-link" href="#/Available%20where%20%60Self%60%3A%20%60UIViewController%60"></a>
-                  <h3 class="section-name"><p>Available where <code>Self</code>: <code>UIViewController</code></p>
-</h3>
-                </div>
-              </div>
               <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Workflow17FlowRepresentableP0A5UIKitSo16UIViewControllerCRbzrlE07abandonA08animated8onFinishySb_yycSgtF"></a>
-                    <a name="//apple_ref/swift/Method/abandonWorkflow(animated:onFinish:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Workflow17FlowRepresentableP0A5UIKitSo16UIViewControllerCRbzrlE07abandonA08animated8onFinishySb_yycSgtF">abandonWorkflow(animated:<wbr>onFinish:<wbr>)</a>
+                    <a name="/s:8Workflow03AnyA0C0A5UIKitE7abandon8animated8onFinishySb_yycSgtF"></a>
+                    <a name="//apple_ref/swift/Method/abandon(animated:onFinish:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow03AnyA0C0A5UIKitE7abandon8animated8onFinishySb_yycSgtF">abandon(animated:<wbr>onFinish:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -139,7 +130,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Called when the current workflow should be terminated, and the app should return to the point before the workflow was launched</p>
+                        <p>Called when the workflow should be terminated, and the app should return to the point before the workflow was launched</p>
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     In order to dismiss UIKit views the workflow must have an <code>OrchestrationResponder</code> that is a <code><a href="../Classes/UIKitPresenter.html">UIKitPresenter</a></code>.
@@ -151,7 +142,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">abandonWorkflow</span><span class="p">(</span><span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">onFinish</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">abandon</span><span class="p">(</span><span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">onFinish</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>

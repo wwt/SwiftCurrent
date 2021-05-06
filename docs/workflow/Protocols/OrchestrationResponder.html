@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>AnyWorkflow Class Reference</title>
+    <title>OrchestrationResponder Protocol Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Class/AnyWorkflow" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Protocol/OrchestrationResponder" class="dashAnchor"></a>
 
-    <a title="AnyWorkflow Class Reference"></a>
+    <a title="OrchestrationResponder Protocol Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -44,7 +44,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">Workflow Reference</a>
       <img class="carat" src="../img/carat.png" />
-      AnyWorkflow Class Reference
+      OrchestrationResponder Protocol Reference
     </p>
 
     <div class="content-wrapper">
@@ -107,15 +107,15 @@
 
         <section class="section">
           <div class="section-content top-matter">
-            <h1>AnyWorkflow</h1>
+            <h1>OrchestrationResponder</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">AnyWorkflow</span> <span class="p">:</span> <span class="kt"><a href="../Classes/LinkedList.html">LinkedList</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/FlowRepresentableMetadata.html">FlowRepresentableMetadata</a></span><span class="o">&gt;</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">OrchestrationResponder</span></code></pre>
 
                 </div>
               </div>
-            <p>A type erased <code><a href="../Classes/Workflow.html">Workflow</a></code></p>
+            <p>A type capable of responding to <code><a href="../Classes/Workflow.html">Workflow</a></code> actions.</p>
 
           </div>
         </section>
@@ -127,18 +127,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Workflow03AnyA0C12InstanceNodea"></a>
-                    <a name="//apple_ref/swift/Alias/InstanceNode" class="dashAnchor"></a>
-                    <a class="direct-link" href="../Classes/AnyWorkflow/InstanceNode.html">InstanceNode</a>
-                    </code>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8Workflow03AnyA0C27applyOrchestrationResponderyyAA0dE0_pF"></a>
-                    <a name="//apple_ref/swift/Method/applyOrchestrationResponder(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Workflow03AnyA0C27applyOrchestrationResponderyyAA0dE0_pF">applyOrchestrationResponder(_:<wbr>)</a>
+                    <a name="/s:8Workflow22OrchestrationResponderP6launch2toyAA10LinkedListC4NodeCyAA20AnyFlowRepresentableCSg_ALG8instance_AA0jK8MetadataC8metadatat_tF"></a>
+                    <a name="//apple_ref/swift/Method/launch(to:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow22OrchestrationResponderP6launch2toyAA10LinkedListC4NodeCyAA20AnyFlowRepresentableCSg_ALG8instance_AA0jK8MetadataC8metadatat_tF">launch(to:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -146,14 +137,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Sets the <code><a href="../Protocols/OrchestrationResponder.html">OrchestrationResponder</a></code> on the workflow.</p>
+                        <p>Respond to the <code><a href="../Classes/Workflow.html">Workflow</a></code> launching.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">applyOrchestrationResponder</span><span class="p">(</span><span class="n">_</span> <span class="nv">orchestrationResponder</span><span class="p">:</span> <span class="kt"><a href="../Protocols/OrchestrationResponder.html">OrchestrationResponder</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">launch</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="p">(</span><span class="nv">instance</span><span class="p">:</span> <span class="kt"><a href="../Classes/AnyWorkflow.html">AnyWorkflow</a></span><span class="o">.</span><span class="kt">InstanceNode</span><span class="p">,</span> <span class="nv">metadata</span><span class="p">:</span> <span class="kt"><a href="../Classes/FlowRepresentableMetadata.html">FlowRepresentableMetadata</a></span><span class="p">))</span></code></pre>
 
                         </div>
                       </div>
@@ -164,12 +155,12 @@
                             <tr>
                               <td>
                                 <code>
-                                <em>orchestrationResponder</em>
+                                <em>to</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The <code><a href="../Protocols/OrchestrationResponder.html">OrchestrationResponder</a></code> to notify when the <code><a href="../Classes/Workflow.html">Workflow</a></code> proceeds or backs up.</p>
+                                  <p>Passes the <code><a href="../Classes/AnyWorkflow/InstanceNode.html">AnyWorkflow.InstanceNode</a></code> and <code><a href="../Classes/FlowRepresentableMetadata.html">FlowRepresentableMetadata</a></code> so the responder can decide how to launch the first loaded instance.</p>
                                 </div>
                               </td>
                             </tr>
@@ -182,9 +173,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Workflow03AnyA0C6launch15withLaunchStyle8onFinishAA10LinkedListC4NodeCyAA0B17FlowRepresentableCSg_AMGSgAA0eF0C_yypSgcSgtF"></a>
-                    <a name="//apple_ref/swift/Method/launch(withLaunchStyle:onFinish:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Workflow03AnyA0C6launch15withLaunchStyle8onFinishAA10LinkedListC4NodeCyAA0B17FlowRepresentableCSg_AMGSgAA0eF0C_yypSgcSgtF">launch(withLaunchStyle:<wbr>onFinish:<wbr>)</a>
+                    <a name="/s:8Workflow22OrchestrationResponderP7proceed2to4fromyAA10LinkedListC4NodeCyAA20AnyFlowRepresentableCSg_AMG8instance_AA0kL8MetadataC8metadatat_AnO_AqRttF"></a>
+                    <a name="//apple_ref/swift/Method/proceed(to:from:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow22OrchestrationResponderP7proceed2to4fromyAA10LinkedListC4NodeCyAA20AnyFlowRepresentableCSg_AMG8instance_AA0kL8MetadataC8metadatat_AnO_AqRttF">proceed(to:<wbr>from:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -192,16 +183,15 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Launches the <code><a href="../Classes/Workflow.html">Workflow</a></code>.</p>
+                        <p>Respond to the <code><a href="../Classes/Workflow.html">Workflow</a></code> proceeding.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="nf">launch</span><span class="p">(</span><span class="n">withLaunchStyle</span> <span class="nv">launchStyle</span><span class="p">:</span> <span class="kt"><a href="../Classes/LaunchStyle.html">LaunchStyle</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span>
-                   <span class="nv">onFinish</span><span class="p">:</span> <span class="p">((</span><span class="kt">Any</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/AnyWorkflow/InstanceNode.html">InstanceNode</a></span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">proceed</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="p">(</span><span class="nv">instance</span><span class="p">:</span> <span class="kt"><a href="../Classes/AnyWorkflow.html">AnyWorkflow</a></span><span class="o">.</span><span class="kt">InstanceNode</span><span class="p">,</span> <span class="nv">metadata</span><span class="p">:</span> <span class="kt"><a href="../Classes/FlowRepresentableMetadata.html">FlowRepresentableMetadata</a></span><span class="p">),</span>
+             <span class="nv">from</span><span class="p">:</span> <span class="p">(</span><span class="nv">instance</span><span class="p">:</span> <span class="kt"><a href="../Classes/AnyWorkflow.html">AnyWorkflow</a></span><span class="o">.</span><span class="kt">InstanceNode</span><span class="p">,</span> <span class="nv">metadata</span><span class="p">:</span> <span class="kt"><a href="../Classes/FlowRepresentableMetadata.html">FlowRepresentableMetadata</a></span><span class="p">))</span></code></pre>
 
                         </div>
                       </div>
@@ -212,12 +202,129 @@
                             <tr>
                               <td>
                                 <code>
-                                <em>launchStyle</em>
+                                <em>to</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The launch style to use.</p>
+                                  <p>Passes the <code><a href="../Classes/AnyWorkflow/InstanceNode.html">AnyWorkflow.InstanceNode</a></code> and <code><a href="../Classes/FlowRepresentableMetadata.html">FlowRepresentableMetadata</a></code> so the responder can decide how to proceed.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>from</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Passes the <code><a href="../Classes/AnyWorkflow/InstanceNode.html">AnyWorkflow.InstanceNode</a></code> and <code><a href="../Classes/FlowRepresentableMetadata.html">FlowRepresentableMetadata</a></code> so the responder has context on where to proceed from.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Workflow22OrchestrationResponderP6backUp4from2toyAA10LinkedListC4NodeCyAA20AnyFlowRepresentableCSg_AMG8instance_AA0lM8MetadataC8metadatat_AnO_AqRttF"></a>
+                    <a name="//apple_ref/swift/Method/backUp(from:to:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow22OrchestrationResponderP6backUp4from2toyAA10LinkedListC4NodeCyAA20AnyFlowRepresentableCSg_AMG8instance_AA0lM8MetadataC8metadatat_AnO_AqRttF">backUp(from:<wbr>to:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Respond to the <code><a href="../Classes/Workflow.html">Workflow</a></code> backing up.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">backUp</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="p">(</span><span class="nv">instance</span><span class="p">:</span> <span class="kt"><a href="../Classes/AnyWorkflow.html">AnyWorkflow</a></span><span class="o">.</span><span class="kt">InstanceNode</span><span class="p">,</span> <span class="nv">metadata</span><span class="p">:</span> <span class="kt"><a href="../Classes/FlowRepresentableMetadata.html">FlowRepresentableMetadata</a></span><span class="p">),</span>
+            <span class="nv">to</span><span class="p">:</span> <span class="p">(</span><span class="nv">instance</span><span class="p">:</span> <span class="kt"><a href="../Classes/AnyWorkflow.html">AnyWorkflow</a></span><span class="o">.</span><span class="kt">InstanceNode</span><span class="p">,</span> <span class="nv">metadata</span><span class="p">:</span> <span class="kt"><a href="../Classes/FlowRepresentableMetadata.html">FlowRepresentableMetadata</a></span><span class="p">))</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>to</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Passes the <code><a href="../Classes/AnyWorkflow/InstanceNode.html">AnyWorkflow.InstanceNode</a></code> and <code><a href="../Classes/FlowRepresentableMetadata.html">FlowRepresentableMetadata</a></code> so the responder can decide how to back up.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>from</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Passes the <code><a href="../Classes/AnyWorkflow/InstanceNode.html">AnyWorkflow.InstanceNode</a></code> and <code><a href="../Classes/FlowRepresentableMetadata.html">FlowRepresentableMetadata</a></code> so the responder has context on where to back up from.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Workflow22OrchestrationResponderP7abandon_8onFinishyAA03AnyA0C_yycSgtF"></a>
+                    <a name="//apple_ref/swift/Method/abandon(_:onFinish:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow22OrchestrationResponderP7abandon_8onFinishyAA03AnyA0C_yycSgtF">abandon(_:<wbr>onFinish:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Respond to the <code><a href="../Classes/Workflow.html">Workflow</a></code> getting abandoned.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">abandon</span><span class="p">(</span><span class="n">_</span> <span class="nv">workflow</span><span class="p">:</span> <span class="kt"><a href="../Classes/AnyWorkflow.html">AnyWorkflow</a></span><span class="p">,</span> <span class="nv">onFinish</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>workflow</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The <code><a href="../Classes/AnyWorkflow.html">AnyWorkflow</a></code> that is being abandoned.</p>
                                 </div>
                               </td>
                             </tr>
@@ -229,189 +336,14 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>The closure to call when the last element in the <code><a href="../Classes/Workflow.html">Workflow</a></code> proceeds.</p>
+                                  <p>A closure that is executed when the responder is finished abandoning.</p>
                                 </div>
                               </td>
                             </tr>
                           </tbody>
                         </table>
                       </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>The first loaded instance or nil, if none was loaded.</p>
-                      </div>
                     </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8Workflow03AnyA0C6launch4with0D11LaunchStyle8onFinishAA10LinkedListC4NodeCyAA0B17FlowRepresentableCSg_ANGSgypSg_AA0eF0CyAQcSgtF"></a>
-                    <a name="//apple_ref/swift/Method/launch(with:withLaunchStyle:onFinish:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Workflow03AnyA0C6launch4with0D11LaunchStyle8onFinishAA10LinkedListC4NodeCyAA0B17FlowRepresentableCSg_ANGSgypSg_AA0eF0CyAQcSgtF">launch(with:<wbr>withLaunchStyle:<wbr>onFinish:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Launches the <code><a href="../Classes/Workflow.html">Workflow</a></code>.</p>
-<h3 id='discussion' class='heading'>Discussion</h3>
-
-<p>Args are passed to the first instance, it has the opportunity to load, not load and transform them, or just not load.
-In the event an instance does not load and does not transform args, they are passed unmodified to the next instance in the <code><a href="../Classes/Workflow.html">Workflow</a></code> until one loads.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="nf">launch</span><span class="p">(</span><span class="n">with</span> <span class="nv">args</span><span class="p">:</span> <span class="kt">Any</span><span class="p">?,</span>
-                   <span class="n">withLaunchStyle</span> <span class="nv">launchStyle</span><span class="p">:</span> <span class="kt"><a href="../Classes/LaunchStyle.html">LaunchStyle</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span>
-                   <span class="nv">onFinish</span><span class="p">:</span> <span class="p">((</span><span class="kt">Any</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/AnyWorkflow/InstanceNode.html">InstanceNode</a></span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>args</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The arguments to pass to the first instance(s).</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>launchStyle</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The launch style to use.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>onFinish</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The closure to call when the last element in the <code><a href="../Classes/Workflow.html">Workflow</a></code> proceeds.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>The first loaded instance or nil, if none was loaded.</p>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8Workflow03AnyA0C6launch10passedArgs15withLaunchStyle8onFinishAA10LinkedListC4NodeCyAA0B17FlowRepresentableCSg_ANGSgAC06PassedE0O_AA0gH0CyypSgcSgtF"></a>
-                    <a name="//apple_ref/swift/Method/launch(passedArgs:withLaunchStyle:onFinish:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Workflow03AnyA0C6launch10passedArgs15withLaunchStyle8onFinishAA10LinkedListC4NodeCyAA0B17FlowRepresentableCSg_ANGSgAC06PassedE0O_AA0gH0CyypSgcSgtF">launch(passedArgs:<wbr>withLaunchStyle:<wbr>onFinish:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Launches the <code><a href="../Classes/Workflow.html">Workflow</a></code>.</p>
-<h3 id='discussion' class='heading'>Discussion</h3>
-
-<p>passedArgs are passed to the first instance, it has the opportunity to load, not load and transform them, or just not load.
-In the event an instance does not load and does not transform args, they are passed unmodified to the next instance in the <code><a href="../Classes/Workflow.html">Workflow</a></code> until one loads.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="nf">launch</span><span class="p">(</span><span class="nv">passedArgs</span><span class="p">:</span> <span class="kt"><a href="../Classes/AnyWorkflow/PassedArgs.html">PassedArgs</a></span><span class="p">,</span>
-                   <span class="n">withLaunchStyle</span> <span class="nv">launchStyle</span><span class="p">:</span> <span class="kt"><a href="../Classes/LaunchStyle.html">LaunchStyle</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span>
-                   <span class="nv">onFinish</span><span class="p">:</span> <span class="p">((</span><span class="kt">Any</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/AnyWorkflow/InstanceNode.html">InstanceNode</a></span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>passedArgs</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The arguments to pass to the first instance(s).</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>launchStyle</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The launch style to use.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>onFinish</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The closure to call when the last element in the <code><a href="../Classes/Workflow.html">Workflow</a></code> proceeds.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>The first loaded instance or nil, if none was loaded.</p>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8Workflow03AnyA0C10PassedArgsO"></a>
-                    <a name="//apple_ref/swift/Enum/PassedArgs" class="dashAnchor"></a>
-                    <a class="direct-link" href="../Classes/AnyWorkflow/PassedArgs.html">PassedArgs</a>
-                    </code>
                   </div>
                 </li>
               </ul>
