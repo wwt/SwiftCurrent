@@ -14,7 +14,7 @@ import Foundation
  Examples:
  ```swift
  let workflow = Workflow(SomeFlowRepresentableClass.self)
- .thenPresent(SomeOtherFlowRepresentableClass.self, launchStyle: .navigationStack)
+                .then(SomeOtherFlowRepresentableClass.self, launchStyle: .navigationStack)
  ```
 
  ### Discussion
@@ -23,7 +23,7 @@ import Foundation
  ```swift
  struct Workflows {
  static let schedulingFlow = Workflow(SomeFlowRepresentableClass.self)
- .thenPresent(SomeOtherFlowRepresentableClass.self, launchStyle: .navigationStack)
+                            .then(SomeOtherFlowRepresentableClass.self, launchStyle: .navigationStack)
  }
  ```
  */
