@@ -17,7 +17,7 @@ import Foundation
  #### Example
  ```swift
  Workflow(SomeFlowRepresentableClass.self) // We now have a FlowRepresentableMetadata representing SomeFlowRepresentableClass
-     .then(SomeOtherFlowRepresentableClass.self, launchStyle: .navigationStack) // We now have a FlowRepresentableMetadata representing SomeOtherFlowRepresentableClass and its launch style of navigation stack
+     .thenProceed(with: SomeOtherFlowRepresentableClass.self, launchStyle: .navigationStack) // We now have a FlowRepresentableMetadata representing SomeOtherFlowRepresentableClass and its launch style of navigation stack
  ```
  Initially we create a `FlowRepresentableMetadata` representing SomeFlowRepresentableClass.  When we call `.thenPresent` we add a `FlowRepresentableMetadata` representing SomeOtherFlowRepresentableClass and its launch style of navigation stack to the `Workflow`.
  */

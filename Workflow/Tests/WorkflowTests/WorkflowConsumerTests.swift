@@ -20,8 +20,8 @@ class WorkflowConsumerTests: XCTestCase {
 
         let responder = MockOrchestrationResponder()
         let wf = Workflow(FR1.self)
-            .then(FR2.self)
-            .then(FR3.self)
+            .thenProceed(with: FR2.self)
+            .thenProceed(with: FR3.self)
 
         wf.applyOrchestrationResponder(responder)
 
@@ -60,8 +60,8 @@ class WorkflowConsumerTests: XCTestCase {
 
         let responder = MockOrchestrationResponder()
         let wf = Workflow(FR1.self)
-            .then(FR2.self)
-            .then(FR3.self)
+            .thenProceed(with: FR2.self)
+            .thenProceed(with: FR3.self)
 
         wf.applyOrchestrationResponder(responder)
 
@@ -95,8 +95,8 @@ class WorkflowConsumerTests: XCTestCase {
 
         let responder = MockOrchestrationResponder()
         let wf = Workflow(FR1.self)
-            .then(FR2.self)
-            .then(FR3.self)
+            .thenProceed(with: FR2.self)
+            .thenProceed(with: FR3.self)
 
         wf.applyOrchestrationResponder(responder)
 
@@ -143,7 +143,7 @@ class WorkflowConsumerTests: XCTestCase {
         }
 
         let wf: Workflow = Workflow(FR1.self)
-            .then(FR2.self)
+            .thenProceed(with: FR2.self)
 
         var callbackCalled = false
         let firstInstance = wf.launch(with: 1) { args in
@@ -169,7 +169,7 @@ class WorkflowConsumerTests: XCTestCase {
         }
 
         let wf: Workflow = Workflow(FR1.self)
-            .then(FR2.self)
+            .thenProceed(with: FR2.self)
 
         var callbackCalled = false
         let firstInstance = wf.launch(with: 1) { args in

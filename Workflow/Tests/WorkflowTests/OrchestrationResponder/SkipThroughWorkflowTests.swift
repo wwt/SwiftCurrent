@@ -18,8 +18,8 @@ class SkipThroughWorkflowTests: XCTestCase {
         class FR2: TestPassthroughFlowRepresentable { }
         class FR3: TestPassthroughFlowRepresentable { }
         let wf = Workflow(FR1.self)
-            .then(FR2.self)
-            .then(FR3.self)
+            .thenProceed(with: FR2.self)
+            .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
 
@@ -53,8 +53,8 @@ class SkipThroughWorkflowTests: XCTestCase {
         }
         class FR3: TestPassthroughFlowRepresentable { }
         let wf = Workflow(FR1.self)
-            .then(FR2.self)
-            .then(FR3.self)
+            .thenProceed(with: FR2.self)
+            .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
 
@@ -88,8 +88,8 @@ class SkipThroughWorkflowTests: XCTestCase {
         }
         class FR3: TestPassthroughFlowRepresentable { }
         let wf = Workflow(FR1.self)
-            .then(FR2.self)
-            .then(FR3.self)
+            .thenProceed(with: FR2.self)
+            .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
 
@@ -139,8 +139,8 @@ class SkipThroughWorkflowTests: XCTestCase {
             func shouldLoad() -> Bool { false }
         }
         let wf = Workflow(FR1.self)
-            .then(FR2.self)
-            .then(FR3.self)
+            .thenProceed(with: FR2.self)
+            .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
 
@@ -186,8 +186,8 @@ class SkipThroughWorkflowTests: XCTestCase {
         }
         class FR3: TestPassthroughFlowRepresentable { }
         let wf = Workflow(FR1.self)
-            .then(FR2.self)
-            .then(FR3.self)
+            .thenProceed(with: FR2.self)
+            .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
 
@@ -242,8 +242,8 @@ class SkipThroughWorkflowTests: XCTestCase {
             }
         }
         let wf = Workflow(FR1.self)
-            .then(FR2.self)
-            .then(FR3.self)
+            .thenProceed(with: FR2.self)
+            .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
 
@@ -276,8 +276,8 @@ class SkipThroughWorkflowTests: XCTestCase {
         }
         class FR3: TestPassthroughFlowRepresentable { }
         let wf = Workflow(FR1.self)
-            .then(FR2.self)
-            .then(FR3.self)
+            .thenProceed(with: FR2.self)
+            .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
 
@@ -325,8 +325,8 @@ class SkipThroughWorkflowTests: XCTestCase {
             }
         }
         let wf = Workflow(FR1.self)
-            .then(FR2.self)
-            .then(FR3.self)
+            .thenProceed(with: FR2.self)
+            .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
 
@@ -366,8 +366,8 @@ class SkipThroughWorkflowTests: XCTestCase {
         }
         let expectation = self.expectation(description: "onFinish called")
         let wf = Workflow(FR1.self)
-            .then(FR2.self)
-            .then(FR3.self)
+            .thenProceed(with: FR2.self)
+            .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
 
@@ -410,8 +410,8 @@ class SkipThroughWorkflowTests: XCTestCase {
             }
         }
         let wf = Workflow(FR1.self)
-            .then(FR2.self)
-            .then(FR3.self)
+            .thenProceed(with: FR2.self)
+            .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
 
@@ -463,8 +463,8 @@ class SkipThroughWorkflowTests: XCTestCase {
         }
         let expectation = self.expectation(description: "onFinish called")
         let wf = Workflow(FR1.self)
-            .then(FR2.self)
-            .then(FR3.self)
+            .thenProceed(with: FR2.self)
+            .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
         wf.applyOrchestrationResponder(responder)
 

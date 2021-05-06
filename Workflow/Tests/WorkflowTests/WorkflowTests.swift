@@ -38,7 +38,7 @@ class WorkflowTests: XCTestCase {
                 return true
             }
         }
-        let flow = Workflow(FR1.self).then(FR2.self)
+        let flow = Workflow(FR1.self).thenProceed(with: FR2.self)
         _ = flow.first?.value.flowRepresentableFactory(.args("str")).shouldLoad()
         _ = flow.last?.value.flowRepresentableFactory(.args(1)).shouldLoad()
 

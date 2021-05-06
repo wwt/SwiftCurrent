@@ -9,25 +9,18 @@
 import Foundation
 
 /**
- Workflow: A doubly linked list of AnyFlowRepresentable types. Can be used to create a user flow.
- 
- Examples:
- ```swift
- let workflow = Workflow(SomeFlowRepresentableClass.self)
-                .then(SomeOtherFlowRepresentableClass.self, launchStyle: .navigationStack)
- ```
+ A doubly linked list of `FlowRepresentableMetadata`s; used to define a process.
 
  ### Discussion
  In a sufficiently complex application it may make sense to create a structure to hold onto all the workflows in an application.
- Example
- ```swift
- struct Workflows {
- static let schedulingFlow = Workflow(SomeFlowRepresentableClass.self)
-                            .then(SomeOtherFlowRepresentableClass.self, launchStyle: .navigationStack)
- }
- ```
  */
-
+/// #### Example
+/// ```swift
+/// struct Workflows {
+///     static let schedulingFlow = Workflow(SomeFlowRepresentable.self)
+///         .thenProceed(with: SomeOtherFlowRepresentable.self)
+/// }
+/// ```
 public final class Workflow<F: FlowRepresentable>: AnyWorkflow {
     public required init(_ node: AnyWorkflow.Element?) {
         super.init(node)
@@ -101,9 +94,9 @@ extension Workflow where F.WorkflowOutput == Never {
      - Parameter flowPersistence: An `FlowPersistence`type representing how this item in the workflow should persist.
      - Returns: `Workflow`
      */
-    public func then<FR: FlowRepresentable>(_ type: FR.Type,
-                                            launchStyle: LaunchStyle = .default,
-                                            flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where FR.WorkflowInput == Never {
+    public func thenProceed<FR: FlowRepresentable>(with type: FR.Type,
+                                                   launchStyle: LaunchStyle = .default,
+                                                   flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where FR.WorkflowInput == Never {
         let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetadata(type,
                                             launchStyle: launchStyle) { _ in flowPersistence() })
@@ -117,9 +110,9 @@ extension Workflow where F.WorkflowOutput == Never {
      - Parameter flowPersistence: An `FlowPersistence`type representing how this item in the workflow should persist.
      - Returns: `Workflow`
      */
-    public func then<FR: FlowRepresentable>(_ type: FR.Type,
-                                            launchStyle: LaunchStyle = .default,
-                                            flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR>
+    public func thenProceed<FR: FlowRepresentable>(with type: FR.Type,
+                                                   launchStyle: LaunchStyle = .default,
+                                                   flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR>
     where FR.WorkflowInput == AnyWorkflow.PassedArgs {
         let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetadata(type,
@@ -136,9 +129,9 @@ extension Workflow {
      - Parameter flowPersistence: An `FlowPersistence`type representing how this item in the workflow should persist.
      - Returns: `Workflow`
      */
-    public func then<FR: FlowRepresentable>(_ type: FR.Type,
-                                            launchStyle: LaunchStyle = .default,
-                                            flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where F.WorkflowOutput == FR.WorkflowInput {
+    public func thenProceed<FR: FlowRepresentable>(with type: FR.Type,
+                                                   launchStyle: LaunchStyle = .default,
+                                                   flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where F.WorkflowOutput == FR.WorkflowInput {
         let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetadata(type,
                                             launchStyle: launchStyle) { _ in flowPersistence() })
@@ -152,9 +145,9 @@ extension Workflow {
      - Parameter flowPersistence: A closure taking in the generic type from the `FlowRepresentable` and returning a `FlowPersistence`type representing how this item in the workflow should persist.
      - Returns: `Workflow`
      */
-    public func then<FR: FlowRepresentable>(_ type: FR.Type,
-                                            launchStyle: LaunchStyle = .default,
-                                            flowPersistence: @escaping (FR.WorkflowInput) -> FlowPersistence) -> Workflow<FR> where F.WorkflowOutput == FR.WorkflowInput {
+    public func thenProceed<FR: FlowRepresentable>(with type: FR.Type,
+                                                   launchStyle: LaunchStyle = .default,
+                                                   flowPersistence: @escaping (FR.WorkflowInput) -> FlowPersistence) -> Workflow<FR> where F.WorkflowOutput == FR.WorkflowInput {
         let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetadata(type,
                                             launchStyle: launchStyle) { data in
@@ -172,9 +165,9 @@ extension Workflow {
      - Parameter flowPersistence: A closure returning a `FlowPersistence`type representing how this item in the workflow should persist.
      - Returns: `Workflow`
      */
-    public func then<FR: FlowRepresentable>(_ type: FR.Type,
-                                            launchStyle: LaunchStyle = .default,
-                                            flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where FR.WorkflowInput == Never {
+    public func thenProceed<FR: FlowRepresentable>(with type: FR.Type,
+                                                   launchStyle: LaunchStyle = .default,
+                                                   flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where FR.WorkflowInput == Never {
         let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetadata(type,
                                             launchStyle: launchStyle) { _ in flowPersistence() })
@@ -188,9 +181,9 @@ extension Workflow {
      - Parameter flowPersistence: A closure returning a `FlowPersistence`type representing how this item in the workflow should persist.
      - Returns: `Workflow`
      */
-    public func then<FR: FlowRepresentable>(_ type: FR.Type,
-                                            launchStyle: LaunchStyle = .default,
-                                            flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR>
+    public func thenProceed<FR: FlowRepresentable>(with type: FR.Type,
+                                                   launchStyle: LaunchStyle = .default,
+                                                   flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR>
     where FR.WorkflowInput == AnyWorkflow.PassedArgs {
         let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetadata(type,
