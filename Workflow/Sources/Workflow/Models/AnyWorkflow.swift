@@ -23,6 +23,7 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
         self.orchestrationResponder = orchestrationResponder
     }
 
+    #warning("Maybe OnFinish should take a AnyWorkflow.PassedArgs")
     /**
      Launches the `Workflow`.
      - Parameter launchStyle: The launch style to use.
