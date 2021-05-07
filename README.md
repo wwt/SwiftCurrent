@@ -7,7 +7,7 @@
 Workflow is a library meant to handle complex user flows in iOS applications.
 
 #### Table of Contents:
-- [Insallation](https://github.com/wwt/Workflow/wiki/Installation)
+- [Installation](https://github.com/wwt/Workflow/wiki/Installation)
 - [Why DynamicWorkflow?](https://github.com/wwt/Workflow/wiki/why-this-library)
 - [Getting Started](https://github.com/wwt/Workflow/wiki/getting-started)
 - [Testing Your Workflows](https://github.com/wwt/Workflow/wiki/testing)
