@@ -8,6 +8,7 @@
 
 import Foundation
 
+#warning("Consider: This does not use our recommended approach to type erasure, should we change it?")
 /// A type erased `Workflow`
 public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
     /// A `LinkedList.Node` that holds onto the loaded `AnyFlowRepresentable`s.
@@ -146,6 +147,20 @@ public class AnyWorkflow: LinkedList<FlowRepresentableMetadata> {
                     nextNode.value = flowRepresentable
                     root = (instance: flowRepresentable, metadata: metadata)
                     setupCallbacks(for: nextNode, onFinish: onFinish)
+                    #warning("""
+                        Should from be root ?? node? We should write a test that starts with a loading representable
+                        Then has 2 in a row that proceed and skip AND persist while skipped
+                        Visualization: FR1 (loads), FR2 (skips, persists), FR3 (skips, persists), FR4 (loads)
+                        CORRECT:
+                        FR1 calls proceed, this callback tells the reponder to proceed to FR2 from FR1 THEN
+                        FR2 calls proceed, this callback tells the responder to proceed from FR2 to FR3 THEN
+                        FR3 calls proceed, this callback tells the responder to proceed from FR3 to FR4
+
+                        POSSIBLY HAPPENING NOW (incorrect):
+                        FR1 calls proceed, this callback tells the reponder to proceed to FR2 from FR1 THEN
+                        FR2 calls proceed, this callback tells the responder to proceed from FR1 to FR3 THEN
+                        FR3 calls proceed, this callback tells the responder to proceed from FR1 to FR4
+                    """)
                     orchestrationResponder?.proceed(to: (instance: nextNode, metadata: metadata),
                                                     from: (instance: node, metadata: currentMetadataNode.value))
                 }

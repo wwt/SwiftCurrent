@@ -49,6 +49,7 @@ import Foundation
  ```
  */
 public protocol FlowRepresentable {
+    #warning("With `shouldLoad(with args: WorkflowInput)` gone, it is possible to default WorkflowInput to `Never`, should we?")
     /// The type of data coming into the `FlowRepresentable`; use `Never` when the `FlowRepresentable` will ignore data passed in from the `Workflow`.
     associatedtype WorkflowInput
     /// The type of data passed forward from the `FlowRepresentable`; defaulted to `Never`; `Never` means data will not be passed forward.
