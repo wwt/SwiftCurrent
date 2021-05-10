@@ -82,12 +82,11 @@ public class AnyWorkflow: LinkedList<WorkflowItem> {
     @discardableResult public func launch(passedArgs: PassedArgs,
                                           withLaunchStyle launchStyle: LaunchStyle = .default,
                                           onFinish: ((AnyWorkflow.PassedArgs) -> Void)? = nil) -> Element? {
-        var firstLoadedInstance: Element?
         removeInstances()
         var root: Element?
         var passedArgs = passedArgs
 
-        let metadata = first?.traverse { [self] nextNode in
+        let firstLoadedInstance = first?.traverse { [self] nextNode in
             let nextMetadata = nextNode.value.metadata
             let flowRepresentable = nextMetadata.flowRepresentableFactory(passedArgs)
             flowRepresentable.workflow = self
@@ -99,7 +98,6 @@ public class AnyWorkflow: LinkedList<WorkflowItem> {
                 let persistence = nextMetadata.calculatePersistence(passedArgs)
                 if shouldLoad {
                     nextNode.value.instance = flowRepresentable
-                    firstLoadedInstance = nextNode
                     setupCallbacks(for: nextNode, onFinish: onFinish)
                 } else if !shouldLoad && persistence == .persistWhenSkipped {
                     nextNode.value.instance = flowRepresentable
@@ -109,7 +107,7 @@ public class AnyWorkflow: LinkedList<WorkflowItem> {
                 }
             }
             return shouldLoad
-        }?.value.metadata
+        }
 
         guard let first = firstLoadedInstance  else {
             onFinish?(passedArgs)
@@ -143,9 +141,8 @@ public class AnyWorkflow: LinkedList<WorkflowItem> {
             var argsToPass = args
             var root: (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetadata)?
             let nextLoadedNode = node.next?.traverse { nextNode in
-                guard let metadata = first?.traverse(nextNode.position)?.value.metadata else { return false }
-                let persistence = metadata.calculatePersistence(argsToPass)
-                let flowRepresentable = metadata.flowRepresentableFactory(argsToPass)
+                let persistence = nextNode.value.metadata.calculatePersistence(argsToPass)
+                let flowRepresentable = nextNode.value.metadata.flowRepresentableFactory(argsToPass)
                 flowRepresentable.workflow = self
 
                 flowRepresentable.proceedInWorkflowStorage = { argsToPass = $0 }
@@ -155,7 +152,7 @@ public class AnyWorkflow: LinkedList<WorkflowItem> {
 
                 if !shouldLoad && persistence == .persistWhenSkipped {
                     nextNode.value.instance = flowRepresentable
-                    root = (instance: flowRepresentable, metadata: metadata)
+                    root = (instance: flowRepresentable, metadata: nextNode.value.metadata)
                     setupCallbacks(for: nextNode, onFinish: onFinish)
                     #warning("""
                         Should from be root ?? node? We should write a test that starts with a loading representable
@@ -171,7 +168,7 @@ public class AnyWorkflow: LinkedList<WorkflowItem> {
                         FR2 calls proceed, this callback tells the responder to proceed from FR1 to FR3 THEN
                         FR3 calls proceed, this callback tells the responder to proceed from FR1 to FR4
                     """)
-                    orchestrationResponder?.proceed(to: (instance: nextNode, metadata: metadata),
+                    orchestrationResponder?.proceed(to: (instance: nextNode, metadata: nextNode.value.metadata),
                                                     from: (instance: node, metadata: node.value.metadata))
                 }
 
