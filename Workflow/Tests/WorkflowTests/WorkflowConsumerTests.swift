@@ -167,6 +167,58 @@ class WorkflowConsumerTests: XCTestCase {
         }
         XCTAssert(callbackCalled)
     }
+
+    func testWorkflowWithSeveralBackToBackPersistWhenSkippedItems_StillCallsOrchestrationResponderAppropriately() {
+        final class FR1: FlowRepresentable {
+            typealias WorkflowInput = Never
+            var _workflowPointer: AnyFlowRepresentable?
+        }
+
+        final class FR2: FlowRepresentable {
+            typealias WorkflowInput = Never
+            var _workflowPointer: AnyFlowRepresentable?
+            func shouldLoad() -> Bool { false }
+        }
+
+        final class FR3: FlowRepresentable {
+            typealias WorkflowInput = Never
+            var _workflowPointer: AnyFlowRepresentable?
+            func shouldLoad() -> Bool { false }
+        }
+
+        final class FR4: FlowRepresentable {
+            typealias WorkflowInput = Never
+            var _workflowPointer: AnyFlowRepresentable?
+        }
+
+        let mockOrchestrationResponder = MockOrchestrationResponder()
+        let workflow = Workflow(FR1.self)
+            .thenProceed(with: FR2.self, flowPersistence: .persistWhenSkipped)
+            .thenProceed(with: FR3.self, flowPersistence: .persistWhenSkipped)
+            .thenProceed(with: FR4.self)
+
+        workflow.applyOrchestrationResponder(mockOrchestrationResponder)
+        workflow.launch()
+
+        XCTAssertEqual(mockOrchestrationResponder.launchCalled, 1)
+        XCTAssert(mockOrchestrationResponder.lastTo?.value.instance?.underlyingInstance is FR1)
+
+        (workflow.first?.value.instance?.underlyingInstance as? FR1)?.proceedInWorkflow()
+
+        XCTAssertEqual(mockOrchestrationResponder.allTos.count, 4)
+        XCTAssertEqual(mockOrchestrationResponder.allFroms.count, 3)
+
+        guard mockOrchestrationResponder.allTos.count == 4, mockOrchestrationResponder.allFroms.count == 3 else { return }
+
+        XCTAssert(mockOrchestrationResponder.allFroms[0].value.instance?.underlyingInstance is FR1, "Expected orchestration responder to proceed from FR1, but was: \(String(describing: mockOrchestrationResponder.allFroms[0].value.instance?.underlyingInstance))")
+        XCTAssert(mockOrchestrationResponder.allTos[1].value.instance?.underlyingInstance is FR2, "Expected orchestration responder to proceed to FR2, but was: \(String(describing: mockOrchestrationResponder.allTos[1].value.instance?.underlyingInstance))")
+
+        XCTAssert(mockOrchestrationResponder.allFroms[1].value.instance?.underlyingInstance is FR2, "Expected orchestration responder to proceed from FR2, but was: \(String(describing: mockOrchestrationResponder.allFroms[1].value.instance?.underlyingInstance))")
+        XCTAssert(mockOrchestrationResponder.allTos[2].value.instance?.underlyingInstance is FR3, "Expected orchestration responder to proceed to FR3, but was: \(String(describing: mockOrchestrationResponder.allTos[2].value.instance?.underlyingInstance))")
+
+        XCTAssert(mockOrchestrationResponder.allFroms[2].value.instance?.underlyingInstance is FR3, "Expected orchestration responder to proceed from FR3, but was: \(String(describing: mockOrchestrationResponder.allFroms[2].value.instance?.underlyingInstance))")
+        XCTAssert(mockOrchestrationResponder.allTos[3].value.instance?.underlyingInstance is FR4, "Expected orchestration responder to proceed to FR4, but was: \(String(describing: mockOrchestrationResponder.allTos[3].value.instance?.underlyingInstance))")
+    }
 }
 
 extension WorkflowConsumerTests {
