@@ -26,14 +26,6 @@ public final class Workflow<F: FlowRepresentable>: AnyWorkflow {
         super.init(node)
     }
 
-    public convenience init(_ metadata: FlowRepresentableMetadata) {
-        self.init(WorkflowItem(metadata: metadata, instance: nil))
-    }
-
-    public func append(_ metadata: FlowRepresentableMetadata) {
-        append(WorkflowItem(metadata: metadata, instance: nil))
-    }
-
     /**
      A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
      - Parameter type: A reference to the class used to create the workflow

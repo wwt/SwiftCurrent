@@ -8,21 +8,21 @@
 
 import Foundation
 
-public class WorkflowItem {
-    public let metadata: FlowRepresentableMetadata
-    public internal(set) var instance: AnyFlowRepresentable?
-
-    init(metadata: FlowRepresentableMetadata, instance: AnyFlowRepresentable? = nil) {
-        self.metadata = metadata
-        self.instance = instance
-    }
-}
-
 #warning("Consider: This does not use our recommended approach to type erasure, should we change it?")
 /// A type erased `Workflow`
-public class AnyWorkflow: LinkedList<WorkflowItem> {
+public class AnyWorkflow: LinkedList<_WorkflowItem> {
     /// A `LinkedList.Node` that holds onto the loaded `AnyFlowRepresentable`s.
     public private(set) var orchestrationResponder: OrchestrationResponder?
+
+    /// Creates an `AnyWorkflow` with a `WorkflowItem` that has metadata, but no instance
+    public convenience init(_ metadata: FlowRepresentableMetadata) {
+        self.init(Node(with: _WorkflowItem(metadata: metadata, instance: nil)))
+    }
+
+    /// Appends a `WorkflowItem` that has metadata, but no instance
+    public func append(_ metadata: FlowRepresentableMetadata) {
+        append(_WorkflowItem(metadata: metadata, instance: nil))
+    }
 
     /**
      Sets the `OrchestrationResponder` on the workflow.
@@ -131,38 +131,47 @@ public class AnyWorkflow: LinkedList<WorkflowItem> {
     }
 
     private func setupProceedCallbacks(_ node: Element, _ onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
-        node.value.instance?.proceedInWorkflowStorage = { [self] args in
-            var argsToPass = args
-            var root: Element?
-            let nextLoadedNode = node.next?.traverse { nextNode in
-                let persistence = nextNode.value.metadata.calculatePersistence(argsToPass)
-                let flowRepresentable = nextNode.value.metadata.flowRepresentableFactory(argsToPass)
-                flowRepresentable.workflow = self
-
-                flowRepresentable.proceedInWorkflowStorage = { argsToPass = $0 }
-
-                let shouldLoad = flowRepresentable.shouldLoad()
-                nextNode.value.instance = (shouldLoad || (!shouldLoad && persistence == .persistWhenSkipped)) ? flowRepresentable : nil
-
-                if !shouldLoad && persistence == .persistWhenSkipped {
-                    nextNode.value.instance = flowRepresentable
-                    setupCallbacks(for: nextNode, onFinish: onFinish)
-                    orchestrationResponder?.proceed(to: nextNode, from: root ?? node)
-                    root = nextNode
-                }
-
-                return shouldLoad
-            }
-
-            guard let nextNode = nextLoadedNode else {
-                onFinish?(argsToPass)
-                return
-            }
-
-            setupCallbacks(for: nextNode, onFinish: onFinish)
-            orchestrationResponder?.proceed(to: nextNode,
-                                            from: root ?? node)
+        node.value.instance?.proceedInWorkflowStorage = { [weak self] args in
+            guard let self = self else { return }
+            self.setupProceedInWorkflowStorage(node: node,
+                                               args: args,
+                                               onFinish: onFinish)
         }
+    }
+
+    private func setupProceedInWorkflowStorage(node: Element, args: PassedArgs, onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
+        var argsToPass = args
+        var root: Element?
+        // traverse AND mutate the above variables
+        let nextLoadedNode = node.next?.traverse { nextNode in
+            let persistence = nextNode.value.metadata.calculatePersistence(argsToPass)
+            let flowRepresentable = nextNode.value.metadata.flowRepresentableFactory(argsToPass)
+            flowRepresentable.workflow = self
+
+            // Capture new arguments, if shouldLoad calls proceedInWorkflow
+            flowRepresentable.proceedInWorkflowStorage = { argsToPass = $0 }
+
+            let shouldLoad = flowRepresentable.shouldLoad()
+            nextNode.value.instance = (shouldLoad || (!shouldLoad && persistence == .persistWhenSkipped)) ? flowRepresentable : nil
+
+            // Potential candidate for extration, thar be dragons watch out...
+            if !shouldLoad && persistence == .persistWhenSkipped {
+                nextNode.value.instance = flowRepresentable
+                setupCallbacks(for: nextNode, onFinish: onFinish)
+                orchestrationResponder?.proceed(to: nextNode, from: root ?? node)
+                root = nextNode
+            }
+
+            return shouldLoad
+        }
+
+        guard let nextNode = nextLoadedNode else {
+            onFinish?(argsToPass)
+            return
+        }
+
+        setupCallbacks(for: nextNode, onFinish: onFinish)
+        orchestrationResponder?.proceed(to: nextNode, from: root ?? node)
     }
 
     private func setupBackUpCallbacks(_ node: Element, _ onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {

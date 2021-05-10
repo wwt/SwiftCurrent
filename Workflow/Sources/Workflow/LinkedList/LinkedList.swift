@@ -52,22 +52,8 @@ public class LinkedList<Value>: Sequence, CustomStringConvertible {
     */
     public var last: Element? { first?.traverseToEnd() }
 
-    public convenience init(_ elements: Value...) {
-        self.init(elements)
-    }
-
-    public convenience init(_ elements: [Value]) {
-        let collection = elements.map { Element(with: $0) }
-        for (i, node) in collection.enumerated() {
-            node.previous = collection[safe: i - 1]
-            node.next = collection[safe: i + 1]
-        }
-
-        self.init(collection.first)
-    }
-
     /// A LinkedList can be instantiated simply by providing the first node in the list
-    public required init(_ node: Element?) {
+    public required init(_ node: Element? = nil) {
         first = node
     }
 

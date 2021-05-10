@@ -8,7 +8,24 @@
 
 import Foundation
 import XCTest
-import Workflow
+
+@testable import Workflow
+
+extension LinkedList {
+    convenience init(_ elements: Value...) {
+        self.init(elements)
+    }
+
+    convenience init(_ elements: [Value]) {
+        let collection = elements.map { Element(with: $0) }
+        for (i, node) in collection.enumerated() {
+            node.previous = collection[safe: i - 1]
+            node.next = collection[safe: i + 1]
+        }
+
+        self.init(collection.first)
+    }
+}
 
 class LinkedListTests: XCTestCase {
     class Object { }
