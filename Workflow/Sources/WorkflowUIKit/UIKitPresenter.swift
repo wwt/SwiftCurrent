@@ -46,9 +46,9 @@ open class UIKitPresenter: OrchestrationResponder {
     }
 
     /// Back up in the `Workflow` by dismissing or popping the `FlowRepresentable` that is also a `UIViewController`
-    public func backUp(from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
-                       to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata)) {
-        guard let view = to.instance.value.instance?.underlyingInstance as? UIViewController else { return }
+    public func backUp(from: AnyWorkflow.InstanceNode,
+                       to: AnyWorkflow.InstanceNode) {
+        guard let view = to.value.instance?.underlyingInstance as? UIViewController else { return }
         if let nav = view.navigationController {
             nav.popToViewController(view, animated: true)
         } else if let presented = view.presentedViewController {

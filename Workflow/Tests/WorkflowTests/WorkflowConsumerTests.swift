@@ -79,38 +79,6 @@ class WorkflowConsumerTests: XCTestCase {
         XCTAssert(responder.lastTo?.instance.value.underlyingInstance is FR3)
     }
 
-    func testBackUpThrowsFatalErrorIfInternalStateIsMangled() {
-        struct FR1: FlowRepresentable {
-            typealias WorkflowInput = Never
-            var _workflowPointer: AnyFlowRepresentable?
-        }
-        struct FR2: FlowRepresentable {
-            typealias WorkflowInput = Never
-            var _workflowPointer: AnyFlowRepresentable?
-        }
-        struct FR3: FlowRepresentable {
-            typealias WorkflowInput = Never
-            var _workflowPointer: AnyFlowRepresentable?
-        }
-
-        let responder = MockOrchestrationResponder()
-        let wf = Workflow(FR1.self)
-            .thenProceed(with: FR2.self)
-            .thenProceed(with: FR3.self)
-
-        wf.applyOrchestrationResponder(responder)
-
-        wf.launch(with: 1)
-
-        (responder.lastTo?.instance.value.underlyingInstance as? FR1)?.proceedInWorkflow()
-
-        wf.first = nil
-
-        XCTAssertThrowsFatalError {
-            try? (responder.lastTo?.instance.value.underlyingInstance as? FR2)?.backUpInWorkflow()
-        }
-    }
-
     func testBackUpThrowsErrorIfAtBeginningOfWorkflow() {
         struct FR1: FlowRepresentable {
             typealias WorkflowInput = Never

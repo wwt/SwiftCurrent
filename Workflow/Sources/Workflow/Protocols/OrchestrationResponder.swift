@@ -26,8 +26,8 @@ public protocol OrchestrationResponder {
      - Parameter to: Passes the `AnyWorkflow.InstanceNode` and `FlowRepresentableMetadata` so the responder can decide how to back up.
      - Parameter from: Passes the `AnyWorkflow.InstanceNode` and `FlowRepresentableMetadata` so the responder has context on where to back up from.
      */
-    func backUp(from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
-                to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata))
+    func backUp(from: AnyWorkflow.InstanceNode,
+                to: AnyWorkflow.InstanceNode)
     /**
      Respond to the `Workflow` getting abandoned.
      - Parameter workflow: The `AnyWorkflow` that is being abandoned.

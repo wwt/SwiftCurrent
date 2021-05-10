@@ -195,11 +195,7 @@ public class AnyWorkflow: LinkedList<WorkflowItem> {
 
             guard let previousNode = previousLoadedNode else { throw WorkflowError.failedToBackUp }
 
-            guard let previousMetadataNode = first?.traverse(previousNode.position) else {
-                fatalError("Internal state of workflow completely mangled during execution of proceed backward callback.")
-            }
-
-            orchestrationResponder?.backUp(from: (instance: node, metadata: node.value.metadata), to: (instance: previousNode, metadata: previousMetadataNode.value.metadata))
+            orchestrationResponder?.backUp(from: node, to: previousNode)
         }
     }
 

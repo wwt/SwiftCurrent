@@ -28,9 +28,9 @@ class MockOrchestrationResponder: OrchestrationResponder {
     }
 
     var backUpCalled = 0
-    func backUp(from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata), to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata)) {
-        lastFrom = from
-        lastTo = to
+    func backUp(from: AnyWorkflow.InstanceNode, to: AnyWorkflow.InstanceNode) {
+        lastFrom = (instance: from, metadata: from.value.metadata)
+        lastTo = (instance: to, metadata: to.value.metadata)
         backUpCalled += 1
     }
 
