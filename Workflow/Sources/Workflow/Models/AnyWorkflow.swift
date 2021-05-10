@@ -22,9 +22,7 @@ public class WorkflowItem {
 /// A type erased `Workflow`
 public class AnyWorkflow: LinkedList<WorkflowItem> {
     /// A `LinkedList.Node` that holds onto the loaded `AnyFlowRepresentable`s.
-    public typealias InstanceNode = Element
     public private(set) var orchestrationResponder: OrchestrationResponder?
-//    internal var instances = LinkedList<AnyFlowRepresentable?>()
 
     /**
      Sets the `OrchestrationResponder` on the workflow.
@@ -41,7 +39,7 @@ public class AnyWorkflow: LinkedList<WorkflowItem> {
      - Returns: The first loaded instance or nil, if none was loaded.
      */
     @discardableResult public func launch(withLaunchStyle launchStyle: LaunchStyle = .default,
-                                          onFinish: ((AnyWorkflow.PassedArgs) -> Void)? = nil) -> InstanceNode? {
+                                          onFinish: ((AnyWorkflow.PassedArgs) -> Void)? = nil) -> Element? {
         launch(passedArgs: .none, withLaunchStyle: launchStyle, onFinish: onFinish)
     }
 
@@ -59,7 +57,7 @@ public class AnyWorkflow: LinkedList<WorkflowItem> {
      */
     @discardableResult public func launch(with args: Any?,
                                           withLaunchStyle launchStyle: LaunchStyle = .default,
-                                          onFinish: ((AnyWorkflow.PassedArgs) -> Void)? = nil) -> InstanceNode? {
+                                          onFinish: ((AnyWorkflow.PassedArgs) -> Void)? = nil) -> Element? {
         launch(passedArgs: .args(args), withLaunchStyle: launchStyle, onFinish: onFinish)
     }
 

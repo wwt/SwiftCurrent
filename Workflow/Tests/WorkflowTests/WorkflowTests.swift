@@ -80,20 +80,6 @@ class WorkflowTests: XCTestCase {
             _ = FR1()
         }
     }
-
-    func testAnyWorkflowThrowsFatalErrorWhenMetadataGetsMangledOnProceed() {
-        final class FR1: FlowRepresentable {
-            typealias WorkflowInput = Never
-            weak var _workflowPointer: AnyFlowRepresentable?
-        }
-
-        XCTAssertThrowsFatalError {
-            let wf = Workflow(FR1.self)
-            wf.removeAll()
-            (wf.first?.value.instance?.underlyingInstance as! FR1).proceedInWorkflow()
-            wf.launch()
-        }
-    }
 }
 
 extension WorkflowTests {

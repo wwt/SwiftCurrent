@@ -27,15 +27,15 @@ open class UIKitPresenter: OrchestrationResponder {
     }
 
     /// Launches a `FlowRepresentable` that is also a `UIViewController`
-    public func launch(to: AnyWorkflow.InstanceNode) {
+    public func launch(to: AnyWorkflow.Element) {
         guard let view = to.value.instance?.underlyingInstance as? UIViewController else { return }
         firstLoadedInstance = view
         displayInstance(to, style: launchedPresentationType.rawValue, view: view, root: launchedFromVC)
     }
 
     /// Proceeds in the `Workflow` by presenting the next `FlowRepresentable` that is also a `UIViewController`
-    public func proceed(to: AnyWorkflow.InstanceNode,
-                        from: AnyWorkflow.InstanceNode) {
+    public func proceed(to: AnyWorkflow.Element,
+                        from: AnyWorkflow.Element) {
         guard let view = to.value.instance?.underlyingInstance as? UIViewController,
               let root = from.value.instance?.underlyingInstance as? UIViewController else { return }
         displayInstance(to, style: to.value.metadata.launchStyle, view: view, root: root) { [self] in
@@ -46,8 +46,8 @@ open class UIKitPresenter: OrchestrationResponder {
     }
 
     /// Back up in the `Workflow` by dismissing or popping the `FlowRepresentable` that is also a `UIViewController`
-    public func backUp(from: AnyWorkflow.InstanceNode,
-                       to: AnyWorkflow.InstanceNode) {
+    public func backUp(from: AnyWorkflow.Element,
+                       to: AnyWorkflow.Element) {
         guard let view = to.value.instance?.underlyingInstance as? UIViewController else { return }
         if let nav = view.navigationController {
             nav.popToViewController(view, animated: true)
@@ -110,7 +110,7 @@ open class UIKitPresenter: OrchestrationResponder {
         }
     }
 
-    private func displayInstance(_ to: AnyWorkflow.InstanceNode,
+    private func displayInstance(_ to: AnyWorkflow.Element,
                                  style: LaunchStyle,
                                  view: UIViewController,
                                  root: UIViewController,
@@ -127,7 +127,7 @@ open class UIKitPresenter: OrchestrationResponder {
         }
     }
 
-    private func displayDefaultPresentationType(to: AnyWorkflow.InstanceNode,
+    private func displayDefaultPresentationType(to: AnyWorkflow.Element,
                                                 root: UIViewController,
                                                 view: UIViewController,
                                                 animated: Bool,
@@ -145,7 +145,7 @@ open class UIKitPresenter: OrchestrationResponder {
         }
     }
 
-    private func displayModalPresentationType(to: AnyWorkflow.InstanceNode,
+    private func displayModalPresentationType(to: AnyWorkflow.Element,
                                               view: UIViewController,
                                               style: (LaunchStyle.PresentationType.ModalPresentationStyle),
                                               root: UIViewController,
