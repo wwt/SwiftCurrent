@@ -84,7 +84,7 @@ public class AnyWorkflow: LinkedList<WorkflowItem> {
                                           onFinish: ((AnyWorkflow.PassedArgs) -> Void)? = nil) -> Element? {
         var firstLoadedInstance: Element?
         removeInstances()
-        var root: (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetadata)?
+        var root: Element?
         var passedArgs = passedArgs
 
         let metadata = first?.traverse { [self] nextNode in
@@ -104,20 +104,19 @@ public class AnyWorkflow: LinkedList<WorkflowItem> {
                 } else if !shouldLoad && persistence == .persistWhenSkipped {
                     nextNode.value.instance = flowRepresentable
                     setupCallbacks(for: nextNode, onFinish: onFinish)
-                    orchestrationResponder?.launchOrProceed(to: (instance: nextNode, metadata: nextMetadata), from: convertInput(root))
-                    root = (instance: flowRepresentable, metadata: nextMetadata)
+                    orchestrationResponder?.launchOrProceed(to: nextNode, from: root)
+                    root = nextNode
                 }
             }
             return shouldLoad
         }?.value.metadata
 
-        guard let first = firstLoadedInstance,
-              let m = metadata else {
+        guard let first = firstLoadedInstance  else {
             onFinish?(passedArgs)
             return nil
         }
 
-        orchestrationResponder?.launchOrProceed(to: (instance: first, metadata:m), from: convertInput(root))
+        orchestrationResponder?.launchOrProceed(to: first, from: root)
 
         return firstLoadedInstance
     }

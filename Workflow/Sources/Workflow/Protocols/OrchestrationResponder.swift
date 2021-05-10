@@ -37,12 +37,13 @@ public protocol OrchestrationResponder {
 }
 
 extension OrchestrationResponder {
-    func launchOrProceed(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
-                         from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata)?) {
+    func launchOrProceed(to: AnyWorkflow.Element,
+                         from: AnyWorkflow.Element?) {
         if let root = from {
-            proceed(to: to, from: root)
+            proceed(to: (instance: to, metadata: to.value.metadata),
+                    from: (instance: root, metadata: root.value.metadata))
         } else {
-            launch(to: to)
+            launch(to: (instance: to, metadata: to.value.metadata))
         }
     }
 }
