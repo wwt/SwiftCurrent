@@ -49,12 +49,12 @@ func XCTAssertWorkflowLaunched(listener: WorkflowListener, workflow: AnyWorkflow
             XCTFail("Could not determine correct passedArgs to use, please make sure you have PassedArgs for every FlowRepresentable in your expected Workflow")
             return
         }
-        let actual = type(of: node.value.flowRepresentableFactory(passedArgs[position]).underlyingInstance)
+        let actual = type(of: node.value.metadata.flowRepresentableFactory(passedArgs[position]).underlyingInstance)
         guard let workflowNode = workflow.first?.traverse(node.position) else {
             XCTFail("expected workflow not as long as actual workflow")
             return
         }
-        let expected = type(of: workflowNode.value.flowRepresentableFactory(passedArgs[position]).underlyingInstance)
+        let expected = type(of: workflowNode.value.metadata.flowRepresentableFactory(passedArgs[position]).underlyingInstance)
         XCTAssert(actual == expected, "Expected type: \(expected), but got: \(actual)")
     }
 }

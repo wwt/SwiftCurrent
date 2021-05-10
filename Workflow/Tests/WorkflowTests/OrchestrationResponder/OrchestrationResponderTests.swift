@@ -24,26 +24,26 @@ class OrchestrationResponderTests: XCTestCase {
         let launchedRepresentable = wf.launch()
 
         XCTAssertEqual(responder.launchCalled, 1)
-        XCTAssert(launchedRepresentable?.value?.underlyingInstance is FR1)
-        XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR1)
+        XCTAssert(launchedRepresentable?.value.underlyingInstance is FR1)
+        XCTAssert(responder.lastTo?.instance.value.underlyingInstance is FR1)
         XCTAssertNil(responder.lastFrom)
 
-        (launchedRepresentable?.value?.underlyingInstance as? FR1)?.proceedInWorkflow()
+        (launchedRepresentable?.value.underlyingInstance as? FR1)?.proceedInWorkflow()
 
         XCTAssertEqual(responder.proceedCalled, 1)
-        XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR2)
+        XCTAssert(responder.lastTo?.instance.value.underlyingInstance is FR2)
         XCTAssertNotNil(responder.lastFrom)
-        XCTAssert(responder.lastFrom?.instance.value?.underlyingInstance is FR1)
-        XCTAssert((responder.lastFrom?.instance.value?.underlyingInstance as? FR1) === (launchedRepresentable?.value?.underlyingInstance as? FR1))
+        XCTAssert(responder.lastFrom?.instance.value.underlyingInstance is FR1)
+        XCTAssert((responder.lastFrom?.instance.value.underlyingInstance as? FR1) === (launchedRepresentable?.value.underlyingInstance as? FR1))
 
-        let fr2 = (responder.lastTo?.instance.value?.underlyingInstance as? FR2)
+        let fr2 = (responder.lastTo?.instance.value.underlyingInstance as? FR2)
         fr2?.proceedInWorkflow()
 
         XCTAssertEqual(responder.proceedCalled, 2)
-        XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR3)
+        XCTAssert(responder.lastTo?.instance.value.underlyingInstance is FR3)
         XCTAssertNotNil(responder.lastFrom)
-        XCTAssert(responder.lastFrom?.instance.value?.underlyingInstance is FR2)
-        XCTAssert((responder.lastFrom?.instance.value?.underlyingInstance as? FR2) === fr2)
+        XCTAssert(responder.lastFrom?.instance.value.underlyingInstance is FR2)
+        XCTAssert((responder.lastFrom?.instance.value.underlyingInstance as? FR2) === fr2)
     }
 
     func testWorkflowCallsOnFinishWhenItIsDone() {
@@ -59,9 +59,9 @@ class OrchestrationResponderTests: XCTestCase {
 
         let launchedRepresentable = wf.launch { _ in expectation.fulfill() }
 
-        (launchedRepresentable?.value?.underlyingInstance as? FR1)?.proceedInWorkflow()
-        (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.proceedInWorkflow()
-        (responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.proceedInWorkflow()
+        (launchedRepresentable?.value.underlyingInstance as? FR1)?.proceedInWorkflow()
+        (responder.lastTo?.instance.value.underlyingInstance as? FR2)?.proceedInWorkflow()
+        (responder.lastTo?.instance.value.underlyingInstance as? FR3)?.proceedInWorkflow()
 
         wait(for: [expectation], timeout: 3)
     }
@@ -84,9 +84,9 @@ class OrchestrationResponderTests: XCTestCase {
             expectation.fulfill()
         }
 
-        (launchedRepresentable?.value?.underlyingInstance as? FR1)?.proceedInWorkflow()
-        (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.proceedInWorkflow()
-        (responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.proceedInWorkflow(val)
+        (launchedRepresentable?.value.underlyingInstance as? FR1)?.proceedInWorkflow()
+        (responder.lastTo?.instance.value.underlyingInstance as? FR2)?.proceedInWorkflow()
+        (responder.lastTo?.instance.value.underlyingInstance as? FR3)?.proceedInWorkflow(val)
 
         wait(for: [expectation], timeout: 3)
     }
@@ -104,33 +104,33 @@ class OrchestrationResponderTests: XCTestCase {
         let launchedRepresentable = wf.launch()
 
         XCTAssertEqual(responder.launchCalled, 1)
-        XCTAssert(launchedRepresentable?.value?.underlyingInstance is FR1)
-        XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR1)
+        XCTAssert(launchedRepresentable?.value.underlyingInstance is FR1)
+        XCTAssert(responder.lastTo?.instance.value.underlyingInstance is FR1)
         XCTAssertNil(responder.lastFrom)
 
-        (launchedRepresentable?.value?.underlyingInstance as? FR1)?.proceedInWorkflow()
+        (launchedRepresentable?.value.underlyingInstance as? FR1)?.proceedInWorkflow()
 
         XCTAssertEqual(responder.proceedCalled, 1)
-        XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR2)
+        XCTAssert(responder.lastTo?.instance.value.underlyingInstance is FR2)
         XCTAssertNotNil(responder.lastFrom)
-        XCTAssert(responder.lastFrom?.instance.value?.underlyingInstance is FR1)
-        XCTAssert((responder.lastFrom?.instance.value?.underlyingInstance as? FR1) === (launchedRepresentable?.value?.underlyingInstance as? FR1))
+        XCTAssert(responder.lastFrom?.instance.value.underlyingInstance is FR1)
+        XCTAssert((responder.lastFrom?.instance.value.underlyingInstance as? FR1) === (launchedRepresentable?.value.underlyingInstance as? FR1))
 
-        let fr2 = (responder.lastTo?.instance.value?.underlyingInstance as? FR2)
+        let fr2 = (responder.lastTo?.instance.value.underlyingInstance as? FR2)
         try? fr2?.backUpInWorkflow()
         XCTAssertEqual(responder.backUpCalled, 1)
-        XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR1)
+        XCTAssert(responder.lastTo?.instance.value.underlyingInstance is FR1)
         XCTAssertNotNil(responder.lastTo)
-        XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR1)
-        XCTAssert((responder.lastTo?.instance.value?.underlyingInstance as? FR1) === (launchedRepresentable?.value?.underlyingInstance as? FR1))
+        XCTAssert(responder.lastTo?.instance.value.underlyingInstance is FR1)
+        XCTAssert((responder.lastTo?.instance.value.underlyingInstance as? FR1) === (launchedRepresentable?.value.underlyingInstance as? FR1))
 
         fr2?.proceedInWorkflow()
 
         XCTAssertEqual(responder.proceedCalled, 2)
-        XCTAssert(responder.lastTo?.instance.value?.underlyingInstance is FR3)
+        XCTAssert(responder.lastTo?.instance.value.underlyingInstance is FR3)
         XCTAssertNotNil(responder.lastFrom)
-        XCTAssert(responder.lastFrom?.instance.value?.underlyingInstance is FR2)
-        XCTAssert((responder.lastFrom?.instance.value?.underlyingInstance as? FR2) === fr2)
+        XCTAssert(responder.lastFrom?.instance.value.underlyingInstance is FR2)
+        XCTAssert((responder.lastFrom?.instance.value.underlyingInstance as? FR2) === fr2)
     }
 
     func testWorkflowCallsOnFinishWhenItIsDone_EvenWhenMovingBackwardsForABit() {
@@ -146,12 +146,12 @@ class OrchestrationResponderTests: XCTestCase {
 
         let launchedRepresentable = wf.launch { _ in expectation.fulfill() }
 
-        (launchedRepresentable?.value?.underlyingInstance as? FR1)?.proceedInWorkflow()
-        (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.proceedInWorkflow()
-        try? (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.backUpInWorkflow()
-        (responder.lastTo?.instance.value?.underlyingInstance as? FR1)?.proceedInWorkflow()
-        (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.proceedInWorkflow()
-        (responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.proceedInWorkflow()
+        (launchedRepresentable?.value.underlyingInstance as? FR1)?.proceedInWorkflow()
+        (responder.lastTo?.instance.value.underlyingInstance as? FR2)?.proceedInWorkflow()
+        try? (responder.lastTo?.instance.value.underlyingInstance as? FR2)?.backUpInWorkflow()
+        (responder.lastTo?.instance.value.underlyingInstance as? FR1)?.proceedInWorkflow()
+        (responder.lastTo?.instance.value.underlyingInstance as? FR2)?.proceedInWorkflow()
+        (responder.lastTo?.instance.value.underlyingInstance as? FR3)?.proceedInWorkflow()
 
         wait(for: [expectation], timeout: 3)
     }
@@ -205,18 +205,18 @@ class OrchestrationResponderTests: XCTestCase {
             expectation.fulfill()
         }
 
-        XCTAssert((launchedRepresentable?.value?.underlyingInstance as? FR1)?.obj === val)
-        (launchedRepresentable?.value?.underlyingInstance as? FR1)?.proceedInWorkflow(val)
-        XCTAssert((responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.obj === val)
-        (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.proceedInWorkflow(val)
-        XCTAssert((responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.obj === val)
-        try? (responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.backUpInWorkflow()
-        XCTAssert((responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.obj === val)
-        (responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.proceedInWorkflow(val)
-        XCTAssert((responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.obj === val)
-        (responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.proceedInWorkflow(val)
-        XCTAssert((responder.lastTo?.instance.value?.underlyingInstance as? FR2)?.obj === val)
-        (responder.lastTo?.instance.value?.underlyingInstance as? FR3)?.proceedInWorkflow(val)
+        XCTAssert((launchedRepresentable?.value.underlyingInstance as? FR1)?.obj === val)
+        (launchedRepresentable?.value.underlyingInstance as? FR1)?.proceedInWorkflow(val)
+        XCTAssert((responder.lastTo?.instance.value.underlyingInstance as? FR2)?.obj === val)
+        (responder.lastTo?.instance.value.underlyingInstance as? FR2)?.proceedInWorkflow(val)
+        XCTAssert((responder.lastTo?.instance.value.underlyingInstance as? FR3)?.obj === val)
+        try? (responder.lastTo?.instance.value.underlyingInstance as? FR3)?.backUpInWorkflow()
+        XCTAssert((responder.lastTo?.instance.value.underlyingInstance as? FR2)?.obj === val)
+        (responder.lastTo?.instance.value.underlyingInstance as? FR2)?.proceedInWorkflow(val)
+        XCTAssert((responder.lastTo?.instance.value.underlyingInstance as? FR2)?.obj === val)
+        (responder.lastTo?.instance.value.underlyingInstance as? FR3)?.proceedInWorkflow(val)
+        XCTAssert((responder.lastTo?.instance.value.underlyingInstance as? FR2)?.obj === val)
+        (responder.lastTo?.instance.value.underlyingInstance as? FR3)?.proceedInWorkflow(val)
 
         wait(for: [expectation], timeout: 3)
     }

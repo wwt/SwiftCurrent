@@ -39,8 +39,8 @@ class WorkflowTests: XCTestCase {
             }
         }
         let flow = Workflow(FR1.self).thenProceed(with: FR2.self)
-        _ = flow.first?.value.flowRepresentableFactory(.args("str")).shouldLoad()
-        _ = flow.last?.value.flowRepresentableFactory(.args(1)).shouldLoad()
+        _ = flow.first?.value.metadata.flowRepresentableFactory(.args("str")).shouldLoad()
+        _ = flow.last?.value.metadata.flowRepresentableFactory(.args(1)).shouldLoad()
 
         XCTAssert(FR1.shouldLoadCalledOnFR1, "Should load not called on flow representable 1 with correct corresponding type")
         XCTAssert(FR2.shouldLoadCalledOnFR2, "Should load not called on flow representable 2 with correct corresponding type")
@@ -90,7 +90,7 @@ class WorkflowTests: XCTestCase {
         XCTAssertThrowsFatalError {
             let wf = Workflow(FR1.self)
             wf.removeAll()
-            (wf.instances.first?.value?.underlyingInstance as! FR1).proceedInWorkflow()
+            (wf.first?.value.underlyingInstance as! FR1).proceedInWorkflow()
             wf.launch()
         }
     }
