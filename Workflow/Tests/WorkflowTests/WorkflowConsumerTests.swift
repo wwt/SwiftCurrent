@@ -26,16 +26,16 @@ class WorkflowConsumerTests: XCTestCase {
         wf.applyOrchestrationResponder(responder)
 
         let firstInstance = wf.launch(with: 1)
-        XCTAssert(firstInstance?.value.underlyingInstance is FR1)
+        XCTAssert(firstInstance?.value.instance?.underlyingInstance is FR1)
         XCTAssertNil(responder.lastFrom)
-        XCTAssert(responder.lastTo?.instance.value.underlyingInstance is FR1)
-        XCTAssert((responder.lastTo?.instance.value.underlyingInstance as? FR1) === firstInstance?.value.underlyingInstance as? FR1)
+        XCTAssert(responder.lastTo?.value.instance?.underlyingInstance is FR1)
+        XCTAssert((responder.lastTo?.value.instance?.underlyingInstance as? FR1) === firstInstance?.value.instance?.underlyingInstance as? FR1)
         XCTAssertEqual(responder.launchCalled, 1)
-        (firstInstance?.value.underlyingInstance as? FR1)?.proceedInWorkflow()
+        (firstInstance?.value.instance?.underlyingInstance as? FR1)?.proceedInWorkflow()
         XCTAssertEqual(responder.proceedCalled, 1)
-        XCTAssert((responder.lastFrom?.instance.value.underlyingInstance as? FR1) === firstInstance?.value.underlyingInstance as? FR1)
-        XCTAssert(responder.lastTo?.instance.value.underlyingInstance is FR3)
-        XCTAssert((responder.lastTo?.instance.value.underlyingInstance as? FR3) === firstInstance?.next?.next?.value.underlyingInstance as? FR3)
+        XCTAssert((responder.lastFrom?.value.instance?.underlyingInstance as? FR1) === firstInstance?.value.instance?.underlyingInstance as? FR1)
+        XCTAssert(responder.lastTo?.value.instance?.underlyingInstance is FR3)
+        XCTAssert((responder.lastTo?.value.instance?.underlyingInstance as? FR3) === firstInstance?.next?.next?.value.instance?.underlyingInstance as? FR3)
     }
 
     func testProgressToNextAvailableItemInWorkflowWithValueTypes() {
@@ -66,17 +66,17 @@ class WorkflowConsumerTests: XCTestCase {
         wf.applyOrchestrationResponder(responder)
 
         let firstInstance = wf.launch(with: 1)
-        XCTAssert(firstInstance?.value.underlyingInstance is FR1)
+        XCTAssert(firstInstance?.value.instance?.underlyingInstance is FR1)
         XCTAssertNil(responder.lastFrom)
-        XCTAssert(responder.lastTo?.instance.value.underlyingInstance is FR1)
+        XCTAssert(responder.lastTo?.value.instance?.underlyingInstance is FR1)
         XCTAssertEqual(responder.launchCalled, 1)
-        (responder.lastTo?.instance.value.underlyingInstance as? FR1)?.proceedInWorkflow()
+        (responder.lastTo?.value.instance?.underlyingInstance as? FR1)?.proceedInWorkflow()
         XCTAssertEqual(responder.proceedCalled, 1)
-        XCTAssert(responder.lastTo?.instance.value.underlyingInstance is FR2)
-        (responder.lastTo?.instance.value.underlyingInstance as? FR2)?.proceedInWorkflow()
+        XCTAssert(responder.lastTo?.value.instance?.underlyingInstance is FR2)
+        (responder.lastTo?.value.instance?.underlyingInstance as? FR2)?.proceedInWorkflow()
         XCTAssertEqual(responder.proceedCalled, 2)
-        XCTAssert(responder.lastFrom?.instance.value.underlyingInstance is FR2)
-        XCTAssert(responder.lastTo?.instance.value.underlyingInstance is FR3)
+        XCTAssert(responder.lastFrom?.value.instance?.underlyingInstance is FR2)
+        XCTAssert(responder.lastTo?.value.instance?.underlyingInstance is FR3)
     }
 
     func testBackUpThrowsErrorIfAtBeginningOfWorkflow() {
@@ -90,7 +90,7 @@ class WorkflowConsumerTests: XCTestCase {
         wf.applyOrchestrationResponder(responder)
         wf.launch()
 
-        XCTAssertThrowsError(try (responder.lastTo?.instance.value.underlyingInstance as? FR1)?.backUpInWorkflow()) { actualError in
+        XCTAssertThrowsError(try (responder.lastTo?.value.instance?.underlyingInstance as? FR1)?.backUpInWorkflow()) { actualError in
             XCTAssertNotNil(actualError as? WorkflowError, "Expected \(actualError) to be WorkflowError")
             XCTAssertEqual(actualError as? WorkflowError, .failedToBackUp, "Expected \(actualError) to be failedToBackUp")
         }
@@ -118,9 +118,9 @@ class WorkflowConsumerTests: XCTestCase {
             callbackCalled = true
             XCTAssertEqual(args.extractArgs(defaultValue: nil) as? String, "args")
         }
-        XCTAssert(firstInstance?.value.underlyingInstance is FR1)
-        (firstInstance?.value.underlyingInstance as? FR1)?.proceedInWorkflow("test")
-        (firstInstance?.next?.value.underlyingInstance as? FR2)?.proceedInWorkflow("args")
+        XCTAssert(firstInstance?.value.instance?.underlyingInstance is FR1)
+        (firstInstance?.value.instance?.underlyingInstance as? FR1)?.proceedInWorkflow("test")
+        (firstInstance?.next?.value.instance?.underlyingInstance as? FR2)?.proceedInWorkflow("args")
         XCTAssert(callbackCalled)
     }
 
@@ -144,8 +144,8 @@ class WorkflowConsumerTests: XCTestCase {
             callbackCalled = true
             XCTAssertEqual(args.extractArgs(defaultValue: nil) as? String, "args")
         }
-        XCTAssert(firstInstance?.value.underlyingInstance is FR1)
-        (firstInstance?.value.underlyingInstance as? FR1)?.proceedInWorkflow("test")
+        XCTAssert(firstInstance?.value.instance?.underlyingInstance is FR1)
+        (firstInstance?.value.instance?.underlyingInstance as? FR1)?.proceedInWorkflow("test")
         XCTAssert(callbackCalled)
     }
 

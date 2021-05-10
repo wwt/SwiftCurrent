@@ -12,10 +12,6 @@ public class WorkflowItem {
     public let metadata: FlowRepresentableMetadata
     public internal(set) var instance: AnyFlowRepresentable?
 
-    public var underlyingInstance: Any? {
-        instance?.underlyingInstance
-    }
-
     init(metadata: FlowRepresentableMetadata, instance: AnyFlowRepresentable? = nil) {
         self.metadata = metadata
         self.instance = instance
@@ -139,7 +135,7 @@ public class AnyWorkflow: LinkedList<WorkflowItem> {
     private func setupProceedCallbacks(_ node: Element, _ onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
         node.value.instance?.proceedInWorkflowStorage = { [self] args in
             var argsToPass = args
-            var root: (instance: AnyFlowRepresentable, metadata: FlowRepresentableMetadata)?
+            var root: Element?
             let nextLoadedNode = node.next?.traverse { nextNode in
                 let persistence = nextNode.value.metadata.calculatePersistence(argsToPass)
                 let flowRepresentable = nextNode.value.metadata.flowRepresentableFactory(argsToPass)
@@ -152,7 +148,7 @@ public class AnyWorkflow: LinkedList<WorkflowItem> {
 
                 if !shouldLoad && persistence == .persistWhenSkipped {
                     nextNode.value.instance = flowRepresentable
-                    root = (instance: flowRepresentable, metadata: nextNode.value.metadata)
+                    root = nextNode // This needs to be moved UNDER proceed most likely
                     setupCallbacks(for: nextNode, onFinish: onFinish)
                     #warning("""
                         Should from be root ?? node? We should write a test that starts with a loading representable
@@ -168,22 +164,20 @@ public class AnyWorkflow: LinkedList<WorkflowItem> {
                         FR2 calls proceed, this callback tells the responder to proceed from FR1 to FR3 THEN
                         FR3 calls proceed, this callback tells the responder to proceed from FR1 to FR4
                     """)
-                    orchestrationResponder?.proceed(to: (instance: nextNode, metadata: nextNode.value.metadata),
-                                                    from: (instance: node, metadata: node.value.metadata))
+                    orchestrationResponder?.proceed(to: nextNode, from: node)
                 }
 
                 return shouldLoad
             }
 
-            guard let nextNode = nextLoadedNode,
-                  let nextMetadataNode = first?.traverse(nextNode.position) else {
+            guard let nextNode = nextLoadedNode else {
                 onFinish?(argsToPass)
                 return
             }
 
             setupCallbacks(for: nextNode, onFinish: onFinish)
-            orchestrationResponder?.proceed(to: (instance: nextNode, metadata:nextMetadataNode.value.metadata),
-                                            from: convertInput(root) ?? (instance: node, metadata:node.value.metadata))
+            orchestrationResponder?.proceed(to: nextNode,
+                                            from: root ?? node)
         }
     }
 
@@ -202,15 +196,6 @@ public class AnyWorkflow: LinkedList<WorkflowItem> {
     private func setupCallbacks(for node: Element, onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
         setupProceedCallbacks(node, onFinish)
         setupBackUpCallbacks(node, onFinish)
-    }
-}
-
-extension AnyWorkflow {
-    private func convertInput(_ old: (instance: AnyFlowRepresentable,
-                                      metadata: FlowRepresentableMetadata)?) -> (instance: AnyWorkflow.InstanceNode,
-                                                                                 metadata: FlowRepresentableMetadata)? {
-        guard let old = old else { return nil }
-        return (instance: AnyWorkflow.InstanceNode(with: WorkflowItem(metadata: old.metadata, instance: old.instance)), metadata: old.metadata)
     }
 }
 

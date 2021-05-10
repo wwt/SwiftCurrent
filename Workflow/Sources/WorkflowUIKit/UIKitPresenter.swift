@@ -27,19 +27,19 @@ open class UIKitPresenter: OrchestrationResponder {
     }
 
     /// Launches a `FlowRepresentable` that is also a `UIViewController`
-    public func launch(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata)) {
-        guard let view = to.instance.value.instance?.underlyingInstance as? UIViewController else { return }
+    public func launch(to: AnyWorkflow.InstanceNode) {
+        guard let view = to.value.instance?.underlyingInstance as? UIViewController else { return }
         firstLoadedInstance = view
         displayInstance(to, style: launchedPresentationType.rawValue, view: view, root: launchedFromVC)
     }
 
     /// Proceeds in the `Workflow` by presenting the next `FlowRepresentable` that is also a `UIViewController`
-    public func proceed(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
-                        from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata)) {
-        guard let view = to.instance.value.instance?.underlyingInstance as? UIViewController,
-              let root = from.instance.value.instance?.underlyingInstance as? UIViewController else { return }
-        displayInstance(to, style: to.metadata.launchStyle, view: view, root: root) { [self] in
-            if from.metadata.persistence == .removedAfterProceeding {
+    public func proceed(to: AnyWorkflow.InstanceNode,
+                        from: AnyWorkflow.InstanceNode) {
+        guard let view = to.value.instance?.underlyingInstance as? UIViewController,
+              let root = from.value.instance?.underlyingInstance as? UIViewController else { return }
+        displayInstance(to, style: to.value.metadata.launchStyle, view: view, root: root) { [self] in
+            if from.value.metadata.persistence == .removedAfterProceeding {
                 destroy(root)
             }
         }
@@ -110,12 +110,12 @@ open class UIKitPresenter: OrchestrationResponder {
         }
     }
 
-    private func displayInstance(_ to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
+    private func displayInstance(_ to: AnyWorkflow.InstanceNode,
                                  style: LaunchStyle,
                                  view: UIViewController,
                                  root: UIViewController,
                                  completion: (() -> Void)? = nil) {
-        let animated = to.metadata.persistence != .hiddenInitially
+        let animated = to.value.metadata.persistence != .hiddenInitially
         switch LaunchStyle.PresentationType(rawValue: style) {
             case _ where style == .default:
                 displayDefaultPresentationType(to: to, root: root, view: view, animated: animated, completion: completion)
@@ -127,12 +127,12 @@ open class UIKitPresenter: OrchestrationResponder {
         }
     }
 
-    private func displayDefaultPresentationType(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
+    private func displayDefaultPresentationType(to: AnyWorkflow.InstanceNode,
                                                 root: UIViewController,
                                                 view: UIViewController,
                                                 animated: Bool,
                                                 completion: (() -> Void)?) {
-        if case .modal(let style) = LaunchStyle.PresentationType(rawValue: to.metadata.launchStyle) {
+        if case .modal(let style) = LaunchStyle.PresentationType(rawValue: to.value.metadata.launchStyle) {
             if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
                 view.modalPresentationStyle = modalPresentationStyle
             }
@@ -145,13 +145,13 @@ open class UIKitPresenter: OrchestrationResponder {
         }
     }
 
-    private func displayModalPresentationType(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
+    private func displayModalPresentationType(to: AnyWorkflow.InstanceNode,
                                               view: UIViewController,
                                               style: (LaunchStyle.PresentationType.ModalPresentationStyle),
                                               root: UIViewController,
                                               animated: Bool,
                                               completion: (() -> Void)?) {
-        if LaunchStyle.PresentationType(rawValue: to.metadata.launchStyle) == .navigationStack {
+        if LaunchStyle.PresentationType(rawValue: to.value.metadata.launchStyle) == .navigationStack {
             let nav = UINavigationController(rootViewController: view)
             if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
                 nav.modalPresentationStyle = modalPresentationStyle

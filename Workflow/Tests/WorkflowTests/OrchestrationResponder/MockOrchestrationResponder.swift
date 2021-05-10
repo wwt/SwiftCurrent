@@ -10,17 +10,17 @@ import Workflow
 
 class MockOrchestrationResponder: OrchestrationResponder {
     var launchCalled = 0
-    var lastTo: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata)?
-    func launch(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata)) {
+    var lastTo: AnyWorkflow.InstanceNode?
+    func launch(to: AnyWorkflow.InstanceNode) {
         lastTo = to
         launchCalled += 1
     }
 
     var proceedCalled = 0
-    var lastFrom: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata)?
+    var lastFrom: AnyWorkflow.InstanceNode?
     var lastCompletion:(() -> Void)?
-    func proceed(to: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata),
-                 from: (instance: AnyWorkflow.InstanceNode, metadata: FlowRepresentableMetadata)) {
+    func proceed(to: AnyWorkflow.InstanceNode,
+                 from: AnyWorkflow.InstanceNode) {
         lastTo = to
         lastFrom = from
         proceedCalled += 1
@@ -28,8 +28,8 @@ class MockOrchestrationResponder: OrchestrationResponder {
 
     var backUpCalled = 0
     func backUp(from: AnyWorkflow.InstanceNode, to: AnyWorkflow.InstanceNode) {
-        lastFrom = (instance: from, metadata: from.value.metadata)
-        lastTo = (instance: to, metadata: to.value.metadata)
+        lastFrom = from
+        lastTo = to
         backUpCalled += 1
     }
 

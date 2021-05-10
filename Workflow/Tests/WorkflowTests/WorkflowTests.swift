@@ -90,7 +90,7 @@ class WorkflowTests: XCTestCase {
         XCTAssertThrowsFatalError {
             let wf = Workflow(FR1.self)
             wf.removeAll()
-            (wf.first?.value.underlyingInstance as! FR1).proceedInWorkflow()
+            (wf.first?.value.instance?.underlyingInstance as! FR1).proceedInWorkflow()
             wf.launch()
         }
     }
