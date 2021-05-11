@@ -1,6 +1,6 @@
 //
 //  AnyWorkflow.swift
-//  
+//  Workflow
 //
 //  Created by Tyler Thompson on 11/25/20.
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
@@ -166,6 +166,13 @@ public class AnyWorkflow: LinkedList<_WorkflowItem> {
             }
 
             return shouldLoad
+        }
+
+        defer {
+            if node.value.metadata.persistence == .removedAfterProceeding {
+                node.value.instance?.proceedInWorkflowStorage = nil
+                node.value.instance = nil
+            }
         }
 
         guard let nextNode = nextLoadedNode else {
