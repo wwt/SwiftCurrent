@@ -11,7 +11,7 @@ import Foundation
 #warning("Consider: This does not use our recommended approach to type erasure, should we change it?")
 /// A type erased `Workflow`
 public class AnyWorkflow: LinkedList<_WorkflowItem> {
-    /// The `OrchestartionResponder` the `Workflow` will send actions to.
+    /// The `OrchestrationResponder` the `Workflow` will send actions to.
     public internal(set) var orchestrationResponder: OrchestrationResponder?
 
     /// Creates an `AnyWorkflow` with a `WorkflowItem` that has metadata, but no instance
@@ -93,7 +93,7 @@ public class AnyWorkflow: LinkedList<_WorkflowItem> {
             let shouldLoad = flowRepresentable.shouldLoad()
 
             defer {
-                let persistence = nextNode.value.metadata.calculatePersistence(passedArgs)
+                let persistence = nextNode.value.metadata.setPersistence(passedArgs)
                 if shouldLoad {
                     nextNode.value.instance = flowRepresentable
                     setupCallbacks(for: nextNode, onFinish: onFinish)
@@ -148,7 +148,7 @@ public class AnyWorkflow: LinkedList<_WorkflowItem> {
         var root: Element?
         // traverse AND mutate the above variables
         let nextLoadedNode = node.next?.traverse { nextNode in
-            let persistence = nextNode.value.metadata.calculatePersistence(argsToPass)
+            let persistence = nextNode.value.metadata.setPersistence(argsToPass)
             let flowRepresentable = nextNode.value.metadata.flowRepresentableFactory(argsToPass)
             flowRepresentable.workflow = self
 
