@@ -108,7 +108,7 @@ public final class Workflow<F: FlowRepresentable>: LinkedList<_WorkflowItem> {
             let shouldLoad = flowRepresentable.shouldLoad()
 
             defer {
-                let persistence = nextNode.value.metadata.calculatePersistence(passedArgs)
+                let persistence = nextNode.value.metadata.setPersistence(passedArgs)
                 if shouldLoad {
                     nextNode.value.instance = flowRepresentable
                     setupCallbacks(for: nextNode, onFinish: onFinish)
@@ -163,7 +163,7 @@ public final class Workflow<F: FlowRepresentable>: LinkedList<_WorkflowItem> {
         var root: Element?
         // traverse AND mutate the above variables
         let nextLoadedNode = node.next?.traverse { nextNode in
-            let persistence = nextNode.value.metadata.calculatePersistence(argsToPass)
+            let persistence = nextNode.value.metadata.setPersistence(argsToPass)
             let flowRepresentable = nextNode.value.metadata.flowRepresentableFactory(argsToPass)
             flowRepresentable.workflow = AnyWorkflow(self)
 
@@ -181,6 +181,13 @@ public final class Workflow<F: FlowRepresentable>: LinkedList<_WorkflowItem> {
             }
 
             return shouldLoad
+        }
+
+        defer {
+            if node.value.metadata.persistence == .removedAfterProceeding {
+                node.value.instance?.proceedInWorkflowStorage = nil
+                node.value.instance = nil
+            }
         }
 
         guard let nextNode = nextLoadedNode else {

@@ -13,7 +13,7 @@ import Foundation
 public class AnyWorkflow {
     /// The `LinkedList.Node` type of a `Workflow`
     public typealias Element = LinkedList<_WorkflowItem>.Element
-    
+
     /// The `OrchestrationResponder` of the wrapped `Workflow`
     public internal(set) var orchestrationResponder: OrchestrationResponder? {
         get {
