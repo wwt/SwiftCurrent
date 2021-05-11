@@ -12,7 +12,7 @@ import Foundation
 /// A type erased `Workflow`
 public class AnyWorkflow: LinkedList<_WorkflowItem> {
     /// A `LinkedList.Node` that holds onto the loaded `AnyFlowRepresentable`s.
-    public private(set) var orchestrationResponder: OrchestrationResponder?
+    public internal(set) var orchestrationResponder: OrchestrationResponder?
 
     /// Creates an `AnyWorkflow` with a `WorkflowItem` that has metadata, but no instance
     public convenience init(_ metadata: FlowRepresentableMetadata) {
@@ -25,22 +25,19 @@ public class AnyWorkflow: LinkedList<_WorkflowItem> {
     }
 
     /**
-     Sets the `OrchestrationResponder` on the workflow.
-     - Parameter orchestrationResponder: The `OrchestrationResponder` to notify when the `Workflow` proceeds or backs up.
-    */
-    public func applyOrchestrationResponder(_ orchestrationResponder: OrchestrationResponder) {
-        self.orchestrationResponder = orchestrationResponder
-    }
-
-    /**
      Launches the `Workflow`.
+     - Parameter orchestrationResponder: The `OrchestrationResponder` to notify when the `Workflow` proceeds or backs up.
      - Parameter launchStyle: The launch style to use.
      - Parameter onFinish: The closure to call when the last element in the workflow proceeds; called with the `AnyWorkflow.PassedArgs` the workflow finished with.
      - Returns: The first loaded instance or nil, if none was loaded.
      */
-    @discardableResult public func launch(withLaunchStyle launchStyle: LaunchStyle = .default,
+    @discardableResult public func launch(withOrchestrationResponder orchestrationResponder: OrchestrationResponder,
+                                          launchStyle: LaunchStyle = .default,
                                           onFinish: ((AnyWorkflow.PassedArgs) -> Void)? = nil) -> Element? {
-        launch(passedArgs: .none, withLaunchStyle: launchStyle, onFinish: onFinish)
+        launch(withOrchestrationResponder: orchestrationResponder,
+               passedArgs: .none,
+               launchStyle: launchStyle,
+               onFinish: onFinish)
     }
 
     /**
@@ -50,15 +47,20 @@ public class AnyWorkflow: LinkedList<_WorkflowItem> {
      Args are passed to the first instance, it has the opportunity to load, not load and transform them, or just not load.
      In the event an instance does not load and does not transform args, they are passed unmodified to the next instance in the `Workflow` until one loads.
 
+     - Parameter orchestrationResponder: The `OrchestrationResponder` to notify when the `Workflow` proceeds or backs up.
      - Parameter args: The arguments to pass to the first instance(s).
      - Parameter launchStyle: The launch style to use.
      - Parameter onFinish: The closure to call when the last element in the workflow proceeds; called with the `AnyWorkflow.PassedArgs` the workflow finished with.
      - Returns: The first loaded instance or nil, if none was loaded.
      */
-    @discardableResult public func launch(with args: Any?,
+    @discardableResult public func launch(withOrchestrationResponder orchestrationResponder: OrchestrationResponder,
+                                          args: Any?,
                                           withLaunchStyle launchStyle: LaunchStyle = .default,
                                           onFinish: ((AnyWorkflow.PassedArgs) -> Void)? = nil) -> Element? {
-        launch(passedArgs: .args(args), withLaunchStyle: launchStyle, onFinish: onFinish)
+        launch(withOrchestrationResponder: orchestrationResponder,
+               passedArgs: .args(args),
+               launchStyle: launchStyle,
+               onFinish: onFinish)
     }
 
     /**
@@ -68,15 +70,18 @@ public class AnyWorkflow: LinkedList<_WorkflowItem> {
      passedArgs are passed to the first instance, it has the opportunity to load, not load and transform them, or just not load.
      In the event an instance does not load and does not transform args, they are passed unmodified to the next instance in the `Workflow` until one loads.
 
+     - Parameter orchestrationResponder: The `OrchestrationResponder` to notify when the `Workflow` proceeds or backs up.
      - Parameter passedArgs: The arguments to pass to the first instance(s).
      - Parameter launchStyle: The launch style to use.
      - Parameter onFinish: The closure to call when the last element in the workflow proceeds; called with the `AnyWorkflow.PassedArgs` the workflow finished with.
      - Returns: The first loaded instance or nil, if none was loaded.
      */
-    @discardableResult public func launch(passedArgs: PassedArgs,
-                                          withLaunchStyle launchStyle: LaunchStyle = .default,
+    @discardableResult public func launch(withOrchestrationResponder orchestrationResponder: OrchestrationResponder,
+                                          passedArgs: PassedArgs,
+                                          launchStyle: LaunchStyle = .default,
                                           onFinish: ((AnyWorkflow.PassedArgs) -> Void)? = nil) -> Element? {
         removeInstances()
+        self.orchestrationResponder = orchestrationResponder
         var root: Element?
         var passedArgs = passedArgs
 
@@ -95,7 +100,7 @@ public class AnyWorkflow: LinkedList<_WorkflowItem> {
                 } else if !shouldLoad && persistence == .persistWhenSkipped {
                     nextNode.value.instance = flowRepresentable
                     setupCallbacks(for: nextNode, onFinish: onFinish)
-                    orchestrationResponder?.launchOrProceed(to: nextNode, from: root)
+                    orchestrationResponder.launchOrProceed(to: nextNode, from: root)
                     root = nextNode
                 }
             }
@@ -107,7 +112,7 @@ public class AnyWorkflow: LinkedList<_WorkflowItem> {
             return nil
         }
 
-        orchestrationResponder?.launchOrProceed(to: first, from: root)
+        orchestrationResponder.launchOrProceed(to: first, from: root)
 
         return firstLoadedInstance
     }

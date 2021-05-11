@@ -23,9 +23,7 @@ class WorkflowConsumerTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
 
-        wf.applyOrchestrationResponder(responder)
-
-        let firstInstance = wf.launch(with: 1)
+        let firstInstance = wf.launch(withOrchestrationResponder: responder, args: 1)
         XCTAssert(firstInstance?.value.instance?.underlyingInstance is FR1)
         XCTAssertNil(responder.lastFrom)
         XCTAssert(responder.lastTo?.value.instance?.underlyingInstance is FR1)
@@ -54,9 +52,7 @@ class WorkflowConsumerTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
 
-        wf.applyOrchestrationResponder(responder)
-
-        let firstInstance = wf.launch(with: 1)
+        let firstInstance = wf.launch(withOrchestrationResponder: responder, args: 1)
         XCTAssert(firstInstance?.value.instance?.underlyingInstance is FR1)
         XCTAssertNil(responder.lastFrom)
         XCTAssert(responder.lastTo?.value.instance?.underlyingInstance is FR1)
@@ -77,8 +73,7 @@ class WorkflowConsumerTests: XCTestCase {
 
         let responder = MockOrchestrationResponder()
         let wf = Workflow(FR1.self)
-        wf.applyOrchestrationResponder(responder)
-        wf.launch()
+        wf.launch(withOrchestrationResponder: responder)
 
         XCTAssertThrowsError(try (responder.lastTo?.value.instance?.underlyingInstance as? FR1)?.backUpInWorkflow()) { actualError in
             XCTAssertNotNil(actualError as? WorkflowError, "Expected \(actualError) to be WorkflowError")
@@ -88,8 +83,8 @@ class WorkflowConsumerTests: XCTestCase {
 
     func testWorkflowReturnsNilWhenLaunchingWithoutRepresentables() {
         let wf: AnyWorkflow = AnyWorkflow()
-        XCTAssertNil(wf.launch())
-        XCTAssertNil(wf.launch(with: nil))
+        XCTAssertNil(wf.launch(withOrchestrationResponder: MockOrchestrationResponder()))
+        XCTAssertNil(wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: nil))
     }
 
     func testWorkflowCallsBackOnCompletion() {
@@ -104,7 +99,7 @@ class WorkflowConsumerTests: XCTestCase {
             .thenProceed(with: FR2.self)
 
         var callbackCalled = false
-        let firstInstance = wf.launch(with: 1) { args in
+        let firstInstance = wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: 1) { args in
             callbackCalled = true
             XCTAssertEqual(args.extractArgs(defaultValue: nil) as? String, "args")
         }
@@ -130,7 +125,7 @@ class WorkflowConsumerTests: XCTestCase {
             .thenProceed(with: FR2.self)
 
         var callbackCalled = false
-        let firstInstance = wf.launch(with: 1) { args in
+        let firstInstance = wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: 1) { args in
             callbackCalled = true
             XCTAssertEqual(args.extractArgs(defaultValue: nil) as? String, "args")
         }
@@ -151,7 +146,7 @@ class WorkflowConsumerTests: XCTestCase {
         let wf: Workflow = Workflow(FR1.self)
 
         var callbackCalled = false
-        _ = wf.launch(with: 1) { args in
+        _ = wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: 1) { args in
             callbackCalled = true
             XCTAssertEqual(args.extractArgs(defaultValue: nil) as? String, "args")
         }
@@ -183,8 +178,7 @@ class WorkflowConsumerTests: XCTestCase {
             .thenProceed(with: FR3.self, flowPersistence: .persistWhenSkipped)
             .thenProceed(with: FR4.self)
 
-        workflow.applyOrchestrationResponder(mockOrchestrationResponder)
-        workflow.launch()
+        workflow.launch(withOrchestrationResponder: mockOrchestrationResponder)
 
         XCTAssertEqual(mockOrchestrationResponder.launchCalled, 1)
         XCTAssert(mockOrchestrationResponder.lastTo?.value.instance?.underlyingInstance is FR1)

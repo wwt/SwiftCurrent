@@ -19,9 +19,8 @@ class OrchestrationResponderTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
-        wf.applyOrchestrationResponder(responder)
 
-        let launchedRepresentable = wf.launch()
+        let launchedRepresentable = wf.launch(withOrchestrationResponder: responder)
 
         XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value.instance?.underlyingInstance is FR1)
@@ -54,10 +53,9 @@ class OrchestrationResponderTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
-        wf.applyOrchestrationResponder(responder)
         let expectation = self.expectation(description: "OnFinish called")
 
-        let launchedRepresentable = wf.launch { _ in expectation.fulfill() }
+        let launchedRepresentable = wf.launch(withOrchestrationResponder: responder) { _ in expectation.fulfill() }
 
         (launchedRepresentable?.value.instance?.underlyingInstance as? FR1)?.proceedInWorkflow()
         (responder.lastTo?.value.instance?.underlyingInstance as? FR2)?.proceedInWorkflow()
@@ -76,10 +74,9 @@ class OrchestrationResponderTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
-        wf.applyOrchestrationResponder(responder)
         let expectation = self.expectation(description: "OnFinish called")
 
-        let launchedRepresentable = wf.launch { args in
+        let launchedRepresentable = wf.launch(withOrchestrationResponder: responder) { args in
             XCTAssert(args.extractArgs(defaultValue: nil) as? Object === val)
             expectation.fulfill()
         }
@@ -99,9 +96,8 @@ class OrchestrationResponderTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
-        wf.applyOrchestrationResponder(responder)
 
-        let launchedRepresentable = wf.launch()
+        let launchedRepresentable = wf.launch(withOrchestrationResponder: responder)
 
         XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value.instance?.underlyingInstance is FR1)
@@ -141,10 +137,9 @@ class OrchestrationResponderTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
-        wf.applyOrchestrationResponder(responder)
         let expectation = self.expectation(description: "OnFinish called")
 
-        let launchedRepresentable = wf.launch { _ in expectation.fulfill() }
+        let launchedRepresentable = wf.launch(withOrchestrationResponder: responder) { _ in expectation.fulfill() }
 
         (launchedRepresentable?.value.instance?.underlyingInstance as? FR1)?.proceedInWorkflow()
         (responder.lastTo?.value.instance?.underlyingInstance as? FR2)?.proceedInWorkflow()
@@ -197,10 +192,10 @@ class OrchestrationResponderTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
-        wf.applyOrchestrationResponder(responder)
         let expectation = self.expectation(description: "OnFinish called")
 
-        let launchedRepresentable = wf.launch(with: val) { args in
+        let launchedRepresentable = wf.launch(withOrchestrationResponder: responder,
+                                              args: val) { args in
             XCTAssert(args.extractArgs(defaultValue: nil) as? Object === val)
             expectation.fulfill()
         }

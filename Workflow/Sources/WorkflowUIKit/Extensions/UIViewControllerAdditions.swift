@@ -25,8 +25,8 @@ extension UIViewController {
                            args: Any? = nil,
                            withLaunchStyle launchStyle: LaunchStyle.PresentationType = .default,
                            onFinish: ((AnyWorkflow.PassedArgs) -> Void)? = nil) {
-        workflow.applyOrchestrationResponder(UIKitPresenter(self, launchStyle: launchStyle))
-        workflow.launch(with: args,
+        workflow.launch(withOrchestrationResponder: UIKitPresenter(self, launchStyle: launchStyle),
+                        args: args,
                         withLaunchStyle: launchStyle.rawValue,
                         onFinish: onFinish)
         #if canImport(XCTest)
@@ -50,8 +50,8 @@ extension UIViewController {
     public func launchInto(_ workflow: AnyWorkflow,
                            withLaunchStyle launchStyle: LaunchStyle.PresentationType = .default,
                            onFinish: ((AnyWorkflow.PassedArgs) -> Void)? = nil) {
-        workflow.applyOrchestrationResponder(UIKitPresenter(self, launchStyle: launchStyle))
-        workflow.launch(withLaunchStyle: launchStyle.rawValue,
+        workflow.launch(withOrchestrationResponder: UIKitPresenter(self, launchStyle: launchStyle),
+                        launchStyle: launchStyle.rawValue,
                         onFinish: onFinish)
         #if canImport(XCTest)
         NotificationCenter.default.post(name: .workflowLaunched, object: [

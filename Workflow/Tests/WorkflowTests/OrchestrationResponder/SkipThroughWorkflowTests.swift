@@ -21,11 +21,10 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
-        wf.applyOrchestrationResponder(responder)
 
         let expectation = self.expectation(description: "OnFinish called")
 
-        let launchedRepresentable = wf.launch { _ in expectation.fulfill() }
+        let launchedRepresentable = wf.launch(withOrchestrationResponder: responder) { _ in expectation.fulfill() }
 
         XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value.instance?.underlyingInstance is FR2)
@@ -56,11 +55,10 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
-        wf.applyOrchestrationResponder(responder)
 
         let expectation = self.expectation(description: "OnFinish called")
 
-        let launchedRepresentable = wf.launch { _ in expectation.fulfill() }
+        let launchedRepresentable = wf.launch(withOrchestrationResponder: responder) { _ in expectation.fulfill() }
 
         XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value.instance?.underlyingInstance is FR1)
@@ -91,11 +89,10 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
-        wf.applyOrchestrationResponder(responder)
 
         let expectation = self.expectation(description: "OnFinish called")
 
-        let launchedRepresentable = wf.launch { _ in expectation.fulfill() }
+        let launchedRepresentable = wf.launch(withOrchestrationResponder: responder) { _ in expectation.fulfill() }
 
         XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value.instance?.underlyingInstance is FR1)
@@ -142,11 +139,10 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
-        wf.applyOrchestrationResponder(responder)
 
         let expectation = self.expectation(description: "OnFinish called")
 
-        let launchedRepresentable = wf.launch { _ in expectation.fulfill() }
+        let launchedRepresentable = wf.launch(withOrchestrationResponder: responder) { _ in expectation.fulfill() }
 
         XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value.instance?.underlyingInstance is FR1)
@@ -189,9 +185,8 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
-        wf.applyOrchestrationResponder(responder)
 
-        let launchedRepresentable = wf.launch()
+        let launchedRepresentable = wf.launch(withOrchestrationResponder: responder)
 
         XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value.instance?.underlyingInstance is FR2)
@@ -245,9 +240,8 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
-        wf.applyOrchestrationResponder(responder)
 
-        let launchedRepresentable = wf.launch()
+        let launchedRepresentable = wf.launch(withOrchestrationResponder: responder)
 
         XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value.instance?.underlyingInstance is FR3)
@@ -279,9 +273,9 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
-        wf.applyOrchestrationResponder(responder)
 
-        let launchedRepresentable = wf.launch(with: FR1.id)
+        let launchedRepresentable = wf.launch(withOrchestrationResponder: responder,
+                                              args: FR1.id)
 
         XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value.instance?.underlyingInstance is FR2)
@@ -328,9 +322,8 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
-        wf.applyOrchestrationResponder(responder)
 
-        let launchedRepresentable = wf.launch(with: FR1.id)
+        let launchedRepresentable = wf.launch(withOrchestrationResponder: responder, args: FR1.id)
 
         XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value.instance?.underlyingInstance is FR3)
@@ -369,9 +362,8 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
-        wf.applyOrchestrationResponder(responder)
 
-        let launchedRepresentable = wf.launch(with: FR1.id) { id in
+        let launchedRepresentable = wf.launch(withOrchestrationResponder: responder, args: FR1.id) { id in
             expectation.fulfill()
             XCTAssertEqual(id.extractArgs(defaultValue: nil) as? String, FR1.id)
         }
@@ -413,9 +405,8 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
-        wf.applyOrchestrationResponder(responder)
 
-        let launchedRepresentable = wf.launch()
+        let launchedRepresentable = wf.launch(withOrchestrationResponder: responder)
 
         XCTAssertEqual(responder.launchCalled, 1)
         XCTAssert(launchedRepresentable?.value.instance?.underlyingInstance is FR1)
@@ -466,9 +457,8 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
-        wf.applyOrchestrationResponder(responder)
 
-        let launchedRepresentable = wf.launch { id in
+        let launchedRepresentable = wf.launch(withOrchestrationResponder: responder) { id in
             expectation.fulfill()
             XCTAssertEqual(id.extractArgs(defaultValue: nil) as? String, FR1.id)
         }

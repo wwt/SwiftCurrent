@@ -65,7 +65,7 @@ class PickupOrDeliveryViewControllerTests: ViewControllerTest<PickupOrDeliveryVi
                                   passedArgs: [.args(Order(location: nil))])
 
         let mock = MockOrchestrationResponder()
-        listener.workflow?.applyOrchestrationResponder(mock)
+        listener.workflow?.orchestrationResponder = mock
 
         var proceedInWorkflowCalled = false
         testViewController.proceedInWorkflowStorage = { data in

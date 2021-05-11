@@ -24,7 +24,7 @@ class UIKitPresenterTests: XCTestCase {
 
         let presenter = UIKitPresenter(rootController, launchStyle: .modal)
 
-        wf.applyOrchestrationResponder(presenter)
+        wf.orchestrationResponder = presenter
         var fr1 = FR1(with: .none)
         let metadata = FlowRepresentableMetadata(FR1.self, launchStyle: ls, flowPersistence: { _ in .default })
         let node = AnyWorkflow.Element(with: _WorkflowItem(metadata: metadata, instance: AnyFlowRepresentable(&fr1)))
@@ -37,8 +37,8 @@ class UIKitPresenterTests: XCTestCase {
     func testEvenWithoutAResponder_WorkflowStillAbandons() {
         class FR1: TestViewController { }
         let wf = Workflow(FR1.self)
-        wf.launch()
-
+        wf.launch(withOrchestrationResponder: UIKitPresenter(UIViewController(), launchStyle: .modal))
+        wf.orchestrationResponder = nil
         wf.abandon()
 
         XCTAssertNil(wf.first?.value.instance?.proceedInWorkflowStorage)
