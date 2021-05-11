@@ -15,29 +15,22 @@ import Workflow
  
  ### Examples:
  ```swift
- class SomeFlowRepresentable: UIWorkflowItem<String> { //must take in a string, or will not load
-     var name:String?
- }
- extension SomeFlowRepresentable: FlowRepresentable {
-     func shouldLoad(with name:String) {
-         self.name = name
-         return true
-     }
-     static func instance() -> AnyFlowRepresentable {
-         return SomeFlowRepresentable()
-     }
+ class SomeFlowRepresentable: UIWorkflowItem<String>, FlowRepresentable { //must take in a string, or will not load
+    var name:String
+    init(with name: String) {
+        self.name = name
+    }
  }
  ```
  
  ### Discussion
  If you would like the same convenience for other UIKit types this class is very straightforward to create:
  ```
- open class UITableViewWorkflowItem<I>: UITableViewController {
-     public var callback: ((Any?) -> Void)?
- 
+ open class UITableViewWorkflowItem<I, O>: UITableViewController {
      public typealias WorkflowInput = I
- 
-     public weak var workflow: Workflow?
+     public typealias WorkflowOutput = O
+
+     public weak var _workflowPointer: AnyFlowRepresentable?
  }
  ```
  */

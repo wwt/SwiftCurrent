@@ -780,9 +780,7 @@ class UIKitConsumerTests: XCTestCase {
         class FR1: TestViewController {
             override func shouldLoad() -> Bool { false }
         }
-        final class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable {
-            static func instance() -> Self { Self() }
-        }
+        final class FR2: UIWorkflowItem<Never, Any?>, FlowRepresentable { }
         class FR3: TestViewController { }
 
         let root = UIViewController()

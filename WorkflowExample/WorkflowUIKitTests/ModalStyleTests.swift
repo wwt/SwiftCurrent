@@ -335,10 +335,6 @@ class ModalStyleTests: XCTestCase {
 
 extension ModalStyleTests {
     class RootViewController: UIWorkflowItem<Never, Never>, FlowRepresentable {
-        static func instance() -> Self {
-            standard as! Self
-        }
-
         static var standard: ModalStyleTests.RootViewController {
             let controller = Self()
             controller.view.backgroundColor = .blue
@@ -348,11 +344,6 @@ extension ModalStyleTests {
 
     class TestViewController: UIWorkflowItem<Never, Any?>, FlowRepresentable {
         var data: Any?
-        static func instance() -> Self {
-            let controller = Self()
-            controller.view.backgroundColor = .red
-            return controller
-        }
         func next() {
             proceedInWorkflow(data)
         }

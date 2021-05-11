@@ -214,8 +214,6 @@ extension WorkflowConsumerTests {
 
         required init() { }
 
-        static func instance() -> Self { Self() }
-
         weak var _workflowPointer: AnyFlowRepresentable?
     }
 }
