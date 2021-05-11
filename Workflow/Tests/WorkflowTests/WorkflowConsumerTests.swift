@@ -82,7 +82,10 @@ class WorkflowConsumerTests: XCTestCase {
     }
 
     func testWorkflowReturnsNilWhenLaunchingWithoutRepresentables() {
-        let wf: AnyWorkflow = AnyWorkflow()
+        final class FR1: FlowRepresentable {
+            var _workflowPointer: AnyFlowRepresentable?
+        }
+        let wf = Workflow<FR1>()
         XCTAssertNil(wf.launch(withOrchestrationResponder: MockOrchestrationResponder()))
         XCTAssertNil(wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: nil))
     }

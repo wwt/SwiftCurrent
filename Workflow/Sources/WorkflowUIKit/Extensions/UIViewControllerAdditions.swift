@@ -14,24 +14,24 @@ import Workflow
 
 extension UIViewController {
     /**
-    When using UIKit this is how you launch a workflow
-    - Parameter workflow: `Workflow` to launch
-    - Parameter args: Args to pass to the first `FlowRepresentable`
-    - Parameter launchStyle: The `PresentationType` used to launch the workflow
-    - Parameter onFinish: A callback that is called when the last item in the workflow proceeds; called with the `AnyWorkflow.PassedArgs` the workflow finished with.
-    - Note: In the background this applies a UIKitPresenter, if you call launch on workflow directly you'll need to apply one yourself
-    */
-    public func launchInto(_ workflow: AnyWorkflow,
-                           args: Any? = nil,
-                           withLaunchStyle launchStyle: LaunchStyle.PresentationType = .default,
-                           onFinish: ((AnyWorkflow.PassedArgs) -> Void)? = nil) {
+     When using UIKit this is how you launch a workflow
+     - Parameter workflow: `Workflow` to launch
+     - Parameter args: Args to pass to the first `FlowRepresentable`
+     - Parameter launchStyle: The `PresentationType` used to launch the workflow
+     - Parameter onFinish: A callback that is called when the last item in the workflow proceeds; called with the `AnyWorkflow.PassedArgs` the workflow finished with.
+     - Note: In the background this applies a UIKitPresenter, if you call launch on workflow directly you'll need to apply one yourself
+     */
+    public func launchInto<F>(_ workflow: Workflow<F>,
+                              args: Any? = nil,
+                              withLaunchStyle launchStyle: LaunchStyle.PresentationType = .default,
+                              onFinish: ((AnyWorkflow.PassedArgs) -> Void)? = nil) {
         workflow.launch(withOrchestrationResponder: UIKitPresenter(self, launchStyle: launchStyle),
                         args: args,
                         withLaunchStyle: launchStyle.rawValue,
                         onFinish: onFinish)
         #if canImport(XCTest)
         NotificationCenter.default.post(name: .workflowLaunched, object: [
-            "workflow": workflow,
+            "workflow": AnyWorkflow(workflow),
             "launchFrom": self,
             "args": args,
             "style": launchStyle,
@@ -41,21 +41,21 @@ extension UIViewController {
     }
 
     /**
-    When using UIKit this is how you launch a workflow
-    - Parameter workflow: `Workflow` to launch
-    - Parameter launchStyle: The `PresentationType` used to launch the workflow
-    - Parameter onFinish: A callback that is called when the last item in the workflow proceeds; called with the `AnyWorkflow.PassedArgs` the workflow finished with.
-    - Note: In the background this applies a UIKitPresenter, if you call launch on workflow directly you'll need to apply one yourself
-    */
-    public func launchInto(_ workflow: AnyWorkflow,
-                           withLaunchStyle launchStyle: LaunchStyle.PresentationType = .default,
-                           onFinish: ((AnyWorkflow.PassedArgs) -> Void)? = nil) {
+     When using UIKit this is how you launch a workflow
+     - Parameter workflow: `Workflow` to launch
+     - Parameter launchStyle: The `PresentationType` used to launch the workflow
+     - Parameter onFinish: A callback that is called when the last item in the workflow proceeds; called with the `AnyWorkflow.PassedArgs` the workflow finished with.
+     - Note: In the background this applies a UIKitPresenter, if you call launch on workflow directly you'll need to apply one yourself
+     */
+    public func launchInto<F>(_ workflow: Workflow<F>,
+                              withLaunchStyle launchStyle: LaunchStyle.PresentationType = .default,
+                              onFinish: ((AnyWorkflow.PassedArgs) -> Void)? = nil) {
         workflow.launch(withOrchestrationResponder: UIKitPresenter(self, launchStyle: launchStyle),
                         launchStyle: launchStyle.rawValue,
                         onFinish: onFinish)
         #if canImport(XCTest)
         NotificationCenter.default.post(name: .workflowLaunched, object: [
-            "workflow": workflow,
+            "workflow": AnyWorkflow(workflow),
             "launchFrom": self,
             "style": launchStyle,
             "onFinish": onFinish as Any

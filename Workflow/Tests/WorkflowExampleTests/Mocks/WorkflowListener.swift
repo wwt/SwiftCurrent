@@ -35,7 +35,7 @@ class WorkflowListener {
     }
 }
 
-func XCTAssertWorkflowLaunched(listener: WorkflowListener, workflow: AnyWorkflow, passedArgs: [AnyWorkflow.PassedArgs]) {
+func XCTAssertWorkflowLaunched<F>(listener: WorkflowListener, workflow: Workflow<F>, passedArgs: [AnyWorkflow.PassedArgs]) {
     XCTAssertNotNil(listener.workflow, "No workflow found")
     guard let listenerWorkflow = listener.workflow,
           listenerWorkflow.count == workflow.count else {
