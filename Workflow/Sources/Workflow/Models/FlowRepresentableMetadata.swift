@@ -46,7 +46,7 @@ public class FlowRepresentableMetadata {
         self.launchStyle = launchStyle
     }
 
-    func calculatePersistence(_ args: AnyWorkflow.PassedArgs) -> FlowPersistence {
+    func setPersistence(_ args: AnyWorkflow.PassedArgs) -> FlowPersistence {
         let val = flowPersistence(args)
         persistence = val
         return val
