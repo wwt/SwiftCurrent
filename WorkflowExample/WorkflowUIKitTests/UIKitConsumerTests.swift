@@ -34,8 +34,6 @@ class UIKitConsumerTests: XCTestCase {
 
     func testWorkflowCanLaunchViewController() {
         class FR1: UIViewController, FlowRepresentable {
-            typealias WorkflowInput = Never
-
             weak var _workflowPointer: AnyFlowRepresentable?
         }
         let flow = Workflow(FR1.self)
@@ -83,8 +81,6 @@ class UIKitConsumerTests: XCTestCase {
 
     func testWorkflowCanPushOntoExistingNavController() {
         class FR1: UIViewController, FlowRepresentable {
-            typealias WorkflowInput = Never
-
             weak var _workflowPointer: AnyFlowRepresentable?
         }
         let root = UIViewController()
@@ -101,8 +97,6 @@ class UIKitConsumerTests: XCTestCase {
 
     func testAbandonWorkflowWithoutNavigationController() {
         class FR1: UIViewController, FlowRepresentable {
-            typealias WorkflowInput = Never
-
             weak var _workflowPointer: AnyFlowRepresentable?
         }
 
@@ -125,8 +119,6 @@ class UIKitConsumerTests: XCTestCase {
 
     func testAbandonWorkflowCallsOnFinishCallback() {
         class FR1: UIViewController, FlowRepresentable {
-            typealias WorkflowInput = Never
-
             weak var _workflowPointer: AnyFlowRepresentable?
         }
 
@@ -152,8 +144,6 @@ class UIKitConsumerTests: XCTestCase {
 
     func testAbandonWorkflowWithNavigationController() {
         class FR1: UIViewController, FlowRepresentable {
-            typealias WorkflowInput = Never
-
             weak var _workflowPointer: AnyFlowRepresentable?
         }
 
@@ -177,8 +167,6 @@ class UIKitConsumerTests: XCTestCase {
 
     func testAbandonWorkflowWithNavigationControllerWhichHasSomeViewControllersAlready() {
         class FR1: UIViewController, FlowRepresentable {
-            typealias WorkflowInput = Never
-
             weak var _workflowPointer: AnyFlowRepresentable?
         }
 

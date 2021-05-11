@@ -32,7 +32,6 @@ import Foundation
  A `FlowRepresentable` with a `WorkflowInput` of `Never` and a `WorkflowOutput` of `Never`
  ```swift
  final class FR1: FlowRepresentable { // Classes synthesize an empty initializer already, you are good!
-    typealias WorkflowInput = Never
     weak var _workflowPointer: AnyFlowRepresentable?
  }
  ```
@@ -41,7 +40,6 @@ import Foundation
  Declaring your own custom initializer can result in a compiler error with an unfriendly message
  ```swift
  class FR1: FlowRepresentable { // Results in compiler error for 'init()' being unavailable
-    typealias WorkflowInput = Never
     weak var _workflowPointer: AnyFlowRepresentable?
     init(myCustomInitializer property: Int) { }
     // required init() { } // declare your own init() to satisfy the protocol requirements and handle the compiler error
@@ -51,7 +49,7 @@ import Foundation
 public protocol FlowRepresentable {
     #warning("With `shouldLoad(with args: WorkflowInput)` gone, it is possible to default WorkflowInput to `Never`, should we?")
     /// The type of data coming into the `FlowRepresentable`; use `Never` when the `FlowRepresentable` will ignore data passed in from the `Workflow`.
-    associatedtype WorkflowInput
+    associatedtype WorkflowInput = Never
     /// The type of data passed forward from the `FlowRepresentable`; defaulted to `Never`; `Never` means data will not be passed forward.
     associatedtype WorkflowOutput = Never
 

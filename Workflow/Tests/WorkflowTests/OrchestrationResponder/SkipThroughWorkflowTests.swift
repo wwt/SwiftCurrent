@@ -496,8 +496,5 @@ extension SkipThroughWorkflowTests {
         weak var _workflowPointer: AnyFlowRepresentable?
 
         required init() { }
-
-        typealias WorkflowInput = Never
-        typealias WorkflowOutput = Never
     }
 }

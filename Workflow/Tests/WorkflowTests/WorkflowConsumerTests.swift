@@ -40,22 +40,13 @@ class WorkflowConsumerTests: XCTestCase {
 
     func testProgressToNextAvailableItemInWorkflowWithValueTypes() {
         struct FR1: FlowRepresentable {
-            typealias WorkflowInput = Never
-            typealias WorkflowOutput = Never
             var _workflowPointer: AnyFlowRepresentable?
-            static func instance() -> Self { Self() }
         }
         struct FR2: FlowRepresentable {
-            typealias WorkflowInput = Never
-            typealias WorkflowOutput = Never
             var _workflowPointer: AnyFlowRepresentable?
-            static func instance() -> Self { Self() }
         }
         struct FR3: FlowRepresentable {
-            typealias WorkflowInput = Never
-            typealias WorkflowOutput = Never
             var _workflowPointer: AnyFlowRepresentable?
-            static func instance() -> Self { Self() }
         }
 
         let responder = MockOrchestrationResponder()
@@ -81,7 +72,6 @@ class WorkflowConsumerTests: XCTestCase {
 
     func testBackUpThrowsErrorIfAtBeginningOfWorkflow() {
         struct FR1: FlowRepresentable {
-            typealias WorkflowInput = Never
             var _workflowPointer: AnyFlowRepresentable?
         }
 
@@ -170,24 +160,20 @@ class WorkflowConsumerTests: XCTestCase {
 
     func testWorkflowWithSeveralBackToBackPersistWhenSkippedItems_StillCallsOrchestrationResponderAppropriately() {
         final class FR1: FlowRepresentable {
-            typealias WorkflowInput = Never
             var _workflowPointer: AnyFlowRepresentable?
         }
 
         final class FR2: FlowRepresentable {
-            typealias WorkflowInput = Never
             var _workflowPointer: AnyFlowRepresentable?
             func shouldLoad() -> Bool { false }
         }
 
         final class FR3: FlowRepresentable {
-            typealias WorkflowInput = Never
             var _workflowPointer: AnyFlowRepresentable?
             func shouldLoad() -> Bool { false }
         }
 
         final class FR4: FlowRepresentable {
-            typealias WorkflowInput = Never
             var _workflowPointer: AnyFlowRepresentable?
         }
 
