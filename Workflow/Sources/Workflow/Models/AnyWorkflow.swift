@@ -81,15 +81,14 @@ public class AnyWorkflow: LinkedList<_WorkflowItem> {
         var passedArgs = passedArgs
 
         let firstLoadedInstance = first?.traverse { [self] nextNode in
-            let nextMetadata = nextNode.value.metadata
-            let flowRepresentable = nextMetadata.flowRepresentableFactory(passedArgs)
+            let flowRepresentable = nextNode.value.metadata.flowRepresentableFactory(passedArgs)
             flowRepresentable.workflow = self
             flowRepresentable.proceedInWorkflowStorage = { passedArgs = $0 }
 
             let shouldLoad = flowRepresentable.shouldLoad()
 
             defer {
-                let persistence = nextMetadata.calculatePersistence(passedArgs)
+                let persistence = nextNode.value.metadata.calculatePersistence(passedArgs)
                 if shouldLoad {
                     nextNode.value.instance = flowRepresentable
                     setupCallbacks(for: nextNode, onFinish: onFinish)

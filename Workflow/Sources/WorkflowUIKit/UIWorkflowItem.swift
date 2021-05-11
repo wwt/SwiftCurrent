@@ -16,7 +16,7 @@ import Workflow
  ### Examples:
  ```swift
  class SomeFlowRepresentable: UIWorkflowItem<String>, FlowRepresentable { //must take in a string, or will not load
-    var name:String
+    var name: String
     init(with name: String) {
         self.name = name
     }
