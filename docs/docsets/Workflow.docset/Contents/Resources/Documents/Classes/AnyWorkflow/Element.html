@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>PassedArgs Enumeration Reference</title>
+    <title>Element Type Alias Reference</title>
     <link rel="stylesheet" type="text/css" href="../../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Enum/PassedArgs" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Alias/Element" class="dashAnchor"></a>
 
-    <a title="PassedArgs Enumeration Reference"></a>
+    <a title="Element Type Alias Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -44,7 +44,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../../index.html">Workflow Reference</a>
       <img class="carat" src="../../img/carat.png" />
-      PassedArgs Enumeration Reference
+      Element Type Alias Reference
     </p>
 
     <div class="content-wrapper">
@@ -127,129 +127,21 @@
 
         <section class="section">
           <div class="section-content top-matter">
-            <h1>PassedArgs</h1>
+            <h1>Element</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">PassedArgs</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">Element</span> <span class="o">=</span> <span class="kt"><a href="../../Classes/LinkedList.html">LinkedList</a></span><span class="o">&lt;</span><span class="n">_WorkflowItem</span><span class="o">&gt;.</span><span class="kt">Element</span></code></pre>
 
                 </div>
               </div>
-            <p>A type that represents either a type erased value or no value.</p>
+            <p>The <code><a href="../../Classes/LinkedList/Node.html">LinkedList.Node</a></code> type of a <code><a href="../../Classes/Workflow.html">Workflow</a></code></p>
 
           </div>
         </section>
 
         <section class="section">
           <div class="section-content">
-            <div class="task-group">
-              <ul class="item-container">
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8Workflow03AnyA0C10PassedArgsO4noneyA2EmF"></a>
-                    <a name="//apple_ref/swift/Element/none" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Workflow03AnyA0C10PassedArgsO4noneyA2EmF">none</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>No arguments are passed forward.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="k">none</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8Workflow03AnyA0C10PassedArgsO4argsyAEypSgcAEmF"></a>
-                    <a name="//apple_ref/swift/Element/args(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Workflow03AnyA0C10PassedArgsO4argsyAEypSgcAEmF">args(_:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>The type erased value passed forward.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">args</span><span class="p">(</span><span class="kt">Any</span><span class="p">?)</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8Workflow03AnyA0C10PassedArgsO07extractD012defaultValueypSgAH_tF"></a>
-                    <a name="//apple_ref/swift/Method/extractArgs(defaultValue:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Workflow03AnyA0C10PassedArgsO07extractD012defaultValueypSgAH_tF">extractArgs(defaultValue:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Performs a coalescing operation, returning the type erased value of a <code>PassedArgs</code> instance or a default value.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">extractArgs</span><span class="p">(</span><span class="n">defaultValue</span><span class="p">:</span> <span class="kt">Any</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Any</span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>defaultValue</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>the default value to use if there are no args.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>type erased value of a <code>PassedArgs</code> instance or a default value.</p>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
           </div>
         </section>
 
