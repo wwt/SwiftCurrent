@@ -35,11 +35,6 @@ platform :ios do
     sh('swiftlint --fix --config=../WorkflowLint/.swiftlint.yml')
   end
 
-  lane :document do
-    jazzy(config: ".jazzy-Workflow.yaml")
-    jazzy(config: ".jazzy-WorkflowUIKit.yaml")
-  end
-
   desc "Release a new version with a patch bump_type"
   lane :patch do
     release("patch")
