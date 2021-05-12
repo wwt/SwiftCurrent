@@ -135,16 +135,10 @@
 
                 </div>
               </div>
-            <p>Data about a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code>. Used to make an <code><a href="../Protocols/OrchestrationResponder.html">OrchestrationResponder</a></code>.</p>
+            <p>Data about a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code>.</p>
 <h3 id='discussion' class='heading'>Discussion</h3>
 
-<p>Every time a <code><a href="../Classes/Workflow.html">Workflow</a></code> is created, the defining characteristics about a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> is stored in the <code>FlowRepresentableMetadata</code> to be used later.</p>
-<h4 id='example' class='heading'>Example</h4>
-<pre class="highlight swift"><code><span class="kt">Workflow</span><span class="p">(</span><span class="kt">SomeFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span> <span class="c1">// We now have a FlowRepresentableMetadata representing SomeFlowRepresentableClass</span>
-    <span class="o">.</span><span class="nf">thenProceed</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="kt">SomeOtherFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">launchStyle</span><span class="p">:</span> <span class="o">.</span><span class="n">navigationStack</span><span class="p">)</span> <span class="c1">// We now have a FlowRepresentableMetadata representing SomeOtherFlowRepresentableClass and its launch style of navigation stack</span>
-</code></pre>
-
-<p>Initially we create a <code>FlowRepresentableMetadata</code> representing SomeFlowRepresentableClass.  When we call <code>.thenPresent</code> we add a <code>FlowRepresentableMetadata</code> representing SomeOtherFlowRepresentableClass and its launch style of navigation stack to the <code><a href="../Classes/Workflow.html">Workflow</a></code>.</p>
+<p>Every time a <code><a href="../Classes/Workflow.html">Workflow</a></code> is created, the defining characteristics about a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> are stored in the <code>FlowRepresentableMetadata</code> to be used later.</p>
 
           </div>
         </section>
@@ -193,7 +187,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Preferred <code><a href="../Classes/FlowPersistence.html">FlowPersistence</a></code> of  the associated <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code>.</p>
+                        <p>Preferred <code><a href="../Classes/FlowPersistence.html">FlowPersistence</a></code> of  the associated <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code>; set when <code>FlowRepresentableMetadata</code> instantiates an instance.</p>
 
                       </div>
                       <div class="declaration">

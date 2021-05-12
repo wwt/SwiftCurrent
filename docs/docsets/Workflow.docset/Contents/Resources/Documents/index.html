@@ -138,25 +138,25 @@
 
 <ul>
 <li><a href="https://github.com/wwt/Workflow/wiki/Installation">Installation</a></li>
-<li><a href="https://github.com/wwt/Workflow/wiki/why-this-library">Why DynamicWorkflow?</a></li>
+<li><a href="https://github.com/wwt/Workflow/wiki/why-this-library">Why Workflow?</a></li>
 <li><a href="https://github.com/wwt/Workflow/wiki/getting-started">Getting Started</a></li>
 <li><a href="https://github.com/wwt/Workflow/wiki/testing">Testing Your Workflows</a></li>
 <li><a href="https://github.com/wwt/Workflow/wiki/advanced">Advanced</a></li>
 <li><a href="https://htmlpreview.github.io/?https://github.com/wwt/Workflow/blob/main/docs/index.html">Developer Documentation</a></li>
 <li><a href="https://github.com/wwt/Workflow/wiki/faq">FAQ</a></li>
 </ul>
-<h3 id='the-problem-dynamicworkflow-was-built-to-solve' class='heading'>The problem DynamicWorkflow was built to solve:</h3>
+<h3 id='the-problem-workflow-was-built-to-solve' class='heading'>The problem Workflow was built to solve:</h3>
 
 <p>When developing for iOS one view controller has to know about the one following it in order to pass along data. Imagine a workflow for a fast food app.</p>
 
 <p>Pick a location -&gt; Pickup or Delivery -&gt; Catering Menu or Normal Menu -&gt; Choose Food -&gt; Review Order -&gt; Submit payment</p>
 
-<p>Now imagine if a users location is known via GPS. You may be able to skip the first screen and assume the nearest location knowing they can edit it on the review screen. Pickup or Delivery may or may not need to show up depending on what the location they picked supports, Same with catering menu vs normal menu</p>
+<p>Now imagine if a users location is known via GPS. You may be able to skip the first screen and assume the nearest location knowing they can edit it on the review screen. Pickup or Delivery may or may not need to show up depending on what the location they picked supports. The same is true with catering menu vs normal menu</p>
 
-<p>Finally the review screen would be really nice if it gave a way to edit. This spells a nightmare for you if you utilize UIStoryboardSegue to help. You&rsquo;ll have to use many of them, and if the design of this user flow changes you&rsquo;re in for a bit of an annoying time changing them around.</p>
+<p>Finally the review screen would be really nice if it gave a way to edit. This spells a nightmare for you if you utilize segues. You&rsquo;ll have to use many of them, and if the design of this user flow changes you&rsquo;re in for a bit of an annoying time changing them around.</p>
 <h3 id='the-solution' class='heading'>The solution</h3>
 
-<p>DynamicWorkflow lets you specify once what the whole workflow looks like, then each view controller defines whether it should show up or not, so to solve the above problem you&rsquo;d use something like this.</p>
+<p>Workflow lets you specify once what the whole workflow looks like, then each view controller defines whether it should show up or not, so to solve the above problem you&rsquo;d use something like this.</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">workflow</span> <span class="o">=</span> <span class="kt">Workflow</span><span class="p">()</span>
                 <span class="o">.</span><span class="nf">thenPresent</span><span class="p">(</span><span class="kt">LocationsViewController</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
                 <span class="o">.</span><span class="nf">thenPresent</span><span class="p">(</span><span class="kt">PickupOrDeliveryViewController</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
@@ -165,11 +165,11 @@
                 <span class="o">.</span><span class="nf">thenPresent</span><span class="p">(</span><span class="kt">ReviewOrderViewController</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
                 <span class="o">.</span><span class="nf">thenPresent</span><span class="p">(</span><span class="kt">SubmitPaymentViewController</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
 
-<span class="c1">//from wherever this flow is launched</span>
+<span class="c1">// from wherever this flow is launched</span>
 <span class="nf">launchInto</span><span class="p">(</span><span class="n">workflow</span><span class="p">)</span>
 </code></pre>
 
-<p>If you ever want to re-order these you simply move their position in the chain. Your ViewControllers will be naturally start to become defined in a way where they can be injected into any kind of workflow and so if for scheduled orders you want screens to show up in a different order, you just define a new <code><a href="Classes/Workflow.html">Workflow</a></code>.</p>
+<p>If you ever want to re-order these you simply move their position in the chain. Your view controllers will naturally start to become defined in a way where they can be injected into any kind of workflow, and so if for scheduled orders you want screens to show up in a different order, you just define a new <code><a href="Classes/Workflow.html">Workflow</a></code>.</p>
 
           </div>
         </section>
