@@ -32,6 +32,7 @@ public final class LaunchStyle {
 }
 
 extension LaunchStyle: Equatable {
+    /// :nodoc: Equatable protocol requirement.
     public static func == (lhs: LaunchStyle, rhs: LaunchStyle) -> Bool {
         lhs === rhs
     }

@@ -9,22 +9,15 @@
 import Foundation
 
 /**
- Data about a `FlowRepresentable`. Used to make an `OrchestrationResponder`.
+ Data about a `FlowRepresentable`.
 
  ### Discussion
- Every time a `Workflow` is created, the defining characteristics about a `FlowRepresentable` is stored in the `FlowRepresentableMetadata` to be used later.
-
- #### Example
- ```swift
- Workflow(SomeFlowRepresentableClass.self) // We now have a FlowRepresentableMetadata representing SomeFlowRepresentableClass
-     .thenProceed(with: SomeOtherFlowRepresentableClass.self, launchStyle: .navigationStack) // We now have a FlowRepresentableMetadata representing SomeOtherFlowRepresentableClass and its launch style of navigation stack
- ```
- Initially we create a `FlowRepresentableMetadata` representing SomeFlowRepresentableClass.  When we call `.thenPresent` we add a `FlowRepresentableMetadata` representing SomeOtherFlowRepresentableClass and its launch style of navigation stack to the `Workflow`.
+ Every time a `Workflow` is created, the defining characteristics about a `FlowRepresentable` are stored in the `FlowRepresentableMetadata` to be used later.
  */
 public class FlowRepresentableMetadata {
     /// Preferred `LaunchStyle` of the associated `FlowRepresentable`.
     public private(set) var launchStyle: LaunchStyle
-    /// Preferred `FlowPersistence` of  the associated `FlowRepresentable`.
+    /// Preferred `FlowPersistence` of  the associated `FlowRepresentable`; set when `FlowRepresentableMetadata` instantiates an instance.
     public private(set) var persistence: FlowPersistence?
     private(set) var flowRepresentableFactory: (AnyWorkflow.PassedArgs) -> AnyFlowRepresentable
     private var flowPersistence: (AnyWorkflow.PassedArgs) -> FlowPersistence

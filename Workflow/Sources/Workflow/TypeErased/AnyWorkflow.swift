@@ -9,12 +9,12 @@
 
 import Foundation
 
-/// A type erased `Workflow`
+/// A type erased `Workflow`.
 public class AnyWorkflow {
-    /// The `LinkedList.Node` type of a `Workflow`
+    /// The `LinkedList.Node` type of a `Workflow`.
     public typealias Element = LinkedList<_WorkflowItem>.Element
 
-    /// The `OrchestrationResponder` of the wrapped `Workflow`
+    /// The `OrchestrationResponder` of the wrapped `Workflow`.
     public internal(set) var orchestrationResponder: OrchestrationResponder? {
         get {
             storageBase.orchestrationResponder
@@ -23,12 +23,12 @@ public class AnyWorkflow {
         }
     }
 
-    /// The count of the wrapped `Workflow`
+    /// The count of the wrapped `Workflow`.
     public var count: Int { storageBase.count }
 
     fileprivate var storageBase: AnyWorkflowStorageBase
 
-    /// Creates a type erased `Workflow`
+    /// Creates a type erased `Workflow`.
     public init<F>(_ workflow: Workflow<F>) {
         storageBase = AnyWorkflowStorage(workflow)
     }
@@ -38,6 +38,7 @@ public class AnyWorkflow {
 }
 
 extension AnyWorkflow: Sequence {
+    /// :nodoc: Sequence protocol requirement.
     public func makeIterator() -> LinkedList<_WorkflowItem>.Iterator {
         storageBase.makeIterator()
     }

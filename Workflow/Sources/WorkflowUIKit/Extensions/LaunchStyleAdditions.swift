@@ -31,22 +31,20 @@ extension LaunchStyle {
     /// A type indicating how a `FlowRepresentable` should be presented.
     public enum PresentationType: RawRepresentable {
         /**
-        Indicates a `FlowRepresentable` should be launched in a navigation stack of some kind (For example with UIKit this would use a UINavigationController)
-        - Note: If no current navigation stack is available, one will be created
-        */
-        case navigationStack
-        /// Indicates a `FlowRepresentable` should be launched modally
-        case modal(ModalPresentationStyle)
-        /**
-        Indicates a `FlowRepresentable` can be launched contextually
-        - Note: If there's already a navigation stack, it will be used. Otherwise views will present modally
+        Indicates a `FlowRepresentable` can be launched contextually.
+        - Important: If there's already a navigation stack, it will be used; otherwise views will present modally.
         */
         case `default`
+        /**
+        Indicates a `FlowRepresentable` should be launched in a navigation stack of some kind (For example with UIKit this would use a UINavigationController).
+        - Important: If no current navigation stack is available, one will be created.
+        */
+        case navigationStack
+        /// Indicates a `FlowRepresentable` should be launched modally.
+        case modal(ModalPresentationStyle)
 
-        /// An alias for PresentationType.modal(.default)
-        public static var modal: PresentationType {
-            .modal(.default)
-        }
+        /// An alias for `PresentationType.modal(.default)`.
+        public static var modal: PresentationType { .modal(.default) }
 
         /// Creates a `PresentationType` from a `LaunchStyle`, or returns nil if no mapping exists.
         public init?(rawValue: LaunchStyle) {
@@ -140,6 +138,7 @@ extension UIModalPresentationStyle {
 }
 
 extension LaunchStyle.PresentationType: Equatable {
+    /// :nodoc: Equatable protocol requirement.
     public static func == (lhs: LaunchStyle.PresentationType, rhs: LaunchStyle.PresentationType) -> Bool {
         lhs.rawValue === rhs.rawValue
     }

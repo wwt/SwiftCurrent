@@ -17,9 +17,9 @@ import Foundation
 public final class FlowPersistence {
     /// Indicates a `FlowRepresentable` in a `Workflow` should persist based on its `shouldLoad` function.
     public static let `default` = FlowPersistence()
-    /// Indicates a `FlowRepresentable` in a `Workflow` who's `shouldLoad` function returns false should still be persisted in the workflow.
+    /// Indicates a `FlowRepresentable` in a `Workflow` whose `shouldLoad` function returns false, should still be persisted in the workflow.
     public static let persistWhenSkipped = FlowPersistence()
-    /// Indicates a `FlowRepresentable` in a `Workflow` who's `shouldLoad` function returns true should be removed from the workflow after proceeding forward.
+    /// Indicates a `FlowRepresentable` in a `Workflow` whose `shouldLoad` function returns true, should be removed from the workflow after proceeding forward.
     public static let removedAfterProceeding = FlowPersistence()
 
     /// A new instance of `FlowPersistence`; only use for extending cases of `FlowPersistence`.
@@ -31,6 +31,7 @@ public final class FlowPersistence {
 }
 
 extension FlowPersistence: Equatable {
+    /// :nodoc: Equatable protocol requirement.
     public static func == (lhs: FlowPersistence, rhs: FlowPersistence) -> Bool {
         lhs === rhs
     }

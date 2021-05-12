@@ -31,7 +31,7 @@ extension LinkedList {
 
     /**
     Return a new version of the LinkedList with a specific element replaced
-    - Parameter index: The index of the node who's concrete value should be replaced
+    - Parameter index: The index of the node whose concrete value should be replaced
     - Parameter newItem: The concrete value to replace
     - Returns: A new version of the LinkedList with a specific element replaced
     */
