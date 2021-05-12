@@ -13,7 +13,6 @@ import Workflow
 
 // UI friendly terms for creating a workflow.
 extension Workflow {
-
     /**
     A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     - Parameter type: A reference to the class used to create the workflow
@@ -76,7 +75,6 @@ extension Workflow {
 }
 
 extension Workflow {
-
     /**
     Called when the workflow should be terminated, and the app should return to the point before the workflow was launched
     - Parameter animated: A boolean indicating whether abandoning the workflow should be animated
@@ -89,7 +87,6 @@ extension Workflow {
 }
 
 extension AnyWorkflow {
-
     /**
     Called when the workflow should be terminated, and the app should return to the point before the workflow was launched
     - Parameter animated: A boolean indicating whether abandoning the workflow should be animated
@@ -114,7 +111,6 @@ extension AnyWorkflow {
 }
 
 extension Workflow where F.WorkflowOutput == Never {
-
     /**
     A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     - Parameter type: A reference to the class used to create the workflow
@@ -150,7 +146,6 @@ extension Workflow where F.WorkflowOutput == Never {
 }
 
 extension Workflow {
-
     /**
     A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     - Parameter type: A reference to the class used to create the workflow
