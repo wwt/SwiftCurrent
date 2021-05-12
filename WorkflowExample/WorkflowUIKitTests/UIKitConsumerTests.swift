@@ -1746,6 +1746,10 @@ class UIKitConsumerTests: XCTestCase {
         XCTAssertNil((wf.first?.value.instance?.underlyingInstance as? FR1)?.proceedInWorkflowStorage)
         XCTAssertNil(wf.first?.value.instance)
     }
+
+    func testHiddenInitiallyAndPersistWhenSkippedAreTheSame() {
+        XCTAssertEqual(FlowPersistence.hiddenInitially, .persistWhenSkipped)
+    }
 }
 
 extension UIKitConsumerTests {
