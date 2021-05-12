@@ -1,4 +1,4 @@
 {
-  "contributors": ["Richard-Gist", "Tyler-Keith-Thompson", "hmeadow"],
+  "contributors": ["Richard-Gist", "Tyler-Keith-Thompson", "hmeadow", "pg"],
   "message": "Thank you for your pull request and welcome to our community. We require contributors to sign our Contributor License Agreement, and we do not seem to have the users {{usersWithoutCLA}} on file. In order for us to review and merge your code, please contact [Workflow@wwt.com](mailto:Workflow@wwt.com) to get yourself added."
 }
