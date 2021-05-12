@@ -55,6 +55,11 @@
 		CAF58832256D73090044C864 /* LocationsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF58825256D73090044C864 /* LocationsViewControllerTests.swift */; };
 		CAF58834256D73090044C864 /* WorkflowListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF58828256D73090044C864 /* WorkflowListener.swift */; };
 		CAF5885F256D73D60044C864 /* Workflow in Frameworks */ = {isa = PBXBuildFile; productRef = CAF5885E256D73D60044C864 /* Workflow */; };
+		D7E1264E264C6FBD00B6A712 /* UIKitConsumerAbandonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1264D264C6FBD00B6A712 /* UIKitConsumerAbandonTests.swift */; };
+		D7E12656264C719B00B6A712 /* UIKitConsumerSkipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E12655264C719B00B6A712 /* UIKitConsumerSkipTests.swift */; };
+		D7E1265E264C73BA00B6A712 /* UIKitConsumerLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1265D264C73BA00B6A712 /* UIKitConsumerLaunchTests.swift */; };
+		D7E12666264C75CF00B6A712 /* UIKitConsumerWorkflowChainingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E12665264C75CF00B6A712 /* UIKitConsumerWorkflowChainingTests.swift */; };
+		D7E1266E264C76D000B6A712 /* UIKitConsumerPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1266D264C76D000B6A712 /* UIKitConsumerPersistenceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +128,11 @@
 		CAF58824256D73090044C864 /* SetupViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SetupViewControllerTests.swift; path = ../../Workflow/Tests/WorkflowExampleTests/SetupViewControllerTests.swift; sourceTree = "<group>"; };
 		CAF58825256D73090044C864 /* LocationsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationsViewControllerTests.swift; path = ../../Workflow/Tests/WorkflowExampleTests/LocationsViewControllerTests.swift; sourceTree = "<group>"; };
 		CAF58828256D73090044C864 /* WorkflowListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkflowListener.swift; sourceTree = "<group>"; };
+		D7E1264D264C6FBD00B6A712 /* UIKitConsumerAbandonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitConsumerAbandonTests.swift; sourceTree = "<group>"; };
+		D7E12655264C719B00B6A712 /* UIKitConsumerSkipTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitConsumerSkipTests.swift; sourceTree = "<group>"; };
+		D7E1265D264C73BA00B6A712 /* UIKitConsumerLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitConsumerLaunchTests.swift; sourceTree = "<group>"; };
+		D7E12665264C75CF00B6A712 /* UIKitConsumerWorkflowChainingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitConsumerWorkflowChainingTests.swift; sourceTree = "<group>"; };
+		D7E1266D264C76D000B6A712 /* UIKitConsumerPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitConsumerPersistenceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -262,10 +272,15 @@
 		CAF58636256CF0E50044C864 /* WorkflowUIKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				CA28CCFC264C658500DB4044 /* MockOrchestrationResponder.swift */,
 				CAF58803256D72BD0044C864 /* Info.plist */,
+				CA28CCFC264C658500DB4044 /* MockOrchestrationResponder.swift */,
 				CAC1C24E256D8F0400DBD0D4 /* ModalStyleTests.swift */,
+				D7E1264D264C6FBD00B6A712 /* UIKitConsumerAbandonTests.swift */,
+				D7E1265D264C73BA00B6A712 /* UIKitConsumerLaunchTests.swift */,
+				D7E1266D264C76D000B6A712 /* UIKitConsumerPersistenceTests.swift */,
+				D7E12655264C719B00B6A712 /* UIKitConsumerSkipTests.swift */,
 				CAC1C24D256D8F0300DBD0D4 /* UIKitConsumerTests.swift */,
+				D7E12665264C75CF00B6A712 /* UIKitConsumerWorkflowChainingTests.swift */,
 				CA357F19263E67DE003D1ACB /* UIKitPresenterTests.swift */,
 				CAF58806256D72BD0044C864 /* XCTestManifests.swift */,
 				CA50C90E2640E78000FAA8FE /* Storyboard */,
@@ -482,10 +497,15 @@
 				CAC1C250256D8F0400DBD0D4 /* UIKitConsumerTests.swift in Sources */,
 				CA9226EB26406C5B00BD0366 /* StoryboardLoadableTests.swift in Sources */,
 				CAC1C235256D8DA300DBD0D4 /* TopViewController.swift in Sources */,
+				D7E1264E264C6FBD00B6A712 /* UIKitConsumerAbandonTests.swift in Sources */,
 				CA875AC0257353B300243FA4 /* CustomAssertions.swift in Sources */,
+				D7E12666264C75CF00B6A712 /* UIKitConsumerWorkflowChainingTests.swift in Sources */,
+				D7E1266E264C76D000B6A712 /* UIKitConsumerPersistenceTests.swift in Sources */,
 				CA357F1A263E67DE003D1ACB /* UIKitPresenterTests.swift in Sources */,
 				CAC1C23D256D8DB100DBD0D4 /* WaitUntil.swift in Sources */,
+				D7E1265E264C73BA00B6A712 /* UIKitConsumerLaunchTests.swift in Sources */,
 				CAF58811256D72BE0044C864 /* XCTestManifests.swift in Sources */,
+				D7E12656264C719B00B6A712 /* UIKitConsumerSkipTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
