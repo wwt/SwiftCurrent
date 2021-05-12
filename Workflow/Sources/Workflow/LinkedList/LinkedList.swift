@@ -47,7 +47,7 @@ public class LinkedList<Value>: Sequence, CustomStringConvertible {
 
     /// The first node in the list
     public var first: Element?
-    
+
     /** The last node in the list
     - Complexity: O(n). The LinkedList must traverse to the end to determine the count
     */
