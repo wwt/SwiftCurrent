@@ -10,14 +10,14 @@
 
 import Foundation
 extension LinkedList: Equatable where Value: Equatable {
+    /// :nodoc: Equatable protocol requirement.
     public static func == (lhs: LinkedList<Value>, rhs: LinkedList<Value>) -> Bool {
         lhs.toArray() == rhs.toArray()
     }
 
     /**
-     Returns a boolean indicating whether the given value is present in the LinkedList
-     - Parameter element: The value to check against the LinkedList
-     - Returns: A boolean indicating whether the supplied value is present
+     Returns a boolean indicating whether the given value is present in the linked list.
+     - Parameter element: the value to check against the linked list.
      */
     public func contains(_ element: Element.Value) -> Bool {
         contains { $0.value == element }
