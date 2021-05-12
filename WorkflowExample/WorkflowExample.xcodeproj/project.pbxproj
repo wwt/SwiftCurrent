@@ -192,11 +192,11 @@
 		CAF58521256CEE990044C864 = {
 			isa = PBXGroup;
 			children = (
-				CAF5852C256CEE990044C864 /* WorkflowExample */,
-				CAF58636256CF0E50044C864 /* WorkflowUIKitTests */,
-				CAF586AF256CF2B40044C864 /* WorkflowExampleTests */,
-				CAF5852B256CEE990044C864 /* Products */,
 				CAF58542256CEEAA0044C864 /* Frameworks */,
+				CAF5852B256CEE990044C864 /* Products */,
+				CAF5852C256CEE990044C864 /* WorkflowExample */,
+				CAF586AF256CF2B40044C864 /* WorkflowExampleTests */,
+				CAF58636256CF0E50044C864 /* WorkflowUIKitTests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -213,16 +213,16 @@
 		CAF5852C256CEE990044C864 /* WorkflowExample */ = {
 			isa = PBXGroup;
 			children = (
-				CAF5854D256CEECC0044C864 /* Models */,
-				CAF58546256CEECC0044C864 /* Ordering */,
-				CAF58551256CEECC0044C864 /* Protocols */,
+				CAF5853B256CEE990044C864 /* Info.plist */,
 				CAF5852D256CEE990044C864 /* AppDelegate.swift */,
 				CAF5852F256CEE990044C864 /* SceneDelegate.swift */,
 				CAF58554256CEF080044C864 /* SetupViewController.swift */,
-				CAF58533256CEE990044C864 /* Main.storyboard */,
 				CAF58536256CEE990044C864 /* Assets.xcassets */,
 				CAF58538256CEE990044C864 /* LaunchScreen.storyboard */,
-				CAF5853B256CEE990044C864 /* Info.plist */,
+				CAF58533256CEE990044C864 /* Main.storyboard */,
+				CAF5854D256CEECC0044C864 /* Models */,
+				CAF58546256CEECC0044C864 /* Ordering */,
+				CAF58551256CEECC0044C864 /* Protocols */,
 			);
 			path = WorkflowExample;
 			sourceTree = "<group>";
@@ -241,12 +241,12 @@
 		CAF58546256CEECC0044C864 /* Ordering */ = {
 			isa = PBXGroup;
 			children = (
-				CAF58547256CEECC0044C864 /* LocationsViewController.swift */,
-				CAF58548256CEECC0044C864 /* FoodSelectionViewController.swift */,
-				CAF58549256CEECC0044C864 /* MenuSelectionViewController.swift */,
 				CAF5854A256CEECC0044C864 /* EnterAddressViewController.swift */,
-				CAF5854B256CEECC0044C864 /* ReviewOrderViewController.swift */,
+				CAF58548256CEECC0044C864 /* FoodSelectionViewController.swift */,
+				CAF58547256CEECC0044C864 /* LocationsViewController.swift */,
+				CAF58549256CEECC0044C864 /* MenuSelectionViewController.swift */,
 				CAF5854C256CEECC0044C864 /* PickupOrDeliveryViewController.swift */,
+				CAF5854B256CEECC0044C864 /* ReviewOrderViewController.swift */,
 			);
 			path = Ordering;
 			sourceTree = "<group>";
@@ -297,12 +297,12 @@
 				CAF58821256D73080044C864 /* FoodSelectionViewControllerTests.swift */,
 				CAF58825256D73090044C864 /* LocationsViewControllerTests.swift */,
 				CAF58820256D73080044C864 /* MenuSelectionViewControllerTests.swift */,
-				CAF58826256D73090044C864 /* Mocks */,
 				CAF5881D256D73080044C864 /* PickupOrDeliveryViewControllerTests.swift */,
 				CAF58823256D73090044C864 /* ReviewOrderViewControllerTests.swift */,
 				CAF58824256D73090044C864 /* SetupViewControllerTests.swift */,
 				CAF5881F256D73080044C864 /* TestFinder.swift */,
 				CAF5881C256D73080044C864 /* ViewControllerTest.swift */,
+				CAF58826256D73090044C864 /* Mocks */,
 			);
 			path = WorkflowExampleTests;
 			sourceTree = "<group>";
