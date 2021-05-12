@@ -1700,6 +1700,27 @@ class UIKitConsumerTests: XCTestCase {
 
         XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
     }
+
+    func testUIKitPresentRespondsToAbandonActionCorrectly() {
+        class FR1: UIWorkflowItem<Never, Never>, FlowRepresentable { }
+
+        let expectation = self.expectation(description: "Abandon Called")
+        let root = UIViewController()
+        root.loadForTesting()
+
+        let wf = Workflow(FR1.self)
+        root.launchInto(wf)
+
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
+
+        wf.orchestrationResponder?.abandon(AnyWorkflow(wf)) {
+            expectation.fulfill()
+        }
+
+        XCTAssertUIViewControllerDisplayed(isInstance: root)
+
+        wait(for: [expectation], timeout: 0.3)
+    }
 }
 
 extension UIKitConsumerTests {
