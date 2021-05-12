@@ -11,9 +11,9 @@
 import Foundation
 extension LinkedList {
     /**
-     Appends a new node to the end of the LinkedList
-     - Parameter element: The concrete value that should be appended
-     - Note: This operation mutates the original LinkedList
+     Appends a new node to the end of the linked list.
+     - Parameter element: the concrete value that should be appended.
+     - Important: This operation mutates the original `LinkedList`.
      */
     public func append(_ element: Value) {
         let node = Element(with: element)
@@ -28,9 +28,9 @@ extension LinkedList {
     }
 
     /**
-    Appends a collection of nodes to the end of the LinkedList
-    - Parameter newElements: An sequence of concrete elements that should be appended
-    - Note: This operation mutates the original LinkedList
+     Appends a collection of nodes to the end of the linked list.
+     - Parameter newElements: a sequence of concrete elements that should be appended.
+     - Important: This operation mutates the original `LinkedList`.
      */
     public func append<S>(contentsOf newElements: S) where S: Sequence, Value == S.Element {
         let collection = newElements.map { Element(with: $0) }
@@ -48,10 +48,10 @@ extension LinkedList {
     }
 
     /**
-    Inserts a new node at a specified location
-    - Parameter element: The concrete value that should be inserted
-    - Parameter i: The index the value should be inserted at
-    - Note: This operation mutates the original LinkedList
+     Inserts a new node at a specified location.
+     - Parameter element: the concrete value that should be inserted.
+     - Parameter i: the index the value should be inserted at.
+     - Important: This operation mutates the original `LinkedList`.
      */
     public func insert(_ element: Value, atIndex i: Index) {
         let existingNode: Element? = first?.traverse(i)
@@ -66,10 +66,10 @@ extension LinkedList {
     }
 
     /**
-     Inserts a sequences of new nodes at a specified location
-     - Parameter newElements: A sequences of concrete values that should be inserted
-     - Parameter i: The index the value should be inserted at
-     - Note: This operation mutates the original LinkedList
+     Inserts a sequence of new nodes at a specified location.
+     - Parameter newElements: a sequence of concrete values that should be inserted.
+     - Parameter i: the index the sequence should be inserted at.
+     - Important: This operation mutates the original `LinkedList`.
      */
     public func insert<C>(contentsOf newElements: C, at i: Index) where C: Collection, Value == C.Element {
         let existingNode: Element? = first?.traverse(i)
@@ -90,10 +90,10 @@ extension LinkedList {
     }
 
     /**
-    Removes a node at the specified index
-    - Parameter i: The index the value should be removed from
-    - Note: This operation mutates the original LinkedList
-    - Note: If you pass an index greater than the count of the LinkedList this will be a NO-OP
+     Removes a node at the specified index.
+     - Parameter i: the index the value should be removed from.
+     - Important: This operation mutates the original `LinkedList`.
+     - Important: If you pass an index greater than the count of the LinkedList this will be a NO-OP.
      */
     public func remove(at i: Index) {
         let node: Element? = first?.traverse(i)
@@ -102,9 +102,9 @@ extension LinkedList {
     }
 
     /**
-    Removes a node at the specified index
-    - Parameter predicate: A closure indicating whether that node should be removed
-    - Note: This operation mutates the original LinkedList
+     Removes a node at the specified index.
+     - Parameter predicate: a closure indicating whether that node should be removed.
+     - Important: This operation mutates the original `LinkedList`.
      */
     public func remove(where predicate: (Element) -> Bool) {
         _ = first?.traverse {
@@ -117,10 +117,10 @@ extension LinkedList {
     }
 
     /**
-    Removes the first n nodes from the LinkedList
-    - Parameter n: The number of nodes that should be removed
-    - Note: This operation mutates the original LinkedList
-    - Note: If you pass a value greater than the count of the LinkedList you will remove all items
+     Removes the first n nodes from the linked list.
+     - Parameter n: the number of nodes that should be removed.
+     - Important: This operation mutates the original `LinkedList`.
+     - Important: If you pass a value greater than the count of the linked list you will remove all items.
      */
     public func removeFirst(_ n: Int = 1) {
         guard n > 0 else { return }
@@ -133,10 +133,10 @@ extension LinkedList {
     }
 
     /**
-    Removes the last n nodes from the LinkedList
-    - Parameter n: The number of nodes that should be removed
-    - Note: This operation mutates the original LinkedList
-    - Note: If you pass a value greater than the count of the LinkedList you will remove all items
+     Removes the last n nodes from the linked list.
+     - Parameter n: the number of nodes that should be removed.
+     - Important: This operation mutates the original `LinkedList`.
+     - Important: If you pass a value greater than the count of the linked list you will remove all items.
      */
     public func removeLast(_ n: Int = 1) {
         guard n > 0 else { return }
@@ -150,9 +150,9 @@ extension LinkedList {
     }
 
     /**
-     Removes the last n nodes from the LinkedList and returns the removed concrete type
-     - Note: This operation mutates the original LinkedList
-     - Returns: The concrete type the node encapsulated that was removed
+     Removes the last node from the linked list; returns the removed concrete type.
+     - Important: This operation mutates the original `LinkedList`.
+     - Returns: the concrete type the node encapsulated that was removed; nil if no node exists.
      */
     public func popLast() -> Value? {
         let l = last
@@ -167,8 +167,8 @@ extension LinkedList {
     }
 
     /**
-     Removes all nodes from the LinkedList
-     - Note: This operation mutates the original LinkedList
+     Removes all nodes from the linked list.
+     - Important: This operation mutates the original `LinkedList`.
      */
     public func removeAll() {
         first?.next?.removeTillEnd()
@@ -176,11 +176,11 @@ extension LinkedList {
     }
 
     /**
-     Swaps the concrete values of 2 nodes
-     - Parameter i: The index of one of the items to be swapped
-     - Parameter j: The index of the second item to be swapped
-     - Note: This operation mutates the original LinkedList
-     - Note: If you call this with an invalid index you will cause a `fatalError` and stop execution of the process
+     Swaps the concrete values of 2 nodes.
+     - Parameter i: the index of the first item to be swapped.
+     - Parameter j: the index of the second item to be swapped.
+     - Important: This operation mutates the original `LinkedList`.
+     - Important: If you call this with an invalid index you will cause a `fatalError` and stop execution of the process.
      */
     public func swapAt(_ i: Int, _ j: Int) {
         var firstElement: Element?
@@ -203,30 +203,30 @@ extension LinkedList {
     }
 
     /**
-    Replaces the concrete value of the node at the specified index
-    - Parameter index: The index of the node with the value to be replaced
-    - Parameter newItem: The concrete value that should replace the old value
-    - Note: This operation mutates the original LinkedList
-    - Note: If you call this with an invalid index this will be a NO-OP
-    */
+     Replaces the concrete value of the node at the specified index.
+     - Parameter index: the index of the node with the value to be replaced.
+     - Parameter newItem: the concrete value that should replace the old value.
+     - Important: This operation mutates the original `LinkedList`.
+     - Important: If you call this with an invalid index this will be a NO-OP.
+     */
     public func replace(atIndex index: Int, withItem newItem: Value) {
         first?.traverse(index)?.value = newItem
     }
 
     /**
-    reverse: Reverse the LinkedList
-    - Note: This operation mutates the original LinkedList
-    */
+     Reverses the linked list.
+     - Important: This operation mutates the original `LinkedList`.
+     */
     public func reverse() {
         first = reversed().first
     }
 
     /**
-    Sorts the linkedList
-    - Parameter comparator: A function that takes in 2 concrete types and indicates how they should be sorted
-    - Note: This operation mutates the original LinkedList
-    - Complexity: O(nLogn) This uses Merge Sort under the covers and is more performant than the built in alternative
-    */
+     Sorts the linked list.
+     - Parameter comparator: a closure that takes in 2 concrete types and indicates how they should be sorted.
+     - Important: This operation mutates the original `LinkedList`.
+     - Complexity: O(n log(n)) This uses Merge Sort under the covers and is more performant than the built in alternative.
+     */
     public func sort(by comparator: (Value, Value) -> Bool) {
         guard first?.next != nil else { return }
         first = LinkedList(mergeSort(first, by: comparator)).first
