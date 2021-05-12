@@ -1701,7 +1701,7 @@ class UIKitConsumerTests: XCTestCase {
         XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
     }
 
-    func testUIKitPresentRespondsToAbandonActionCorrectly() {
+    func testUIKitPresenterRespondsToAbandonActionCorrectly() {
         class FR1: UIWorkflowItem<Never, Never>, FlowRepresentable { }
 
         let expectation = self.expectation(description: "Abandon Called")
@@ -1720,6 +1720,31 @@ class UIKitConsumerTests: XCTestCase {
         XCTAssertUIViewControllerDisplayed(isInstance: root)
 
         wait(for: [expectation], timeout: 0.3)
+    }
+
+    func testUIKitAbandon_CanStillAbandon_EvenIfTheResponderIsNotAUIKitPresenter() {
+        class FR1: UIWorkflowItem<Never, Never>, FlowRepresentable { }
+
+        let expectation = self.expectation(description: "Abandon Called")
+        let root = UIViewController()
+        root.loadForTesting()
+
+        let wf = Workflow(FR1.self)
+        let responder = MockOrchestrationResponder()
+        wf.launch(withOrchestrationResponder: responder)
+
+        XCTAssertNotNil(wf.first?.value.instance)
+
+        wf.abandon(animated: false) {
+            expectation.fulfill()
+        }
+
+        responder.lastOnFinish?()
+
+        wait(for: [expectation], timeout: 0.1)
+
+        XCTAssertNil((wf.first?.value.instance?.underlyingInstance as? FR1)?.proceedInWorkflowStorage)
+        XCTAssertNil(wf.first?.value.instance)
     }
 }
 

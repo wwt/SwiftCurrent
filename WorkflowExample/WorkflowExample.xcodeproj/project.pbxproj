@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA28CCFD264C658600DB4044 /* MockOrchestrationResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA28CCFC264C658500DB4044 /* MockOrchestrationResponder.swift */; };
 		CA357F1A263E67DE003D1ACB /* UIKitPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA357F19263E67DE003D1ACB /* UIKitPresenterTests.swift */; };
 		CA357F1F263E68AD003D1ACB /* UIKitAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA357F1E263E68AD003D1ACB /* UIKitAssertions.swift */; };
 		CA875A89256F7B9200243FA4 /* MockOrchestrationResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA875A88256F7B9200243FA4 /* MockOrchestrationResponder.swift */; };
@@ -74,6 +75,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CA28CCFC264C658500DB4044 /* MockOrchestrationResponder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockOrchestrationResponder.swift; path = ../../Workflow/Tests/WorkflowTests/OrchestrationResponder/MockOrchestrationResponder.swift; sourceTree = "<group>"; };
 		CA357F19263E67DE003D1ACB /* UIKitPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitPresenterTests.swift; sourceTree = "<group>"; };
 		CA357F1E263E68AD003D1ACB /* UIKitAssertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitAssertions.swift; sourceTree = "<group>"; };
 		CA875A88256F7B9200243FA4 /* MockOrchestrationResponder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockOrchestrationResponder.swift; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 		CAF58636256CF0E50044C864 /* WorkflowUIKitTests */ = {
 			isa = PBXGroup;
 			children = (
+				CA28CCFC264C658500DB4044 /* MockOrchestrationResponder.swift */,
 				CAF58803256D72BD0044C864 /* Info.plist */,
 				CAC1C24E256D8F0400DBD0D4 /* ModalStyleTests.swift */,
 				CAC1C24D256D8F0300DBD0D4 /* UIKitConsumerTests.swift */,
@@ -475,6 +478,7 @@
 			files = (
 				CAC1C24F256D8F0400DBD0D4 /* ModalStyleTests.swift in Sources */,
 				CA357F1F263E68AD003D1ACB /* UIKitAssertions.swift in Sources */,
+				CA28CCFD264C658600DB4044 /* MockOrchestrationResponder.swift in Sources */,
 				CAC1C250256D8F0400DBD0D4 /* UIKitConsumerTests.swift in Sources */,
 				CA9226EB26406C5B00BD0366 /* StoryboardLoadableTests.swift in Sources */,
 				CAC1C235256D8DA300DBD0D4 /* TopViewController.swift in Sources */,
