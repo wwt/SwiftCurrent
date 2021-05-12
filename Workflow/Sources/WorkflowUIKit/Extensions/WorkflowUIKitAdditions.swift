@@ -54,7 +54,7 @@ extension Workflow {
     */
     public convenience init(_ type: F.Type,
                             presentationType: LaunchStyle.PresentationType,
-                            flowPersistence: @escaping () -> FlowPersistence) where F.WorkflowInput == Never {
+                            flowPersistence: @autoclosure @escaping () -> FlowPersistence) where F.WorkflowInput == Never {
         self.init(FlowRepresentableMetadata(type,
                                             launchStyle: presentationType.rawValue) { _ in flowPersistence() })
     }
@@ -68,7 +68,7 @@ extension Workflow {
     */
     public convenience init(_ type: F.Type,
                             presentationType: LaunchStyle.PresentationType,
-                            flowPersistence: @escaping () -> FlowPersistence) where F.WorkflowInput == AnyWorkflow.PassedArgs {
+                            flowPersistence: @autoclosure @escaping () -> FlowPersistence) where F.WorkflowInput == AnyWorkflow.PassedArgs {
         self.init(FlowRepresentableMetadata(type,
                                             launchStyle: presentationType.rawValue) { _ in flowPersistence() })
     }
@@ -136,8 +136,7 @@ extension Workflow where F.WorkflowOutput == Never {
     */
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: LaunchStyle.PresentationType = .default,
-                                                   flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR>
-    where FR.WorkflowInput == AnyWorkflow.PassedArgs {
+                                                   flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where FR.WorkflowInput == AnyWorkflow.PassedArgs {
         let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetadata(type,
                                             launchStyle: presentationType.rawValue) { _ in flowPersistence() })
@@ -207,8 +206,7 @@ extension Workflow {
     */
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: LaunchStyle.PresentationType = .default,
-                                                   flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR>
-    where FR.WorkflowInput == AnyWorkflow.PassedArgs {
+                                                   flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where FR.WorkflowInput == AnyWorkflow.PassedArgs {
         let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetadata(type,
                                             launchStyle: presentationType.rawValue) { _ in flowPersistence() })

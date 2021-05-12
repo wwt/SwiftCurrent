@@ -1618,6 +1618,88 @@ class UIKitConsumerTests: XCTestCase {
 
         XCTAssert(UIApplication.topViewController() === rootController)
     }
+
+    func testInstantiatingWorkflow_WithFlowPersistenceClosure() {
+        let expectation = self.expectation(description: "Flow Persistence Closure Called")
+        let expectedArgs = UUID().uuidString
+        class FR1: UIWorkflowItem<String, Never>, FlowRepresentable {
+            required init(with args: String) {
+                super.init(nibName: nil, bundle: nil)
+            }
+            required init?(coder: NSCoder) { fatalError() }
+        }
+
+        let wf = Workflow(FR1.self, presentationType: .modal) { args in
+            expectation.fulfill()
+            XCTAssertEqual(args, expectedArgs)
+            return .persistWhenSkipped
+        }
+
+        let root = UIViewController()
+        root.loadForTesting()
+
+        root.launchInto(wf, args: expectedArgs)
+
+        wait(for: [expectation], timeout: 0.3)
+
+        XCTAssertEqual(wf.first?.value.metadata.persistence, .persistWhenSkipped)
+    }
+
+    func testInstantiatingWorkflow_WithFlowPersistenceAutoClosure_AndAnInputOfNever() {
+        let expectedArgs = UUID().uuidString
+        class FR1: UIWorkflowItem<Never, Never>, FlowRepresentable { }
+
+        let wf = Workflow(FR1.self, presentationType: .modal, flowPersistence: .persistWhenSkipped)
+
+        let root = UIViewController()
+        root.loadForTesting()
+
+        root.launchInto(wf, args: expectedArgs)
+
+        XCTAssertEqual(wf.first?.value.metadata.persistence, .persistWhenSkipped)
+    }
+
+    func testInstantiatingWorkflow_WithFlowPersistenceAutoClosure_AndAnInputOfPassedArgs() {
+        let expectedArgs = UUID().uuidString
+        class FR1: UIWorkflowItem<AnyWorkflow.PassedArgs, Never>, FlowRepresentable {
+            required init(with args: AnyWorkflow.PassedArgs) {
+                super.init(nibName: nil, bundle: nil)
+            }
+            required init?(coder: NSCoder) { fatalError() }
+        }
+
+        let wf = Workflow(FR1.self, presentationType: .modal, flowPersistence: .persistWhenSkipped)
+
+        let root = UIViewController()
+        root.loadForTesting()
+
+        root.launchInto(wf, args: expectedArgs)
+
+        XCTAssertEqual(wf.first?.value.metadata.persistence, .persistWhenSkipped)
+    }
+
+    func testProceedingInWorkflow_WithFlowPersistenceAutoClosure_AndAnInputOfPassedArgs() {
+        let expectedArgs = UUID().uuidString
+        class FR1: UIWorkflowItem<Never, Never>, FlowRepresentable { }
+        class FR2: UIWorkflowItem<AnyWorkflow.PassedArgs, Never>, FlowRepresentable {
+            required init(with args: AnyWorkflow.PassedArgs) {
+                super.init(nibName: nil, bundle: nil)
+            }
+            required init?(coder: NSCoder) { fatalError() }
+        }
+
+        let wf = Workflow(FR1.self)
+            .thenPresent(FR2.self, presentationType: .modal, flowPersistence: .persistWhenSkipped)
+
+        let root = UIViewController()
+        root.loadForTesting()
+
+        root.launchInto(wf, args: expectedArgs)
+
+        (wf.first?.value.instance?.underlyingInstance as? FR1)?.proceedInWorkflow()
+
+        XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
+    }
 }
 
 extension UIKitConsumerTests {
