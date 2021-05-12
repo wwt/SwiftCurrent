@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 /**
  An extendable class that indicates how a `FlowRepresentable` should be persisted.
 

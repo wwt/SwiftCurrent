@@ -37,7 +37,7 @@ extension LinkedList {
     */
     public func replacing(atIndex index: Int, withItem newItem: Value) -> LinkedList<Value> {
         guard let first = first else { return self }
-        let copy = LinkedList<Value>(first.copy())
+        let copy = LinkedList(first.copy())
         copy.replace(atIndex: index, withItem: newItem)
         return copy
     }

@@ -26,6 +26,7 @@ extension LinkedList {
         node.previous = last
         last?.next = node
     }
+
     /**
     Appends a collection of nodes to the end of the LinkedList
     - Parameter newElements: An sequence of concrete elements that should be appended

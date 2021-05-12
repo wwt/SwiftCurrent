@@ -22,12 +22,12 @@ import Foundation
  Initially we create a `FlowRepresentableMetadata` representing SomeFlowRepresentableClass.  When we call `.thenPresent` we add a `FlowRepresentableMetadata` representing SomeOtherFlowRepresentableClass and its launch style of navigation stack to the `Workflow`.
  */
 public class FlowRepresentableMetadata {
-    private(set) var flowRepresentableFactory: (AnyWorkflow.PassedArgs) -> AnyFlowRepresentable
-    private var flowPersistence: (AnyWorkflow.PassedArgs) -> FlowPersistence
     /// Preferred `LaunchStyle` of the associated `FlowRepresentable`.
     public private(set) var launchStyle: LaunchStyle
     /// Preferred `FlowPersistence` of  the associated `FlowRepresentable`.
     public private(set) var persistence: FlowPersistence?
+    private(set) var flowRepresentableFactory: (AnyWorkflow.PassedArgs) -> AnyFlowRepresentable
+    private var flowPersistence: (AnyWorkflow.PassedArgs) -> FlowPersistence
 
     /**
      Creates an instance that holds onto metadata associated with the `FlowRepresentable`.
