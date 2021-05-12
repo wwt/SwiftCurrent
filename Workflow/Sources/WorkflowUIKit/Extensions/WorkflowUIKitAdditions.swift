@@ -13,11 +13,12 @@ import Workflow
 
 // UI friendly terms for creating a workflow.
 extension Workflow {
+
     /**
     A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     - Parameter type: A reference to the class used to create the workflow
-    - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
-    - Parameter flowPersistence: An `FlowPersistence`type representing how this item in the workflow should persist.
+    - Parameter presentationType: The `PresentationType` the flow representable should use while it's part of this workflow
+    - Parameter flowPersistence: The `FlowPersistence` type representing how this item in the workflow should persist.
     - Returns: `Workflow`
     */
     public convenience init(_ type: F.Type,
@@ -26,11 +27,12 @@ extension Workflow {
         self.init(FlowRepresentableMetadata(type,
                                             launchStyle: presentationType.rawValue) { _ in flowPersistence() })
     }
+
     /**
     A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     - Parameter type: A reference to the class used to create the workflow
-    - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
-    - Parameter flowPersistence: A closure taking in the generic type from the `FlowRepresentable` and returning a `FlowPersistence`type representing how this item in the workflow should persist.
+    - Parameter presentationType: The `PresentationType` the flow representable should use while it's part of this workflow
+    - Parameter flowPersistence: A closure taking in the `FlowRepresentable.WorkflowInput` and returning a `FlowPersistence` type representing how this item in the workflow should persist.
     - Returns: `Workflow`
     */
     public convenience init(_ type: F.Type,
@@ -47,8 +49,8 @@ extension Workflow {
     /**
     A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     - Parameter type: A reference to the class used to create the workflow
-    - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
-    - Parameter flowPersistence: A closure returning a `FlowPersistence`type representing how this item in the workflow should persist.
+    - Parameter presentationType: The `PresentationType` the flow representable should use while it's part of this workflow
+    - Parameter flowPersistence: A closure returning a `FlowPersistence` type representing how this item in the workflow should persist.
     - Returns: `Workflow`
     */
     public convenience init(_ type: F.Type,
@@ -61,8 +63,8 @@ extension Workflow {
     /**
     A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     - Parameter type: A reference to the class used to create the workflow
-    - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
-    - Parameter flowPersistence: A closure returning a `FlowPersistence`type representing how this item in the workflow should persist.
+    - Parameter presentationType: The `PresentationType` the flow representable should use while it's part of this workflow
+    - Parameter flowPersistence: A closure returning a `FlowPersistence` type representing how this item in the workflow should persist.
     - Returns: `Workflow`
     */
     public convenience init(_ type: F.Type,
@@ -74,6 +76,7 @@ extension Workflow {
 }
 
 extension Workflow {
+
     /**
     Called when the workflow should be terminated, and the app should return to the point before the workflow was launched
     - Parameter animated: A boolean indicating whether abandoning the workflow should be animated
@@ -86,6 +89,7 @@ extension Workflow {
 }
 
 extension AnyWorkflow {
+
     /**
     Called when the workflow should be terminated, and the app should return to the point before the workflow was launched
     - Parameter animated: A boolean indicating whether abandoning the workflow should be animated
@@ -110,11 +114,12 @@ extension AnyWorkflow {
 }
 
 extension Workflow where F.WorkflowOutput == Never {
+
     /**
     A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     - Parameter type: A reference to the class used to create the workflow
-    - Parameter presentationType: A `PresentationType` the flow representable should use while it's part of this workflow
-    - Parameter flowPersistence: An `FlowPersistence`type representing how this item in the workflow should persist.
+    - Parameter presentationType: The `PresentationType` the flow representable should use while it's part of this workflow
+    - Parameter flowPersistence: The `FlowPersistence`type representing how this item in the workflow should persist.
     - Returns: `Workflow`
     */
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
@@ -145,6 +150,7 @@ extension Workflow where F.WorkflowOutput == Never {
 }
 
 extension Workflow {
+
     /**
     A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements
     - Parameter type: A reference to the class used to create the workflow

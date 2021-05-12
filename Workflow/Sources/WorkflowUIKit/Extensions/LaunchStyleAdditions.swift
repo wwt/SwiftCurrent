@@ -30,6 +30,7 @@ extension LaunchStyle {
 extension LaunchStyle {
     /// A type indicating how a `FlowRepresentable` should be presented.
     public enum PresentationType: RawRepresentable {
+
         /**
         Indicates a `FlowRepresentable` should be launched in a navigation stack of some kind (For example with UIKit this would use a UINavigationController)
         - Note: If no current navigation stack is available, one will be created
