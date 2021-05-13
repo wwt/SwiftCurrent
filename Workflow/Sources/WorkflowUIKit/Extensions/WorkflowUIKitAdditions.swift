@@ -16,7 +16,7 @@ extension Workflow {
     /**
      Creates a `Workflow` with a `FlowRepresentable`.
      - Parameter type: a reference to the first `FlowRepresentable`'s concrete type in the workflow.
-     - Parameter presentationType: the `PresentationType` the flow representable should use while it's part of this workflow.
+     - Parameter presentationType: the `LaunchStyle.PresentationType` the flow representable should use while it's part of this workflow.
      - Parameter flowPersistence: the `FlowPersistence` representing how this item in the workflow should persist.
      */
     public convenience init(_ type: F.Type,
@@ -29,7 +29,7 @@ extension Workflow {
     /**
      Creates a `Workflow` with a `FlowRepresentable`.
      - Parameter type: a reference to the first `FlowRepresentable`'s concrete type in the workflow.
-     - Parameter presentationType: the `PresentationType` the flow representable should use while it's part of this workflow.
+     - Parameter presentationType: the `LaunchStyle.PresentationType` the flow representable should use while it's part of this workflow.
      - Parameter flowPersistence: a closure taking in the `FlowRepresentable.WorkflowInput` and returning a `FlowPersistence` representing how this item in the workflow should persist.
      */
     public convenience init(_ type: F.Type,
@@ -46,7 +46,7 @@ extension Workflow {
     /**
      Creates a `Workflow` with a `FlowRepresentable`.
      - Parameter type: a reference to the first `FlowRepresentable`'s concrete type in the workflow.
-     - Parameter presentationType: the `PresentationType` the flow representable should use while it's part of this workflow.
+     - Parameter presentationType: the `LaunchStyle.PresentationType` the flow representable should use while it's part of this workflow.
      - Parameter flowPersistence: a closure returning a `FlowPersistence` representing how this item in the workflow should persist.
      */
     public convenience init(_ type: F.Type,
@@ -59,7 +59,7 @@ extension Workflow {
     /**
      Creates a `Workflow` with a `FlowRepresentable`.
      - Parameter type: a reference to the first `FlowRepresentable`'s concrete type in the workflow.
-     - Parameter presentationType: the `PresentationType` the flow representable should use while it's part of this workflow.
+     - Parameter presentationType: the `LaunchStyle.PresentationType` the flow representable should use while it's part of this workflow.
      - Parameter flowPersistence: a closure returning a `FlowPersistence` representing how this item in the workflow should persist.
      */
     public convenience init(_ type: F.Type,
@@ -110,7 +110,7 @@ extension Workflow where F.WorkflowOutput == Never {
     /**
      Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
      - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
-     - Parameter presentationType: the `PresentationType` the `FlowRepresentable` should use while it's part of this workflow.
+     - Parameter presentationType: the `LaunchStyle.PresentationType` the `FlowRepresentable` should use while it's part of this workflow.
      - Parameter flowPersistence: a `FlowPersistence` representing how this item in the workflow should persist.
      - Returns: a new workflow with the additional `FlowRepresentable` item.
      */
@@ -126,7 +126,7 @@ extension Workflow where F.WorkflowOutput == Never {
     /**
      Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
      - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
-     - Parameter presentationType: the `PresentationType` the `FlowRepresentable` should use while it's part of this workflow.
+     - Parameter presentationType: the `LaunchStyle.PresentationType` the `FlowRepresentable` should use while it's part of this workflow.
      - Parameter flowPersistence: a `FlowPersistence` representing how this item in the workflow should persist.
      - Returns: a new workflow with the additional `FlowRepresentable` item.
      */
@@ -144,7 +144,7 @@ extension Workflow {
     /**
      Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
      - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
-     - Parameter presentationType: the `PresentationType` the `FlowRepresentable` should use while it's part of this workflow.
+     - Parameter presentationType: the `LaunchStyle.PresentationType` the `FlowRepresentable` should use while it's part of this workflow.
      - Parameter flowPersistence: a `FlowPersistence` representing how this item in the workflow should persist.
      - Returns: a new workflow with the additional `FlowRepresentable` item.
      */
@@ -160,7 +160,7 @@ extension Workflow {
     /**
      Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
      - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
-     - Parameter presentationType: the `PresentationType` the `FlowRepresentable` should use while it's part of this workflow.
+     - Parameter presentationType: the `LaunchStyle.PresentationType` the `FlowRepresentable` should use while it's part of this workflow.
      - Parameter flowPersistence: a closure taking in the `FlowRepresentable.WorkflowInput` and returning a `FlowPersistence` representing how this item in the workflow should persist.
      - Returns: a new workflow with the additional `FlowRepresentable` item.
      */
@@ -180,7 +180,7 @@ extension Workflow {
     /**
      Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
      - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
-     - Parameter presentationType: the `PresentationType` the `FlowRepresentable` should use while it's part of this workflow.
+     - Parameter presentationType: the `LaunchStyle.PresentationType` the `FlowRepresentable` should use while it's part of this workflow.
      - Parameter flowPersistence: a `FlowPersistence` representing how this item in the workflow should persist.
      - Returns: a new workflow with the additional `FlowRepresentable` item.
      */
@@ -196,7 +196,7 @@ extension Workflow {
     /**
      Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
      - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
-     - Parameter presentationType: the `PresentationType` the `FlowRepresentable` should use while it's part of this workflow.
+     - Parameter presentationType: the `LaunchStyle.PresentationType` the `FlowRepresentable` should use while it's part of this workflow.
      - Parameter flowPersistence: a `FlowPersistence` representing how this item in the workflow should persist.
      - Returns: a new workflow with the additional `FlowRepresentable` item.
      */
