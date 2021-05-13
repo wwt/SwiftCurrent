@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Workflow
 import WorkflowUIKit
 
 class MenuSelectionViewController: UIWorkflowItem<Order, Order>, StoryboardLoadable {
@@ -29,9 +28,7 @@ class MenuSelectionViewController: UIWorkflowItem<Order, Order>, StoryboardLoada
         order.menuType = .regular
         proceedInWorkflow(order)
     }
-}
 
-extension MenuSelectionViewController: FlowRepresentable {
     func shouldLoad() -> Bool {
         if order.location?.menuTypes.count == 1 {
             order.menuType = order.location?.menuTypes.first

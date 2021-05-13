@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Workflow
 import WorkflowUIKit
 import UIKit
 
@@ -22,9 +21,7 @@ class LocationsViewController: UIWorkflowItem<[Location], Order>, StoryboardLoad
     }
 
     required init?(coder: NSCoder) { fatalError() }
-}
 
-extension LocationsViewController: FlowRepresentable {
     func shouldLoad() -> Bool {
         if let location = locations.first,
             locations.count == 1 {

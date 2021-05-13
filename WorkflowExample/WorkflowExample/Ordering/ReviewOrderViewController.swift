@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Workflow
 import WorkflowUIKit
 import UIKit
 
@@ -45,5 +44,3 @@ class ReviewOrderViewController: UIWorkflowItem<Order, Order>, StoryboardLoadabl
         }
     }
 }
-
-extension ReviewOrderViewController: FlowRepresentable { }

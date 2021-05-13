@@ -33,9 +33,7 @@ class PickupOrDeliveryViewController: UIWorkflowItem<Order, Order>, StoryboardLo
             self?.proceedInWorkflow(order)
         }
     }
-}
 
-extension PickupOrDeliveryViewController: FlowRepresentable {
     func shouldLoad() -> Bool {
         if let location = order.location,
             location.orderTypes.count == 1 {
