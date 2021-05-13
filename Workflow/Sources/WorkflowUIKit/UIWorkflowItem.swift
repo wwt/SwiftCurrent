@@ -11,10 +11,10 @@ import UIKit
 import Workflow
 
 /**
- A subclass of UIViewController designed for convenience. This does **NOT** have to be used, it simply removes some of the boilerplate that normally comes with a `FlowRepresentable`.
+ A subclass of `UIViewController` designed for convenience. This does **NOT** have to be used, it simply removes some of the boilerplate that normally comes with a `FlowRepresentable`.
  
  ### Discussion
- If you would like the same convenience for other UIKit types this class is very straightforward to create:
+ If you would like the same convenience for other UIKit types, this class is very straightforward to create:
  ```
  open class UITableViewWorkflowItem<I, O>: UITableViewController {
      public typealias WorkflowInput = I
