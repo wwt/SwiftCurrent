@@ -61,6 +61,11 @@ Use this document to help you understand how to update between major versions of
     self?.proceedInWorkflow(order)
   }
   ```
+  
+  #### The way you Test has Changed
+  You used to be able to re-assign `proceedInWorkflow` to assert it was called with the args you expected, this has now slightly changed.
+  To get the *exact* behavior as before use `_proceedInWorkflow` to re-assign that closure. 
+  There's also `proceedInWorkflowStorage` which gives you the `AnyWorkflow.PassedArgs` used when `proceedInWorkflow` was called.
 </details>
 
 ---
