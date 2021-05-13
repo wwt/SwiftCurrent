@@ -20,20 +20,20 @@ extension Notification.Name {
 
 extension FlowRepresentable {
     /// :nodoc: Your tests may want to manually set the closure so they can make assertions it was called, this is simply a convenience available for that.
-    public var proceedInWorkflowStorage: ((Any?) -> Void)? {
+    public var proceedInWorkflowStorage: ((AnyWorkflow.PassedArgs) -> Void)? {
         get {
             {
-                _workflowPointer?.proceedInWorkflowStorage?(.args($0))
+                _workflowPointer?.proceedInWorkflowStorage?($0)
             }
         }
         set {
             _workflowPointer?.proceedInWorkflowStorage = { args in
-                newValue?(args.extractArgs(defaultValue: nil))
+                newValue?(args)
             }
         }
     }
 
-    /// :nodoc: An alias for proceedInWorkflowStorage.
+    /// :nodoc: Designed for V1 and V2 people who used to assign to proceedInWorkflow for tests. This auto extracts args.
     public var _proceedInWorkflow: ((Any?) -> Void)? {
         get {
             {

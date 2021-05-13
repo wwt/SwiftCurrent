@@ -21,7 +21,7 @@ class FoodSelectionViewControllerTests: ViewControllerTest<FoodSelectionViewCont
         let order = Order(location: Location(name: "", address: Address(), orderTypes: [], menuTypes: []))
         loadFromStoryboard(args: .args(order))
         var proceedInWorkflowCalled = false
-        testViewController.proceedInWorkflowStorage = { data in
+        testViewController._proceedInWorkflow = { data in
             proceedInWorkflowCalled = true
             XCTAssertEqual((data as? Order)?.shoppingCart.last?.name, "Combo #1")
         }
@@ -34,7 +34,7 @@ class FoodSelectionViewControllerTests: ViewControllerTest<FoodSelectionViewCont
         let order = Order(location: Location(name: "", address: Address(), orderTypes: [], menuTypes: []))
         loadFromStoryboard(args: .args(order))
         var proceedInWorkflowCalled = false
-        testViewController.proceedInWorkflowStorage = { data in
+        testViewController._proceedInWorkflow = { data in
             proceedInWorkflowCalled = true
             XCTAssertEqual((data as? Order)?.shoppingCart.last?.name, "Combo #2")
         }
@@ -47,7 +47,7 @@ class FoodSelectionViewControllerTests: ViewControllerTest<FoodSelectionViewCont
         let order = Order(location: Location(name: "", address: Address(), orderTypes: [], menuTypes: []))
         loadFromStoryboard(args: .args(order))
         var proceedInWorkflowCalled = false
-        testViewController.proceedInWorkflowStorage = { data in
+        testViewController._proceedInWorkflow = { data in
             proceedInWorkflowCalled = true
             XCTAssertEqual((data as? Order)?.shoppingCart.last?.name, "Combo #3")
         }

@@ -28,7 +28,7 @@ class MenuSelectionViewControllerTests: ViewControllerTest<MenuSelectionViewCont
         let locationWithOne = Location(name: "", address: Address(), orderTypes: [], menuTypes: [.catering])
         loadFromStoryboard(args: .args(Order(location: locationWithOne)))
 
-        testViewController.proceedInWorkflowStorage = { data in
+        testViewController._proceedInWorkflow = { data in
             proceedInWorkflowCalled = true
             XCTAssertEqual((data as? Order)?.menuType, .catering)
         }
@@ -42,7 +42,7 @@ class MenuSelectionViewControllerTests: ViewControllerTest<MenuSelectionViewCont
         let locationWithMultiple = Location(name: "", address: Address(), orderTypes: [], menuTypes: [.regular, .catering])
         loadFromStoryboard(args: .args(Order(location: locationWithMultiple)))
 
-        testViewController.proceedInWorkflowStorage = { data in
+        testViewController._proceedInWorkflow = { data in
             proceedInWorkflowCalled = true
             XCTAssertEqual((data as? Order)?.menuType, .catering)
         }
@@ -57,7 +57,7 @@ class MenuSelectionViewControllerTests: ViewControllerTest<MenuSelectionViewCont
         let locationWithMultiple = Location(name: "", address: Address(), orderTypes: [], menuTypes: [.regular, .catering])
         loadFromStoryboard(args: .args(Order(location: locationWithMultiple)))
 
-        testViewController.proceedInWorkflowStorage = { data in
+        testViewController._proceedInWorkflow = { data in
             proceedInWorkflowCalled = true
             XCTAssertEqual((data as? Order)?.menuType, .regular)
         }

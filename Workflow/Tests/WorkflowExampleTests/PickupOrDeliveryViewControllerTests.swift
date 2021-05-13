@@ -27,7 +27,7 @@ class PickupOrDeliveryViewControllerTests: ViewControllerTest<PickupOrDeliveryVi
         var callbackCalled = false
         let locationWithOne = Location(name: "", address: Address(), orderTypes: [.delivery(Address())], menuTypes: [])
         loadFromStoryboard(args: .args(Order(location: locationWithOne))) { viewController in
-            viewController.proceedInWorkflowStorage = { data in
+            viewController._proceedInWorkflow = { data in
                 callbackCalled = true
                 XCTAssert(data is Order)
                 XCTAssertEqual((data as? Order)?.orderType, .delivery(Address()))
@@ -41,7 +41,7 @@ class PickupOrDeliveryViewControllerTests: ViewControllerTest<PickupOrDeliveryVi
         var callbackCalled = false
         let location = Location(name: "", address: Address(), orderTypes: [.pickup, .delivery(Address())], menuTypes: [])
         loadFromStoryboard(args: .args(Order(location: location))) { viewController in
-            viewController.proceedInWorkflowStorage = { data in
+            viewController._proceedInWorkflow = { data in
                 callbackCalled = true
                 XCTAssert(data is Order)
                 XCTAssertEqual((data as? Order)?.orderType, .pickup)
@@ -68,7 +68,7 @@ class PickupOrDeliveryViewControllerTests: ViewControllerTest<PickupOrDeliveryVi
         listener.workflow?.orchestrationResponder = mock
 
         var proceedInWorkflowCalled = false
-        testViewController.proceedInWorkflowStorage = { data in
+        testViewController._proceedInWorkflow = { data in
             proceedInWorkflowCalled = true
             XCTAssert(data is Order)
             XCTAssertEqual(data as? Order, orderOutput)
