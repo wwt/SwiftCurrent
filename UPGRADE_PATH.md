@@ -50,7 +50,9 @@ Use this document to help you understand how to update between major versions of
     workflow.abandon()
     self?.proceedInWorkflow(order)
   }
-
+  ```
+  To this:
+  ```swift
   // NEW
   let workflow = ...
   launchInto(Workflow(EnterAddressViewController.self) { [weak self] passedArgs in // passedArgs is an AnyWorkflow.PassedArgs
