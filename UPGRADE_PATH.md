@@ -16,15 +16,16 @@ Use this document to help you understand how to update between major versions of
 
   #### Update base types and conformance
   #### IF YOU USE STORYBOARDS
-  There is now a protocol for those using Storyboards called StoryboardLoadable.  See docs for more info (link).
-  IMPORTANT: `StoryboardLoadable` has a minimum requirement of iOS 13. Be a little cautious of the Xcode fix-it here, it'll encourage you to add an `@available` attribute, or it may tell you to implement `_factory` methods. This is not correct, instead if you plan on using `StoryboardLoadable` you should just set your minimum iOS target to 13, otherwise you've gotta hand roll something. The implementation of `StoryboardLoadable` may help with hand rolling if that is what you decide to do.
+  There is now a protocol for those using Storyboards called StoryboardLoadable.  See [the docs](https://gitcdn.link/repo/wwt/Workflow/main/docs/Protocols/StoryboardLoadable.html) for more info.
+  
+  **IMPORTANT**: `StoryboardLoadable` has a minimum requirement of iOS 13. Be a little cautious of the Xcode fix-it here, it'll encourage you to add an `@available` attribute, or it may tell you to implement `_factory` methods. This is not correct, instead if you plan on using `StoryboardLoadable` you should just set your minimum iOS target to 13, otherwise you've gotta hand roll something. The implementation of `StoryboardLoadable` may help with hand rolling if that is what you decide to do.
 
   #### FlowRepresentable has Changed
-  Please review FlowRepresentable docs to see the changes made there. (link)
+  Please review [the FlowRepresentable docs](https://gitcdn.link/repo/wwt/Workflow/main/docs/Protocols/FlowRepresentable.html) to see the changes made there.
   The static `instance()` method is no longer required, instead a `FlowRepresentable` now has a dedicated initializer, if the `WorkflowInput` has a value you need `init(with args: WorkflowInput`. If `WorkflowInput` is `Never` you simply need `init()`
 
   #### UIWorkflowItem has Changed
-  If you were using `UIWorkflowItem<I>`, it has changed to `UIWorkflowItem<I, O>` where `I` is your input type and `O` is your output type.  See docs for more info (link).
+  If you were using `UIWorkflowItem<I>`, it has changed to `UIWorkflowItem<I, O>` where `I` is your input type and `O` is your output type.  See [the docs](https://gitcdn.link/repo/wwt/Workflow/main/docs/Classes/UIWorkflowItem.html) for more info.
 
   #### `shouldLoad` no Longer Takes Arguments
   Update shouldLoad methods as they are no longer mutating, nor do they take in parameters.  If you were doing any initializations during shouldLoad, that initialization should now happen in the initializer.  If you were requiring parameters to be passed into shouldLoad those should now be part of initialization and referenced on the object in shouldLoad.
