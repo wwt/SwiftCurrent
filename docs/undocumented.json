@@ -15,13 +15,6 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Workflow/Sources/Workflow/LinkedList/LinkedListIterator.swift",
-      "line": 11,
-      "symbol": "LinkedList.LinkedListIterator",
-      "symbol_kind": "source.lang.swift.decl.struct",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Workflow/Sources/Workflow/Models/Workflow.swift",
       "line": 135,
       "symbol": "Workflow._abandon()",

@@ -135,7 +135,7 @@
 
                 </div>
               </div>
-            <p>LinkedList.Node: A type to hold onto elements in a LinkedList</p>
+            <p>A type to hold onto elements in a <code><a href="../../Classes/LinkedList.html">LinkedList</a></code>.</p>
 <h3 id='discussion' class='heading'>Discussion</h3>
 
 <p>These nodes hold onto a value, the next node, and the previous node.</p>
@@ -169,7 +169,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The concrete value the node is holding onto</p>
+                        <p>The concrete value the node is holding on to.</p>
 
                       </div>
                       <div class="declaration">
@@ -196,7 +196,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>An optional reference to the next node in the LinkedList</p>
+                        <p>An optional reference to the next node in the <code><a href="../../Classes/LinkedList.html">LinkedList</a></code>.</p>
 
                       </div>
                       <div class="declaration">
@@ -223,7 +223,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>An optional reference to the previous node in the LinkedList</p>
+                        <p>An optional reference to the previous node in the <code><a href="../../Classes/LinkedList.html">LinkedList</a></code>.</p>
 
                       </div>
                       <div class="declaration">
@@ -259,9 +259,9 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A method to move N spaces forwards or backwards through the nodes</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
+                        <p>A method to move N spaces forwards or backwards through the nodes.</p>
+<div class="aside aside-important">
+    <p class="aside-title">Important</p>
     If the distance is out of bounds nil will be returned
 
 </div>
@@ -287,7 +287,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>An integer indicating how far to move through the nodes</p>
+                                  <p>an integer indicating how far to move through the nodes.</p>
                                 </div>
                               </td>
                             </tr>
@@ -296,7 +296,7 @@
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>Node<T>? where T is the specialized type of the LinkedList</p>
+                        <p>the node at the indicated distance; nil if distance is out of bounds.</p>
                       </div>
                     </section>
                   </div>
@@ -314,12 +314,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A method to move forward through the nodes until a precondition is met</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    If <code>true</code> is returned from <code>until</code> then traversal stops. e.g. <code>node.traverse { $0.value == 0 }</code> traverses until it finds a node who has a value of 0
-
-</div>
+                        <p>A method to move forward through the nodes until a precondition is met.</p>
 
                       </div>
                       <div class="declaration">
@@ -342,7 +337,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>An enum indicating whether to traverse forward or backwards, defaults to foward.</p>
+                                  <p>an enum indicating whether to traverse forward or backwards, defaults to <code><a href="../../Classes/LinkedList/Node/TraversalDirection.html#/s:8Workflow10LinkedListC4NodeC18TraversalDirectionO7forwardyAGyx_qd___GAImr__lF">TraversalDirection.forward</a></code>.</p>
                                 </div>
                               </td>
                             </tr>
@@ -354,7 +349,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>A function that takes in a Node<T> and returns a boolean to indicate whether traversal should continue</p>
+                                  <p>a closure that takes in a node and returns a boolean to indicate whether traversal should continue. Once until returns true, it is not called again.</p>
                                 </div>
                               </td>
                             </tr>
@@ -363,7 +358,7 @@
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>Node<T>? where T is the specialized type of the LinkedList</p>
+                        <p>the node when traversal finishes; nil if none found.</p>
                       </div>
                     </section>
                   </div>
@@ -381,7 +376,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A method to move forward through the nodes until there is no <code><a href="../../Classes/LinkedList/Node.html#/s:8Workflow10LinkedListC4NodeC4nextAEyx_qd__GSgvp">next</a></code></p>
+                        <p>A method to move forward through the nodes until there is no <code><a href="../../Classes/LinkedList/Node.html#/s:8Workflow10LinkedListC4NodeC4nextAEyx_qd__GSgvp">next</a></code>.</p>
 
                       </div>
                       <div class="declaration">
@@ -408,7 +403,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A method to move backwards through the nodes until there is no <code><a href="../../Classes/LinkedList/Node.html#/s:8Workflow10LinkedListC4NodeC8previousAEyx_qd__GSgvp">previous</a></code></p>
+                        <p>A method to move backwards through the nodes until there is no <code><a href="../../Classes/LinkedList/Node.html#/s:8Workflow10LinkedListC4NodeC8previousAEyx_qd__GSgvp">previous</a></code>.</p>
 
                       </div>
                       <div class="declaration">
@@ -435,10 +430,10 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A computed property that calculates a nodes position in the LinkedList</p>
+                        <p>A nodes position in the <code><a href="../../Classes/LinkedList.html">LinkedList</a></code></p>
 <div class="aside aside-complexity">
     <p class="aside-title">Complexity</p>
-    O(n) this has a worst case of having to traverse the entire list to determine its position
+    O(n) this has a worst case of having to traverse the entire list to determine its position.
 
 </div>
 
@@ -467,7 +462,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Creates an exact replica of the node, including the next and previous values, this essentially deep copies the entire LinkedList</p>
+                        <p>Creates an exact replica of the node, including the next and previous values, this essentially deep copies the entire <code><a href="../../Classes/LinkedList.html">LinkedList</a></code>.</p>
 
                       </div>
                       <div class="declaration">
