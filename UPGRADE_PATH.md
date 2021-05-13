@@ -12,9 +12,8 @@ Use this document to help you understand how to update between major versions of
       pod 'DynamicWorkflow/UIKit'
       ```
   1. run a `pod install`
-  1. Change your import statements will change from `import DynamicWorkflow` to `import Workflow`
+  1. Your import statements will change from `import DynamicWorkflow` to `import Workflow`
 
-  #### Update base types and conformance
   #### IF YOU USE STORYBOARDS
   There is now a protocol for those using Storyboards called StoryboardLoadable.  See [the docs](https://gitcdn.link/repo/wwt/Workflow/main/docs/Protocols/StoryboardLoadable.html) for more info.
   
