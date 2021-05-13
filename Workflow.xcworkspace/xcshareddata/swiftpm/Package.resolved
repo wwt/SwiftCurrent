@@ -1,0 +1,61 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "CwlCatchException",
+        "repositoryURL": "https://github.com/mattgallagher/CwlCatchException.git",
+        "state": {
+          "branch": null,
+          "revision": "f809deb30dc5c9d9b78c872e553261a61177721a",
+          "version": "2.0.0"
+        }
+      },
+      {
+        "package": "CwlPreconditionTesting",
+        "repositoryURL": "https://github.com/mattgallagher/CwlPreconditionTesting.git",
+        "state": {
+          "branch": null,
+          "revision": "02b7a39a99c4da27abe03cab2053a9034379639f",
+          "version": "2.0.0"
+        }
+      },
+      {
+        "package": "ExceptionCatcher",
+        "repositoryURL": "https://github.com/sindresorhus/ExceptionCatcher",
+        "state": {
+          "branch": null,
+          "revision": "9d99a736e17f67ab3aa333c0dad7ed2ee9d6b2b9",
+          "version": "2.0.0"
+        }
+      },
+      {
+        "package": "swift-algorithms",
+        "repositoryURL": "https://github.com/apple/swift-algorithms",
+        "state": {
+          "branch": null,
+          "revision": "bb3bafeca0e164ece3403a9de646b7d38c07dd49",
+          "version": "0.0.2"
+        }
+      },
+      {
+        "package": "swift-numerics",
+        "repositoryURL": "https://github.com/apple/swift-numerics",
+        "state": {
+          "branch": null,
+          "revision": "6b24333510e9044cf4716a07bed65eeed6bc6393",
+          "version": "0.0.8"
+        }
+      },
+      {
+        "package": "UIUTest",
+        "repositoryURL": "https://github.com/nallick/UIUTest.git",
+        "state": {
+          "branch": null,
+          "revision": "33cc7be1352dfdb37984e38e4276daa65030c5bc",
+          "version": "1.8.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

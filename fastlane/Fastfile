@@ -8,10 +8,6 @@ platform :ios do
   end
 
   lane :unit_test do
-    cocoapods(
-      clean: true,
-      repo_update: true,
-    )
     scan(
       code_coverage: true,
       scheme:  'Workflow',
@@ -20,11 +16,23 @@ platform :ios do
   end
 
   lane :build_swiftpm do
-    sh('echo NO SWIFTPM TO BUILD!')
+    sh('swift build --package-path="../Workflow" -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios14.0-simulator"')
   end
 
   lane :cocoapods_liblint do
     pod_lib_lint(podspec: 'DynamicWorkflow.podspec', allow_warnings: true)
+  end
+
+  lane :lint do 
+    swiftlint(
+      config_file: 'WorkflowLint/.swiftlint.yml',
+      raise_if_swiftlint_error: true,
+      strict: true
+    )
+  end
+
+  lane :lintfix do 
+    sh('swiftlint --fix --config=../WorkflowLint/.swiftlint.yml')
   end
 
   desc "Release a new version with a patch bump_type"

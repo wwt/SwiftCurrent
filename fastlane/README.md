@@ -31,6 +31,16 @@ fastlane ios build_swiftpm
 fastlane ios cocoapods_liblint
 ```
 
+### ios lint
+```
+fastlane ios lint
+```
+
+### ios lintfix
+```
+fastlane ios lintfix
+```
+
 ### ios patch
 ```
 fastlane ios patch

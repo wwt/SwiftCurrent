@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>FlowPersistence Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Class/FlowPersistence" class="dashAnchor"></a>
+
+    <a title="FlowPersistence Class Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+          Workflow 3.0.0 Docs
+        </a>
+         (92% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/wwt/workflow">
+            <img class="header-icon" src="../img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html">Workflow Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      FlowPersistence Class Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/AnyFlowRepresentable.html">AnyFlowRepresentable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/AnyWorkflow.html">AnyWorkflow</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/AnyWorkflow/PassedArgs.html">– PassedArgs</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/FlowPersistence.html">FlowPersistence</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/FlowRepresentableMetadata.html">FlowRepresentableMetadata</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/LaunchStyle.html">LaunchStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/LaunchStyle/PresentationType.html">– PresentationType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/LinkedList.html">LinkedList</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/LinkedList/Node.html">– Node</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/UIKitPresenter.html">UIKitPresenter</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/UIWorkflowItem.html">UIWorkflowItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Workflow.html">Workflow</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/WorkflowError.html">WorkflowError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/UIViewController.html">UIViewController</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/FlowRepresentable.html">FlowRepresentable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/OrchestrationResponder.html">OrchestrationResponder</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/StoryboardLoadable.html">StoryboardLoadable</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content top-matter">
+            <h1>FlowPersistence</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">FlowPersistence</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">FlowPersistence</span><span class="p">:</span> <span class="kt">Equatable</span></code></pre>
+
+                </div>
+              </div>
+            <p>An extendable class that indicates how a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> should be persisted.</p>
+<h3 id='discussion' class='heading'>Discussion</h3>
+
+<p>Used when you are creating a <code><a href="../Classes/Workflow.html">Workflow</a></code>.</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Workflow15FlowPersistenceC7defaultACvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/default" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow15FlowPersistenceC7defaultACvpZ">default</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Indicates a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> in a <code><a href="../Classes/Workflow.html">Workflow</a></code> should persist based on its <code>shouldLoad</code> function.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">let</span> <span class="err">`</span><span class="k">default</span><span class="err">`</span><span class="p">:</span> <span class="kt">FlowPersistence</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Workflow15FlowPersistenceC18persistWhenSkippedACvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/persistWhenSkipped" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow15FlowPersistenceC18persistWhenSkippedACvpZ">persistWhenSkipped</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Indicates a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> in a <code><a href="../Classes/Workflow.html">Workflow</a></code> whose <code>shouldLoad</code> function returns false, should still be persisted in the workflow.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">persistWhenSkipped</span><span class="p">:</span> <span class="kt">FlowPersistence</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Workflow15FlowPersistenceC22removedAfterProceedingACvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/removedAfterProceeding" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow15FlowPersistenceC22removedAfterProceedingACvpZ">removedAfterProceeding</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Indicates a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> in a <code><a href="../Classes/Workflow.html">Workflow</a></code> whose <code>shouldLoad</code> function returns true, should be removed from the workflow after proceeding forward.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">removedAfterProceeding</span><span class="p">:</span> <span class="kt">FlowPersistence</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Workflow15FlowPersistenceC3newACvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/new" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow15FlowPersistenceC3newACvpZ">new</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A new instance of <code>FlowPersistence</code>; only use for extending cases of <code>FlowPersistence</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">new</span><span class="p">:</span> <span class="kt">FlowPersistence</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Workflow15FlowPersistenceC0A5UIKitE15hiddenInitiallyACvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/hiddenInitially" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow15FlowPersistenceC0A5UIKitE15hiddenInitiallyACvpZ">hiddenInitially</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Indicates a <code><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></code> in a <code><a href="../Classes/Workflow.html">Workflow</a></code> whose <code>shouldLoad</code> function returns false, should be persisted in the workflow for backwards navigation.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">hiddenInitially</span><span class="p">:</span> <span class="kt">FlowPersistence</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2021 <a class="link" href="https://github.com/wwt/workflow" target="_blank" rel="external">WWT and Tyler Thompson</a>. All rights reserved. (Last updated: 2021-05-13)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.7</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

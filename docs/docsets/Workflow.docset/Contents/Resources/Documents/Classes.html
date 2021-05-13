@@ -21,9 +21,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="index.html">
-          Workflow 1.0.28 Docs
+          Workflow 3.0.0 Docs
         </a>
-         (74% documented)
+         (92% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -54,13 +54,37 @@
             <a class="nav-group-name-link" href="Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/AnyFlowRepresentable.html">AnyFlowRepresentable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/AnyWorkflow.html">AnyWorkflow</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/AnyWorkflow/PassedArgs.html">– PassedArgs</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/FlowPersistence.html">FlowPersistence</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/FlowRepresentableMetadata.html">FlowRepresentableMetadata</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/LaunchStyle.html">LaunchStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/LaunchStyle/PresentationType.html">– PresentationType</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/LinkedList.html">LinkedList</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/LinkedList/Node.html">– Node</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes.html#/s:8Workflow14UIWorkflowItemC">UIWorkflowItem</a>
+                <a class="nav-group-task-link" href="Classes/UIKitPresenter.html">UIKitPresenter</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/UIWorkflowItem.html">UIWorkflowItem</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/Workflow.html">Workflow</a>
@@ -71,10 +95,7 @@
             <a class="nav-group-name-link" href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Enums/PresentationType.html">PresentationType</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Enums/ViewPersistance.html">ViewPersistance</a>
+                <a class="nav-group-task-link" href="Enums/WorkflowError.html">WorkflowError</a>
               </li>
             </ul>
           </li>
@@ -90,13 +111,13 @@
             <a class="nav-group-name-link" href="Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/AnyFlowRepresentable.html">AnyFlowRepresentable</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/FlowRepresentable.html">FlowRepresentable</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/Presenter.html">Presenter</a>
+                <a class="nav-group-task-link" href="Protocols/OrchestrationResponder.html">OrchestrationResponder</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/StoryboardLoadable.html">StoryboardLoadable</a>
               </li>
             </ul>
           </li>
@@ -119,129 +140,82 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8WorkflowAAC"></a>
-                    <a name="//apple_ref/swift/Class/Workflow" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8WorkflowAAC">Workflow</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Workflow: A doubly linked list of AnyFlowRepresentable types. Can be used to create a user flow.</p>
-
-<p>Examples:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">workflow</span> <span class="o">=</span> <span class="kt">Workflow</span><span class="p">()</span>
-                   <span class="o">.</span><span class="nf">thenPresent</span><span class="p">(</span><span class="kt">SomeFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
-                   <span class="o">.</span><span class="nf">thenPResent</span><span class="p">(</span><span class="kt">SomeOtherFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">presentationType</span><span class="p">:</span> <span class="o">.</span><span class="n">navigationStack</span><span class="p">)</span>
-</code></pre>
-<h3 id='discussion' class='heading'>Discussion:</h3>
-
-<p>In a sufficiently complex application it may make sense to create a structure to hold onto all the workflows in an application.
-Example</p>
-<pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">Workflows</span> <span class="p">{</span>
-   <span class="kd">static</span> <span class="k">let</span> <span class="nv">schedulingFlow</span> <span class="o">=</span> <span class="kt">Workflow</span><span class="p">()</span>
-                                <span class="o">.</span><span class="nf">thenPresent</span><span class="p">(</span><span class="kt">SomeFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
-                                <span class="o">.</span><span class="nf">thenPResent</span><span class="p">(</span><span class="kt">SomeOtherFlowRepresentableClass</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">presentationType</span><span class="p">:</span> <span class="o">.</span><span class="n">navigationStack</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre>
-
-                        <a href="Classes/Workflow.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Workflow</span> <span class="p">:</span> <span class="kt"><a href="Classes/LinkedList.html">LinkedList</a></span><span class="o">&lt;</span><span class="kt">FlowRepresentableMetaData</span><span class="o">&gt;</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:8Workflow10LinkedListC"></a>
                     <a name="//apple_ref/swift/Class/LinkedList" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Workflow10LinkedListC">LinkedList</a>
+                    <a class="direct-link" href="Classes/LinkedList.html">LinkedList</a>
                     </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>LinkedList: A sequence type used to create a doubly linked list</p>
-<h3 id='discussion' class='heading'>Discussion:</h3>
-
-<p>A workflow is ultimately a doubly linked list. This is the underlying sequence type used.</p>
-
-                        <a href="Classes/LinkedList.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">LinkedList</span><span class="o">&lt;</span><span class="kt">Value</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt">Sequence</span><span class="p">,</span> <span class="kt">CustomStringConvertible</span></code></pre>
-<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">LinkedList</span> <span class="p">:</span> <span class="kt">Equatable</span> <span class="k">where</span> <span class="kt">Value</span> <span class="p">:</span> <span class="kt">Equatable</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
                   </div>
                 </li>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Workflow14UIWorkflowItemC"></a>
-                    <a name="//apple_ref/swift/Class/UIWorkflowItem" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Workflow14UIWorkflowItemC">UIWorkflowItem</a>
+                    <a name="/s:8Workflow15FlowPersistenceC"></a>
+                    <a name="//apple_ref/swift/Class/FlowPersistence" class="dashAnchor"></a>
+                    <a class="direct-link" href="Classes/FlowPersistence.html">FlowPersistence</a>
                     </code>
                   </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>UIWorkflowItem: A subclass of UIViewController designed for convenience. This does <strong>NOT</strong> have to be used, it simply removes some of the overhead that normally comes with a FlowRepresentable.</p>
-<h3 id='examples' class='heading'>Examples:</h3>
-<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">SomeFlowRepresentable</span><span class="p">:</span> <span class="kt">UIWorkflowItem</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span> <span class="p">{</span> <span class="c1">//must take in a string, or will not load</span>
-    <span class="k">var</span> <span class="nv">name</span><span class="p">:</span><span class="kt">String</span><span class="p">?</span>
-<span class="p">}</span>
-<span class="kd">extension</span> <span class="kt">SomeFlowRepresentable</span><span class="p">:</span> <span class="kt">FlowRepresentable</span> <span class="p">{</span>
-    <span class="kd">func</span> <span class="nf">shouldLoad</span><span class="p">(</span><span class="n">with</span> <span class="nv">name</span><span class="p">:</span><span class="kt">String</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="k">return</span> <span class="kc">true</span>
-    <span class="p">}</span>
-    <span class="kd">static</span> <span class="kd">func</span> <span class="nf">instance</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">AnyFlowRepresentable</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="kt">SomeFlowRepresentable</span><span class="p">()</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre>
-<h3 id='discussion' class='heading'>Discussion:</h3>
-
-<p>If you would like the same convenience for other UIKit types this class is very straightforward to create:</p>
-<pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">UITableViewWorkflowItem</span><span class="o">&lt;</span><span class="kt">I</span><span class="o">&gt;</span><span class="p">:</span> <span class="kt">UITableViewController</span> <span class="p">{</span>
-    <span class="kd">public</span> <span class="k">var</span> <span class="nv">callback</span><span class="p">:</span> <span class="p">((</span><span class="kt">Any</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span>
-
-    <span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">IntakeType</span> <span class="o">=</span> <span class="kt">I</span>
-
-    <span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">workflow</span><span class="p">:</span> <span class="kt">Workflow</span><span class="p">?</span>
-<span class="p">}</span>
-</code></pre>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">UIWorkflowItem</span><span class="o">&lt;</span><span class="kt">I</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt">UIViewController</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Workflow25FlowRepresentableMetadataC"></a>
+                    <a name="//apple_ref/swift/Class/FlowRepresentableMetadata" class="dashAnchor"></a>
+                    <a class="direct-link" href="Classes/FlowRepresentableMetadata.html">FlowRepresentableMetadata</a>
+                    </code>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Workflow11LaunchStyleC"></a>
+                    <a name="//apple_ref/swift/Class/LaunchStyle" class="dashAnchor"></a>
+                    <a class="direct-link" href="Classes/LaunchStyle.html">LaunchStyle</a>
+                    </code>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8WorkflowAAC"></a>
+                    <a name="//apple_ref/swift/Class/Workflow" class="dashAnchor"></a>
+                    <a class="direct-link" href="Classes/Workflow.html">Workflow</a>
+                    </code>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Workflow20AnyFlowRepresentableC"></a>
+                    <a name="//apple_ref/swift/Class/AnyFlowRepresentable" class="dashAnchor"></a>
+                    <a class="direct-link" href="Classes/AnyFlowRepresentable.html">AnyFlowRepresentable</a>
+                    </code>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Workflow03AnyA0C"></a>
+                    <a name="//apple_ref/swift/Class/AnyWorkflow" class="dashAnchor"></a>
+                    <a class="direct-link" href="Classes/AnyWorkflow.html">AnyWorkflow</a>
+                    </code>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13WorkflowUIKit0B9PresenterC"></a>
+                    <a name="//apple_ref/swift/Class/UIKitPresenter" class="dashAnchor"></a>
+                    <a class="direct-link" href="Classes/UIKitPresenter.html">UIKitPresenter</a>
+                    </code>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13WorkflowUIKit14UIWorkflowItemC"></a>
+                    <a name="//apple_ref/swift/Class/UIWorkflowItem" class="dashAnchor"></a>
+                    <a class="direct-link" href="Classes/UIWorkflowItem.html">UIWorkflowItem</a>
+                    </code>
                   </div>
                 </li>
               </ul>
@@ -252,8 +226,8 @@ Example</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://github.com/wwt/workflow" target="_blank" rel="external">WWT and Tyler THompson</a>. All rights reserved. (Last updated: 2021-04-29)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/wwt/workflow" target="_blank" rel="external">WWT and Tyler Thompson</a>. All rights reserved. (Last updated: 2021-05-13)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.7</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>
