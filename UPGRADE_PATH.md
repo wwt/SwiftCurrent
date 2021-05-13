@@ -2,7 +2,7 @@
 Use this document to help you understand how to update between major versions of the library. We test upgrade paths when we ramp major versions and do our best to have the compiler help make a useful upgrade experience.
 
 <details>
-  <summary>V2 -> V3</summary>
+  <summary><b>V2 -> V3</b></summary>
   
   #### Package Management:
   NOTE: We support both SwiftPM and CocoaPods now, pick whichever suits your needs best. The primary difference is that SwiftPM has different `import` statements for `import Workflow` and `import WorkflowUIKit`, CocoaPods just uses `import Workflow`.
@@ -62,8 +62,10 @@ Use this document to help you understand how to update between major versions of
   ```
 </details>
 
+---
+
 <details>
-  <summary>V1 -> V2</summary>
+  <summary><b>V1 -> V2</b></summary>
   
   The biggest change here was a license change. We moved from MIT to Apache 2.0. Please assess and make sure you are willing to accept the new license.
 </details>
