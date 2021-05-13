@@ -39,13 +39,6 @@
          </BuildableReference>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "WorkflowDI"
-            BuildableName = "WorkflowDI"
-            BlueprintName = "WorkflowDI"
-            ReferencedContainer = "container:../Workflow">
-         </BuildableReference>
-         <BuildableReference
-            BuildableIdentifier = "primary"
             BlueprintIdentifier = "WorkflowUIKit"
             BuildableName = "WorkflowUIKit"
             BlueprintName = "WorkflowUIKit"
