@@ -21,7 +21,7 @@ Use this document to help you understand how to update between major versions of
 
   #### FlowRepresentable has Changed
   Please review [the FlowRepresentable docs](https://gitcdn.link/repo/wwt/Workflow/main/docs/Protocols/FlowRepresentable.html) to see the changes made there.
-  The static `instance()` method is no longer required, instead a `FlowRepresentable` now has a dedicated initializer, if the `WorkflowInput` has a value you need `init(with args: WorkflowInput`. If `WorkflowInput` is `Never` you simply need `init()`
+  The static `instance()` method is no longer required, instead a `FlowRepresentable` now has a dedicated initializer, if the `WorkflowInput` has a value you need `init(with args: WorkflowInput)`. If `WorkflowInput` is `Never` you simply need `init()`
 
   #### UIWorkflowItem has Changed
   If you were using `UIWorkflowItem<I>`, it has changed to `UIWorkflowItem<I, O>` where `I` is your input type and `O` is your output type.  See [the docs](https://gitcdn.link/repo/wwt/Workflow/main/docs/Classes/UIWorkflowItem.html) for more info.
