@@ -11,7 +11,7 @@ import UIKit
 import Workflow
 
 /**
- UIWorkflowItem: A subclass of UIViewController designed for convenience. This does **NOT** have to be used, it simply removes some of the overhead that normally comes with a FlowRepresentable.
+ A subclass of UIViewController designed for convenience. This does **NOT** have to be used, it simply removes some of the boilerplate that normally comes with a `FlowRepresentable`.
  
  ### Discussion
  If you would like the same convenience for other UIKit types this class is very straightforward to create:
@@ -26,7 +26,7 @@ import Workflow
 
  #### Example
  ```swift
- class SomeFlowRepresentable: UIWorkflowItem<String, Never>, FlowRepresentable { //must take in a string, or will not load
+ class SomeFlowRepresentable: UIWorkflowItem<String, Never>, FlowRepresentable { // WorkflowInput of String, Output of Never
     var name: String
     required init(with name: String) {
         self.name = name
@@ -34,7 +34,6 @@ import Workflow
  }
  ```
  */
-
 open class UIWorkflowItem<I, O>: UIViewController {
     public typealias WorkflowInput = I
     public typealias WorkflowOutput = O

@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Workflow
 
-/// An `OrchestrationResponder` that interacts with UIKit
+/// An `OrchestrationResponder` that interacts with UIKit.
 open class UIKitPresenter: OrchestrationResponder {
     let launchedFromVC: UIViewController
     let launchedPresentationType: LaunchStyle.PresentationType
@@ -18,22 +18,22 @@ open class UIKitPresenter: OrchestrationResponder {
 
     /**
      Creates a `UIKitPresenter` that can respond to a `Workflow`'s actions.
-     - Parameter viewController: The `UIViewController` that a `Workflow` should launch from.
-     - Parameter launchStyle: The `LaunchStyle.PresentationType` to use to launch the `Workflow`
+     - Parameter viewController: the `UIViewController` that a `Workflow` should launch from.
+     - Parameter launchStyle: the `LaunchStyle.PresentationType` to use to launch the `Workflow`.
      */
     public init(_ viewController: UIViewController, launchStyle: LaunchStyle.PresentationType) {
         launchedFromVC = viewController
         launchedPresentationType = launchStyle
     }
 
-    /// Launches a `FlowRepresentable` that is also a `UIViewController`
+    /// Launches a `FlowRepresentable` that is also a `UIViewController`.
     public func launch(to: AnyWorkflow.Element) {
         guard let view = to.value.instance?.underlyingInstance as? UIViewController else { return }
         firstLoadedInstance = view
         displayInstance(to, style: launchedPresentationType.rawValue, view: view, root: launchedFromVC)
     }
 
-    /// Proceeds in the `Workflow` by presenting the next `FlowRepresentable` that is also a `UIViewController`
+    /// Proceeds in the `Workflow` by presenting the next `FlowRepresentable` that is also a `UIViewController`.
     public func proceed(to: AnyWorkflow.Element,
                         from: AnyWorkflow.Element) {
         guard let view = to.value.instance?.underlyingInstance as? UIViewController,
@@ -45,7 +45,7 @@ open class UIKitPresenter: OrchestrationResponder {
         }
     }
 
-    /// Back up in the `Workflow` by dismissing or popping the `FlowRepresentable` that is also a `UIViewController`
+    /// Back up in the `Workflow` by dismissing or popping the `FlowRepresentable` that is also a `UIViewController`.
     public func backUp(from: AnyWorkflow.Element,
                        to: AnyWorkflow.Element) {
         guard let view = to.value.instance?.underlyingInstance as? UIViewController else { return }
