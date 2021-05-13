@@ -14,12 +14,11 @@ import Workflow
 // UI friendly terms for creating a workflow.
 extension Workflow {
     /**
-    A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements.
-    - Parameter type: a reference to the class used to create the workflow.
-    - Parameter presentationType: the `PresentationType` the flow representable should use while it's part of this workflow.
-    - Parameter flowPersistence: the `FlowPersistence` type representing how this item in the workflow should persist.
-    - Returns: `Workflow`
-    */
+     Creates a `Workflow` with a `FlowRepresentable`.
+     - Parameter type: a reference to the first `FlowRepresentable`'s concrete type in the workflow.
+     - Parameter presentationType: the `PresentationType` the flow representable should use while it's part of this workflow.
+     - Parameter flowPersistence: the `FlowPersistence` representing how this item in the workflow should persist.
+     */
     public convenience init(_ type: F.Type,
                             presentationType: LaunchStyle.PresentationType,
                             flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) {
@@ -28,12 +27,11 @@ extension Workflow {
     }
 
     /**
-    A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements.
-    - Parameter type: a reference to the class used to create the workflow.
-    - Parameter presentationType: the `PresentationType` the flow representable should use while it's part of this workflow.
-    - Parameter flowPersistence: a closure taking in the `FlowRepresentable.WorkflowInput` and returning a `FlowPersistence` type representing how this item in the workflow should persist.
-    - Returns: `Workflow`
-    */
+     Creates a `Workflow` with a `FlowRepresentable`.
+     - Parameter type: a reference to the first `FlowRepresentable`'s concrete type in the workflow.
+     - Parameter presentationType: the `PresentationType` the flow representable should use while it's part of this workflow.
+     - Parameter flowPersistence: a closure taking in the `FlowRepresentable.WorkflowInput` and returning a `FlowPersistence` representing how this item in the workflow should persist.
+     */
     public convenience init(_ type: F.Type,
                             presentationType: LaunchStyle.PresentationType,
                             flowPersistence: @escaping (F.WorkflowInput) -> FlowPersistence) {
@@ -46,12 +44,11 @@ extension Workflow {
     }
 
     /**
-    A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements.
-    - Parameter type: a reference to the class used to create the workflow.
-    - Parameter presentationType: the `PresentationType` the flow representable should use while it's part of this workflow.
-    - Parameter flowPersistence: a closure returning a `FlowPersistence` type representing how this item in the workflow should persist.
-    - Returns: `Workflow`
-    */
+     Creates a `Workflow` with a `FlowRepresentable`.
+     - Parameter type: a reference to the first `FlowRepresentable`'s concrete type in the workflow.
+     - Parameter presentationType: the `PresentationType` the flow representable should use while it's part of this workflow.
+     - Parameter flowPersistence: a closure returning a `FlowPersistence` representing how this item in the workflow should persist.
+     */
     public convenience init(_ type: F.Type,
                             presentationType: LaunchStyle.PresentationType,
                             flowPersistence: @autoclosure @escaping () -> FlowPersistence) where F.WorkflowInput == Never {
@@ -60,12 +57,11 @@ extension Workflow {
     }
 
     /**
-    A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements.
-    - Parameter type: a reference to the class used to create the workflow.
-    - Parameter presentationType: the `PresentationType` the flow representable should use while it's part of this workflow.
-    - Parameter flowPersistence: a closure returning a `FlowPersistence` type representing how this item in the workflow should persist.
-    - Returns: `Workflow`
-    */
+     Creates a `Workflow` with a `FlowRepresentable`.
+     - Parameter type: a reference to the first `FlowRepresentable`'s concrete type in the workflow.
+     - Parameter presentationType: the `PresentationType` the flow representable should use while it's part of this workflow.
+     - Parameter flowPersistence: a closure returning a `FlowPersistence` representing how this item in the workflow should persist.
+     */
     public convenience init(_ type: F.Type,
                             presentationType: LaunchStyle.PresentationType,
                             flowPersistence: @autoclosure @escaping () -> FlowPersistence) where F.WorkflowInput == AnyWorkflow.PassedArgs {
@@ -76,11 +72,11 @@ extension Workflow {
 
 extension Workflow {
     /**
-    Called when the workflow should be terminated, and the app should return to the point before the workflow was launched.
-    - Parameter animated: a boolean indicating whether abandoning the workflow should be animated.
-    - Parameter onFinish: a callback after the workflow has been abandoned.
-    - Important: In order to dismiss UIKit views the workflow must have an `OrchestrationResponder` that is a `UIKitPresenter`.
-    */
+     Called when the workflow should be terminated, and the app should return to the point before the workflow was launched.
+     - Parameter animated: a boolean indicating whether abandoning the workflow should be animated.
+     - Parameter onFinish: a callback after the workflow has been abandoned.
+     - Important: In order to dismiss UIKit views the workflow must have an `OrchestrationResponder` that is a `UIKitPresenter`.
+     */
     public func abandon(animated: Bool = true, onFinish:(() -> Void)? = nil) {
         AnyWorkflow(self).abandon(animated: animated, onFinish: onFinish)
     }
@@ -88,11 +84,11 @@ extension Workflow {
 
 extension AnyWorkflow {
     /**
-    Called when the workflow should be terminated, and the app should return to the point before the workflow was launched.
-    - Parameter animated: a boolean indicating whether abandoning the workflow should be animated.
-    - Parameter onFinish: a callback after the workflow has been abandoned.
-    - Important: In order to dismiss UIKit views the workflow must have an `OrchestrationResponder` that is a `UIKitPresenter`.
-    */
+     Called when the workflow should be terminated, and the app should return to the point before the workflow was launched.
+     - Parameter animated: a boolean indicating whether abandoning the workflow should be animated.
+     - Parameter onFinish: a callback after the workflow has been abandoned.
+     - Important: In order to dismiss UIKit views the workflow must have an `OrchestrationResponder` that is a `UIKitPresenter`.
+     */
     public func abandon(animated: Bool = true, onFinish:(() -> Void)? = nil) {
         if let presenter = orchestrationResponder as? UIKitPresenter {
             presenter.abandon(self, animated: animated) { [weak self] in
@@ -112,12 +108,12 @@ extension AnyWorkflow {
 
 extension Workflow where F.WorkflowOutput == Never {
     /**
-    A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements.
-    - Parameter type: a reference to the class used to create the workflow.
-    - Parameter presentationType: the `PresentationType` the flow representable should use while it's part of this workflow.
-    - Parameter flowPersistence: the `FlowPersistence`type representing how this item in the workflow should persist.
-    - Returns: `Workflow`
-    */
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
+     - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
+     - Parameter presentationType: the `PresentationType` the `FlowRepresentable` should use while it's part of this workflow.
+     - Parameter flowPersistence: a `FlowPersistence` representing how this item in the workflow should persist.
+     - Returns: a new workflow with the additional `FlowRepresentable` item.
+     */
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: LaunchStyle.PresentationType = .default,
                                                    flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where FR.WorkflowInput == Never {
@@ -128,12 +124,12 @@ extension Workflow where F.WorkflowOutput == Never {
     }
 
     /**
-    A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements.
-    - Parameter type: a reference to the class used to create the workflow.
-    - Parameter presentationType: a `PresentationType` the flow representable should use while it's part of this workflow.
-    - Parameter flowPersistence: an `FlowPersistence`type representing how this item in the workflow should persist.
-    - Returns: `Workflow`
-    */
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
+     - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
+     - Parameter presentationType: the `PresentationType` the `FlowRepresentable` should use while it's part of this workflow.
+     - Parameter flowPersistence: a `FlowPersistence` representing how this item in the workflow should persist.
+     - Returns: a new workflow with the additional `FlowRepresentable` item.
+     */
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: LaunchStyle.PresentationType = .default,
                                                    flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where FR.WorkflowInput == AnyWorkflow.PassedArgs {
@@ -146,12 +142,12 @@ extension Workflow where F.WorkflowOutput == Never {
 
 extension Workflow {
     /**
-    A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements.
-    - Parameter type: a reference to the class used to create the workflow.
-    - Parameter presentationType: a `PresentationType` the flow representable should use while it's part of this workflow.
-    - Parameter flowPersistence: an `FlowPersistence`type representing how this item in the workflow should persist.
-    - Returns: `Workflow`
-    */
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
+     - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
+     - Parameter presentationType: the `PresentationType` the `FlowRepresentable` should use while it's part of this workflow.
+     - Parameter flowPersistence: a `FlowPersistence` representing how this item in the workflow should persist.
+     - Returns: a new workflow with the additional `FlowRepresentable` item.
+     */
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: LaunchStyle.PresentationType = .default,
                                                    flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where F.WorkflowOutput == FR.WorkflowInput {
@@ -162,32 +158,32 @@ extension Workflow {
     }
 
     /**
-    A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements.
-    - Parameter type: a reference to the class used to create the workflow.
-    - Parameter presentationType: a `PresentationType` the flow representable should use while it's part of this workflow.
-    - Parameter flowPersistence: a closure taking in the generic type from the `FlowRepresentable` and returning a `FlowPersistence`type representing how this item in the workflow should persist.
-    - Returns: `Workflow`
-    */
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
+     - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
+     - Parameter presentationType: the `PresentationType` the `FlowRepresentable` should use while it's part of this workflow.
+     - Parameter flowPersistence: a closure taking in the `FlowRepresentable.WorkflowInput` and returning a `FlowPersistence` representing how this item in the workflow should persist.
+     - Returns: a new workflow with the additional `FlowRepresentable` item.
+     */
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: LaunchStyle.PresentationType = .default,
                                                    flowPersistence: @escaping (FR.WorkflowInput) -> FlowPersistence) -> Workflow<FR> where F.WorkflowOutput == FR.WorkflowInput {
         let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetadata(type,
                                             launchStyle: presentationType.rawValue) { data in
-                                                guard case.args(let extracted) = data,
-                                                      let cast = extracted as? FR.WorkflowInput else { return .default }
-                                                return flowPersistence(cast)
+            guard case.args(let extracted) = data,
+                  let cast = extracted as? FR.WorkflowInput else { return .default }
+            return flowPersistence(cast)
         })
         return wf
     }
 
     /**
-    A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements.
-    - Parameter type: a reference to the class used to create the workflow.
-    - Parameter presentationType: a `PresentationType` the flow representable should use while it's part of this workflow.
-    - Parameter flowPersistence: a closure returning a `FlowPersistence`type representing how this item in the workflow should persist.
-    - Returns: `Workflow`
-    */
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
+     - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
+     - Parameter presentationType: the `PresentationType` the `FlowRepresentable` should use while it's part of this workflow.
+     - Parameter flowPersistence: a `FlowPersistence` representing how this item in the workflow should persist.
+     - Returns: a new workflow with the additional `FlowRepresentable` item.
+     */
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: LaunchStyle.PresentationType = .default,
                                                    flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where FR.WorkflowInput == Never {
@@ -198,12 +194,12 @@ extension Workflow {
     }
 
     /**
-    A way of creating workflows with a fluent API. Useful for complex workflows with difficult requirements.
-    - Parameter type: a reference to the class used to create the workflow.
-    - Parameter presentationType: a `PresentationType` the flow representable should use while it's part of this workflow.
-    - Parameter flowPersistence: a closure returning a `FlowPersistence`type representing how this item in the workflow should persist.
-    - Returns: `Workflow`
-    */
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
+     - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
+     - Parameter presentationType: the `PresentationType` the `FlowRepresentable` should use while it's part of this workflow.
+     - Parameter flowPersistence: a `FlowPersistence` representing how this item in the workflow should persist.
+     - Returns: a new workflow with the additional `FlowRepresentable` item.
+     */
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: LaunchStyle.PresentationType = .default,
                                                    flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where FR.WorkflowInput == AnyWorkflow.PassedArgs {
