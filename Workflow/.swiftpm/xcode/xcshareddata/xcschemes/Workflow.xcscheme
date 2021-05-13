@@ -123,16 +123,6 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DependencyInjectionTests"
-               BuildableName = "DependencyInjectionTests"
-               BlueprintName = "DependencyInjectionTests"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "WorkflowTests"
                BuildableName = "WorkflowTests"
                BlueprintName = "WorkflowTests"
