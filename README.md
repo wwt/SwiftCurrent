@@ -13,7 +13,7 @@ Workflow is a library meant to handle complex user flows in iOS applications.
 - [Testing Your Workflows](https://github.com/wwt/Workflow/wiki/testing)
 - [Advanced](https://github.com/wwt/Workflow/wiki/advanced)
 - [Developer Documentation](https://gitcdn.link/repo/wwt/Workflow/main/docs/index.html)
-- [Upgrade Path](UPGRADE_PATH.md)
+- [Upgrade Path](https://github.com/wwt/Workflow/blob/main/UPGRADE_PATH.md)
 - [FAQ](https://github.com/wwt/Workflow/wiki/faq)
 
 ### The problem Workflow was built to solve:
