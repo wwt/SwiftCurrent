@@ -8,7 +8,9 @@
 
 import Foundation
 extension LinkedList {
+    /// :nodoc: Sequence protocol requirement.
     public struct LinkedListIterator<N: Element>: IteratorProtocol {
+        /// :nodoc: IteratorProtocol requirement.
         public typealias Element = N
         var element: N?
 
@@ -16,6 +18,7 @@ extension LinkedList {
             element = node
         }
 
+        /// :nodoc: IteratorProtocol requirement.
         public mutating func next() -> N? {
             let elementCopy = element
             element = element?.next as? N
