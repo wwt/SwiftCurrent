@@ -66,6 +66,8 @@ Use this document to help you understand how to update between major versions of
   You used to be able to re-assign `proceedInWorkflow` to assert it was called with the args you expected, this has now slightly changed.
   To get the *exact* behavior as before use `_proceedInWorkflow` to re-assign that closure. 
   There's also `proceedInWorkflowStorage` which gives you the `AnyWorkflow.PassedArgs` used when `proceedInWorkflow` was called.
+  
+  If you were using some of the methods from our WorkflowExampleTests please look at thow they're set up now, they're drastically different.
 </details>
 
 ---
