@@ -42,7 +42,7 @@ Use this document to help you understand how to update between major versions of
   This change was critical to allowing Type Safety within a Workflow.
 
   #### The `onFinish` Closure when Launching Workflows has Changed
-  They now take an `AnyWorkflow.PassedArgs` type to help consumers of the library differentiate between no arguments being passed, and nil being passed explicitly. So you go from this:
+  They now take an [`AnyWorkflow.PassedArgs`](https://gitcdn.link/repo/wwt/Workflow/main/docs/Classes/AnyWorkflow/PassedArgs.html) type to help consumers of the library differentiate between no arguments being passed, and nil being passed explicitly. So you go from this:
   ```swift
   // OLD
   let workflow = ...
