@@ -1,1 +1,13 @@
+/.gitignore @wwt/workflow-pipeline
 /.github/ @wwt/workflow-pipeline
+/fastlane/ @wwt/workflow-pipeline
+
+/sonar-project.properties @wwt/workflow-pipeline
+/xccov-to-sonarqube-generic.sh @wwt/workflow-pipeline
+/WorkflowLint/.swiftlint.yml @wwt/workflow-pipeline
+
+/changelog_configuration.json @wwt/workflow-pipeline
+/document.sh @wwt/workflow-pipeline
+
+/.clabot @wwt/workflow-pipeline
+/DynamicWorkflow.podspec @wwt/workflow-pipeline
