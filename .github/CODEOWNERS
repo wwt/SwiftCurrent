@@ -11,3 +11,5 @@
 
 /.clabot @wwt/workflow-pipeline
 /DynamicWorkflow.podspec @wwt/workflow-pipeline
+
+/LICENSE @wwt/workflow-license
