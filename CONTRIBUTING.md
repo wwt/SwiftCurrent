@@ -28,7 +28,7 @@ Please review our [style guide](STYLEGUIDE.md) to ensure the least amount of rew
 - We are big believers in [TDD](https://en.wikipedia.org/wiki/Test-driven_development) and it is the practice we use for writing code. 
   - You do NOT have to practice TDD, as that's not enforceable. However, your tests should be written to provide the same value. TDD helps (but doesn't guarantee) not only tests, and high coverage but *valuable* tests. If you do a bunch of `XCTAssertNotNil(thing)` on things that should never be nil all your test did was get coverage numbers up, it didn't really assert anything we care about.
   - If you do not use TDD please comment out your production code, then run your tests. Make sure they *fail*, then slowly bring back your production code a few lines at a time all while running your tests. If they turn *green* before you have all your code back, you have more to cover.
-- Prefer [sociable unit tests](https://martinfowler.com/bliki/UnitTest.html/) to solitary or "strict" unit tests.
+- Prefer [sociable unit tests](https://martinfowler.com/bliki/UnitTest.html) to solitary or "strict" unit tests.
   - Specifically this should indicate to you that tests are driven as much as possible from the public API layer. Our unit tests mimic how developers consume our library, and assert that it behaves as expected.
   - This should also indicate to you that we don't have many tests that make sure 2 classes talk to each other as expected, this means we have the freedom to refactor as we see fit, but still have confidence that what is important to our library consumers is working.
 - Make sure all tests are passing before submitting a PR
