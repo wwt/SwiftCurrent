@@ -64,6 +64,10 @@ public protocol FlowRepresentable {
      */
     var _workflowPointer: AnyFlowRepresentable? { get set }
 
+    // No public docs necessary, as this should not be used by consumers.
+    // swiftlint:disable:next missing_docs
+    var _workflowUnderlyingInstance: Any { get }
+    
     /**
      Creates a `FlowRepresentable`.
 

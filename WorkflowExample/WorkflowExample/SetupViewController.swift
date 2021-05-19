@@ -32,9 +32,9 @@ class SetupViewController: UIViewController {
         ]
         launchInto(
             Workflow(LocationsViewController.self)
-                .thenPresent(PickupOrDeliveryViewController.self)
-                .thenPresent(MenuSelectionViewController.self, flowPersistence: .persistWhenSkipped)
-                .thenPresent(FoodSelectionViewController.self)
+                .thenPresent(PickupOrDeliveryViewController.self, presentationType: .modal(.pageSheet))
+                .thenPresent(MenuSelectionViewController.self, presentationType: .modal(.formSheet))
+                .thenPresent(FoodSelectionViewController.self, presentationType: .navigationStack)
                 .thenPresent(ReviewOrderViewController.self),
             args: locations,
             withLaunchStyle: .navigationStack)

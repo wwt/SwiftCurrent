@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "Workflow",
-    platforms: [.iOS(.v11)],
+    platforms: [.iOS(.v13)],
     products: [
         .library(
             name: "Workflow",
@@ -13,6 +13,9 @@ let package = Package(
         .library(
             name: "WorkflowUIKit",
             targets: ["WorkflowUIKit"]),
+        .library(
+            name: "WorkflowSwiftUI",
+            targets: ["WorkflowSwiftUI"])
     ],
     dependencies: [
         .package(url: "https://github.com/mattgallagher/CwlPreconditionTesting.git", from: Version("2.0.0-beta.1")),
@@ -27,6 +30,8 @@ let package = Package(
         .target(
             name: "WorkflowUIKit",
             dependencies: ["Workflow"]),
+        .target(name: "WorkflowSwiftUI",
+                dependencies: ["Workflow"]),
         .testTarget(
             name: "WorkflowTests",
             dependencies: [
