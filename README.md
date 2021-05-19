@@ -30,11 +30,10 @@ Finally the review screen would be really nice if it gave a way to edit. This sp
 Workflow lets you specify once what the whole workflow looks like, then each view controller defines whether it should show up or not, so to solve the above problem you'd use something like this.
 
 ```swift
-let workflow = Workflow()
-                .thenPresent(LocationsViewController.self)
+let workflow = Workflow(LocationsViewController.self)
                 .thenPresent(PickupOrDeliveryViewController.self)
-                .thenPresent(MenuChooserViewController.self)
-                .thenPresent(FoodChooserViewController.self)
+                .thenPresent(MenuSelectionViewController.self)
+                .thenPresent(FoodSelectionViewController.self)
                 .thenPresent(ReviewOrderViewController.self)
                 .thenPresent(SubmitPaymentViewController.self)
 
