@@ -16,7 +16,7 @@ For more installation instructions, see the wiki on [installation](https://githu
 ## Creating your first screen with Workflow
 Start with your views. With your new iOS project there's 1 view controller named "ViewController" with no logic in it. Let's keep that there, because we need a starting point.
 
-For views you want to display from now on we're going to create them as [FlowRepresentable](). So create a new view.
+For views you want to display from now on we're going to create them as [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html). So create a new view.
 ```swift
 import Workflow
 
@@ -36,8 +36,8 @@ class FirstViewController: UIWorkflowItem<String, Never>, StoryboardLoadable {
 ```
 
 Okay a couple things to notice. 
-- We're using the *optional* convenience class [UIWorkflowItem]() to describe this view takes in a `String` and outputs `Never`, ~~if no `String` is passed to it, the view will not load.~~
-- We're using the *optional* convenience protocol [StoryboardLoadable]() to more easily integrate our [FlowRepresentable]() with our storyboard based UI.
+- We're using the *optional* convenience class [UIWorkflowItem](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/UIWorkflowItem.html) to describe this view takes in a `String` and outputs `Never`, ~~if no `String` is passed to it, the view will not load.~~
+- We're using the *optional* convenience protocol [StoryboardLoadable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/StoryboardLoadable.html) to more easily integrate our [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) with our storyboard based UI.
 - We've slightly modified the method signature of `init` to use `name` instead of `args`. 
 - We're pointing to a storyboard that has a view controller with an identifier the same as our class name.
 
@@ -53,11 +53,11 @@ class ViewController: UIViewController {
 }
 ```
 
-Don't forget to hook everything up in storyboards.  And congratulations! You've created your first [FlowRepresentable]() and launched your first [Workflow]()! Pretty simple.
+Don't forget to hook everything up in storyboards.  And congratulations! You've created your first [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) and launched your first [Workflow](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/Workflow.html)! Pretty simple.
 
 ## Enhancing the first screen
 
-On `FirstViewController` let's add a `UITextField` so the user can enter their email address, a `UILabel` to welcome them and a `UIButton` for them to save.
+On `FirstViewController` let's add a `UITextField` so the user can enter their email address, a `UILabel` to welcome them and a `UIButton` for them to save. When saving we'll want to pass the textfield data forward, so we will also update our [UIWorkflowItem](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/UIWorkflowItem.html) to specify `String?` as our output type.
 
 ```swift
 class FirstViewController: UIWorkflowItem<String, String?>, StoryboardLoadable {
@@ -95,7 +95,7 @@ class ViewController: UIViewController {
 Now after the user hits the button their email will be printed to the console. Congratulations, you now know how to pass data!
 
 Things to notice:
-- Because `FirstViewController` was also the last view in the workflow it passes data back to the closure we specified when we called `launchInto`
+- Because `FirstViewController` was also the last view in the workflow it passes data back to the closure we specified when we called `launchInto`.  Also, the data is in the form of a [AnyWorkflow.PassedArgs](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/AnyWorkflow/PassedArgs.html) which we have to extract the data from.
 - We extracted our workflow to a variable so that we could call `abandon` on it after the last view calls our callback. This lets us remove all views in the workflow from the screen
 
 ### Next steps
