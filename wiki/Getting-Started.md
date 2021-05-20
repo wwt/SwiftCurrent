@@ -1,61 +1,78 @@
 So you're interested in trying this out. Start by cloning the repo and checking out the 'WorkflowExample' scheme. This should give you a decent idea of how the library works conceptually.
 
-### Installation
-For all installation instructions, see the wiki on [installation](https://github.com/wwt/Workflow/wiki/Installation).  For this guide, we will use Cocoapods.  Add this to your Podfile:
+## Getting the project started
+For this guide, we will create a new iOS application project in Xcode, using UIKit and Storyboards for the views.  We will also use Cocoapods for pulling in Workflow, so be sure to initialize your project with 
+```ruby
+pod init
+```
+and add 
 ```ruby
 pod 'DynamicWorkflow/UIKit'
 ```
-And run a `pod install`.
+to your Podfile.
 
-### How to build an app with Workflow
-Start with your views. For the purposes of this document we'll assume you're using UIKit and not SwiftUI. When you start a new iOS project there's 1 view controller named "ViewController" with no logic in it. Let's keep that there, because we need a starting point.
+For more installation instructions, see the wiki on [installation](https://github.com/wwt/Workflow/wiki/Installation).
 
-For views you want to display from now on we're going to create them as FlowRepresentable. So create a new view.
+## Creating your first screen with Workflow
+Start with your views. With your new iOS project there's 1 view controller named "ViewController" with no logic in it. Let's keep that there, because we need a starting point.
+
+For views you want to display from now on we're going to create them as [FlowRepresentable](). So create a new view.
 ```swift
-class FirstViewController: UIWorkflowItem<String> {
-    var name:String?
-}
+import Workflow
 
-extension FirstViewController: FlowRepresentable {
-    func shouldLoad(with name: String) -> Bool {
+class FirstViewController: UIWorkflowItem<String, Never>, StoryboardLoadable {
+    static var storyboardId: String { String(describing: Self.self) }
+    static var storyboard: UIStoryboard { UIStoryboard(name: "Main", bundle: Bundle(for: Self.self)) }
+
+    var name: String
+
+    required init?(coder: NSCoder, with name: String) {
         self.name = name
-        return true
+        super.init(coder: coder)
     }
-    static func instance() -> AnyFlowRepresentable {
-        return UIStoryboard(name: "Main", bundle: Bundle(for: FirstViewController.self)).instantiateViewController(withIdentifier: "FirstViewController") as! FirstViewController
-    }
+
+    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 ```
 
 Okay a couple things to notice. 
-- We're using the *optional* convenience class `UIWorkflowItem` to describe this view takes in a `String`, if no `String` is passed to it, the view will not load. 
-- We've slightly modified the method signature of `shouldLoad` to use `name` instead of `args`. 
+- We're using the *optional* convenience class [UIWorkflowItem]() to describe this view takes in a `String` and outputs `Never`, ~~if no `String` is passed to it, the view will not load.~~
+- We're using the *optional* convenience protocol [StoryboardLoadable]() to more easily integrate our [FlowRepresentable]() with our storyboard based UI.
+- We've slightly modified the method signature of `init` to use `name` instead of `args`. 
 - We're pointing to a storyboard that has a view controller with an identifier the same as our class name.
 
-Now from `ViewController` we can create a new action
+Now from `ViewController` we can import Workflow and create a new action
 ```swift
+import UIKit
+import Workflow
+
 class ViewController: UIViewController {
     @IBAction func launchWorkflow() {
-        launchInto([ FirstViewController.self ], args: "Some Name")
+        launchInto(Workflow(FirstViewController.self), args: "Some Name")
     }
 }
 ```
 
-Congratulations! You've created your first FlowRepresentable, not too hard eh?
+Don't forget to hook everything up in storyboards.  And congratulations! You've created your first [FlowRepresentable]() and launched your first [Workflow]()! Pretty simple.
+
+## Enhancing the first screen
 
 On `FirstViewController` let's add a `UITextField` so the user can enter their email address, a `UILabel` to welcome them and a `UIButton` for them to save.
 
 ```swift
-class FirstViewController: UIWorkflowItem<String> {
-    //...
-    @IBOutlet weak var welcomeLabel:UILabel! {
+class FirstViewController: UIWorkflowItem<String, String?>, StoryboardLoadable {
+   //...
+
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var welcomeLabel: UILabel! {
         willSet(this) {
             this.text = ["Welcome", name].compactMap { $0 }.joined(separator: " ") + "!"
         }
     }
-    @IBOutlet weak var emailTextField:UITextField!
 
-    @IBAction func savePressed() {
+    //...
+
+    @IBAction func savePressed(_ sender: Any) {
         proceedInWorkflow(emailTextField.text)
     }
 }
@@ -64,12 +81,13 @@ class FirstViewController: UIWorkflowItem<String> {
 Now when they press the button their email gets passed as data. Let's modify our original workflow launcher to do something with that data:
 
 ```swift
-// back in ViewController.swift
-@IBAction func launchWorkflow() {
-    let workflow:Workflow = [ FirstViewController.self ]
-    launchInto(workflow, args: "Some Name") { email in 
-        workflow.abandon()
-        print(String(describing: email))
+class ViewController: UIViewController {
+    @IBAction func launchWorkflow() {
+        let workflow = Workflow(FirstViewController.self)
+        launchInto(workflow, args: "Some Name") { passedArgs in
+            workflow.abandon()
+            print(String(describing: passedArgs.extractArgs(defaultValue: nil)))
+        }
     }
 }
 ```
