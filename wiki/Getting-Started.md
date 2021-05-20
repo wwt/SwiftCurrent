@@ -1,5 +1,12 @@
 So you're interested in trying this out. Start by cloning the repo and checking out the 'WorkflowExample' scheme. This should give you a decent idea of how the library works conceptually.
 
+### Installation
+For all installation instructions, see the wiki on [installation](https://github.com/wwt/Workflow/wiki/Installation).  For this guide, we will use Cocoapods.  Add this to your Podfile:
+```ruby
+pod 'DynamicWorkflow/UIKit'
+```
+And run a `pod install`.
+
 ### How to build an app with Workflow
 Start with your views. For the purposes of this document we'll assume you're using UIKit and not SwiftUI. When you start a new iOS project there's 1 view controller named "ViewController" with no logic in it. Let's keep that there, because we need a starting point.
 
