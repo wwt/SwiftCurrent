@@ -61,7 +61,7 @@ On `FirstViewController` let's add a `UITextField` so the user can enter their e
 
 ```swift
 class FirstViewController: UIWorkflowItem<String, String?>, StoryboardLoadable {
-   //...
+   // ...
 
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var welcomeLabel: UILabel! {
@@ -70,7 +70,7 @@ class FirstViewController: UIWorkflowItem<String, String?>, StoryboardLoadable {
         }
     }
 
-    //...
+    // ...
 
     @IBAction func savePressed(_ sender: Any) {
         proceedInWorkflow(emailTextField.text)
@@ -98,5 +98,64 @@ Things to notice:
 - Because `FirstViewController` was also the last view in the workflow it passes data back to the closure we specified when we called `launchInto`.  Also, the data is in the form of a [AnyWorkflow.PassedArgs](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/AnyWorkflow/PassedArgs.html) which we have to extract the data from.
 - We extracted our workflow to a variable so that we could call `abandon` on it after the last view calls our callback. This lets us remove all views in the workflow from the screen
 
-### Next steps
-Try defining a `SecondViewController` that takes in a more complex object. Modify `FirstViewController` to pass that argument in the `proceedInWorkflow` call and you'll see how, as long as the type matches `SecondViewController`'s `shouldLoad` method is called with the data from the previous view.
+## Refactors and improvements
+### StoryboardLoadable
+Up to this point we have been conforming `FirstViewController` to the [StoryboardLoadable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/StoryboardLoadable.html) protocol, but we can refactor out a more convenient protocol to help us group our controllers together within a storyboard.  We'll continue to use `Main` as our storyboard, but let's create a more specialized protocol, like the example in [StoryboardLoadable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/StoryboardLoadable.html).
+
+```swift
+extension StoryboardLoadable {
+    static var storyboardId: String { String(describing: Self.self) }
+}
+
+protocol MainStoryboardLoadable: StoryboardLoadable {
+    static var storyboard: UIStoryboard { UIStoryboard(name: "Main", bundle: Bundle(for: Self.self)) }
+}
+```
+
+Then update FirstViewController to use the new specialized protocol.  With that change the view controller will look like this:
+
+```swift
+class FirstViewController: UIWorkflowItem<String, String?>, MainStoryboardLoadable {
+    var name: String
+
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var welcomeLabel: UILabel! {
+        willSet(this) {
+            this.text = ["Welcome", name].compactMap { $0 }.joined(separator: " ") + "!"
+        }
+    }
+
+    required init?(coder: NSCoder, with name: String) {
+        self.name = name
+        super.init(coder: coder)
+    }
+
+    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
+    @IBAction func savePressed(_ sender: Any) {
+        proceedInWorkflow(emailTextField.text)
+    }
+}
+```
+
+### Extracting arguments
+You probably noticed earlier on that the onFinish closure printed out an `Optional(Optional("Texfield text"))`.  We can improve this by changing out how we extract the argument.  Let's change the closure to: 
+```swift
+launchInto(workflow, args: "Some Name") { passedArgs in
+    workflow.abandon()
+    guard case .args(let emailAddress as String) = passedArgs else {
+        print("No email address supplied")
+        return
+    }
+    print(emailAddress)
+}
+```
+Now when the print statement runs it will print `"Texfield text"`.
+
+## Make a second screen without the helpers
+We're setup very nicely to make [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html)s quickly by using the convenience class [UIWorkflowItem](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/UIWorkflowItem.html) and our specialized convenience protocol `MainStoryboardLoadable`, but these helpers are not *necessary* for a [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html).
+
+Let's make another view controller without the helpers.
+
+# Next steps
+Try defining a `SecondViewController` that takes in a more complex object. Modify `FirstViewController` to pass that argument in the `proceedInWorkflow` call and you'll see how, as long as the type matches `SecondViewController`'s `Input Type` method is called with the data from the previous view.
