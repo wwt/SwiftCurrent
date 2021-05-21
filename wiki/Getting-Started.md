@@ -85,14 +85,13 @@ class SecondViewController: UIWorkflowItem<String, String>, MainStoryboardLoadab
 #### **What's this `shouldLoad()`?**
 It is part of the [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) protocol. It has default implementations created for your convenience, but is still left implementable by you should you want to control when a [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) should load in the work flow.  It is called after `init` but before `viewDidLoad()`.
 
-## Launching the Workflow
-Next, we create a Workflow object that is initialized with our FlowRepresentables
-
-NOTE: our second FlowRepresentable must take as input the same type output by the first
+## Launching the [Workflow](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/Workflow.html)
+Next, we create a [Workflow](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/Workflow.html) that is initialized with our [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html)s, and launch it from a view controller that is already loaded onto the screen (here we use the default ViewController of a new iOS project).
 
 ```swift
 import UIKit
 import Workflow
+
 class ViewController: UIViewController {
     @IBAction private func launchWorkflow() {
         let workflow = Workflow(FirstViewController.self)
@@ -108,3 +107,12 @@ class ViewController: UIViewController {
     }
 }
 ```
+### Let's discuss what's going on here.
+#### **Where is the type safety, I heard about?**
+The [Workflow](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/Workflow.html) has compile-time type safety on the Input/Output types of the supplied [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html)s. This means that you will get a build error if the output of `FirstViewController` does not match the input type of `SecondViewController`.
+
+#### **What's going on with this `passedArgs`?**
+The `onFinish` closure for `launchInto(_::)` provides the last passed [AnyWorkflow.PassedArgs](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/AnyWorkflow/PassedArgs.html) in the work flow. For this Workflow, that could be the output of `FirstViewController` or `SecondViewController` depending on the email signature typed in `FirstViewController`. To extract the value, we unwrap the variable within the case of `.args()` as we expect this workflow to return some argument.
+
+#### **Why call `abandon()`?**
+Calling `abandon()` closes all the views launched as part of the workflow, leaving you back on `ViewController`.
