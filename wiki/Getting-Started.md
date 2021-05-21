@@ -61,7 +61,7 @@ class FirstViewController: UIWorkflowItem<String, String>, MainStoryboardLoadabl
 
 // This screen shows an employee only screen
 class SecondViewController: UIWorkflowItem<String, String>, MainStoryboardLoadable {
-    let email: String
+    private let email: String
     required init?(coder: NSCoder, with email: String) {
         self.email = email
         super.init(coder: coder)
@@ -81,14 +81,14 @@ class SecondViewController: UIWorkflowItem<String, String>, MainStoryboardLoadab
 
 Next, we create a Workflow object that is initialized with our FlowRepresentables
 
-NOTE: our second FlowRepresentable must take as input the same type output by our first FlowRepresentable
+NOTE: our second FlowRepresentable must take as input the same type output by the first
 
 
 ```swift
 import UIKit
 import Workflow
 class ViewController: UIViewController {
-    @IBAction func launchWorkflow() {
+    @IBAction private func launchWorkflow() {
         let workflow = Workflow(FirstViewController.self)
                             .thenPresent(SecondViewController.self)
         launchInto(workflow, args: "Some Name") { passedArgs in
