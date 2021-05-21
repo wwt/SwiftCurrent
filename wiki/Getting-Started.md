@@ -1,23 +1,15 @@
 So you're interested in trying this out. Start by cloning the repo and checking out the 'WorkflowExample' scheme. This should give you a decent idea of how the library works conceptually.
-
-## Getting the project started
-For this guide, we will create a new iOS application project in Xcode, using UIKit and Storyboards for the views.  We will also use Cocoapods for pulling in Workflow, so be sure to initialize your project with 
-```ruby
-pod init
-```
-and add 
+# Cocoapods with Storyboards
+## Getting a new project started
 ```ruby
 pod 'DynamicWorkflow/UIKit'
 ```
-to your Podfile.
+Add the above line to your Podfile.
 
 For more installation instructions, see the wiki on [installation](https://github.com/wwt/Workflow/wiki/Installation).
 
-## Creating your first screen with Workflow
-
-
-Let's jump into Swift by creating a convenience protocol to load the storyboard
-
+## Create the convenience protocols for storyboard loading
+It is best practice to use the [StoryboardLoadable]() protocol to connect your [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) to your Storyboard.  Additionally, to limit the amount of duplicate code, you can make a convenience protocol for each storyboard.
 ```swift
 import Workflow
 
@@ -25,12 +17,13 @@ extension StoryboardLoadable {
     static var storyboardId: String { String(describing: Self.self) }
 }
 
-protocol MainStoryboardLoadable: StoryboardLoadable {}
+protocol MainStoryboardLoadable: StoryboardLoadable { }
 extension MainStoryboardLoadable {
     static var storyboard: UIStoryboard { UIStoryboard(name: "Main", bundle: Bundle(for: Self.self)) }
 }
 ```
 
+## Creating the [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html)s
 To begin a workflow, we create a couple of FlowRepresentables
 
 ```swift
