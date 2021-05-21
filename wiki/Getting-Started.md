@@ -9,7 +9,7 @@ Add the above line to your Podfile.
 For more installation instructions, see the wiki on [installation](https://github.com/wwt/Workflow/wiki/Installation).
 
 ## Create the convenience protocols for storyboard loading
-It is best practice to use the [StoryboardLoadable]() protocol to connect your [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) to your Storyboard.  Additionally, to limit the amount of duplicate code, you can make a convenience protocol for each storyboard.
+It is best practice to use the [StoryboardLoadable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/StoryboardLoadable.html) protocol to connect your [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) to your Storyboard.  Additionally, to limit the amount of duplicate code, you can make a convenience protocol for each storyboard.
 ```swift
 import Workflow
 
@@ -22,9 +22,10 @@ extension MainStoryboardLoadable {
     static var storyboard: UIStoryboard { UIStoryboard(name: "Main", bundle: Bundle(for: Self.self)) }
 }
 ```
+NOTE: [StoryboardLoadable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/StoryboardLoadable.html) is only available in iOS 13.0 and later.
 
 ## Creating the [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html)s
-To begin a workflow, we create a couple of FlowRepresentables
+First, create the [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html)s you will use in your workflow.
 
 ```swift
 import UIKit
@@ -36,7 +37,7 @@ class FirstViewController: UIWorkflowItem<String, String>, MainStoryboardLoadabl
     @IBOutlet private weak var emailTextField: UITextField!
     @IBOutlet private weak var welcomeLabel: UILabel! {
         willSet(this) {
-            this.text = ["Welcome", name].compactMap { $0 }.joined(separator: " ") + "!"
+            this.text = "Welcome \(name)!"
         }
     }
 
@@ -71,11 +72,23 @@ class SecondViewController: UIWorkflowItem<String, String>, MainStoryboardLoadab
     }
 }
 ```
+### Let's talk about what is going on with these view controllers.
+#### **How are these [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html)?**
+1) Each view controller inherits from the *optional* [UIWorkflowItem<I, O>](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/UIWorkflowItem.html) class.  This class removes some of the boilerplate that normally comes with a [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html).
+    - Your view controller will not be a [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) by inheriting [UIWorkflowItem](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/UIWorkflowItem.html).
+1) `MainStoryboardLoadable` inherits from [StoryboardLoadable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/StoryboardLoadable.html) which can only be applied to a `UIViewController` that is also a [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html).
+1) These view controllers are [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) because they implement the protocol through [UIWorkflowItem](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/UIWorkflowItem.html) AND are required to be [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) by [StoryboardLoadable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/StoryboardLoadable.html).
 
+#### **Why these initializers?**
+[StoryboardLoadable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/StoryboardLoadable.html) helps guide XCode to give you compiler errors with the appropriate fix-its to generate `required init?(coder: NSCoder, with args: String)`. These initializers allow you to load from a storyboard while also having compile-time safety in your properties.  You will notice that both view controllers store the argument string on a `private let` property.
+
+#### **What's this `shouldLoad()`?**
+It is part of the [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) protocol. It has default implementations created for your convenience, but is still left implementable by you should you want to control when a [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) should load in the work flow.  It is called after `init` but before `viewDidLoad()`.
+
+## Launching the Workflow
 Next, we create a Workflow object that is initialized with our FlowRepresentables
 
 NOTE: our second FlowRepresentable must take as input the same type output by the first
-
 
 ```swift
 import UIKit
