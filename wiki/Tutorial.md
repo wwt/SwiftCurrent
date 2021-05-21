@@ -107,7 +107,8 @@ extension StoryboardLoadable {
     static var storyboardId: String { String(describing: Self.self) }
 }
 
-protocol MainStoryboardLoadable: StoryboardLoadable {
+protocol MainStoryboardLoadable: StoryboardLoadable {}
+extension MainStoryboardLoadable {
     static var storyboard: UIStoryboard { UIStoryboard(name: "Main", bundle: Bundle(for: Self.self)) }
 }
 ```
@@ -115,7 +116,7 @@ protocol MainStoryboardLoadable: StoryboardLoadable {
 Then update FirstViewController to use the new specialized protocol.  With that change the view controller will look like this:
 
 ```swift
-class FirstViewController: UIWorkflowItem<String, String?>, MainStoryboardLoadable {
+class FirstViewController: UIWorkflowItem<String, String>, MainStoryboardLoadable {
     var name: String
 
     @IBOutlet weak var emailTextField: UITextField!
@@ -161,9 +162,9 @@ Let's make another view controller without [UIWorkflowItem](https://gitcdn.link/
 import UIKit
 import Workflow
 
-class SecondViewController: UIViewController, FlowRepresentable, MainStoryboardloadable {
-    typealias WorkflowInput = String
-    typealias WorkflowOutput = String
+class SecondViewController: UIViewController, FlowRepresentable, MainStoryboardLoadable {
+    typealias WorkflowInput = String?
+    typealias WorkflowOutput = String?
 
     let email: String
     weak var _workflowPointer: AnyFlowRepresentable?
@@ -192,16 +193,24 @@ Then update your workflow to add the new screen.
 @IBAction func launchWorkflow() {
     let workflow = Workflow(FirstViewController.self)
                     .thenPresent(SecondViewController.self)
-    launchInto(workflow, args: "Some Name") { passedArgs in
-        workflow.abandon()
-        guard case .args(let emailAddress as String) = passedArgs else {
-            print("No email address supplied")
-            return
-        }
-        print(emailAddress)
-    }
+    // ...
 }
+```
+
+
+## What type safety looks like in Workflow
+```swift
+super small example of code that will not compile for type safety
 ```
 
 # Next steps
 Try defining a `SecondViewController` that takes in a more complex object. Modify `FirstViewController` to pass that argument in the `proceedInWorkflow` call and you'll see how, as long as the type matches `SecondViewController`'s `Input Type` method is called with the data from the previous view.
+
+
+
+
+
+
+* Getting started should be the minimum for getting started (not all the things about workflow)
+* A tutorial is different than a Getting Started.
+* In order to get started, you do need to know what the type safety looks like.
