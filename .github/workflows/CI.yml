@@ -36,7 +36,7 @@ jobs:
           name: sq-generic.xml
           path: artifacts
       - name: Rename Paths in Coverage
-        run:  sed 's+/Users/runner/work/Workflow/Workflow/++g' artifacts/sq-generic.xml > sq-generic.xml
+        run:  sed 's+/Users/runner/work/Workflow/++g' artifacts/sq-generic.xml > sq-generic.xml
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         env:
