@@ -13,7 +13,4 @@
    <FileRef
       location = "group:DynamicWorkflow.podspec">
    </FileRef>
-   <FileRef
-      location = "group:Workflow.xctestplan">
-   </FileRef>
 </Workspace>
