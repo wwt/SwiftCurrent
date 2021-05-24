@@ -11,12 +11,13 @@ platform :ios do
     scan(
       code_coverage: true,
       scheme:  'Workflow',
-      workspace: 'Workflow.xcworkspace'
+      workspace: 'Workflow.xcworkspace',
+      derived_data_path: "~/Library/Developer/Xcode/DerivedData",
     )
   end
 
   lane :build_swiftpm do
-    sh('swift build --package-path="../Workflow" -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios14.0-simulator"')
+    sh('swift build --package-path="../" -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios14.0-simulator"')
   end
 
   lane :cocoapods_liblint do
