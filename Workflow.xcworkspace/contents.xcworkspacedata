@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Workflow">
+      location = "group:">
    </FileRef>
    <FileRef
       location = "group:WorkflowExample/WorkflowExample.xcodeproj">
@@ -12,8 +12,5 @@
    </FileRef>
    <FileRef
       location = "group:DynamicWorkflow.podspec">
-   </FileRef>
-   <FileRef
-      location = "group:Workflow.xctestplan">
    </FileRef>
 </Workspace>
