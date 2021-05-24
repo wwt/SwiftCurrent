@@ -10,7 +10,7 @@ jobs:
       - name: Run TESTS
         run: bundle exec fastlane unit_test
       - name: Generate SonarCloud Friendly Coverage Report
-        run: ./xccov-to-sonarqube-generic.sh "~/Library/Developer/Xcode/DerivedData/*/Logs/Test/*.xcresult" > "sq-generic.xml"
+        run: ./xccov-to-sonarqube-generic.sh ~/Library/Developer/Xcode/DerivedData/**/*.xcresult > sq-generic.xml
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v2
         with:
