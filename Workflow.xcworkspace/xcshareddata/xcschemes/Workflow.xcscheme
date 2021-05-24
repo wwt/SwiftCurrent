@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1220"
+   LastUpgradeVersion = "1250"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "WorkflowUIKit"
-               BuildableName = "WorkflowUIKit"
-               BlueprintName = "WorkflowUIKit"
+               BlueprintIdentifier = "Workflow"
+               BuildableName = "Workflow"
+               BlueprintName = "Workflow"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -26,8 +26,39 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "WorkflowTests"
+               BuildableName = "WorkflowTests"
+               BlueprintName = "WorkflowTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CAF586AD256CF2B40044C864"
+               BuildableName = "WorkflowExampleTests.xctest"
+               BlueprintName = "WorkflowExampleTests"
+               ReferencedContainer = "container:WorkflowExample/WorkflowExample.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CAF58634256CF0E50044C864"
+               BuildableName = "WorkflowUIKitTests.xctest"
+               BlueprintName = "WorkflowUIKitTests"
+               ReferencedContainer = "container:WorkflowExample/WorkflowExample.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -50,9 +81,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "WorkflowUIKit"
-            BuildableName = "WorkflowUIKit"
-            BlueprintName = "WorkflowUIKit"
+            BlueprintIdentifier = "Workflow"
+            BuildableName = "Workflow"
+            BlueprintName = "Workflow"
             ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>
