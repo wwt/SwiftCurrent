@@ -12,7 +12,7 @@ Note that brevity is not a primary goal. Code should be made more concise only i
 
 ## Guiding Tenets
 
-* The [official swift API design guidelines](https://swift.org/documentation/api-design-guidelines/) are all unilaterally accepted for any public API and generally have good information for private or internal APIs. If you are not making a public API we do not require the same level of documentation, but the naming conventions and general design guidelines are still great and should be adhered to.
+* The [official Swift API design guidelines](https://swift.org/documentation/api-design-guidelines/) are all unilaterally accepted for any public API and generally have good information for private or internal APIs. If you are not making a public API we do not require the same level of documentation, but the naming conventions and general design guidelines are still great and should be adhered to.
 * These rules should not fight Xcode's <kbd>^</kbd> + <kbd>I</kbd> indentation behavior.
 * We strive to make rules lintable:
   * If a rule changes the format of the code, it needs to be able to be reformatted automatically using [SwiftLint](https://github.com/realm/SwiftLint).
@@ -1923,7 +1923,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   <details>
   
   #### Why?
-  Remember, implicitly unwrapped optionals are a thing if you can safely assume a value. A core component to swift is its safety, don't ruin that safety just for conveniences sake.
+  Remember, implicitly unwrapped optionals are a thing if you can safely assume a value. A core component to Swift is its safety, don't ruin that safety just for conveniences sake.
 
   ```swift
   // WRONG
@@ -2354,6 +2354,6 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
 ## Attribution:
 - This styleguide was forked from the [AirBnB styleguide](https://github.com/airbnb/swift). Thanks AirBnB!
-- Inspiration on format also came from [the effective dart docs](https://dart.dev/guides/language/effective-dart), Thanks google!
-- Parts of the styleguide also inspired by [the google swift styleguide](https://google.github.io/swift/#defining-new-operators), Thanks google!
+- Inspiration on format also came from [the effective dart docs](https://dart.dev/guides/language/effective-dart), Thanks Google!
+- Parts of the styleguide also inspired by [the Google Swift styleguide](https://google.github.io/swift/#defining-new-operators), Thanks Google!
 - Parts of the styleguide also inspired by [The Official raywenderlich.com Swift Style Guide](https://github.com/raywenderlich/swift-style-guide), Thanks Ray Wenderlich!
