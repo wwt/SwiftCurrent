@@ -219,6 +219,33 @@ class UIKitConsumerAbandonTests: XCTestCase {
         (UIApplication.topViewController() as? FR4)?.abandonWorkflow()
         XCTAssertUIViewControllerDisplayed(isInstance: root)
     }
+    
+    func testAbandonWhenWorkflowHasNoNavPresentingSubsequentViewsModally() {
+        class FR1: TestViewController { }
+        class FR2: TestViewController { }
+        class FR3: TestViewController { }
+        class FR4: TestViewController { }
+
+        let root = UIViewController()
+        root.loadForTesting()
+
+        root.launchInto(Workflow(FR1.self)
+            .thenPresent(FR2.self, presentationType: .modal)
+            .thenPresent(FR3.self, presentationType: .modal)
+            .thenPresent(FR4.self), withLaunchStyle: .modal)
+
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
+        XCTAssertNotNil(UIApplication.topViewController())
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
+        XCTAssertNil(UIApplication.topViewController()?.navigationController)
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
+        (UIApplication.topViewController() as? FR3)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR4.self)
+        (UIApplication.topViewController() as? FR4)?.abandonWorkflow()
+        XCTAssertUIViewControllerDisplayed(isInstance: root)
+    }
 
     func testAbandonWhenFluentWorkflowHasNavPresentingSubsequentViewsModally() {
         class FR1: TestViewController { }

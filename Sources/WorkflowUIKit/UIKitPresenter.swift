@@ -84,8 +84,8 @@ open class UIKitPresenter: OrchestrationResponder {
                     nav.popViewController(animated: animated)
                 }
             }
-        } else {
-            first.dismiss(animated: animated, completion: onFinish)
+        } else if let presenting = first.presentingViewController {
+            presenting.dismiss(animated: animated, completion: onFinish)
         }
     }
 
