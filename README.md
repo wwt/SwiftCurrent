@@ -37,7 +37,7 @@ As you continue to develop your applications, each view controller will become m
 [We're working on it now!](https://github.com/wwt/Workflow/milestone/2)
 
 # Quick Start
-## Cocoapods
+## CocoaPods
 ```ruby
 pod 'DynamicWorkflow/UIKit'
 ```
@@ -58,9 +58,6 @@ launchInto(Workflow(ExampleViewController.self))
 ```
 
 And just like that you're started!  To see something more practical and in-depth, check out the example app in the repo.  For a more in-depth starting guide, checkout out our [Getting Started](https://github.com/wwt/Workflow/wiki/getting-started) documentation.
-
-## SwiftPM
-Currently on the way!
 
 # Deep Dive
 - [Why Workflow?](https://github.com/wwt/Workflow/wiki/Why-This-Library%3F)
