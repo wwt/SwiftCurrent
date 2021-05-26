@@ -81,7 +81,7 @@ class ModalStyleTests: XCTestCase {
         print("!!!! \(Date().timeIntervalSince1970) - testShowModalAsCustom - Completed launchInto")
 
         XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
-        XCTAssertEqual(UIApplication.topViewController()?.modalPresentationStyle, .custom)
+        XCTAssertEqual(UIApplication.topViewController()?.modalPresentationStyle.rawValue, UIModalPresentationStyle.custom.rawValue)
         print("!!!! \(Date().timeIntervalSince1970) - testShowModalAsCustom - RawValue: \(String(describing: UIApplication.topViewController()?.modalPresentationStyle.rawValue))")
     }
 

@@ -17,10 +17,7 @@ jobs:
           token: ${{ secrets.TYLER_PAT }}
       - name: Bump version in Podspec and Plist
         id: bump_version
-        run: |
-          bundle exec fastlane patch
-          VERSION=`/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" Workflow/Info.plist`
-          echo "##[set-output name=version;]$VERSION"
+        run: bundle exec fastlane patch
       - name: Commit version changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
