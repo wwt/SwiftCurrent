@@ -1,63 +1,27 @@
-# ORIGINAL
-### Swift Package Manager
-To use Workflow in a SwiftPM project, add the following line to the dependencies in your Package.swift file:
+# Swift Package Manager
+If you want more information about installing Swift packages with Xcode, [follow these instructions](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app). If you want to learn more about Swift Package Manager, [this page goes into detail](https://swift.org/package-manager/).
 
-```swift 
-.package(url: "https://github.com/wwt/Workflow")
+## Get the package
+Add the following line to the package dependencies in `Package.swift`:
+```swift
+.package(url: "https://github.com/wwt/Workflow.git", .upToNextMajor(from: "3.0.0")),
 ```
 
-### CocoaPods
-Add the following line(s) to your podfile:
-
-#### If you want to use Workflow with UIKit:
-```ruby
-pod 'DynamicWorkflow/UIKit'
+## Get the correct product
+Add one one of the following products to your target dependencies.
+### If you want to use Workflow with UIKit:
+```swift
+.product(name: "WorkflowUIKit", package: "Workflow")
 ```
+`WorkflowUIKit` will need to be built on a platform that supports UIKit, such as iOS or macOS with Catalyst.
 
-#### If you want to use Workflow as a generic construct, and build your own Orchestration Responder:
-```ruby
-pod 'DynamicWorkflow/Core'
+### If you want to use Workflow without UIKit:
+```swift
+.product(name: "Workflow", package: "Workflow"),
 ```
+You will need to build your own [Orchestration Responders](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/OrchestrationResponder.html) for your domains.
 
-# NEW
-
-// reference
-
-Docs for SwiftPM 
-- https://swift.org/package-manager/
-- https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app
-
-Docs for Cocoapods
-- https://cocoapods.org/
-
-Example installation
-- https://github.com/Alamofire/Alamofire#installation
-
------
-
-## Swift Package Manager
-[ need to vet the instructions ]
-
-Docs for SwiftPM 
-- https://swift.org/package-manager/
-- https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app
-
-### Add the library to a SwiftPM project *
-Add the following line to the dependencies in your Package.swift file:
-```swift 
-.package(url: "https://github.com/wwt/Workflow")
-```
-
-### Add the library using Xcode
-Follow these [instructions](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app).  The URL for the library is:
-```
-https://github.com/wwt/Workflow
-```
-Select the `WorkflowUIKit` for UIKit support.
-
-Select the `Workflow` package.
-
-## CocoaPods
+# CocoaPods
 Set up [CocoaPods](https://cocoapods.org/) for your project, then include Workflow in your dependencies by adding one of the following lines to your `Podfile`: 
 
 ### If you want to use Workflow with UIKit:
@@ -65,7 +29,7 @@ Set up [CocoaPods](https://cocoapods.org/) for your project, then include Workfl
 pod 'DynamicWorkflow/UIKit'
 ```
 
-### If you only want the core tools to create [Workflows]():
+### If you want to use Workflow without UIKit:
 ```ruby
 pod 'DynamicWorkflow/Core'
 ```
