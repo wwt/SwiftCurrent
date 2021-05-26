@@ -6,7 +6,7 @@ There are many reasons to be excited about Workflow:
 - Create flows that give your users a better experience, web frameworks can easily sign somebody in, or sign them up, then continue into a flow, so why not be able to easily do the same in Swift?
 - Power deep linking experiences that can get your users right where you want them with minimal overhead.
 
-Read on to learn about our philosphy of development. We believe these ideals take us from "just another library" too a tool you won't want to do without.
+Read on to learn about our philosophy of development. We believe these ideals take us from "just another library" too a tool you won't want to do without.
 
 ### Developer Experience over Problem Solving
 There have been many attempts by others to create libraries that decouple the concept of a flow that can move forward and backwards, but they all took very different approaches. What separates us, and makes this library worth using, is our developer-centric experience. We sat down with a group of developers and asked the question "if something existed today that did what you wanted, what would that thing look like?" then we spent a lot of effort making that happen.
