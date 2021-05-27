@@ -80,6 +80,7 @@ class SecondViewController: UIWorkflowItem<String, String>, MainStoryboardLoadab
 <details> 
 
 You could declare these view controllers with `class FirstViewController: UIWorkflowItem<String, String>, FlowRepresentable, MainStoryboardLoadable`, but the [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) is not specifically needed, so we excluded it from our example.
+</details>
 
 #### **Why is [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) not needed in the declaration?**
 <details>
@@ -88,7 +89,6 @@ These view controllers adhere to [FlowRepresentable](https://gitcdn.link/cdn/wwt
 1. The [UIWorkflowItem<I, O>](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/UIWorkflowItem.html) class implements a subset of the requirements for [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html).
 1. [StoryboardLoadable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/StoryboardLoadable.html) implements the remaining subset and requires that it is only applied to a [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html).
 
-</details>
 </details>
 
 #### **Why these initializers?**
