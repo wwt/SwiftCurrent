@@ -23,16 +23,6 @@ The above code is all that is needed from the screen starting this flow. Each sc
 
 As you continue to develop your applications, each view controller will become more decoupled from the rest of the app.  That means, if you want a completely different order of screens, just define a new [Workflow](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/Workflow.html).
 
-<!-- See it in action!
-<details>
-  <summary><b>Storyboard based application</b></summary>
-	[GIF]
-</details>
-<details>
-  <summary><b>Programmatic view based application</b></summary>
-	[GIF]
-</details> -->
-
 ## Interested but you need SwiftUI support?
 [We're working on it now!](https://github.com/wwt/Workflow/milestone/2)
 
