@@ -3,42 +3,58 @@
 ![Quality Gate](https://img.shields.io/sonar/quality_gate/wwt_Workflow?server=https%3A%2F%2Fsonarcloud.io)
 ![Coverage](https://img.shields.io/sonar/coverage/wwt_Workflow?server=http%3A%2F%2Fsonarcloud.io)
 
-### Welcome to Workflow!
-Workflow is a library meant to handle complex user flows in iOS applications.
+# Welcome
+Workflow is a library that lets you easily manage journeys through your Swift application.
 
-#### Table of Contents:
-- [Installation](https://github.com/wwt/Workflow/wiki/Installation)
+When Developing in UIKit, each view controller has to know about the one following it in order to share data.  Now imagine a flow where the first 3 screens are optional.  What would it look like if you could decouple all of that?
+
+```swift
+let workflow = Workflow(LocationsViewController.self) // Skip this if you have GPS
+                .thenProceed(with: PickupOrDeliveryViewController.self) // Skip this if you only have 1 choice
+                .thenProceed(with: MenuSelectionViewController.self) // Skip this for new stores
+                .thenProceed(with: FoodSelectionViewController.self)
+                .thenProceed(with: ReviewOrderViewController.self) // This lets you edit anything you've already picked
+                .thenProceed(with: SubmitPaymentViewController.self)
+
+// from wherever this flow is launched
+launchInto(workflow)
+```
+The above code is all that is needed from the screen starting this flow. Each screen determines if it needs to show based on data passed in and what that screen knows about the system (such as GPS availability), and all of it is type safe. If you ever want to re-order these, simply move their position in the chain.
+
+As you continue to develop your applications, each view controller will become more decoupled from the rest of the app.  That means, if you want a completely different order of screens, just define a new [Workflow](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/Workflow.html).
+
+## Interested but you need SwiftUI support?
+[We're working on it now!](https://github.com/wwt/Workflow/milestone/2)
+
+# Quick Start
+## CocoaPods
+```ruby
+pod 'DynamicWorkflow/UIKit'
+```
+Then make your first FlowRepresentable view controller:
+```swift
+import Workflow
+class ExampleViewController: UIWorkflowItem<Never, Never>, FlowRepresentable {
+    override func viewDidLoad() {
+        view.backgroundColor = .green
+    }
+}
+```
+Then from your root view controller, call: 
+```swift
+import Workflow
+...
+launchInto(Workflow(ExampleViewController.self))
+```
+
+And just like that you're started!  To see something more practical and in-depth, check out the example app in the repo.  For a more in-depth starting guide, checkout out our [Getting Started](https://github.com/wwt/Workflow/wiki/getting-started) documentation.
+
+# Deep Dive
 - [Why Workflow?](https://github.com/wwt/Workflow/wiki/Why-This-Library%3F)
+- [Installation](https://github.com/wwt/Workflow/wiki/Installation)
 - [Getting Started](https://github.com/wwt/Workflow/wiki/getting-started)
 - [Testing Your Workflows](https://github.com/wwt/Workflow/wiki/testing)
 - [Advanced](https://github.com/wwt/Workflow/wiki/advanced)
 - [Developer Documentation](https://gitcdn.link/repo/wwt/Workflow/main/docs/index.html)
 - [Upgrade Path](https://github.com/wwt/Workflow/blob/main/UPGRADE_PATH.md)
 - [FAQ](https://github.com/wwt/Workflow/wiki/faq)
-
-### The problem Workflow was built to solve:
-When developing for iOS one view controller has to know about the one following it in order to pass along data. Imagine a workflow for a fast food app.
-
-Pick a location -> Pickup or Delivery -> Catering Menu or Normal Menu -> Choose Food -> Review Order -> Submit payment
-
-Now imagine if a users location is known via GPS. You may be able to skip the first screen and assume the nearest location knowing they can edit it on the review screen. Pickup or Delivery may or may not need to show up depending on what the location they picked supports. The same is true with catering menu vs normal menu
-
-Finally the review screen would be really nice if it gave a way to edit. This spells a nightmare for you if you utilize segues. You'll have to use many of them, and if the design of this user flow changes you're in for a bit of an annoying time changing them around.
-
-
-### The solution
-Workflow lets you specify once what the whole workflow looks like, then each view controller defines whether it should show up or not, so to solve the above problem you'd use something like this.
-
-```swift
-let workflow = Workflow(LocationsViewController.self)
-                .thenPresent(PickupOrDeliveryViewController.self)
-                .thenPresent(MenuSelectionViewController.self)
-                .thenPresent(FoodSelectionViewController.self)
-                .thenPresent(ReviewOrderViewController.self)
-                .thenPresent(SubmitPaymentViewController.self)
-
-// from wherever this flow is launched
-launchInto(workflow)
-```
-
-If you ever want to re-order these you simply move their position in the chain. Your view controllers will naturally start to become defined in a way where they can be injected into any kind of workflow, and so if for scheduled orders you want screens to show up in a different order, you just define a new `Workflow`.
