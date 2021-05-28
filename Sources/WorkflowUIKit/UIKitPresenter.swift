@@ -86,8 +86,6 @@ open class UIKitPresenter: OrchestrationResponder {
             }
         } else if let presenting = first.presentingViewController {
             presenting.dismiss(animated: animated, completion: onFinish)
-        } else {
-            first.dismiss(animated: animated, completion: onFinish)
         }
     }
 
