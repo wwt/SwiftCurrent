@@ -219,7 +219,126 @@ class UIKitConsumerAbandonTests: XCTestCase {
         (UIApplication.topViewController() as? FR4)?.abandonWorkflow()
         XCTAssertUIViewControllerDisplayed(isInstance: root)
     }
+    
+    func testAbandonCalledOnFlowRepresentableWhenWorkflowHasNoNavPresentingSubsequentViewsModally() {
+        class FR1: TestViewController { }
+        class FR2: TestViewController { }
+        class FR3: TestViewController { }
+        class FR4: TestViewController { }
 
+        let root = UIViewController()
+        root.loadForTesting()
+
+        root.launchInto(Workflow(FR1.self)
+            .thenPresent(FR2.self)
+            .thenPresent(FR3.self)
+            .thenPresent(FR4.self), withLaunchStyle: .modal)
+
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
+        (UIApplication.topViewController() as? FR3)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR4.self)
+        (UIApplication.topViewController() as? FR4)?.abandonWorkflow()
+        XCTAssertUIViewControllerDisplayed(isInstance: root)
+    }
+    
+    func testAbandonCalledOnWorkflowWhenWorkflowHasNoNavPresentingSubsequentViewsModally() {
+        class FR1: TestViewController { }
+        class FR2: TestViewController { }
+        class FR3: TestViewController { }
+        class FR4: TestViewController { }
+
+        let wf = Workflow(FR1.self)
+            .thenPresent(FR2.self)
+            .thenPresent(FR3.self)
+            .thenPresent(FR4.self)
+        
+        let root = UIViewController()
+        root.loadForTesting()
+        
+        root.launchInto(wf, withLaunchStyle: .modal) { _ in
+            wf.abandon()
+        }
+        
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
+        (UIApplication.topViewController() as? FR3)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR4.self)
+        (UIApplication.topViewController() as? FR4)?.proceedInWorkflow(nil)
+
+        XCTAssertUIViewControllerDisplayed(isInstance: root)
+    }
+    
+    func testLaunchingViewControllerIsNotDismissedWhenWorkflowAbandons() {
+        class FR1: TestViewController { }
+        class FR2: TestViewController { }
+        class FR3: TestViewController { }
+        class FR4: TestViewController { }
+
+        let wf = Workflow(FR1.self)
+            .thenPresent(FR2.self)
+            .thenPresent(FR3.self)
+            .thenPresent(FR4.self)
+        
+        let root = UIViewController()
+        root.loadForTesting()
+        let vc = UIViewController()
+        root.present(vc, animated: false)
+        
+        vc.launchInto(wf, withLaunchStyle: .modal) { _ in
+            wf.abandon()
+        }
+        
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
+        (UIApplication.topViewController() as? FR3)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR4.self)
+        (UIApplication.topViewController() as? FR4)?.proceedInWorkflow(nil)
+
+        XCTAssertUIViewControllerDisplayed(isInstance: vc)
+    }
+
+    func testLaunchingViewControllerIsNotDismissedWhenFlowRepresentableAbandons() {
+        class FR1: TestViewController { }
+        class FR2: TestViewController { }
+        class FR3: TestViewController { }
+        class FR4: TestViewController { }
+
+        let wf = Workflow(FR1.self)
+            .thenPresent(FR2.self, presentationType: .modal)
+            .thenPresent(FR3.self, presentationType: .modal)
+            .thenPresent(FR4.self, presentationType: .modal)
+        
+        let root = UIViewController()
+        root.loadForTesting()
+        let vc = UIViewController()
+        root.present(vc, animated: false)
+        
+        let presenter = UIKitPresenter(vc, launchStyle: .modal)
+        
+        wf.launch(withOrchestrationResponder: presenter)
+        
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
+        (UIApplication.topViewController() as? FR3)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR4.self)
+        (UIApplication.topViewController() as? FR4)?.abandonWorkflow()
+
+        XCTAssertUIViewControllerDisplayed(isInstance: vc)
+    }
+    
     func testAbandonWhenFluentWorkflowHasNavPresentingSubsequentViewsModally() {
         class FR1: TestViewController { }
         class FR2: TestViewController { }
