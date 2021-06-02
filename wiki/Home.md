@@ -1,8 +1,4 @@
 - [Why This Library?](https://github.com/wwt/Workflow/wiki/Why-This-Library%3F)
 - [Installation](https://github.com/wwt/Workflow/wiki/Installation)
 - [Getting Started](https://github.com/wwt/Workflow/wiki/getting-started)
-- [Tutorial](https://github.com/wwt/Workflow/wiki/Tutorial)
-- [Advanced](https://github.com/wwt/Workflow/wiki/advanced)
-- [Testing Your Workflows](https://github.com/wwt/Workflow/wiki/Testing-Your-Workflows)
 - [Developer Documentation](https://htmlpreview.github.io/?https://github.com/wwt/Workflow/blob/master/docs/index.html)
-- [FAQ](https://github.com/wwt/Workflow/wiki/faq)
