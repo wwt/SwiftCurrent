@@ -100,9 +100,11 @@ class WorkflowConsumerTests: XCTestCase {
 
         let wf: Workflow = Workflow(FR1.self)
             .thenProceed(with: FR2.self)
+        let responder = MockOrchestrationResponder()
+        responder.complete_EnableDefaultImplementation = true
 
         var callbackCalled = false
-        let firstInstance = wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: 1) { args in
+        let firstInstance = wf.launch(withOrchestrationResponder: responder, args: 1) { args in
             callbackCalled = true
             XCTAssertEqual(args.extractArgs(defaultValue: nil) as? String, "args")
         }
@@ -126,9 +128,11 @@ class WorkflowConsumerTests: XCTestCase {
 
         let wf: Workflow = Workflow(FR1.self)
             .thenProceed(with: FR2.self)
+        let responder = MockOrchestrationResponder()
+        responder.complete_EnableDefaultImplementation = true
 
         var callbackCalled = false
-        let firstInstance = wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: 1) { args in
+        let firstInstance = wf.launch(withOrchestrationResponder: responder, args: 1) { args in
             callbackCalled = true
             XCTAssertEqual(args.extractArgs(defaultValue: nil) as? String, "args")
         }
