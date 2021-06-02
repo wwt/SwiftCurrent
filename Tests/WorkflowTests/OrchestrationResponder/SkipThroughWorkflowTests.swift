@@ -21,6 +21,7 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
+        responder.complete_EnableDefaultImplementation = true
 
         let expectation = self.expectation(description: "OnFinish called")
 
@@ -39,8 +40,10 @@ class SkipThroughWorkflowTests: XCTestCase {
         XCTAssertNotNil(responder.lastFrom)
         XCTAssert(responder.lastFrom?.value.instance?.underlyingInstance is FR2)
         XCTAssert((responder.lastFrom?.value.instance?.underlyingInstance as? FR2) === fr2)
+        XCTAssertEqual(responder.completeCalled, 0)
 
         (responder.lastTo?.value.instance?.underlyingInstance as? FR3)?.proceedInWorkflow()
+        XCTAssertEqual(responder.completeCalled, 1)
 
         wait(for: [expectation], timeout: 3)
     }
@@ -55,6 +58,7 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
+        responder.complete_EnableDefaultImplementation = true
 
         let expectation = self.expectation(description: "OnFinish called")
 
@@ -73,9 +77,11 @@ class SkipThroughWorkflowTests: XCTestCase {
         XCTAssertNotNil(responder.lastFrom)
         XCTAssert(responder.lastFrom?.value.instance?.underlyingInstance is FR1)
         XCTAssert((responder.lastFrom?.value.instance?.underlyingInstance as? FR1) === fr1)
+        XCTAssertEqual(responder.completeCalled, 0)
 
         (responder.lastTo?.value.instance?.underlyingInstance as? FR3)?.proceedInWorkflow()
 
+        XCTAssertEqual(responder.completeCalled, 1)
         wait(for: [expectation], timeout: 3)
     }
 
@@ -89,6 +95,7 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
+        responder.complete_EnableDefaultImplementation = true
 
         let expectation = self.expectation(description: "OnFinish called")
 
@@ -123,9 +130,11 @@ class SkipThroughWorkflowTests: XCTestCase {
         XCTAssertNotNil(responder.lastFrom)
         XCTAssert(responder.lastFrom?.value.instance?.underlyingInstance is FR1)
         XCTAssert((responder.lastFrom?.value.instance?.underlyingInstance as? FR1) === fr1Again)
+        XCTAssertEqual(responder.completeCalled, 0)
 
         (responder.lastTo?.value.instance?.underlyingInstance as? FR3)?.proceedInWorkflow()
 
+        XCTAssertEqual(responder.completeCalled, 1)
         wait(for: [expectation], timeout: 3)
     }
 
@@ -139,6 +148,7 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
+        responder.complete_EnableDefaultImplementation = true
 
         let expectation = self.expectation(description: "OnFinish called")
 
@@ -157,9 +167,11 @@ class SkipThroughWorkflowTests: XCTestCase {
         XCTAssertNotNil(responder.lastFrom)
         XCTAssert(responder.lastFrom?.value.instance?.underlyingInstance is FR1)
         XCTAssert((responder.lastFrom?.value.instance?.underlyingInstance as? FR1) === fr1)
+        XCTAssertEqual(responder.completeCalled, 0)
 
         (responder.lastTo?.value.instance?.underlyingInstance as? FR2)?.proceedInWorkflow()
 
+        XCTAssertEqual(responder.completeCalled, 1)
         wait(for: [expectation], timeout: 3)
     }
 
@@ -457,6 +469,7 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
+        responder.complete_EnableDefaultImplementation = true
 
         let launchedRepresentable = wf.launch(withOrchestrationResponder: responder) { id in
             expectation.fulfill()
@@ -467,9 +480,11 @@ class SkipThroughWorkflowTests: XCTestCase {
         XCTAssert(launchedRepresentable?.value.instance?.underlyingInstance is FR1)
         XCTAssert(responder.lastTo?.value.instance?.underlyingInstance is FR1)
         XCTAssertNil(responder.lastFrom)
+        XCTAssertEqual(responder.completeCalled, 0)
 
         (launchedRepresentable?.value.instance?.underlyingInstance as? FR1)?.proceedInWorkflow(FR1.id)
 
+        XCTAssertEqual(responder.completeCalled, 1)
         wait(for: [FR2.expectation, FR3.expectation, expectation], timeout: 3)
     }
 }
