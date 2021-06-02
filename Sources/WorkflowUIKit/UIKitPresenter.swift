@@ -12,10 +12,6 @@ import Workflow
 
 /// An `OrchestrationResponder` that interacts with UIKit.
 open class UIKitPresenter: OrchestrationResponder {
-    public func complete(_ workflow: AnyWorkflow, passedArgs: AnyWorkflow.PassedArgs, onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
-        
-    }
-
     let launchedFromVC: UIViewController
     let launchedPresentationType: LaunchStyle.PresentationType
     var firstLoadedInstance: UIViewController?
@@ -63,6 +59,14 @@ open class UIKitPresenter: OrchestrationResponder {
     /// Abandons the `Workflow` by dismissing all `UIViewController`'s currently displayed by this presenter.
     public func abandon(_ workflow: AnyWorkflow, onFinish: (() -> Void)?) {
         abandon(workflow, animated: true, onFinish: onFinish)
+    }
+
+    public func complete(_ workflow: AnyWorkflow, passedArgs: AnyWorkflow.PassedArgs, onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
+        let lastInstance = workflow.filter { $0.value.instance != nil }.last
+        if lastInstance?.value.metadata.persistence == .removedAfterProceeding {
+            destroy((lastInstance?.value.instance?.underlyingInstance as? UIViewController)!)
+        }
+        onFinish?(passedArgs)
     }
 
     func abandon(_ workflow: AnyWorkflow, animated: Bool, onFinish: (() -> Void)?) {
