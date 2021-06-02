@@ -193,7 +193,7 @@ public final class Workflow<F: FlowRepresentable>: LinkedList<_WorkflowItem> {
 
         guard let nextNode = nextLoadedNode else {
             #warning("Workflow in Complete is incorrect. Test Drive it to make it correct.")
-            orchestrationResponder?.complete(AnyWorkflow(Workflow(self.first)), passedArgs: argsToPass, onFinish: onFinish)
+            orchestrationResponder?.complete(AnyWorkflow(Workflow(self.last)), passedArgs: argsToPass, onFinish: onFinish)
             return
         }
 
