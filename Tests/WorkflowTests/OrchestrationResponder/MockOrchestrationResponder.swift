@@ -26,7 +26,6 @@ class MockOrchestrationResponder: OrchestrationResponder {
         allFroms.last
     }
 
-    var lastCompletion:(() -> Void)?
     func proceed(to: AnyWorkflow.Element,
                  from: AnyWorkflow.Element) {
         allTos.append(to)
@@ -48,5 +47,18 @@ class MockOrchestrationResponder: OrchestrationResponder {
         lastWorkflow = workflow
         lastOnFinish = onFinish
         abandonCalled += 1
+    }
+
+    var completeCalled = 0
+    var lastPassedArgs: AnyWorkflow.PassedArgs?
+    var lastCompleteOnFinish: ((AnyWorkflow.PassedArgs) -> Void)?
+    var complete_EnableDefaultImplementation = false
+    func complete(_ workflow: AnyWorkflow, passedArgs: AnyWorkflow.PassedArgs, onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
+        lastWorkflow = workflow
+        lastPassedArgs = passedArgs
+        lastCompleteOnFinish = onFinish
+        completeCalled += 1
+
+        if complete_EnableDefaultImplementation { onFinish?(passedArgs) }
     }
 }

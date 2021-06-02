@@ -10,6 +10,10 @@ import Foundation
 import Workflow
 
 class MockOrchestrationResponder: OrchestrationResponder {
+    func complete(_ workflow: AnyWorkflow, passedArgs: AnyWorkflow.PassedArgs, onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
+        
+    }
+
     var launchCalled = 0
     var lastTo: AnyWorkflow.Element?
     func launch(to: AnyWorkflow.Element) {

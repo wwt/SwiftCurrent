@@ -32,6 +32,13 @@ public protocol OrchestrationResponder {
      - Parameter onFinish: A closure that is executed when the responder is finished abandoning.
      */
     func abandon(_ workflow: AnyWorkflow, onFinish: (() -> Void)?)
+    /**
+     Respond to the `Workflow` completing.
+     - Parameter workflow: The `AnyWorkflow` that is being completed.
+     - Parameter passedArgs: The `AnyWorkflow.PassedArgs` to be passed to `onFinish`.
+     - Parameter onFinish: A closure that is executed when the responder is finished completing.
+     */
+    func complete(_ workflow: AnyWorkflow, passedArgs: AnyWorkflow.PassedArgs, onFinish: ((AnyWorkflow.PassedArgs) -> Void)?)
 }
 
 extension OrchestrationResponder {

@@ -12,6 +12,10 @@ import Workflow
 
 /// An `OrchestrationResponder` that interacts with UIKit.
 open class UIKitPresenter: OrchestrationResponder {
+    public func complete(_ workflow: AnyWorkflow, passedArgs: AnyWorkflow.PassedArgs, onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
+        
+    }
+
     let launchedFromVC: UIViewController
     let launchedPresentationType: LaunchStyle.PresentationType
     var firstLoadedInstance: UIViewController?
