@@ -59,6 +59,7 @@
 		D7E1265E264C73BA00B6A712 /* UIKitConsumerLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1265D264C73BA00B6A712 /* UIKitConsumerLaunchTests.swift */; };
 		D7E12666264C75CF00B6A712 /* UIKitConsumerWorkflowChainingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E12665264C75CF00B6A712 /* UIKitConsumerWorkflowChainingTests.swift */; };
 		D7E1266E264C76D000B6A712 /* UIKitConsumerPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1266D264C76D000B6A712 /* UIKitConsumerPersistenceTests.swift */; };
+		D7EE838326695AF90062731D /* SecondTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EE838226695AF90062731D /* SecondTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -130,6 +131,7 @@
 		D7E1265D264C73BA00B6A712 /* UIKitConsumerLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitConsumerLaunchTests.swift; sourceTree = "<group>"; };
 		D7E12665264C75CF00B6A712 /* UIKitConsumerWorkflowChainingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitConsumerWorkflowChainingTests.swift; sourceTree = "<group>"; };
 		D7E1266D264C76D000B6A712 /* UIKitConsumerPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitConsumerPersistenceTests.swift; sourceTree = "<group>"; };
+		D7EE838226695AF90062731D /* SecondTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -308,6 +310,7 @@
 				CA655A93265B4EF200F37E47 /* SetupViewControllerTests.swift */,
 				CA655A8F265B4EF200F37E47 /* TestFinder.swift */,
 				CA655A94265B4EF200F37E47 /* ViewControllerTest.swift */,
+				D7EE838226695AF90062731D /* SecondTests.swift */,
 			);
 			path = WorkflowExampleTests;
 			sourceTree = "<group>";
@@ -514,6 +517,7 @@
 				CA655A9A265B4EF300F37E47 /* MenuSelectionViewControllerTests.swift in Sources */,
 				CA655A97265B4EF300F37E47 /* PickupOrDeliveryViewControllerTests.swift in Sources */,
 				CA655A98265B4EF300F37E47 /* ReviewOrderViewControllerTests.swift in Sources */,
+				D7EE838326695AF90062731D /* SecondTests.swift in Sources */,
 				CA655A9E265B4EF300F37E47 /* EnterAddressViewControllerTests.swift in Sources */,
 				CA655A99265B4EF300F37E47 /* FoodSelectionViewControllerTests.swift in Sources */,
 				CA655A9F265B4EF300F37E47 /* SetupViewControllerTests.swift in Sources */,

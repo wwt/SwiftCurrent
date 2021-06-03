@@ -192,3 +192,51 @@ fileprivate extension UIViewController {
     }
 }
 ```
+
+```swift
+import Foundation
+import XCTest
+import UIUTest
+import Workflow
+
+@testable import WorkflowExample
+
+class SecondTests: XCTestCase {
+    func testShouldNotLoadThing() {
+        let ref = AnyFlowRepresentable(SecondViewController.self, args: .args(""))
+        let testViewController = (ref.underlyingInstance as! SecondViewController)
+
+        XCTAssertFalse(testViewController.shouldLoad())
+    }
+
+    func testShouldLoadThing() {
+        let ref = AnyFlowRepresentable(SecondViewController.self, args: .args("Awesome.Possum@wwt.com"))
+        let testViewController = (ref.underlyingInstance as! SecondViewController)
+
+        XCTAssert(testViewController.shouldLoad())
+    }
+
+    func testProceed() {
+        var proceedInWorkflowCalled = false
+        let expectedString = "Awesome.Possum@wwt.com"
+        let ref = AnyFlowRepresentable(SecondViewController.self, args: .args(expectedString))
+        var testViewController = (ref.underlyingInstance as! SecondViewController)
+        _ = testViewController.shouldLoad()
+
+        testViewController.proceedInWorkflowStorage = { passedArgs in
+            XCTAssertEqual(passedArgs.extractArgs(defaultValue: "defaultValue used") as? String, expectedString)
+        }
+
+        testViewController.saveButton?.simulateTouch()
+
+        XCTAssert(testViewController.shouldLoad())
+        XCTAssertTrue(proceedInWorkflowCalled)
+    }
+}
+
+fileprivate extension UIViewController {
+    var saveButton: UIButton? {
+        view.viewWithAccessibilityIdentifier("save") as? UIButton
+    }
+}
+```

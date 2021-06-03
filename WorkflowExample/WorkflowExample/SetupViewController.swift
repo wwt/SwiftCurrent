@@ -45,3 +45,21 @@ class SetupViewController: UIViewController {
         super.viewDidLoad()
     }
 }
+
+class SecondViewController: UIWorkflowItem<String, String>, StoryboardLoadable {
+    private let email: String
+    required init?(coder: NSCoder, with email: String) {
+        self.email = email
+        super.init(coder: coder)
+    }
+
+    required init?(coder: NSCoder) { nil }
+
+    @IBAction private func finishPressed(_ sender: Any) {
+        proceedInWorkflow(email)
+    }
+
+    func shouldLoad() -> Bool {
+        return email.contains("@wwt.com")
+    }
+}
