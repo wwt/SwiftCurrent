@@ -143,3 +143,52 @@ The `onFinish` closure for `launchInto(_:args:onFinish:)` provides the last pass
 
 Calling `abandon()` closes all the views launched as part of the workflow, leaving you back on `ViewController`.
 </details>
+
+## Testing
+
+```swift
+import XCTest
+import UIUTest
+import Workflow
+
+@testable import GettingStarted
+
+class FirstViewControllerTests: XCTestCase {
+    func testProceedingInTheWorkflowSendsTheCorrectData() {
+        let ref = AnyFlowRepresentable(FirstViewController.self, args: .args(""))
+        var testViewController = (ref.underlyingInstance as! FirstViewController)
+
+        // Mimicking the lifecycle of a storyboard.
+        _ = testViewController.shouldLoad()
+        testViewController.loadForTesting()
+
+        var proceedInWorkflowCalled = false
+
+        testViewController.emailTextField?.simulateTouch()
+        testViewController.emailTextField?.simulateTyping("foo")
+
+        testViewController.proceedInWorkflowStorage = { passedArgs in
+            proceedInWorkflowCalled = true
+
+            // 1
+            XCTAssertEqual(passedArgs.extractArgs(defaultValue: nil) as? String, "foo")
+
+            // 2
+            XCTAssertEqual(passedArgs.extractArgs(defaultValue: "defaultValue used") as? String, "foo")
+        }
+
+        testViewController.saveButton?.simulateTouch()
+
+        XCTAssertTrue(proceedInWorkflowCalled)
+    }
+}
+
+fileprivate extension UIViewController {
+    var emailTextField: UITextField? {
+        view.viewWithAccessibilityIdentifier("email") as? UITextField
+    }
+    var saveButton: UIButton? {
+        view.viewWithAccessibilityIdentifier("save") as? UIButton
+    }
+}
+```
