@@ -53,8 +53,5 @@ And just like that you're started!  To see something more practical and in-depth
 - [Why Workflow?](https://github.com/wwt/Workflow/wiki/Why-This-Library%3F)
 - [Installation](https://github.com/wwt/Workflow/wiki/Installation)
 - [Getting Started](https://github.com/wwt/Workflow/wiki/getting-started)
-- [Testing Your Workflows](https://github.com/wwt/Workflow/wiki/testing)
-- [Advanced](https://github.com/wwt/Workflow/wiki/advanced)
 - [Developer Documentation](https://gitcdn.link/repo/wwt/Workflow/main/docs/index.html)
 - [Upgrade Path](https://github.com/wwt/Workflow/blob/main/UPGRADE_PATH.md)
-- [FAQ](https://github.com/wwt/Workflow/wiki/faq)
