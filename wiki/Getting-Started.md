@@ -151,24 +151,24 @@ import XCTest
 import UIUTest
 import Workflow
 
-@testable import WorkflowExample
+@testable import GettingStarted
 
-class SecondTests: XCTestCase {
-    func testShouldNotLoadThing() {
+class SecondViewControllerTests: XCTestCase {
+    func testSecondViewControllerDoesNotLoadWhenInputIsEmpty() {
         let ref = AnyFlowRepresentable(SecondViewController.self, args: .args(""))
         let testViewController = (ref.underlyingInstance as! SecondViewController)
 
-        XCTAssertFalse(testViewController.shouldLoad())
+        XCTAssertFalse(testViewController.shouldLoad(), "SecondViewController should not load")
     }
 
-    func testShouldLoadThing() {
+    func testSecondViewControllerLoadsWhenInputIsContainsWWTEmail() {
         let ref = AnyFlowRepresentable(SecondViewController.self, args: .args("Awesome.Possum@wwt.com"))
         let testViewController = (ref.underlyingInstance as! SecondViewController)
 
-        XCTAssert(testViewController.shouldLoad())
+        XCTAssert(testViewController.shouldLoad(), "SecondViewController should load")
     }
 
-    func testProceed() {
+    func testProceedPassesThroughInput() {
         var proceedInWorkflowCalled = false
         let expectedString = "Awesome.Possum@wwt.com"
         let ref = AnyFlowRepresentable(SecondViewController.self, args: .args(expectedString))
@@ -182,9 +182,9 @@ class SecondTests: XCTestCase {
             XCTAssertEqual(passedArgs.extractArgs(defaultValue: "defaultValue used") as? String, expectedString)
         }
 
-        (testViewController.view.viewWithAccessibilityIdentifier("save") as? UIButton)?.simulateTouch() // UIUTest helper
+        (testViewController.view.viewWithAccessibilityIdentifier("finish") as? UIButton)?.simulateTouch() // UIUTest helper
 
-        XCTAssertTrue(proceedInWorkflowCalled)
+        XCTAssert(proceedInWorkflowCalled, "proceedInWorkflow should be called")
     }
 }
 ```
