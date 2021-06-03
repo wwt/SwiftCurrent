@@ -151,54 +151,6 @@ import XCTest
 import UIUTest
 import Workflow
 
-@testable import GettingStarted
-
-class FirstViewControllerTests: XCTestCase {
-    func testProceedingInTheWorkflowSendsTheCorrectData() {
-        let ref = AnyFlowRepresentable(FirstViewController.self, args: .args(""))
-        var testViewController = (ref.underlyingInstance as! FirstViewController)
-
-        // Mimicking the lifecycle of a storyboard.
-        _ = testViewController.shouldLoad()
-        testViewController.loadForTesting()
-
-        var proceedInWorkflowCalled = false
-
-        testViewController.emailTextField?.simulateTouch()
-        testViewController.emailTextField?.simulateTyping("foo")
-
-        testViewController.proceedInWorkflowStorage = { passedArgs in
-            proceedInWorkflowCalled = true
-
-            // 1
-            XCTAssertEqual(passedArgs.extractArgs(defaultValue: nil) as? String, "foo")
-
-            // 2
-            XCTAssertEqual(passedArgs.extractArgs(defaultValue: "defaultValue used") as? String, "foo")
-        }
-
-        testViewController.saveButton?.simulateTouch()
-
-        XCTAssertTrue(proceedInWorkflowCalled)
-    }
-}
-
-fileprivate extension UIViewController {
-    var emailTextField: UITextField? {
-        view.viewWithAccessibilityIdentifier("email") as? UITextField
-    }
-    var saveButton: UIButton? {
-        view.viewWithAccessibilityIdentifier("save") as? UIButton
-    }
-}
-```
-
-```swift
-import Foundation
-import XCTest
-import UIUTest
-import Workflow
-
 @testable import WorkflowExample
 
 class SecondTests: XCTestCase {
@@ -221,22 +173,19 @@ class SecondTests: XCTestCase {
         let expectedString = "Awesome.Possum@wwt.com"
         let ref = AnyFlowRepresentable(SecondViewController.self, args: .args(expectedString))
         var testViewController = (ref.underlyingInstance as! SecondViewController)
+        // Mimicking the lifecycle of the view controller
         _ = testViewController.shouldLoad()
+        testViewController.loadForTesting() // UIUTest helper
 
         testViewController.proceedInWorkflowStorage = { passedArgs in
+            proceedInWorkflowCalled = true
             XCTAssertEqual(passedArgs.extractArgs(defaultValue: "defaultValue used") as? String, expectedString)
         }
 
-        testViewController.saveButton?.simulateTouch()
+        (testViewController.view.viewWithAccessibilityIdentifier("save") as? UIButton)?.simulateTouch() // UIUTest helper
 
-        XCTAssert(testViewController.shouldLoad())
         XCTAssertTrue(proceedInWorkflowCalled)
     }
 }
-
-fileprivate extension UIViewController {
-    var saveButton: UIButton? {
-        view.viewWithAccessibilityIdentifier("save") as? UIButton
-    }
-}
 ```
+This is the preferred way of testing, and then a comment about how you could do this without UIUTest.
