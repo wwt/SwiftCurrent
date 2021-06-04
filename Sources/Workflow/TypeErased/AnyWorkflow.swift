@@ -42,6 +42,10 @@ extension AnyWorkflow: Sequence {
     public func makeIterator() -> LinkedList<_WorkflowItem>.Iterator {
         storageBase.makeIterator()
     }
+
+    public func last(where predicate: (LinkedList<_WorkflowItem>.Element) throws -> Bool) rethrows -> LinkedList<_WorkflowItem>.Element? {
+        try storageBase.last(where: predicate)
+    }
 }
 
 extension AnyWorkflow {
@@ -69,15 +73,21 @@ extension AnyWorkflow {
 
 fileprivate class AnyWorkflowStorageBase {
     var orchestrationResponder: OrchestrationResponder?
-    var count: Int { fatalError("Count not overriden by AnyWorkflowStorage") }
+    var count: Int { fatalError("Count not overridden by AnyWorkflowStorage") }
 
     // https://github.com/Tyler-Keith-Thompson/Workflow/blob/master/STYLEGUIDE.md#type-erasure
     // swiftlint:disable:next unavailable_function
-    func _abandon() { fatalError("_abandon not overriden by AnyWorkflowStorage") }
+    func _abandon() { fatalError("_abandon not overridden by AnyWorkflowStorage") }
 
     // https://github.com/Tyler-Keith-Thompson/Workflow/blob/master/STYLEGUIDE.md#type-erasure
     // swiftlint:disable:next unavailable_function
-    func makeIterator() -> LinkedList<_WorkflowItem>.Iterator { fatalError("makeIterator not overriden by AnyWorkflowStorage") }
+    func makeIterator() -> LinkedList<_WorkflowItem>.Iterator { fatalError("makeIterator not overridden by AnyWorkflowStorage") }
+
+    // https://github.com/Tyler-Keith-Thompson/Workflow/blob/master/STYLEGUIDE.md#type-erasure
+    // swiftlint:disable:next unavailable_function
+    func last(where predicate: (LinkedList<_WorkflowItem>.Element) throws -> Bool) rethrows -> LinkedList<_WorkflowItem>.Element? {
+        fatalError("last(where:) not overridden by AnyWorkflowStorage")
+    }
 }
 
 fileprivate final class AnyWorkflowStorage<F: FlowRepresentable>: AnyWorkflowStorageBase {
@@ -104,5 +114,9 @@ fileprivate final class AnyWorkflowStorage<F: FlowRepresentable>: AnyWorkflowSto
 
     override func makeIterator() -> LinkedList<_WorkflowItem>.Iterator {
         workflow.makeIterator()
+    }
+
+    override func last(where predicate: (LinkedList<_WorkflowItem>.Element) throws -> Bool) rethrows -> LinkedList<_WorkflowItem>.Element? {
+        try workflow.last(where: predicate)
     }
 }

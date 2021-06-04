@@ -62,7 +62,7 @@ open class UIKitPresenter: OrchestrationResponder {
     }
 
     public func complete(_ workflow: AnyWorkflow, passedArgs: AnyWorkflow.PassedArgs, onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
-        let lastInstance = workflow.filter { $0.value.instance != nil }.last
+        let lastInstance = workflow.last { $0.value.instance != nil }
 
         if lastInstance?.value.metadata.persistence == .removedAfterProceeding,
            let view = lastInstance?.value.instance?.underlyingInstance as? UIViewController {
