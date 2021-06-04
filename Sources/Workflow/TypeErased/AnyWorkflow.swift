@@ -85,7 +85,7 @@ fileprivate class AnyWorkflowStorageBase {
 
     // https://github.com/Tyler-Keith-Thompson/Workflow/blob/master/STYLEGUIDE.md#type-erasure
     // swiftlint:disable:next unavailable_function
-    func last(where predicate: (LinkedList<_WorkflowItem>.Element) throws -> Bool) rethrows -> LinkedList<_WorkflowItem>.Element? {
+    func last(where: (LinkedList<_WorkflowItem>.Element) throws -> Bool) rethrows -> LinkedList<_WorkflowItem>.Element? {
         fatalError("last(where:) not overridden by AnyWorkflowStorage")
     }
 }
