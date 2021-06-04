@@ -374,6 +374,7 @@ class SkipThroughWorkflowTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
+        responder.complete_EnableDefaultImplementation = true
 
         let launchedRepresentable = wf.launch(withOrchestrationResponder: responder, args: FR1.id) { id in
             expectation.fulfill()
@@ -384,6 +385,7 @@ class SkipThroughWorkflowTests: XCTestCase {
         XCTAssertNil(launchedRepresentable)
         XCTAssertNil(responder.lastTo)
         XCTAssertNil(responder.lastFrom)
+        XCTAssertEqual(responder.completeCalled, 1)
 
         wait(for: [FR2.expectation, FR3.expectation, expectation], timeout: 3)
     }

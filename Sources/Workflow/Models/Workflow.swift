@@ -123,8 +123,7 @@ public final class Workflow<F: FlowRepresentable>: LinkedList<_WorkflowItem> {
         }
 
         guard let first = firstLoadedInstance  else {
-            #warning("This should be changed to orchestrationResponder.complete")
-            onFinish?(passedArgs)
+            orchestrationResponder.complete(AnyWorkflow(self), passedArgs: passedArgs, onFinish: onFinish)
             return nil
         }
 
