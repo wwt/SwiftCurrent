@@ -514,6 +514,34 @@ class UIKitConsumerPersistenceTests: XCTestCase {
 
         wait(for: [expectOnFinish], timeout: 3)
     }
+    
+    func testDefaultWorkflow_LaunchedFromNav_CanDestroyAllItems_WhenLastFRIsNotLoaded() {
+        class FR1: TestViewController { }
+        class FR2: TestViewController { override func shouldLoad() -> Bool { false } }
+        class FR3: TestViewController { override func shouldLoad() -> Bool { false } }
+
+        let root = UIViewController()
+        let navigationController = UINavigationController(rootViewController: root)
+        navigationController.loadForTesting()
+        let expectOnFinish = self.expectation(description: "onFinish called")
+        
+        root.launchInto(Workflow(FR1.self, flowPersistence: .removedAfterProceeding)
+                            .thenProceed(with: FR2.self, flowPersistence: .removedAfterProceeding)
+                            .thenProceed(with: FR3.self, flowPersistence: .removedAfterProceeding)) { _ in
+            XCTAssertUIViewControllerDisplayed(isInstance: root)
+            XCTAssertEqual(UIApplication.topViewController()?.navigationController?.viewControllers.count, 1)
+            expectOnFinish.fulfill()
+        }
+        
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
+        XCTAssert(UIApplication.topViewController()?.navigationController?.viewControllers.first === root,
+                  "\(String(describing: UIApplication.topViewController()?.navigationController?.viewControllers.first)) was not \(root)")
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
+        XCTAssert(UIApplication.topViewController()?.navigationController?.viewControllers.first === root,
+                  "\(String(describing: UIApplication.topViewController()?.navigationController?.viewControllers.first)) was not \(root)")
+
+        wait(for: [expectOnFinish], timeout: 3)
+    }
 
     func testModalWorkflow_LaunchedFromNav_CanDestroyAllItems_AndStillProceedThroughFlow_AndCallOnFinish() {
         class FR1: TestViewController { }
