@@ -91,7 +91,11 @@ public class LinkedList<Value>: Sequence, CustomStringConvertible {
     /// ```
     public func last(where predicate: (Element) throws -> Bool) rethrows -> Element? {
         var lastElement: Element?
-        try forEach { if try predicate($0) { lastElement = $0 } }
+
+        for element in self where try predicate(element) {
+                lastElement = element
+        }
+
         return lastElement
     }
 }
