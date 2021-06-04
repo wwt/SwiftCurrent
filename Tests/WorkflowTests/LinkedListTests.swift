@@ -409,6 +409,17 @@ class LinkedListTests: XCTestCase {
         XCTAssertEqual(list.last?.value, 4)
     }
 
+    
+    func testLastWhere() {
+        let list = LinkedList([1, 4, 8, 3])
+        
+        
+        let last = list.last(where: { $0.value % 2 == 0})
+        XCTAssertNotNil(list)
+        
+        XCTAssertEqual(last?.value, 8)
+    }
+    
     func testEquatability() {
         let list = LinkedList([1, 2, 3])
         let list2 = LinkedList([1, 2, 3])

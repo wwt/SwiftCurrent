@@ -66,4 +66,14 @@ public class LinkedList<Value>: Sequence, CustomStringConvertible {
     func toArray() -> [Element.Value] {
         map { $0.value }
     }
+
+    func last(where predicate: (Element) -> Bool) -> Element? {
+        var lastElememt: Element?
+        for element in self {
+            if predicate(element) {
+                lastElememt = element
+            }
+        }
+      return lastElememt
+    }
 }

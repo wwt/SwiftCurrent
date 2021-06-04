@@ -62,8 +62,6 @@ open class UIKitPresenter: OrchestrationResponder {
     }
 
     public func complete(_ workflow: AnyWorkflow, passedArgs: AnyWorkflow.PassedArgs, onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
-        // AnyWorkflow does not have a last(where:)
-        // swiftlint:disable:next last_where
         let lastInstance = workflow.filter { $0.value.instance != nil }.last
 
         if lastInstance?.value.metadata.persistence == .removedAfterProceeding,
