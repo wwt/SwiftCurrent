@@ -67,13 +67,31 @@ public class LinkedList<Value>: Sequence, CustomStringConvertible {
         map { $0.value }
     }
 
-    func last(where predicate: (Element) -> Bool) -> Element? {
-        var lastElememt: Element?
-        for element in self {
-            if predicate(element) {
-                lastElememt = element
-            }
-        }
-      return lastElememt
+    /**
+     Returns the last element of the sequence that satisfies the given
+     predicate.
+
+     - Parameter predicate: A closure that takes an element of the sequence as
+     its argument and returns a Boolean value indicating whether the
+     element is a match.
+     - Returns: The last element of the sequence that satisfies `predicate`,
+     or `nil` if there is no element that satisfies `predicate`.
+     - Complexity: O(n). The linked list must traverse to the end.
+
+     #### Example
+     This example uses the `last(where:)` method to find the last
+     negative number in an array of integers:
+     */
+    /// ```swift
+    ///  let numbers = LinkedList([3, 7, 4, -2, 9, -6, 10, 1])
+    ///  if let lastNegative = numbers.last(where: { $0.value < 0 }) {
+    ///      print("The last negative number is \(lastNegative).")
+    ///  }
+    ///  // Prints "The last negative number is -6."
+    /// ```
+    public func last(where predicate: (Element) throws -> Bool) rethrows -> Element? {
+        var lastElement: Element?
+        try forEach { if try predicate($0) { lastElement = $0 } }
+        return lastElement
     }
 }
