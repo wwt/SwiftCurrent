@@ -66,10 +66,10 @@ open class UIKitPresenter: OrchestrationResponder {
 
         if lastInstance?.value.metadata.persistence == .removedAfterProceeding,
            let view = lastInstance?.value.instance?.underlyingInstance as? UIViewController {
-            destroy(view)
-        }
-
+            destroy(view) { onFinish?(passedArgs) }
+        } else {
         onFinish?(passedArgs)
+    }
     }
 
     func abandon(_ workflow: AnyWorkflow, animated: Bool, onFinish: (() -> Void)?) {
@@ -100,12 +100,13 @@ open class UIKitPresenter: OrchestrationResponder {
         }
     }
 
-    private func destroy(_ view: UIViewController) {
+    private func destroy(_ view: UIViewController, completion: (() -> Void)? = nil) {
         if let nav = view.navigationController {
             let vcs = nav.viewControllers.filter {
                 $0 !== view
             }
             nav.setViewControllers(vcs, animated: false)
+            completion?()
         } else {
             let parent = view.presentingViewController
             let child = view.presentedViewController
@@ -116,6 +117,8 @@ open class UIKitPresenter: OrchestrationResponder {
                 if let p = parent,
                    let c = child {
                     p.present(c, animated: false)
+                } else {
+                    completion?()
                 }
             }
         }
