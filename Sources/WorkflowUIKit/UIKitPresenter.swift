@@ -116,7 +116,9 @@ open class UIKitPresenter: OrchestrationResponder {
             parent?.dismiss(animated: false) {
                 if let p = parent,
                    let c = child {
-                    p.present(c, animated: false)
+                    p.present(c, animated: false) {
+                        completion?()
+                    }
                 } else {
                     completion?()
                 }

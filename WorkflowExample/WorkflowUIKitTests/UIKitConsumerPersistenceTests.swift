@@ -573,6 +573,48 @@ class UIKitConsumerPersistenceTests: XCTestCase {
 
         wait(for: [expectOnFinish], timeout: 3)
     }
+
+    func testModalWorkflow_CanPresentNewViewControllerModally_AndCallOnFinish() {
+        class FR1: TestViewController { }
+        class FR2: TestViewController { }
+        class FR3: TestViewController {
+            let presented = UIViewController()
+            func presentOutsideViewController() {
+                present(presented, animated: false)
+            }
+        }
+        var presented: UIViewController?
+        let root = UIViewController()
+        let nav = UINavigationController(rootViewController: root)
+        nav.loadForTesting()
+
+        let expectOnFinish = self.expectation(description: "onFinish called")
+        root.launchInto(Workflow(FR1.self, flowPersistence: .removedAfterProceeding)
+                            .thenProceed(with: FR2.self, flowPersistence: .removedAfterProceeding)
+                            .thenProceed(with: FR3.self, flowPersistence: .removedAfterProceeding),
+                        withLaunchStyle: .modal) { _ in
+            XCTAssertUIViewControllerDisplayed(isInstance: presented!)
+            XCTAssertEqual(UIApplication.topViewController()?.presentingViewController, nav)
+            expectOnFinish.fulfill()
+        }
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
+        XCTAssert(UIApplication.topViewController()?.presentingViewController === nav,
+                  "\(String(describing: UIApplication.topViewController()?.presentingViewController)) was not \(nav)")
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
+        XCTAssert(UIApplication.topViewController()?.presentingViewController === nav,
+                  "\(String(describing: UIApplication.topViewController()?.presentingViewController)) was not \(nav)")
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
+
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
+
+        let fr3 = (UIApplication.topViewController() as? FR3)
+        presented = fr3?.presented
+        fr3?.presentOutsideViewController()
+        fr3?.proceedInWorkflow(nil)
+
+        wait(for: [expectOnFinish], timeout: 3)
+    }
 }
 
 extension UIKitConsumerPersistenceTests {
