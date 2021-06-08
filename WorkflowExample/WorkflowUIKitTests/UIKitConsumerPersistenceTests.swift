@@ -615,6 +615,34 @@ class UIKitConsumerPersistenceTests: XCTestCase {
 
         wait(for: [expectOnFinish], timeout: 3)
     }
+
+    func testNavWorkflow_LaunchedFromModal_CanDestroyAllItems_AndStillProceedThroughFlow_AndCallOnFinish() {
+        class FR1: TestViewController { }
+        class FR2: TestViewController { }
+        class FR3: TestViewController { }
+        let root = UIViewController()
+        root.loadForTesting()
+
+        let expectOnFinish = self.expectation(description: "onFinish called")
+        root.launchInto(Workflow(FR1.self, flowPersistence: .removedAfterProceeding)
+                            .thenProceed(with: FR2.self, flowPersistence: .removedAfterProceeding)
+                            .thenProceed(with: FR3.self, flowPersistence: .removedAfterProceeding),
+                        withLaunchStyle: .navigationStack) { _ in
+            XCTAssertUIViewControllerDisplayed(isInstance: root)
+            XCTAssertNil(UIApplication.topViewController()?.presentingViewController)
+            expectOnFinish.fulfill()
+        }
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
+        XCTAssert(UIApplication.topViewController()?.presentingViewController === root)
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
+        XCTAssert(UIApplication.topViewController()?.presentingViewController === root)
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
+        (UIApplication.topViewController() as? FR3)?.proceedInWorkflow(nil)
+
+        wait(for: [expectOnFinish], timeout: 3)
+    }
 }
 
 extension UIKitConsumerPersistenceTests {

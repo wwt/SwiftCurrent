@@ -15,6 +15,7 @@ open class UIKitPresenter: OrchestrationResponder {
     let launchedFromVC: UIViewController
     let launchedPresentationType: LaunchStyle.PresentationType
     var firstLoadedInstance: UIViewController?
+    weak var internalNavigationController: UINavigationController?
 
     /**
      Creates a `UIKitPresenter` that can respond to a `Workflow`'s actions.
@@ -68,8 +69,8 @@ open class UIKitPresenter: OrchestrationResponder {
            let view = lastInstance?.value.instance?.underlyingInstance as? UIViewController {
             destroy(view) { onFinish?(passedArgs) }
         } else {
-        onFinish?(passedArgs)
-    }
+            onFinish?(passedArgs)
+        }
     }
 
     func abandon(_ workflow: AnyWorkflow, animated: Bool, onFinish: (() -> Void)?) {
@@ -105,8 +106,16 @@ open class UIKitPresenter: OrchestrationResponder {
             let vcs = nav.viewControllers.filter {
                 $0 !== view
             }
-            nav.setViewControllers(vcs, animated: false)
-            completion?()
+
+            if vcs.isEmpty && nav === internalNavigationController {
+                nav.presentingViewController?.dismiss(animated: false) { [weak self] in
+                    self?.internalNavigationController?.setViewControllers(vcs, animated: false)
+                    completion?()
+                }
+            } else {
+                nav.setViewControllers(vcs, animated: false)
+                completion?()
+            }
         } else {
             let parent = view.presentingViewController
             let child = view.presentedViewController
@@ -169,6 +178,7 @@ open class UIKitPresenter: OrchestrationResponder {
                                               completion: (() -> Void)?) {
         if LaunchStyle.PresentationType(rawValue: to.value.metadata.launchStyle) == .navigationStack {
             let nav = UINavigationController(rootViewController: view)
+            internalNavigationController = nav
             if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
                 nav.modalPresentationStyle = modalPresentationStyle
             }
@@ -190,6 +200,7 @@ open class UIKitPresenter: OrchestrationResponder {
             completion?()
         } else {
             let nav = UINavigationController(rootViewController: view)
+            internalNavigationController = nav
             root.present(nav, animated: animated, completion: completion)
         }
     }
