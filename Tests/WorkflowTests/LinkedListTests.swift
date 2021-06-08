@@ -409,7 +409,6 @@ class LinkedListTests: XCTestCase {
         XCTAssertEqual(list.last?.value, 4)
     }
 
-    
     func testLastWhere() {
         class Obj {
             let num: Int
