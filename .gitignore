@@ -82,3 +82,4 @@ dependency-check-report.html
 xcuserdata/
 
 muter_logs
+.idea/

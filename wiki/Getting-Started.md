@@ -1,7 +1,7 @@
 # Interested in seeing examples of Workflow in action?
 Start by cloning the repo and checking out the 'WorkflowExample' scheme. This should give you a decent idea of how the library works.  If you want to create a new project, read on.
 
-# Cocoapods with Storyboards
+# CocoaPods with Storyboards
 
 ## Adding the dependency
 ```ruby
@@ -142,4 +142,74 @@ The `onFinish` closure for `launchInto(_:args:onFinish:)` provides the last pass
 <details>
 
 Calling `abandon()` closes all the views launched as part of the workflow, leaving you back on `ViewController`.
+</details>
+
+## Testing
+
+### Installing test dependencies
+For our test example, we will be using a library called [UIUTest](https://github.com/nallick/UIUTest). It is optional for testing Workflow, but in order for the example to be copyable, you will need to add
+```ruby
+pod 'UIUTest'
+```
+to your test target.
+
+### Creating the tests
+
+```swift
+import XCTest
+import UIUTest
+import Workflow
+
+@testable import GettingStarted
+
+class SecondViewControllerTests: XCTestCase {
+    func testSecondViewControllerDoesNotLoadWhenInputIsEmpty() {
+        let ref = AnyFlowRepresentable(SecondViewController.self, args: .args(""))
+        let testViewController = (ref.underlyingInstance as! SecondViewController)
+
+        XCTAssertFalse(testViewController.shouldLoad(), "SecondViewController should not load")
+    }
+
+    func testSecondViewControllerLoadsWhenInputIsContainsWWTEmail() {
+        let ref = AnyFlowRepresentable(SecondViewController.self, args: .args("Awesome.Possum@wwt.com"))
+        let testViewController = (ref.underlyingInstance as! SecondViewController)
+
+        XCTAssert(testViewController.shouldLoad(), "SecondViewController should load")
+    }
+
+    func testProceedPassesThroughInput() {
+        var proceedInWorkflowCalled = false
+        let expectedString = "Awesome.Possum@wwt.com"
+        let ref = AnyFlowRepresentable(SecondViewController.self, args: .args(expectedString))
+        var testViewController = (ref.underlyingInstance as! SecondViewController)
+        // Mimicking the lifecycle of the view controller
+        _ = testViewController.shouldLoad()
+        testViewController.loadForTesting() // UIUTest helper
+
+        testViewController.proceedInWorkflowStorage = { passedArgs in
+            proceedInWorkflowCalled = true
+            XCTAssertEqual(passedArgs.extractArgs(defaultValue: "defaultValue used") as? String, expectedString)
+        }
+
+        (testViewController.view.viewWithAccessibilityIdentifier("finish") as? UIButton)?.simulateTouch() // UIUTest helper
+
+        XCTAssert(proceedInWorkflowCalled, "proceedInWorkflow should be called")
+    }
+}
+```
+While this team finds that testing our view controllers with [UIUTest](https://github.com/nallick/UIUTest) allows us to decrease the visibility of our properties and provide better coverage, [UIUTest](https://github.com/nallick/UIUTest) is not needed for testing Workflow. If you do not want to take the dependency, you will have to elevate visibility or find a way to invoke the `finishPressed` method.
+
+#### **What is going on with: `testSecondViewControllerDoesNotLoadWhenInputIsEmpty`?**
+<details>
+This test is super simple. We create the view controller in a way that will go through the correct init, with expected arguments. Then we call `shouldLoad` to validate if the provided Input gets us the results we want.
+</details>
+
+#### **What is going on with: `testProceedPassesThroughInput`?**
+<details>
+At a high level we are loading the view controller for testing (similar to before but now with an added step of triggering lifecycle events). We update the `proceedInWorkflow` closure so that we can confirm it was called. Finally we invoke the method that will call proceed. The assert is verifying that the Output is the same as the input, as this view controller is passing it through.
+</details>
+
+#### **I added UIUTest, why isn't it hitting the finish button?**
+<details>
+It's easy to forget to set the accessibility identifier on the button, please check that first. Second, if you don't call `loadForTesting()` your view controller doesn't make it to the window and the hit testing of `simulateTouch()` will also fail. Finally, make sure the button is visible and tappable on the simulator you are using.
 </details>
