@@ -11,8 +11,7 @@ import XCTest
 @testable import Workflow
 
 class PersistenceTests: XCTestCase {
-    #warning("This is named wrong and not doing what it says it should be doing....")
-    func testWorkflowCanDestroyFirstItem_AndStillProceedThroughFlow_AndCallOnFinish() {
+    func testWorkflowCanDestroyFirstItem_AndStillProceedThroughFlow() {
         class FR1: TestPassthroughFlowRepresentable { }
         class FR2: TestPassthroughFlowRepresentable { }
         class FR3: TestPassthroughFlowRepresentable { }
