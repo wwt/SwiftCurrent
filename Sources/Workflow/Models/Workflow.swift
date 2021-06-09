@@ -123,7 +123,7 @@ public final class Workflow<F: FlowRepresentable>: LinkedList<_WorkflowItem> {
         }
 
         guard let first = firstLoadedInstance  else {
-            onFinish?(passedArgs)
+            orchestrationResponder.complete(AnyWorkflow(self), passedArgs: passedArgs, onFinish: onFinish)
             return nil
         }
 
@@ -191,7 +191,7 @@ public final class Workflow<F: FlowRepresentable>: LinkedList<_WorkflowItem> {
         }
 
         guard let nextNode = nextLoadedNode else {
-            onFinish?(argsToPass)
+            orchestrationResponder?.complete(AnyWorkflow(self), passedArgs: argsToPass, onFinish: onFinish)
             return
         }
 

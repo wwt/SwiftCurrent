@@ -10,6 +10,19 @@ import Foundation
 import Workflow
 
 class MockOrchestrationResponder: OrchestrationResponder {
+    var completeCalled = 0
+    var lastPassedArgs: AnyWorkflow.PassedArgs?
+    var lastCompleteOnFinish: ((AnyWorkflow.PassedArgs) -> Void)?
+    var complete_EnableDefaultImplementation = false
+    func complete(_ workflow: AnyWorkflow, passedArgs: AnyWorkflow.PassedArgs, onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
+        lastWorkflow = workflow
+        lastPassedArgs = passedArgs
+        lastCompleteOnFinish = onFinish
+        completeCalled += 1
+
+        if complete_EnableDefaultImplementation { onFinish?(passedArgs) }
+    }
+
     var launchCalled = 0
     var lastTo: AnyWorkflow.Element?
     func launch(to: AnyWorkflow.Element) {

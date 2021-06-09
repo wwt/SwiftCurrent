@@ -234,6 +234,28 @@ class UIKitConsumerSkipTests: XCTestCase {
         XCTAssert(callbackCalled)
     }
 
+    func testFinishingWorkflowCallsBackEvenIfAllViewsAreSkipped() {
+        class FR1: TestViewController { override func shouldLoad() -> Bool { false } }
+        class FR2: TestViewController { override func shouldLoad() -> Bool { false } }
+        class FR3: TestViewController { override func shouldLoad() -> Bool { false } }
+        class Root: UIViewController { }
+        class Obj { }
+        let obj = Obj()
+
+        let root = Root()
+        root.loadForTesting()
+
+        var callbackCalled = false
+        root.launchInto(Workflow(FR1.self)
+                            .thenPresent(FR2.self)
+                            .thenPresent(FR3.self), args: obj) { args in
+            callbackCalled = true
+            XCTAssert(args.extractArgs(defaultValue: nil) as? Obj === obj)
+        }
+
+        XCTAssertUIViewControllerDisplayed(ofType: Root.self)
+        XCTAssert(callbackCalled)
+    }
 }
 
 extension UIKitConsumerSkipTests {

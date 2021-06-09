@@ -53,6 +53,7 @@ class OrchestrationResponderTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
+        responder.complete_EnableDefaultImplementation = true
         let expectation = self.expectation(description: "OnFinish called")
 
         let launchedRepresentable = wf.launch(withOrchestrationResponder: responder) { _ in expectation.fulfill() }
@@ -62,6 +63,10 @@ class OrchestrationResponderTests: XCTestCase {
         (responder.lastTo?.value.instance?.underlyingInstance as? FR3)?.proceedInWorkflow()
 
         wait(for: [expectation], timeout: 3)
+
+        XCTAssertEqual(responder.completeCalled, 1)
+        XCTAssertNotNil(responder.lastPassedArgs)
+        XCTAssertNotNil(responder.lastCompleteOnFinish)
     }
 
     func testWorkflowCallsOnFinishWhenItIsDone_andPassesForwardLastArguments() {
@@ -74,6 +79,7 @@ class OrchestrationResponderTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
+        responder.complete_EnableDefaultImplementation = true
         let expectation = self.expectation(description: "OnFinish called")
 
         let launchedRepresentable = wf.launch(withOrchestrationResponder: responder) { args in
@@ -86,6 +92,10 @@ class OrchestrationResponderTests: XCTestCase {
         (responder.lastTo?.value.instance?.underlyingInstance as? FR3)?.proceedInWorkflow(val)
 
         wait(for: [expectation], timeout: 3)
+
+        XCTAssertEqual(responder.completeCalled, 1)
+        XCTAssertNotNil(responder.lastPassedArgs)
+        XCTAssertNotNil(responder.lastCompleteOnFinish)
     }
 
     func testWorkflowCanProceedForwardAndBackwardThroughFlow() {
@@ -137,6 +147,7 @@ class OrchestrationResponderTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
+        responder.complete_EnableDefaultImplementation = true
         let expectation = self.expectation(description: "OnFinish called")
 
         let launchedRepresentable = wf.launch(withOrchestrationResponder: responder) { _ in expectation.fulfill() }
@@ -149,6 +160,10 @@ class OrchestrationResponderTests: XCTestCase {
         (responder.lastTo?.value.instance?.underlyingInstance as? FR3)?.proceedInWorkflow()
 
         wait(for: [expectation], timeout: 3)
+
+        XCTAssertEqual(responder.completeCalled, 1)
+        XCTAssertNotNil(responder.lastPassedArgs)
+        XCTAssertNotNil(responder.lastCompleteOnFinish)
     }
 
     func testWorkflowCallsOnFinishWhenItIsDone_andPassesForwardInitialArguments_EvenWhenMovingBackwardsForABit() {
@@ -192,6 +207,7 @@ class OrchestrationResponderTests: XCTestCase {
             .thenProceed(with: FR2.self)
             .thenProceed(with: FR3.self)
         let responder = MockOrchestrationResponder()
+        responder.complete_EnableDefaultImplementation = true
         let expectation = self.expectation(description: "OnFinish called")
 
         let launchedRepresentable = wf.launch(withOrchestrationResponder: responder,
@@ -214,6 +230,10 @@ class OrchestrationResponderTests: XCTestCase {
         (responder.lastTo?.value.instance?.underlyingInstance as? FR3)?.proceedInWorkflow(val)
 
         wait(for: [expectation], timeout: 3)
+
+        XCTAssertEqual(responder.completeCalled, 1)
+        XCTAssertNotNil(responder.lastPassedArgs)
+        XCTAssertNotNil(responder.lastCompleteOnFinish)
     }
 }
 

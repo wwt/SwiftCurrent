@@ -458,6 +458,191 @@ class UIKitConsumerPersistenceTests: XCTestCase {
         XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
     }
 
+    func testDefaultWorkflow_LaunchedFromModal_CanDestroyAllItems_AndStillProceedThroughFlow_AndCallOnFinish() {
+        class FR1: TestViewController { }
+        class FR2: TestViewController { }
+        class FR3: TestViewController { }
+        let root = UIViewController()
+        root.loadForTesting()
+
+        let expectOnFinish = self.expectation(description: "onFinish called")
+        root.launchInto(Workflow(FR1.self, flowPersistence: .removedAfterProceeding)
+                            .thenProceed(with: FR2.self, flowPersistence: .removedAfterProceeding)
+                            .thenProceed(with: FR3.self, flowPersistence: .removedAfterProceeding)) { _ in
+            XCTAssertUIViewControllerDisplayed(isInstance: root)
+            XCTAssertNil(UIApplication.topViewController()?.presentingViewController)
+            expectOnFinish.fulfill()
+        }
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
+        XCTAssert(UIApplication.topViewController()?.presentingViewController === root)
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
+        XCTAssert(UIApplication.topViewController()?.presentingViewController === root)
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
+        (UIApplication.topViewController() as? FR3)?.proceedInWorkflow(nil)
+
+        wait(for: [expectOnFinish], timeout: 3)
+    }
+
+    func testDefaultWorkflow_LaunchedFromNav_CanDestroyAllItems_AndStillProceedThroughFlow_AndCallOnFinish() {
+        class FR1: TestViewController { }
+        class FR2: TestViewController { }
+        class FR3: TestViewController { }
+        let root = UIViewController()
+        let navigationController = UINavigationController(rootViewController: root)
+        navigationController.loadForTesting()
+
+        let expectOnFinish = self.expectation(description: "onFinish called")
+        root.launchInto(Workflow(FR1.self, flowPersistence: .removedAfterProceeding)
+                            .thenProceed(with: FR2.self, flowPersistence: .removedAfterProceeding)
+                            .thenProceed(with: FR3.self, flowPersistence: .removedAfterProceeding)) { _ in
+            XCTAssertUIViewControllerDisplayed(isInstance: root)
+            XCTAssertEqual(UIApplication.topViewController()?.navigationController?.viewControllers.count, 1)
+            expectOnFinish.fulfill()
+        }
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
+        XCTAssert(UIApplication.topViewController()?.navigationController?.viewControllers.first === root,
+                  "\(String(describing: UIApplication.topViewController()?.navigationController?.viewControllers.first)) was not \(root)")
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
+        XCTAssert(UIApplication.topViewController()?.navigationController?.viewControllers.first === root,
+                  "\(String(describing: UIApplication.topViewController()?.navigationController?.viewControllers.first)) was not \(root)")
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
+        (UIApplication.topViewController() as? FR3)?.proceedInWorkflow(nil)
+
+        wait(for: [expectOnFinish], timeout: 3)
+    }
+    
+    func testDefaultWorkflow_LaunchedFromNav_CanDestroyAllItems_WhenLastFRIsNotLoaded() {
+        class FR1: TestViewController { }
+        class FR2: TestViewController { override func shouldLoad() -> Bool { false } }
+        class FR3: TestViewController { override func shouldLoad() -> Bool { false } }
+
+        let root = UIViewController()
+        let navigationController = UINavigationController(rootViewController: root)
+        navigationController.loadForTesting()
+        let expectOnFinish = self.expectation(description: "onFinish called")
+        
+        root.launchInto(Workflow(FR1.self, flowPersistence: .removedAfterProceeding)
+                            .thenProceed(with: FR2.self, flowPersistence: .removedAfterProceeding)
+                            .thenProceed(with: FR3.self, flowPersistence: .removedAfterProceeding)) { _ in
+            XCTAssertUIViewControllerDisplayed(isInstance: root)
+            XCTAssertEqual(UIApplication.topViewController()?.navigationController?.viewControllers.count, 1)
+            expectOnFinish.fulfill()
+        }
+        
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
+        XCTAssert(UIApplication.topViewController()?.navigationController?.viewControllers.first === root,
+                  "\(String(describing: UIApplication.topViewController()?.navigationController?.viewControllers.first)) was not \(root)")
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
+        XCTAssert(UIApplication.topViewController()?.navigationController?.viewControllers.first === root,
+                  "\(String(describing: UIApplication.topViewController()?.navigationController?.viewControllers.first)) was not \(root)")
+
+        wait(for: [expectOnFinish], timeout: 3)
+    }
+
+    func testModalWorkflow_LaunchedFromNav_CanDestroyAllItems_AndStillProceedThroughFlow_AndCallOnFinish() {
+        class FR1: TestViewController { }
+        class FR2: TestViewController { }
+        class FR3: TestViewController { }
+        let root = UIViewController()
+        let nav = UINavigationController(rootViewController: root)
+        nav.loadForTesting()
+
+        let expectOnFinish = self.expectation(description: "onFinish called")
+        root.launchInto(Workflow(FR1.self, flowPersistence: .removedAfterProceeding)
+                            .thenProceed(with: FR2.self, flowPersistence: .removedAfterProceeding)
+                            .thenProceed(with: FR3.self, flowPersistence: .removedAfterProceeding),
+                        withLaunchStyle: .modal) { _ in
+            XCTAssertUIViewControllerDisplayed(isInstance: root)
+            XCTAssertNil(UIApplication.topViewController()?.presentingViewController)
+            expectOnFinish.fulfill()
+        }
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
+        XCTAssert(UIApplication.topViewController()?.presentingViewController === nav,
+                  "\(String(describing: UIApplication.topViewController()?.presentingViewController)) was not \(nav)")
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
+        XCTAssert(UIApplication.topViewController()?.presentingViewController === nav,
+                  "\(String(describing: UIApplication.topViewController()?.presentingViewController)) was not \(nav)")
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
+        (UIApplication.topViewController() as? FR3)?.proceedInWorkflow(nil)
+
+        wait(for: [expectOnFinish], timeout: 3)
+    }
+
+    func testModalWorkflow_CanPresentNewViewControllerModally_AndCallOnFinish() {
+        class FR1: TestViewController { }
+        class FR2: TestViewController { }
+        class FR3: TestViewController {
+            let presented = UIViewController()
+            func presentOutsideViewController() {
+                present(presented, animated: false)
+            }
+        }
+        var presented: UIViewController?
+        let root = UIViewController()
+        let nav = UINavigationController(rootViewController: root)
+        nav.loadForTesting()
+
+        let expectOnFinish = self.expectation(description: "onFinish called")
+        root.launchInto(Workflow(FR1.self, flowPersistence: .removedAfterProceeding)
+                            .thenProceed(with: FR2.self, flowPersistence: .removedAfterProceeding)
+                            .thenProceed(with: FR3.self, flowPersistence: .removedAfterProceeding),
+                        withLaunchStyle: .modal) { _ in
+            XCTAssertUIViewControllerDisplayed(isInstance: presented!)
+            XCTAssertEqual(UIApplication.topViewController()?.presentingViewController, nav)
+            expectOnFinish.fulfill()
+        }
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
+        XCTAssert(UIApplication.topViewController()?.presentingViewController === nav,
+                  "\(String(describing: UIApplication.topViewController()?.presentingViewController)) was not \(nav)")
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
+        XCTAssert(UIApplication.topViewController()?.presentingViewController === nav,
+                  "\(String(describing: UIApplication.topViewController()?.presentingViewController)) was not \(nav)")
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
+
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
+
+        let fr3 = (UIApplication.topViewController() as? FR3)
+        presented = fr3?.presented
+        fr3?.presentOutsideViewController()
+        fr3?.proceedInWorkflow(nil)
+
+        wait(for: [expectOnFinish], timeout: 3)
+    }
+
+    func testNavWorkflow_LaunchedFromModal_CanDestroyAllItems_AndStillProceedThroughFlow_AndCallOnFinish() {
+        class FR1: TestViewController { }
+        class FR2: TestViewController { }
+        class FR3: TestViewController { }
+        let root = UIViewController()
+        root.loadForTesting()
+
+        let expectOnFinish = self.expectation(description: "onFinish called")
+        root.launchInto(Workflow(FR1.self, flowPersistence: .removedAfterProceeding)
+                            .thenProceed(with: FR2.self, flowPersistence: .removedAfterProceeding)
+                            .thenProceed(with: FR3.self, flowPersistence: .removedAfterProceeding),
+                        withLaunchStyle: .navigationStack) { _ in
+            XCTAssertUIViewControllerDisplayed(isInstance: root)
+            XCTAssertNil(UIApplication.topViewController()?.presentingViewController)
+            expectOnFinish.fulfill()
+        }
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
+        XCTAssert(UIApplication.topViewController()?.presentingViewController === root)
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
+        XCTAssert(UIApplication.topViewController()?.presentingViewController === root)
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
+        (UIApplication.topViewController() as? FR3)?.proceedInWorkflow(nil)
+
+        wait(for: [expectOnFinish], timeout: 3)
+    }
 }
 
 extension UIKitConsumerPersistenceTests {

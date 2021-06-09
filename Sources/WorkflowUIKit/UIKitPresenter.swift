@@ -15,6 +15,7 @@ open class UIKitPresenter: OrchestrationResponder {
     let launchedFromVC: UIViewController
     let launchedPresentationType: LaunchStyle.PresentationType
     var firstLoadedInstance: UIViewController?
+    weak var internalNavigationController: UINavigationController?
 
     /**
      Creates a `UIKitPresenter` that can respond to a `Workflow`'s actions.
@@ -61,6 +62,28 @@ open class UIKitPresenter: OrchestrationResponder {
         abandon(workflow, animated: true, onFinish: onFinish)
     }
 
+    /**
+     Completes the workflow, making the callback at the appropriate time for UIKit.
+
+     ### Discussion
+     If the last view of the workflow has a persistence of `.removedAfterProceeding`, then the view will be removed before completing.
+
+     - Important: `complete` is called when proceeding through the last view of the ``Workflow``.
+     - Parameter workflow: ``AnyWorkflow`` being completed.
+     - Parameter passedArgs: arguments to pass to `onFinish`.
+     - Parameter onFinish: closure provided when launching `workflow`.
+     */
+    public func complete(_ workflow: AnyWorkflow, passedArgs: AnyWorkflow.PassedArgs, onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
+        let lastInstance = workflow.last { $0.value.instance != nil }
+
+        if lastInstance?.value.metadata.persistence == .removedAfterProceeding,
+           let view = lastInstance?.value.instance?.underlyingInstance as? UIViewController {
+            destroy(view) { onFinish?(passedArgs) }
+        } else {
+            onFinish?(passedArgs)
+        }
+    }
+
     func abandon(_ workflow: AnyWorkflow, animated: Bool, onFinish: (() -> Void)?) {
         guard let first = firstLoadedInstance else { return }
         if let nav = first.navigationController {
@@ -89,12 +112,18 @@ open class UIKitPresenter: OrchestrationResponder {
         }
     }
 
-    private func destroy(_ view: UIViewController) {
+    private func destroy(_ view: UIViewController, completion: (() -> Void)? = nil) {
         if let nav = view.navigationController {
             let vcs = nav.viewControllers.filter {
                 $0 !== view
             }
-            nav.setViewControllers(vcs, animated: false)
+
+            if vcs.isEmpty && nav === internalNavigationController {
+                nav.presentingViewController?.dismiss(animated: false, completion: completion)
+            } else {
+                nav.setViewControllers(vcs, animated: false)
+                completion?()
+            }
         } else {
             let parent = view.presentingViewController
             let child = view.presentedViewController
@@ -104,7 +133,9 @@ open class UIKitPresenter: OrchestrationResponder {
             parent?.dismiss(animated: false) {
                 if let p = parent,
                    let c = child {
-                    p.present(c, animated: false)
+                    p.present(c, animated: false, completion: completion)
+                } else {
+                    completion?()
                 }
             }
         }
@@ -153,6 +184,7 @@ open class UIKitPresenter: OrchestrationResponder {
                                               completion: (() -> Void)?) {
         if LaunchStyle.PresentationType(rawValue: to.value.metadata.launchStyle) == .navigationStack {
             let nav = UINavigationController(rootViewController: view)
+            internalNavigationController = nav
             if let modalPresentationStyle = UIModalPresentationStyle.styleFor(style) {
                 nav.modalPresentationStyle = modalPresentationStyle
             }
@@ -174,6 +206,7 @@ open class UIKitPresenter: OrchestrationResponder {
             completion?()
         } else {
             let nav = UINavigationController(rootViewController: view)
+            internalNavigationController = nav
             root.present(nav, animated: animated, completion: completion)
         }
     }

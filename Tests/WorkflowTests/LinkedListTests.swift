@@ -409,6 +409,33 @@ class LinkedListTests: XCTestCase {
         XCTAssertEqual(list.last?.value, 4)
     }
 
+    func testLastWhere() {
+        class Obj {
+            let num: Int
+            init(_ num: Int) { self.num = num }
+        }
+        let list = LinkedList([Obj(1), Obj(4), Obj(4), Obj(3)])
+        let expectedValue = list.first?.traverse(2)?.value
+
+        let last = list.last { $0.value.num == 4 }
+
+        XCTAssertEqual(last?.value.num, 4)
+        XCTAssert(last?.value === expectedValue)
+
+        let notFound = list.last { $0.value.num == 10 }
+
+        XCTAssertNil(notFound)
+    }
+
+    func testLastWhereAllowsThrowingClosure() {
+        class Obj { func throwing() throws -> Bool { true } }
+        let list = LinkedList([Obj(), Obj(), Obj()])
+
+        let foundObj = try? list.last { try $0.value.throwing() }
+
+        XCTAssert(foundObj?.value === list.last?.value)
+    }
+    
     func testEquatability() {
         let list = LinkedList([1, 2, 3])
         let list2 = LinkedList([1, 2, 3])
