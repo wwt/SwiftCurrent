@@ -108,10 +108,7 @@ open class UIKitPresenter: OrchestrationResponder {
             }
 
             if vcs.isEmpty && nav === internalNavigationController {
-                nav.presentingViewController?.dismiss(animated: false) { [weak self] in
-                    self?.internalNavigationController?.setViewControllers(vcs, animated: false)
-                    completion?()
-                }
+                nav.presentingViewController?.dismiss(animated: false, completion: completion)
             } else {
                 nav.setViewControllers(vcs, animated: false)
                 completion?()
@@ -125,9 +122,7 @@ open class UIKitPresenter: OrchestrationResponder {
             parent?.dismiss(animated: false) {
                 if let p = parent,
                    let c = child {
-                    p.present(c, animated: false) {
-                        completion?()
-                    }
+                    p.present(c, animated: false, completion: completion)
                 } else {
                     completion?()
                 }
