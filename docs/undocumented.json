@@ -71,6 +71,13 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/TypeErased/AnyWorkflow.swift",
+      "line": 46,
+      "symbol": "AnyWorkflow.last(where:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/WorkflowUIKit/StoryboardLoadable.swift",
       "line": 65,
       "symbol": "StoryboardLoadable._factory(_:with:)",

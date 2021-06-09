@@ -21,7 +21,7 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
-          Workflow 3.0.3 Docs
+          Workflow 3.1.0 Docs
         </a>
          (92% documented)
       </p>
@@ -312,6 +312,84 @@
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13WorkflowUIKit0B9PresenterC8complete_10passedArgs8onFinishy0A003AnyA0C_AI06PassedF0OyAKcSgtF"></a>
+                    <a name="//apple_ref/swift/Method/complete(_:passedArgs:onFinish:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13WorkflowUIKit0B9PresenterC8complete_10passedArgs8onFinishy0A003AnyA0C_AI06PassedF0OyAKcSgtF">complete(_:<wbr>passedArgs:<wbr>onFinish:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Completes the workflow, making the callback at the appropriate time for UIKit.</p>
+<h3 id='discussion' class='heading'>Discussion</h3>
+
+<p>If the last view of the workflow has a persistence of <code>.removedAfterProceeding</code>, then the view will be removed before completing.</p>
+<div class="aside aside-important">
+    <p class="aside-title">Important</p>
+    <code>complete</code> is called when proceeding through the last view of the <code><a href="../Classes/Workflow.html">Workflow</a></code>.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">complete</span><span class="p">(</span><span class="n">_</span> <span class="nv">workflow</span><span class="p">:</span> <span class="kt"><a href="../Classes/AnyWorkflow.html">AnyWorkflow</a></span><span class="p">,</span> <span class="nv">passedArgs</span><span class="p">:</span> <span class="kt"><a href="../Classes/AnyWorkflow.html">AnyWorkflow</a></span><span class="o">.</span><span class="kt">PassedArgs</span><span class="p">,</span> <span class="nv">onFinish</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Classes/AnyWorkflow.html">AnyWorkflow</a></span><span class="o">.</span><span class="kt">PassedArgs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>workflow</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code><a href="../Classes/AnyWorkflow.html">AnyWorkflow</a></code> being completed.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>passedArgs</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>arguments to pass to <code>onFinish</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onFinish</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>closure provided when launching <code>workflow</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
           </div>
@@ -320,7 +398,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://github.com/wwt/workflow" target="_blank" rel="external">WWT and Tyler Thompson</a>. All rights reserved. (Last updated: 2021-05-27)</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/wwt/workflow" target="_blank" rel="external">WWT and Tyler Thompson</a>. All rights reserved. (Last updated: 2021-06-09)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

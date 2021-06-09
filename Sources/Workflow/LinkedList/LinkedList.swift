@@ -81,19 +81,19 @@ public class LinkedList<Value>: Sequence, CustomStringConvertible {
      #### Example
      This example uses the `last(where:)` method to find the last
      negative number in an array of integers:
+     ```swift
+     let numbers = LinkedList([3, 7, 4, -2, 9, -6, 10, 1])
+     if let lastNegative = numbers.last(where: { $0.value < 0 }) {
+        print("The last negative number is \(lastNegative).")
+     }
+     // Prints "The last negative number is -6."
+     ```
      */
-    /// ```swift
-    ///  let numbers = LinkedList([3, 7, 4, -2, 9, -6, 10, 1])
-    ///  if let lastNegative = numbers.last(where: { $0.value < 0 }) {
-    ///      print("The last negative number is \(lastNegative).")
-    ///  }
-    ///  // Prints "The last negative number is -6."
-    /// ```
     public func last(where predicate: (Element) throws -> Bool) rethrows -> Element? {
         var lastElement: Element?
 
         for element in self where try predicate(element) {
-                lastElement = element
+            lastElement = element
         }
 
         return lastElement

@@ -21,7 +21,7 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
-          Workflow 3.0.3 Docs
+          Workflow 3.1.0 Docs
         </a>
          (92% documented)
       </p>
@@ -430,6 +430,75 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">makeIterator</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/LinkedList/Iterator.html">Iterator</a></span></code></pre>
 
                         </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Workflow10LinkedListC4last5whereAC4NodeCyx_xGSgSbAHKXE_tKF"></a>
+                    <a name="//apple_ref/swift/Method/last(where:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Workflow10LinkedListC4last5whereAC4NodeCyx_xGSgSbAHKXE_tKF">last(where:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the last element of the sequence that satisfies the given
+predicate.</p>
+<div class="aside aside-complexity">
+    <p class="aside-title">Complexity</p>
+    O(n). The linked list must traverse to the end.
+
+</div>
+<h4 id='example' class='heading'>Example</h4>
+
+<p>This example uses the <code>last(where:)</code> method to find the last
+negative number in an array of integers:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">numbers</span> <span class="o">=</span> <span class="kt">LinkedList</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="k">if</span> <span class="k">let</span> <span class="nv">lastNegative</span> <span class="o">=</span> <span class="n">numbers</span><span class="o">.</span><span class="nf">last</span><span class="p">(</span><span class="nv">where</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">value</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="p">})</span> <span class="p">{</span>
+   <span class="nf">print</span><span class="p">(</span><span class="s">"The last negative number is </span><span class="se">\(</span><span class="n">lastNegative</span><span class="se">)</span><span class="s">."</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="c1">// Prints "The last negative number is -6."</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">last</span><span class="p">(</span><span class="k">where</span> <span class="nv">predicate</span><span class="p">:</span> <span class="p">(</span><span class="kt"><a href="../Classes/LinkedList/Element.html">Element</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Bool</span><span class="p">)</span> <span class="k">rethrows</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/LinkedList/Element.html">Element</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>predicate</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure that takes an element of the sequence as
+its argument and returns a Boolean value indicating whether the
+element is a match.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The last element of the sequence that satisfies <code>predicate</code>,
+or <code>nil</code> if there is no element that satisfies <code>predicate</code>.</p>
                       </div>
                     </section>
                   </div>
@@ -1791,7 +1860,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://github.com/wwt/workflow" target="_blank" rel="external">WWT and Tyler Thompson</a>. All rights reserved. (Last updated: 2021-05-27)</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/wwt/workflow" target="_blank" rel="external">WWT and Tyler Thompson</a>. All rights reserved. (Last updated: 2021-06-09)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
