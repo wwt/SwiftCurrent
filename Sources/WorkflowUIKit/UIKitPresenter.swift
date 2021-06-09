@@ -62,6 +62,17 @@ open class UIKitPresenter: OrchestrationResponder {
         abandon(workflow, animated: true, onFinish: onFinish)
     }
 
+    /**
+     Completes the workflow, making the callback at the appropriate time for UIKit.
+
+     ### Discussion
+     If the last view of the workflow has a persistence of `.removedAfterProceeding`, then the view will be removed before completing.
+
+     - Important: `complete` is called when proceeding through the last view of the ``Workflow``.
+     - Parameter workflow: ``AnyWorkflow`` being completed.
+     - Parameter passedArgs: arguments to pass to `onFinish`.
+     - Parameter onFinish: closure provided when launching `workflow`.
+     */
     public func complete(_ workflow: AnyWorkflow, passedArgs: AnyWorkflow.PassedArgs, onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
         let lastInstance = workflow.last { $0.value.instance != nil }
 
