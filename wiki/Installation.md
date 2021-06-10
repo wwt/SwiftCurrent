@@ -60,4 +60,10 @@ pod 'DynamicWorkflow/UIKit'
 pod 'DynamicWorkflow/Core'
 ```
 
+#### In both of these cases you'll import Workflow as such
+
+```swift
+import Workflow
+```
+
 You will need to build your own [Orchestration Responders](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/OrchestrationResponder.html) for your domains.
