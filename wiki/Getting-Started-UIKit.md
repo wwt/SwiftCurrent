@@ -90,12 +90,12 @@ class SecondViewController: UIWorkflowItem<String, String>, FlowRepresentable {
 
     required init?(coder: NSCoder) { nil }
 
-    @objc private func finishPressed() {
-        proceedInWorkflow(email)
-    }
-
     func shouldLoad() -> Bool {
         return email.contains("@wwt.com")
+    }
+
+    @objc private func finishPressed() {
+        proceedInWorkflow(email)
     }
 }
 ```
@@ -116,11 +116,10 @@ import Workflow
 class ViewController: UIViewController {
     private let launchButton = UIButton()
 
-    init() {
-        super.init(nibName: nil, bundle: nil)
-
+    override func viewDidLoad() {
         launchButton.setTitle("Launch Workflow", for: .normal)
-        launchButton.addTarget(self, action: #selector(launchWorkflow), for: .touchUpInside)
+        launchButton.setTitleColor(.systemBlue, for: .normal)
+        launchButton.addTarget(self, action: #selector(didTapLaunchWorkflow), for: .touchUpInside)
 
         view.addSubview(launchButton)
 
@@ -129,11 +128,7 @@ class ViewController: UIViewController {
         launchButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    @objc private func launchWorkflow() {
+    @objc private func didTapLaunchWorkflow() {
         let workflow = Workflow(FirstViewController.self)
             .thenPresent(SecondViewController.self)
 
