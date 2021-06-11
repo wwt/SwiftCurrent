@@ -18,14 +18,14 @@ Add the following line to the package dependencies in `Package.swift`:
 
 Add one one of the following products to your target dependencies.
 
-#### __If you want to use Workflow with UIKit__
+#### **If you want to use Workflow with UIKit**
 
 ```swift
 .product(name: "Workflow", package: "Workflow"),
 .product(name: "WorkflowUIKit", package: "Workflow")
 ```
 
-#### __You'll import Workflow for UIKit as such__
+#### **You'll import Workflow for UIKit as such**
 
 ```swift
 import WorkflowUIKit
@@ -33,13 +33,13 @@ import WorkflowUIKit
 
 `WorkflowUIKit` will need to be built on a platform that supports UIKit, such as iOS or macOS with Catalyst.
 
-#### __If you want to use Workflow without UIKit__
+#### **If you want to use Workflow without UIKit**
 
 ```swift
 .product(name: "Workflow", package: "Workflow"),
 ```
 
-#### __You'll import Workflow without UIKit as such__
+#### **You'll import Workflow without UIKit as such**
 
 ```swift
 import Workflow
@@ -51,19 +51,19 @@ You will need to build your own [Orchestration Responders](https://gitcdn.link/c
 
 Set up [CocoaPods](https://cocoapods.org/) for your project, then include Workflow in your dependencies by adding one of the following lines to your `Podfile`:
 
-#### __If you want to use Workflow with UIKit__
+#### **If you want to use Workflow with UIKit**
 
 ```ruby
 pod 'DynamicWorkflow/UIKit'
 ```
 
-#### __If you want to use Workflow without UIKit__
+#### **If you want to use Workflow without UIKit**
 
 ```ruby
 pod 'DynamicWorkflow/Core'
 ```
 
-#### __In both of these cases you'll import Workflow as such__
+#### **In both of these cases you'll import Workflow as such**
 
 ```swift
 import Workflow
