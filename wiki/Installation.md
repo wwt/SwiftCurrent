@@ -2,7 +2,9 @@
 
 If you want more information about installing Swift packages with Xcode, [follow these instructions](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app). If you want to learn more about Swift Package Manager, [this page goes into detail](https://swift.org/package-manager/).
 
-If you haven't added any Swift Packages to your project yet and thus don't have a `Package.swift` file, follow [these](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app) instructions for adding your first package.
+To use Swift Package Manager in Xcode, click `File` -> `Swift Packages` -> `Add Package Dependency` and enter the Workflow repo's URL.
+
+If you're a framework author and want to use Workflow as a dependency, update your `Package.swift` file:
 
 ## Get the package
 
@@ -14,15 +16,16 @@ Add the following line to the package dependencies in `Package.swift`:
 
 ## Get the correct product
 
-### Add one one of the following products to your target dependencies.
+Add one one of the following products to your target dependencies.
 
-#### If you want to use Workflow with UIKit
+#### __If you want to use Workflow with UIKit__
 
 ```swift
+.product(name: "Workflow", package: "Workflow"),
 .product(name: "WorkflowUIKit", package: "Workflow")
 ```
 
-#### You'll import Workflow for UIKit as such
+#### __You'll import Workflow for UIKit as such__
 
 ```swift
 import WorkflowUIKit
@@ -30,13 +33,13 @@ import WorkflowUIKit
 
 `WorkflowUIKit` will need to be built on a platform that supports UIKit, such as iOS or macOS with Catalyst.
 
-#### If you want to use Workflow without UIKit
+#### __If you want to use Workflow without UIKit__
 
 ```swift
 .product(name: "Workflow", package: "Workflow"),
 ```
 
-#### You'll import Workflow without UIKit as such
+#### __You'll import Workflow without UIKit as such__
 
 ```swift
 import Workflow
@@ -48,19 +51,19 @@ You will need to build your own [Orchestration Responders](https://gitcdn.link/c
 
 Set up [CocoaPods](https://cocoapods.org/) for your project, then include Workflow in your dependencies by adding one of the following lines to your `Podfile`:
 
-#### If you want to use Workflow with UIKit
+#### __If you want to use Workflow with UIKit__
 
 ```ruby
 pod 'DynamicWorkflow/UIKit'
 ```
 
-#### If you want to use Workflow without UIKit
+#### __If you want to use Workflow without UIKit__
 
 ```ruby
 pod 'DynamicWorkflow/Core'
 ```
 
-#### In both of these cases you'll import Workflow as such
+#### __In both of these cases you'll import Workflow as such__
 
 ```swift
 import Workflow

@@ -12,7 +12,7 @@ pod 'DynamicWorkflow/UIKit'
 
 Add the above line to your Podfile.
 
-For information on importing and more installation instructions, check out our [Installation](https://github.com/wwt/Workflow/wiki/Installation) page.
+For information on importing and more installation instructions, [check out our Installation page](https://github.com/wwt/Workflow/wiki/Installation).
 
 ## Create the convenience protocols for storyboard loading
 
