@@ -1,4 +1,5 @@
 - [Why This Library?](https://github.com/wwt/Workflow/wiki/Why-This-Library%3F)
 - [Installation](https://github.com/wwt/Workflow/wiki/Installation)
-- [Getting Started](https://github.com/wwt/Workflow/wiki/getting-started)
+- [Getting Started with Storyboards](https://github.com/wwt/Workflow/wiki/getting-started)
+- [Getting Started with Programmatic UIKit](https://github.com/wwt/Workflow/wiki/getting-started-with-programmatic-uikit)
 - [Developer Documentation](https://gitcdn.link/repo/wwt/Workflow/main/docs/index.html)

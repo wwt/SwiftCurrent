@@ -52,6 +52,7 @@ And just like that you're started!  To see something more practical and in-depth
 # Deep Dive
 - [Why Workflow?](https://github.com/wwt/Workflow/wiki/Why-This-Library%3F)
 - [Installation](https://github.com/wwt/Workflow/wiki/Installation)
-- [Getting Started](https://github.com/wwt/Workflow/wiki/getting-started)
+- [Getting Started with Storyboards](https://github.com/wwt/Workflow/wiki/getting-started)
+- [Getting Started with Programmatic UIKit](https://github.com/wwt/Workflow/wiki/Getting-Started-with-Programmatic-UIKit)
 - [Developer Documentation](https://gitcdn.link/repo/wwt/Workflow/main/docs/index.html)
 - [Upgrade Path](https://github.com/wwt/Workflow/blob/main/UPGRADE_PATH.md)
