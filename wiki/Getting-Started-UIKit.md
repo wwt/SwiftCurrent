@@ -17,7 +17,6 @@ Create two view controllers that inherit from [UIWorkflowItem<I, O>](https://git
 ```swift
 import UIKit
 import Workflow
-import WorkflowUIKit
 
 class FirstViewController: UIWorkflowItem<String, String>, FlowRepresentable {
     private let name: String
@@ -69,8 +68,7 @@ class FirstViewController: UIWorkflowItem<String, String>, FlowRepresentable {
 // This screen shows an employee only screen
 class SecondViewController: UIWorkflowItem<String, String>, FlowRepresentable {
     private let email: String
-    private let emailLabel = UILabel()
-    private let nextButton = UIButton()
+    private let finishButton = UIButton()
 
     required init(with email: String) {
         self.email = email
@@ -78,30 +76,26 @@ class SecondViewController: UIWorkflowItem<String, String>, FlowRepresentable {
 
         view.backgroundColor = .systemGray5
 
-        emailLabel.text = "Entered: \(email)"
+        finishButton.setTitle("Finish", for: .normal)
+        finishButton.setTitleColor(.systemBlue, for: .normal)
+        finishButton.addTarget(self, action: #selector(finishPressed), for: .touchUpInside)
+        finishButton.accessibilityIdentifier = "finish"
 
-        nextButton.setTitle("Next", for: .normal)
-        nextButton.setTitleColor(.systemBlue, for: .normal)
-        nextButton.addTarget(self, action: #selector(nextPressed), for: .touchUpInside)
+        view.addSubview(finishButton)
 
-        view.addSubview(emailLabel)
-        view.addSubview(nextButton)
-
-        emailLabel.translatesAutoresizingMaskIntoConstraints = false
-        emailLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        emailLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-
-        nextButton.translatesAutoresizingMaskIntoConstraints = false
-        nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        nextButton.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 16).isActive = true
+        finishButton.translatesAutoresizingMaskIntoConstraints = false
+        finishButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        finishButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
 
     required init?(coder: NSCoder) { nil }
 
-    func shouldLoad() -> Bool { email.contains("@wwt.com") }
-
-    @objc private func nextPressed() {
+    @objc private func finishPressed() {
         proceedInWorkflow(email)
+    }
+
+    func shouldLoad() -> Bool {
+        return email.contains("@wwt.com")
     }
 }
 ```
