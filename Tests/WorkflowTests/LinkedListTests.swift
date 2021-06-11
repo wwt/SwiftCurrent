@@ -112,68 +112,77 @@ class LinkedListTests: XCTestCase {
         XCTAssertFalse(list.contains(4))
     }
 
-//    func testSort() {
-//        let list = LinkedList([3, 1, 2])
-//
-//        list.sort()
-//
-//        XCTAssertEqual(list.first?.value, 1)
-//        XCTAssertEqual(list.first?.next?.previous?.value, 1)
-//        XCTAssertNil(list.first?.previous)
-//        XCTAssertEqual(list.first?.traverse(1)?.value, 2)
-//        XCTAssertEqual(list.first?.traverse(1)?.next?.previous?.value, 1)
-//        XCTAssertEqual(list.first?.traverse(2)?.value, 3)
-//        XCTAssertEqual(list.first?.traverse(2)?.next?.previous?.value, 1)
-//    }
-//
-//    func testSortBy() {
-//        class Wrapper {
-//            var int: Int
-//            init(_ val: Int) {
-//                int = val
-//            }
-//        }
-//        let list = LinkedList([Wrapper(3), Wrapper(1), Wrapper(2)])
-//
-//        list.sort(by: { $0.int <= $1.int })
-//
-//        XCTAssertEqual(list.first?.value.int, 1)
-//        XCTAssertEqual(list.first?.traverse(1)?.value.int, 2)
-//        XCTAssertEqual(list.first?.traverse(2)?.value.int, 3)
-//    }
-//
-//    func testSortedBy() {
-//        class Wrapper {
-//            var int: Int
-//            init(_ val: Int) {
-//                int = val
-//            }
-//        }
-//        let list: LinkedList = LinkedList([Wrapper(3), Wrapper(1), Wrapper(2)])
-//                              .sorted(by: { $0.int <= $1.int })
-//
-//        XCTAssertEqual(list.first?.value.int, 1)
-//        XCTAssertEqual(list.first?.traverse(1)?.value.int, 2)
-//        XCTAssertEqual(list.first?.traverse(2)?.value.int, 3)
-//    }
-//
-//    func testSortInPlacePerformance() {
-//        let limit = 10_000
-//        let list = LinkedList((1...limit).map { _ in arc4random_uniform(UInt32(limit)) })
-//
-//        measure {
-//            list.sort()
-//        }
-//    }
-//
-//    func testSortPerformance() {
-//        let limit = 10_000
-//        let list = LinkedList((1...limit).map { _ in arc4random_uniform(UInt32(limit)) })
-//
-//        measure {
-//            _ = list.sorted()
-//        }
-//    }
+    func testRemoveTillEnd() {
+        let list = LinkedList([1, 2, 3])
+        let node = list.first?.next
+
+        node?.removeTillEnd()
+
+        XCTAssertNil(node?.previous)
+        XCTAssertNil(node?.next)
+    }
+
+    func testSort() {
+        let list = LinkedList([3, 1, 2])
+
+        list.sort()
+
+        XCTAssertEqual(list.first?.value, 1)
+        XCTAssertEqual(list.first?.next?.previous?.value, 1)
+        XCTAssertNil(list.first?.previous)
+        XCTAssertEqual(list.first?.traverse(1)?.value, 2)
+        XCTAssertEqual(list.first?.traverse(1)?.next?.previous?.value, 2)
+        XCTAssertEqual(list.first?.traverse(2)?.value, 3)
+    }
+
+    func testSortBy() {
+        class Wrapper {
+            var int: Int
+            init(_ val: Int) {
+                int = val
+            }
+        }
+        let list = LinkedList([Wrapper(3), Wrapper(1), Wrapper(2)])
+
+        list.sort(by: { $0.int <= $1.int })
+
+        XCTAssertEqual(list.first?.value.int, 1)
+        XCTAssertEqual(list.first?.traverse(1)?.value.int, 2)
+        XCTAssertEqual(list.first?.traverse(2)?.value.int, 3)
+    }
+
+    func testSortedBy() {
+        class Wrapper {
+            var int: Int
+            init(_ val: Int) {
+                int = val
+            }
+        }
+        let list: LinkedList = LinkedList([Wrapper(3), Wrapper(1), Wrapper(2)])
+                              .sorted(by: { $0.int <= $1.int })
+
+        XCTAssertEqual(list.first?.value.int, 1)
+        XCTAssertEqual(list.first?.traverse(1)?.value.int, 2)
+        XCTAssertEqual(list.first?.traverse(2)?.value.int, 3)
+    }
+
+    func testSortInPlacePerformance() {
+        let limit = 10_000
+        let list = LinkedList((1...limit).map { _ in arc4random_uniform(UInt32(limit)) })
+
+        measure {
+            list.sort()
+        }
+    }
+
+    func testSortPerformance() {
+        let limit = 10_000
+        let list = LinkedList((1...limit).map { _ in arc4random_uniform(UInt32(limit)) })
+
+        measure {
+            _ = list.sorted()
+        }
+    }
 
     func testAppendToExisting() {
         let list = LinkedList([1, 2, 3])
