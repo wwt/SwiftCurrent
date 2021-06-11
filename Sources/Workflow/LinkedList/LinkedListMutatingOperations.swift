@@ -232,6 +232,8 @@ extension LinkedList {
      */
     public func sort(by comparator: (Value, Value) -> Bool) {
         guard first?.next != nil else { return }
-        first = LinkedList(mergeSort(first, by: comparator)).first
+        let sorted = LinkedList(mergeSort(first?.copy(), by: comparator))
+        let copy = sorted.first?.copy()
+        first = copy
     }
 }

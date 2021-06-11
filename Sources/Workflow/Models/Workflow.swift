@@ -26,6 +26,10 @@ public final class Workflow<F: FlowRepresentable>: LinkedList<_WorkflowItem> {
         super.init(node)
     }
 
+    public required init(withoutCopying node: Element? = nil) {
+        super.init(withoutCopying: node)
+    }
+
     /// The `OrchestartionResponder` the `Workflow` will send actions to.
     public internal(set) var orchestrationResponder: OrchestrationResponder?
 
@@ -286,7 +290,7 @@ extension Workflow where F.WorkflowOutput == Never {
     public func thenProceed<FR: FlowRepresentable>(with type: FR.Type,
                                                    launchStyle: LaunchStyle = .default,
                                                    flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where FR.WorkflowInput == Never {
-        let wf = Workflow<FR>(first?.copy())
+        let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetadata(type,
                                             launchStyle: launchStyle) { _ in flowPersistence() })
         return wf
@@ -302,7 +306,7 @@ extension Workflow where F.WorkflowOutput == Never {
     public func thenProceed<FR: FlowRepresentable>(with type: FR.Type,
                                                    launchStyle: LaunchStyle = .default,
                                                    flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where FR.WorkflowInput == AnyWorkflow.PassedArgs {
-        let wf = Workflow<FR>(first?.copy())
+        let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetadata(type,
                                             launchStyle: launchStyle) { _ in flowPersistence() })
         return wf
@@ -320,7 +324,7 @@ extension Workflow {
     public func thenProceed<FR: FlowRepresentable>(with type: FR.Type,
                                                    launchStyle: LaunchStyle = .default,
                                                    flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where F.WorkflowOutput == FR.WorkflowInput {
-        let wf = Workflow<FR>(first?.copy())
+        let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetadata(type,
                                             launchStyle: launchStyle) { _ in flowPersistence() })
         return wf
@@ -336,7 +340,7 @@ extension Workflow {
     public func thenProceed<FR: FlowRepresentable>(with type: FR.Type,
                                                    launchStyle: LaunchStyle = .default,
                                                    flowPersistence: @escaping (FR.WorkflowInput) -> FlowPersistence) -> Workflow<FR> where F.WorkflowOutput == FR.WorkflowInput {
-        let wf = Workflow<FR>(first?.copy())
+        let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetadata(type,
                                             launchStyle: launchStyle) { data in
             guard case.args(let extracted) = data,
@@ -356,7 +360,7 @@ extension Workflow {
     public func thenProceed<FR: FlowRepresentable>(with type: FR.Type,
                                                    launchStyle: LaunchStyle = .default,
                                                    flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where FR.WorkflowInput == Never {
-        let wf = Workflow<FR>(first?.copy())
+        let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetadata(type,
                                             launchStyle: launchStyle) { _ in flowPersistence() })
         return wf
@@ -372,7 +376,7 @@ extension Workflow {
     public func thenProceed<FR: FlowRepresentable>(with type: FR.Type,
                                                    launchStyle: LaunchStyle = .default,
                                                    flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where FR.WorkflowInput == AnyWorkflow.PassedArgs {
-        let wf = Workflow<FR>(first?.copy())
+        let wf = Workflow<FR>(first)
         wf.append(FlowRepresentableMetadata(type,
                                             launchStyle: launchStyle) { _ in flowPersistence() })
         return wf

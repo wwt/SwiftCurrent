@@ -23,7 +23,7 @@ extension LinkedList {
             node.next = collection[safe: i + 1]
         }
 
-        self.init(collection.first)
+        self.init(withoutCopying: collection.first)
     }
 }
 
