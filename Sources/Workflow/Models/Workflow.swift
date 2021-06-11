@@ -26,6 +26,10 @@ public final class Workflow<F: FlowRepresentable>: LinkedList<_WorkflowItem> {
         super.init(node)
     }
 
+    public required init(withoutCopying node: Element? = nil) {
+        super.init(withoutCopying: node)
+    }
+
     /// The `OrchestartionResponder` the `Workflow` will send actions to.
     public internal(set) var orchestrationResponder: OrchestrationResponder?
 

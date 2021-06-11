@@ -16,7 +16,7 @@
     },
     {
       "file": "/Users/gistr/workspaces/wwt/Workflow/Workflow/Sources/Workflow/Models/Workflow.swift",
-      "line": 135,
+      "line": 139,
       "symbol": "Workflow._abandon()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

@@ -23,7 +23,7 @@ extension LinkedList {
             node.next = collection[safe: i + 1]
         }
 
-        self.init(collection.first)
+        self.init(withoutCopying: collection.first)
     }
 }
 
@@ -112,13 +112,26 @@ class LinkedListTests: XCTestCase {
         XCTAssertFalse(list.contains(4))
     }
 
+    func testRemoveTillEnd() {
+        let list = LinkedList([1, 2, 3])
+        let node = list.first?.next
+
+        node?.removeTillEnd()
+
+        XCTAssertNil(node?.previous)
+        XCTAssertNil(node?.next)
+    }
+
     func testSort() {
         let list = LinkedList([3, 1, 2])
 
         list.sort()
 
         XCTAssertEqual(list.first?.value, 1)
+        XCTAssertEqual(list.first?.next?.previous?.value, 1)
+        XCTAssertNil(list.first?.previous)
         XCTAssertEqual(list.first?.traverse(1)?.value, 2)
+        XCTAssertEqual(list.first?.traverse(1)?.next?.previous?.value, 2)
         XCTAssertEqual(list.first?.traverse(2)?.value, 3)
     }
 
@@ -551,6 +564,18 @@ class LinkedListTests: XCTestCase {
         let node = list.last?.traverse(direction: .backward) { $0.value == 8 }
         XCTAssertNil(node)
     }
+
+    func testLinkedListDoesNotHaveRetainCycle() throws {
+        var list: LinkedList<Int>?
+        weak var retainedNode: LinkedList<Int>.Node<Int>?
+        autoreleasepool {
+            list = LinkedList([1, 2, 3])
+            retainedNode = list?.first
+        }
+        list = nil
+        XCTAssertNil(retainedNode)
+    }
+
 
     class ComplexObject {
         var i: Int
