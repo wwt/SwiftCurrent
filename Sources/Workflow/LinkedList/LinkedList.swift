@@ -58,6 +58,10 @@ public class LinkedList<Value>: Sequence, CustomStringConvertible {
         first = node
     }
 
+    deinit {
+        removeAll()
+    }
+
     /// Returns an iterator over the elements of this sequence.
     public func makeIterator() -> Iterator {
         LinkedListIterator(first)

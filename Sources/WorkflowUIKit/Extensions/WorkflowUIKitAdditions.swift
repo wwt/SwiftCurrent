@@ -117,7 +117,7 @@ extension Workflow where F.WorkflowOutput == Never {
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: LaunchStyle.PresentationType = .default,
                                                    flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where FR.WorkflowInput == Never {
-        let wf = Workflow<FR>(first)
+        let wf = Workflow<FR>(first?.copy())
         wf.append(FlowRepresentableMetadata(type,
                                             launchStyle: presentationType.rawValue) { _ in flowPersistence() })
         return wf
@@ -133,7 +133,7 @@ extension Workflow where F.WorkflowOutput == Never {
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: LaunchStyle.PresentationType = .default,
                                                    flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where FR.WorkflowInput == AnyWorkflow.PassedArgs {
-        let wf = Workflow<FR>(first)
+        let wf = Workflow<FR>(first?.copy())
         wf.append(FlowRepresentableMetadata(type,
                                             launchStyle: presentationType.rawValue) { _ in flowPersistence() })
         return wf
@@ -151,7 +151,7 @@ extension Workflow {
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: LaunchStyle.PresentationType = .default,
                                                    flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where F.WorkflowOutput == FR.WorkflowInput {
-        let wf = Workflow<FR>(first)
+        let wf = Workflow<FR>(first?.copy())
         wf.append(FlowRepresentableMetadata(type,
                                             launchStyle: presentationType.rawValue) { _ in flowPersistence() })
         return wf
@@ -167,7 +167,7 @@ extension Workflow {
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: LaunchStyle.PresentationType = .default,
                                                    flowPersistence: @escaping (FR.WorkflowInput) -> FlowPersistence) -> Workflow<FR> where F.WorkflowOutput == FR.WorkflowInput {
-        let wf = Workflow<FR>(first)
+        let wf = Workflow<FR>(first?.copy())
         wf.append(FlowRepresentableMetadata(type,
                                             launchStyle: presentationType.rawValue) { data in
             guard case.args(let extracted) = data,
@@ -187,7 +187,7 @@ extension Workflow {
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: LaunchStyle.PresentationType = .default,
                                                    flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where FR.WorkflowInput == Never {
-        let wf = Workflow<FR>(first)
+        let wf = Workflow<FR>(first?.copy())
         wf.append(FlowRepresentableMetadata(type,
                                             launchStyle: presentationType.rawValue) { _ in flowPersistence() })
         return wf
@@ -203,7 +203,7 @@ extension Workflow {
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: LaunchStyle.PresentationType = .default,
                                                    flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where FR.WorkflowInput == AnyWorkflow.PassedArgs {
-        let wf = Workflow<FR>(first)
+        let wf = Workflow<FR>(first?.copy())
         wf.append(FlowRepresentableMetadata(type,
                                             launchStyle: presentationType.rawValue) { _ in flowPersistence() })
         return wf

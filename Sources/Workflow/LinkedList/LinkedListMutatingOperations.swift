@@ -218,7 +218,9 @@ extension LinkedList {
      - Important: This operation mutates the original `LinkedList`.
      */
     public func reverse() {
-        first = reversed().first
+        let reversed = reversed()
+        let copied = reversed.first?.copy()
+        first = copied
     }
 
     /**
