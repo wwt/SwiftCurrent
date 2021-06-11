@@ -53,7 +53,7 @@ public class LinkedList<Value>: Sequence, CustomStringConvertible {
      */
     public var last: Element? { first?.traverseToEnd() }
 
-    /// Creates a copy of a `LinkedList` by providing the first node, and copying it.
+    /// Creates a copy of a `LinkedList` by providing the first node and copying it.
     public required init(_ node: Element? = nil) {
         first = node?.copy()
     }
