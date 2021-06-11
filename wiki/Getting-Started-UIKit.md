@@ -61,8 +61,7 @@ class FirstViewController: UIWorkflowItem<String, String>, FlowRepresentable {
 
     required init?(coder: NSCoder) { nil }
 
-    @objc
-    private func savePressed() {
+    @objc private func savePressed() {
         proceedInWorkflow(emailTextField.text ?? "")
     }
 }
@@ -101,8 +100,7 @@ class SecondViewController: UIWorkflowItem<String, String>, FlowRepresentable {
 
     func shouldLoad() -> Bool { email.contains("@wwt.com") }
 
-    @objc
-    private func nextPressed() {
+    @objc private func nextPressed() {
         proceedInWorkflow(email)
     }
 }
@@ -141,8 +139,7 @@ class ViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    @objc
-    private func launchWorkflow() {
+    @objc private func launchWorkflow() {
         let workflow = Workflow(FirstViewController.self)
             .thenPresent(SecondViewController.self)
 
