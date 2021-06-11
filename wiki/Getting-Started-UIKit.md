@@ -1,7 +1,7 @@
 # Interested in seeing examples of Workflow in action?
 Start by cloning the repo and checking out the 'WorkflowExample' scheme. This should give you a decent idea of how the library works.  If you want to create a new project, read on.
 
-# CocoaPods with Programmatic Views
+# CocoaPods with Programmatic UIKit
 
 ## Adding the dependency
 ```ruby
