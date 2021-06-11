@@ -98,9 +98,9 @@ extension LinkedList {
 
         func removeTillEnd() {
             previous = nil
-            var n = next
-            while let next = n {
-                defer { n = n?.next }
+            var nextNode = next
+            while let next = nextNode {
+                defer { nextNode = nextNode?.next }
                 next.previous?.next = nil
                 next.previous = nil
             }
