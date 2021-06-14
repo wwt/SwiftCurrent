@@ -3,8 +3,8 @@ output: docs
 skip_undocumented: true
 separate_global_declarations: true
 readme: README.md
-module: Workflow
-author_url: https://github.com/wwt/workflow
-github_url: https://github.com/wwt/workflow
+module: SwiftCurrent
+author_url: https://github.com/wwt/SwiftCurrent
+github_url: https://github.com/wwt/SwiftCurrent
 sourcekitten_sourcefile: workflow-docs.json,workflowuikit-docs.json
 author: WWT and Tyler Thompson

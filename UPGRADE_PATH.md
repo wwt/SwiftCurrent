@@ -2,6 +2,12 @@
 Use this document to help you understand how to update between major versions of the library. We test upgrade paths when we ramp major versions and do our best to have the compiler help make a useful upgrade experience.
 
 <details>
+  <summary><b>V3 -> V3</b></summary>
+  update imports and pod or SPM
+
+</details>
+
+<details>
   <summary><b>V2 -> V3</b></summary>
   
   #### Package Management:

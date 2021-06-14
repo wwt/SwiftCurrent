@@ -21,7 +21,7 @@ platform :ios do
   end
 
   lane :cocoapods_liblint do
-    pod_lib_lint(podspec: 'DynamicWorkflow.podspec', allow_warnings: true)
+    pod_lib_lint(podspec: 'SwiftCurrent.podspec', allow_warnings: true)
   end
 
   lane :lint do 
@@ -52,7 +52,7 @@ platform :ios do
   end
 
   def release(type)
-    podspec_name = "DynamicWorkflow.podspec"
+    podspec_name = "SwiftCurrent.podspec"
     version = version_bump_podspec(path: podspec_name,
                                    bump_type: type)
     echo(message: "New Version: #{version}")

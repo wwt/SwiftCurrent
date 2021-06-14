@@ -2214,9 +2214,9 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
     import Swinject
     import ViewInspector
 
-    import WorkflowCore
+    import SwiftCurrentCore
 
-    @testable import WorkflowSwiftUI
+    @testable import SwiftCurrentSwiftUI
     ```
 
   </details>

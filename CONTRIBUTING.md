@@ -1,18 +1,18 @@
-# Contributing to Workflow
-Thank you for your interest in Workflow!
+# Contributing to SwiftCurrent
+Thank you for your interest in SwiftCurrent!
 
 ## Submitting issues
 ### Filing bugs
-If you found a bug in Workflow, thank you!  Please go to [issues](https://github.com/wwt/Workflow/issues/new/choose) and use the `Bug report` template to file it.  We'll reach out to you as soon as we can.  Some things the template will ask for are:
+If you found a bug in SwiftCurrent, thank you!  Please go to [issues](https://github.com/wwt/SwiftCurrent/issues/new/choose) and use the `Bug report` template to file it.  We'll reach out to you as soon as we can.  Some things the template will ask for are:
 - Steps to reproduce
 - Context around your environment
 - Optional screenshots and debugging logs
 
 ### Feature requests
-If you have an idea or change you would like to request, please go to [issues](https://github.com/wwt/Workflow/issues/new/choose) and use the `Feature request` template to make your request.  We'll reach out to you as soon as we can to discuss.  The more "why" you put into your request, the better we will be able to help build a solution that meets our styling and achieves your goals.
+If you have an idea or change you would like to request, please go to [issues](https://github.com/wwt/SwiftCurrent/issues/new/choose) and use the `Feature request` template to make your request.  We'll reach out to you as soon as we can to discuss.  The more "why" you put into your request, the better we will be able to help build a solution that meets our styling and achieves your goals.
 
 ## Pull Requests:
-PRs have a checklist that walks you through the things that you should do for any PR. This document provides greater detail and context around what some of those checklist items mean. Please take the time to read through this document and our styleguide before contributing so that we can keep Workflow clean, and maintainable. By the time you submit code we want to be focused on the logic, not the formatting, or patterns. Also please be sure to read the section on testing in this guide as tests are incredibly important to us.
+PRs have a checklist that walks you through the things that you should do for any PR. This document provides greater detail and context around what some of those checklist items mean. Please take the time to read through this document and our styleguide before contributing so that we can keep SwiftCurrent clean, and maintainable. By the time you submit code we want to be focused on the logic, not the formatting, or patterns. Also please be sure to read the section on testing in this guide as tests are incredibly important to us.
 
 ## Style guide
 Please review our [style guide](STYLEGUIDE.md) to ensure the least amount of rework and changes in your pull request.  If there are changes that you would like to make to the style guide, the process is:
@@ -65,7 +65,7 @@ This is not just about code. If any change affects statements that we have made 
 ### How do we write good documentation?
 Our documentation goal is to be clear and concise. We don't want superfluous statements; we also want to avoid ambiguity. We choose to use US English for our documentation. If you are going to include sample code in your documentation it is vital that code can be copied and pasted into Xcode and work with the latest version of our library.
 
-For an example of documentation that we like, look at our style guide. Our style guide communicates complex topics unambiguously. People should understand the value of what we are documenting. If they're reading documentation about Workflow they should understand why Workflow is valuable to them. If they're reading documentation about our choice to use a fluent API, then they should understand why we chose it and how it helps them.  
+For an example of documentation that we like, look at our style guide. Our style guide communicates complex topics unambiguously. People should understand the value of what we are documenting. If they're reading documentation about SwiftCurrent they should understand why SwiftCurrent is valuable to them. If they're reading documentation about our choice to use a fluent API, then they should understand why we chose it and how it helps them.  
 
 ### What don't we document? 
 We do not document things that are irrelevant to our users. This means we do not document implementation details of our public methods, but we do document how to use those public methods. If we refactor internal workings of the library, our users are unaffected by that and therefore documenting it would be superfluous. We also don't document anything that the linter or compiler will tell you. For example, we will not document compiler errors unless they are unclear. 

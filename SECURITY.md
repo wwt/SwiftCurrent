@@ -8,4 +8,4 @@ We support the latest version of the library, by which we mean we have processes
 
 ## Reporting a Vulnerability
 
-To report a vulnerability, send an email to [Workflow@wwt.com](mailto:Workflow@wwt.com) with the subject line: `Security Vulnerability: [vulnerability]`.
+To report a vulnerability, send an email to [SwiftCurrent@wwt.com](mailto:SwiftCurrent@wwt.com) with the subject line: `Security Vulnerability: [vulnerability]`.
