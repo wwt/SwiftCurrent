@@ -1,8 +1,6 @@
 # Swift Package Manager
 
-If you want more information about installing Swift packages with Xcode, [follow these instructions](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app). If you want to learn more about Swift Package Manager, [this page goes into detail](https://swift.org/package-manager/).
-
-To use Swift Package Manager in Xcode, click `File` -> `Swift Packages` -> `Add Package Dependency` and enter the Workflow repo's URL.
+If you want more information about installing Swift packages through Xcode, [follow these instructions](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app). If you want to learn more about Swift Package Manager, [this page goes into detail](https://swift.org/package-manager/).
 
 If you're a framework author and want to use Workflow as a dependency, update your `Package.swift` file:
 

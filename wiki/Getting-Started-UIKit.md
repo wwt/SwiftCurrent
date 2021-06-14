@@ -1,22 +1,18 @@
 # Interested in seeing examples of Workflow in action?
 Start by cloning the repo and checking out the 'WorkflowExample' scheme. This should give you a decent idea of how the library works.  If you want to create a new project, read on.
 
-# CocoaPods with Programmatic UIKit
+# Swift Package Manager with Programmatic UIKit
 
 ## Adding the dependency
-```ruby
-pod 'DynamicWorkflow/UIKit'
-```
-Add the above line to your Podfile.
 
-For more installation instructions, see the wiki on [installation](https://github.com/wwt/Workflow/wiki/Installation).
+For instructions on SPM and other package managers, [check out our intstallation page.](https://github.com/wwt/Workflow/wiki/Installation#swift-package-manager)
 
 ## Create your view controllers
 Create two view controllers that inherit from [UIWorkflowItem<I, O>](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/UIWorkflowItem.html).
 
 ```swift
 import UIKit
-import Workflow
+import WorkflowUIKit
 
 class FirstViewController: UIWorkflowItem<String, String>, FlowRepresentable {
     private let name: String
@@ -112,6 +108,7 @@ Next, we create a [Workflow](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954
 ```swift
 import UIKit
 import Workflow
+import WorkflowUIKit
 
 class ViewController: UIViewController {
     private let launchButton = UIButton()
@@ -166,10 +163,8 @@ Calling `abandon()` closes all the views launched as part of the workflow, leavi
 ## Testing
 
 ### Installing test dependencies
-For our test example, we will be using a library called [UIUTest](https://github.com/nallick/UIUTest). It is optional for testing Workflow, but in order for the example to be copyable, you will need to add
-```ruby
-pod 'UIUTest'
-```
+
+For our test example, we will be using a library called [UIUTest](https://github.com/nallick/UIUTest). It is optional for testing Workflow, but in order for the example to be copyable, you will need to add the UIUTest Swift Package
 to your test target.
 
 ### Creating the tests

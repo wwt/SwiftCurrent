@@ -2,24 +2,18 @@
 
 Start by cloning the repo and checking out the 'WorkflowExample' scheme. This should give you a decent idea of how the library works.  If you want to create a new project, read on.
 
-# CocoaPods with Storyboards
+# Swift Package Manager with Storyboards
 
 ## Adding the dependency
 
-```ruby
-pod 'DynamicWorkflow/UIKit'
-```
-
-Add the above line to your Podfile.
-
-For information on importing and more installation instructions, [check out our Installation page](https://github.com/wwt/Workflow/wiki/Installation).
+For instructions on SPM and other package managers, [check out our intstallation page.](https://github.com/wwt/Workflow/wiki/Installation#swift-package-manager)
 
 ## Create the convenience protocols for storyboard loading
 
 It is best practice to use the [StoryboardLoadable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/StoryboardLoadable.html) protocol to connect your [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) to your Storyboard.  Additionally, to limit the amount of duplicate code, you can make a convenience protocol for each storyboard.
 
 ```swift
-import Workflow
+import WorkflowUIKit
 
 extension StoryboardLoadable {
     static var storyboardId: String { String(describing: Self.self) }
@@ -39,7 +33,7 @@ Create two view controllers that both conform to `MainStoryboardLoadable` and in
 
 ```swift
 import UIKit
-import Workflow
+import WorkflowUIKit
 
 class FirstViewController: UIWorkflowItem<String, String>, MainStoryboardLoadable {
     private let name: String
@@ -124,6 +118,7 @@ Next, we create a [Workflow](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954
 ```swift
 import UIKit
 import Workflow
+import WorkflowUIKit
 
 class ViewController: UIViewController {
     @IBAction private func launchWorkflow() {
@@ -168,12 +163,7 @@ Calling `abandon()` closes all the views launched as part of the workflow, leavi
 
 ### Installing test dependencies
 
-For our test example, we will be using a library called [UIUTest](https://github.com/nallick/UIUTest). It is optional for testing Workflow, but in order for the example to be copyable, you will need to add
-
-```ruby
-pod 'UIUTest'
-```
-
+For our test example, we will be using a library called [UIUTest](https://github.com/nallick/UIUTest). It is optional for testing Workflow, but in order for the example to be copyable, you will need to add the UIUTest Swift Package
 to your test target.
 
 ### Creating the tests
