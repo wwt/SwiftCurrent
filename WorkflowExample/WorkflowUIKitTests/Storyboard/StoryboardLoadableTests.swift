@@ -10,8 +10,8 @@ import XCTest
 
 import ExceptionCatcher
 
-import Workflow
-@testable import WorkflowUIKit
+import SwiftCurrent
+@testable import SwiftCurrent_UIKit
 
 class StoryboardLoadableTests: XCTestCase {
     func testStoryboardLoadableThrowsErrorWhenYouCallDefaultInitImplementation() {

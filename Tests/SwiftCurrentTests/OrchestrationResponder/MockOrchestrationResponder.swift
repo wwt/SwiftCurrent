@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Workflow
+import SwiftCurrent
 
 class MockOrchestrationResponder: OrchestrationResponder {
     var launchCalled = 0

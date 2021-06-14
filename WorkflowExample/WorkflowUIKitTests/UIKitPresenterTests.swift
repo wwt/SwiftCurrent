@@ -9,8 +9,8 @@
 import Foundation
 import XCTest
 
-@testable import Workflow
-@testable import WorkflowUIKit
+@testable import SwiftCurrent
+@testable import SwiftCurrent_UIKit
 
 class UIKitPresenterTests: XCTestCase {
     func testUnknownLaunchStyleThrowsFatalError() {

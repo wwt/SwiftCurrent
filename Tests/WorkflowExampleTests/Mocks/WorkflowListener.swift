@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 
-@testable import Workflow
+@testable import SwiftCurrent
 
 class WorkflowListener {
     var workflow: AnyWorkflow?

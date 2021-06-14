@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import WorkflowUIKit
+import SwiftCurrent_UIKit
 
 class FoodSelectionViewController: UIWorkflowItem<Order, Order>, StoryboardLoadable {
     var order: Order

@@ -8,7 +8,7 @@
 
 import XCTest
 
-import Workflow
+import SwiftCurrent
 
 class WorkflowConsumerTests: XCTestCase {
     func testProgressToNextAvailableItemInWorkflow() {

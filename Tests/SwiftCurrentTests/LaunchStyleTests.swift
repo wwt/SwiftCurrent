@@ -7,7 +7,7 @@
 
 import Foundation
 import XCTest
-import Workflow
+import SwiftCurrent
 
 class LaunchStyleTests: XCTestCase {
     func testCreatingNewLaunchStylesNeverHasTheSameInstance() {

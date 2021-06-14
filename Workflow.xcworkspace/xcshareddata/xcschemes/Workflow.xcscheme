@@ -73,6 +73,16 @@
                ReferencedContainer = "container:WorkflowExample/WorkflowExample.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "SwiftCurrentTests"
+               BuildableName = "SwiftCurrentTests"
+               BlueprintName = "SwiftCurrentTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import Workflow
+import SwiftCurrent
 
 /**
  A subclass of `UIViewController` designed for convenience. This does **NOT** have to be used, it simply removes some of the boilerplate that normally comes with a `FlowRepresentable`.

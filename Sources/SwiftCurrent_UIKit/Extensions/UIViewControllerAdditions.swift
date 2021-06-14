@@ -10,7 +10,7 @@
 
 import Foundation
 import UIKit
-import Workflow
+import SwiftCurrent
 
 extension UIViewController {
     /**

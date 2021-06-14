@@ -9,7 +9,7 @@
 //
 
 import Foundation
-import Workflow
+import SwiftCurrent
 
 // UI friendly terms for creating a workflow.
 extension Workflow {

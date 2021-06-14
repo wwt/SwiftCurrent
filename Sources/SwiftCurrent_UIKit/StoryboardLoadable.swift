@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-import Workflow
+import SwiftCurrent
 
 /**
  A protocol indicating this a `FlowRepresentable` that should be loaded from a storyboard.

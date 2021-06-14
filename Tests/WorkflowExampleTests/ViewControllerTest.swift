@@ -10,9 +10,9 @@ import Foundation
 import XCTest
 import UIUTest
 
-import WorkflowUIKit
+import SwiftCurrent_UIKit
 
-@testable import Workflow
+@testable import SwiftCurrent
 @testable import WorkflowExample
 
 class ViewControllerTest<T: StoryboardLoadable>: XCTestCase {

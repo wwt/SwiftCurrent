@@ -10,7 +10,7 @@ import Foundation
 import XCTest
 
 @testable import WorkflowExample
-@testable import Workflow
+@testable import SwiftCurrent
 
 class PickupOrDeliveryViewControllerTests: ViewControllerTest<PickupOrDeliveryViewController> {
     func testShouldLoadOnlyIfThereAreMultipleOrderTypes() {

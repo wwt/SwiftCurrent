@@ -8,7 +8,7 @@
 import Foundation
 import XCTest
 
-@testable import Workflow
+@testable import SwiftCurrent
 
 class PersistenceTests: XCTestCase {
     func testWorkflowCanDestroyFirstItem_AndStillProceedThroughFlow() {

@@ -7,7 +7,7 @@
 
 import Foundation
 import XCTest
-import Workflow
+import SwiftCurrent
 import Algorithms
 
 class FlowPersistenceTests: XCTestCase {

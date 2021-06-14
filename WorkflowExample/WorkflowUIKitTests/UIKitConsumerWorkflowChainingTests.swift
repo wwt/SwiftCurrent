@@ -11,8 +11,8 @@ import XCTest
 import UIUTest
 
 // Do *not* change to @testable import, we want tests driven from the consumer standpoint
-import Workflow
-import WorkflowUIKit
+import SwiftCurrent
+import SwiftCurrent_UIKit
 
 class UIKitConsumerWorkflowChainingTests: XCTestCase {
     override func setUpWithError() throws {

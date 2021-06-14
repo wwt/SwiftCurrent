@@ -9,7 +9,7 @@
 //
 
 import Foundation
-import Workflow
+import SwiftCurrent
 
 extension FlowPersistence {
     /// Indicates a `FlowRepresentable` in a `Workflow` whose `shouldLoad` function returns false, should be persisted in the workflow for backwards navigation.

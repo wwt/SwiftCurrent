@@ -7,8 +7,8 @@
 //
 
 import Foundation
-import Workflow
-import WorkflowUIKit
+import SwiftCurrent
+import SwiftCurrent_UIKit
 
 class PickupOrDeliveryViewController: UIWorkflowItem<Order, Order>, StoryboardLoadable {
     var order: Order

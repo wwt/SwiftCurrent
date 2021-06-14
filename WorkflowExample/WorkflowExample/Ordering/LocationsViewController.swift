@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import WorkflowUIKit
+import SwiftCurrent_UIKit
 import UIKit
 
 class LocationsViewController: UIWorkflowItem<[Location], Order>, StoryboardLoadable {

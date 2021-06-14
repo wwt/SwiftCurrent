@@ -8,7 +8,7 @@
 import Foundation
 import XCTest
 
-import Workflow
+import SwiftCurrent
 
 class SkipThroughWorkflowTests: XCTestCase {
     func testWorkflowCanSkipFirstItem_AndStillProceedThroughFlow_AndCallOnFinish() {

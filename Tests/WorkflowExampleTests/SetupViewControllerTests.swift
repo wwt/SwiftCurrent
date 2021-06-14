@@ -10,7 +10,7 @@ import Foundation
 import XCTest
 
 @testable import WorkflowExample
-import Workflow
+import SwiftCurrent
 
 class SetupViewControllerTests: XCTestCase {
     var testViewController: SetupViewController!

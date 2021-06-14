@@ -8,8 +8,8 @@
 
 import Foundation
 import UIKit
-import Workflow
-import WorkflowUIKit
+import SwiftCurrent
+import SwiftCurrent_UIKit
 
 class SetupViewController: UIViewController {
     @IBAction private func launchMultiLocationWorkflow() {

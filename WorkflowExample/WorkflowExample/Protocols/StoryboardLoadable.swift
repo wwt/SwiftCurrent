@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-import WorkflowUIKit
+import SwiftCurrent_UIKit
 
 extension StoryboardLoadable {
     static var storyboardId: String {

@@ -11,7 +11,7 @@
 import Foundation
 import UIKit
 
-import Workflow
+import SwiftCurrent
 
 extension LaunchStyle {
     static let _navigationStack = LaunchStyle.new

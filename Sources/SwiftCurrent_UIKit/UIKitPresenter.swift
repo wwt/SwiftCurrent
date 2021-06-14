@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import Workflow
+import SwiftCurrent
 
 /// An `OrchestrationResponder` that interacts with UIKit.
 open class UIKitPresenter: OrchestrationResponder {

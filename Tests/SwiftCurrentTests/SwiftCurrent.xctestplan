@@ -33,20 +33,20 @@
     {
       "target" : {
         "containerPath" : "container:",
-        "identifier" : "WorkflowTests",
-        "name" : "WorkflowTests"
+        "identifier" : "SwiftCurrentTests",
+        "name" : "SwiftCurrentTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:..\/WorkflowExample\/WorkflowExample.xcodeproj",
+        "containerPath" : "container:WorkflowExample\/WorkflowExample.xcodeproj",
         "identifier" : "CAF586AD256CF2B40044C864",
         "name" : "WorkflowExampleTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:..\/WorkflowExample\/WorkflowExample.xcodeproj",
+        "containerPath" : "container:WorkflowExample\/WorkflowExample.xcodeproj",
         "identifier" : "CAF58634256CF0E50044C864",
         "name" : "WorkflowUIKitTests"
       }
