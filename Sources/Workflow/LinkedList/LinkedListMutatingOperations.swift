@@ -218,17 +218,22 @@ extension LinkedList {
      - Important: This operation mutates the original `LinkedList`.
      */
     public func reverse() {
-        first = reversed().first
+        let rev = reversed()
+        let copied = rev.first?.copy()
+        first = copied
     }
 
     /**
      Sorts the linked list.
      - Parameter comparator: a closure that takes in 2 concrete types and indicates how they should be sorted.
      - Important: This operation mutates the original `LinkedList`.
+     - Important: This will not mutate any references to nodes you have, for memory and performance reasons this sorts the `LinkedList` without modifying original nodes.
      - Complexity: O(n log(n)) This uses Merge Sort under the covers and is more performant than the built in alternative.
      */
     public func sort(by comparator: (Value, Value) -> Bool) {
         guard first?.next != nil else { return }
-        first = LinkedList(mergeSort(first, by: comparator)).first
+        let sorted = LinkedList(mergeSort(first?.copy(), by: comparator))
+        let copy = sorted.first?.copy()
+        first = copy
     }
 }

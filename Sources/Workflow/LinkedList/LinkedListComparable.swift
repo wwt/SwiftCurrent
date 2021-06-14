@@ -11,14 +11,17 @@
 import Foundation
 extension LinkedList where Value: Comparable {
     /// Sorts the linked list in place using a merge sort.
+    /// - Important: This will not mutate any references to nodes you have, for memory and performance reasons this sorts the `LinkedList` without modifying original nodes.
     public func sort() {
         guard first?.next != nil else { return }
-        first = LinkedList(mergeSort(first) { $0 <= $1 }).first
+        let sorted = LinkedList(mergeSort(first?.copy()) { $0 <= $1 })
+        let copy = sorted.first?.copy()
+        first = copy
     }
 
     /// Returns a sorted version of the linked list.
     public func sorted() -> LinkedList<Value> {
-        LinkedList(mergeSort(first) { $0 <= $1 })
+        LinkedList(mergeSort(first?.copy()) { $0 <= $1 })
     }
 
     /// Returns the maximum concrete value in the linked list; nil if there is none.

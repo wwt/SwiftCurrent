@@ -20,6 +20,12 @@ extension LinkedList {
         let right = mergeSort(nextOfMiddle, by: comparator)
 
         let sorted = sortedMerge(upper: left, lower: right, by: comparator)
+        var prev: Element?
+        _ = sorted?.traverse { node in
+            defer { prev = node }
+            node.previous = prev
+            return true
+        }
         return sorted
     }
 

@@ -53,9 +53,20 @@ public class LinkedList<Value>: Sequence, CustomStringConvertible {
      */
     public var last: Element? { first?.traverseToEnd() }
 
-    /// Creates a `LinkedList` by providing the first node in the list.
+    /// Creates a copy of a `LinkedList` by providing the first node and copying it.
     public required init(_ node: Element? = nil) {
+        first = node?.copy()
+    }
+
+    /** Creates a `LinkedList` by providing the first node in the list.
+    - Important: This can potentially cause memory retention issues, you are passing a reference, be aware.
+     */
+    public required init(withoutCopying node: Element?) {
         first = node
+    }
+
+    deinit {
+        removeAll()
     }
 
     /// Returns an iterator over the elements of this sequence.

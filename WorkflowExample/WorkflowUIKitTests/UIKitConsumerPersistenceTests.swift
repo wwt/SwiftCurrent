@@ -593,7 +593,10 @@ class UIKitConsumerPersistenceTests: XCTestCase {
                             .thenProceed(with: FR2.self, flowPersistence: .removedAfterProceeding)
                             .thenProceed(with: FR3.self, flowPersistence: .removedAfterProceeding),
                         withLaunchStyle: .modal) { _ in
-            XCTAssertUIViewControllerDisplayed(isInstance: presented!)
+            XCTAssertNotNil(presented)
+            if let presented = presented {
+                XCTAssertUIViewControllerDisplayed(isInstance: presented)
+            }
             XCTAssertEqual(UIApplication.topViewController()?.presentingViewController, nav)
             expectOnFinish.fulfill()
         }
