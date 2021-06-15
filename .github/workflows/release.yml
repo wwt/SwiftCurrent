@@ -7,12 +7,12 @@ on:
 jobs:
   release:
     runs-on: macos-latest
-    if: ${{ github.repository == 'wwt/Workflow' }}
+    if: ${{ github.repository == 'wwt/SwiftCurrent' }}
     steps:
       - uses: actions/checkout@v2
       - name: Cocoapods Release
         run: |
           pod repo add-cdn trunk 'https://cdn.cocoapods.org/'
-          pod trunk push DynamicWorkflow.podspec --allow-warnings
+          pod trunk push SwiftCurrent.podspec --allow-warnings
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}

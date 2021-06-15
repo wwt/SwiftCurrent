@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:">
+   </FileRef>
+   <FileRef
+      location = "group:SwiftCurrentExample/SwiftCurrentExample.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:SwiftCurrentLint/SwiftCurrentLint.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:DynamicWorkflow.podspec">
+   </FileRef>
+</Workspace>

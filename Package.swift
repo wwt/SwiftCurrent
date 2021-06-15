@@ -4,15 +4,15 @@
 import PackageDescription
 
 let package = Package(
-    name: "Workflow",
+    name: "SwiftCurrent",
     platforms: [.iOS(.v11)],
     products: [
         .library(
-            name: "Workflow",
-            targets: ["Workflow"]),
+            name: "SwiftCurrent",
+            targets: ["SwiftCurrent"]),
         .library(
-            name: "WorkflowUIKit",
-            targets: ["WorkflowUIKit"]),
+            name: "SwiftCurrent_UIKit",
+            targets: ["SwiftCurrent_UIKit"]),
     ],
     dependencies: [
         .package(url: "https://github.com/mattgallagher/CwlPreconditionTesting.git", from: Version("2.0.0-beta.1")),
@@ -22,20 +22,20 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "Workflow",
+            name: "SwiftCurrent",
             dependencies: []),
         .target(
-            name: "WorkflowUIKit",
-            dependencies: ["Workflow"]),
+            name: "SwiftCurrent_UIKit",
+            dependencies: ["SwiftCurrent"]),
         .testTarget(
-            name: "WorkflowTests",
+            name: "SwiftCurrentTests",
             dependencies: [
-                "Workflow",
+                "SwiftCurrent",
                 "CwlPreconditionTesting",
                 "CwlCatchException",
                 "ExceptionCatcher",
                 .product(name: "Algorithms", package: "swift-algorithms")
             ],
-            exclude: ["Info.plist", "Workflow.xctestplan"]),
+            exclude: ["Info.plist", "SwiftCurrent.xctestplan"]),
     ]
 )

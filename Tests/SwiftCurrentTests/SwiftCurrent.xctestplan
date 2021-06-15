@@ -1,0 +1,56 @@
+{
+  "configurations" : [
+    {
+      "id" : "6D7D223B-8529-4817-AA8E-F6BD6745F6CD",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:",
+          "identifier" : "Workflow",
+          "name" : "Workflow"
+        },
+        {
+          "containerPath" : "container:",
+          "identifier" : "WorkflowUIKit",
+          "name" : "WorkflowUIKit"
+        },
+        {
+          "containerPath" : "container:..\/SwiftCurrentExample\/SwiftCurrentExample.xcodeproj",
+          "identifier" : "CAF58529256CEE990044C864",
+          "name" : "SwiftCurrentExample"
+        }
+      ]
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "SwiftCurrentTests",
+        "name" : "SwiftCurrentTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:SwiftCurrentExample\/SwiftCurrentExample.xcodeproj",
+        "identifier" : "CAF586AD256CF2B40044C864",
+        "name" : "SwiftCurrentExampleTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:SwiftCurrentExample\/SwiftCurrentExample.xcodeproj",
+        "identifier" : "CAF58634256CF0E50044C864",
+        "name" : "WorkflowUIKitTests"
+      }
+    }
+  ],
+  "version" : 1
+}

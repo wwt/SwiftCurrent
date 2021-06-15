@@ -1,9 +1,9 @@
 {
   "arguments" : [
     "-workspace",
-    "Workflow.xcworkspace",
+    "SwiftCurrent.xcworkspace",
     "-scheme",
-    "Workflow",
+    "SwiftCurrent",
     "-destination",
     "platform=iOS Simulator,name=iPhone 8",
     "test"
