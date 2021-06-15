@@ -22,9 +22,9 @@
           "name" : "WorkflowUIKit"
         },
         {
-          "containerPath" : "container:..\/WorkflowExample\/WorkflowExample.xcodeproj",
+          "containerPath" : "container:..\/SwiftCurrentExample\/SwiftCurrentExample.xcodeproj",
           "identifier" : "CAF58529256CEE990044C864",
-          "name" : "WorkflowExample"
+          "name" : "SwiftCurrentExample"
         }
       ]
     }
@@ -39,14 +39,14 @@
     },
     {
       "target" : {
-        "containerPath" : "container:WorkflowExample\/WorkflowExample.xcodeproj",
+        "containerPath" : "container:SwiftCurrentExample\/SwiftCurrentExample.xcodeproj",
         "identifier" : "CAF586AD256CF2B40044C864",
-        "name" : "WorkflowExampleTests"
+        "name" : "SwiftCurrentExampleTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:WorkflowExample\/WorkflowExample.xcodeproj",
+        "containerPath" : "container:SwiftCurrentExample\/SwiftCurrentExample.xcodeproj",
         "identifier" : "CAF58634256CF0E50044C864",
         "name" : "WorkflowUIKitTests"
       }

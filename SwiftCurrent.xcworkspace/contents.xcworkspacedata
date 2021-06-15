@@ -5,7 +5,7 @@
       location = "group:">
    </FileRef>
    <FileRef
-      location = "group:WorkflowExample/WorkflowExample.xcodeproj">
+      location = "group:SwiftCurrentExample/SwiftCurrentExample.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:WorkflowLint/WorkflowLint.xcodeproj">

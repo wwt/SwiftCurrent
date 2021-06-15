@@ -61,10 +61,20 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "SwiftCurrentTests"
+               BuildableName = "SwiftCurrentTests"
+               BlueprintName = "SwiftCurrentTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "CAF586AD256CF2B40044C864"
-               BuildableName = "WorkflowExampleTests.xctest"
-               BlueprintName = "WorkflowExampleTests"
-               ReferencedContainer = "container:WorkflowExample/WorkflowExample.xcodeproj">
+               BuildableName = "SwiftCurrentExampleTests.xctest"
+               BlueprintName = "SwiftCurrentExampleTests"
+               ReferencedContainer = "container:SwiftCurrentExample/SwiftCurrentExample.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -72,19 +82,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CAF58634256CF0E50044C864"
-               BuildableName = "WorkflowUIKitTests.xctest"
-               BlueprintName = "WorkflowUIKitTests"
-               ReferencedContainer = "container:WorkflowExample/WorkflowExample.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "SwiftCurrentTests"
-               BuildableName = "SwiftCurrentTests"
-               BlueprintName = "SwiftCurrentTests"
-               ReferencedContainer = "container:">
+               BuildableName = "SwiftCurrent_UIKitTests.xctest"
+               BlueprintName = "SwiftCurrent_UIKitTests"
+               ReferencedContainer = "container:SwiftCurrentExample/SwiftCurrentExample.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
