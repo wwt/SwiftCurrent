@@ -2,4 +2,4 @@
 - [Installation](https://github.com/wwt/SwiftCurrent/wiki/Installation)
 - [Getting Started with Storyboards](https://github.com/wwt/SwiftCurrent/wiki/getting-started)
 - [Getting Started with Programmatic UIKit](https://github.com/wwt/SwiftCurrent/wiki/getting-started-with-programmatic-uikit)
-- [Developer Documentation](https://gitcdn.link/repo/wwt/SwiftCurrent/main/docs/index.html)
+- [Developer Documentation](https://wwt.github.io/SwiftCurrent/index.html)

@@ -21,7 +21,7 @@ launchInto(workflow)
 ```
 The above code is all that is needed from the screen starting this flow. Each screen determines if it needs to show based on data passed in and what that screen knows about the system (such as GPS availability), and all of it is type safe. If you ever want to re-order these, simply move their position in the chain.
 
-As you continue to develop your applications, each view controller will become more decoupled from the rest of the app.  That means, if you want a completely different order of screens, just define a new [Workflow](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/Workflow.html).
+As you continue to develop your applications, each view controller will become more decoupled from the rest of the app.  That means, if you want a completely different order of screens, just define a new [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html).
 
 ## Interested but you need SwiftUI support?
 [We're working on it now!](https://github.com/wwt/SwiftCurrent/milestone/2)
@@ -54,5 +54,5 @@ And just like that you're started!  To see something more practical and in-depth
 - [Installation](https://github.com/wwt/SwiftCurrent/wiki/Installation)
 - [Getting Started with Storyboards](https://github.com/wwt/SwiftCurrent/wiki/getting-started)
 - [Getting Started with Programmatic UIKit](https://github.com/wwt/SwiftCurrent/wiki/Getting-Started-with-Programmatic-UIKit)
-- [Developer Documentation](https://gitcdn.link/repo/wwt/SwiftCurrent/main/docs/index.html)
+- [Developer Documentation](https://wwt.github.io/SwiftCurrent/index.html)
 - [Upgrade Path](https://github.com/wwt/SwiftCurrent/blob/main/UPGRADE_PATH.md)

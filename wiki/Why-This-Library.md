@@ -1,7 +1,7 @@
 ### Why This Library?
 There are many reasons to be excited about SwiftCurrent:
 - Build flexibility into your applications so that you can easily make changes when you need to.
-- Compose new [Workflows](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/Workflow.html) to quickly create a new journey through your app.
+- Compose new [Workflows](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html) to quickly create a new journey through your app.
 - Stop components in your app from knowing more than they should, no more complicated routers or views that have to know what comes next.
 - Create flows that give your users a better experience, web frameworks can easily sign somebody in, or sign them up, then continue into a flow, so why not be able to easily do the same in Swift?
 - Power deep linking experiences that can get your users right where you want them with minimal overhead.
