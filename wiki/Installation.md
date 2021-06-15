@@ -6,7 +6,7 @@ If you're a framework author and want to use SwiftCurrent as a dependency, updat
 
 ## Get the package
 
-Add the following line to the package dependencies in `Package.swift`:
+Add the following line to the package dependencies
 
 ```swift
 .package(url: "https://github.com/wwt/SwiftCurrent.git", .upToNextMajor(from: "3.0.0")),
@@ -29,7 +29,7 @@ Add one one of the following products to your target dependencies.
 import SwiftCurrent_UIKit
 ```
 
-`WorkflowUIKit` will need to be built on a platform that supports UIKit, such as iOS or macOS with Catalyst.
+`WorkflowUIKit` will need to be built for a platform that supports UIKit, such as iOS or macOS with Catalyst.
 
 #### **If you want to use SwiftCurrent without UIKit**
 
@@ -42,8 +42,7 @@ import SwiftCurrent_UIKit
 ```swift
 import SwiftCurrent
 ```
-
-You will need to build your own [Orchestration Responders](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/OrchestrationResponder.html) for your domains.
+`Note:` When using SwiftCurrent for a custom domain, you will need to build the associated [Orchestration Responders](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/OrchestrationResponder.html).
 
 # CocoaPods
 
@@ -61,10 +60,10 @@ pod 'SwiftCurrent/UIKit'
 pod 'SwiftCurrent/Core'
 ```
 
+`Note:` When using SwiftCurrent for a custom domain, you will need to build the associated [Orchestration Responders](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/OrchestrationResponder.html).
+
 #### **In both of these cases your import statement will be**
 
 ```swift
 import SwiftCurrent
 ```
-
-You will need to build your own [Orchestration Responders](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/OrchestrationResponder.html) for your domains.
