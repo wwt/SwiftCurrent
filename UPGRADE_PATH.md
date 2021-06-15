@@ -2,8 +2,21 @@
 Use this document to help you understand how to update between major versions of the library. We test upgrade paths when we ramp major versions and do our best to have the compiler help make a useful upgrade experience.
 
 <details>
-  <summary><b>V3 -> V3</b></summary>
-  update imports and pod or SPM
+  <summary><b>V3 -> V4</b></summary>
+  ### Name Change
+  The library changed its name from "Workflow" to "SwiftCurrent". This change was an important step for us, because it helps with SEO and gives people a sense that the library isn't just some generic thing slapped together. 
+
+  ** If you're using CocoaPods **
+  Update your `podfile` to include `SwiftCurrent`
+  ```ruby
+  pod 'SwiftCurrent'
+  ```
+
+  ** If you're using Swift Package Manager **
+  Update your URL in Xcode or your `Package.swift` file to the new one, for example:
+  ```swift
+  .package(url: "https://github.com/wwt/SwiftCurrent.git", .upToNextMajor(from: "4.0.0")),
+  ```
 
 </details>
 

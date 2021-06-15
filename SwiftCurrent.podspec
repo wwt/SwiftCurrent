@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   s.version          = '4.0.0'
   s.summary          = 'A library for complex workflows in Swift'
   s.description      = <<-DESC
-iOS has a linear paradigm for navigation that doesn't support a lot of flexibility. This library attempts to create a dynamic way to define your workflows in code allowing for easy reordering.
+  SwiftCurrent is a library that lets you easily manage journeys through your Swift application.
                        DESC
 
   s.homepage         = 'https://github.com/wwt/SwiftCurrent'
