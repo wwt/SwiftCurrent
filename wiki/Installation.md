@@ -29,7 +29,7 @@ Add one one of the following products to your target dependencies.
 import SwiftCurrent_UIKit
 ```
 
-`WorkflowUIKit` will need to be built for a platform that supports UIKit, such as iOS or macOS with Catalyst.
+`SwiftCurrent_UIKit` will need to target a platform that supports UIKit, such as iOS or macOS with Catalyst.
 
 #### **If you want to use SwiftCurrent without UIKit**
 

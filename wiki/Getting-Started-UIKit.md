@@ -6,7 +6,7 @@ Start by cloning the repo and checking out the 'SwiftCurrentExample' scheme. Thi
 
 ## Adding the dependency
 
-For instructions on SPM and other package managers, [check out our intstallation page.](https://github.com/wwt/SwiftCurrent/wiki/Installation#swift-package-manager)
+For instructions on SPM and CocoaPods, [check out our intstallation page.](https://github.com/wwt/SwiftCurrent/wiki/Installation#swift-package-manager)
 
 ## Create your view controllers
 
