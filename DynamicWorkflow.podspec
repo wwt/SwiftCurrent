@@ -13,16 +13,18 @@ iOS has a linear paradigm for navigation that doesn't support a lot of flexibili
 
   s.ios.deployment_target = '11.0'
   s.swift_version = '5.1'
+  s.deprecated = true
+  s.deprecated_in_favor_of = 'SwiftCurrent'
 
   s.module_name = 'Workflow'
 
   s.subspec 'Core' do |ss|
-    ss.source_files = 'Sources/Workflow/**/*.{swift,h,m}'
+    ss.source_files = 'Sources/SwiftCurrent/**/*.{swift,h,m}'
   end
   
   s.subspec 'UIKit' do |ss|
     ss.ios.deployment_target = '11.0'
-    ss.source_files = 'Sources/WorkflowUIKit/**/*.{swift,h,m}'
+    ss.source_files = 'Sources/SwiftCurrent/**/*.{swift,h,m}'
     ss.dependency 'DynamicWorkflow/Core'
   end
 
