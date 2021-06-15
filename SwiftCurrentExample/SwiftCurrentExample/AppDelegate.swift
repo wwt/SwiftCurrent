@@ -9,4 +9,6 @@
 import UIKit
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate { }
+class AppDelegate: UIResponder, UIApplicationDelegate {
+    // No implementation necessary as it would only include boilerplate.
+}
