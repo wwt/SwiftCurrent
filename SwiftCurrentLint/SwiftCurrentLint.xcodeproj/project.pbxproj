@@ -8,7 +8,7 @@
 
 /* Begin PBXFileReference section */
 		CA09510C256DD69400759957 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		CA185E12256DD2F3008C9143 /* libWorkflowLint.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libWorkflowLint.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA185E12256DD2F3008C9143 /* libSwiftCurrentLint.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSwiftCurrentLint.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -23,7 +23,7 @@
 		CA185E13256DD2F3008C9143 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CA185E12256DD2F3008C9143 /* libWorkflowLint.a */,
+				CA185E12256DD2F3008C9143 /* libSwiftCurrentLint.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -31,9 +31,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CA185E11256DD2F3008C9143 /* WorkflowLint */ = {
+		CA185E11256DD2F3008C9143 /* SwiftCurrentLint */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CA185E19256DD2F3008C9143 /* Build configuration list for PBXNativeTarget "WorkflowLint" */;
+			buildConfigurationList = CA185E19256DD2F3008C9143 /* Build configuration list for PBXNativeTarget "SwiftCurrentLint" */;
 			buildPhases = (
 				CA0950DB256DD32400759957 /* Lint */,
 			);
@@ -41,9 +41,9 @@
 			);
 			dependencies = (
 			);
-			name = WorkflowLint;
-			productName = WorkflowLint;
-			productReference = CA185E12256DD2F3008C9143 /* libWorkflowLint.a */;
+			name = SwiftCurrentLint;
+			productName = SwiftCurrentLint;
+			productReference = CA185E12256DD2F3008C9143 /* libSwiftCurrentLint.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -61,7 +61,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CA185E0D256DD2F3008C9143 /* Build configuration list for PBXProject "WorkflowLint" */;
+			buildConfigurationList = CA185E0D256DD2F3008C9143 /* Build configuration list for PBXProject "SwiftCurrentLint" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -74,7 +74,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CA185E11256DD2F3008C9143 /* WorkflowLint */,
+				CA185E11256DD2F3008C9143 /* SwiftCurrentLint */,
 			);
 		};
 /* End PBXProject section */
@@ -246,7 +246,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CA185E0D256DD2F3008C9143 /* Build configuration list for PBXProject "WorkflowLint" */ = {
+		CA185E0D256DD2F3008C9143 /* Build configuration list for PBXProject "SwiftCurrentLint" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CA185E17256DD2F3008C9143 /* Debug */,
@@ -255,7 +255,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CA185E19256DD2F3008C9143 /* Build configuration list for PBXNativeTarget "WorkflowLint" */ = {
+		CA185E19256DD2F3008C9143 /* Build configuration list for PBXNativeTarget "SwiftCurrentLint" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CA185E1A256DD2F3008C9143 /* Debug */,

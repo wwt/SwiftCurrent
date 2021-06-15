@@ -4,7 +4,7 @@
 
 /sonar-project.properties @wwt/workflow-pipeline
 /xccov-to-sonarqube-generic.sh @wwt/workflow-pipeline
-/WorkflowLint/.swiftlint.yml @wwt/workflow-pipeline
+/SwiftCurrentLint/.swiftlint.yml @wwt/workflow-pipeline
 
 /changelog_configuration.json @wwt/workflow-pipeline
 /document.sh @wwt/workflow-pipeline

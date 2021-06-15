@@ -8,7 +8,7 @@
       location = "group:SwiftCurrentExample/SwiftCurrentExample.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:WorkflowLint/WorkflowLint.xcodeproj">
+      location = "group:SwiftCurrentLint/SwiftCurrentLint.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:DynamicWorkflow.podspec">

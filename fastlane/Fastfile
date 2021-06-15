@@ -26,14 +26,14 @@ platform :ios do
 
   lane :lint do 
     swiftlint(
-      config_file: 'WorkflowLint/.swiftlint.yml',
+      config_file: 'SwiftCurrentLint/.swiftlint.yml',
       raise_if_swiftlint_error: true,
       strict: true
     )
   end
 
   lane :lintfix do 
-    sh('swiftlint --fix --config=../WorkflowLint/.swiftlint.yml')
+    sh('swiftlint --fix --config=../SwiftCurrentLint/.swiftlint.yml')
   end
 
   desc "Release a new version with a patch bump_type"

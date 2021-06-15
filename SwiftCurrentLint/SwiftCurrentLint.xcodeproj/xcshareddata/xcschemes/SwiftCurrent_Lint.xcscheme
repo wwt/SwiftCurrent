@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CA185E11256DD2F3008C9143"
-               BuildableName = "libWorkflowLint.a"
-               BlueprintName = "WorkflowLint"
-               ReferencedContainer = "container:WorkflowLint.xcodeproj">
+               BuildableName = "libSwiftCurrentLint.a"
+               BlueprintName = "SwiftCurrentLint"
+               ReferencedContainer = "container:SwiftCurrentLint.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -51,9 +51,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CA185E11256DD2F3008C9143"
-            BuildableName = "libWorkflowLint.a"
-            BlueprintName = "WorkflowLint"
-            ReferencedContainer = "container:WorkflowLint.xcodeproj">
+            BuildableName = "libSwiftCurrentLint.a"
+            BlueprintName = "SwiftCurrentLint"
+            ReferencedContainer = "container:SwiftCurrentLint.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
