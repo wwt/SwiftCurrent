@@ -42,7 +42,7 @@ import SwiftCurrent_UIKit
 ```swift
 import SwiftCurrent
 ```
-`Note:` When using SwiftCurrent for a custom domain, you will need to build the associated [Orchestration Responders](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/OrchestrationResponder.html).
+`Note:` When using SwiftCurrent for a custom domain, you will need to build out the associated [Orchestration Responders](https://wwt.github.io/SwiftCurrent/Protocols/OrchestrationResponder.html).
 
 # CocoaPods
 
@@ -60,7 +60,7 @@ pod 'SwiftCurrent/UIKit'
 pod 'SwiftCurrent/Core'
 ```
 
-`Note:` When using SwiftCurrent for a custom domain, you will need to build the associated [Orchestration Responders](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/OrchestrationResponder.html).
+`Note:` When using SwiftCurrent for a custom domain, you will need to build out the associated [Orchestration Responders](https://wwt.github.io/SwiftCurrent/Protocols/OrchestrationResponder.html).
 
 #### **In both of these cases your import statement will be**
 
