@@ -17,12 +17,12 @@ iOS has a linear paradigm for navigation that doesn't support a lot of flexibili
   s.module_name = 'SwiftCurrent'
 
   s.subspec 'Core' do |ss|
-    ss.source_files = 'Sources/Workflow/**/*.{swift,h,m}'
+    ss.source_files = 'Sources/SwiftCurrent/**/*.{swift,h,m}'
   end
   
   s.subspec 'UIKit' do |ss|
     ss.ios.deployment_target = '11.0'
-    ss.source_files = 'Sources/WorkflowUIKit/**/*.{swift,h,m}'
+    ss.source_files = 'Sources/SwiftCurrent_UIKit/**/*.{swift,h,m}'
     ss.dependency 'SwiftCurrent/Core'
   end
 
