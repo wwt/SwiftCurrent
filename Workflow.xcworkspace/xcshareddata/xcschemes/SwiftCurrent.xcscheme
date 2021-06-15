@@ -14,9 +14,23 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "Workflow"
-               BuildableName = "Workflow"
-               BlueprintName = "Workflow"
+               BlueprintIdentifier = "SwiftCurrent"
+               BuildableName = "SwiftCurrent"
+               BlueprintName = "SwiftCurrent"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "SwiftCurrent_UIKit"
+               BuildableName = "SwiftCurrent_UIKit"
+               BlueprintName = "SwiftCurrent_UIKit"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -43,16 +57,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       codeCoverageEnabled = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "WorkflowTests"
-               BuildableName = "WorkflowTests"
-               BlueprintName = "WorkflowTests"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </TestableReference>
          <TestableReference
             skipped = "NO">
             <BuildableReference
@@ -105,10 +109,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "Workflow"
-            BuildableName = "Workflow"
-            BlueprintName = "Workflow"
-            ReferencedContainer = "container:">
+            BlueprintIdentifier = "CA185E11256DD2F3008C9143"
+            BuildableName = "libWorkflowLint.a"
+            BlueprintName = "WorkflowLint"
+            ReferencedContainer = "container:WorkflowLint/WorkflowLint.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

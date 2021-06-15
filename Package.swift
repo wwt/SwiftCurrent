@@ -11,7 +11,7 @@ let package = Package(
             name: "SwiftCurrent",
             targets: ["SwiftCurrent"]),
         .library(
-            name: "SwiftCurrent_SwiftUI",
+            name: "SwiftCurrent_UIKit",
             targets: ["SwiftCurrent_UIKit"]),
     ],
     dependencies: [

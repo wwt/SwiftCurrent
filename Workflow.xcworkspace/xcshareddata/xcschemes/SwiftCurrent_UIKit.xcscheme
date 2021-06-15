@@ -14,10 +14,24 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "WorkflowUIKit"
-               BuildableName = "WorkflowUIKit"
-               BlueprintName = "WorkflowUIKit"
+               BlueprintIdentifier = "SwiftCurrent_UIKit"
+               BuildableName = "SwiftCurrent_UIKit"
+               BlueprintName = "SwiftCurrent_UIKit"
                ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CA185E11256DD2F3008C9143"
+               BuildableName = "libWorkflowLint.a"
+               BlueprintName = "WorkflowLint"
+               ReferencedContainer = "container:WorkflowLint/WorkflowLint.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -50,9 +64,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "WorkflowUIKit"
-            BuildableName = "WorkflowUIKit"
-            BlueprintName = "WorkflowUIKit"
+            BlueprintIdentifier = "SwiftCurrent_UIKit"
+            BuildableName = "SwiftCurrent_UIKit"
+            BlueprintName = "SwiftCurrent_UIKit"
             ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>
