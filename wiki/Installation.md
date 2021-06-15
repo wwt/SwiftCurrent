@@ -23,7 +23,7 @@ Add one one of the following products to your target dependencies.
 .product(name: "WorkflowUIKit", package: "Workflow")
 ```
 
-#### **You'll import Workflow for UIKit as such**
+#### **Your import statement in this case will be**
 
 ```swift
 import WorkflowUIKit
@@ -36,8 +36,8 @@ import WorkflowUIKit
 ```swift
 .product(name: "Workflow", package: "Workflow"),
 ```
+#### **Your import statement in this case will be**
 
-#### **You'll import Workflow without UIKit as such**
 
 ```swift
 import Workflow
@@ -61,7 +61,7 @@ pod 'DynamicWorkflow/UIKit'
 pod 'DynamicWorkflow/Core'
 ```
 
-#### **In both of these cases you'll import Workflow as such**
+#### **In both of these cases your import statement will be**
 
 ```swift
 import Workflow
