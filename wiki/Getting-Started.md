@@ -1,19 +1,19 @@
-# Interested in seeing examples of Workflow in action?
+# Interested in seeing examples of SwiftCurrent in action?
 
-Start by cloning the repo and checking out the 'WorkflowExample' scheme. This should give you a decent idea of how the library works.  If you want to create a new project, read on.
+Start by cloning the repo and checking out the 'SwiftCurrentExample' scheme. This should give you a decent idea of how the library works.  If you want to create a new project, read on.
 
 # Swift Package Manager with Storyboards
 
 ## Adding the dependency
 
-For instructions on SPM and other package managers, [check out our intstallation page.](https://github.com/wwt/Workflow/wiki/Installation#swift-package-manager)
+For instructions on SPM and other package managers, [check out our intstallation page.](https://github.com/wwt/SwiftCurrent/wiki/Installation#swift-package-manager)
 
 ## Create the convenience protocols for storyboard loading
 
-It is best practice to use the [StoryboardLoadable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/StoryboardLoadable.html) protocol to connect your [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) to your Storyboard.  Additionally, to limit the amount of duplicate code, you can make a convenience protocol for each storyboard.
+It is best practice to use the [StoryboardLoadable](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/StoryboardLoadable.html) protocol to connect your [FlowRepresentable](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) to your Storyboard.  Additionally, to limit the amount of duplicate code, you can make a convenience protocol for each storyboard.
 
 ```swift
-import WorkflowUIKit
+import SwiftCurrent_UIKit
 
 extension StoryboardLoadable {
     static var storyboardId: String { String(describing: Self.self) }
@@ -25,15 +25,15 @@ extension MainStoryboardLoadable {
 }
 ```
 
-NOTE: [StoryboardLoadable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/StoryboardLoadable.html) is only available in iOS 13.0 and later.
+NOTE: [StoryboardLoadable](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/StoryboardLoadable.html) is only available in iOS 13.0 and later.
 
 ## Create your view controllers
 
-Create two view controllers that both conform to `MainStoryboardLoadable` and inherit from [UIWorkflowItem<I, O>](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/UIWorkflowItem.html).
+Create two view controllers that both conform to `MainStoryboardLoadable` and inherit from [UIWorkflowItem<I, O>](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/UIWorkflowItem.html).
 
 ```swift
 import UIKit
-import WorkflowUIKit
+import SwiftCurrent_UIKit
 
 class FirstViewController: UIWorkflowItem<String, String>, MainStoryboardLoadable {
     private let name: String
@@ -79,21 +79,21 @@ class SecondViewController: UIWorkflowItem<String, String>, MainStoryboardLoadab
 
 ### Let's talk about what is going on with these view controllers
 
-#### **Where are the [FlowRepresentables](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) you mentioned earlier?**
+#### **Where are the [FlowRepresentables](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) you mentioned earlier?**
 
 <details>
 
-You could declare these view controllers with `class FirstViewController: UIWorkflowItem<String, String>, FlowRepresentable, MainStoryboardLoadable`, but the [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) is not specifically needed, so we excluded it from our example.
+You could declare these view controllers with `class FirstViewController: UIWorkflowItem<String, String>, FlowRepresentable, MainStoryboardLoadable`, but the [FlowRepresentable](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) is not specifically needed, so we excluded it from our example.
 </details>
 
-#### **Why is [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) not needed in the declaration?**
+#### **Why is [FlowRepresentable](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) not needed in the declaration?**
 
 <details>
 
-These view controllers adhere to [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) by the combination of [UIWorkflowItem](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/UIWorkflowItem.html) and [StoryboardLoadable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/StoryboardLoadable.html).
+These view controllers adhere to [FlowRepresentable](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) by the combination of [UIWorkflowItem](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/UIWorkflowItem.html) and [StoryboardLoadable](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/StoryboardLoadable.html).
 
-1. The [UIWorkflowItem<I, O>](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/UIWorkflowItem.html) class implements a subset of the requirements for [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html).
-1. [StoryboardLoadable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/StoryboardLoadable.html) implements the remaining subset and requires that it is only applied to a [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html).
+1. The [UIWorkflowItem<I, O>](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/UIWorkflowItem.html) class implements a subset of the requirements for [FlowRepresentable](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html).
+1. [StoryboardLoadable](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/StoryboardLoadable.html) implements the remaining subset and requires that it is only applied to a [FlowRepresentable](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html).
 
 </details>
 
@@ -101,24 +101,24 @@ These view controllers adhere to [FlowRepresentable](https://gitcdn.link/cdn/wwt
 
 <details>
 
-[StoryboardLoadable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/StoryboardLoadable.html) helps guide XCode to give you compiler errors with the appropriate fix-its to generate `required init?(coder: NSCoder, with args: String)`. These initializers allow you to load from a storyboard while also having compile-time safety in your properties.  You will notice that both view controllers store the argument string on a `private let` property.
+[StoryboardLoadable](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/StoryboardLoadable.html) helps guide XCode to give you compiler errors with the appropriate fix-its to generate `required init?(coder: NSCoder, with args: String)`. These initializers allow you to load from a storyboard while also having compile-time safety in your properties.  You will notice that both view controllers store the argument string on a `private let` property.
 </details>
 
 #### **What's this `shouldLoad()`?**
 
 <details>
 
-It is part of the [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) protocol. It has default implementations created for your convenience but is still implementable if you want to control when a [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) should load in the work flow.  It is called after `init` but before `viewDidLoad()`.
+It is part of the [FlowRepresentable](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) protocol. It has default implementations created for your convenience but is still implementable if you want to control when a [FlowRepresentable](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) should load in the work flow.  It is called after `init` but before `viewDidLoad()`.
 </details>
 
-## Launching the [Workflow](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/Workflow.html)
+## Launching the [Workflow](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/Workflow.html)
 
-Next, we create a [Workflow](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/Workflow.html) that is initialized with our [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html)s and launch it from a view controller that is already loaded onto the screen (in our case, the 'ViewController' class provided by Xcode).
+Next, we create a [Workflow](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/Workflow.html) that is initialized with our [FlowRepresentable](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html)s and launch it from a view controller that is already loaded onto the screen (in our case, the 'ViewController' class provided by Xcode).
 
 ```swift
 import UIKit
-import Workflow
-import WorkflowUIKit
+import SwiftCurrent
+import SwiftCurrent_UIKit
 
 class ViewController: UIViewController {
     @IBAction private func launchWorkflow() {
@@ -142,14 +142,14 @@ class ViewController: UIViewController {
 
 <details>
 
-The [Workflow](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/Workflow.html) has compile-time type safety on the Input/Output types of the supplied [FlowRepresentable](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html)s. This means that you will get a build error if the output of `FirstViewController` does not match the input type of `SecondViewController`.
+The [Workflow](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/Workflow.html) has compile-time type safety on the Input/Output types of the supplied [FlowRepresentable](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html)s. This means that you will get a build error if the output of `FirstViewController` does not match the input type of `SecondViewController`.
 </details>
 
 #### **What's going on with this `passedArgs`?**
 
 <details>
 
-The `onFinish` closure for `launchInto(_:args:onFinish:)` provides the last passed [AnyWorkflow.PassedArgs](https://gitcdn.link/cdn/wwt/Workflow/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/AnyWorkflow/PassedArgs.html) in the work flow. For this Workflow, that could be the output of `FirstViewController` or `SecondViewController` depending on the email signature typed in `FirstViewController`. To extract the value, we unwrap the variable within the case of `.args()` as we expect this workflow to return some argument.
+The `onFinish` closure for `launchInto(_:args:onFinish:)` provides the last passed [AnyWorkflow.PassedArgs](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/AnyWorkflow/PassedArgs.html) in the work flow. For this Workflow, that could be the output of `FirstViewController` or `SecondViewController` depending on the email signature typed in `FirstViewController`. To extract the value, we unwrap the variable within the case of `.args()` as we expect this workflow to return some argument.
 </details>
 
 #### **Why call `abandon()`?**
@@ -163,7 +163,7 @@ Calling `abandon()` closes all the views launched as part of the workflow, leavi
 
 ### Installing test dependencies
 
-For our test example, we will be using a library called [UIUTest](https://github.com/nallick/UIUTest). It is optional for testing Workflow, but in order for the example to be copyable, you will need to add the UIUTest Swift Package
+For our test example, we will be using a library called [UIUTest](https://github.com/nallick/UIUTest). It is optional for testing SwiftCurrent, but in order for the example to be copyable, you will need to add the UIUTest Swift Package
 to your test target.
 
 ### Creating the tests
@@ -171,7 +171,7 @@ to your test target.
 ```swift
 import XCTest
 import UIUTest
-import Workflow
+import SwiftCurrent
 
 @testable import GettingStarted
 
@@ -211,7 +211,7 @@ class SecondViewControllerTests: XCTestCase {
 }
 ```
 
-While this team finds that testing our view controllers with [UIUTest](https://github.com/nallick/UIUTest) allows us to decrease the visibility of our properties and provide better coverage, [UIUTest](https://github.com/nallick/UIUTest) is not needed for testing Workflow. If you do not want to take the dependency, you will have to elevate visibility or find a way to invoke the `finishPressed` method.
+While this team finds that testing our view controllers with [UIUTest](https://github.com/nallick/UIUTest) allows us to decrease the visibility of our properties and provide better coverage, [UIUTest](https://github.com/nallick/UIUTest) is not needed for testing SwiftCurrent. If you do not want to take the dependency, you will have to elevate visibility or find a way to invoke the `finishPressed` method.
 
 #### **What is going on with: `testSecondViewControllerDoesNotLoadWhenInputIsEmpty`?**
 
