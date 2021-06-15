@@ -10,8 +10,8 @@ platform :ios do
   lane :unit_test do
     scan(
       code_coverage: true,
-      scheme:  'Workflow',
-      workspace: 'Workflow.xcworkspace',
+      scheme:  'SwiftCurrent',
+      workspace: 'SwiftCurrent.xcworkspace',
       derived_data_path: "~/Library/Developer/Xcode/DerivedData",
     )
   end
