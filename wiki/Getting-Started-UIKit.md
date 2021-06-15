@@ -10,7 +10,7 @@ For instructions on SPM and other package managers, [check out our intstallation
 
 ## Create your view controllers
 
-Create two view controllers that inherit from [UIWorkflowItem<I, O>](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/UIWorkflowItem.html).
+Create two view controllers that inherit from [UIWorkflowItem<I, O>](https://github.io/SwiftCurrent/Classes/UIWorkflowItem.html).
 
 ```swift
 import UIKit
@@ -104,12 +104,12 @@ class SecondViewController: UIWorkflowItem<String, String>, FlowRepresentable {
 
 <details>
 
-It is part of the [FlowRepresentable](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) protocol. It has default implementations created for your convenience but is still implementable if you want to control when a [FlowRepresentable](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html) should load in the work flow.  It is called after `init` but before `viewDidLoad()`.
+It is part of the [FlowRepresentable](https://github.io/SwiftCurrent/Protocols/FlowRepresentable.html) protocol. It has default implementations created for your convenience but is still implementable if you want to control when a [FlowRepresentable](https://github.io/SwiftCurrent/Protocols/FlowRepresentable.html) should load in the work flow.  It is called after `init` but before `viewDidLoad()`.
 </details>
 
-## Launching the [Workflow](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/Workflow.html)
+## Launching the [Workflow](https://github.io/SwiftCurrent/Classes/Workflow.html)
 
-Next, we create a [Workflow](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/Workflow.html) that is initialized with our [FlowRepresentable](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html)s and launch it from a view controller that is already loaded onto the screen (in our case, the 'ViewController' class provided by Xcode).
+Next, we create a [Workflow](https://github.io/SwiftCurrent/Classes/Workflow.html) that is initialized with our [FlowRepresentable](https://github.io/SwiftCurrent/Protocols/FlowRepresentable.html)s and launch it from a view controller that is already loaded onto the screen (in our case, the 'ViewController' class provided by Xcode).
 
 ```swift
 import UIKit
@@ -154,14 +154,14 @@ class ViewController: UIViewController {
 
 <details>
 
-The [Workflow](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/Workflow.html) has compile-time type safety on the Input/Output types of the supplied [FlowRepresentable](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Protocols/FlowRepresentable.html)s. This means that you will get a build error if the output of `FirstViewController` does not match the input type of `SecondViewController`.
+The [Workflow](https://github.io/SwiftCurrent/Classes/Workflow.html) has compile-time type safety on the Input/Output types of the supplied [FlowRepresentable](https://github.io/SwiftCurrent/Protocols/FlowRepresentable.html)s. This means that you will get a build error if the output of `FirstViewController` does not match the input type of `SecondViewController`.
 </details>
 
 #### **What's going on with this `passedArgs`?**
 
 <details>
 
-The `onFinish` closure for `launchInto(_:args:onFinish:)` provides the last passed [AnyWorkflow.PassedArgs](https://gitcdn.link/cdn/wwt/SwiftCurrent/faf9273f154954848bf6b6d5c592a7f0740ef53a/docs/Classes/AnyWorkflow/PassedArgs.html) in the work flow. For this Workflow, that could be the output of `FirstViewController` or `SecondViewController` depending on the email signature typed in `FirstViewController`. To extract the value, we unwrap the variable within the case of `.args()` as we expect this workflow to return some argument.
+The `onFinish` closure for `launchInto(_:args:onFinish:)` provides the last passed [AnyWorkflow.PassedArgs](https://github.io/SwiftCurrent/Classes/AnyWorkflow/PassedArgs.html) in the work flow. For this Workflow, that could be the output of `FirstViewController` or `SecondViewController` depending on the email signature typed in `FirstViewController`. To extract the value, we unwrap the variable within the case of `.args()` as we expect this workflow to return some argument.
 </details>
 
 #### **Why call `abandon()`?**
