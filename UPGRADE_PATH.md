@@ -3,6 +3,7 @@ Use this document to help you understand how to update between major versions of
 
 <details>
   <summary><b>V3 -> V4</b></summary>
+
   ### Name Change
   The library changed its name from "Workflow" to "SwiftCurrent". This change was an important step for us, because it helps with SEO and gives people a sense that the library isn't just some generic thing slapped together. 
 
@@ -19,6 +20,8 @@ Use this document to help you understand how to update between major versions of
   ```
 
 </details>
+
+---
 
 <details>
   <summary><b>V2 -> V3</b></summary>
