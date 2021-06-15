@@ -2,7 +2,7 @@
 
 Start by cloning the repo and checking out the 'SwiftCurrentExample' scheme. This should give you a decent idea of how the library works.  If you want to create a new project, read on.
 
-# Swift Package Manager with Programmatic UIKit
+# Swift Package Manager with Programmatic UIKit Views
 
 ## Adding the dependency
 
