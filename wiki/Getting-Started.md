@@ -13,6 +13,7 @@ For instructions on SPM and CocoaPods, [check out our intstallation page.](https
 It is best practice to use the [StoryboardLoadable](https://github.io/SwiftCurrent/Protocols/StoryboardLoadable.html) protocol to connect your [FlowRepresentable](https://github.io/SwiftCurrent/Protocols/FlowRepresentable.html) to your Storyboard.  Additionally, to limit the amount of duplicate code, you can make a convenience protocol for each storyboard.
 
 ```swift
+import UIKit
 import SwiftCurrent_UIKit
 
 extension StoryboardLoadable {
