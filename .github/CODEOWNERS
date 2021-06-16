@@ -2,8 +2,6 @@
 /.github/ @wwt/workflow-pipeline
 /fastlane/ @wwt/workflow-pipeline
 
-/sonar-project.properties @wwt/workflow-pipeline
-/xccov-to-sonarqube-generic.sh @wwt/workflow-pipeline
 /SwiftCurrentLint/.swiftlint.yml @wwt/workflow-pipeline
 
 /changelog_configuration.json @wwt/workflow-pipeline

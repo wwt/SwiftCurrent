@@ -7,7 +7,6 @@
 - [ ] Did you comply with our [styleguide](https://github.com/wwt/SwiftCurrent/blob/main/STYLEGUIDE.md)?
 - [ ] Is there [adequate test coverage](https://github.com/wwt/SwiftCurrent/blob/main/CONTRIBUTING.md#test-etiquette) for your new code?
 - [ ] Does the CI pipeline pass?
-- [ ] Is the [static analysis tool](https://sonarcloud.io/dashboard?id=wwt_Workflow) reporting 0 issues?
 - [ ] Did you [update the documentation](https://github.com/wwt/SwiftCurrent/blob/main/CONTRIBUTING.md#documentation)?
 - [ ] Did you [update the sample app](https://github.com/wwt/SwiftCurrent/blob/main/CONTRIBUTING.md#sample-app)?
 - [ ] Do we need to [increment the minor/major version](https://github.com/wwt/SwiftCurrent/blob/main/CONTRIBUTING.md#versioning)?
