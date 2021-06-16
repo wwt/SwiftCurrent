@@ -6,13 +6,14 @@ Start by cloning the repo and checking out the 'SwiftCurrentExample' scheme. Thi
 
 ## Adding the dependency
 
-For instructions on SPM and CocoaPods, [check out our intstallation page.](https://github.com/wwt/SwiftCurrent/wiki/Installation#swift-package-manager)
+For instructions on SPM and CocoaPods, [check out our installation page.](https://github.com/wwt/SwiftCurrent/wiki/Installation#swift-package-manager)
 
 ## Create the convenience protocols for storyboard loading
 
 It is best practice to use the [StoryboardLoadable](https://github.io/SwiftCurrent/Protocols/StoryboardLoadable.html) protocol to connect your [FlowRepresentable](https://github.io/SwiftCurrent/Protocols/FlowRepresentable.html) to your Storyboard.  Additionally, to limit the amount of duplicate code, you can make a convenience protocol for each storyboard.
 
 ```swift
+import UIKit
 import SwiftCurrent_UIKit
 
 extension StoryboardLoadable {
@@ -191,6 +192,7 @@ class SecondViewControllerTests: XCTestCase {
     }
 
     func testProceedPassesThroughInput() {
+        // Arrange
         var proceedInWorkflowCalled = false
         let expectedString = "Awesome.Possum@wwt.com"
         let ref = AnyFlowRepresentable(SecondViewController.self, args: .args(expectedString))
@@ -204,8 +206,10 @@ class SecondViewControllerTests: XCTestCase {
             XCTAssertEqual(passedArgs.extractArgs(defaultValue: "defaultValue used") as? String, expectedString)
         }
 
+        // Act
         (testViewController.view.viewWithAccessibilityIdentifier("finish") as? UIButton)?.simulateTouch() // UIUTest helper
 
+        // Assert
         XCTAssert(proceedInWorkflowCalled, "proceedInWorkflow should be called")
     }
 }
