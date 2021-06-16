@@ -14,6 +14,7 @@ Create two view controllers that inherit from [UIWorkflowItem<I, O>](https://git
 
 ```swift
 import UIKit
+import SwiftCurrent
 import SwiftCurrent_UIKit
 
 class FirstViewController: UIWorkflowItem<String, String>, FlowRepresentable {
