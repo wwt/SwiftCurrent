@@ -9,10 +9,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: Run TESTS
         run: bundle exec fastlane unit_test
-      - name: Codecov
-        uses: codecov/codecov-action@v1.5.2
-        with:
-          fail_ci_if_error: true
+      # - name: Codecov
+      #   uses: codecov/codecov-action@v1.5.2
+      #   with:
+      #     fail_ci_if_error: true
       - name: Upload Test logs
         if: ${{ always() }}
         uses: actions/upload-artifact@v2
