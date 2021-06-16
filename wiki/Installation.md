@@ -23,7 +23,7 @@ Add the following products to your target dependencies.
 .product(name: "SwiftCurrent_UIKit", package: "SwiftCurrent")
 ```
 
-#### **Your import statements will be**
+#### **Your import statements for these products will be**
 
 ```swift
 import SwiftCurrent
@@ -35,7 +35,7 @@ import SwiftCurrent_UIKit
 
 # CocoaPods
 
-Set up [CocoaPods](https://cocoapods.org/) for your project, then include SwiftCurrent in your dependencies by adding one of the following lines to your `Podfile`:
+Set up [CocoaPods](https://cocoapods.org/) for your project, then include SwiftCurrent in your dependencies by adding the following line to your `Podfile`:
 
 #### **If you want to use SwiftCurrent with UIKit**
 
