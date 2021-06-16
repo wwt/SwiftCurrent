@@ -14,7 +14,7 @@ Add the following line to the package dependencies
 
 ## Get the correct product
 
-Add one of the following products to your target dependencies.
+Add the following products to your target dependencies.
 
 #### **If you want to use SwiftCurrent with UIKit**
 
