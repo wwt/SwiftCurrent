@@ -14,7 +14,7 @@ Add the following line to the package dependencies
 
 ## Get the correct product
 
-Add one one of the following products to your target dependencies.
+Add one of the following products to your target dependencies.
 
 #### **If you want to use SwiftCurrent with UIKit**
 
@@ -23,26 +23,15 @@ Add one one of the following products to your target dependencies.
 .product(name: "SwiftCurrent_UIKit", package: "SwiftCurrent")
 ```
 
-#### **Your import statement in this case will be**
+#### **Your import statements will be**
 
 ```swift
+import SwiftCurrent
 import SwiftCurrent_UIKit
 ```
 
 `SwiftCurrent_UIKit` will need to target a platform that supports UIKit, such as iOS or macOS with Catalyst.
 
-#### **If you want to use SwiftCurrent without UIKit**
-
-```swift
-.product(name: "SwiftCurrent", package: "SwiftCurrent"),
-```
-#### **Your import statement in this case will be**
-
-
-```swift
-import SwiftCurrent
-```
-`Note:` When using SwiftCurrent for a custom domain, you will need to build out the associated [Orchestration Responders](https://wwt.github.io/SwiftCurrent/Protocols/OrchestrationResponder.html).
 
 # CocoaPods
 
@@ -54,15 +43,7 @@ Set up [CocoaPods](https://cocoapods.org/) for your project, then include SwiftC
 pod 'SwiftCurrent/UIKit'
 ```
 
-#### **If you want to use SwiftCurrent without UIKit**
-
-```ruby
-pod 'SwiftCurrent/Core'
-```
-
-`Note:` When using SwiftCurrent for a custom domain, you will need to build out the associated [Orchestration Responders](https://wwt.github.io/SwiftCurrent/Protocols/OrchestrationResponder.html).
-
-#### **In both of these cases your import statement will be**
+#### **Your import statement will be**
 
 ```swift
 import SwiftCurrent
