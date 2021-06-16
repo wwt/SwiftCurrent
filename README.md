@@ -1,9 +1,9 @@
 ![Build Status](https://github.com/wwt/SwiftCurrent/actions/workflows/CI.yml/badge.svg?branch=main)
 ![Pod Version](https://img.shields.io/cocoapods/v/SwiftCurrent.svg?style=popout)
-![Quality Gate](https://img.shields.io/sonar/quality_gate/wwt_Workflow?server=https%3A%2F%2Fsonarcloud.io)
-![Coverage](https://img.shields.io/sonar/coverage/wwt_Workflow?server=http%3A%2F%2Fsonarcloud.io)
+[![codecov](https://codecov.io/gh/wwt/SwiftCurrent/branch/main/graph/badge.svg?token=04Q5KSHict)](https://codecov.io/gh/wwt/SwiftCurrent)
 
 # Welcome
+
 SwiftCurrent is a library that lets you easily manage journeys through your Swift application.
 
 When Developing in UIKit, each view controller has to know about the one following it in order to share data.  Now imagine a flow where the first 3 screens are optional.  What would it look like if you could decouple all of that?
