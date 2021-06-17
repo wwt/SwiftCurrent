@@ -40,3 +40,18 @@ jobs:
           tag_name: ${{ steps.bump_version.outputs.version }}
           release_name: Release ${{ steps.bump_version.outputs.version }}
           body: ${{steps.build_changelog.outputs.changelog}}
+  deploy_documentation:
+    runs-on: macos-latest
+    needs: version_bump
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: gem install jazzy
+      - name: Generate documentation
+        run: ./document.sh
+      - uses: JamesIves/github-pages-deploy-action@4.1.3
+        with:
+          branch: gh-pages
+          folder: docs
+          commit-message: "Deploying docs"
+          single-commit: true # optional
