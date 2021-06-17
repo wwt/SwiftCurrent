@@ -46,6 +46,7 @@ This quick start uses SPM, but if you would prefer CocoaPods, [see our installat
 Then make your first FlowRepresentable view controller:
 ```swift
 import SwiftCurrent
+import SwiftCurrent_UIKit
 class ExampleViewController: UIWorkflowItem<Never, Never>, FlowRepresentable {
     override func viewDidLoad() {
         view.backgroundColor = .green
@@ -55,7 +56,6 @@ class ExampleViewController: UIWorkflowItem<Never, Never>, FlowRepresentable {
 Then from your root view controller, call: 
 ```swift
 import SwiftCurrent
-import SwiftCurrent_UIKit
 ...
 launchInto(Workflow(ExampleViewController.self))
 ```
