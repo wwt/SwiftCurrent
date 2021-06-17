@@ -15,11 +15,12 @@ parsers:
       macro: no
       
 ignore:
-  - "Tests/"
-  - "SwiftCurrentLint/"
-  - "Sources/SwiftCurrent/Deprecations/"
-  - "SwiftCurrentExample/SwiftCurrentExampleTests/"
-  - "SwiftCurrentExample/SwiftCurrent_UIKitTests/"
+  - "Tests"
+  - "SwiftCurrentLint"
+  - "Sources/SwiftCurrent/Deprecations"
+  - "SwiftCurrentExample/SwiftCurrentExampleTests"
+  - "SwiftCurrentExample/SwiftCurrent_UIKitTests"
+  - "fastlane"
   
 comment:
   layout: "reach,diff,flags,files,footer"
