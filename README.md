@@ -24,16 +24,24 @@ The above code is all that is needed from the screen starting this flow. Each sc
 As you continue to develop your applications, each view controller will become more decoupled from the rest of the app.  That means, if you want a completely different order of screens, just define a new [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html).
 
 ## See it in action with our sample app
+
 Clone our repo, open `SwiftCurrent.xcworkspace`, target the `SwiftCurrentExample` scheme, and run to see our sample app in action. The app is designed to give you an idea of what SwiftCurrent can do with minimal overhead in the UI.
 
 ## Interested but you need SwiftUI support?
+
 [We're working on it now!](https://github.com/wwt/SwiftCurrent/milestone/2)
 
 # Quick Start
 
-## CocoaPods
-```ruby
-pod 'SwiftCurrent/UIKit'
+This quick start uses SPM, but if you would prefer CocoaPods, [see our installation instructions](https://github.com/wwt/SwiftCurrent/wiki/Installation).
+
+## UIKit
+
+```swift
+.package(url: "https://github.com/wwt/SwiftCurrent.git", .upToNextMajor(from: "4.0.0")),
+...
+.product(name: "SwiftCurrent", package: "SwiftCurrent"),
+.product(name: "SwiftCurrent_UIKit", package: "SwiftCurrent")
 ```
 Then make your first FlowRepresentable view controller:
 ```swift
@@ -47,6 +55,7 @@ class ExampleViewController: UIWorkflowItem<Never, Never>, FlowRepresentable {
 Then from your root view controller, call: 
 ```swift
 import SwiftCurrent
+import SwiftCurrent_UIKit
 ...
 launchInto(Workflow(ExampleViewController.self))
 ```
