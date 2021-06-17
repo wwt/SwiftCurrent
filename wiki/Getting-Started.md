@@ -1,8 +1,6 @@
-# Interested in seeing examples of SwiftCurrent in action?
-
-Start by cloning the repo and checking out the 'SwiftCurrentExample' scheme. This should give you a decent idea of how the library works.  If you want to create a new project, read on.
-
 # Swift Package Manager with Storyboards
+
+This guide will walk you through getting a [Workflow]() up and running in a new iOS project.  If you would like to see an existing project, clone the repo and view the `SwiftCurrentExample` scheme in `SwiftCurrent.xcworkspace`.
 
 ## Adding the dependency
 
@@ -167,7 +165,7 @@ Calling `abandon()` closes all the views launched as part of the workflow, leavi
 For our test example, we will be using a library called [UIUTest](https://github.com/nallick/UIUTest). It is optional for testing SwiftCurrent, but in order for the example to be copyable, you will need to add the UIUTest Swift Package
 to your test target.
 
-### Creating the tests
+### Creating tests
 
 ```swift
 import XCTest

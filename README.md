@@ -23,6 +23,9 @@ The above code is all that is needed from the screen starting this flow. Each sc
 
 As you continue to develop your applications, each view controller will become more decoupled from the rest of the app.  That means, if you want a completely different order of screens, just define a new [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html).
 
+## See it in action with our sample app
+Clone our repo, open `SwiftCurrent.xcworkspace`, target the `SwiftCurrentExample` scheme, and run to see our sample app in action. The app is designed to give you an idea of what SwiftCurrent can do with minimal overhead in the UI.
+
 ## Interested but you need SwiftUI support?
 [We're working on it now!](https://github.com/wwt/SwiftCurrent/milestone/2)
 
