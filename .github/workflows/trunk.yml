@@ -45,6 +45,8 @@ jobs:
     needs: version_bump
     steps:
       - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: gem install jazzy
       - name: Generate documentation
         run: ./document.sh
       - uses: JamesIves/github-pages-deploy-action@4.1.3
