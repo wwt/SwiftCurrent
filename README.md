@@ -54,9 +54,14 @@ launchInto(Workflow(ExampleViewController.self))
 And just like that you're started!  To see something more practical and in-depth, check out the example app in the repo.  For a more in-depth starting guide, checkout out our [Getting Started](https://github.com/wwt/SwiftCurrent/wiki/getting-started) documentation.
 
 # Deep Dive
+
 - [Why SwiftCurrent?](https://github.com/wwt/SwiftCurrent/wiki/Why-This-Library%3F)
 - [Installation](https://github.com/wwt/SwiftCurrent/wiki/Installation)
 - [Getting Started with Storyboards](https://github.com/wwt/SwiftCurrent/wiki/getting-started)
 - [Getting Started with Programmatic UIKit](https://github.com/wwt/SwiftCurrent/wiki/Getting-Started-with-Programmatic-UIKit)
 - [Developer Documentation](https://wwt.github.io/SwiftCurrent/index.html)
 - [Upgrade Path](https://github.com/wwt/SwiftCurrent/blob/main/UPGRADE_PATH.md)
+
+# Feedback
+
+If you like what you've seen, consider [giving us a star](https://github.com/wwt/SwiftCurrent/stargazers)! If you don't, let us know [how we can improve](https://github.com/wwt/SwiftCurrent/discussions/new).
