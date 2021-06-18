@@ -33,7 +33,7 @@ Clone our repo, open `SwiftCurrent.xcworkspace`, target the `SwiftCurrentExample
 
 # Quick Start
 
-This quick start uses SPM, but if you would prefer CocoaPods, [see our installation instructions](https://github.com/wwt/SwiftCurrent/wiki/Installation).
+This quick start uses SPM, but for other approaches, [see our installation instructions](https://github.com/wwt/SwiftCurrent/wiki/Installation).
 
 ## UIKit
 
