@@ -93,6 +93,8 @@ public protocol FlowRepresentable {
      Returning `false` can have different behaviors depending on the `FlowPersistence`.
      */
     func shouldLoad() -> Bool
+
+    var _workflowUnderlyingInstance: Any { get }
 }
 
 extension FlowRepresentable {
