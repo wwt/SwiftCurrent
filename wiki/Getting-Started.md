@@ -78,7 +78,7 @@ class SecondViewController: UIWorkflowItem<String, String>, MainStoryboardLoadab
 
 ### Let's talk about what is going on with these view controllers
 
-#### **Where are the [FlowRepresentables](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) you mentioned earlier?**
+#### **Where are the [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html)s you mentioned earlier?**
 
 <details>
 
