@@ -1,6 +1,7 @@
 ![Build Status](https://github.com/wwt/SwiftCurrent/actions/workflows/CI.yml/badge.svg?branch=main)
 ![Pod Version](https://img.shields.io/cocoapods/v/SwiftCurrent.svg?style=popout)
 [![codecov](https://codecov.io/gh/wwt/SwiftCurrent/branch/main/graph/badge.svg?token=04Q5KSHict)](https://codecov.io/gh/wwt/SwiftCurrent)
+![Swift Package Manager](https://img.shields.io/badge/Swift_Package_Manager-supported-brightgreen)
 
 # Welcome
 
