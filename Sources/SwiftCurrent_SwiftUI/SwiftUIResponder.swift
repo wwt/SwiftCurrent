@@ -49,6 +49,7 @@ public struct SwiftUIResponder2: View, OrchestrationResponder {
 
     public func abandon(_ workflow: AnyWorkflow, onFinish: (() -> Void)?) {
         // TODO
+        containedView.view = AnyView(EmptyView())
     }
 
     public func complete(_ workflow: AnyWorkflow, passedArgs: AnyWorkflow.PassedArgs, onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {

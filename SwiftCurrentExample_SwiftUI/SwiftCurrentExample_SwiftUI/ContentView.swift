@@ -11,13 +11,14 @@ import SwiftCurrent
 import SwiftCurrent_SwiftUI
 
 struct ContentView: View {
+    var workflow: Workflow = Workflow(FR1.self)
     var body: some View {
         Text("Hello, world!")
             .padding()
         SwiftUIResponder()
             .padding()
-        SwiftUIResponder2(workflow: Workflow(FR1.self))
-            .padding()
+        SwiftUIResponder2(workflow: workflow)
+        .padding()
     }
 }
 
@@ -27,5 +28,9 @@ struct FR1: View, FlowRepresentable {
 
     var body: some View {
         Text("FR1")
+        Button("Abandon!") {
+            self.workflow?.abandon()
+        }
+        .padding()
     }
 }
