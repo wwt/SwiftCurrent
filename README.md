@@ -23,18 +23,32 @@ The above code is all that is needed from the screen starting this flow. Each sc
 
 As you continue to develop your applications, each view controller will become more decoupled from the rest of the app.  That means, if you want a completely different order of screens, just define a new [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html).
 
+## See it in action with our example app
+
+Clone our repo, open `SwiftCurrent.xcworkspace`, target the `SwiftCurrentExample` scheme, and run to see our example app in action.
+
+The app is designed to give you an idea of what SwiftCurrent can do with minimal overhead in the UI.  The key areas of code you'll want to look at are: `SetupViewController.swift` and the view controllers referenced in the [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html).
+
 ## Interested but you need SwiftUI support?
+
 [We're working on it now!](https://github.com/wwt/SwiftCurrent/milestone/2)
 
 # Quick Start
 
-## CocoaPods
-```ruby
-pod 'SwiftCurrent/UIKit'
+This quick start uses SPM, but for other approaches, [see our installation instructions](https://github.com/wwt/SwiftCurrent/wiki/Installation).
+
+## UIKit
+
+```swift
+.package(url: "https://github.com/wwt/SwiftCurrent.git", .upToNextMajor(from: "4.0.0")),
+...
+.product(name: "SwiftCurrent", package: "SwiftCurrent"),
+.product(name: "SwiftCurrent_UIKit", package: "SwiftCurrent")
 ```
 Then make your first FlowRepresentable view controller:
 ```swift
 import SwiftCurrent
+import SwiftCurrent_UIKit
 class ExampleViewController: UIWorkflowItem<Never, Never>, FlowRepresentable {
     override func viewDidLoad() {
         view.backgroundColor = .green
@@ -48,12 +62,17 @@ import SwiftCurrent
 launchInto(Workflow(ExampleViewController.self))
 ```
 
-And just like that you're started!  To see something more practical and in-depth, check out the example app in the repo.  For a more in-depth starting guide, checkout out our [Getting Started](https://github.com/wwt/SwiftCurrent/wiki/getting-started) documentation.
+And just like that you're started!
 
 # Deep Dive
+
 - [Why SwiftCurrent?](https://github.com/wwt/SwiftCurrent/wiki/Why-This-Library%3F)
 - [Installation](https://github.com/wwt/SwiftCurrent/wiki/Installation)
 - [Getting Started with Storyboards](https://github.com/wwt/SwiftCurrent/wiki/getting-started)
 - [Getting Started with Programmatic UIKit](https://github.com/wwt/SwiftCurrent/wiki/Getting-Started-with-Programmatic-UIKit)
 - [Developer Documentation](https://wwt.github.io/SwiftCurrent/index.html)
 - [Upgrade Path](https://github.com/wwt/SwiftCurrent/blob/main/UPGRADE_PATH.md)
+
+# Feedback
+
+If you like what you've seen, consider [giving us a star](https://github.com/wwt/SwiftCurrent/stargazers)! If you don't, let us know [how we can improve](https://github.com/wwt/SwiftCurrent/discussions/new).

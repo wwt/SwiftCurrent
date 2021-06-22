@@ -1,8 +1,6 @@
-# Interested in seeing examples of SwiftCurrent in action?
-
-Start by cloning the repo and checking out the 'SwiftCurrentExample' scheme. This should give you a decent idea of how the library works.  If you want to create a new project, read on.
-
 # Swift Package Manager with Programmatic UIKit Views
+
+This guide will walk you through getting a [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html) up and running in a new iOS project.  If you would like to see an existing project, clone the repo and view the `SwiftCurrentExample` scheme in `SwiftCurrent.xcworkspace`.
 
 ## Adding the dependency
 
@@ -10,7 +8,7 @@ For instructions on SPM and CocoaPods, [check out our installation page.](https:
 
 ## Create your view controllers
 
-Create two view controllers that inherit from [UIWorkflowItem<I, O>](https://github.io/SwiftCurrent/Classes/UIWorkflowItem.html).
+Create two view controllers that inherit from [UIWorkflowItem<I, O>](https://wwt.github.io/SwiftCurrent/Classes/UIWorkflowItem.html).
 
 ```swift
 import UIKit
@@ -105,12 +103,12 @@ class SecondViewController: UIWorkflowItem<String, String>, FlowRepresentable {
 
 <details>
 
-It is part of the [FlowRepresentable](https://github.io/SwiftCurrent/Protocols/FlowRepresentable.html) protocol. It has default implementations created for your convenience but is still implementable if you want to control when a [FlowRepresentable](https://github.io/SwiftCurrent/Protocols/FlowRepresentable.html) should load in the work flow.  It is called after `init` but before `viewDidLoad()`.
+It is part of the [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) protocol. It has default implementations created for your convenience but is still implementable if you want to control when a [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) should load in the work flow.  It is called after `init` but before `viewDidLoad()`.
 </details>
 
-## Launching the [Workflow](https://github.io/SwiftCurrent/Classes/Workflow.html)
+## Launching the [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html)
 
-Next, we create a [Workflow](https://github.io/SwiftCurrent/Classes/Workflow.html) that is initialized with our [FlowRepresentable](https://github.io/SwiftCurrent/Protocols/FlowRepresentable.html)s and launch it from a view controller that is already loaded onto the screen (in our case, the 'ViewController' class provided by Xcode).
+Next, we create a [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html) that is initialized with our [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html)s and launch it from a view controller that is already loaded onto the screen (in our case, the 'ViewController' class provided by Xcode).
 
 ```swift
 import UIKit
@@ -155,14 +153,14 @@ class ViewController: UIViewController {
 
 <details>
 
-The [Workflow](https://github.io/SwiftCurrent/Classes/Workflow.html) has compile-time type safety on the Input/Output types of the supplied [FlowRepresentable](https://github.io/SwiftCurrent/Protocols/FlowRepresentable.html)s. This means that you will get a build error if the output of `FirstViewController` does not match the input type of `SecondViewController`.
+The [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html) has compile-time type safety on the Input/Output types of the supplied [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html)s. This means that you will get a build error if the output of `FirstViewController` does not match the input type of `SecondViewController`.
 </details>
 
 #### **What's going on with this `passedArgs`?**
 
 <details>
 
-The `onFinish` closure for `launchInto(_:args:onFinish:)` provides the last passed [AnyWorkflow.PassedArgs](https://github.io/SwiftCurrent/Classes/AnyWorkflow/PassedArgs.html) in the work flow. For this Workflow, that could be the output of `FirstViewController` or `SecondViewController` depending on the email signature typed in `FirstViewController`. To extract the value, we unwrap the variable within the case of `.args()` as we expect this workflow to return some argument.
+The `onFinish` closure for `launchInto(_:args:onFinish:)` provides the last passed [AnyWorkflow.PassedArgs](https://wwt.github.io/SwiftCurrent/Classes/AnyWorkflow/PassedArgs.html) in the work flow. For this Workflow, that could be the output of `FirstViewController` or `SecondViewController` depending on the email signature typed in `FirstViewController`. To extract the value, we unwrap the variable within the case of `.args()` as we expect this workflow to return some argument.
 </details>
 
 #### **Why call `abandon()`?**
@@ -179,7 +177,7 @@ Calling `abandon()` closes all the views launched as part of the workflow, leavi
 For our test example, we will be using a library called [UIUTest](https://github.com/nallick/UIUTest). It is optional for testing SwiftCurrent, but in order for the example to be copyable, you will need to add the UIUTest Swift Package
 to your test target.
 
-### Creating the tests
+### Creating tests
 
 ```swift
 import XCTest
