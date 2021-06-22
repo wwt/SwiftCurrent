@@ -1,7 +1,18 @@
-![Build Status](https://github.com/wwt/SwiftCurrent/actions/workflows/CI.yml/badge.svg?branch=main)
-![Pod Version](https://img.shields.io/cocoapods/v/SwiftCurrent.svg?style=popout)
-[![codecov](https://codecov.io/gh/wwt/SwiftCurrent/branch/main/graph/badge.svg?token=04Q5KSHict)](https://codecov.io/gh/wwt/SwiftCurrent)
+<!-- Library status -->
+![Supported Platforms](https://img.shields.io/cocoapods/p/SwiftCurrent)
 ![Swift Package Manager](https://img.shields.io/badge/Swift_Package_Manager-supported-brightgreen)
+![Pod Version](https://img.shields.io/cocoapods/v/SwiftCurrent.svg?style=popout)
+![License](https://img.shields.io/github/license/wwt/SwiftCurrent)
+
+![Build Status](https://github.com/wwt/SwiftCurrent/actions/workflows/CI.yml/badge.svg?branch=main)
+[![Code Coverage](https://codecov.io/gh/wwt/SwiftCurrent/branch/main/graph/badge.svg?token=04Q5KSHict)](https://codecov.io/gh/wwt/SwiftCurrent)
+![Issues](https://img.shields.io/github/issues-raw/wwt/SwiftCurrent)
+![Pull Requests](https://img.shields.io/github/issues-pr/wwt/SwiftCurrent)
+
+<!-- Social media -->
+[![Stars](https://img.shields.io/github/stars/wwt/SwiftCurrent?style=social)](https://github.com/wwt/SwiftCurrent/stargazers)
+![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2FSwiftCurrentWWT)
+
 
 # Welcome
 
