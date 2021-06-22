@@ -28,7 +28,7 @@ jobs:
         id: build_changelog
         uses: mikepenz/release-changelog-builder-action@v1.7.3
         with:
-          configuration: "changelog_configuration.json"
+          configuration: ".github/changelog_configuration.json"
           ignorePreReleases: "false"
           toTag: ${{ steps.bump_version.outputs.version }}
           token: ${{ secrets.GITHUB_TOKEN }}
