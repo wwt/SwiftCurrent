@@ -19,10 +19,8 @@ public struct SwiftUIResponder: View {
 
 public struct SwiftUIResponder2: View, OrchestrationResponder {
     @ObservedObject var containedView = ContainedView()
-    public init<F: FlowRepresentable>(workflow: Workflow<F>) {
-        workflow.launch(withOrchestrationResponder: self) { _ in
-
-        }
+    public init<F: FlowRepresentable>(workflow: Workflow<F>, onFinish: ((AnyWorkflow.PassedArgs) -> Void)? = nil) {
+        workflow.launch(withOrchestrationResponder: self, onFinish: onFinish)
     }
 
     public var body: some View {
@@ -46,11 +44,27 @@ public struct SwiftUIResponder2: View, OrchestrationResponder {
     }
 
     public func backUp(from: AnyWorkflow.Element, to: AnyWorkflow.Element) {
-        // TODO
+        guard let underlyingView = to.value.instance?.underlyingInstance as? AnyView else {
+            fatalError("Underlying instance was not AnyView")
+        }
+
+        withAnimation {
+            containedView.view = underlyingView
+        }
     }
 
     public func abandon(_ workflow: AnyWorkflow, onFinish: (() -> Void)?) {
-        containedView.view = AnyView(EmptyView())
+        abandon(workflow, animated: true, onFinish: onFinish)
+    }
+
+    func abandon(_ workflow: AnyWorkflow, animated: Bool, onFinish: (() -> Void)?) {
+        if animated {
+            withAnimation {
+                containedView.view = AnyView(EmptyView())
+            }
+        } else {
+            containedView.view = AnyView(EmptyView())
+        }
     }
 
     public func complete(_ workflow: AnyWorkflow, passedArgs: AnyWorkflow.PassedArgs, onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
@@ -69,3 +83,4 @@ extension FlowRepresentable where Self: View {
         }
     }
 }
+

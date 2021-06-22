@@ -29,7 +29,7 @@ extension AnyWorkflow {
      */
     public func abandon(animated: Bool = true, onFinish:(() -> Void)? = nil) {
         if let presenter = orchestrationResponder as? SwiftUIResponder2 {
-            presenter.abandon(self) { [weak self] in
+            presenter.abandon(self, animated: animated) { [weak self] in
                 self?._abandon()
                 onFinish?()
             }
