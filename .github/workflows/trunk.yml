@@ -45,6 +45,8 @@ jobs:
     needs: version_bump
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: main
       - name: Install sourcekitten
         run: brew install sourcekitten
       - name: Install jazzy

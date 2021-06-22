@@ -1,6 +1,9 @@
 # Contributing to SwiftCurrent
 Thank you for your interest in SwiftCurrent!
 
+[![Issues](https://img.shields.io/github/issues/wwt/SwiftCurrent?color=bright-green)](https://github.com/wwt/SwiftCurrent/issues)
+[![Pull Requests](https://img.shields.io/github/issues-pr/wwt/SwiftCurrent?color=bright-green)](https://github.com/wwt/SwiftCurrent/pulls)
+
 ## Submitting issues
 ### Filing bugs
 If you found a bug in SwiftCurrent, thank you!  Please go to [issues](https://github.com/wwt/SwiftCurrent/issues/new/choose) and use the `Bug report` template to file it.  We'll reach out to you as soon as we can.  Some things the template will ask for are:
