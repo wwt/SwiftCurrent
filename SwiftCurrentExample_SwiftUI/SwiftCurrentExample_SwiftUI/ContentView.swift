@@ -31,6 +31,9 @@ struct FR1: View, FlowRepresentable {
         Button("Abandon!") {
             self.workflow?.abandon()
         }
+        Button("Proceed!") {
+            self.proceedInWorkflow()
+        }
         .padding()
     }
 }

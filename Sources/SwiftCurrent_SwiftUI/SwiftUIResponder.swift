@@ -20,7 +20,9 @@ public struct SwiftUIResponder: View {
 public struct SwiftUIResponder2: View, OrchestrationResponder {
     @ObservedObject var containedView = ContainedView()
     public init<F: FlowRepresentable>(workflow: Workflow<F>) {
-        workflow.launch(withOrchestrationResponder: self)
+        workflow.launch(withOrchestrationResponder: self) { _ in
+
+        }
     }
 
     public var body: some View {
@@ -48,12 +50,11 @@ public struct SwiftUIResponder2: View, OrchestrationResponder {
     }
 
     public func abandon(_ workflow: AnyWorkflow, onFinish: (() -> Void)?) {
-        // TODO
         containedView.view = AnyView(EmptyView())
     }
 
     public func complete(_ workflow: AnyWorkflow, passedArgs: AnyWorkflow.PassedArgs, onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
-        // TODO
+        onFinish?(passedArgs)
     }
 }
 
