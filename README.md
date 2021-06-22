@@ -1,17 +1,17 @@
 <!-- Library status -->
 ![Supported Platforms](https://img.shields.io/cocoapods/p/SwiftCurrent)
-![Swift Package Manager](https://img.shields.io/badge/Swift_Package_Manager-supported-brightgreen)
-![Pod Version](https://img.shields.io/cocoapods/v/SwiftCurrent.svg?style=popout)
-![License](https://img.shields.io/github/license/wwt/SwiftCurrent)
+[![Swift Package Manager](https://img.shields.io/badge/Swift_Package_Manager-supported-brightgreen)](https://github.com/wwt/SwiftCurrent/wiki/Installation#swift-package-manager)
+[![Pod Version](https://img.shields.io/cocoapods/v/SwiftCurrent.svg?style=popout)](https://github.com/wwt/SwiftCurrent/wiki/Installation#cocoapods)
+[![License](https://img.shields.io/github/license/wwt/SwiftCurrent)](https://github.com/wwt/SwiftCurrent/blob/main/LICENSE)
 
-![Build Status](https://github.com/wwt/SwiftCurrent/actions/workflows/CI.yml/badge.svg?branch=main)
+[![Build Status](https://github.com/wwt/SwiftCurrent/actions/workflows/CI.yml/badge.svg?branch=main)]()
 [![Code Coverage](https://codecov.io/gh/wwt/SwiftCurrent/branch/main/graph/badge.svg?token=04Q5KSHict)](https://codecov.io/gh/wwt/SwiftCurrent)
-![Issues](https://img.shields.io/github/issues-raw/wwt/SwiftCurrent)
-![Pull Requests](https://img.shields.io/github/issues-pr/wwt/SwiftCurrent)
+[![Issues](https://img.shields.io/github/issues-raw/wwt/SwiftCurrent)]()
+[![Pull Requests](https://img.shields.io/github/issues-pr/wwt/SwiftCurrent)]()
 
 <!-- Social media -->
 [![Stars](https://img.shields.io/github/stars/wwt/SwiftCurrent?style=social)](https://github.com/wwt/SwiftCurrent/stargazers)
-![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2FSwiftCurrentWWT)
+[![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2FSwiftCurrentWWT)]()
 
 
 # Welcome
