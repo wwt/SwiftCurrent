@@ -27,7 +27,7 @@ As you continue to develop your applications, each view controller will become m
 
 Clone our repo, open `SwiftCurrent.xcworkspace`, target the `SwiftCurrentExample` scheme, and run to see our example app in action.
 
-The app is designed to give you an idea of what SwiftCurrent can do with minimal overhead in the UI.  The key areas of code you'll want to look at are: `SetupViewController.swift` and the view controllers referenced in the [Workflow]().
+The app is designed to give you an idea of what SwiftCurrent can do with minimal overhead in the UI.  The key areas of code you'll want to look at are: `SetupViewController.swift` and the view controllers referenced in the [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html).
 
 ## Interested but you need SwiftUI support?
 
@@ -62,23 +62,7 @@ import SwiftCurrent
 launchInto(Workflow(ExampleViewController.self))
 ```
 
-### Original:
-
-And just like that you're started!  To see something more practical and in-depth, check out the example app in the repo.  For a more in-depth starting guide, checkout out our [Getting Started](https://github.com/wwt/SwiftCurrent/wiki/getting-started) documentation.
-
-### Option #1:
-
-And just like that you're started!  If you would like to see a more practical example, [checkout the example app in the repo]().  If you would like to have a slightly larger example than this quick start that may answer a number of initial questions you might have, take a look at the getting started guide that is most relevant to you:
-
-- [Getting Started with Storyboards](https://github.com/wwt/SwiftCurrent/wiki/getting-started)
-- [Getting Started with Programmatic UIKit](https://github.com/wwt/SwiftCurrent/wiki/Getting-Started-with-Programmatic-UIKit)
-
-
-### Option #2:
-
 And just like that you're started!
-
-If you're looking for a more practical example, [checkout the example app in the repo](https://github.com/wwt/SwiftCurrent#see-it-in-action-with-our-sample-app).  If instead, you would like a more guided walkthrough of using SwiftCurrent, follow our [Getting Started with Storyboards](https://github.com/wwt/SwiftCurrent/wiki/getting-started) or [Getting Started with Programmatic UIKit](https://github.com/wwt/SwiftCurrent/wiki/Getting-Started-with-Programmatic-UIKit) articles.
 
 # Deep Dive
 
