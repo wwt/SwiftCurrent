@@ -1,17 +1,10 @@
-<!-- Library status -->
+<!-- Library Information -->
 [![Supported Platforms](https://img.shields.io/cocoapods/p/SwiftCurrent)](https://github.com/wwt/SwiftCurrent/security/policy)
 [![Swift Package Manager](https://img.shields.io/badge/Swift_Package_Manager-supported-brightgreen)](https://github.com/wwt/SwiftCurrent/wiki/Installation#swift-package-manager)
 [![Pod Version](https://img.shields.io/cocoapods/v/SwiftCurrent.svg?style=popout)](https://github.com/wwt/SwiftCurrent/wiki/Installation#cocoapods)
 [![License](https://img.shields.io/github/license/wwt/SwiftCurrent)](https://github.com/wwt/SwiftCurrent/blob/main/LICENSE)
-
 [![Build Status](https://github.com/wwt/SwiftCurrent/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/wwt/SwiftCurrent/actions?query=branch%3Amain)
 [![Code Coverage](https://codecov.io/gh/wwt/SwiftCurrent/branch/main/graph/badge.svg?token=04Q5KSHict)](https://codecov.io/gh/wwt/SwiftCurrent)
-
-<!-- Social media -->
-[![Stars](https://img.shields.io/github/stars/wwt/SwiftCurrent?style=social)](https://github.com/wwt/SwiftCurrent/stargazers)
-[![Issues](https://img.shields.io/github/issues/wwt/SwiftCurrent?style=social)](https://github.com/wwt/SwiftCurrent/issues)
-[![Pull Requests](https://img.shields.io/github/issues-pr/wwt/SwiftCurrent?style=social)](https://github.com/wwt/SwiftCurrent/pulls)
-[![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2FSwiftCurrentWWT)](https://twitter.com/SwiftCurrentWWT)
 
 
 # Welcome
@@ -88,3 +81,7 @@ And just like that you're started!
 # Feedback
 
 If you like what you've seen, consider [giving us a star](https://github.com/wwt/SwiftCurrent/stargazers)! If you don't, let us know [how we can improve](https://github.com/wwt/SwiftCurrent/discussions/new).
+
+<!-- Social Media -->
+[![Stars](https://img.shields.io/github/stars/wwt/SwiftCurrent?style=social)](https://github.com/wwt/SwiftCurrent/stargazers)
+[![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2FSwiftCurrentWWT)](https://twitter.com/SwiftCurrentWWT)
