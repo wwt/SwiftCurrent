@@ -42,24 +42,26 @@ struct FR1: View, FlowRepresentable {
     @State var state = false
 
     var body: some View {
-        Text("FR1")
-        HStack {
-            Button("Abandon!") {
-                self.workflow?.abandon()
+        VStack {
+            Text("FR1")
+            HStack {
+                Button("Abandon!") {
+                    self.workflow?.abandon()
+                }
+                Button("Proceed!") {
+                    withAnimation { state.toggle() }
+                    self.proceedInWorkflow()
+                }
+                Button("Backup!") {
+                    withAnimation { state.toggle() }
+                    try? self.backUpInWorkflow()
+                }
             }
-            Button("Proceed!") {
-                withAnimation { state.toggle() }
-                self.proceedInWorkflow()
-            }
-            Button("Backup!") {
-                withAnimation { state.toggle() }
-                try? self.backUpInWorkflow()
-            }
+            .padding()
+            Text("Hello, FR1!")
+                .frame(maxWidth: .infinity, alignment: state ? .leading : .trailing)
+                .foregroundColor(state ? .red : .green)
         }
-        .padding()
-        Text("Hello, FR1!")
-                 .frame(maxWidth: .infinity, alignment: state ? .leading : .trailing)
-                 .foregroundColor(state ? .red : .green)
     }
 }
 
