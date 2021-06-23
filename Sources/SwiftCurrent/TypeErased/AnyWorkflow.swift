@@ -75,15 +75,15 @@ fileprivate class AnyWorkflowStorageBase {
     var orchestrationResponder: OrchestrationResponder?
     var count: Int { fatalError("Count not overridden by AnyWorkflowStorage") }
 
-    // https://github.com/Tyler-Keith-Thompson/Workflow/blob/master/STYLEGUIDE.md#type-erasure
+    // https://github.com/wwt/SwiftCurrent/blob/main/.github/STYLEGUIDE.md#type-erasure
     // swiftlint:disable:next unavailable_function
     func _abandon() { fatalError("_abandon not overridden by AnyWorkflowStorage") }
 
-    // https://github.com/Tyler-Keith-Thompson/Workflow/blob/master/STYLEGUIDE.md#type-erasure
+    // https://github.com/wwt/SwiftCurrent/blob/main/.github/STYLEGUIDE.md#type-erasure
     // swiftlint:disable:next unavailable_function
     func makeIterator() -> LinkedList<_WorkflowItem>.Iterator { fatalError("makeIterator not overridden by AnyWorkflowStorage") }
 
-    // https://github.com/Tyler-Keith-Thompson/Workflow/blob/master/STYLEGUIDE.md#type-erasure
+    // https://github.com/wwt/SwiftCurrent/blob/main/.github/STYLEGUIDE.md#type-erasure
     // swiftlint:disable:next unavailable_function
     func last(where _: (LinkedList<_WorkflowItem>.Element) throws -> Bool) rethrows -> LinkedList<_WorkflowItem>.Element? {
         fatalError("last(where:) not overridden by AnyWorkflowStorage")

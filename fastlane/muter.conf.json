@@ -1,7 +1,7 @@
 {
   "arguments" : [
     "-workspace",
-    "SwiftCurrent.xcworkspace",
+    "../SwiftCurrent.xcworkspace",
     "-scheme",
     "SwiftCurrent",
     "-destination",
@@ -9,7 +9,7 @@
     "test"
   ],
   "exclude" : [
-    "Package.swift"
+    "../Package.swift"
   ],
   "excludeCalls" : [
 

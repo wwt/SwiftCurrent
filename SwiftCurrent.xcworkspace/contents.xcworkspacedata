@@ -11,6 +11,6 @@
       location = "group:SwiftCurrentLint/SwiftCurrentLint.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:DynamicWorkflow.podspec">
+      location = "group:SwiftCurrent.podspec">
    </FileRef>
 </Workspace>

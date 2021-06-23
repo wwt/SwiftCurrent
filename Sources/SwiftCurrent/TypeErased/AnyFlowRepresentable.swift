@@ -85,7 +85,7 @@ fileprivate class AnyFlowRepresentableStorageBase {
         fatalError("AnyFlowRepresentableStorageBase called directly, only available internally so something has gone VERY wrong.")
     }
 
-    // https://github.com/Tyler-Keith-Thompson/Workflow/blob/master/STYLEGUIDE.md#type-erasure
+    // https://github.com/wwt/SwiftCurrent/blob/main/.github/STYLEGUIDE.md#type-erasure
     // swiftlint:disable:next unavailable_function
     func shouldLoad() -> Bool {
         fatalError("AnyFlowRepresentableStorageBase called directly, only available internally so something has gone VERY wrong.")
