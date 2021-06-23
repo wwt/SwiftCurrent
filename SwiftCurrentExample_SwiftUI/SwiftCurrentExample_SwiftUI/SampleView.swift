@@ -31,6 +31,7 @@ struct SampleView: View {
             FirstView() // but even if it takes parameters just use the () initializer
             SecondView()
                 .background(shiftLeading ? .red : .blue)
+                .transition(shiftLeading ? .slide : .fade)
 
                 ...
 
@@ -44,7 +45,7 @@ struct SampleView: View {
         WorkflowGroup {
             ThenPresent(FirstView()) // but even if it takes parameters just use the () initializer
 
-            SecondView()
+            ReplaceWith(SecondView())
                 .background(shiftLeading ? .red : .blue)
 
                 ...
@@ -56,6 +57,13 @@ struct SampleView: View {
         }
 
         //Injected @EnvironmentObject -> MY EnvironmentObject; my Workflow
+
+        // Inspiration:
+        LazyVStack(alignment: .center, spacing: nil, pinnedViews: [], content: {
+            ForEach(1...10, id: \.self) { count in
+                Text("Placeholder \(count)")
+            }
+        })
     }
 }
 
