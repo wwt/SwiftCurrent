@@ -1,5 +1,5 @@
 theme: fullwidth
-output: docs
+output: ../docs
 skip_undocumented: true
 separate_global_declarations: true
 readme: README.md
