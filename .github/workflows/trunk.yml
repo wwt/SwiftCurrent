@@ -52,7 +52,7 @@ jobs:
       - name: Install jazzy
         run: gem install jazzy
       - name: Generate documentation
-        run: ./document.sh
+        run: ./.github/document.sh
       - uses: JamesIves/github-pages-deploy-action@4.1.3
         with:
           branch: gh-pages
