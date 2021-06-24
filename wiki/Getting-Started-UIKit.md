@@ -15,15 +15,13 @@ import UIKit
 import SwiftCurrent
 import SwiftCurrent_UIKit
 
-// SwiftCurrent specific code: UIWorkflowItem<String, String>, FlowRepresentable
-class FirstViewController: UIWorkflowItem<String, String>, FlowRepresentable {
+class FirstViewController: UIWorkflowItem<String, String>, FlowRepresentable { // SwiftCurrent
     private let name: String
     private let emailTextField = UITextField()
     private let welcomeLabel = UILabel()
     private let saveButton = UIButton()
 
-    // SwiftCurrent custom initializer
-    required init(with name: String) {
+    required init(with name: String) { // SwiftCurrent
         self.name = name
         super.init(nibName: nil, bundle: nil)
 
@@ -60,19 +58,16 @@ class FirstViewController: UIWorkflowItem<String, String>, FlowRepresentable {
     required init?(coder: NSCoder) { nil }
 
     @objc private func savePressed() {
-        // SwiftCurrent specific code: This calls to move forward in the workflow
-        proceedInWorkflow(emailTextField.text ?? "")
+        proceedInWorkflow(emailTextField.text ?? "") // SwiftCurrent
     }
 }
 
 // This screen shows an employee only screen
-// SwiftCurrent specific code: UIWorkflowItem<String, String>, FlowRepresentable
-class SecondViewController: UIWorkflowItem<String, String>, FlowRepresentable {
+class SecondViewController: UIWorkflowItem<String, String>, FlowRepresentable { // SwiftCurrent
     private let email: String
     private let finishButton = UIButton()
 
-    // SwiftCurrent custom initializer
-    required init(with email: String) {
+    required init(with email: String) { // SwiftCurrent
         self.email = email
         super.init(nibName: nil, bundle: nil)
 
@@ -92,14 +87,12 @@ class SecondViewController: UIWorkflowItem<String, String>, FlowRepresentable {
 
     required init?(coder: NSCoder) { nil }
 
-    // SwiftCurrent specific code
-    func shouldLoad() -> Bool {
+    func shouldLoad() -> Bool { // SwiftCurrent
         return email.contains("@wwt.com")
     }
 
     @objc private func finishPressed() {
-        // SwiftCurrent specific code: This calls to move forward in the workflow
-        proceedInWorkflow(email)
+        proceedInWorkflow(email) // SwiftCurrent
     }
 }
 ```
@@ -138,12 +131,10 @@ class ViewController: UIViewController {
     }
 
     @objc private func didTapLaunchWorkflow() {
-        // SwiftCurrent
-        let workflow = Workflow(FirstViewController.self)
-            .thenPresent(SecondViewController.self)
+        let workflow = Workflow(FirstViewController.self) // SwiftCurrent
+            .thenPresent(SecondViewController.self) // SwiftCurrent
 
-        // SwiftCurrent
-        launchInto(workflow, args: "Noble Six") { passedArgs in
+        launchInto(workflow, args: "Noble Six") { passedArgs in // SwiftCurrent
             workflow.abandon()
 
             guard case .args(let emailAddress as String) = passedArgs else {
