@@ -12,18 +12,16 @@ Add the following line to the package dependencies
 .package(url: "https://github.com/wwt/SwiftCurrent.git", .upToNextMajor(from: "4.0.0")),
 ```
 
-## Get the correct product
+## Get the products
 
 Add the following products to your target dependencies.
-
-#### **If you want to use SwiftCurrent with UIKit**
 
 ```swift
 .product(name: "SwiftCurrent", package: "SwiftCurrent"),
 .product(name: "SwiftCurrent_UIKit", package: "SwiftCurrent")
 ```
 
-#### **Your import statements for these products will be**
+### Your import statements for these products will be
 
 ```swift
 import SwiftCurrent
@@ -37,13 +35,13 @@ import SwiftCurrent_UIKit
 
 Set up [CocoaPods](https://cocoapods.org/) for your project, then include SwiftCurrent in your dependencies by adding the following line to your `Podfile`:
 
-#### **If you want to use SwiftCurrent with UIKit**
+### To use SwiftCurrent with UIKit
 
 ```ruby
 pod 'SwiftCurrent/UIKit'
 ```
 
-#### **Your import statement will be**
+### Your import statement will be
 
 ```swift
 import SwiftCurrent

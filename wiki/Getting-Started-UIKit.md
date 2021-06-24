@@ -15,12 +15,14 @@ import UIKit
 import SwiftCurrent
 import SwiftCurrent_UIKit
 
+// SwiftCurrent specific code: UIWorkflowItem<String, String>, FlowRepresentable
 class FirstViewController: UIWorkflowItem<String, String>, FlowRepresentable {
     private let name: String
     private let emailTextField = UITextField()
     private let welcomeLabel = UILabel()
     private let saveButton = UIButton()
 
+    // SwiftCurrent custom initializer
     required init(with name: String) {
         self.name = name
         super.init(nibName: nil, bundle: nil)
@@ -58,15 +60,18 @@ class FirstViewController: UIWorkflowItem<String, String>, FlowRepresentable {
     required init?(coder: NSCoder) { nil }
 
     @objc private func savePressed() {
+        // SwiftCurrent specific code: This calls to move forward in the workflow
         proceedInWorkflow(emailTextField.text ?? "")
     }
 }
 
 // This screen shows an employee only screen
+// SwiftCurrent specific code: UIWorkflowItem<String, String>, FlowRepresentable
 class SecondViewController: UIWorkflowItem<String, String>, FlowRepresentable {
     private let email: String
     private let finishButton = UIButton()
 
+    // SwiftCurrent custom initializer
     required init(with email: String) {
         self.email = email
         super.init(nibName: nil, bundle: nil)
@@ -87,11 +92,13 @@ class SecondViewController: UIWorkflowItem<String, String>, FlowRepresentable {
 
     required init?(coder: NSCoder) { nil }
 
+    // SwiftCurrent specific code
     func shouldLoad() -> Bool {
         return email.contains("@wwt.com")
     }
 
     @objc private func finishPressed() {
+        // SwiftCurrent specific code: This calls to move forward in the workflow
         proceedInWorkflow(email)
     }
 }
@@ -131,9 +138,11 @@ class ViewController: UIViewController {
     }
 
     @objc private func didTapLaunchWorkflow() {
+        // SwiftCurrent
         let workflow = Workflow(FirstViewController.self)
             .thenPresent(SecondViewController.self)
 
+        // SwiftCurrent
         launchInto(workflow, args: "Noble Six") { passedArgs in
             workflow.abandon()
 
