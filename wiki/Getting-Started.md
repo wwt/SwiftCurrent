@@ -14,8 +14,7 @@ It is best practice to use the [StoryboardLoadable](https://wwt.github.io/SwiftC
 import UIKit
 import SwiftCurrent_UIKit
 
-// SwiftCurrent specific Protocol
-extension StoryboardLoadable {
+extension StoryboardLoadable { // SwiftCurrent
     // Assumes that your storyboardId will be the same as your UIViewController class name
     static var storyboardId: String { String(describing: Self.self) }
 }
@@ -36,8 +35,7 @@ Create two view controllers that both conform to `MainStoryboardLoadable` and in
 import UIKit
 import SwiftCurrent_UIKit
 
-// SwiftCurrent specific code: UIWorkflowItem<String, String>, MainStoryboardLoadable
-class FirstViewController: UIWorkflowItem<String, String>, MainStoryboardLoadable {
+class FirstViewController: UIWorkflowItem<String, String>, MainStoryboardLoadable { // SwiftCurrent
     private let name: String
 
     @IBOutlet private weak var emailTextField: UITextField!
@@ -47,8 +45,7 @@ class FirstViewController: UIWorkflowItem<String, String>, MainStoryboardLoadabl
         }
     }
 
-    // SwiftCurrent specific init
-    required init?(coder: NSCoder, with name: String) {
+    required init?(coder: NSCoder, with name: String) { // SwiftCurrent
         self.name = name
         super.init(coder: coder)
     }
@@ -56,16 +53,14 @@ class FirstViewController: UIWorkflowItem<String, String>, MainStoryboardLoadabl
     required init?(coder: NSCoder) { nil }
 
     @IBAction private func savePressed(_ sender: Any) {
-        // SwiftCurrent specific method
-        proceedInWorkflow(emailTextField.text ?? "")
+        proceedInWorkflow(emailTextField.text ?? "") // SwiftCurrent
     }
 }
 
 // This screen shows an employee only screen
-// SwiftCurrent code: UIWorkflowItem<String, String>, MainStoryboardLoadable
-class SecondViewController: UIWorkflowItem<String, String>, MainStoryboardLoadable {
+class SecondViewController: UIWorkflowItem<String, String>, MainStoryboardLoadable { // SwiftCurrent
     private let email: String
-    required init?(coder: NSCoder, with email: String) {
+    required init?(coder: NSCoder, with email: String) { // SwiftCurrent
         self.email = email
         super.init(coder: coder)
     }
@@ -73,12 +68,10 @@ class SecondViewController: UIWorkflowItem<String, String>, MainStoryboardLoadab
     required init?(coder: NSCoder) { nil }
 
     @IBAction private func finishPressed(_ sender: Any) {
-        // SwiftCurrent method
-        proceedInWorkflow(email)
+        proceedInWorkflow(email) // SwiftCurrent
     }
 
-    // SwiftCurrent method
-    func shouldLoad() -> Bool {
+    func shouldLoad() -> Bool { // SwiftCurrent
         return email.contains("@wwt.com")
     }
 }
@@ -129,11 +122,10 @@ import SwiftCurrent_UIKit
 
 class ViewController: UIViewController {
     @IBAction private func launchWorkflow() {
-        // SwiftCurrent specific type
-        let workflow = Workflow(FirstViewController.self)
-                            .thenPresent(SecondViewController.self)
-        // SwiftCurrent specific method
-        launchInto(workflow, args: "Some Name") { passedArgs in
+        let workflow = Workflow(FirstViewController.self) // SwiftCurrent
+                            .thenPresent(SecondViewController.self) // SwiftCurrent
+        
+        launchInto(workflow, args: "Some Name") { passedArgs in // SwiftCurrent
             workflow.abandon()
             guard case .args(let emailAddress as String) = passedArgs else {
                 print("No email address supplied")
