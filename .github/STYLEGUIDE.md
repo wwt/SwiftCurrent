@@ -2212,7 +2212,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   
   #### Why?
   
-  Things that can potentially effect more of the codebase go first. Similarly, related things (like the same property wrappers) take sorting precedence over the below list.  e.g. `@EnvironmentObject` comes before `@State`; `public` comes before `private`; `typealias`'s are potentially more affecting and thus go at the start.
+  Things that can potentially affect more of the codebase go first. Similarly, related things (like the same property wrappers) take sorting precedence over the below list.  e.g. `@EnvironmentObject` comes before `@State`; `public` comes before `private`; ` @MainActor` comes before `@ViewBuilder`; `typealias`'s are potentially more affecting and thus go at the start.
 
   Still extract as necessary into extensions, but ensure those extensions also conform to the rule.
 
