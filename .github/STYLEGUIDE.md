@@ -785,7 +785,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   ```
   </details>
 
-* **PREFER attributes on a separate line as what they are attributing for classes, structs, and actors.**
+* **PREFER attributes on a separate line from what they are attributing for classes, structs, and actors.**
 
   <details>
 
@@ -819,6 +819,13 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   @available(iOS 14.0, *) 
   @propertyWrapper 
   struct MyPropertyWrapper {
+    // ...
+  }
+
+  // RIGHT
+  @available(iOS 13, *)
+  @resultBuilder @requires_stored_property_inits
+  class WorkflowBuilder {
     // ...
   }
   ```
