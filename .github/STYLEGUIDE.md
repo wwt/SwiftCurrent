@@ -773,7 +773,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   // RIGHT
   @State var stateVar: Bool = true
   @discardableResult func thing() -> Bool { true }
-  @MainActor @ViewBuilder func createViews() {
+  @MainActor @ViewBuilder func createViews() -> some View {
     // ...
   }
 
