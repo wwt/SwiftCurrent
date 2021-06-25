@@ -6,6 +6,10 @@ This guide will walk you through getting a [Workflow](https://wwt.github.io/Swif
 
 For instructions on SPM and CocoaPods, [check out our installation page.](https://github.com/wwt/SwiftCurrent/wiki/Installation#swift-package-manager)
 
+## IMPORTANT NOTE
+
+SwiftCurrent is so convenient that you may miss the couple lines that are calls to the library.  To make it easier, we've marked our code snippets with `// SwiftCurrent` to highlight items that are coming from the library.
+
 ## Create the convenience protocols for storyboard loading
 
 It is best practice to use the [StoryboardLoadable](https://wwt.github.io/SwiftCurrent/Protocols/StoryboardLoadable.html) protocol to connect your [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) to your Storyboard.  Additionally, to limit the amount of duplicate code, you can make a convenience protocol for each storyboard.

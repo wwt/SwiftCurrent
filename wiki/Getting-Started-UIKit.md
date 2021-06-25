@@ -6,6 +6,10 @@ This guide will walk you through getting a [Workflow](https://wwt.github.io/Swif
 
 For instructions on SPM and CocoaPods, [check out our installation page.](https://github.com/wwt/SwiftCurrent/wiki/Installation#swift-package-manager)
 
+## IMPORTANT NOTE
+
+To make it easy to spot the couple lines needed for SwiftCurrent, we have appended every line related to SwiftCurrent in the sample code.  Look for the lines with the `// SwiftCurrent` comment.
+
 ## Create your view controllers
 
 Create two view controllers that inherit from [UIWorkflowItem<I, O>](https://wwt.github.io/SwiftCurrent/Classes/UIWorkflowItem.html).
