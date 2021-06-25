@@ -76,7 +76,7 @@ And just like that you're started!
 - [Getting Started with Storyboards](https://github.com/wwt/SwiftCurrent/wiki/getting-started)
 - [Getting Started with Programmatic UIKit](https://github.com/wwt/SwiftCurrent/wiki/Getting-Started-with-Programmatic-UIKit)
 - [Developer Documentation](https://wwt.github.io/SwiftCurrent/index.html)
-- [Upgrade Path](https://github.com/wwt/SwiftCurrent/blob/main/UPGRADE_PATH.md)
+- [Upgrade Path](https://github.com/wwt/SwiftCurrent/blob/main/wiki/UPGRADE_PATH.md)
 
 # Feedback
 
