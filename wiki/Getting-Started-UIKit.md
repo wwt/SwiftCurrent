@@ -12,7 +12,7 @@ To make it easy to spot the couple lines needed for SwiftCurrent, we have append
 
 ## Create your view controllers
 
-Create two view controllers that inherit from [UIWorkflowItem<I, O>](https://wwt.github.io/SwiftCurrent/Classes/UIWorkflowItem.html).
+Create two view controllers that inherit from [UIWorkflowItem<I, O>](https://wwt.github.io/SwiftCurrent/Classes/UIWorkflowItem.html) and implement [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html).
 
 ```swift
 import UIKit
@@ -28,7 +28,16 @@ class FirstViewController: UIWorkflowItem<String, String>, FlowRepresentable { /
     required init(with name: String) { // SwiftCurrent
         self.name = name
         super.init(nibName: nil, bundle: nil)
+        configureViews()
+    }
 
+    required init?(coder: NSCoder) { nil }
+
+    @objc private func savePressed() {
+        proceedInWorkflow(emailTextField.text ?? "") // SwiftCurrent
+    }
+
+    private func configureViews() {
         view.backgroundColor = .systemGray5
 
         welcomeLabel.text = "Welcome \(name)!"
@@ -58,12 +67,6 @@ class FirstViewController: UIWorkflowItem<String, String>, FlowRepresentable { /
         saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         saveButton.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 24).isActive = true
     }
-
-    required init?(coder: NSCoder) { nil }
-
-    @objc private func savePressed() {
-        proceedInWorkflow(emailTextField.text ?? "") // SwiftCurrent
-    }
 }
 
 // This screen shows an employee only screen
@@ -74,7 +77,20 @@ class SecondViewController: UIWorkflowItem<String, String>, FlowRepresentable { 
     required init(with email: String) { // SwiftCurrent
         self.email = email
         super.init(nibName: nil, bundle: nil)
+        configureViews()
+    }
 
+    required init?(coder: NSCoder) { nil }
+
+    func shouldLoad() -> Bool { // SwiftCurrent
+        return email.contains("@wwt.com")
+    }
+
+    @objc private func finishPressed() {
+        proceedInWorkflow(email) // SwiftCurrent
+    }
+
+    private func configureViews() {
         view.backgroundColor = .systemGray5
 
         finishButton.setTitle("Finish", for: .normal)
@@ -87,16 +103,6 @@ class SecondViewController: UIWorkflowItem<String, String>, FlowRepresentable { 
         finishButton.translatesAutoresizingMaskIntoConstraints = false
         finishButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         finishButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-    }
-
-    required init?(coder: NSCoder) { nil }
-
-    func shouldLoad() -> Bool { // SwiftCurrent
-        return email.contains("@wwt.com")
-    }
-
-    @objc private func finishPressed() {
-        proceedInWorkflow(email) // SwiftCurrent
     }
 }
 ```
