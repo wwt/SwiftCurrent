@@ -811,7 +811,8 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   }
   
   // RIGHT
-  @dynamicCallable class MyClass {
+  @dynamicCallable
+  class MyClass {
     // ...
   }
 
