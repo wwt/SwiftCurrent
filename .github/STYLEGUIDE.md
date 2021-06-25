@@ -749,7 +749,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   #### Why?
 
-    Because we naturally read lines of code as a consistent line, introducing whitespace makes it that much harder to understand the full context of the line you're trying to understand. This is the same reasoning we put behind preferring a return on the same line as the final parameter in a function declaration.
+    Because we naturally read lines of code as a consistent line, introducing whitespace makes it that much harder to understand the full context of the line you're trying to understand. This is the same reasoning used for preferring a return on the same line as the final parameter in a function declaration.
 
     NOTE: This does not come at the cost of sanity. If you have an exceptionally large number of attributions then it might indicate that you've gotten overzealous, and it actually obscures your meaning, rather than add to it.
 
