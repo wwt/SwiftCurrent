@@ -22,16 +22,54 @@ struct Tester: View {
     @State var show = false
 
     var body: some View {
-        if show {
-            Text("Foo")
-                .transition(.slide)
-        }
-        Button(show ? "Hide" : "Show") { withAnimation { show.toggle() } }
-
-        LazyVStack(alignment: .center, spacing: nil, pinnedViews: [], content: {
-            ForEach(1...10, id: \.self) { count in
-                Text("Placeholder \(count)")
+        VStack {
+            HStack {
+                Text("Header Area")
             }
-        })
+            HStack {
+                VStack {
+                    Text("Static Side Pane")
+                    Button(show ? "Hide" : "Show") { show.toggle() }
+                        .foregroundColor(Color.green)
+                    Image(uiImage: .actions)
+                }
+
+                NavigationView {
+                    NavigationLink(
+                        destination: Text("FR1"),
+                        isActive: $show,
+                        label: {
+                            Text("Launch button")
+                        })
+                }
+
+//                TabView {
+//                    Text("FR1")
+////                        .tabItem {
+////                            Text("Tabby")
+////                        }
+//                    Text("FR2")
+////                        .tabItem {
+////                            Text("Tabby2")
+////                        }
+//                }
+
+//                Menu("Breakdown") {
+//                    Text("FR1")
+//                    Text("FR2")
+//                }
+
+
+            }
+            HStack {
+                Text("Footer Area")
+            }
+        }.background(Color.blue)
+    }
+}
+
+struct Tester_Previews: PreviewProvider {
+    static var previews: some View {
+        Tester()
     }
 }
