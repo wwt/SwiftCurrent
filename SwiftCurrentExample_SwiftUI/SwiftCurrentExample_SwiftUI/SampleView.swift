@@ -27,43 +27,37 @@ struct SampleView: View {
 //        ^ REJECTED!!!
 
 //        Option 1
-        WorkflowGroup {
-            FirstView() // but even if it takes parameters just use the () initializer
-            SecondView()
-                .background(shiftLeading ? .red : .blue)
-                .transition(shiftLeading ? .slide : .fade)
-
-                ...
-
-            OneBeforeNthView()
-                .show(when: .proceeding) //remove from stack when proceeding
-            NthView()
-                .show(when: .backingUp) //don't display unless backing up
-        }
-
-//        Option 2
-        WorkflowGroup {
-            ThenPresent(FirstView()) // but even if it takes parameters just use the () initializer
-
-            ReplaceWith(SecondView())
-                .background(shiftLeading ? .red : .blue)
-
-                ...
-
-            OneBeforeNthView()
-                .show(when: .proceeding) //remove from stack when proceeding
-            NthView()
-                .show(when: .backingUp) //don't display unless backing up
-        }
+//        WorkflowGroup {
+//            FirstView() // but even if it takes parameters just use the () initializer
+//            SecondView()
+//                .background(shiftLeading ? .red : .blue)
+//                .transition(shiftLeading ? .slide : .fade)
+//
+//                ...
+//
+//            OneBeforeNthView()
+//                .show(when: .proceeding) //remove from stack when proceeding
+//            NthView()
+//                .show(when: .backingUp) //don't display unless backing up
+//        }
+//
+////        Option 2
+//        WorkflowGroup {
+//            ThenPresent(FirstView()) // but even if it takes parameters just use the () initializer
+//
+//            ReplaceWith(SecondView())
+//                .background(shiftLeading ? .red : .blue)
+//
+//                ...
+//
+//            OneBeforeNthView()
+//                .show(when: .proceeding) //remove from stack when proceeding
+//            NthView()
+//                .show(when: .backingUp) //don't display unless backing up
+//        }
 
         //Injected @EnvironmentObject -> MY EnvironmentObject; my Workflow
 
-        // Inspiration:
-        LazyVStack(alignment: .center, spacing: nil, pinnedViews: [], content: {
-            ForEach(1...10, id: \.self) { count in
-                Text("Placeholder \(count)")
-            }
-        })
     }
 }
 

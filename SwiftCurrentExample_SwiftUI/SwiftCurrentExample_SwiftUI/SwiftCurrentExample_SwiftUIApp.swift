@@ -5,7 +5,9 @@
 //  Created by Richard Gist on 6/21/21.
 //
 
+import Foundation
 import SwiftUI
+import SwiftCurrent
 
 @main
 struct SwiftCurrentExample_SwiftUIApp: App {
@@ -58,12 +60,19 @@ struct Tester: View {
 //                    Text("FR1")
 //                    Text("FR2")
 //                }
-
+                // Inspiration:
+//                LazyVStack(alignment: .center, spacing: nil, pinnedViews: [], content: {
+//                    ForEach(1...10, id: \.self) { count in
+//                        Text("Placeholder \(count)")
+//                    }
+//                })
 
             }
             HStack {
                 Text("Footer Area")
             }
+
+
         }.background(Color.blue)
     }
 }
@@ -71,5 +80,29 @@ struct Tester: View {
 struct Tester_Previews: PreviewProvider {
     static var previews: some View {
         Tester()
+        WorkflowView {
+            WorkflowItem<SecondView>()
+                .padding()
+                .foregroundColor(.blue)
+                .transition(.slide)
+            WorkflowItem<FirstView>()
+        }
+
+    }
+}
+
+struct WorkflowView<Content>: View where Content : View {
+    var body: some View {
+        EmptyView()
+    }
+
+    init(@ViewBuilder content: () -> Content) {
+
+    }
+}
+
+struct WorkflowItem<Content>: View where Content: View & FlowRepresentable {
+    var body: some View {
+        EmptyView()
     }
 }
