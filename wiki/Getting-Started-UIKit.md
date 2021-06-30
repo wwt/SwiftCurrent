@@ -8,7 +8,7 @@ For instructions on SPM and CocoaPods, [check out our installation page.](https:
 
 ## IMPORTANT NOTE
 
-To make it easy to spot the couple lines needed for SwiftCurrent, we have appended every line related to SwiftCurrent in the sample code.  Look for the lines with the `// SwiftCurrent` comment.
+SwiftCurrent is so convenient that you may miss the couple lines that are calls to the library.  To make it easier, we've marked our code snippets with `// SwiftCurrent` to highlight items that are coming from the library.
 
 ## Create your view controllers
 
