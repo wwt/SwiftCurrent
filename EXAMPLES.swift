@@ -21,7 +21,14 @@ struct FR1: View, FlowRepresentable {
 
 
 /////////////// MODAL STYLE //////////////////
-let sequenceOfViews = {
+✅ Able to apply view modifiers on a per view basis (especially transition animations).
+✅ Able to read the Workflow when there are many views present (at least 10).
+Able to swap inline definition of views with a variable/property
+✅ Completion syntax makes sense when everything is inlined.
+✅ We have a way to abandon the Workflow.
+✅ We can set persistence and launch styles on a per view basis (most likely just another view modifier).
+
+let sequenceOfViews: @ViewBuilder () -> some View = {
     WorkflowItem(FR1.self)
     WorkflowItem(FR2.self)
     WorkflowItem(FR3.self)
