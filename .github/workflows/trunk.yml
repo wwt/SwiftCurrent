@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          token: ${{ secrets.TYLER_PAT }}
+          token: ${{ secrets.RELEASE_PAT }}
       - name: Bump version in Podspec and Plist
         id: bump_version
         run: bundle exec fastlane patch
@@ -35,7 +35,7 @@ jobs:
       - name: Create a GitHub release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.TYLER_PAT }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_PAT }}
         with:
           tag_name: ${{ steps.bump_version.outputs.version }}
           release_name: Release ${{ steps.bump_version.outputs.version }}

@@ -743,6 +743,95 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   ```
   </details>
 
+* **PREFER attributes on the same line as what they are attributing for properties, functions, and closures.**
+
+  <details>
+
+  #### Why?
+
+    Because we naturally read lines of code as a consistent line, introducing whitespace makes it that much harder to understand the full context of the line you're trying to understand. This is the same reasoning used for preferring a return on the same line as the final parameter in a function declaration. A notable exception to this preference is the `@available` attribute which should always be on its own line.
+
+    NOTE: This does not come at the cost of sanity. If you have an exceptionally large number of attributions then it might indicate that you've gotten overzealous, and it actually obscures your meaning, rather than add to it.
+
+  ```swift
+  // WRONG
+  @objc
+  func thingExposedToObjectiveC() {
+    // ...
+  }
+  
+  // WRONG
+  @ViewBuilder @discardableResult @MainActor @inlinable func betYouDoNotEvenKnowWhatThisFunctionDoesAnymore() {
+    // ...
+  }
+
+  // WRONG
+  @available(iOS 14.0, *) func doSomething() {
+    // ...
+  }
+
+  // RIGHT
+  @State var stateVar: Bool = true
+  @discardableResult func thing() -> Bool { true }
+  @MainActor @ViewBuilder func createViews() -> some View {
+    // ...
+  }
+
+  // RIGHT
+  @available(iOS 14.0, *) 
+  func doSomething() {
+    // ...
+  }
+  ```
+  </details>
+
+* **PREFER attributes on a separate line from what they are attributing for classes, structs, and actors.**
+
+  <details>
+
+  #### Why?
+  This is the convention set by Apple in the [Swift attribute docs](https://docs.swift.org/swift-book/ReferenceManual/Attributes.html). A notable exception to this preference is the `@available` attribute which should always be on its own line.
+    
+
+  ```swift
+  // WRONG
+  @dynamicCallable class MyClass {
+    // ...
+  }
+
+  // WRONG
+  @MainActor struct MyStruct {
+    // ...
+  }
+
+  // WRONG
+  @available(iOS 14.0, *) @MainActor 
+  struct MyStruct {
+    // ...
+  }
+  
+  // RIGHT
+  @dynamicCallable
+  class MyClass {
+    // ...
+  }
+
+  // RIGHT
+  @available(iOS 14.0, *) 
+  @propertyWrapper 
+  struct MyPropertyWrapper {
+    // ...
+  }
+
+  // RIGHT
+  @available(iOS 13, *)
+  @resultBuilder @requires_stored_property_inits
+  class WorkflowBuilder {
+    // ...
+  }
+  ```
+  </details>
+
 ### Functions
 
 * **PREFER omitting `Void` return types from function definitions.**
@@ -2124,7 +2213,7 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
   
   #### Why?
   
-  Things that can potentially effect more of the codebase go first. Similarly, related things (like the same property wrappers) take sorting precedence over the below list.  e.g. `@EnvironmentObject` comes before `@State`; `public` comes before `private`; `typealias`'s are potentially more affecting and thus go at the start.
+  Things that can potentially affect more of the codebase go first. Similarly, related things (like the same property wrappers) take sorting precedence over the below list.  e.g. `@EnvironmentObject` comes before `@State`; `public` comes before `private`; ` @MainActor` comes before `@ViewBuilder`; `typealias`'s are potentially more affecting and thus go at the start.
 
   Still extract as necessary into extensions, but ensure those extensions also conform to the rule.
 
