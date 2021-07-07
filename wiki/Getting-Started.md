@@ -4,7 +4,7 @@ This guide will walk you through getting a [Workflow](https://wwt.github.io/Swif
 
 The app in this guide is going to be very simple.  It consists of a screen that will launch the [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html), a screen to enter an email address, and an optional screen for if your email contains `wwt.com`.  Here is a preview of what the app will look like:
 
-![Preview image of app](https://github.com/wwt/SwiftCurrent/wiki/storyboard.gif)
+![Preview image of app](https://github.com/wwt/SwiftCurrent/blob/e863b8eaa91a06d7bf3f236b9dc74d2b8342a8f6/wiki/storyboard.gif)
 
 ## Adding the dependency
 
