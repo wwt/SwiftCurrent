@@ -2,29 +2,46 @@
 
 This guide will walk you through getting a [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html) up and running in a new iOS project.  If you would like to see an existing project, clone the repo and view the `SwiftCurrentExample` scheme in `SwiftCurrent.xcworkspace`.
 
+The app in this guide is going to be very simple.  It consists of a screen that will launch the [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html), a screen to enter an email address, and an optional screen for if your email contains `wwt.com`.  Here is a preview of what the app will look like:
+
+![Preview image of app](https://github.com/wwt/SwiftCurrent/wiki/programmatic.gif)
+
 ## Adding the dependency
 
 For instructions on SPM and CocoaPods, [check out our installation page.](https://github.com/wwt/SwiftCurrent/wiki/Installation#swift-package-manager)
 
+## IMPORTANT NOTE
+
+SwiftCurrent is so convenient that you may miss the couple lines that are calls to the library.  To make it easier, we've marked our code snippets with `// SwiftCurrent` to highlight items that are coming from the library.
+
 ## Create your view controllers
 
-Create two view controllers that inherit from [UIWorkflowItem<I, O>](https://wwt.github.io/SwiftCurrent/Classes/UIWorkflowItem.html).
+Create two view controllers that inherit from [UIWorkflowItem<I, O>](https://wwt.github.io/SwiftCurrent/Classes/UIWorkflowItem.html) and implement [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html).
 
 ```swift
 import UIKit
 import SwiftCurrent
 import SwiftCurrent_UIKit
 
-class FirstViewController: UIWorkflowItem<String, String>, FlowRepresentable {
+class FirstViewController: UIWorkflowItem<String, String>, FlowRepresentable { // SwiftCurrent
     private let name: String
     private let emailTextField = UITextField()
     private let welcomeLabel = UILabel()
     private let saveButton = UIButton()
 
-    required init(with name: String) {
+    required init(with name: String) { // SwiftCurrent
         self.name = name
         super.init(nibName: nil, bundle: nil)
+        configureViews()
+    }
 
+    required init?(coder: NSCoder) { nil }
+
+    @objc private func savePressed() {
+        proceedInWorkflow(emailTextField.text ?? "") // SwiftCurrent
+    }
+
+    private func configureViews() {
         view.backgroundColor = .systemGray5
 
         welcomeLabel.text = "Welcome \(name)!"
@@ -54,23 +71,30 @@ class FirstViewController: UIWorkflowItem<String, String>, FlowRepresentable {
         saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         saveButton.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 24).isActive = true
     }
-
-    required init?(coder: NSCoder) { nil }
-
-    @objc private func savePressed() {
-        proceedInWorkflow(emailTextField.text ?? "")
-    }
 }
 
 // This screen shows an employee only screen
-class SecondViewController: UIWorkflowItem<String, String>, FlowRepresentable {
+class SecondViewController: UIWorkflowItem<String, String>, FlowRepresentable { // SwiftCurrent
     private let email: String
     private let finishButton = UIButton()
 
-    required init(with email: String) {
+    required init(with email: String) { // SwiftCurrent
         self.email = email
         super.init(nibName: nil, bundle: nil)
+        configureViews()
+    }
 
+    required init?(coder: NSCoder) { nil }
+
+    func shouldLoad() -> Bool { // SwiftCurrent
+        return email.contains("@wwt.com")
+    }
+
+    @objc private func finishPressed() {
+        proceedInWorkflow(email) // SwiftCurrent
+    }
+
+    private func configureViews() {
         view.backgroundColor = .systemGray5
 
         finishButton.setTitle("Finish", for: .normal)
@@ -83,16 +107,6 @@ class SecondViewController: UIWorkflowItem<String, String>, FlowRepresentable {
         finishButton.translatesAutoresizingMaskIntoConstraints = false
         finishButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         finishButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-    }
-
-    required init?(coder: NSCoder) { nil }
-
-    func shouldLoad() -> Bool {
-        return email.contains("@wwt.com")
-    }
-
-    @objc private func finishPressed() {
-        proceedInWorkflow(email)
     }
 }
 ```
@@ -131,10 +145,10 @@ class ViewController: UIViewController {
     }
 
     @objc private func didTapLaunchWorkflow() {
-        let workflow = Workflow(FirstViewController.self)
-            .thenPresent(SecondViewController.self)
+        let workflow = Workflow(FirstViewController.self) // SwiftCurrent
+            .thenPresent(SecondViewController.self) // SwiftCurrent
 
-        launchInto(workflow, args: "Noble Six") { passedArgs in
+        launchInto(workflow, args: "Noble Six") { passedArgs in // SwiftCurrent
             workflow.abandon()
 
             guard case .args(let emailAddress as String) = passedArgs else {

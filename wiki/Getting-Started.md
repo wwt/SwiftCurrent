@@ -2,9 +2,17 @@
 
 This guide will walk you through getting a [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html) up and running in a new iOS project.  If you would like to see an existing project, clone the repo and view the `SwiftCurrentExample` scheme in `SwiftCurrent.xcworkspace`.
 
+The app in this guide is going to be very simple.  It consists of a screen that will launch the [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html), a screen to enter an email address, and an optional screen for if your email contains `wwt.com`.  Here is a preview of what the app will look like:
+
+![Preview image of app](https://github.com/wwt/SwiftCurrent/wiki/storyboard.gif)
+
 ## Adding the dependency
 
 For instructions on SPM and CocoaPods, [check out our installation page.](https://github.com/wwt/SwiftCurrent/wiki/Installation#swift-package-manager)
+
+## IMPORTANT NOTE
+
+SwiftCurrent is so convenient that you may miss the couple lines that are calls to the library.  To make it easier, we've marked our code snippets with `// SwiftCurrent` to highlight items that are coming from the library.
 
 ## Create the convenience protocols for storyboard loading
 
@@ -14,7 +22,8 @@ It is best practice to use the [StoryboardLoadable](https://wwt.github.io/SwiftC
 import UIKit
 import SwiftCurrent_UIKit
 
-extension StoryboardLoadable {
+extension StoryboardLoadable { // SwiftCurrent
+    // Assumes that your storyboardId will be the same as your UIViewController class name
     static var storyboardId: String { String(describing: Self.self) }
 }
 
@@ -34,7 +43,7 @@ Create two view controllers that both conform to `MainStoryboardLoadable` and in
 import UIKit
 import SwiftCurrent_UIKit
 
-class FirstViewController: UIWorkflowItem<String, String>, MainStoryboardLoadable {
+class FirstViewController: UIWorkflowItem<String, String>, MainStoryboardLoadable { // SwiftCurrent
     private let name: String
 
     @IBOutlet private weak var emailTextField: UITextField!
@@ -44,7 +53,7 @@ class FirstViewController: UIWorkflowItem<String, String>, MainStoryboardLoadabl
         }
     }
 
-    required init?(coder: NSCoder, with name: String) {
+    required init?(coder: NSCoder, with name: String) { // SwiftCurrent
         self.name = name
         super.init(coder: coder)
     }
@@ -52,14 +61,14 @@ class FirstViewController: UIWorkflowItem<String, String>, MainStoryboardLoadabl
     required init?(coder: NSCoder) { nil }
 
     @IBAction private func savePressed(_ sender: Any) {
-        proceedInWorkflow(emailTextField.text ?? "")
+        proceedInWorkflow(emailTextField.text ?? "") // SwiftCurrent
     }
 }
 
 // This screen shows an employee only screen
-class SecondViewController: UIWorkflowItem<String, String>, MainStoryboardLoadable {
+class SecondViewController: UIWorkflowItem<String, String>, MainStoryboardLoadable { // SwiftCurrent
     private let email: String
-    required init?(coder: NSCoder, with email: String) {
+    required init?(coder: NSCoder, with email: String) { // SwiftCurrent
         self.email = email
         super.init(coder: coder)
     }
@@ -67,10 +76,10 @@ class SecondViewController: UIWorkflowItem<String, String>, MainStoryboardLoadab
     required init?(coder: NSCoder) { nil }
 
     @IBAction private func finishPressed(_ sender: Any) {
-        proceedInWorkflow(email)
+        proceedInWorkflow(email) // SwiftCurrent
     }
 
-    func shouldLoad() -> Bool {
+    func shouldLoad() -> Bool { // SwiftCurrent
         return email.contains("@wwt.com")
     }
 }
@@ -121,9 +130,10 @@ import SwiftCurrent_UIKit
 
 class ViewController: UIViewController {
     @IBAction private func launchWorkflow() {
-        let workflow = Workflow(FirstViewController.self)
-                            .thenPresent(SecondViewController.self)
-        launchInto(workflow, args: "Some Name") { passedArgs in
+        let workflow = Workflow(FirstViewController.self) // SwiftCurrent
+                            .thenPresent(SecondViewController.self) // SwiftCurrent
+        
+        launchInto(workflow, args: "Some Name") { passedArgs in // SwiftCurrent
             workflow.abandon()
             guard case .args(let emailAddress as String) = passedArgs else {
                 print("No email address supplied")
@@ -172,6 +182,7 @@ import XCTest
 import UIUTest
 import SwiftCurrent
 
+// This assumes your project was called GettingStarted.
 @testable import GettingStarted
 
 class SecondViewControllerTests: XCTestCase {
