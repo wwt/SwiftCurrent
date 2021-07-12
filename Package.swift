@@ -48,6 +48,7 @@ let package = Package(
             name: "SwiftCurrent_SwiftUITests",
             dependencies: [
                 "SwiftCurrent",
+                "SwiftCurrent_SwiftUI",
                 "CwlPreconditionTesting",
                 "CwlCatchException",
                 "ViewInspector"
