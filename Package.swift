@@ -13,6 +13,9 @@ let package = Package(
         .library(
             name: "SwiftCurrent_UIKit",
             targets: ["SwiftCurrent_UIKit"]),
+        .library(
+            name: "BETA_SwiftCurrent_SwiftUI",
+            targets: ["SwiftCurrent_SwiftUI"])
     ],
     dependencies: [
         .package(url: "https://github.com/mattgallagher/CwlPreconditionTesting.git", from: Version("2.0.0-beta.1")),
@@ -26,6 +29,9 @@ let package = Package(
             dependencies: []),
         .target(
             name: "SwiftCurrent_UIKit",
+            dependencies: ["SwiftCurrent"]),
+        .target(
+            name: "SwiftCurrent_SwiftUI",
             dependencies: ["SwiftCurrent"]),
         .testTarget(
             name: "SwiftCurrentTests",
