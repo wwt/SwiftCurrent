@@ -46,17 +46,16 @@ import SwiftCurrent
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 public struct WorkflowView: View {
     @Binding public var isPresented: Bool
-    let inspection = Inspection<Self>()
+    let inspection = Inspection<Self>() // Needed for ViewInspector
 
     /// Creates a `WorkflowView` that displays a `FlowRepresentable` when presented.
     public init(isPresented: Binding<Bool>) {
         _isPresented = .constant(false)
     }
 
-    #warning("NOTE: The onReceive is how the tests work...do not remove it if you want tests that work. If you do not want tests that work why precisely are you at WWT or on this project?????")
     public var body: some View {
         VStack {
-        }.onReceive(inspection.notice) { inspection.visit(self, $0) }
+        }.onReceive(inspection.notice) { inspection.visit(self, $0) } // Needed for ViewInspector
     }
 
     /// Adds an action to perform when this `Workflow` has finished.

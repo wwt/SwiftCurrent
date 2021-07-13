@@ -83,7 +83,6 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR6.self))
                 .thenProceed(with: WorkflowItem(FR7.self)))
             .inspection.inspect { viewUnderTest in
-                #warning("NOTE: These serve a dual purpose, if the view can't be cast to the appropriate FR# then it fails AND it proceeds in the workflow in 1 line")
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
                 XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
                 XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())

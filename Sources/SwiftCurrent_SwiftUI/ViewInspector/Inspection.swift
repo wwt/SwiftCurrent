@@ -9,7 +9,7 @@
 import SwiftUI
 import Combine
 
-#warning("It sucks that we have to modify production code for the sake of tests, but it is absolutely necessary for ViewInspector and totally WORTH IT to get tests around SwiftUI that aren't XCUITests")
+// Necessary for ViewInspector tests
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 final class Inspection<V> where V: View {
     let notice = PassthroughSubject<UInt, Never>()
