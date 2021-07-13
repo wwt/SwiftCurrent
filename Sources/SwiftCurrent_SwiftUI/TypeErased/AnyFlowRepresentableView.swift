@@ -19,12 +19,11 @@ final class AnyFlowRepresentableView: AnyFlowRepresentable {
 
     init<FR: FlowRepresentable & View>(type: FR.Type, args: AnyWorkflow.PassedArgs) {
         super.init(type, args: args)
-        #warning("Fix this!!!")
-        // swiftlint:disable:next force_cast
-        let instance = underlyingInstance as! FR
-        #warning("Consider testing [weak self]")
-        setViewOnModel = {
-            self.model?.body = AnyView(instance)
+        guard let instance = underlyingInstance as? FR else {
+            fatalError("Could not cast \(String(describing: underlyingInstance)) to expected type: \(FR.self)")
+        }
+        setViewOnModel = { [weak self] in
+            self?.model?.body = AnyView(instance)
         }
     }
 }
