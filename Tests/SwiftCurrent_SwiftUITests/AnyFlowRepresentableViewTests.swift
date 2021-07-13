@@ -30,6 +30,7 @@ final class AnyFlowRepresentableViewTests: XCTestCase {
     }
 }
 
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 fileprivate struct FR: View, FlowRepresentable {
     weak var _workflowPointer: AnyFlowRepresentable?
 
