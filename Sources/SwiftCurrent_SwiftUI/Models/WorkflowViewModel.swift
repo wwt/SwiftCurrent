@@ -9,12 +9,14 @@
 import SwiftCurrent
 import SwiftUI
 
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 final class WorkflowViewModel: ObservableObject {
     @Published var body = AnyView(EmptyView())
     var isPresented: Binding<Bool>?
     var onAbandon = [() -> Void]()
 }
 
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension WorkflowViewModel: OrchestrationResponder {
     func launch(to destination: AnyWorkflow.Element) {
         extractView(from: destination).model = self
