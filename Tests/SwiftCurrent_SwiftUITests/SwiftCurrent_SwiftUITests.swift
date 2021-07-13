@@ -15,6 +15,7 @@ import SwiftCurrent
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
+    #warning("NOTE: This is the only \"Vetted\" test, in that it has passed for the right reasons and failed for the right reasons. All of the other tests are assumed to work.")
     func testWorkflowCanBeFollowed() throws {
         // NOTE: I implemented the spike code (then removed it) to prove that this test does pass if the code is implemented.
         struct FR1: View, FlowRepresentable, Inspectable {
@@ -95,6 +96,44 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: 0.3)
     }
 
+    func testMovingBiDirectionallyInAWorkflow() throws {
+        // NOTE: Workflows in the past had issues with 4+ items, so this is to cover our bases. SwiftUI also has a nasty habit of behaving a little differently as number of views increase.
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR3 type") }
+        }
+        struct FR4: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR4 type") }
+        }
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowView(isPresented: .constant(true))
+                .thenProceed(with: WorkflowItem(FR1.self))
+                .thenProceed(with: WorkflowItem(FR2.self))
+                .thenProceed(with: WorkflowItem(FR3.self))
+                .thenProceed(with: WorkflowItem(FR4.self)))
+            .inspection.inspect { viewUnderTest in
+                XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+                XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().backUpInWorkflow())
+                XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+                XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().backUpInWorkflow())
+                XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
+                XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
+            }
+
+        wait(for: [expectViewLoaded], timeout: 0.3)
+    }
+
     func testWorkflowSetsBindingBooleanToFalseWhenAbandoned() throws {
         // NOTE: This test is un-vetted. It probably is either correct or close to correct, though.
         struct FR1: View, FlowRepresentable, Inspectable {
@@ -110,8 +149,8 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             expectOnAbandon.fulfill()
             XCTAssertFalse(isPresented.wrappedValue)
         }).inspection.inspect { viewUnderTest in
-            XCTAssertEqual(try viewUnderTest.vStack().anyView(0).view(FR1.self).text().string(), "FR1 type")
-            XCTAssertNoThrow(try viewUnderTest.vStack().anyView(0).view(FR1.self).actualView().workflow?.abandon())
+            XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
+            XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().workflow?.abandon())
         }
 
         wait(for: [expectOnAbandon, expectViewLoaded], timeout: 0.3)

@@ -33,4 +33,9 @@ import SwiftCurrent
 public final class WorkflowItem<F: FlowRepresentable & View> {
     /// Creates a `WorkflowItem` with no arguments from a `FlowRepresentable` that is also a View.
     public init(_: F.Type) { }
+
+    /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.
+    public func persistence(_ : FlowPersistence) -> Self {
+        self
+    }
 }
