@@ -33,6 +33,8 @@ import SwiftCurrent
 public final class WorkflowItem<F: FlowRepresentable & View> {
     var metadata: FlowRepresentableMetadata!
     private var flowPersistenceClosure: (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default }
+    private var modifierClosure: ((AnyFlowRepresentableView) -> Void)?
+
     /// Creates a `WorkflowItem` with no arguments from a `FlowRepresentable` that is also a View.
     public init(_: F.Type) {
         metadata = FlowRepresentableMetadata(F.self,
@@ -41,8 +43,24 @@ public final class WorkflowItem<F: FlowRepresentable & View> {
                                              flowRepresentableFactory: factory)
     }
 
+    /**
+     Provides a way to apply modifiers to your `FlowRepresentable` view.
+
+     ### Important: The most recently defined (or last) use of this, is the only one that applies modifiers, unlike onAbandon or onFinish.
+     */
+    public func applyModifiers<V: View>(@ViewBuilder _ closure: @escaping (F) -> V) -> Self {
+        modifierClosure = {
+            #warning("Come back to this")
+            // swiftlint:disable:next force_cast
+            $0.changeUnderlyingView(to: closure($0.underlyingInstance as! F))
+        }
+        return self
+    }
+
     func factory(args: AnyWorkflow.PassedArgs) -> AnyFlowRepresentable {
-        AnyFlowRepresentableView(type: F.self, args: args)
+        let afrv = AnyFlowRepresentableView(type: F.self, args: args)
+        modifierClosure?(afrv)
+        return afrv
     }
 }
 

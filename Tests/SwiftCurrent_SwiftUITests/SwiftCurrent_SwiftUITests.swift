@@ -266,7 +266,6 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     }
 
     func testWorkflowSetsBindingBooleanToFalseWhenAbandoned() throws {
-        // NOTE: This test is un-vetted. It probably is either correct or close to correct, though.
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
@@ -289,7 +288,6 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     }
 
     func testWorkflowViewCanHaveMultipleOnAbandonCallbacks() throws {
-        // NOTE: This test is un-vetted. It probably is either correct or close to correct, though.
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
@@ -312,5 +310,23 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         }
 
         wait(for: [expectOnAbandon1, expectOnAbandon2, expectViewLoaded], timeout: 0.3)
+    }
+
+    func testWorkflowViewCanHaveModifiers() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+
+            func customModifier() -> Self { self }
+        }
+
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowView(isPresented: .constant(true))
+                .thenProceed(with: WorkflowItem(FR1.self)
+                                .applyModifiers { $0.customModifier().background(Color.blue) })).inspection.inspect { viewUnderTest in
+            XCTAssertNoThrow(try viewUnderTest.vStack().anyView(0).view(FR1.self).background())
+        }
+
+        wait(for: [expectViewLoaded], timeout: 0.3)
     }
 }
