@@ -17,7 +17,7 @@ final class AnyFlowRepresentableView: AnyFlowRepresentable {
     }
     private var setViewOnModel = { }
 
-    init<FR: FlowRepresentable & View>(_ type: FR.Type, args: AnyWorkflow.PassedArgs) {
+    init<FR: FlowRepresentable & View>(type: FR.Type, args: AnyWorkflow.PassedArgs) {
         super.init(type, args: args)
         #warning("Fix this!!!")
         // swiftlint:disable:next force_cast

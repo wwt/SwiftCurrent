@@ -46,6 +46,9 @@ import SwiftCurrent
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 public struct WorkflowView: View {
     @Binding public var isPresented: Bool
+    @StateObject private var model = WorkflowViewModel()
+    @State private var workflow: AnyWorkflow?
+
     let inspection = Inspection<Self>() // Needed for ViewInspector
 
     /// Creates a `WorkflowView` that displays a `FlowRepresentable` when presented.
@@ -53,8 +56,20 @@ public struct WorkflowView: View {
         _isPresented = .constant(false)
     }
 
+    private init(isPresented: Binding<Bool>,
+                 workflow: AnyWorkflow?) {
+        _isPresented = isPresented
+        _workflow = State(initialValue: workflow)
+    }
+
     public var body: some View {
         VStack {
+            model.body
+        }.onAppear {
+            workflow?.launch(withOrchestrationResponder: model,
+                             passedArgs: .none,
+                             launchStyle: .new,
+                             onFinish: nil)
         }.onReceive(inspection.notice) { inspection.visit(self, $0) } // Needed for ViewInspector
     }
 
@@ -76,7 +91,14 @@ extension WorkflowView {
      - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
      - Returns: a new `WorkflowView` with the additional `FlowRepresentable` item.
      */
-    public func thenProceed<FR: FlowRepresentable & View>(with _: WorkflowItem<FR>) -> WorkflowView {
-        self // WRONG
+    public func thenProceed<FR: FlowRepresentable & View>(with item: WorkflowItem<FR>) -> WorkflowView {
+        var workflow = self.workflow
+        if workflow == nil {
+            workflow = AnyWorkflow(Workflow<FR>(item.metadata))
+        } else {
+            workflow?.append(item.metadata)
+        }
+        return WorkflowView(isPresented: $isPresented,
+                            workflow: workflow)
     }
 }

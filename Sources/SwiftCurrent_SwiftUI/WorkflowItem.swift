@@ -31,11 +31,21 @@ import SwiftCurrent
  */
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 public final class WorkflowItem<F: FlowRepresentable & View> {
+    var metadata: FlowRepresentableMetadata!
     /// Creates a `WorkflowItem` with no arguments from a `FlowRepresentable` that is also a View.
-    public init(_: F.Type) { }
+    public init(_: F.Type) {
+        metadata = FlowRepresentableMetadata(F.self,
+                                             launchStyle: .new,
+                                             flowPersistence: { _ in .default },
+                                             flowRepresentableFactory: factory)
+    }
 
     /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.
     public func persistence(_ : FlowPersistence) -> Self {
         self
+    }
+
+    func factory(args: AnyWorkflow.PassedArgs) -> AnyFlowRepresentable {
+        AnyFlowRepresentableView(type: F.self, args: args)
     }
 }
