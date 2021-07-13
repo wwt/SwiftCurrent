@@ -16,33 +16,33 @@ import SwiftCurrent
  The preferred method for creating a `Workflow` with SwiftUI is a combination of `WorkflowView` and `WorkflowItem`. Initialize with arguments if your first `FlowRepresentable` has an input type.
 
  #### Example
- ```swift
- WorkflowView(isPresented: $isPresented.animation(), args: "String in")
- .thenProceed(with: WorkflowItem(FirstView.self)
- .applyModifiers {
- if true { // Enabling transition animation
- $0.background(Color.gray)
- .transition(.slide)
- .animation(.spring())
- }
- })
- .thenProceed(with: WorkflowItem(SecondView.self)
- .persistence(.removedAfterProceeding)
- .applyModifiers {
- if true {
- $0.SecondViewSpecificModifier()
- .padding(10)
- .background(Color.purple)
- .transition(.opacity)
- .animation(.easeInOut)
- }
- })
- .onAbandon { print("presentingWorkflowView is now false") }
- .onFinish { args in print("Finished 1: \(args)") }
- .onFinish { print("Finished 2: \($0)") }
- .background(Color.green)
- ```
  */
+/// ```swift
+/// WorkflowView(isPresented: $isPresented.animation(), args: "String in")
+///     .thenProceed(with: WorkflowItem(FirstView.self)
+///                     .applyModifiers {
+///         if true { // Enabling transition animation
+///             $0.background(Color.gray)
+///                 .transition(.slide)
+///                 .animation(.spring())
+///         }
+///     })
+///     .thenProceed(with: WorkflowItem(SecondView.self)
+///                     .persistence(.removedAfterProceeding)
+///                     .applyModifiers {
+///         if true {
+///             $0.SecondViewSpecificModifier()
+///                 .padding(10)
+///                 .background(Color.purple)
+///                 .transition(.opacity)
+///                 .animation(.easeInOut)
+///         }
+///     })
+///     .onAbandon { print("presentingWorkflowView is now false") }
+///     .onFinish { args in print("Finished 1: \(args)") }
+///     .onFinish { print("Finished 2: \($0)") }
+///     .background(Color.green)
+///  ```
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 public struct WorkflowView: View {
     @Binding public var isPresented: Bool

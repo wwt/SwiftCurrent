@@ -32,17 +32,23 @@ import SwiftCurrent
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 public final class WorkflowItem<F: FlowRepresentable & View> {
     var metadata: FlowRepresentableMetadata!
+    private var flowPersistenceClosureIGuess: (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default }
     /// Creates a `WorkflowItem` with no arguments from a `FlowRepresentable` that is also a View.
     public init(_: F.Type) {
         metadata = FlowRepresentableMetadata(F.self,
                                              launchStyle: .new,
-                                             flowPersistence: { _ in .default },
+                                             flowPersistence: flowPersistenceClosureIGuess,
                                              flowRepresentableFactory: factory)
     }
 
     /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.
-    public func persistence(_ : FlowPersistence) -> Self {
-        self
+    public func persistence(_ persistence: FlowPersistence) -> Self {
+        flowPersistenceClosureIGuess = { _ in persistence }
+        metadata = FlowRepresentableMetadata(F.self,
+                                             launchStyle: .new,
+                                             flowPersistence: flowPersistenceClosureIGuess,
+                                             flowRepresentableFactory: factory)
+        return self
     }
 
     func factory(args: AnyWorkflow.PassedArgs) -> AnyFlowRepresentable {
