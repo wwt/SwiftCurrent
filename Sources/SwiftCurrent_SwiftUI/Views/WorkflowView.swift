@@ -44,7 +44,7 @@ import SwiftCurrent
 ///     .background(Color.green)
 ///  ```
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-public struct WorkflowView: View {
+public struct WorkflowView<Args>: View {
     @Binding public var isPresented: Bool
     @StateObject private var model = WorkflowViewModel()
 
@@ -52,20 +52,29 @@ public struct WorkflowView: View {
     private var workflow: AnyWorkflow?
     private var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
     private var onAbandon = [() -> Void]()
+    private var passedArgs = AnyWorkflow.PassedArgs.none
 
     /// Creates a `WorkflowView` that displays a `FlowRepresentable` when presented.
-    public init(isPresented: Binding<Bool>) {
+    public init(isPresented: Binding<Bool>) where Args == Never {
         _isPresented = isPresented
+    }
+
+    /// Creates a `WorkflowView` that displays a `FlowRepresentable` when presented.
+    public init(isPresented: Binding<Bool>, args: Args) {
+        _isPresented = isPresented
+        passedArgs = .args(args)
     }
 
     private init(isPresented: Binding<Bool>,
                  workflow: AnyWorkflow?,
                  onFinish: [(AnyWorkflow.PassedArgs) -> Void],
-                 onAbandon: [() -> Void]) {
+                 onAbandon: [() -> Void],
+                 passedArgs: AnyWorkflow.PassedArgs) {
         _isPresented = isPresented
         self.workflow = workflow
         self.onFinish = onFinish
         self.onAbandon = onAbandon
+        self.passedArgs = passedArgs
     }
 
     public var body: some View {
@@ -77,7 +86,7 @@ public struct WorkflowView: View {
                 model.isPresented = $isPresented
                 model.onAbandon = onAbandon
                 workflow?.launch(withOrchestrationResponder: model,
-                                 passedArgs: .none,
+                                 passedArgs: passedArgs,
                                  launchStyle: .new) { passedArgs in
                     onFinish.forEach { $0(passedArgs) }
                 }
@@ -93,7 +102,8 @@ public struct WorkflowView: View {
         return WorkflowView(isPresented: $isPresented,
                             workflow: workflow,
                             onFinish: onFinish,
-                            onAbandon: onAbandon)
+                            onAbandon: onAbandon,
+                            passedArgs: passedArgs)
     }
 
     /// Adds an action to perform when this `Workflow` has abandoned.
@@ -103,7 +113,8 @@ public struct WorkflowView: View {
         return WorkflowView(isPresented: $isPresented,
                             workflow: workflow,
                             onFinish: onFinish,
-                            onAbandon: onAbandon)
+                            onAbandon: onAbandon,
+                            passedArgs: passedArgs)
     }
 }
 
@@ -124,6 +135,7 @@ extension WorkflowView {
         return WorkflowView(isPresented: $isPresented,
                             workflow: workflow,
                             onFinish: onFinish,
-                            onAbandon: onAbandon)
+                            onAbandon: onAbandon,
+                            passedArgs: passedArgs)
     }
 }

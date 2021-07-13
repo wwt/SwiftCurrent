@@ -43,19 +43,6 @@ final class WorkflowViewModelTests: XCTestCase {
             model.complete(AnyWorkflow(typedWorkflow), passedArgs: .none, onFinish: nil)
         }
     }
-
-//    if workflow.lastLoadedItem?.value.metadata.persistence == .removedAfterProceeding {
-//        if let lastPresentableItem = workflow.lastPresentableItem {
-//            #warning("come back to this")
-//            // swiftlint:disable:next force_cast
-//            let afrv = lastPresentableItem.value.instance as! AnyFlowRepresentableView
-//            afrv.model = self
-//        } else {
-//            #warning("We are a little worried about animation here")
-//            body = AnyView(EmptyView())
-//        }
-//    }
-
 }
 
 fileprivate struct FR: FlowRepresentable {
