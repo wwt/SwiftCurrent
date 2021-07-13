@@ -82,7 +82,6 @@ public struct WorkflowView<Args>: View {
     }
 
     #warning("Need to add a test that says only launch once")
-    // Add onDisappear for animation
     public var body: some View {
         if isPresented {
             VStack {
@@ -96,6 +95,9 @@ public struct WorkflowView<Args>: View {
                                  launchStyle: .new) { passedArgs in
                     onFinish.forEach { $0(passedArgs) }
                 }
+            }
+            .onDisappear {
+                model.body = AnyView(EmptyView())
             }
             .onReceive(inspection.notice) { inspection.visit(self, $0) } // Needed for ViewInspector
         }

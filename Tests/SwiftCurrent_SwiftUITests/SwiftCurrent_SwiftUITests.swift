@@ -329,4 +329,23 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
 
         wait(for: [expectViewLoaded], timeout: 0.3)
     }
+
+    func testWorkflowViewRemovesRemnantsAfterWorkflowDisappears() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+
+            func customModifier() -> Self { self }
+        }
+
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowView(isPresented: .constant(true))
+                .thenProceed(with: WorkflowItem(FR1.self)
+                                .applyModifiers { $0.customModifier().background(Color.blue) })).inspection.inspect { viewUnderTest in
+            XCTAssertNoThrow(try viewUnderTest.vStack().callOnDisappear())
+            XCTAssertNoThrow(try viewUnderTest.vStack().anyView(0).emptyView())
+        }
+
+        wait(for: [expectViewLoaded], timeout: 0.3)
+    }
 }
