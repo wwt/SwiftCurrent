@@ -30,12 +30,13 @@ public class FlowRepresentableMetadata {
      - Parameter flowPersistence: a closure passing arguments to the caller and returning the preferred `FlowPersistence`.
      */
     public convenience init<FR: FlowRepresentable>(_ flowRepresentableType: FR.Type,
-                                       launchStyle: LaunchStyle = .default,
-                                       flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) {
+                                                   launchStyle: LaunchStyle = .default,
+                                                   flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) {
         self.init(flowRepresentableType,
                   launchStyle: launchStyle,
                   flowPersistence: flowPersistence) { args in
-            AnyFlowRepresentable(FR.self, args: args)}
+            AnyFlowRepresentable(FR.self, args: args)
+        }
     }
 
     /**

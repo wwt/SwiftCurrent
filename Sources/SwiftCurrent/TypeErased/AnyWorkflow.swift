@@ -125,10 +125,10 @@ fileprivate class AnyWorkflowStorageBase {
 
     // https://github.com/wwt/SwiftCurrent/blob/main/.github/STYLEGUIDE.md#type-erasure
     // swiftlint:disable:next unavailable_function
-    @discardableResult public func launch(withOrchestrationResponder orchestrationResponder: OrchestrationResponder,
-                                          passedArgs: AnyWorkflow.PassedArgs,
-                                          launchStyle: LaunchStyle = .default,
-                                          onFinish: ((AnyWorkflow.PassedArgs) -> Void)? = nil) -> AnyWorkflow.Element? {
+    @discardableResult func launch(withOrchestrationResponder orchestrationResponder: OrchestrationResponder,
+                                   passedArgs: AnyWorkflow.PassedArgs,
+                                   launchStyle: LaunchStyle = .default,
+                                   onFinish: ((AnyWorkflow.PassedArgs) -> Void)? = nil) -> AnyWorkflow.Element? {
         fatalError("launch(orchestrationResponder:passedArgs:launchStyle:onFinish) not overriden")
     }
 }

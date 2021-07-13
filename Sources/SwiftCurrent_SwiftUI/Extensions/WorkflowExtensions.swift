@@ -1,16 +1,17 @@
 //  swiftlint:disable:this file_name
-//  AnyWorkflowExtensions.swift
+//  WorkflowExtensions.swift
 //  SwiftCurrent
 //
-//  Created by Tyler Thompson on 7/12/21.
+//  Created by Tyler Thompson on 7/13/21.
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
 
 import SwiftCurrent
+import SwiftUI
 
-extension AnyWorkflow {
+extension Workflow where F: FlowRepresentable & View {
     /// Called when the workflow should be terminated, and the app should return to the point before the workflow was launched.
     public func abandon() {
-        orchestrationResponder?.abandon(self, onFinish: nil)
+        AnyWorkflow(self).abandon()
     }
 }
