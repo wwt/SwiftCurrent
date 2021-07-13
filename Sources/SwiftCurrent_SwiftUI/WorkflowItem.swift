@@ -50,9 +50,10 @@ public final class WorkflowItem<F: FlowRepresentable & View> {
      */
     public func applyModifiers<V: View>(@ViewBuilder _ closure: @escaping (F) -> V) -> Self {
         modifierClosure = {
-            #warning("Come back to this")
+            // We are essentially casting this to itself, that cannot fail. (Famous last words)
             // swiftlint:disable:next force_cast
-            $0.changeUnderlyingView(to: closure($0.underlyingInstance as! F))
+            let instance = $0.underlyingInstance as! F
+            $0.changeUnderlyingView(to: closure(instance))
         }
         return self
     }

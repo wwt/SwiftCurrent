@@ -29,9 +29,8 @@ final class AnyFlowRepresentableView: AnyFlowRepresentable {
     }
 
     func changeUnderlyingView<V: View>(to view: V) {
-        #warning("Can we add weak self tests?")
-        setViewOnModel = {
-            self.model?.body = AnyView(view)
+        setViewOnModel = { [weak self] in
+            self?.model?.body = AnyView(view)
         }
     }
 }

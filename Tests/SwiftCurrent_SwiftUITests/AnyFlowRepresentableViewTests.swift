@@ -28,6 +28,21 @@ final class AnyFlowRepresentableViewTests: XCTestCase {
         XCTAssertNil(afrv)
         XCTAssertNil(ref)
     }
+
+    func testAnyFlowRepresentableViewDoesNotCreate_StrongRetainCycle_WhenUnderlyingViewIsChanged() {
+        var afrv: AnyFlowRepresentableView?
+        weak var ref: AnyFlowRepresentableView?
+        autoreleasepool {
+            afrv = AnyFlowRepresentableView(type: FR.self, args: .none)
+            afrv?.changeUnderlyingView(to: EmptyView())
+            ref = afrv
+            XCTAssertNotNil(afrv)
+            XCTAssertNotNil(ref)
+        }
+        afrv = nil
+        XCTAssertNil(afrv)
+        XCTAssertNil(ref)
+    }
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
