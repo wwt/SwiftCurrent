@@ -63,6 +63,11 @@ public struct WorkflowView: View {
     public func onFinish(_: (AnyWorkflow.PassedArgs) -> Void) -> Self {
         self
     }
+
+    /// Adds an action to perform when this `Workflow` has abandoned.
+    public func onAbandon(_: () -> Void) -> Self {
+        self
+    }
 }
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)

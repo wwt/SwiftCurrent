@@ -41,4 +41,80 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
 
         wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)
     }
+
+    func testLargeWorkflowCanBeFollowed() throws {
+        // NOTE: Workflows in the past had issues with 4+ items, so this is to cover our bases. SwiftUI also has a nasty habit of behaving a little differently as number of views increase.
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR3 type") }
+        }
+        struct FR4: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR4 type") }
+        }
+        struct FR5: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR5 type") }
+        }
+        struct FR6: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR6 type") }
+        }
+        struct FR7: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR7 type") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowView(isPresented: .constant(true))
+                .thenProceed(with: WorkflowItem(FR1.self))
+                .thenProceed(with: WorkflowItem(FR2.self))
+                .thenProceed(with: WorkflowItem(FR3.self))
+                .thenProceed(with: WorkflowItem(FR4.self))
+                .thenProceed(with: WorkflowItem(FR5.self))
+                .thenProceed(with: WorkflowItem(FR6.self))
+                .thenProceed(with: WorkflowItem(FR7.self)))
+            .inspection.inspect { viewUnderTest in
+                #warning("NOTE: These serve a dual purpose, if the view can't be cast to the appropriate FR# then it fails AND it proceeds in the workflow in 1 line")
+                XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+                XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
+                XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
+                XCTAssertNoThrow(try viewUnderTest.find(FR5.self).actualView().proceedInWorkflow())
+                XCTAssertNoThrow(try viewUnderTest.find(FR6.self).actualView().proceedInWorkflow())
+                XCTAssertNoThrow(try viewUnderTest.find(FR7.self).actualView().proceedInWorkflow())
+            }
+
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)
+    }
+
+    func testWorkflowSetsBindingBooleanToFalseWhenAbandoned() throws {
+        // NOTE: This test is un-vetted. It probably is either correct or close to correct, though.
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        let isPresented = Binding(wrappedValue: true)
+        let expectOnAbandon = expectation(description: "OnAbandon called")
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowView(isPresented: isPresented)
+                .thenProceed(with: WorkflowItem(FR1.self))
+                .onAbandon {
+            expectOnAbandon.fulfill()
+            XCTAssertFalse(isPresented.wrappedValue)
+        }).inspection.inspect { viewUnderTest in
+            XCTAssertEqual(try viewUnderTest.vStack().anyView(0).view(FR1.self).text().string(), "FR1 type")
+            XCTAssertNoThrow(try viewUnderTest.vStack().anyView(0).view(FR1.self).actualView().workflow?.abandon())
+        }
+
+        wait(for: [expectOnAbandon, expectViewLoaded], timeout: 0.3)
+    }
 }
