@@ -46,6 +46,29 @@ extension WorkflowViewModel: OrchestrationResponder {
     }
 
     func complete(_ workflow: AnyWorkflow, passedArgs: AnyWorkflow.PassedArgs, onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
+        if workflow.lastLoadedItem?.value.metadata.persistence == .removedAfterProceeding {
+            if let lastPresentableItem = workflow.lastPresentableItem {
+                #warning("come back to this")
+                // swiftlint:disable:next force_cast
+                let afrv = lastPresentableItem.value.instance as! AnyFlowRepresentableView
+                afrv.model = self
+            } else {
+                #warning("We are a little worried about animation here")
+                body = AnyView(EmptyView())
+            }
+        }
         onFinish?(passedArgs)
+    }
+}
+
+extension AnyWorkflow {
+    fileprivate var lastLoadedItem: AnyWorkflow.Element? {
+        last { $0.value.instance != nil }
+    }
+
+    fileprivate var lastPresentableItem: AnyWorkflow.Element? {
+        last {
+            $0.value.instance != nil && $0.value.metadata.persistence != .removedAfterProceeding
+        }
     }
 }

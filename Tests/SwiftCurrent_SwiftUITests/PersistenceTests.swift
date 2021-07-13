@@ -85,7 +85,6 @@ final class PersistenceTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: 0.3)
     }
 
-    #warning("I know this is important to test because it *could* blow up, but the assertion is a little unclear with SwiftUI")
     func testRemovedAfterProceeding_OnLastItemInAWorkflow() throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
@@ -117,6 +116,7 @@ final class PersistenceTests: XCTestCase {
                 XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
                 XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
                 XCTAssertThrowsError(try viewUnderTest.find(FR4.self))
+                XCTAssertNoThrow(try viewUnderTest.find(FR3.self))
             }
 
         wait(for: [expectViewLoaded, expectOnFinish], timeout: 0.3)
@@ -193,6 +193,9 @@ final class PersistenceTests: XCTestCase {
                 XCTAssertThrowsError(try viewUnderTest.find(FR4.self).actualView().backUpInWorkflow())
                 XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
                 XCTAssertThrowsError(try viewUnderTest.find(FR4.self))
+                XCTAssertThrowsError(try viewUnderTest.find(FR3.self))
+                XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
+                XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
             }
 
         wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)
