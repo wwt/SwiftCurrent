@@ -72,7 +72,6 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR7 type") }
         }
-        let expectOnFinish = expectation(description: "OnFinish called")
         let expectViewLoaded = ViewHosting.loadView(
             WorkflowView(isPresented: .constant(true))
                 .thenProceed(with: WorkflowItem(FR1.self))
@@ -93,7 +92,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
                 XCTAssertNoThrow(try viewUnderTest.find(FR7.self).actualView().proceedInWorkflow())
             }
 
-        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)
+        wait(for: [expectViewLoaded], timeout: 0.3)
     }
 
     func testWorkflowSetsBindingBooleanToFalseWhenAbandoned() throws {
