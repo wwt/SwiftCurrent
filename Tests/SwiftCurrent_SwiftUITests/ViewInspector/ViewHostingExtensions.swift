@@ -10,6 +10,7 @@ import SwiftUI
 import ViewInspector
 
 #warning("These are not part of the library, take a look here so you understand what it does")
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ViewHosting {
     static func loadView<V: View>(_ view: V) -> V {
         defer {
