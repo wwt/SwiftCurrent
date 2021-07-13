@@ -1,8 +1,9 @@
 //
-//  File.swift
-//  
+//  WorkflowItem.swift
+//  SwiftCurrent
 //
-//  Created by thompsty on 7/12/21.
+//  Created by Tyler Thompson on 7/12/21.
+//  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
 
 import Foundation
