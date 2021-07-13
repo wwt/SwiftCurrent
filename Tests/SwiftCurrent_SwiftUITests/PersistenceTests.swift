@@ -201,4 +201,137 @@ final class PersistenceTests: XCTestCase {
 
         wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)
     }
+
+    func testPersistenceWorks_WhenDefinedFromAClosure() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            init(with args: String) { }
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR3 type") }
+        }
+        struct FR4: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR4 type") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let expectedStart = UUID().uuidString
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowView(isPresented: .constant(true), args: expectedStart)
+                .thenProceed(with: WorkflowItem(FR1.self).persistence {
+            XCTAssertEqual($0, expectedStart)
+            return .removedAfterProceeding
+        })
+                .thenProceed(with: WorkflowItem(FR2.self).persistence(.removedAfterProceeding))
+                .thenProceed(with: WorkflowItem(FR3.self).persistence(.removedAfterProceeding))
+                .thenProceed(with: WorkflowItem(FR4.self).persistence(.removedAfterProceeding))
+                .onFinish { _ in expectOnFinish.fulfill() })
+            .inspection.inspect { viewUnderTest in
+                XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+                XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
+                XCTAssertThrowsError(try viewUnderTest.find(FR4.self).actualView().backUpInWorkflow())
+                XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
+                XCTAssertThrowsError(try viewUnderTest.find(FR4.self))
+                XCTAssertThrowsError(try viewUnderTest.find(FR3.self))
+                XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
+                XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
+            }
+
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)
+    }
+
+    func testPersistenceWorks_WhenDefinedFromAClosure_AndItemHasInputOfPassedArgs() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            init(with args: AnyWorkflow.PassedArgs) { }
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR3 type") }
+        }
+        struct FR4: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR4 type") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let expectedStart = AnyWorkflow.PassedArgs.args(UUID().uuidString)
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowView(isPresented: .constant(true), args: expectedStart)
+                .thenProceed(with: WorkflowItem(FR1.self)
+                                .persistence {
+            XCTAssertNotNil(expectedStart.extractArgs(defaultValue: 1) as? String)
+            XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedStart.extractArgs(defaultValue: 1) as? String)
+            return .removedAfterProceeding
+        })
+                .thenProceed(with: WorkflowItem(FR2.self).persistence(.removedAfterProceeding))
+                .thenProceed(with: WorkflowItem(FR3.self).persistence(.removedAfterProceeding))
+                .thenProceed(with: WorkflowItem(FR4.self).persistence(.removedAfterProceeding))
+                .onFinish { _ in expectOnFinish.fulfill() })
+            .inspection.inspect { viewUnderTest in
+                XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+                XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
+                XCTAssertThrowsError(try viewUnderTest.find(FR4.self).actualView().backUpInWorkflow())
+                XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
+                XCTAssertThrowsError(try viewUnderTest.find(FR4.self))
+                XCTAssertThrowsError(try viewUnderTest.find(FR3.self))
+                XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
+                XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
+            }
+
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)
+    }
+
+    func testPersistenceWorks_WhenDefinedFromAClosure_AndItemHasInputOfNever() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR3 type") }
+        }
+        struct FR4: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR4 type") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowView(isPresented: .constant(true))
+                .thenProceed(with: WorkflowItem(FR1.self)
+                                .persistence { .removedAfterProceeding })
+                .thenProceed(with: WorkflowItem(FR2.self).persistence(.removedAfterProceeding))
+                .thenProceed(with: WorkflowItem(FR3.self).persistence(.removedAfterProceeding))
+                .thenProceed(with: WorkflowItem(FR4.self).persistence(.removedAfterProceeding))
+                .onFinish { _ in expectOnFinish.fulfill() })
+            .inspection.inspect { viewUnderTest in
+                XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+                XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
+                XCTAssertThrowsError(try viewUnderTest.find(FR4.self).actualView().backUpInWorkflow())
+                XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
+                XCTAssertThrowsError(try viewUnderTest.find(FR4.self))
+                XCTAssertThrowsError(try viewUnderTest.find(FR3.self))
+                XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
+                XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
+            }
+
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)
+    }
 }
