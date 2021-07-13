@@ -47,6 +47,7 @@ import SwiftCurrent
 public struct WorkflowView<Args>: View {
     @Binding public var isPresented: Bool
     @StateObject private var model = WorkflowViewModel()
+    @State private var didLoad = false
 
     let inspection = Inspection<Self>() // Needed for ViewInspector
     private var workflow: AnyWorkflow?
@@ -88,6 +89,8 @@ public struct WorkflowView<Args>: View {
                 model.body
             }
             .onAppear {
+                guard !didLoad else { return }
+                didLoad = true
                 model.isPresented = $isPresented
                 model.onAbandon = onAbandon
                 workflow?.launch(withOrchestrationResponder: model,
