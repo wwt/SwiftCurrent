@@ -105,6 +105,27 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: 0.3)
     }
 
+    func testWorkflowPassesArgumentsToTheFirstItem_WhenThatFirstItemTakesInAnyWorkflowPassedArgs_AndTheLaunchArgsAreAnyWorkflowPassedArgs() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            typealias WorkflowOutput = AnyWorkflow.PassedArgs
+            var _workflowPointer: AnyFlowRepresentable?
+            let property: AnyWorkflow.PassedArgs
+            init(with: AnyWorkflow.PassedArgs) {
+                self.property = with
+            }
+            var body: some View { Text("FR1 type") }
+        }
+        let expected = UUID().uuidString
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowView(isPresented: .constant(true), args: AnyWorkflow.PassedArgs.args(expected))
+                .thenProceed(with: WorkflowItem(FR1.self))
+                .thenProceed(with: WorkflowItem(FR1.self))).inspection.inspect { viewUnderTest in
+            XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().property.extractArgs(defaultValue: nil) as? String, expected)
+        }
+
+        wait(for: [expectViewLoaded], timeout: 0.3)
+    }
+
     func testWorkflowPassesArgumentsToTheAllItems() throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             typealias WorkflowOutput = Int

@@ -62,7 +62,11 @@ public struct WorkflowView<Args>: View {
     /// Creates a `WorkflowView` that displays a `FlowRepresentable` when presented.
     public init(isPresented: Binding<Bool>, args: Args) {
         _isPresented = isPresented
-        passedArgs = .args(args)
+        if let args = args as? AnyWorkflow.PassedArgs {
+            passedArgs = args
+        } else {
+            passedArgs = .args(args)
+        }
     }
 
     private init(isPresented: Binding<Bool>,
@@ -126,6 +130,28 @@ extension WorkflowView where Args == Never {
      - Returns: a new `WorkflowView` with the additional `FlowRepresentable` item.
      */
     public func thenProceed<FR: FlowRepresentable & View>(with item: WorkflowItem<FR>) -> WorkflowView<FR.WorkflowOutput> where FR.WorkflowInput == Never {
+        var workflow = self.workflow
+        if workflow == nil {
+            workflow = AnyWorkflow(Workflow<FR>(item.metadata))
+        } else {
+            workflow?.append(item.metadata)
+        }
+        return WorkflowView<FR.WorkflowOutput>(isPresented: $isPresented,
+                                               workflow: workflow,
+                                               onFinish: onFinish,
+                                               onAbandon: onAbandon,
+                                               passedArgs: passedArgs)
+    }
+}
+
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension WorkflowView where Args == AnyWorkflow.PassedArgs {
+    /**
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
+     - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
+     - Returns: a new `WorkflowView` with the additional `FlowRepresentable` item.
+     */
+    public func thenProceed<FR: FlowRepresentable & View>(with item: WorkflowItem<FR>) -> WorkflowView<FR.WorkflowOutput> where FR.WorkflowInput == AnyWorkflow.PassedArgs {
         var workflow = self.workflow
         if workflow == nil {
             workflow = AnyWorkflow(Workflow<FR>(item.metadata))
