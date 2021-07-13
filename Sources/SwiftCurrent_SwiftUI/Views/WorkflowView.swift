@@ -43,7 +43,7 @@ import SwiftCurrent
 ///     .onFinish { print("Finished 2: \($0)") }
 ///     .background(Color.green)
 ///  ```
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowView<Args>: View {
     @Binding public var isPresented: Bool
     @StateObject private var model = WorkflowViewModel()
@@ -118,7 +118,7 @@ public struct WorkflowView<Args>: View {
     }
 }
 
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension WorkflowView {
     /**
      Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.

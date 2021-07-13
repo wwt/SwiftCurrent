@@ -11,6 +11,7 @@ import XCTest
 @testable import SwiftCurrent
 @testable import SwiftCurrent_SwiftUI
 
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class WorkflowViewModelTests: XCTestCase {
     func testWorkflowViewModelThrowsFatalError_WhenLaunchedWithSomethingOtherThan_AnyFlowRepresentableView() {
         let model = WorkflowViewModel()

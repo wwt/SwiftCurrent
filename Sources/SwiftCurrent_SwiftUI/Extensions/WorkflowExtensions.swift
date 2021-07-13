@@ -9,7 +9,7 @@
 import SwiftCurrent
 import SwiftUI
 
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension Workflow where F: FlowRepresentable & View {
     /// Called when the workflow should be terminated, and the app should return to the point before the workflow was launched.
     public func abandon() {

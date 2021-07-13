@@ -29,7 +29,7 @@ import SwiftCurrent
             }
  ```
  */
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public final class WorkflowItem<F: FlowRepresentable & View> {
     var metadata: FlowRepresentableMetadata!
     private var flowPersistenceClosureIGuess: (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default }

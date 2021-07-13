@@ -13,7 +13,7 @@ import ViewInspector
 import SwiftCurrent
 @testable import SwiftCurrent_SwiftUI // testable sadly needed for inspection.inspect to work
 
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class SkipTests: XCTestCase {
     func testSkippingFirstItemInAWorkflow() throws {
         // NOTE: Workflows in the past had issues with 4+ items, so this is to cover our bases. SwiftUI also has a nasty habit of behaving a little differently as number of views increase.

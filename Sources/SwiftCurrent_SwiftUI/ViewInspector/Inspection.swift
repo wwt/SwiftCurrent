@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 
 // Necessary for ViewInspector tests
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class Inspection<V> where V: View {
     let notice = PassthroughSubject<UInt, Never>()
     var callbacks = [UInt: (V) -> Void]()
