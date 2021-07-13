@@ -1,10 +1,11 @@
 //
 //  PersistenceTests.swift
-//  SwiftCurrent
+//  SwiftCurrent_SwiftUI
 //
 //  Created by Tyler Thompson on 7/12/21.
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
+
 import XCTest
 import SwiftUI
 import ViewInspector
