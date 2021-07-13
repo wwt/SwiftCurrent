@@ -166,13 +166,40 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             WorkflowView(isPresented: isPresented)
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .onAbandon {
-            expectOnAbandon.fulfill()
             XCTAssertFalse(isPresented.wrappedValue)
+            expectOnAbandon.fulfill()
         }).inspection.inspect { viewUnderTest in
             XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
             XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().workflow?.abandon())
+            XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
         }
 
         wait(for: [expectOnAbandon, expectViewLoaded], timeout: 0.3)
+    }
+
+    func testWorkflowViewCanHaveMultipleOnAbandonCallbacks() throws {
+        // NOTE: This test is un-vetted. It probably is either correct or close to correct, though.
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        let isPresented = Binding(wrappedValue: true)
+        let expectOnAbandon1 = expectation(description: "OnAbandon1 called")
+        let expectOnAbandon2 = expectation(description: "OnAbandon2 called")
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowView(isPresented: isPresented)
+                .thenProceed(with: WorkflowItem(FR1.self))
+                .onAbandon {
+            XCTAssertFalse(isPresented.wrappedValue)
+            expectOnAbandon1.fulfill()
+        }.onAbandon {
+            XCTAssertFalse(isPresented.wrappedValue)
+            expectOnAbandon2.fulfill()
+        }).inspection.inspect { viewUnderTest in
+            XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().workflow?.abandon())
+            XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
+        }
+
+        wait(for: [expectOnAbandon1, expectOnAbandon2, expectViewLoaded], timeout: 0.3)
     }
 }

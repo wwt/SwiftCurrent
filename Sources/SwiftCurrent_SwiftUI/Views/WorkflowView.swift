@@ -51,32 +51,39 @@ public struct WorkflowView: View {
     let inspection = Inspection<Self>() // Needed for ViewInspector
     private var workflow: AnyWorkflow?
     private var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
+    private var onAbandon = [() -> Void]()
 
     /// Creates a `WorkflowView` that displays a `FlowRepresentable` when presented.
     public init(isPresented: Binding<Bool>) {
-        _isPresented = .constant(false)
+        _isPresented = isPresented
     }
 
     private init(isPresented: Binding<Bool>,
                  workflow: AnyWorkflow?,
-                 onFinish: [(AnyWorkflow.PassedArgs) -> Void]) {
+                 onFinish: [(AnyWorkflow.PassedArgs) -> Void],
+                 onAbandon: [() -> Void]) {
         _isPresented = isPresented
         self.workflow = workflow
         self.onFinish = onFinish
+        self.onAbandon = onAbandon
     }
 
     public var body: some View {
-        VStack {
-            model.body
-        }
-        .onAppear {
-            workflow?.launch(withOrchestrationResponder: model,
-                             passedArgs: .none,
-                             launchStyle: .new) { passedArgs in
-                onFinish.forEach { $0(passedArgs) }
+        if isPresented {
+            VStack {
+                model.body
             }
+            .onAppear {
+                model.isPresented = $isPresented
+                model.onAbandon = onAbandon
+                workflow?.launch(withOrchestrationResponder: model,
+                                 passedArgs: .none,
+                                 launchStyle: .new) { passedArgs in
+                    onFinish.forEach { $0(passedArgs) }
+                }
+            }
+            .onReceive(inspection.notice) { inspection.visit(self, $0) } // Needed for ViewInspector
         }
-        .onReceive(inspection.notice) { inspection.visit(self, $0) } // Needed for ViewInspector
     }
 
     /// Adds an action to perform when this `Workflow` has finished.
@@ -85,12 +92,18 @@ public struct WorkflowView: View {
         onFinish.append(closure)
         return WorkflowView(isPresented: $isPresented,
                             workflow: workflow,
-                            onFinish: onFinish)
+                            onFinish: onFinish,
+                            onAbandon: onAbandon)
     }
 
     /// Adds an action to perform when this `Workflow` has abandoned.
-    public func onAbandon(_: () -> Void) -> Self {
-        self
+    public func onAbandon(closure: @escaping () -> Void) -> Self {
+        var onAbandon = self.onAbandon
+        onAbandon.append(closure)
+        return WorkflowView(isPresented: $isPresented,
+                            workflow: workflow,
+                            onFinish: onFinish,
+                            onAbandon: onAbandon)
     }
 }
 
@@ -110,6 +123,7 @@ extension WorkflowView {
         }
         return WorkflowView(isPresented: $isPresented,
                             workflow: workflow,
-                            onFinish: onFinish)
+                            onFinish: onFinish,
+                            onAbandon: onAbandon)
     }
 }

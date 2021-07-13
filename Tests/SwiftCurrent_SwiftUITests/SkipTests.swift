@@ -191,6 +191,6 @@ final class SkipTests: XCTestCase {
                 XCTAssertThrowsError(try viewUnderTest.find(FR4.self))
             }
 
-        wait(for: [expectViewLoaded], timeout: 0.3)
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)
     }
 }

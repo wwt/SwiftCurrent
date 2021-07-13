@@ -9,7 +9,8 @@
 import SwiftCurrent
 
 extension AnyWorkflow {
+    /// Called when the workflow should be terminated, and the app should return to the point before the workflow was launched.
     public func abandon() {
-        
+        orchestrationResponder!.abandon(self, onFinish: nil)
     }
 }

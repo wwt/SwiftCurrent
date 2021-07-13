@@ -11,6 +11,8 @@ import SwiftUI
 
 final class WorkflowViewModel: ObservableObject {
     @Published var body = AnyView(EmptyView())
+    var isPresented: Binding<Bool>?
+    var onAbandon = [() -> Void]()
 }
 
 extension WorkflowViewModel: OrchestrationResponder {
@@ -39,7 +41,8 @@ extension WorkflowViewModel: OrchestrationResponder {
     }
 
     func abandon(_ workflow: AnyWorkflow, onFinish: (() -> Void)?) {
-
+        isPresented?.wrappedValue = false
+        onAbandon.forEach { $0() }
     }
 
     func complete(_ workflow: AnyWorkflow, passedArgs: AnyWorkflow.PassedArgs, onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
