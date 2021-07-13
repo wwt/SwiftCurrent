@@ -15,9 +15,7 @@ import SwiftCurrent
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
-    #warning("NOTE: This is the only \"Vetted\" test, in that it has passed for the right reasons and failed for the right reasons. All of the other tests are assumed to work.")
     func testWorkflowCanBeFollowed() throws {
-        // NOTE: I implemented the spike code (then removed it) to prove that this test does pass if the code is implemented.
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
@@ -43,8 +41,32 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)
     }
 
+    func testWorkflowCanHaveMultipleOnFinishClosures() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        let expectOnFinish1 = expectation(description: "OnFinish1 called")
+        let expectOnFinish2 = expectation(description: "OnFinish2 called")
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowView(isPresented: .constant(true))
+                .thenProceed(with: WorkflowItem(FR1.self))
+                .onFinish { _ in
+            expectOnFinish1.fulfill()
+        }.onFinish { _ in
+            expectOnFinish2.fulfill()
+        }).inspection.inspect { viewUnderTest in
+            XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+        }
+
+        wait(for: [expectOnFinish1, expectOnFinish2, expectViewLoaded], timeout: 0.3)
+    }
+
     func testLargeWorkflowCanBeFollowed() throws {
-        // NOTE: Workflows in the past had issues with 4+ items, so this is to cover our bases. SwiftUI also has a nasty habit of behaving a little differently as number of views increase.
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
@@ -96,7 +118,6 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     }
 
     func testMovingBiDirectionallyInAWorkflow() throws {
-        // NOTE: Workflows in the past had issues with 4+ items, so this is to cover our bases. SwiftUI also has a nasty habit of behaving a little differently as number of views increase.
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }

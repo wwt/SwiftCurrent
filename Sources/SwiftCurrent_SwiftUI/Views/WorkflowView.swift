@@ -18,38 +18,39 @@ import SwiftCurrent
  #### Example
  ```swift
  WorkflowView(isPresented: $isPresented.animation(), args: "String in")
-         .thenProceed(with: WorkflowItem(FirstView.self)
-                         .applyModifiers {
-                             if true { // Enabling transition animation
-                                 $0.background(Color.gray)
-                                     .transition(.slide)
-                                     .animation(.spring())
-                             }
-                         })
-         .thenProceed(with: WorkflowItem(SecondView.self)
-                         .persistence(.removedAfterProceeding)
-                         .applyModifiers {
-                             if true {
-                                 $0.SecondViewSpecificModifier()
-                                     .padding(10)
-                                     .background(Color.purple)
-                                     .transition(.opacity)
-                                     .animation(.easeInOut)
-                             }
-                         })
-         .onAbandon { print("presentingWorkflowView is now false") }
-         .onFinish { args in print("Finished 1: \(args)") }
-         .onFinish { print("Finished 2: \($0)") }
-         .background(Color.green)
+ .thenProceed(with: WorkflowItem(FirstView.self)
+ .applyModifiers {
+ if true { // Enabling transition animation
+ $0.background(Color.gray)
+ .transition(.slide)
+ .animation(.spring())
+ }
+ })
+ .thenProceed(with: WorkflowItem(SecondView.self)
+ .persistence(.removedAfterProceeding)
+ .applyModifiers {
+ if true {
+ $0.SecondViewSpecificModifier()
+ .padding(10)
+ .background(Color.purple)
+ .transition(.opacity)
+ .animation(.easeInOut)
+ }
+ })
+ .onAbandon { print("presentingWorkflowView is now false") }
+ .onFinish { args in print("Finished 1: \(args)") }
+ .onFinish { print("Finished 2: \($0)") }
+ .background(Color.green)
  ```
  */
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 public struct WorkflowView: View {
     @Binding public var isPresented: Bool
     @StateObject private var model = WorkflowViewModel()
-    @State private var workflow: AnyWorkflow?
 
     let inspection = Inspection<Self>() // Needed for ViewInspector
+    private var workflow: AnyWorkflow?
+    private var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
 
     /// Creates a `WorkflowView` that displays a `FlowRepresentable` when presented.
     public init(isPresented: Binding<Bool>) {
@@ -57,25 +58,34 @@ public struct WorkflowView: View {
     }
 
     private init(isPresented: Binding<Bool>,
-                 workflow: AnyWorkflow?) {
+                 workflow: AnyWorkflow?,
+                 onFinish: [(AnyWorkflow.PassedArgs) -> Void]) {
         _isPresented = isPresented
-        _workflow = State(initialValue: workflow)
+        self.workflow = workflow
+        self.onFinish = onFinish
     }
 
     public var body: some View {
         VStack {
             model.body
-        }.onAppear {
+        }
+        .onAppear {
             workflow?.launch(withOrchestrationResponder: model,
                              passedArgs: .none,
-                             launchStyle: .new,
-                             onFinish: nil)
-        }.onReceive(inspection.notice) { inspection.visit(self, $0) } // Needed for ViewInspector
+                             launchStyle: .new) { passedArgs in
+                onFinish.forEach { $0(passedArgs) }
+            }
+        }
+        .onReceive(inspection.notice) { inspection.visit(self, $0) } // Needed for ViewInspector
     }
 
     /// Adds an action to perform when this `Workflow` has finished.
-    public func onFinish(_: (AnyWorkflow.PassedArgs) -> Void) -> Self {
-        self
+    public func onFinish(closure: @escaping (AnyWorkflow.PassedArgs) -> Void) -> Self {
+        var onFinish = self.onFinish
+        onFinish.append(closure)
+        return WorkflowView(isPresented: $isPresented,
+                            workflow: workflow,
+                            onFinish: onFinish)
     }
 
     /// Adds an action to perform when this `Workflow` has abandoned.
@@ -99,6 +109,7 @@ extension WorkflowView {
             workflow?.append(item.metadata)
         }
         return WorkflowView(isPresented: $isPresented,
-                            workflow: workflow)
+                            workflow: workflow,
+                            onFinish: onFinish)
     }
 }

@@ -39,6 +39,6 @@ extension WorkflowViewModel: OrchestrationResponder {
     }
 
     func complete(_ workflow: AnyWorkflow, passedArgs: AnyWorkflow.PassedArgs, onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
-
+        onFinish?(passedArgs)
     }
 }
