@@ -31,7 +31,11 @@ extension WorkflowViewModel: OrchestrationResponder {
     }
 
     func backUp(from: AnyWorkflow.Element, to: AnyWorkflow.Element) {
+        #warning("come back to this")
+        // swiftlint:disable:next force_cast
+        let afrv = to.value.instance as! AnyFlowRepresentableView
 
+        afrv.model = self
     }
 
     func abandon(_ workflow: AnyWorkflow, onFinish: (() -> Void)?) {
