@@ -45,13 +45,14 @@ let package = Package(
             ],
             exclude: ["Info.plist", "SwiftCurrent.xctestplan"]),
         .testTarget(
-            name: "SwiftCurrent_SwiftUITests",
+            name: "SwiftCurrent-SwiftUITests",
             dependencies: [
                 "SwiftCurrent",
                 "SwiftCurrent_SwiftUI",
                 "CwlPreconditionTesting",
                 "CwlCatchException",
                 "ViewInspector"
-            ]),
+            ],
+            path: "Tests/SwiftCurrent_SwiftUITests"),
     ]
 )

@@ -82,7 +82,6 @@ public struct WorkflowView<Args>: View {
         self.passedArgs = passedArgs
     }
 
-    #warning("Need to add a test that says only launch once")
     public var body: some View {
         if isPresented {
             VStack {

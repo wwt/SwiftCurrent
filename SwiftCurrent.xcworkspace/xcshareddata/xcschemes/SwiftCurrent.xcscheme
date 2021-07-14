@@ -91,9 +91,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "SwiftCurrent_SwiftUITests"
-               BuildableName = "SwiftCurrent_SwiftUITests"
-               BlueprintName = "SwiftCurrent_SwiftUITests"
+               BlueprintIdentifier = "SwiftCurrent-SwiftUITests"
+               BuildableName = "SwiftCurrent-SwiftUITests"
+               BlueprintName = "SwiftCurrent-SwiftUITests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
