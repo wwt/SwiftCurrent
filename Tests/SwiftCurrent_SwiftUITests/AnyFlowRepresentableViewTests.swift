@@ -18,12 +18,10 @@ final class AnyFlowRepresentableViewTests: XCTestCase {
     func testAnyFlowRepresentableViewDoesNotCreate_StrongRetainCycle() {
         var afrv: AnyFlowRepresentableView?
         weak var ref: AnyFlowRepresentableView?
-        autoreleasepool {
-            afrv = AnyFlowRepresentableView(type: FR.self, args: .none)
-            ref = afrv
-            XCTAssertNotNil(afrv)
-            XCTAssertNotNil(ref)
-        }
+        afrv = AnyFlowRepresentableView(type: FR.self, args: .none)
+        ref = afrv
+        XCTAssertNotNil(afrv)
+        XCTAssertNotNil(ref)
         afrv = nil
         XCTAssertNil(afrv)
         XCTAssertNil(ref)
@@ -32,13 +30,11 @@ final class AnyFlowRepresentableViewTests: XCTestCase {
     func testAnyFlowRepresentableViewDoesNotCreate_StrongRetainCycle_WhenUnderlyingViewIsChanged() {
         var afrv: AnyFlowRepresentableView?
         weak var ref: AnyFlowRepresentableView?
-        autoreleasepool {
-            afrv = AnyFlowRepresentableView(type: FR.self, args: .none)
-            afrv?.changeUnderlyingView(to: EmptyView())
-            ref = afrv
-            XCTAssertNotNil(afrv)
-            XCTAssertNotNil(ref)
-        }
+        afrv = AnyFlowRepresentableView(type: FR.self, args: .none)
+        afrv?.changeUnderlyingView(to: EmptyView())
+        ref = afrv
+        XCTAssertNotNil(afrv)
+        XCTAssertNotNil(ref)
         afrv = nil
         XCTAssertNil(afrv)
         XCTAssertNil(ref)
