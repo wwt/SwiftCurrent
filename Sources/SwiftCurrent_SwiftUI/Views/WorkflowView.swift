@@ -45,7 +45,7 @@ import SwiftCurrent
 ///  ```
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowView<Args>: View {
-    @Binding public var isPresented: Bool
+    @Binding private var isPresented: Bool
     @StateObject private var model = WorkflowViewModel()
     @State private var didLoad = false
 
@@ -128,7 +128,6 @@ public struct WorkflowView<Args>: View {
     }
 }
 
-// MARK: thenProceeds
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension WorkflowView where Args == Never {
     /**

@@ -58,7 +58,7 @@ public final class WorkflowItem<F: FlowRepresentable & View> {
         return self
     }
 
-    func factory(args: AnyWorkflow.PassedArgs) -> AnyFlowRepresentable {
+    private func factory(args: AnyWorkflow.PassedArgs) -> AnyFlowRepresentable {
         let afrv = AnyFlowRepresentableView(type: F.self, args: args)
         modifierClosure?(afrv)
         return afrv
