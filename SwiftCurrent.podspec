@@ -26,6 +26,12 @@ Pod::Spec.new do |s|
     ss.dependency 'SwiftCurrent/Core'
   end
 
+  s.subspec 'BETA_SwiftUI' do |ss|
+    ss.ios.deployment_target = '14.0'
+    ss.source_files = 'Sources/SwiftCurrent_SwiftUI/**/*.{swift,h,m}'
+    ss.dependency 'SwiftCurrent/Core'
+  end
+
   s.pod_target_xcconfig = {
     'FRAMEWORK_SEARCH_PATHS' => '$(inherited) "$(PLATFORM_DIR)/Developer/Library/Frameworks"',
   }
