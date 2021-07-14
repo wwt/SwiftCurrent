@@ -27,7 +27,7 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'BETA_SwiftUI' do |ss|
-    ss.ios.deployment_target = '14.0'
+    ss.ios.deployment_target = '11.0'
     ss.source_files = 'Sources/SwiftCurrent_SwiftUI/**/*.{swift,h,m}'
     ss.dependency 'SwiftCurrent/Core'
   end
