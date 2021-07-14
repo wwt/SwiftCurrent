@@ -99,6 +99,7 @@ public struct WorkflowView<Args>: View {
                 }
             }
             .onDisappear {
+                didLoad = false
                 model.body = AnyView(EmptyView())
             }
             .onReceive(inspection.notice) { inspection.visit(self, $0) } // Needed for ViewInspector

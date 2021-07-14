@@ -373,4 +373,31 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
 
         wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)
     }
+    
+    func testWorkflowRelaunchesWhenSubsequentlyPresented() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowView(isPresented: .constant(true))
+                .thenProceed(with: WorkflowItem(FR1.self))
+                .thenProceed(with: WorkflowItem(FR2.self))
+                .onFinish { _ in
+                    expectOnFinish.fulfill()
+                }).inspection.inspect { viewUnderTest in
+                    XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+                    XCTAssertNoThrow(try viewUnderTest.vStack().callOnDisappear())
+                    XCTAssertNoThrow(try viewUnderTest.vStack().callOnAppear())
+                    XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+                    XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                }
+        
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)
+    }
 }
