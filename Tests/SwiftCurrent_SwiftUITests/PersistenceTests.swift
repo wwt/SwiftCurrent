@@ -177,9 +177,10 @@ final class PersistenceTests: XCTestCase {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR4 type") }
         }
+        let binding = Binding(wrappedValue: true)
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isPresented: .constant(true))
+            WorkflowView(isPresented: binding)
                 .thenProceed(with: WorkflowItem(FR1.self).persistence(.removedAfterProceeding))
                 .thenProceed(with: WorkflowItem(FR2.self).persistence(.removedAfterProceeding))
                 .thenProceed(with: WorkflowItem(FR3.self).persistence(.removedAfterProceeding))
@@ -195,6 +196,7 @@ final class PersistenceTests: XCTestCase {
                 XCTAssertThrowsError(try viewUnderTest.find(FR3.self))
                 XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
                 XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
+                XCTAssertFalse(binding.wrappedValue, "Binding should be flipped to false")
             }
 
         wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)
@@ -220,10 +222,11 @@ final class PersistenceTests: XCTestCase {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR4 type") }
         }
+        let binding = Binding(wrappedValue: true)
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectedStart = UUID().uuidString
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isPresented: .constant(true), args: expectedStart)
+            WorkflowView(isPresented: binding, args: expectedStart)
                 .thenProceed(with: WorkflowItem(FR1.self).persistence {
             XCTAssertEqual($0, expectedStart)
             return .removedAfterProceeding
@@ -242,6 +245,7 @@ final class PersistenceTests: XCTestCase {
                 XCTAssertThrowsError(try viewUnderTest.find(FR3.self))
                 XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
                 XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
+                XCTAssertFalse(binding.wrappedValue, "Binding should be flipped to false")
             }
 
         wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)
@@ -265,10 +269,11 @@ final class PersistenceTests: XCTestCase {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR4 type") }
         }
+        let binding = Binding(wrappedValue: true)
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectedStart = AnyWorkflow.PassedArgs.args(UUID().uuidString)
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isPresented: .constant(true), args: expectedStart)
+            WorkflowView(isPresented: binding, args: expectedStart)
                 .thenProceed(with: WorkflowItem(FR1.self)
                                 .persistence {
             XCTAssertNotNil(expectedStart.extractArgs(defaultValue: 1) as? String)
@@ -289,6 +294,7 @@ final class PersistenceTests: XCTestCase {
                 XCTAssertThrowsError(try viewUnderTest.find(FR3.self))
                 XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
                 XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
+                XCTAssertFalse(binding.wrappedValue, "Binding should be flipped to false")
             }
 
         wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)
@@ -311,9 +317,10 @@ final class PersistenceTests: XCTestCase {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR4 type") }
         }
+        let binding = Binding(wrappedValue: true)
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isPresented: .constant(true))
+            WorkflowView(isPresented: binding)
                 .thenProceed(with: WorkflowItem(FR1.self)
                                 .persistence { .removedAfterProceeding })
                 .thenProceed(with: WorkflowItem(FR2.self).persistence(.removedAfterProceeding))
@@ -330,6 +337,7 @@ final class PersistenceTests: XCTestCase {
                 XCTAssertThrowsError(try viewUnderTest.find(FR3.self))
                 XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
                 XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
+                XCTAssertFalse(binding.wrappedValue, "Binding should be flipped to false")
             }
 
         wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)

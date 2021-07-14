@@ -40,8 +40,7 @@ extension WorkflowViewModel: OrchestrationResponder {
             if let lastPresentableItem = workflow.lastPresentableItem {
                 extractView(from: lastPresentableItem).model = self
             } else {
-                #warning("We are a little worried about animation here")
-                body = AnyView(EmptyView())
+                isPresented?.wrappedValue = false
             }
         }
         onFinish?(passedArgs)
