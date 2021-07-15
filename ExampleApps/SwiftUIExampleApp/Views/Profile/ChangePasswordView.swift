@@ -70,7 +70,7 @@ struct ChangePasswordView: View, FlowRepresentable {
             case _ where !password.contains { $0.isUppercase }:
                 errors.append("Password must contain at least one uppercase character")
             case _ where !password.contains { $0.isNumber }:
-                errors.append("Password must contain at least one lowercase character")
+                errors.append("Password must contain at least one number")
             default: break
         }
         if newPassword != confirmNewPassword {
