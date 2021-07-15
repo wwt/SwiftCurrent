@@ -26,7 +26,7 @@ struct ProfileFeatureView: View, FlowRepresentable {
             Text("Your name here").font(.title)
             Divider()
             Section(header: Text("Account Information:").font(.title)) {
-                AccountInformationView()
+                AccountInformationView().padding()
             }
             Divider()
             Section(header: Text("Personal Information:").font(.title)) {

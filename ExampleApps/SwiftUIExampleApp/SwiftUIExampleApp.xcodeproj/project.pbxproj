@@ -12,6 +12,7 @@
 		CA0536FB26A0919900BF8FC5 /* AccountInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536FA26A0919900BF8FC5 /* AccountInformationView.swift */; };
 		CA0536FD26A091B200BF8FC5 /* CardInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536FC26A091B200BF8FC5 /* CardInformationView.swift */; };
 		CA0536FF26A092D800BF8FC5 /* MFAuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536FE26A092D800BF8FC5 /* MFAuthenticationView.swift */; };
+		CA4B40B926A09E5800B18626 /* ChangeUsernameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4B40B826A09E5800B18626 /* ChangeUsernameView.swift */; };
 		CAC34B4326A07F830039A373 /* SwiftUIExampleAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC34B4226A07F830039A373 /* SwiftUIExampleAppApp.swift */; };
 		CAC34B4726A07F830039A373 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAC34B4626A07F830039A373 /* Assets.xcassets */; };
 		CAC34B4A26A07F830039A373 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAC34B4926A07F830039A373 /* Preview Assets.xcassets */; };
@@ -43,6 +44,7 @@
 		CA0536FA26A0919900BF8FC5 /* AccountInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInformationView.swift; sourceTree = "<group>"; };
 		CA0536FC26A091B200BF8FC5 /* CardInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardInformationView.swift; sourceTree = "<group>"; };
 		CA0536FE26A092D800BF8FC5 /* MFAuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFAuthenticationView.swift; sourceTree = "<group>"; };
+		CA4B40B826A09E5800B18626 /* ChangeUsernameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeUsernameView.swift; sourceTree = "<group>"; };
 		CAC34B3F26A07F830039A373 /* SwiftUIExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAC34B4226A07F830039A373 /* SwiftUIExampleAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIExampleAppApp.swift; sourceTree = "<group>"; };
 		CAC34B4626A07F830039A373 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				CA0536F526A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift */,
 				CA0536FA26A0919900BF8FC5 /* AccountInformationView.swift */,
 				CA0536FC26A091B200BF8FC5 /* CardInformationView.swift */,
+				CA4B40B826A09E5800B18626 /* ChangeUsernameView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -275,6 +278,7 @@
 				CA0536F626A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift in Sources */,
 				CAC34B4326A07F830039A373 /* SwiftUIExampleAppApp.swift in Sources */,
 				CA0536F426A0887800BF8FC5 /* ProfileFeatureView.swift in Sources */,
+				CA4B40B926A09E5800B18626 /* ChangeUsernameView.swift in Sources */,
 				CA0536FD26A091B200BF8FC5 /* CardInformationView.swift in Sources */,
 				CA0536FB26A0919900BF8FC5 /* AccountInformationView.swift in Sources */,
 				CAC34B7626A07FE90039A373 /* ContentView.swift in Sources */,
