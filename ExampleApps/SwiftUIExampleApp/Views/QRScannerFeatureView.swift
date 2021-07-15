@@ -21,7 +21,7 @@ struct QRScannerFeatureView: View, FlowRepresentable {
                 scannedCode = ScannedCode(data: scanContents)
             }
         }
-        .sheet(item: $scannedCode) {
+        .sheet(item: $scannedCode) { // swiftlint:disable:this multiline_arguments
             scannedCode = nil
         } content: { code in
             Text("SCANNED DATA: \(code.data)")
