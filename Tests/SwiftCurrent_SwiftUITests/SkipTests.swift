@@ -35,7 +35,7 @@ final class SkipTests: XCTestCase {
             var body: some View { Text("FR4 type") }
         }
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isPresented: .constant(true))
+            WorkflowView(isLaunched: .constant(true))
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR2.self))
                 .thenProceed(with: WorkflowItem(FR3.self))
@@ -69,7 +69,7 @@ final class SkipTests: XCTestCase {
             var body: some View { Text("FR4 type") }
         }
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isPresented: .constant(true))
+            WorkflowView(isLaunched: .constant(true))
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR2.self))
                 .thenProceed(with: WorkflowItem(FR3.self))
@@ -104,7 +104,7 @@ final class SkipTests: XCTestCase {
         }
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isPresented: .constant(true))
+            WorkflowView(isLaunched: .constant(true))
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR2.self))
                 .thenProceed(with: WorkflowItem(FR3.self))
@@ -140,7 +140,7 @@ final class SkipTests: XCTestCase {
             var body: some View { Text("FR4 type") }
         }
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isPresented: .constant(true))
+            WorkflowView(isLaunched: .constant(true))
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR2.self))
                 .thenProceed(with: WorkflowItem(FR3.self))
@@ -178,7 +178,7 @@ final class SkipTests: XCTestCase {
         }
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isPresented: .constant(true))
+            WorkflowView(isLaunched: .constant(true))
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR2.self))
                 .thenProceed(with: WorkflowItem(FR3.self))

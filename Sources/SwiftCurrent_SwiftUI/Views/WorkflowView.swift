@@ -18,7 +18,7 @@ import SwiftCurrent
  #### Example
  */
 /// ```swift
-/// WorkflowView(isPresented: $isPresented.animation(), args: "String in")
+/// WorkflowView(isLaunched: $isLaunched.animation(), args: "String in")
 ///     .thenProceed(with: WorkflowItem(FirstView.self)
 ///                     .applyModifiers {
 ///         if true { // Enabling transition animation
@@ -45,7 +45,7 @@ import SwiftCurrent
 ///  ```
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowView<Args>: View {
-    @Binding private var isPresented: Bool
+    @Binding private var isLaunched: Bool
     @StateObject private var model = WorkflowViewModel()
     @State private var didLoad = false
 
@@ -56,13 +56,13 @@ public struct WorkflowView<Args>: View {
     private var passedArgs = AnyWorkflow.PassedArgs.none
 
     /// Creates a `WorkflowView` that displays a `FlowRepresentable` when presented.
-    public init(isPresented: Binding<Bool>) where Args == Never {
-        _isPresented = isPresented
+    public init(isLaunched: Binding<Bool>) where Args == Never {
+        _isLaunched = isLaunched
     }
 
     /// Creates a `WorkflowView` that displays a `FlowRepresentable` when presented.
-    public init(isPresented: Binding<Bool>, args: Args) {
-        _isPresented = isPresented
+    public init(isLaunched: Binding<Bool>, args: Args) {
+        _isLaunched = isLaunched
         if let args = args as? AnyWorkflow.PassedArgs {
             passedArgs = args
         } else {
@@ -70,12 +70,12 @@ public struct WorkflowView<Args>: View {
         }
     }
 
-    private init(isPresented: Binding<Bool>,
+    private init(isLaunched: Binding<Bool>,
                  workflow: AnyWorkflow?,
                  onFinish: [(AnyWorkflow.PassedArgs) -> Void],
                  onAbandon: [() -> Void],
                  passedArgs: AnyWorkflow.PassedArgs) {
-        _isPresented = isPresented
+        _isLaunched = isLaunched
         self.workflow = workflow
         self.onFinish = onFinish
         self.onAbandon = onAbandon
@@ -83,14 +83,14 @@ public struct WorkflowView<Args>: View {
     }
 
     public var body: some View {
-        if isPresented {
+        if isLaunched {
             VStack {
                 model.body
             }
             .onAppear {
                 guard !didLoad else { return }
                 didLoad = true
-                model.isPresented = $isPresented
+                model.isLaunched = $isLaunched
                 model.onAbandon = onAbandon
                 workflow?.launch(withOrchestrationResponder: model,
                                  passedArgs: passedArgs,
@@ -99,7 +99,7 @@ public struct WorkflowView<Args>: View {
                 }
             }
             .onDisappear {
-                if !isPresented {
+                if !isLaunched {
                     didLoad = false
                     model.body = AnyView(EmptyView())
                 }
@@ -112,7 +112,7 @@ public struct WorkflowView<Args>: View {
     public func onFinish(closure: @escaping (AnyWorkflow.PassedArgs) -> Void) -> Self {
         var onFinish = self.onFinish
         onFinish.append(closure)
-        return WorkflowView(isPresented: $isPresented,
+        return WorkflowView(isLaunched: $isLaunched,
                             workflow: workflow,
                             onFinish: onFinish,
                             onAbandon: onAbandon,
@@ -123,7 +123,7 @@ public struct WorkflowView<Args>: View {
     public func onAbandon(closure: @escaping () -> Void) -> Self {
         var onAbandon = self.onAbandon
         onAbandon.append(closure)
-        return WorkflowView(isPresented: $isPresented,
+        return WorkflowView(isLaunched: $isLaunched,
                             workflow: workflow,
                             onFinish: onFinish,
                             onAbandon: onAbandon,
@@ -145,7 +145,7 @@ extension WorkflowView where Args == Never {
         } else {
             workflow?.append(item.metadata)
         }
-        return WorkflowView<FR.WorkflowOutput>(isPresented: $isPresented,
+        return WorkflowView<FR.WorkflowOutput>(isLaunched: $isLaunched,
                                                workflow: workflow,
                                                onFinish: onFinish,
                                                onAbandon: onAbandon,
@@ -167,7 +167,7 @@ extension WorkflowView where Args == AnyWorkflow.PassedArgs {
         } else {
             workflow?.append(item.metadata)
         }
-        return WorkflowView<FR.WorkflowOutput>(isPresented: $isPresented,
+        return WorkflowView<FR.WorkflowOutput>(isLaunched: $isLaunched,
                                                workflow: workflow,
                                                onFinish: onFinish,
                                                onAbandon: onAbandon,
@@ -186,7 +186,7 @@ extension WorkflowView where Args == AnyWorkflow.PassedArgs {
         } else {
             workflow?.append(item.metadata)
         }
-        return WorkflowView<FR.WorkflowOutput>(isPresented: $isPresented,
+        return WorkflowView<FR.WorkflowOutput>(isLaunched: $isLaunched,
                                                workflow: workflow,
                                                onFinish: onFinish,
                                                onAbandon: onAbandon,
@@ -208,7 +208,7 @@ extension WorkflowView {
         } else {
             workflow?.append(item.metadata)
         }
-        return WorkflowView<FR.WorkflowOutput>(isPresented: $isPresented,
+        return WorkflowView<FR.WorkflowOutput>(isLaunched: $isLaunched,
                                                workflow: workflow,
                                                onFinish: onFinish,
                                                onAbandon: onAbandon,
@@ -227,7 +227,7 @@ extension WorkflowView {
         } else {
             workflow?.append(item.metadata)
         }
-        return WorkflowView<FR.WorkflowOutput>(isPresented: $isPresented,
+        return WorkflowView<FR.WorkflowOutput>(isLaunched: $isLaunched,
                                                workflow: workflow,
                                                onFinish: onFinish,
                                                onAbandon: onAbandon,
