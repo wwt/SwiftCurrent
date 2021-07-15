@@ -45,6 +45,7 @@ public class FlowRepresentableMetadata {
      - Parameter flowRepresentableType: specific type of the associated `FlowRepresentable`.
      - Parameter launchStyle: the style to use when launching the `FlowRepresentable`.
      - Parameter flowPersistence: a closure passing arguments to the caller and returning the preferred `FlowPersistence`.
+     - Parameter flowRepresentableFactory: a closure used to generate an `AnyFlowRepresentable` from the `FlowRepresentable` type.
      */
     public init<FR: FlowRepresentable>(_ flowRepresentableType: FR.Type,
                                        launchStyle: LaunchStyle = .default,

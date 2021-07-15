@@ -55,12 +55,19 @@ public struct WorkflowView<Args>: View {
     private var onAbandon = [() -> Void]()
     private var passedArgs = AnyWorkflow.PassedArgs.none
 
-    /// Creates a `WorkflowView` that displays a `FlowRepresentable` when presented.
+    /**
+     Creates a `WorkflowView` that displays a `FlowRepresentable` when presented.
+     - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
+     */
     public init(isLaunched: Binding<Bool>) where Args == Never {
         _isLaunched = isLaunched
     }
 
-    /// Creates a `WorkflowView` that displays a `FlowRepresentable` when presented.
+    /**
+     Creates a `WorkflowView` that displays a `FlowRepresentable` when presented.
+     - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
+     - Parameter startingArgs: arguments passed to the first `FlowRepresentable` in the underlying `Workflow`.
+     */
     public init(isLaunched: Binding<Bool>, startingArgs args: Args) {
         _isLaunched = isLaunched
         if let args = args as? AnyWorkflow.PassedArgs {
