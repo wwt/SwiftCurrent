@@ -51,13 +51,13 @@ fileprivate struct FR: FlowRepresentable {
 }
 
 extension FlowRepresentableMetadata {
-    static func createForTests<FR: FlowRepresentable>(_: FR.Type) -> FlowRepresentableMetadata {
+    fileprivate static func createForTests<FR: FlowRepresentable>(_: FR.Type) -> FlowRepresentableMetadata {
         .init(FR.self, flowPersistence: { _ in .default })
     }
 }
 
 extension AnyWorkflow.Element {
-    static func createForTests<FR: FlowRepresentable>(_ :FR.Type) -> AnyWorkflow.Element {
+    fileprivate static func createForTests<FR: FlowRepresentable>(_ :FR.Type) -> AnyWorkflow.Element {
         return .init(with: .init(metadata: .createForTests(FR.self),
                                  instance: AnyFlowRepresentable(FR.self, args: .none)))
     }

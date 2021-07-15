@@ -120,7 +120,7 @@ fileprivate class AnyWorkflowStorageBase {
     // https://github.com/wwt/SwiftCurrent/blob/main/.github/STYLEGUIDE.md#type-erasure
     // swiftlint:disable:next unavailable_function
     func append(_ metadata: FlowRepresentableMetadata) {
-        fatalError("append(:) not overriden")
+        fatalError("append(:) not overridden by AnyWorkflowStorage")
     }
 
     // https://github.com/wwt/SwiftCurrent/blob/main/.github/STYLEGUIDE.md#type-erasure
@@ -129,7 +129,7 @@ fileprivate class AnyWorkflowStorageBase {
                                    passedArgs: AnyWorkflow.PassedArgs,
                                    launchStyle: LaunchStyle = .default,
                                    onFinish: ((AnyWorkflow.PassedArgs) -> Void)? = nil) -> AnyWorkflow.Element? {
-        fatalError("launch(orchestrationResponder:passedArgs:launchStyle:onFinish) not overriden")
+        fatalError("launch(orchestrationResponder:passedArgs:launchStyle:onFinish) not overridden by AnyWorkflowStorage")
     }
 }
 

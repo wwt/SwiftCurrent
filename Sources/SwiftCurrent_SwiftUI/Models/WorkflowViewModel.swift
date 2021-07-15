@@ -12,7 +12,7 @@ import SwiftUI
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class WorkflowViewModel: ObservableObject {
     @Published var body = AnyView(EmptyView())
-    var isPresented: Binding<Bool>?
+    var isLaunched: Binding<Bool>?
     var onAbandon = [() -> Void]()
 }
 
@@ -31,7 +31,7 @@ extension WorkflowViewModel: OrchestrationResponder {
     }
 
     func abandon(_ workflow: AnyWorkflow, onFinish: (() -> Void)?) {
-        isPresented?.wrappedValue = false
+        isLaunched?.wrappedValue = false
         onAbandon.forEach { $0() }
     }
 
@@ -40,7 +40,7 @@ extension WorkflowViewModel: OrchestrationResponder {
             if let lastPresentableItem = workflow.lastPresentableItem {
                 extractView(from: lastPresentableItem).model = self
             } else {
-                isPresented?.wrappedValue = false
+                isLaunched?.wrappedValue = false
             }
         }
         onFinish?(passedArgs)
