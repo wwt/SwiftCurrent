@@ -12,7 +12,9 @@ import SwiftCurrent_SwiftUI
 
 struct AccountInformationView: View, FlowRepresentable {
     @State var username = "changeme"
+    @State var password = "supersecure"
     @State var usernameWorkflowLaunched = false
+    @State var passwordWorkflowLaunched = false
     weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
@@ -34,6 +36,19 @@ struct AccountInformationView: View, FlowRepresentable {
                     usernameWorkflowLaunched = false
                 }
         }
-        Text("Password: ")
+        if !passwordWorkflowLaunched {
+            Button("Change Password") {
+                passwordWorkflowLaunched = true
+            }
+        } else {
+            WorkflowView(isPresented: $passwordWorkflowLaunched, args: password)
+                .thenProceed(with: WorkflowItem(MFAuthenticationView.self))
+                .thenProceed(with: WorkflowItem(ChangePasswordView.self))
+                .onFinish {
+                    guard case .args(let newPassword as String) = $0 else { return }
+                    password = newPassword
+                    passwordWorkflowLaunched = false
+                }
+        }
     }
 }

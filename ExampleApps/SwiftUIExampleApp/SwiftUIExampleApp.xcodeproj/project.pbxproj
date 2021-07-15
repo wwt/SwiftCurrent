@@ -26,6 +26,7 @@
 		CAC34B7D26A0803C0039A373 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = CAC34B7C26A0803C0039A373 /* CodeScanner */; };
 		CAC34B8226A080910039A373 /* BETA_SwiftCurrent_SwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = CAC34B8126A080910039A373 /* BETA_SwiftCurrent_SwiftUI */; };
 		CAC34B8426A080910039A373 /* SwiftCurrent in Frameworks */ = {isa = PBXBuildFile; productRef = CAC34B8326A080910039A373 /* SwiftCurrent */; };
+		CAD0269726A0AEE00075B818 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD0269626A0AEE00075B818 /* ChangePasswordView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		CAC34B7026A07FE90039A373 /* MapFeatureOnboardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapFeatureOnboardingView.swift; sourceTree = "<group>"; };
 		CAC34B7126A07FE90039A373 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		CAC34B7226A07FE90039A373 /* MapFeatureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapFeatureView.swift; sourceTree = "<group>"; };
+		CAD0269626A0AEE00075B818 /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 				CA0536FA26A0919900BF8FC5 /* AccountInformationView.swift */,
 				CA0536FC26A091B200BF8FC5 /* CardInformationView.swift */,
 				CA4B40B826A09E5800B18626 /* ChangeUsernameView.swift */,
+				CAD0269626A0AEE00075B818 /* ChangePasswordView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -280,6 +283,7 @@
 				CA0536F426A0887800BF8FC5 /* ProfileFeatureView.swift in Sources */,
 				CA4B40B926A09E5800B18626 /* ChangeUsernameView.swift in Sources */,
 				CA0536FD26A091B200BF8FC5 /* CardInformationView.swift in Sources */,
+				CAD0269726A0AEE00075B818 /* ChangePasswordView.swift in Sources */,
 				CA0536FB26A0919900BF8FC5 /* AccountInformationView.swift in Sources */,
 				CAC34B7626A07FE90039A373 /* ContentView.swift in Sources */,
 				CAC34B7726A07FE90039A373 /* MapFeatureView.swift in Sources */,
