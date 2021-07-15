@@ -1,6 +1,6 @@
 # Swift Package Manager with Storyboards
 
-This guide will walk you through getting a [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html) up and running in a new iOS project.  If you would like to see an existing project, clone the repo and view the `SwiftCurrentExample` scheme in `SwiftCurrent.xcworkspace`.
+This guide will walk you through getting a [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html) up and running in a new iOS project.  If you would like to see an existing project, clone the repo and view the `UIKitExample` scheme in `SwiftCurrent.xcworkspace`.
 
 The app in this guide is going to be very simple.  It consists of a screen that will launch the [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html), a screen to enter an email address, and an optional screen for if your email contains `wwt.com`.  Here is a preview of what the app will look like:
 

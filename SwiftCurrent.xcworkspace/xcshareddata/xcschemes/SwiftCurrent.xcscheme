@@ -71,26 +71,6 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CAF586AD256CF2B40044C864"
-               BuildableName = "SwiftCurrentExampleTests.xctest"
-               BlueprintName = "SwiftCurrentExampleTests"
-               ReferencedContainer = "container:SwiftCurrentExample/SwiftCurrentExample.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CAF58634256CF0E50044C864"
-               BuildableName = "SwiftCurrent_UIKitTests.xctest"
-               BlueprintName = "SwiftCurrent_UIKitTests"
-               ReferencedContainer = "container:SwiftCurrentExample/SwiftCurrentExample.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "SwiftCurrent-SwiftUITests"
                BuildableName = "SwiftCurrent-SwiftUITests"
                BlueprintName = "SwiftCurrent-SwiftUITests"
@@ -105,6 +85,26 @@
                BuildableName = "SwiftUIExampleAppTests.xctest"
                BlueprintName = "SwiftUIExampleAppTests"
                ReferencedContainer = "container:ExampleApps/SwiftUIExampleApp/SwiftUIExampleApp.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CAF58634256CF0E50044C864"
+               BuildableName = "SwiftCurrent_UIKitTests.xctest"
+               BlueprintName = "SwiftCurrent_UIKitTests"
+               ReferencedContainer = "container:ExampleApps/UIKitExample/UIKitExample.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CAF586AD256CF2B40044C864"
+               BuildableName = "UIKitExampleTests.xctest"
+               BlueprintName = "UIKitExampleTests"
+               ReferencedContainer = "container:ExampleApps/UIKitExample/UIKitExample.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>

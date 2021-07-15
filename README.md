@@ -30,7 +30,7 @@ As you continue to develop your applications, each view controller will become m
 
 ## See it in action with our example app
 
-Clone our repo, open `SwiftCurrent.xcworkspace`, target the `SwiftCurrentExample` scheme, and run to see our example app in action.
+Clone our repo, open `SwiftCurrent.xcworkspace`, target the `UIKitExample` scheme, and run to see our example app in action.
 
 The app is designed to give you an idea of what SwiftCurrent can do with minimal overhead in the UI.  The key areas of code you'll want to look at are: `SetupViewController.swift` and the view controllers referenced in the [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html).
 
