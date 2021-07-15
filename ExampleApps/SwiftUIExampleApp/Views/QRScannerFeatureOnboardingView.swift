@@ -10,17 +10,19 @@ import SwiftUI
 import SwiftCurrent
 
 struct QRScannerFeatureOnboardingView: View, FlowRepresentable {
+    @DependencyInjected private static var userDefaults: UserDefaults!
+
     weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
         Text("Learn about our awesome QR scanning feature!")
         Button("Continue") {
-            UserDefaults.standard.set(true, forKey: "OnboardedToQRScanningFeature")
+            Self.userDefaults.set(true, forKey: "OnboardedToQRScanningFeature")
             proceedInWorkflow()
         }
     }
 
     func shouldLoad() -> Bool {
-        !UserDefaults.standard.bool(forKey: "OnboardedToQRScanningFeature")
+        !Self.userDefaults.bool(forKey: "OnboardedToQRScanningFeature")
     }
 }

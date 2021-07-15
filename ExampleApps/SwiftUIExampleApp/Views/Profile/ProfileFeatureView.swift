@@ -10,6 +10,7 @@ import SwiftUI
 import SwiftCurrent
 
 struct ProfileFeatureView: View, FlowRepresentable {
+    @DependencyInjected private static var userDefaults: UserDefaults!
     weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
@@ -48,8 +49,7 @@ struct ProfileFeatureView: View, FlowRepresentable {
             }
             Group {
                 Button("Clear User Defaults") {
-                    let defaults = UserDefaults.standard
-                    defaults.dictionaryRepresentation().keys.forEach(defaults.removeObject(forKey:))
+                    Self.userDefaults.dictionaryRepresentation().keys.forEach(Self.userDefaults.removeObject(forKey:))
                 }
             }
             Spacer()

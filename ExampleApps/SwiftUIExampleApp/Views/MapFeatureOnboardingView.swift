@@ -12,17 +12,19 @@ import SwiftUI
 import SwiftCurrent
 
 struct MapFeatureOnboardingView: View, FlowRepresentable {
+    @DependencyInjected private static var userDefaults: UserDefaults!
+
     weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
         Text("Learn about our awesome map feature!")
         Button("Continue") {
-            UserDefaults.standard.set(true, forKey: "OnboardedToMapFeature")
+            Self.userDefaults.set(true, forKey: "OnboardedToMapFeature")
             proceedInWorkflow()
         }
     }
 
     func shouldLoad() -> Bool {
-        !UserDefaults.standard.bool(forKey: "OnboardedToMapFeature")
+        !Self.userDefaults.bool(forKey: "OnboardedToMapFeature")
     }
 }

@@ -8,19 +8,22 @@
 
 import SwiftUI
 import SwiftCurrent
+import Swinject
 
 struct ProfileFeatureOnboardingView: View, FlowRepresentable {
+    private var userDefaults: UserDefaults! { Container.default.resolve(UserDefaults.self) }
+
     weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
         Text("Learn about our awesome profile feature!")
         Button("Continue") {
-            UserDefaults.standard.set(true, forKey: "OnboardedToQRProfileFeature")
+            userDefaults.set(true, forKey: "OnboardedToProfileFeature")
             proceedInWorkflow()
         }
     }
 
     func shouldLoad() -> Bool {
-        !UserDefaults.standard.bool(forKey: "OnboardedToQRProfileFeature")
+        !userDefaults.bool(forKey: "OnboardedToProfileFeature")
     }
 }

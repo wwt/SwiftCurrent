@@ -27,6 +27,15 @@
 		CAC34B8226A080910039A373 /* BETA_SwiftCurrent_SwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = CAC34B8126A080910039A373 /* BETA_SwiftCurrent_SwiftUI */; };
 		CAC34B8426A080910039A373 /* SwiftCurrent in Frameworks */ = {isa = PBXBuildFile; productRef = CAC34B8326A080910039A373 /* SwiftCurrent */; };
 		CAD0269726A0AEE00075B818 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD0269626A0AEE00075B818 /* ChangePasswordView.swift */; };
+		CAD0269A26A0BE390075B818 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = CAD0269926A0BE390075B818 /* Swinject */; };
+		CAD0269C26A0BE4A0075B818 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = CAD0269B26A0BE4A0075B818 /* Swinject */; };
+		CAD0269F26A0BE810075B818 /* ContainerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD0269E26A0BE810075B818 /* ContainerExtensions.swift */; };
+		CAD026A126A0BE9A0075B818 /* DependencyInjected.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD026A026A0BE9A0075B818 /* DependencyInjected.swift */; };
+		CAD026A326A0BEB50075B818 /* DependencyInjectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD026A226A0BEB50075B818 /* DependencyInjectionTests.swift */; };
+		CAD026A626A0C1EF0075B818 /* ProfileFeatureOnboardingViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD026A526A0C1EF0075B818 /* ProfileFeatureOnboardingViewTests.swift */; };
+		CAD026AC26A0C83B0075B818 /* Inspection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD026AB26A0C83B0075B818 /* Inspection.swift */; };
+		CAD026AF26A0C8680075B818 /* InspectableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD026AE26A0C8680075B818 /* InspectableExtensions.swift */; };
+		CAD026B126A0C8960075B818 /* ViewHostingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD026B026A0C8960075B818 /* ViewHostingExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +69,13 @@
 		CAC34B7126A07FE90039A373 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		CAC34B7226A07FE90039A373 /* MapFeatureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapFeatureView.swift; sourceTree = "<group>"; };
 		CAD0269626A0AEE00075B818 /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
+		CAD0269E26A0BE810075B818 /* ContainerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerExtensions.swift; sourceTree = "<group>"; };
+		CAD026A026A0BE9A0075B818 /* DependencyInjected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjected.swift; sourceTree = "<group>"; };
+		CAD026A226A0BEB50075B818 /* DependencyInjectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjectionTests.swift; sourceTree = "<group>"; };
+		CAD026A526A0C1EF0075B818 /* ProfileFeatureOnboardingViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFeatureOnboardingViewTests.swift; sourceTree = "<group>"; };
+		CAD026AB26A0C83B0075B818 /* Inspection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Inspection.swift; sourceTree = "<group>"; };
+		CAD026AE26A0C8680075B818 /* InspectableExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectableExtensions.swift; sourceTree = "<group>"; };
+		CAD026B026A0C8960075B818 /* ViewHostingExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewHostingExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +86,7 @@
 				CAC34B8226A080910039A373 /* BETA_SwiftCurrent_SwiftUI in Frameworks */,
 				CAC34B8426A080910039A373 /* SwiftCurrent in Frameworks */,
 				CAC34B7D26A0803C0039A373 /* CodeScanner in Frameworks */,
+				CAD0269A26A0BE390075B818 /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +95,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAC34B7A26A0801E0039A373 /* ViewInspector in Frameworks */,
+				CAD0269C26A0BE4A0075B818 /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +137,8 @@
 		CAC34B4126A07F830039A373 /* SwiftUIExampleApp */ = {
 			isa = PBXGroup;
 			children = (
+				CAD026AA26A0C7F80075B818 /* ViewInspector */,
+				CAD0269D26A0BE610075B818 /* DependencyInjection */,
 				CAC34B6D26A07FE90039A373 /* Views */,
 				CAC34B4226A07F830039A373 /* SwiftUIExampleAppApp.swift */,
 				CAC34B4626A07F830039A373 /* Assets.xcassets */,
@@ -139,8 +159,11 @@
 		CAC34B5326A07F840039A373 /* SwiftUIExampleAppTests */ = {
 			isa = PBXGroup;
 			children = (
+				CAD026AD26A0C8570075B818 /* ViewInspector */,
+				CAD026A426A0C1E30075B818 /* Views */,
 				CAC34B5426A07F840039A373 /* SwiftUIExampleAppTests.swift */,
 				CAC34B5626A07F840039A373 /* Info.plist */,
+				CAD026A226A0BEB50075B818 /* DependencyInjectionTests.swift */,
 			);
 			path = SwiftUIExampleAppTests;
 			sourceTree = "<group>";
@@ -166,6 +189,40 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		CAD0269D26A0BE610075B818 /* DependencyInjection */ = {
+			isa = PBXGroup;
+			children = (
+				CAD0269E26A0BE810075B818 /* ContainerExtensions.swift */,
+				CAD026A026A0BE9A0075B818 /* DependencyInjected.swift */,
+			);
+			path = DependencyInjection;
+			sourceTree = "<group>";
+		};
+		CAD026A426A0C1E30075B818 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CAD026A526A0C1EF0075B818 /* ProfileFeatureOnboardingViewTests.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CAD026AA26A0C7F80075B818 /* ViewInspector */ = {
+			isa = PBXGroup;
+			children = (
+				CAD026AB26A0C83B0075B818 /* Inspection.swift */,
+			);
+			path = ViewInspector;
+			sourceTree = "<group>";
+		};
+		CAD026AD26A0C8570075B818 /* ViewInspector */ = {
+			isa = PBXGroup;
+			children = (
+				CAD026AE26A0C8680075B818 /* InspectableExtensions.swift */,
+				CAD026B026A0C8960075B818 /* ViewHostingExtensions.swift */,
+			);
+			path = ViewInspector;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -186,6 +243,7 @@
 				CAC34B7C26A0803C0039A373 /* CodeScanner */,
 				CAC34B8126A080910039A373 /* BETA_SwiftCurrent_SwiftUI */,
 				CAC34B8326A080910039A373 /* SwiftCurrent */,
+				CAD0269926A0BE390075B818 /* Swinject */,
 			);
 			productName = SwiftUIExampleApp;
 			productReference = CAC34B3F26A07F830039A373 /* SwiftUIExampleApp.app */;
@@ -207,6 +265,7 @@
 			name = SwiftUIExampleAppTests;
 			packageProductDependencies = (
 				CAC34B7926A0801E0039A373 /* ViewInspector */,
+				CAD0269B26A0BE4A0075B818 /* Swinject */,
 			);
 			productName = SwiftUIExampleAppTests;
 			productReference = CAC34B5026A07F840039A373 /* SwiftUIExampleAppTests.xctest */;
@@ -220,6 +279,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1250;
 				LastUpgradeCheck = 1250;
+				ORGANIZATIONNAME = "WWT and Tyler Thompson";
 				TargetAttributes = {
 					CAC34B3E26A07F830039A373 = {
 						CreatedOnToolsVersion = 12.5.1;
@@ -242,6 +302,7 @@
 			packageReferences = (
 				CAC34B7826A0801E0039A373 /* XCRemoteSwiftPackageReference "ViewInspector" */,
 				CAC34B7B26A0803C0039A373 /* XCRemoteSwiftPackageReference "CodeScanner" */,
+				CAD0269826A0BE390075B818 /* XCRemoteSwiftPackageReference "Swinject" */,
 			);
 			productRefGroup = CAC34B4026A07F830039A373 /* Products */;
 			projectDirPath = "";
@@ -284,7 +345,10 @@
 				CA4B40B926A09E5800B18626 /* ChangeUsernameView.swift in Sources */,
 				CA0536FD26A091B200BF8FC5 /* CardInformationView.swift in Sources */,
 				CAD0269726A0AEE00075B818 /* ChangePasswordView.swift in Sources */,
+				CAD026AC26A0C83B0075B818 /* Inspection.swift in Sources */,
+				CAD0269F26A0BE810075B818 /* ContainerExtensions.swift in Sources */,
 				CA0536FB26A0919900BF8FC5 /* AccountInformationView.swift in Sources */,
+				CAD026A126A0BE9A0075B818 /* DependencyInjected.swift in Sources */,
 				CAC34B7626A07FE90039A373 /* ContentView.swift in Sources */,
 				CAC34B7726A07FE90039A373 /* MapFeatureView.swift in Sources */,
 				CAC34B7526A07FE90039A373 /* MapFeatureOnboardingView.swift in Sources */,
@@ -297,6 +361,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAD026AF26A0C8680075B818 /* InspectableExtensions.swift in Sources */,
+				CAD026A326A0BEB50075B818 /* DependencyInjectionTests.swift in Sources */,
+				CAD026B126A0C8960075B818 /* ViewHostingExtensions.swift in Sources */,
+				CAD026A626A0C1EF0075B818 /* ProfileFeatureOnboardingViewTests.swift in Sources */,
 				CAC34B5526A07F840039A373 /* SwiftUIExampleAppTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -565,6 +633,14 @@
 				minimumVersion = 1.0.7;
 			};
 		};
+		CAD0269826A0BE390075B818 /* XCRemoteSwiftPackageReference "Swinject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/Swinject";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -585,6 +661,16 @@
 		CAC34B8326A080910039A373 /* SwiftCurrent */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftCurrent;
+		};
+		CAD0269926A0BE390075B818 /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CAD0269826A0BE390075B818 /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
+		};
+		CAD0269B26A0BE4A0075B818 /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CAD0269826A0BE390075B818 /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
