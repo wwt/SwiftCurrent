@@ -468,7 +468,7 @@ class UIKitConsumerAbandonTests: XCTestCase {
 
         XCTAssertUIViewControllerDisplayed(isInstance: root)
 
-        wait(for: [expectation], timeout: 0.3)
+        wait(for: [expectation], timeout: 0.5)
     }
 
     func testUIKitAbandon_CanStillAbandon_EvenIfTheResponderIsNotAUIKitPresenter() {

@@ -47,7 +47,7 @@ final class PersistenceTests: XCTestCase {
                 XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
             }
 
-        wait(for: [expectViewLoaded], timeout: 0.3)
+        wait(for: [expectViewLoaded], timeout: 0.5)
     }
 
     func testRemovedAfterProceeding_OnMiddleItemInAWorkflow() throws {
@@ -83,7 +83,7 @@ final class PersistenceTests: XCTestCase {
                 XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
             }
 
-        wait(for: [expectViewLoaded], timeout: 0.3)
+        wait(for: [expectViewLoaded], timeout: 0.5)
     }
 
     func testRemovedAfterProceeding_OnLastItemInAWorkflow() throws {
@@ -120,7 +120,7 @@ final class PersistenceTests: XCTestCase {
                 XCTAssertNoThrow(try viewUnderTest.find(FR3.self))
             }
 
-        wait(for: [expectViewLoaded, expectOnFinish], timeout: 0.3)
+        wait(for: [expectViewLoaded, expectOnFinish], timeout: 0.5)
     }
 
     func testRemovedAfterProceeding_OnMultipleItemsInAWorkflow() throws {
@@ -157,7 +157,7 @@ final class PersistenceTests: XCTestCase {
                 XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
             }
 
-        wait(for: [expectViewLoaded], timeout: 0.3)
+        wait(for: [expectViewLoaded], timeout: 0.5)
     }
 
     func testRemovedAfterProceeding_OnAllItemsInAWorkflow() throws {
@@ -199,7 +199,7 @@ final class PersistenceTests: XCTestCase {
                 XCTAssertFalse(binding.wrappedValue, "Binding should be flipped to false")
             }
 
-        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.5)
     }
 
     // MARK: Closure API Tests
@@ -248,7 +248,7 @@ final class PersistenceTests: XCTestCase {
                 XCTAssertFalse(binding.wrappedValue, "Binding should be flipped to false")
             }
 
-        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.5)
     }
 
     func testPersistenceWorks_WhenDefinedFromAClosure_AndItemHasInputOfPassedArgs() throws {
@@ -297,7 +297,7 @@ final class PersistenceTests: XCTestCase {
                 XCTAssertFalse(binding.wrappedValue, "Binding should be flipped to false")
             }
 
-        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.5)
     }
 
     func testPersistenceWorks_WhenDefinedFromAClosure_AndItemHasInputOfNever() throws {
@@ -340,7 +340,7 @@ final class PersistenceTests: XCTestCase {
                 XCTAssertFalse(binding.wrappedValue, "Binding should be flipped to false")
             }
 
-        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.5)
     }
 
     // MARK: PersistWhenSkippedTests
@@ -376,7 +376,7 @@ final class PersistenceTests: XCTestCase {
                 XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
             }
 
-        wait(for: [expectViewLoaded], timeout: 0.3)
+        wait(for: [expectViewLoaded], timeout: 0.5)
     }
 
     func testPersistWhenSkipped_OnMiddleItemInAWorkflow() throws {
@@ -411,7 +411,7 @@ final class PersistenceTests: XCTestCase {
                 XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
             }
 
-        wait(for: [expectViewLoaded], timeout: 0.3)
+        wait(for: [expectViewLoaded], timeout: 0.5)
     }
 
     func testPersistWhenSkipped_OnLastItemInAWorkflow() throws {
@@ -446,7 +446,7 @@ final class PersistenceTests: XCTestCase {
                 XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
             }
 
-        wait(for: [expectViewLoaded, expectOnFinish], timeout: 0.3)
+        wait(for: [expectViewLoaded, expectOnFinish], timeout: 0.5)
     }
 
     func testPersistWhenSkipped_OnMultipleItemsInAWorkflow() throws {
@@ -482,7 +482,7 @@ final class PersistenceTests: XCTestCase {
                 XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
             }
 
-        wait(for: [expectViewLoaded], timeout: 0.3)
+        wait(for: [expectViewLoaded], timeout: 0.5)
     }
 
     func testPersistWhenSkipped_OnAllItemsInAWorkflow() throws {
@@ -518,6 +518,6 @@ final class PersistenceTests: XCTestCase {
                 XCTAssertNoThrow(try viewUnderTest.find(FR4.self))
             }
 
-        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.5)
     }
 }

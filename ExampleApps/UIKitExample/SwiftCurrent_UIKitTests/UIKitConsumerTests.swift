@@ -224,7 +224,7 @@ class UIKitConsumerTests: XCTestCase {
 
         root.launchInto(wf, args: expectedArgs)
 
-        wait(for: [expectation], timeout: 0.3)
+        wait(for: [expectation], timeout: 0.5)
 
         XCTAssertEqual(wf.first?.value.metadata.persistence, .persistWhenSkipped)
     }
