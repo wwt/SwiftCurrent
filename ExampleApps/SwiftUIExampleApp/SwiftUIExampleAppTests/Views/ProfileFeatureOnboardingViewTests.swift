@@ -21,17 +21,24 @@ final class ProfileFeatureOnboardingViewTests: XCTestCase {
 
     func testOnboardingInWorkflow() throws {
         let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
+        defaults.set(false, forKey: "OnboardedToProfileFeature")
         Container.default.register(UserDefaults.self) { _ in defaults }
+        let workflowFinished = expectation(description: "View Proceeded")
         let exp = ViewHosting.loadView(WorkflowView(isPresented: .constant(true))
-                                        .thenProceed(with: WorkflowItem(ProfileFeatureOnboardingView.self))).inspection.inspect { view in
+                                        .thenProceed(with: WorkflowItem(ProfileFeatureOnboardingView.self))
+                                        .onFinish { _ in
+            workflowFinished.fulfill()
+        }).inspection.inspect { view in // swiftlint:disable:this closure_end_indentation
             XCTAssertNoThrow(try view.find(ViewType.Text.self))
             XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Learn about our awesome profile feature!")
+            XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
         } // swiftlint:disable:this closure_end_indentation
-        wait(for: [exp], timeout: 0.3)
+        wait(for: [exp, workflowFinished], timeout: 0.3)
     }
 
     func testOnboardingViewLoads_WhenNoValueIsInUserDefaults() throws {
         let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
+        defaults.removeObject(forKey: "OnboardedToProfileFeature")
         Container.default.register(UserDefaults.self) { _ in defaults }
         XCTAssert(ProfileFeatureOnboardingView().shouldLoad(), "Profile onboarding should show if defaults do not exist")
     }
