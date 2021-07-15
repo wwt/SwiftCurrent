@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1300"
+   LastUpgradeVersion = "1250"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,24 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CA9728FC269FD655007F6AC0"
+               BlueprintIdentifier = "CAC34B3E26A07F830039A373"
                BuildableName = "SwiftUIExampleApp.app"
                BlueprintName = "SwiftUIExampleApp"
                ReferencedContainer = "container:SwiftUIExampleApp.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CA185E11256DD2F3008C9143"
-               BuildableName = "libSwiftCurrentLint.a"
-               BlueprintName = "SwiftCurrentLint"
-               ReferencedContainer = "container:../../SwiftCurrentLint/SwiftCurrentLint.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -58,7 +44,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CA9728FC269FD655007F6AC0"
+            BlueprintIdentifier = "CAC34B3E26A07F830039A373"
             BuildableName = "SwiftUIExampleApp.app"
             BlueprintName = "SwiftUIExampleApp"
             ReferencedContainer = "container:SwiftUIExampleApp.xcodeproj">
@@ -75,7 +61,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CA9728FC269FD655007F6AC0"
+            BlueprintIdentifier = "CAC34B3E26A07F830039A373"
             BuildableName = "SwiftUIExampleApp.app"
             BlueprintName = "SwiftUIExampleApp"
             ReferencedContainer = "container:SwiftUIExampleApp.xcodeproj">
