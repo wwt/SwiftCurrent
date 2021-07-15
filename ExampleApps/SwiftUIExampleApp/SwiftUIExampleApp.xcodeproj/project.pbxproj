@@ -16,6 +16,8 @@
 		CA97292C269FD718007F6AC0 /* SwiftCurrent in Frameworks */ = {isa = PBXBuildFile; productRef = CA97292B269FD718007F6AC0 /* SwiftCurrent */; };
 		CA972933269FD83B007F6AC0 /* MapFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA972932269FD83B007F6AC0 /* MapFeatureView.swift */; };
 		CA972935269FD8C2007F6AC0 /* MapFeatureOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA972934269FD8C2007F6AC0 /* MapFeatureOnboardingView.swift */; };
+		CA972937269FDED8007F6AC0 /* QRScannerFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA972936269FDED8007F6AC0 /* QRScannerFeatureView.swift */; };
+		CA97293A269FDF17007F6AC0 /* QRScannerFeatureOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA972939269FDF17007F6AC0 /* QRScannerFeatureOnboardingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +40,8 @@
 		CA972911269FD657007F6AC0 /* SwiftUIExampleAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIExampleAppTests.swift; sourceTree = "<group>"; };
 		CA972932269FD83B007F6AC0 /* MapFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFeatureView.swift; sourceTree = "<group>"; };
 		CA972934269FD8C2007F6AC0 /* MapFeatureOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFeatureOnboardingView.swift; sourceTree = "<group>"; };
+		CA972936269FDED8007F6AC0 /* QRScannerFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerFeatureView.swift; sourceTree = "<group>"; };
+		CA972939269FDF17007F6AC0 /* QRScannerFeatureOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerFeatureOnboardingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +123,8 @@
 				CA972902269FD655007F6AC0 /* ContentView.swift */,
 				CA972932269FD83B007F6AC0 /* MapFeatureView.swift */,
 				CA972934269FD8C2007F6AC0 /* MapFeatureOnboardingView.swift */,
+				CA972936269FDED8007F6AC0 /* QRScannerFeatureView.swift */,
+				CA972939269FDF17007F6AC0 /* QRScannerFeatureOnboardingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -137,6 +143,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				CA97293C269FE042007F6AC0 /* PBXTargetDependency */,
 			);
 			name = SwiftUIExampleApp;
 			packageProductDependencies = (
@@ -195,6 +202,7 @@
 			mainGroup = CA9728F4269FD655007F6AC0;
 			packageReferences = (
 				CA972930269FD780007F6AC0 /* XCRemoteSwiftPackageReference "ViewInspector" */,
+				CA972938269FDEED007F6AC0 /* XCRemoteSwiftPackageReference "CodeScanner" */,
 			);
 			productRefGroup = CA9728FE269FD655007F6AC0 /* Products */;
 			projectDirPath = "";
@@ -232,8 +240,10 @@
 			files = (
 				CA972903269FD655007F6AC0 /* ContentView.swift in Sources */,
 				CA972935269FD8C2007F6AC0 /* MapFeatureOnboardingView.swift in Sources */,
+				CA97293A269FDF17007F6AC0 /* QRScannerFeatureOnboardingView.swift in Sources */,
 				CA972901269FD655007F6AC0 /* SwiftUIExampleAppApp.swift in Sources */,
 				CA972933269FD83B007F6AC0 /* MapFeatureView.swift in Sources */,
+				CA972937269FDED8007F6AC0 /* QRScannerFeatureView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,6 +262,10 @@
 			isa = PBXTargetDependency;
 			target = CA9728FC269FD655007F6AC0 /* SwiftUIExampleApp */;
 			targetProxy = CA97290E269FD657007F6AC0 /* PBXContainerItemProxy */;
+		};
+		CA97293C269FE042007F6AC0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = CA97293B269FE042007F6AC0 /* CodeScanner */;
 		};
 /* End PBXTargetDependency section */
 
@@ -375,6 +389,7 @@
 		CA972920269FD657007F6AC0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -405,6 +420,7 @@
 		CA972921269FD657007F6AC0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -523,6 +539,14 @@
 				minimumVersion = 0.8.1;
 			};
 		};
+		CA972938269FDEED007F6AC0 /* XCRemoteSwiftPackageReference "CodeScanner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/twostraws/CodeScanner";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -533,6 +557,11 @@
 		CA97292B269FD718007F6AC0 /* SwiftCurrent */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftCurrent;
+		};
+		CA97293B269FE042007F6AC0 /* CodeScanner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA972938269FDEED007F6AC0 /* XCRemoteSwiftPackageReference "CodeScanner" */;
+			productName = CodeScanner;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
