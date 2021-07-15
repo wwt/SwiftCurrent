@@ -13,6 +13,7 @@ import SwiftCurrent
 struct MapFeatureView: View, FlowRepresentable {
     @State private var region = MKCoordinateRegion()
 
+    let inspection = Inspection<Self>()
     // WWT Global Headquarters
     var coordinate = CLLocationCoordinate2D(latitude: 38.70196, // swiftlint:disable:this number_separator
                                             longitude: -90.44906) // swiftlint:disable:this number_separator
@@ -24,5 +25,6 @@ struct MapFeatureView: View, FlowRepresentable {
             .onAppear {
                 region = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.002, longitudeDelta: 0.002))
             }
+            .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 }

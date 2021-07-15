@@ -16,6 +16,7 @@ import SwiftUI
 extension ProfileFeatureOnboardingView: Inspectable { }
 extension QRScannerFeatureOnboardingView: Inspectable { }
 extension MapFeatureOnboardingView: Inspectable { }
+extension MapFeatureView: Inspectable { }
 extension WorkflowView: Inspectable { }
 
 extension SwiftUIExampleApp.Inspection: InspectionEmissary where V: View { }
