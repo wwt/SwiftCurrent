@@ -61,7 +61,7 @@ public struct WorkflowView<Args>: View {
     }
 
     /// Creates a `WorkflowView` that displays a `FlowRepresentable` when presented.
-    public init(isLaunched: Binding<Bool>, args: Args) {
+    public init(isLaunched: Binding<Bool>, startingArgs args: Args) {
         _isLaunched = isLaunched
         if let args = args as? AnyWorkflow.PassedArgs {
             passedArgs = args

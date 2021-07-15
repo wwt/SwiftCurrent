@@ -226,7 +226,7 @@ final class PersistenceTests: XCTestCase {
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectedStart = UUID().uuidString
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isLaunched: binding, args: expectedStart)
+            WorkflowView(isLaunched: binding, startingArgs: expectedStart)
                 .thenProceed(with: WorkflowItem(FR1.self).persistence {
             XCTAssertEqual($0, expectedStart)
             return .removedAfterProceeding
@@ -273,7 +273,7 @@ final class PersistenceTests: XCTestCase {
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectedStart = AnyWorkflow.PassedArgs.args(UUID().uuidString)
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isLaunched: binding, args: expectedStart)
+            WorkflowView(isLaunched: binding, startingArgs: expectedStart)
                 .thenProceed(with: WorkflowItem(FR1.self)
                                 .persistence {
             XCTAssertNotNil(expectedStart.extractArgs(defaultValue: 1) as? String)

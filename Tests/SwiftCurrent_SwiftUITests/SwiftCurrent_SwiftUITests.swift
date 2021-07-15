@@ -77,7 +77,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         }
         let expected = UUID().uuidString
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isLaunched: .constant(true), args: expected)
+            WorkflowView(isLaunched: .constant(true), startingArgs: expected)
                 .thenProceed(with: WorkflowItem(FR1.self))).inspection.inspect { viewUnderTest in
             XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().stringProperty, expected)
         }
@@ -96,7 +96,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         }
         let expected = UUID().uuidString
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isLaunched: .constant(true), args: expected)
+            WorkflowView(isLaunched: .constant(true), startingArgs: expected)
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR1.self))).inspection.inspect { viewUnderTest in
             XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().property.extractArgs(defaultValue: nil) as? String, expected)
@@ -117,7 +117,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         }
         let expected = UUID().uuidString
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isLaunched: .constant(true), args: AnyWorkflow.PassedArgs.args(expected))
+            WorkflowView(isLaunched: .constant(true), startingArgs: AnyWorkflow.PassedArgs.args(expected))
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR1.self))).inspection.inspect { viewUnderTest in
             XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().property.extractArgs(defaultValue: nil) as? String, expected)
@@ -159,7 +159,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         let expectedFR3 = Bool.random()
         let expectedEnd = UUID().uuidString
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isLaunched: .constant(true), args: expectedFR1)
+            WorkflowView(isLaunched: .constant(true), startingArgs: expectedFR1)
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR2.self))
                 .thenProceed(with: WorkflowItem(FR3.self))
@@ -462,7 +462,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectedArgs = UUID().uuidString
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isLaunched: .constant(true), args: expectedArgs)
+            WorkflowView(isLaunched: .constant(true), startingArgs: expectedArgs)
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR2.self))
                 .onFinish { _ in
