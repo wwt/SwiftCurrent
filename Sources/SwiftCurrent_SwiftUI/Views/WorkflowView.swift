@@ -173,6 +173,25 @@ extension WorkflowView where Args == AnyWorkflow.PassedArgs {
                                                onAbandon: onAbandon,
                                                passedArgs: passedArgs)
     }
+
+    /**
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
+     - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
+     - Returns: a new `WorkflowView` with the additional `FlowRepresentable` item.
+     */
+    public func thenProceed<FR: FlowRepresentable & View>(with item: WorkflowItem<FR>) -> WorkflowView<FR.WorkflowOutput> {
+        var workflow = self.workflow
+        if workflow == nil {
+            workflow = AnyWorkflow(Workflow<FR>(item.metadata))
+        } else {
+            workflow?.append(item.metadata)
+        }
+        return WorkflowView<FR.WorkflowOutput>(isPresented: $isPresented,
+                                               workflow: workflow,
+                                               onFinish: onFinish,
+                                               onAbandon: onAbandon,
+                                               passedArgs: passedArgs)
+    }
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)

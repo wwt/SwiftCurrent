@@ -147,6 +147,13 @@ extension FlowRepresentable where WorkflowOutput == Never {
     }
 }
 
+extension FlowRepresentable where WorkflowOutput == AnyWorkflow.PassedArgs {
+    /// Moves forward while passing arguments forward in the `Workflow`; if at the end, calls the `onFinish` closure used when launching the workflow.
+    public func proceedInWorkflow(_ args: WorkflowOutput) {
+        _workflowPointer?.proceedInWorkflowStorage?(args)
+    }
+}
+
 extension FlowRepresentable {
     /// Moves forward while passing arguments forward in the `Workflow`; if at the end, calls the `onFinish` closure used when launching the workflow.
     public func proceedInWorkflow(_ args: WorkflowOutput) {
