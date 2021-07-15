@@ -442,4 +442,38 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
 
         wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)
     }
+
+    func testWorkflowCanHaveAPassthroughRepresentable() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            typealias WorkflowOutput = AnyWorkflow.PassedArgs
+            var _workflowPointer: AnyFlowRepresentable?
+            private let data: AnyWorkflow.PassedArgs
+            var body: some View { Text("FR1 type") }
+
+            init(with data: AnyWorkflow.PassedArgs) {
+                self.data = data
+            }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            init(with str: String) { }
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let expectedArgs = UUID().uuidString
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowView(isPresented: .constant(true), args: expectedArgs)
+                .thenProceed(with: WorkflowItem(FR1.self))
+                .thenProceed(with: WorkflowItem(FR2.self))
+                .onFinish { _ in
+            expectOnFinish.fulfill()
+        }).inspection.inspect { viewUnderTest in
+            XCTAssertEqual(try viewUnderTest.vStack().anyView(0).view(FR1.self).text().string(), "FR1 type")
+            XCTAssertNoThrow(try viewUnderTest.vStack().anyView(0).view(FR1.self).actualView().proceedInWorkflow(.args(expectedArgs)))
+            XCTAssertEqual(try viewUnderTest.vStack().anyView(0).view(FR2.self).text().string(), "FR2 type")
+            XCTAssertNoThrow(try viewUnderTest.vStack().anyView(0).view(FR2.self).actualView().proceedInWorkflow())
+        }
+
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)
+    }
 }
