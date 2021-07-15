@@ -27,7 +27,7 @@ struct AccountInformationView: View, FlowRepresentable {
                 }
             }
         } else {
-            WorkflowView(isPresented: $usernameWorkflowLaunched, args: username)
+            WorkflowView(isLaunched: $usernameWorkflowLaunched, startingArgs: username)
                 .thenProceed(with: WorkflowItem(MFAuthenticationView.self))
                 .thenProceed(with: WorkflowItem(ChangeUsernameView.self))
                 .onFinish {
@@ -41,7 +41,7 @@ struct AccountInformationView: View, FlowRepresentable {
                 passwordWorkflowLaunched = true
             }
         } else {
-            WorkflowView(isPresented: $passwordWorkflowLaunched, args: password)
+            WorkflowView(isLaunched: $passwordWorkflowLaunched, startingArgs: password)
                 .thenProceed(with: WorkflowItem(MFAuthenticationView.self))
                 .thenProceed(with: WorkflowItem(ChangePasswordView.self))
                 .onFinish {
