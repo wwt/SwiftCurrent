@@ -13,29 +13,44 @@ struct ProfileFeatureView: View, FlowRepresentable {
     weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
-        VStack {
-            Image(systemName: "person.fill.questionmark")
-                .renderingMode(.template)
-                .resizable()
-                .frame(width: 150, height: 150)
-                .padding(35)
-                .background(
-                    Circle().stroke(Color.white, lineWidth: 4)
-                        .shadow(radius: 7)
-                )
-            Text("Your name here").font(.title)
-            Divider()
-            Section(header: Text("Account Information:").font(.title)) {
-                AccountInformationView().padding()
+        VStack { // swiftlint:disable:this closure_body_length
+            Group {
+                Image(systemName: "person.fill.questionmark")
+                    .renderingMode(.template)
+                    .resizable()
+                    .frame(width: 150, height: 150)
+                    .padding(35)
+                    .background(
+                        Circle().stroke(Color.white, lineWidth: 4)
+                            .shadow(radius: 7)
+                    )
+                Text("Your name here").font(.title)
+                Divider()
             }
-            Divider()
-            Section(header: Text("Personal Information:").font(.title)) {
-                Text("name")
-                Text("address")
+            Group {
+                Section(header: Text("Account Information:").font(.title)) {
+                    AccountInformationView().padding()
+                }
+                Divider()
             }
-            Divider()
-            Section(header: Text("Card Information:").font(.title)) {
-                Text("Drivers License Number")
+            Group {
+                Section(header: Text("Personal Information:").font(.title)) {
+                    Text("name")
+                    Text("address")
+                }
+                Divider()
+            }
+            Group {
+                Section(header: Text("Card Information:").font(.title)) {
+                    CardInformationView()
+                }
+                Divider()
+            }
+            Group {
+                Button("Clear User Defaults") {
+                    let defaults = UserDefaults.standard
+                    defaults.dictionaryRepresentation().keys.forEach(defaults.removeObject(forKey:))
+                }
             }
             Spacer()
         }

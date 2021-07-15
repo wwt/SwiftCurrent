@@ -15,6 +15,7 @@ struct ProfileFeatureOnboardingView: View, FlowRepresentable {
     var body: some View {
         Text("Learn about our awesome profile feature!")
         Button("Continue") {
+            UserDefaults.standard.set(true, forKey: "OnboardedToQRProfileFeature")
             proceedInWorkflow()
         }
     }

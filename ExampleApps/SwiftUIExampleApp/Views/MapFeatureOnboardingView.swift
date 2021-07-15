@@ -17,6 +17,7 @@ struct MapFeatureOnboardingView: View, FlowRepresentable {
     var body: some View {
         Text("Learn about our awesome map feature!")
         Button("Continue") {
+            UserDefaults.standard.set(true, forKey: "OnboardedToMapFeature")
             proceedInWorkflow()
         }
     }

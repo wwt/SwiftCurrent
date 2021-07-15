@@ -15,6 +15,7 @@ struct QRScannerFeatureOnboardingView: View, FlowRepresentable {
     var body: some View {
         Text("Learn about our awesome QR scanning feature!")
         Button("Continue") {
+            UserDefaults.standard.set(true, forKey: "OnboardedToQRScanningFeature")
             proceedInWorkflow()
         }
     }
