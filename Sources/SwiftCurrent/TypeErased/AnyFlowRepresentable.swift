@@ -10,7 +10,7 @@
 import Foundation
 
 /// A type erased `FlowRepresentable`.
-public class AnyFlowRepresentable {
+open class AnyFlowRepresentable {
     typealias WorkflowInput = Any
     typealias WorkflowOutput = Any
 

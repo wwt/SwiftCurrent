@@ -29,14 +29,31 @@ public class FlowRepresentableMetadata {
      - Parameter launchStyle: the style to use when launching the `FlowRepresentable`.
      - Parameter flowPersistence: a closure passing arguments to the caller and returning the preferred `FlowPersistence`.
      */
-    public init<FR: FlowRepresentable>(_ flowRepresentableType: FR.Type,
-                                       launchStyle: LaunchStyle = .default,
-                                       flowPersistence:@escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) {
-        flowRepresentableFactory = { args in
+    public convenience init<FR: FlowRepresentable>(_ flowRepresentableType: FR.Type,
+                                                   launchStyle: LaunchStyle = .default,
+                                                   flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) {
+        self.init(flowRepresentableType,
+                  launchStyle: launchStyle,
+                  flowPersistence: flowPersistence) { args in
             AnyFlowRepresentable(FR.self, args: args)
         }
-        self.flowPersistence = flowPersistence
+    }
+
+    /**
+     Creates an instance that holds onto metadata associated with the `FlowRepresentable`.
+
+     - Parameter flowRepresentableType: specific type of the associated `FlowRepresentable`.
+     - Parameter launchStyle: the style to use when launching the `FlowRepresentable`.
+     - Parameter flowPersistence: a closure passing arguments to the caller and returning the preferred `FlowPersistence`.
+     - Parameter flowRepresentableFactory: a closure used to generate an `AnyFlowRepresentable` from the `FlowRepresentable` type.
+     */
+    public init<FR: FlowRepresentable>(_ flowRepresentableType: FR.Type,
+                                       launchStyle: LaunchStyle = .default,
+                                       flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence,
+                                       flowRepresentableFactory: @escaping (AnyWorkflow.PassedArgs) -> AnyFlowRepresentable) {
         self.launchStyle = launchStyle
+        self.flowPersistence = flowPersistence
+        self.flowRepresentableFactory = flowRepresentableFactory
     }
 
     func setPersistence(_ args: AnyWorkflow.PassedArgs) -> FlowPersistence {

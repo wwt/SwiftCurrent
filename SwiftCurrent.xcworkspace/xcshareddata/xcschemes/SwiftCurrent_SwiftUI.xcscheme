@@ -14,23 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "SwiftCurrent"
-               BuildableName = "SwiftCurrent"
-               BlueprintName = "SwiftCurrent"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "SwiftCurrent_UIKit"
-               BuildableName = "SwiftCurrent_UIKit"
-               BlueprintName = "SwiftCurrent_UIKit"
+               BlueprintIdentifier = "SwiftCurrent_SwiftUI"
+               BuildableName = "SwiftCurrent_SwiftUI"
+               BlueprintName = "SwiftCurrent_SwiftUI"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -57,36 +43,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       codeCoverageEnabled = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "SwiftCurrentTests"
-               BuildableName = "SwiftCurrentTests"
-               BlueprintName = "SwiftCurrentTests"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CAF586AD256CF2B40044C864"
-               BuildableName = "SwiftCurrentExampleTests.xctest"
-               BlueprintName = "SwiftCurrentExampleTests"
-               ReferencedContainer = "container:SwiftCurrentExample/SwiftCurrentExample.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CAF58634256CF0E50044C864"
-               BuildableName = "SwiftCurrent_UIKitTests.xctest"
-               BlueprintName = "SwiftCurrent_UIKitTests"
-               ReferencedContainer = "container:SwiftCurrentExample/SwiftCurrentExample.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
          <TestableReference
             skipped = "NO">
             <BuildableReference
@@ -119,10 +75,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CA185E11256DD2F3008C9143"
-            BuildableName = "libSwiftCurrentLint.a"
-            BlueprintName = "SwiftCurrentLint"
-            ReferencedContainer = "container:SwiftCurrentLint/SwiftCurrentLint.xcodeproj">
+            BlueprintIdentifier = "SwiftCurrent_SwiftUI"
+            BuildableName = "SwiftCurrent_SwiftUI"
+            BlueprintName = "SwiftCurrent_SwiftUI"
+            ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

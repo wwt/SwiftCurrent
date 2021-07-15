@@ -6,5 +6,5 @@ readme: README.md
 module: SwiftCurrent
 author_url: https://github.com/wwt/SwiftCurrent
 github_url: https://github.com/wwt/SwiftCurrent
-sourcekitten_sourcefile: swiftcurrent-docs.json,swiftcurrentuikit-docs.json
+sourcekitten_sourcefile: swiftcurrent-docs.json,swiftcurrentuikit-docs.json,swiftcurrent-swiftui-docs.json
 author: WWT and Tyler Thompson
