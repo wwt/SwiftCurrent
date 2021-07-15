@@ -18,6 +18,7 @@ extension QRScannerFeatureOnboardingView: Inspectable { }
 extension MapFeatureOnboardingView: Inspectable { }
 extension MapFeatureView: Inspectable { }
 extension WorkflowView: Inspectable { }
+extension ChangePasswordView: Inspectable { }
 
 extension SwiftUIExampleApp.Inspection: InspectionEmissary where V: View { }
 extension SwiftCurrent_SwiftUI.Inspection: InspectionEmissary where V: View { }

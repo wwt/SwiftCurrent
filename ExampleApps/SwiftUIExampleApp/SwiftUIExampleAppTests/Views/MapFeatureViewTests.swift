@@ -16,10 +16,9 @@ final class MapFeatureViewTests: XCTestCase {
         let exp = ViewHosting.loadView(MapFeatureView()).inspection.inspect { view in
             let map = try view.map()
             let region = try map.coordinateRegion()
-            XCTAssertEqual(region.center.latitude, 38.70196) // swiftlint:disable:this number_separator
+            XCTAssertEqual(region.center.latitude, 38.70196, accuracy: 0.9) // swiftlint:disable:this number_separator
             XCTAssertEqual(region.center.longitude, -90.44906, accuracy: 0.9) // swiftlint:disable:this number_separator
         }
         wait(for: [exp], timeout: 0.3)
     }
 }
-

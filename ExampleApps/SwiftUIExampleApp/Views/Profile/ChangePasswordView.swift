@@ -17,6 +17,8 @@ struct ChangePasswordView: View, FlowRepresentable {
     @State private var submitted = false
     @State private var errors = [String]()
 
+    let inspection = Inspection<Self>()
+
     private let currentPassword: String
 
     weak var _workflowPointer: AnyFlowRepresentable?
@@ -50,6 +52,7 @@ struct ChangePasswordView: View, FlowRepresentable {
         .onChange(of: oldPassword, perform: validateOldPassword)
         .onChange(of: newPassword, perform: validatePassword)
         .onChange(of: confirmNewPassword, perform: validatePassword)
+        .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 
     private func validateOldPassword(_ password: String) {
