@@ -66,6 +66,6 @@ extension MFAuthenticationView {
 
 struct MFAuthenticationView_Previews: PreviewProvider {
     static var previews: some View {
-        MFAuthenticationView()
+        MFAuthenticationView(with: .none)
     }
 }

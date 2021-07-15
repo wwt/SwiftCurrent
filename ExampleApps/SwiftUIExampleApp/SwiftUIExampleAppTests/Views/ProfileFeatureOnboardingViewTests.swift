@@ -24,7 +24,7 @@ final class ProfileFeatureOnboardingViewTests: XCTestCase {
         defaults.set(false, forKey: "OnboardedToProfileFeature")
         Container.default.register(UserDefaults.self) { _ in defaults }
         let workflowFinished = expectation(description: "View Proceeded")
-        let exp = ViewHosting.loadView(WorkflowView(isPresented: .constant(true))
+        let exp = ViewHosting.loadView(WorkflowView(isLaunched: .constant(true))
                                         .thenProceed(with: WorkflowItem(ProfileFeatureOnboardingView.self))
                                         .onFinish { _ in
             workflowFinished.fulfill()
