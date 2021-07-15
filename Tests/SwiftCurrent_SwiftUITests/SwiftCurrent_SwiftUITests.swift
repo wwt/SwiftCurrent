@@ -126,7 +126,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: 0.3)
     }
 
-    func testWorkflowPassesArgumentsToTheAllItems() throws {
+    func testWorkflowPassesArgumentsToAllItems() throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             typealias WorkflowOutput = Int
             var _workflowPointer: AnyFlowRepresentable?
@@ -347,7 +347,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             let vstack = try viewUnderTest.vStack()
             binding.wrappedValue = false
             XCTAssertNoThrow(try vstack.callOnDisappear())
-            // Expected view at this point in the lifecycle
+            // Expected that there is no vstack at this point in the lifecycle
             XCTAssertThrowsError(try viewUnderTest.vStack())
 
             // Change state to put the vstack back
@@ -384,7 +384,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)
     }
     
-    func testWorkflowRelaunchesWhenSubsequentlyPresented() throws {
+    func testWorkflowRelaunchesWhenSubsequentlyLaunched() throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
@@ -415,7 +415,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)
     }
 
-    func testWorkflowMaintainsStateWhenViewDisappearsAndReappears_WithoutIsPresentedChanging() throws {
+    func testWorkflowMaintainsStateWhenViewDisappearsAndReappears_WithoutIsLaunchedChanging() throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
