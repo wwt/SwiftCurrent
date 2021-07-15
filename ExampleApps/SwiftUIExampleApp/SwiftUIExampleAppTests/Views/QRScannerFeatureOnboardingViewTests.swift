@@ -1,10 +1,10 @@
 //
-//  ProfileFeatureOnboardingViewTests.swift
+//  QRScannerFeatureOnboardingViewTests.swift
 //  SwiftUIExampleAppTests
 //
 //  Created by Tyler Thompson on 7/15/21.
-//
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
+//
 
 import XCTest
 import SwiftUI
@@ -14,8 +14,8 @@ import ViewInspector
 @testable import SwiftCurrent_SwiftUI // 🤮 it sucks that this is necessary
 @testable import SwiftUIExampleApp
 
-final class ProfileFeatureOnboardingViewTests: XCTestCase {
-    let defaultsKey = "OnboardedToProfileFeature"
+final class QRScannerFeatureOnboardingViewTests: XCTestCase {
+    let defaultsKey = "OnboardedToQRScanningFeature"
     override func setUpWithError() throws {
         Container.default.removeAll()
     }
@@ -26,12 +26,12 @@ final class ProfileFeatureOnboardingViewTests: XCTestCase {
         Container.default.register(UserDefaults.self) { _ in defaults }
         let workflowFinished = expectation(description: "View Proceeded")
         let exp = ViewHosting.loadView(WorkflowView(isLaunched: .constant(true))
-                                        .thenProceed(with: WorkflowItem(ProfileFeatureOnboardingView.self))
+                                        .thenProceed(with: WorkflowItem(QRScannerFeatureOnboardingView.self))
                                         .onFinish { _ in
             workflowFinished.fulfill()
         }).inspection.inspect { view in // swiftlint:disable:this closure_end_indentation
             XCTAssertNoThrow(try view.find(ViewType.Text.self))
-            XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Learn about our awesome profile feature!")
+            XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Learn about our awesome QR scanning feature!")
             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
         } // swiftlint:disable:this closure_end_indentation
         wait(for: [exp, workflowFinished], timeout: 0.3)
@@ -41,20 +41,20 @@ final class ProfileFeatureOnboardingViewTests: XCTestCase {
         let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
         defaults.removeObject(forKey: defaultsKey)
         Container.default.register(UserDefaults.self) { _ in defaults }
-        XCTAssert(ProfileFeatureOnboardingView().shouldLoad(), "Profile onboarding should show if defaults do not exist")
+        XCTAssert(QRScannerFeatureOnboardingView().shouldLoad(), "Profile onboarding should show if defaults do not exist")
     }
 
     func testOnboardingViewLoads_WhenValueInUserDefaultsIsFalse() throws {
         let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
         defaults.set(false, forKey: defaultsKey)
         Container.default.register(UserDefaults.self) { _ in defaults }
-        XCTAssert(ProfileFeatureOnboardingView().shouldLoad(), "Profile onboarding should show if default is false")
+        XCTAssert(QRScannerFeatureOnboardingView().shouldLoad(), "Profile onboarding should show if default is false")
     }
 
     func testOnboardingViewDoesNotLoad_WhenValueInUserDefaultsIsTrue() throws {
         let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
         defaults.set(true, forKey: defaultsKey)
         Container.default.register(UserDefaults.self) { _ in defaults }
-        XCTAssertFalse(ProfileFeatureOnboardingView().shouldLoad(), "Profile onboarding should not show if default is true")
+        XCTAssertFalse(QRScannerFeatureOnboardingView().shouldLoad(), "Profile onboarding should not show if default is true")
     }
 }

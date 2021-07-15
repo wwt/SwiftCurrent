@@ -14,6 +14,8 @@ import SwiftUI
 
 // Don't forget you need to make every view you want to test with ViewInspector Inspectable
 extension ProfileFeatureOnboardingView: Inspectable { }
+extension QRScannerFeatureOnboardingView: Inspectable { }
+extension MapFeatureOnboardingView: Inspectable { }
 extension WorkflowView: Inspectable { }
 
 extension SwiftUIExampleApp.Inspection: InspectionEmissary where V: View { }
