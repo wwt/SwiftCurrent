@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA0536F426A0887800BF8FC5 /* ProfileFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536F326A0887800BF8FC5 /* ProfileFeatureView.swift */; };
+		CA0536F626A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536F526A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift */; };
+		CA0536FB26A0919900BF8FC5 /* AccountInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536FA26A0919900BF8FC5 /* AccountInformationView.swift */; };
+		CA0536FD26A091B200BF8FC5 /* CardInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536FC26A091B200BF8FC5 /* CardInformationView.swift */; };
+		CA0536FF26A092D800BF8FC5 /* MFAuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536FE26A092D800BF8FC5 /* MFAuthenticationView.swift */; };
 		CAC34B4326A07F830039A373 /* SwiftUIExampleAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC34B4226A07F830039A373 /* SwiftUIExampleAppApp.swift */; };
 		CAC34B4726A07F830039A373 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAC34B4626A07F830039A373 /* Assets.xcassets */; };
 		CAC34B4A26A07F830039A373 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAC34B4926A07F830039A373 /* Preview Assets.xcassets */; };
@@ -33,6 +38,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CA0536F326A0887800BF8FC5 /* ProfileFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFeatureView.swift; sourceTree = "<group>"; };
+		CA0536F526A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFeatureOnboardingView.swift; sourceTree = "<group>"; };
+		CA0536FA26A0919900BF8FC5 /* AccountInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInformationView.swift; sourceTree = "<group>"; };
+		CA0536FC26A091B200BF8FC5 /* CardInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardInformationView.swift; sourceTree = "<group>"; };
+		CA0536FE26A092D800BF8FC5 /* MFAuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFAuthenticationView.swift; sourceTree = "<group>"; };
 		CAC34B3F26A07F830039A373 /* SwiftUIExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAC34B4226A07F830039A373 /* SwiftUIExampleAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIExampleAppApp.swift; sourceTree = "<group>"; };
 		CAC34B4626A07F830039A373 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -70,6 +80,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CA0536F926A0917A00BF8FC5 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				CA0536F326A0887800BF8FC5 /* ProfileFeatureView.swift */,
+				CA0536F526A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift */,
+				CA0536FA26A0919900BF8FC5 /* AccountInformationView.swift */,
+				CA0536FC26A091B200BF8FC5 /* CardInformationView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		CAC34B3626A07F830039A373 = {
 			isa = PBXGroup;
 			children = (
@@ -121,11 +142,13 @@
 		CAC34B6D26A07FE90039A373 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CA0536F926A0917A00BF8FC5 /* Profile */,
 				CAC34B6E26A07FE90039A373 /* QRScannerFeatureView.swift */,
 				CAC34B6F26A07FE90039A373 /* QRScannerFeatureOnboardingView.swift */,
 				CAC34B7026A07FE90039A373 /* MapFeatureOnboardingView.swift */,
 				CAC34B7126A07FE90039A373 /* ContentView.swift */,
 				CAC34B7226A07FE90039A373 /* MapFeatureView.swift */,
+				CA0536FE26A092D800BF8FC5 /* MFAuthenticationView.swift */,
 			);
 			path = Views;
 			sourceTree = SOURCE_ROOT;
@@ -248,7 +271,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA0536FF26A092D800BF8FC5 /* MFAuthenticationView.swift in Sources */,
+				CA0536F626A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift in Sources */,
 				CAC34B4326A07F830039A373 /* SwiftUIExampleAppApp.swift in Sources */,
+				CA0536F426A0887800BF8FC5 /* ProfileFeatureView.swift in Sources */,
+				CA0536FD26A091B200BF8FC5 /* CardInformationView.swift in Sources */,
+				CA0536FB26A0919900BF8FC5 /* AccountInformationView.swift in Sources */,
 				CAC34B7626A07FE90039A373 /* ContentView.swift in Sources */,
 				CAC34B7726A07FE90039A373 /* MapFeatureView.swift in Sources */,
 				CAC34B7526A07FE90039A373 /* MapFeatureOnboardingView.swift in Sources */,
