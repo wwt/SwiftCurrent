@@ -514,7 +514,9 @@ final class PersistenceTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR3.self).persistence(.persistWhenSkipped))
                 .thenProceed(with: WorkflowItem(FR4.self).persistence(.persistWhenSkipped))
                 .onFinish { _ in expectOnFinish.fulfill() })
-            .inspection.inspect { _ in }
+            .inspection.inspect { viewUnderTest in
+                XCTAssertNoThrow(try viewUnderTest.find(FR4.self))
+            }
 
         wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)
     }
