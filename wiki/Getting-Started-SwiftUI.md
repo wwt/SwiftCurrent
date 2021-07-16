@@ -22,7 +22,7 @@ Create two views that implement [FlowRepresentable](https://wwt.github.io/SwiftC
 import SwiftUI
 import SwiftCurrent
 
-struct FR1: View, FlowRepresentable { // SwiftCurrent
+struct FirstView: View, FlowRepresentable { // SwiftCurrent
     typealias WorkflowOutput = String // SwiftCurrent
     weak var _workflowPointer: AnyFlowRepresentable? // SwiftCurrent
 
@@ -43,13 +43,13 @@ struct FR1: View, FlowRepresentable { // SwiftCurrent
     }
 }
 
-struct FR1_Previews: PreviewProvider {
+struct FirstView_Previews: PreviewProvider {
     static var previews: some View {
-        FR1(with: "Example Name")
+        FirstView(with: "Example Name")
     }
 }
 
-struct FR2: View, FlowRepresentable { // SwiftCurrent
+struct SecondView: View, FlowRepresentable { // SwiftCurrent
     typealias WorkflowOutput = String // SwiftCurrent
     weak var _workflowPointer: AnyFlowRepresentable? // SwiftCurrent
 
@@ -70,9 +70,9 @@ struct FR2: View, FlowRepresentable { // SwiftCurrent
     }
 }
 
-struct FR2_Previews: PreviewProvider {
+struct SecondView_Previews: PreviewProvider {
     static var previews: some View {
-        FR2(with: "Example.Name@wwt.com")
+        SecondView(with: "Example.Name@wwt.com")
     }
 }
 ```
@@ -112,11 +112,11 @@ struct ContentView: View {
     @State var workflowIsPresented = false
     var body: some View {
         if workflowIsPresented {
-            WorkflowView(isLaunched: .constant(true), startingArgs: "Richard")
-                .thenProceed(with: WorkflowItem(FR1.self)
+            WorkflowView(isLaunched: .constant(true), startingArgs: "Richard") // SwiftCurrent
+                .thenProceed(with: WorkflowItem(FirstView.self) // SwiftCurrent
                                 .persistence(.removedAfterProceeding)
-                                .applyModifiers { fr1 in fr1.padding().border(.gray) })
-                .thenProceed(with: WorkflowItem(FR2.self)
+                                .applyModifiers { firstView in firstView.padding().border(.gray) })
+                .thenProceed(with: WorkflowItem(SecondView.self)
                                 .persistence(.removedAfterProceeding)
                                 .applyModifiers { $0.padding().border(.gray) })
                 .onFinish { passedArgs in
@@ -127,7 +127,6 @@ struct ContentView: View {
                     }
                     print(emailAddress)
                 }
-                .transition(.slide)
         } else {
             Button("Present") { $workflowIsPresented.wrappedValue = true }
         }
