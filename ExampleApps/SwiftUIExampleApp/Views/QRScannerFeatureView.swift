@@ -11,8 +11,9 @@ import SwiftCurrent
 import CodeScanner
 
 struct QRScannerFeatureView: View, FlowRepresentable {
-    @State private var scannedCode: ScannedCode?
+    @State var scannedCode: ScannedCode?
 
+    let inspection = Inspection<Self>()
     weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
@@ -21,16 +22,17 @@ struct QRScannerFeatureView: View, FlowRepresentable {
                 scannedCode = ScannedCode(data: scanContents)
             }
         }
-        .sheet(item: $scannedCode) { // swiftlint:disable:this multiline_arguments
+        .testableSheet(item: $scannedCode) { // swiftlint:disable:this multiline_arguments
             scannedCode = nil
         } content: { code in
             Text("SCANNED DATA: \(code.data)")
         }
+        .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 }
 
 extension QRScannerFeatureView {
-    private struct ScannedCode: Identifiable {
+    struct ScannedCode: Identifiable {
         let id = UUID()
         let data: String
     }

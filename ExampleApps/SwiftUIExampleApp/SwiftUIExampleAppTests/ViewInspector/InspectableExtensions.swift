@@ -8,6 +8,7 @@
 
 import ViewInspector
 import SwiftUI
+import CodeScanner
 
 @testable import SwiftUIExampleApp
 @testable import SwiftCurrent_SwiftUI
@@ -24,6 +25,8 @@ extension ProfileFeatureView: Inspectable { }
 extension ContentView: Inspectable { }
 extension AccountInformationView: Inspectable { }
 extension CardInformationView: Inspectable { }
+extension CodeScannerView: Inspectable { }
 
 extension SwiftUIExampleApp.Inspection: InspectionEmissary where V: View { }
 extension SwiftCurrent_SwiftUI.Inspection: InspectionEmissary where V: View { }
+extension InspectableSheetWithItem: SheetItemProvider { }
