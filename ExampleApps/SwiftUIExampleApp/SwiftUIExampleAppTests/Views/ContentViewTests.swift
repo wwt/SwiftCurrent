@@ -32,7 +32,7 @@ final class ContentViewTests: XCTestCase {
             wf3 = try view.tabView().view(WorkflowView<Never>.self, 2).actualView()
             XCTAssertEqual(try view.tabView().view(WorkflowView<Never>.self, 2).tabItem().label().title().text().string(), "Profile")
         }
-        wait(for: [exp], timeout: 0.5)
+        wait(for: [exp], timeout: 1)
         XCTAssertNotNil(wf1)
         XCTAssertNotNil(wf2)
         XCTAssertNotNil(wf3)
@@ -49,6 +49,6 @@ final class ContentViewTests: XCTestCase {
                 XCTAssertNoThrow(try workflowView.find(ProfileFeatureOnboardingView.self).actualView().proceedInWorkflow())
                 XCTAssertNoThrow(try workflowView.find(ProfileFeatureView.self))
             }
-        ].compactMap { $0 }, timeout: 0.5)
+        ].compactMap { $0 }, timeout: 1)
     }
 }

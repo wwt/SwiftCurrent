@@ -20,7 +20,7 @@ final class QRScanningViewTests: XCTestCase {
         let exp = ViewHosting.loadView(QRScannerFeatureView()).inspection.inspect { viewUnderTest in
             XCTAssertEqual(try viewUnderTest.view(CodeScannerView.self).actualView().codeTypes, [.qr])
         }
-        wait(for: [exp], timeout: 0.5)
+        wait(for: [exp], timeout: 1)
     }
 
     func testQRScanningView_ShowsSheetWhenScanCompletes() throws {
@@ -31,6 +31,6 @@ final class QRScanningViewTests: XCTestCase {
             XCTAssertNoThrow(try viewUnderTest.view(CodeScannerView.self).sheet().callOnDismiss())
             XCTAssertThrowsError(try viewUnderTest.view(CodeScannerView.self).sheet())
         }
-        wait(for: [exp], timeout: 0.5)
+        wait(for: [exp], timeout: 1)
     }
 }

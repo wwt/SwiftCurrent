@@ -29,7 +29,6 @@
 		CAC34B4326A07F830039A373 /* SwiftUIExampleAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC34B4226A07F830039A373 /* SwiftUIExampleAppApp.swift */; };
 		CAC34B4726A07F830039A373 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAC34B4626A07F830039A373 /* Assets.xcassets */; };
 		CAC34B4A26A07F830039A373 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAC34B4926A07F830039A373 /* Preview Assets.xcassets */; };
-		CAC34B5526A07F840039A373 /* SwiftUIExampleAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC34B5426A07F840039A373 /* SwiftUIExampleAppTests.swift */; };
 		CAC34B7326A07FE90039A373 /* QRScannerFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC34B6E26A07FE90039A373 /* QRScannerFeatureView.swift */; };
 		CAC34B7426A07FE90039A373 /* QRScannerFeatureOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC34B6F26A07FE90039A373 /* QRScannerFeatureOnboardingView.swift */; };
 		CAC34B7526A07FE90039A373 /* MapFeatureOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC34B7026A07FE90039A373 /* MapFeatureOnboardingView.swift */; };
@@ -86,7 +85,6 @@
 		CAC34B4926A07F830039A373 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CAC34B4B26A07F830039A373 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CAC34B5026A07F840039A373 /* SwiftUIExampleAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftUIExampleAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CAC34B5426A07F840039A373 /* SwiftUIExampleAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIExampleAppTests.swift; sourceTree = "<group>"; };
 		CAC34B5626A07F840039A373 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CAC34B6E26A07FE90039A373 /* QRScannerFeatureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRScannerFeatureView.swift; sourceTree = "<group>"; };
 		CAC34B6F26A07FE90039A373 /* QRScannerFeatureOnboardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRScannerFeatureOnboardingView.swift; sourceTree = "<group>"; };
@@ -185,7 +183,6 @@
 			children = (
 				CAD026AD26A0C8570075B818 /* ViewInspector */,
 				CAD026A426A0C1E30075B818 /* Views */,
-				CAC34B5426A07F840039A373 /* SwiftUIExampleAppTests.swift */,
 				CAC34B5626A07F840039A373 /* Info.plist */,
 				CAD026A226A0BEB50075B818 /* DependencyInjectionTests.swift */,
 			);
@@ -412,7 +409,6 @@
 				CAD026A626A0C1EF0075B818 /* ProfileFeatureOnboardingViewTests.swift in Sources */,
 				CA84D8E726A0E72A006CF964 /* MapFeatureViewTests.swift in Sources */,
 				CA84D8E326A0E3F5006CF964 /* QRScannerFeatureOnboardingViewTests.swift in Sources */,
-				CAC34B5526A07F840039A373 /* SwiftUIExampleAppTests.swift in Sources */,
 				CA238D1426A1153B000A36EC /* ContentViewTests.swift in Sources */,
 				CA84D8E526A0E5A8006CF964 /* MapFeatureOnboardingViewTests.swift in Sources */,
 			);

@@ -34,7 +34,7 @@ final class MapFeatureOnboardingViewTests: XCTestCase {
             XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Learn about our awesome map feature!")
             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
         } // swiftlint:disable:this closure_end_indentation
-        wait(for: [exp, workflowFinished], timeout: 0.5)
+        wait(for: [exp, workflowFinished], timeout: 1)
     }
 
     func testOnboardingViewLoads_WhenNoValueIsInUserDefaults() throws {

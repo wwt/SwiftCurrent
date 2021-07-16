@@ -22,7 +22,7 @@ final class AccountInformationViewTests: XCTestCase {
             XCTAssertEqual(try view.find(ViewType.Button.self, traversal: .depthFirst).labelView().text().string(), "Change Username")
             XCTAssertEqual(try view.find(ViewType.Button.self).labelView().text().string(), "Change Password")
         }
-        wait(for: [exp], timeout: 0.5)
+        wait(for: [exp], timeout: 1)
     }
 
     func testAccountInformationCanLaunchUsernameWorkflow() throws {
@@ -33,7 +33,7 @@ final class AccountInformationViewTests: XCTestCase {
             XCTAssertNoThrow(try view.find(ViewType.Button.self, traversal: .depthFirst).tap())
             usernameWorkflow = try view.find(WorkflowView<String>.self).actualView()
         }
-        wait(for: [exp], timeout: 0.5)
+        wait(for: [exp], timeout: 1)
 
         XCTAssertNotNil(usernameWorkflow)
 
@@ -44,7 +44,7 @@ final class AccountInformationViewTests: XCTestCase {
                 XCTAssertEqual(try accountInformation.find(ViewType.Text.self).string(), "Username: newName")
                 XCTAssertThrowsError(try accountInformation.find(WorkflowView<String>.self))
             }
-        ].compactMap { $0 }, timeout: 0.5)
+        ].compactMap { $0 }, timeout: 1)
     }
 
     func testAccountInformationDoesNotBlowUp_IfUsernameWorkflowReturnsSomethingWEIRD() throws {
@@ -54,7 +54,7 @@ final class AccountInformationViewTests: XCTestCase {
             XCTAssertNoThrow(try view.find(ViewType.Button.self, traversal: .depthFirst).tap())
             usernameWorkflow = try view.find(WorkflowView<String>.self).actualView()
         }
-        wait(for: [exp], timeout: 0.5)
+        wait(for: [exp], timeout: 1)
 
         XCTAssertNotNil(usernameWorkflow)
 
@@ -63,7 +63,7 @@ final class AccountInformationViewTests: XCTestCase {
                 XCTAssertNoThrow(try view.find(MFAView.self).actualView().proceedInWorkflow(.args("changeme")))
                 XCTAssertNotNil(try view.find(ChangeUsernameView.self).actualView().proceedInWorkflowStorage?(.args(CustomObj())))
             }
-        ].compactMap { $0 }, timeout: 0.5)
+        ].compactMap { $0 }, timeout: 1)
     }
 
     func testAccountInformationCanLaunchPasswordWorkflow() throws {
@@ -74,7 +74,7 @@ final class AccountInformationViewTests: XCTestCase {
             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
             passwordWorkflow = try view.find(WorkflowView<String>.self).actualView()
         }
-        wait(for: [exp], timeout: 0.5)
+        wait(for: [exp], timeout: 1)
 
         XCTAssertNotNil(passwordWorkflow)
 
@@ -85,7 +85,7 @@ final class AccountInformationViewTests: XCTestCase {
                 XCTAssertEqual(try accountInformation.actualView().password, "newPassword")
                 XCTAssertThrowsError(try accountInformation.find(WorkflowView<String>.self))
             }
-        ].compactMap { $0 }, timeout: 0.5)
+        ].compactMap { $0 }, timeout: 1)
     }
 
     func testAccountInformationDoesNotBlowUp_IfPasswordWorkflowReturnsSomethingWEIRD() throws {
@@ -95,7 +95,7 @@ final class AccountInformationViewTests: XCTestCase {
             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
             passwordWorkflow = try view.find(WorkflowView<String>.self).actualView()
         }
-        wait(for: [exp], timeout: 0.5)
+        wait(for: [exp], timeout: 1)
 
         XCTAssertNotNil(passwordWorkflow)
 
@@ -104,6 +104,6 @@ final class AccountInformationViewTests: XCTestCase {
                 XCTAssertNoThrow(try view.find(MFAView.self).actualView().proceedInWorkflow(.args("changeme")))
                 XCTAssertNotNil(try view.find(ChangePasswordView.self).actualView().proceedInWorkflowStorage?(.args(CustomObj())))
             }
-        ].compactMap { $0 }, timeout: 0.5)
+        ].compactMap { $0 }, timeout: 1)
     }
 }
