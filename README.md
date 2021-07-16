@@ -40,9 +40,9 @@ The app is designed to give you an idea of what SwiftCurrent can do with minimal
 
 If you would like to try the beta release, please install the `BETA_SwiftCurrent_SwiftUI` product in SPM or the `BETA_SwiftUI` sub spec in CocoaPods.  For more detailed steps, [see our installation instructions](https://github.com/wwt/SwiftCurrent/wiki/Installation).  The draft version of "Getting Started with SwiftUI" can be [found here](https://github.com/wwt/SwiftCurrent/blob/main/wiki/Getting-Started-SwiftUI.md).  The SwiftUI example app can be found under the ExampleApp folder.  To run it, clone our repo, open `SwiftCurrent.xcworkspace`, target the `SwiftUIExampleApp` scheme, and run to a simulator.
 
-In order to use the library with SwiftUI, your minimum versions must meet: iOS 14.0, macOS 11, tvOS 14.0, and watchOS 7.0.
+In order to use the library with SwiftUI, your minimum targeted versions must meet: iOS 14.0, macOS 11, tvOS 14.0, and watchOS 7.0.
 
-For us, beta means that the API may change without warning until the full release.  However, we expect bugs to be at minimum and documentation to be true and accurate.
+For us, beta means that the API may change without warning until the full release.  However, we expect bugs to be at a minimum and documentation to be true and accurate.
 
 # Quick Start
 
@@ -71,6 +71,32 @@ Then from your root view controller, call:
 import SwiftCurrent
 ...
 launchInto(Workflow(ExampleViewController.self))
+```
+
+And just like that you're started!
+
+## [BETA] SwiftUI
+
+```swift
+.package(url: "https://github.com/wwt/SwiftCurrent.git", .upToNextMajor(from: "4.1.0")),
+...
+.product(name: "SwiftCurrent", package: "SwiftCurrent"),
+.product(name: "BETA_SwiftCurrent_SwiftUI", package: "SwiftCurrent")
+```
+Then make your first FlowRepresentable view:
+```swift
+import SwiftCurrent
+struct ExampleView: View, FlowRepresentable {
+    weak var _workflowPointer: AnyFlowRepresentable?
+    var body: some View { Text("Welcome to SwiftCurrent") }
+}
+```
+Then from your ContentView body, add: 
+```swift
+import SwiftCurrent_SwiftUI
+...
+WorkflowView(isLaunched: .constant(true))
+    .thenProceed(with: WorkflowItem(ExampleView.self))
 ```
 
 And just like that you're started!
