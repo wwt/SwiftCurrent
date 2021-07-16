@@ -1,6 +1,6 @@
-# [DRAFT] Swift Package Manager with SwiftUI
+# Swift Package Manager with SwiftUI
 
-~~This guide will walk you through getting a [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html) up and running in a new iOS project.  If you would like to see an existing project, clone the repo and view the `SwiftCurrentExample` scheme in `SwiftCurrent.xcworkspace`.~~
+This guide will walk you through getting a [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html) up and running in a new iOS project.  If you would like to see an existing project, clone the repo and view the `SwiftUIExampleApp` scheme in `SwiftCurrent.xcworkspace`.
 
 The app in this guide is going to be very simple.  It consists of a view that will hold the [WorkflowView](https://wwt.github.io/SwiftCurrent/Structs/WorkflowView.html), a view to enter an email address, and an optional view for if your email contains `@wwt.com`.  Here is a preview of what the app will look like:
 
@@ -139,7 +139,7 @@ struct Content_Previews: PreviewProvider {
 
 ### Let's discuss what's going on here
 
-#### **Wait, where is the Workflow?**
+#### **Wait, where is the [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html)?**
 
 <details>
 
