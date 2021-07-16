@@ -42,6 +42,7 @@ final class AccountInformationViewTests: XCTestCase {
                 XCTAssertNoThrow(try view.find(MFAuthenticationView.self).actualView().proceedInWorkflow(.args("changeme")))
                 XCTAssertNoThrow(try view.find(ChangeUsernameView.self).actualView().proceedInWorkflow("newName"))
                 XCTAssertEqual(try accountInformation.find(ViewType.Text.self).string(), "Username: newName")
+                XCTAssertThrowsError(try accountInformation.find(WorkflowView<String>.self))
             }
         ].compactMap { $0 }, timeout: 0.5)
     }
@@ -61,6 +62,47 @@ final class AccountInformationViewTests: XCTestCase {
             ViewHosting.loadView(usernameWorkflow)?.inspection.inspect { view in
                 XCTAssertNoThrow(try view.find(MFAuthenticationView.self).actualView().proceedInWorkflow(.args("changeme")))
                 XCTAssertNotNil(try view.find(ChangeUsernameView.self).actualView().proceedInWorkflowStorage?(.args(CustomObj())))
+            }
+        ].compactMap { $0 }, timeout: 0.5)
+    }
+
+    func testAccountInformationCanLaunchPasswordWorkflow() throws {
+        var passwordWorkflow: WorkflowView<String>!
+        var accountInformation: InspectableView<ViewType.View<AccountInformationView>>!
+        let exp = ViewHosting.loadView(AccountInformationView()).inspection.inspect { view in
+            accountInformation = view
+            XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
+            passwordWorkflow = try view.find(WorkflowView<String>.self).actualView()
+        }
+        wait(for: [exp], timeout: 0.5)
+
+        XCTAssertNotNil(passwordWorkflow)
+
+        wait(for: [
+            ViewHosting.loadView(passwordWorkflow)?.inspection.inspect { view in
+                XCTAssertNoThrow(try view.find(MFAuthenticationView.self).actualView().proceedInWorkflow(.args("changeme")))
+                XCTAssertNoThrow(try view.find(ChangePasswordView.self).actualView().proceedInWorkflow("newPassword"))
+                XCTAssertEqual(try accountInformation.actualView().password, "newPassword")
+                XCTAssertThrowsError(try accountInformation.find(WorkflowView<String>.self))
+            }
+        ].compactMap { $0 }, timeout: 0.5)
+    }
+
+    func testAccountInformationDoesNotBlowUp_IfPasswordWorkflowReturnsSomethingWEIRD() throws {
+        class CustomObj { }
+        var passwordWorkflow: WorkflowView<String>!
+        let exp = ViewHosting.loadView(AccountInformationView()).inspection.inspect { view in
+            XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
+            passwordWorkflow = try view.find(WorkflowView<String>.self).actualView()
+        }
+        wait(for: [exp], timeout: 0.5)
+
+        XCTAssertNotNil(passwordWorkflow)
+
+        wait(for: [
+            ViewHosting.loadView(passwordWorkflow)?.inspection.inspect { view in
+                XCTAssertNoThrow(try view.find(MFAuthenticationView.self).actualView().proceedInWorkflow(.args("changeme")))
+                XCTAssertNotNil(try view.find(ChangePasswordView.self).actualView().proceedInWorkflowStorage?(.args(CustomObj())))
             }
         ].compactMap { $0 }, timeout: 0.5)
     }

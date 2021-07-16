@@ -11,8 +11,8 @@ import SwiftCurrent
 import SwiftCurrent_SwiftUI
 
 struct AccountInformationView: View, FlowRepresentable {
+    @State var password = "supersecure"
     @State private var username = "changeme"
-    @State private var password = "supersecure"
     @State private var usernameWorkflowLaunched = false
     @State private var passwordWorkflowLaunched = false
 
