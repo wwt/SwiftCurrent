@@ -24,4 +24,44 @@ final class AccountInformationViewTests: XCTestCase {
         }
         wait(for: [exp], timeout: 0.5)
     }
+
+    func testAccountInformationCanLaunchUsernameWorkflow() throws {
+        var usernameWorkflow: WorkflowView<String>!
+        var accountInformation: InspectableView<ViewType.View<AccountInformationView>>!
+        let exp = ViewHosting.loadView(AccountInformationView()).inspection.inspect { view in
+            accountInformation = view
+            XCTAssertNoThrow(try view.find(ViewType.Button.self, traversal: .depthFirst).tap())
+            usernameWorkflow = try view.find(WorkflowView<String>.self).actualView()
+        }
+        wait(for: [exp], timeout: 0.5)
+
+        XCTAssertNotNil(usernameWorkflow)
+
+        wait(for: [
+            ViewHosting.loadView(usernameWorkflow)?.inspection.inspect { view in
+                XCTAssertNoThrow(try view.find(MFAuthenticationView.self).actualView().proceedInWorkflow(.args("changeme")))
+                XCTAssertNoThrow(try view.find(ChangeUsernameView.self).actualView().proceedInWorkflow("newName"))
+                XCTAssertEqual(try accountInformation.find(ViewType.Text.self).string(), "Username: newName")
+            }
+        ].compactMap { $0 }, timeout: 0.5)
+    }
+
+    func testAccountInformationDoesNotBlowUp_IfUsernameWorkflowReturnsSomethingWEIRD() throws {
+        class CustomObj { }
+        var usernameWorkflow: WorkflowView<String>!
+        let exp = ViewHosting.loadView(AccountInformationView()).inspection.inspect { view in
+            XCTAssertNoThrow(try view.find(ViewType.Button.self, traversal: .depthFirst).tap())
+            usernameWorkflow = try view.find(WorkflowView<String>.self).actualView()
+        }
+        wait(for: [exp], timeout: 0.5)
+
+        XCTAssertNotNil(usernameWorkflow)
+
+        wait(for: [
+            ViewHosting.loadView(usernameWorkflow)?.inspection.inspect { view in
+                XCTAssertNoThrow(try view.find(MFAuthenticationView.self).actualView().proceedInWorkflow(.args("changeme")))
+                XCTAssertNotNil(try view.find(ChangeUsernameView.self).actualView().proceedInWorkflowStorage?(.args(CustomObj())))
+            }
+        ].compactMap { $0 }, timeout: 0.5)
+    }
 }
