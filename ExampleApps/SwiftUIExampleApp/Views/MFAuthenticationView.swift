@@ -16,6 +16,7 @@ struct MFAuthenticationView: View, FlowRepresentable {
     @State private var enteredCode = ""
     @State private var errorMessage: ErrorMessage?
 
+    let inspection = Inspection<Self>()
     weak var _workflowPointer: AnyFlowRepresentable?
 
     private let heldWorkflowData: AnyWorkflow.PassedArgs
@@ -49,16 +50,17 @@ struct MFAuthenticationView: View, FlowRepresentable {
             }
         }
         .padding()
-        .alert(item: $errorMessage) { message in
+        .testableAlert(item: $errorMessage) { message in
             Alert(title: Text(message.message), dismissButton: .default(Text("Ok")) {
                 workflow?.abandon()
             })
         }
+        .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 }
 
 extension MFAuthenticationView {
-    struct ErrorMessage: Identifiable {
+    private struct ErrorMessage: Identifiable {
         let id = UUID()
         let message: String
     }
