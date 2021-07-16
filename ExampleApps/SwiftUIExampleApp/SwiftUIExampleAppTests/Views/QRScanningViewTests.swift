@@ -17,10 +17,16 @@ import CodeScanner
 
 final class QRScanningViewTests: XCTestCase {
     func testQRScanningView() throws {
-        let code = UUID().uuidString
         let exp = ViewHosting.loadView(QRScannerFeatureView()).inspection.inspect { viewUnderTest in
             XCTAssertEqual(try viewUnderTest.view(CodeScannerView.self).actualView().codeTypes, [.qr])
-            XCTAssertNoThrow(try viewUnderTest.actualView().scannedCode = .init(data: code))
+        }
+        wait(for: [exp], timeout: 0.5)
+    }
+
+    func testQRScanningView_ShowsSheetWhenScanCompletes() throws {
+        let code = UUID().uuidString
+        let exp = ViewHosting.loadView(QRScannerFeatureView()).inspection.inspect { viewUnderTest in
+            XCTAssertNoThrow(try viewUnderTest.view(CodeScannerView.self).actualView().completion(.success(code)))
             XCTAssertEqual(try viewUnderTest.view(CodeScannerView.self).sheet().find(ViewType.Text.self).string(), "SCANNED DATA: \(code)")
         }
         wait(for: [exp], timeout: 0.5)

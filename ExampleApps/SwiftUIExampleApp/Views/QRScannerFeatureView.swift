@@ -11,7 +11,7 @@ import SwiftCurrent
 import CodeScanner
 
 struct QRScannerFeatureView: View, FlowRepresentable {
-    @State var scannedCode: ScannedCode?
+    @State private var scannedCode: ScannedCode?
 
     let inspection = Inspection<Self>()
     weak var _workflowPointer: AnyFlowRepresentable?
@@ -32,7 +32,7 @@ struct QRScannerFeatureView: View, FlowRepresentable {
 }
 
 extension QRScannerFeatureView {
-    struct ScannedCode: Identifiable {
+    private struct ScannedCode: Identifiable {
         let id = UUID()
         let data: String
     }
