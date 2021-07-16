@@ -98,7 +98,7 @@ struct ContentView: View {
     @State var workflowIsPresented = false
     var body: some View {
         if workflowIsPresented {
-            WorkflowView(isLaunched: .constant(true), startingArgs: "SwiftCurrent")
+            WorkflowView(isLaunched: .constant(true), startingArgs: "Richard")
                 .thenProceed(with: WorkflowItem(FR1.self)
                                 .persistence(.removedAfterProceeding)
                                 .applyModifiers { fr1 in fr1.padding().border(.gray) })
@@ -106,7 +106,7 @@ struct ContentView: View {
                                 .persistence(.removedAfterProceeding)
                                 .applyModifiers { $0.padding().border(.gray) })
                 .onFinish { passedArgs in
-                    withAnimation { workflowIsPresented = false }
+                    workflowIsPresented = false
                     guard case .args(let emailAddress as String) = passedArgs else {
                         print("No email address supplied")
                         return
@@ -117,6 +117,12 @@ struct ContentView: View {
         } else {
             Button("Present") { $workflowIsPresented.wrappedValue = true }
         }
+    }
+}
+
+struct Content_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
     }
 }
 ```
