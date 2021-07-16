@@ -83,7 +83,7 @@ struct SecondView_Previews: PreviewProvider {
 
 <details>
 
-The [FlowRepresentable] protocol requires there to be a `_workflowPointer` on you object, but protocols cannot enforce you to use `weak`. If you do not put `weak var _workflowPointer`, the [FlowRepresentable] will end up with a strong circular reference.
+The [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) protocol requires there to be a `_workflowPointer` on you object, but protocols cannot enforce you to use `weak`. If you do not put `weak var _workflowPointer`, the [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) will end up with a strong circular reference.
 </details>
 
 #### **What's this `shouldLoad()`?**
@@ -142,16 +142,25 @@ struct Content_Previews: PreviewProvider {
 
 ### Let's discuss what's going on here
 
+#### **Wait, where is the Workflow?**
+
+<details>
+
+In SwiftUI, the [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html) type is handled by the [WorkflowView](https://wwt.github.io/SwiftCurrent/Structs/WorkflowView.html).  [WorkflowView](https://wwt.github.io/SwiftCurrent/Structs/WorkflowView.html) contains an underlying [AnyWorkflow](https://wwt.github.io/SwiftCurrent/Classes/AnyWorkflow.html) model that it manages and exposes as appropriate.
+</details>
+
 #### **Where is the type safety, I heard about?**
 
 <details>
 
-[WorkflowView] is specialized with your `startingArgs` type.  In [FlowRepresentable], these types are supplied by the `WorkflowInput` and `WorkflowOutput` associated types.  These all work together to create compile-time type safety when creating your flow. This means that you will get a build error if the output of `FR1` does not match the input type of `FR2`.
+[WorkflowView](https://wwt.github.io/SwiftCurrent/Structs/WorkflowView.html) is specialized with your `startingArgs` type.  In [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html), these types are supplied by the `WorkflowInput` and `WorkflowOutput` associated types.  These all work together to create compile-time type safety when creating your flow. This means that you will get a build error if the output of `FirstView` does not match the input type of `SecondView`.
 </details>
 
-#### **What's going on with this `startingArgs`?**
+#### **What's going on with this `startingArgs` and `passedArgs`?**
 
 <details>
 
-~~The `onFinish` closure for `launchInto(_:args:onFinish:)` provides the last passed [AnyWorkflow.PassedArgs](https://wwt.github.io/SwiftCurrent/Classes/AnyWorkflow/PassedArgs.html) in the work flow. For this Workflow, that could be the output of `FirstViewController` or `SecondViewController` depending on the email signature typed in `FirstViewController`. To extract the value, we unwrap the variable within the case of `.args()` as we expect this workflow to return some argument.~~
+`startingArgs` are the [AnyWorkflow.PassedArgs](https://wwt.github.io/SwiftCurrent/Classes/AnyWorkflow/PassedArgs.html) handed to the first [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) in the workflow.  These arguments are used to pass data and determine if the view should load.
+
+`passedArgs` are the [AnyWorkflow.PassedArgs](https://wwt.github.io/SwiftCurrent/Classes/AnyWorkflow/PassedArgs.html) coming from the last view in the workflow.  `onFinish` is only called when the user has gone through all the screens in the `Workflow` by navigation or skipping.  For this workflow, `passedArgs` is going to be the output of `FirstView` or `SecondView` depending on the email signature typed in `FirstView`.  To extract the value, we unwrap the variable within the case of `.args()` as we expect this workflow to return some argument.
 </details>
