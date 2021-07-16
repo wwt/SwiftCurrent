@@ -28,6 +28,10 @@ struct FirstView: View, FlowRepresentable { // SwiftCurrent
 
     @State private var email = ""
     private let name: String
+    
+    init(with name: String) { // SwiftCurrent
+        self.name = name
+    }
 
     var body: some View {
         VStack {
@@ -36,10 +40,6 @@ struct FirstView: View, FlowRepresentable { // SwiftCurrent
                 .textContentType(.emailAddress)
             Button("Save") { proceedInWorkflow(email) }
         }
-    }
-
-    init(with name: String) { // SwiftCurrent
-        self.name = name
     }
 }
 
@@ -55,14 +55,14 @@ struct SecondView: View, FlowRepresentable { // SwiftCurrent
 
     private let email: String
 
+    init(with email: String) { // SwiftCurrent
+        self.email = email
+    }
+
     var body: some View {
         VStack {
             Button("Finish") { proceedInWorkflow(email) }
         }
-    }
-
-    init(with email: String) { // SwiftCurrent
-        self.email = email
     }
 
     func shouldLoad() -> Bool { // SwiftCurrent
@@ -111,25 +111,22 @@ import SwiftCurrent_SwiftUI
 struct ContentView: View {
     @State var workflowIsPresented = false
     var body: some View {
-        if workflowIsPresented {
-            WorkflowView(isLaunched: .constant(true), startingArgs: "Richard") // SwiftCurrent
-                .thenProceed(with: WorkflowItem(FirstView.self) // SwiftCurrent
-                                .persistence(.removedAfterProceeding)
-                                .applyModifiers { firstView in firstView.padding().border(.gray) })
-                .thenProceed(with: WorkflowItem(SecondView.self)
-                                .persistence(.removedAfterProceeding)
-                                .applyModifiers { $0.padding().border(.gray) })
-                .onFinish { passedArgs in
-                    workflowIsPresented = false
-                    guard case .args(let emailAddress as String) = passedArgs else {
-                        print("No email address supplied")
-                        return
-                    }
-                    print(emailAddress)
-                }
-        } else {
+        if !workflowIsPresented {
             Button("Present") { $workflowIsPresented.wrappedValue = true }
         }
+        WorkflowView(isLaunched: $workflowIsPresented, startingArgs: "SwiftCurrent") // SwiftCurrent
+            .thenProceed(with: WorkflowItem(FirstView.self) // SwiftCurrent
+                            .applyModifiers { firstView in firstView.padding().border(.gray) })
+            .thenProceed(with: WorkflowItem(SecondView.self) // SwiftCurrent
+                            .applyModifiers { $0.padding().border(.gray) })
+            .onFinish { passedArgs in // SwiftCurrent
+                workflowIsPresented = false
+                guard case .args(let emailAddress as String) = passedArgs else {
+                    print("No email address supplied")
+                    return
+                }
+                print(emailAddress)
+            }
     }
 }
 
