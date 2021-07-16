@@ -14,6 +14,7 @@
 		CA0536FF26A092D800BF8FC5 /* MFAuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536FE26A092D800BF8FC5 /* MFAuthenticationView.swift */; };
 		CA238D1426A1153B000A36EC /* ContentViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA238D1326A1153B000A36EC /* ContentViewTests.swift */; };
 		CA4B40B926A09E5800B18626 /* ChangeUsernameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4B40B826A09E5800B18626 /* ChangeUsernameView.swift */; };
+		CA7B820D26A11C53005AA87D /* ProfileFeatureViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7B820C26A11C53005AA87D /* ProfileFeatureViewTests.swift */; };
 		CA84D8E326A0E3F5006CF964 /* QRScannerFeatureOnboardingViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA84D8E226A0E3F5006CF964 /* QRScannerFeatureOnboardingViewTests.swift */; };
 		CA84D8E526A0E5A8006CF964 /* MapFeatureOnboardingViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA84D8E426A0E5A8006CF964 /* MapFeatureOnboardingViewTests.swift */; };
 		CA84D8E726A0E72A006CF964 /* MapFeatureViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA84D8E626A0E72A006CF964 /* MapFeatureViewTests.swift */; };
@@ -60,6 +61,7 @@
 		CA0536FE26A092D800BF8FC5 /* MFAuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFAuthenticationView.swift; sourceTree = "<group>"; };
 		CA238D1326A1153B000A36EC /* ContentViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewTests.swift; sourceTree = "<group>"; };
 		CA4B40B826A09E5800B18626 /* ChangeUsernameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeUsernameView.swift; sourceTree = "<group>"; };
+		CA7B820C26A11C53005AA87D /* ProfileFeatureViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFeatureViewTests.swift; sourceTree = "<group>"; };
 		CA84D8E226A0E3F5006CF964 /* QRScannerFeatureOnboardingViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerFeatureOnboardingViewTests.swift; sourceTree = "<group>"; };
 		CA84D8E426A0E5A8006CF964 /* MapFeatureOnboardingViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFeatureOnboardingViewTests.swift; sourceTree = "<group>"; };
 		CA84D8E626A0E72A006CF964 /* MapFeatureViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFeatureViewTests.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				CA84D8E626A0E72A006CF964 /* MapFeatureViewTests.swift */,
 				CA84D8E826A0ED66006CF964 /* ChangePasswordViewTests.swift */,
 				CA238D1326A1153B000A36EC /* ContentViewTests.swift */,
+				CA7B820C26A11C53005AA87D /* ProfileFeatureViewTests.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -374,6 +377,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAD026AF26A0C8680075B818 /* InspectableExtensions.swift in Sources */,
+				CA7B820D26A11C53005AA87D /* ProfileFeatureViewTests.swift in Sources */,
 				CAD026A326A0BEB50075B818 /* DependencyInjectionTests.swift in Sources */,
 				CA84D8E926A0ED66006CF964 /* ChangePasswordViewTests.swift in Sources */,
 				CAD026B126A0C8960075B818 /* ViewHostingExtensions.swift in Sources */,

@@ -22,6 +22,8 @@ extension ChangePasswordView: Inspectable { }
 extension QRScannerFeatureView: Inspectable { }
 extension ProfileFeatureView: Inspectable { }
 extension ContentView: Inspectable { }
+extension AccountInformationView: Inspectable { }
+extension CardInformationView: Inspectable { }
 
 extension SwiftUIExampleApp.Inspection: InspectionEmissary where V: View { }
 extension SwiftCurrent_SwiftUI.Inspection: InspectionEmissary where V: View { }

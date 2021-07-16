@@ -26,8 +26,11 @@ final class ContentViewTests: XCTestCase {
         var wf3: WorkflowView<Never>!
         let exp = ViewHosting.loadView(ContentView()).inspection.inspect { view in
             wf1 = try view.tabView().view(WorkflowView<Never>.self, 0).actualView()
+            XCTAssertEqual(try view.tabView().view(WorkflowView<Never>.self, 0).tabItem().label().title().text().string(), "Map")
             wf2 = try view.tabView().view(WorkflowView<Never>.self, 1).actualView()
+            XCTAssertEqual(try view.tabView().view(WorkflowView<Never>.self, 1).tabItem().label().title().text().string(), "QR Scanner")
             wf3 = try view.tabView().view(WorkflowView<Never>.self, 2).actualView()
+            XCTAssertEqual(try view.tabView().view(WorkflowView<Never>.self, 2).tabItem().label().title().text().string(), "Profile")
         }
         wait(for: [exp], timeout: 0.5)
         XCTAssertNotNil(wf1)
