@@ -27,8 +27,9 @@ extension ContentView: Inspectable { }
 extension AccountInformationView: Inspectable { }
 extension CardInformationView: Inspectable { }
 extension CodeScannerView: Inspectable { }
-extension MFAuthenticationView: Inspectable { }
+extension MFAView: Inspectable { }
 
 extension SwiftUIExampleApp.Inspection: InspectionEmissary where V: View { }
 extension SwiftCurrent_SwiftUI.Inspection: InspectionEmissary where V: View { }
 extension InspectableSheetWithItem: SheetItemProvider { }
+extension InspectableAlertWithItem: AlertItemProvider { }

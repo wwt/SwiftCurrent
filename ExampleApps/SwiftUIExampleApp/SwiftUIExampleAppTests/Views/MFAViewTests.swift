@@ -1,5 +1,5 @@
 //
-//  MFAuthenticationViewTests.swift
+//  MFAViewTests.swift
 //  SwiftUIExampleAppTests
 //
 //  Created by Tyler Thompson on 7/16/21.
@@ -12,9 +12,9 @@ import ViewInspector
 @testable import SwiftCurrent_SwiftUI
 @testable import SwiftUIExampleApp
 
-final class MFAuthenticationViewTests: XCTestCase {
+final class MFAViewTests: XCTestCase {
     func testMFAView() throws {
-        let exp = ViewHosting.loadView(MFAuthenticationView(with: .none)).inspection.inspect { view in
+        let exp = ViewHosting.loadView(MFAView(with: .none)).inspection.inspect { view in
             XCTAssertEqual(try view.find(ViewType.Text.self, traversal: .depthFirst).string(),
                            "This is your friendly MFA Assistant! Tap the button below to pretend to send a push notification and require an account code")
             XCTAssertEqual(try view.find(ViewType.Button.self).labelView().text().string(), "Start MFA")
@@ -23,7 +23,7 @@ final class MFAuthenticationViewTests: XCTestCase {
     }
 
     func testMFAViewAllowsCodeInput() throws {
-        let exp = ViewHosting.loadView(MFAuthenticationView(with: .none)).inspection.inspect { view in
+        let exp = ViewHosting.loadView(MFAView(with: .none)).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
             XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Code (enter 1234 to proceed): ")
             XCTAssertNoThrow(try view.find(ViewType.TextField.self).setInput("1111"))
@@ -31,15 +31,13 @@ final class MFAuthenticationViewTests: XCTestCase {
         wait(for: [exp], timeout: 0.5)
     }
 
-    #warning("Failing for the wrong reason")
     func testMFAViewShowsAlertWhenCodeIsWrong() throws {
-        throw XCTSkip()
-        let exp = ViewHosting.loadView(MFAuthenticationView(with: .none)).inspection.inspect { view in
+        let exp = ViewHosting.loadView(MFAView(with: .none)).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
             XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Code (enter 1234 to proceed): ")
             XCTAssertNoThrow(try view.vStack().textField(1).setInput("1111"))
             XCTAssertNoThrow(try view.vStack().button(2).tap())
-            XCTAssertEqual(try view.vStack().alert().title().string(), "Invalid code entered, abandoning workflow.")
+            XCTAssertEqual(try view.find(ViewType.Alert.self).title().string(), "Invalid code entered, abandoning workflow.")
         }
         wait(for: [exp], timeout: 0.5)
     }
@@ -48,9 +46,9 @@ final class MFAuthenticationViewTests: XCTestCase {
         class CustomObj { }
         let ref = CustomObj()
         let proceedCalled = expectation(description: "Proceed called")
-        let erased = AnyFlowRepresentableView(type: MFAuthenticationView.self, args: .args(ref))
+        let erased = AnyFlowRepresentableView(type: MFAView.self, args: .args(ref))
         // swiftlint:disable:next force_cast
-        var mfaView = erased.underlyingInstance as! MFAuthenticationView
+        var mfaView = erased.underlyingInstance as! MFAView
         mfaView.proceedInWorkflowStorage = {
             XCTAssert(($0.extractArgs(defaultValue: nil) as? CustomObj) === ref)
             proceedCalled.fulfill()

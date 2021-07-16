@@ -39,7 +39,7 @@ final class AccountInformationViewTests: XCTestCase {
 
         wait(for: [
             ViewHosting.loadView(usernameWorkflow)?.inspection.inspect { view in
-                XCTAssertNoThrow(try view.find(MFAuthenticationView.self).actualView().proceedInWorkflow(.args("changeme")))
+                XCTAssertNoThrow(try view.find(MFAView.self).actualView().proceedInWorkflow(.args("changeme")))
                 XCTAssertNoThrow(try view.find(ChangeUsernameView.self).actualView().proceedInWorkflow("newName"))
                 XCTAssertEqual(try accountInformation.find(ViewType.Text.self).string(), "Username: newName")
                 XCTAssertThrowsError(try accountInformation.find(WorkflowView<String>.self))
@@ -60,7 +60,7 @@ final class AccountInformationViewTests: XCTestCase {
 
         wait(for: [
             ViewHosting.loadView(usernameWorkflow)?.inspection.inspect { view in
-                XCTAssertNoThrow(try view.find(MFAuthenticationView.self).actualView().proceedInWorkflow(.args("changeme")))
+                XCTAssertNoThrow(try view.find(MFAView.self).actualView().proceedInWorkflow(.args("changeme")))
                 XCTAssertNotNil(try view.find(ChangeUsernameView.self).actualView().proceedInWorkflowStorage?(.args(CustomObj())))
             }
         ].compactMap { $0 }, timeout: 0.5)
@@ -80,7 +80,7 @@ final class AccountInformationViewTests: XCTestCase {
 
         wait(for: [
             ViewHosting.loadView(passwordWorkflow)?.inspection.inspect { view in
-                XCTAssertNoThrow(try view.find(MFAuthenticationView.self).actualView().proceedInWorkflow(.args("changeme")))
+                XCTAssertNoThrow(try view.find(MFAView.self).actualView().proceedInWorkflow(.args("changeme")))
                 XCTAssertNoThrow(try view.find(ChangePasswordView.self).actualView().proceedInWorkflow("newPassword"))
                 XCTAssertEqual(try accountInformation.actualView().password, "newPassword")
                 XCTAssertThrowsError(try accountInformation.find(WorkflowView<String>.self))
@@ -101,7 +101,7 @@ final class AccountInformationViewTests: XCTestCase {
 
         wait(for: [
             ViewHosting.loadView(passwordWorkflow)?.inspection.inspect { view in
-                XCTAssertNoThrow(try view.find(MFAuthenticationView.self).actualView().proceedInWorkflow(.args("changeme")))
+                XCTAssertNoThrow(try view.find(MFAView.self).actualView().proceedInWorkflow(.args("changeme")))
                 XCTAssertNotNil(try view.find(ChangePasswordView.self).actualView().proceedInWorkflowStorage?(.args(CustomObj())))
             }
         ].compactMap { $0 }, timeout: 0.5)

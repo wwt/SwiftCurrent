@@ -9,12 +9,12 @@
 import SwiftUI
 import SwiftCurrent
 
-struct MFAuthenticationView: View, FlowRepresentable {
+struct MFAView: View, FlowRepresentable {
     typealias WorkflowOutput = AnyWorkflow.PassedArgs
 
-    @State private var pushSent = false
-    @State private var enteredCode = ""
-    @State private var errorMessage: ErrorMessage?
+    @State var pushSent = false
+    @State var enteredCode = ""
+    @State var errorMessage: ErrorMessage?
 
     let inspection = Inspection<Self>()
     weak var _workflowPointer: AnyFlowRepresentable?
@@ -59,8 +59,8 @@ struct MFAuthenticationView: View, FlowRepresentable {
     }
 }
 
-extension MFAuthenticationView {
-    private struct ErrorMessage: Identifiable {
+extension MFAView {
+    struct ErrorMessage: Identifiable {
         let id = UUID()
         let message: String
     }
@@ -68,6 +68,6 @@ extension MFAuthenticationView {
 
 struct MFAuthenticationView_Previews: PreviewProvider {
     static var previews: some View {
-        MFAuthenticationView(with: .none)
+        MFAView(with: .none)
     }
 }
