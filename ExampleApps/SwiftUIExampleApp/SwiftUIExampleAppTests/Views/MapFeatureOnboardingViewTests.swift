@@ -20,21 +20,42 @@ final class MapFeatureOnboardingViewTests: XCTestCase {
         Container.default.removeAll()
     }
 
-    func testOnboardingInWorkflow() throws {
+//    func testOnboardingInWorkflow() throws {
+//        throw XCTSkip("Pipeline has a really hard time with this, even though locally it continues to work great, replacement test below.")
+//        let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
+//        defaults.set(false, forKey: defaultsKey)
+//        Container.default.register(UserDefaults.self) { _ in defaults }
+//        let workflowFinished = expectation(description: "View Proceeded")
+//        let exp = ViewHosting.loadView(WorkflowView(isLaunched: .constant(true))
+//                                        .thenProceed(with: WorkflowItem(MapFeatureOnboardingView.self))
+//                                        .onFinish { _ in
+//            workflowFinished.fulfill()
+//        }).inspection.inspect { view in
+//            XCTAssertNoThrow(try view.find(ViewType.Text.self))
+//            XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Learn about our awesome map feature!")
+//            XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
+//        }
+//        wait(for: [exp, workflowFinished], timeout: 1)
+//    }
+
+    func testOnboardingProceedsInWorkflow() throws {
+        let proceedCalled = expectation(description: "Proceed called")
         let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
         defaults.set(false, forKey: defaultsKey)
         Container.default.register(UserDefaults.self) { _ in defaults }
-        let workflowFinished = expectation(description: "View Proceeded")
-        let exp = ViewHosting.loadView(WorkflowView(isLaunched: .constant(true))
-                                        .thenProceed(with: WorkflowItem(MapFeatureOnboardingView.self))
-                                        .onFinish { _ in
-            workflowFinished.fulfill()
-        }).inspection.inspect { view in // swiftlint:disable:this closure_end_indentation
+        let erased = AnyFlowRepresentableView(type: MapFeatureOnboardingView.self, args: .none)
+        // swiftlint:disable:next force_cast
+        var onboardingView = erased.underlyingInstance as! MapFeatureOnboardingView
+        onboardingView.proceedInWorkflowStorage = { _ in
+            proceedCalled.fulfill()
+        }
+        onboardingView._workflowPointer = erased
+        let exp = ViewHosting.loadView(onboardingView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(ViewType.Text.self))
             XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Learn about our awesome map feature!")
             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
-        } // swiftlint:disable:this closure_end_indentation
-        wait(for: [exp, workflowFinished], timeout: 1)
+        }
+        wait(for: [exp, proceedCalled], timeout: 1)
     }
 
     func testOnboardingViewLoads_WhenNoValueIsInUserDefaults() throws {

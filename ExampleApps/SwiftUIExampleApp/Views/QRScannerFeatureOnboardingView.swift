@@ -13,14 +13,18 @@ import Swinject
 struct QRScannerFeatureOnboardingView: View, FlowRepresentable {
     private var userDefaults: UserDefaults! { Container.default.resolve(UserDefaults.self) }
 
+    let inspection = Inspection<Self>()
     weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
-        Text("Learn about our awesome QR scanning feature!")
-        Button("Continue") {
-            userDefaults.set(true, forKey: "OnboardedToQRScanningFeature")
-            proceedInWorkflow()
+        Group {
+            Text("Learn about our awesome QR scanning feature!")
+            Button("Continue") {
+                userDefaults.set(true, forKey: "OnboardedToQRScanningFeature")
+                proceedInWorkflow()
+            }
         }
+        .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 
     func shouldLoad() -> Bool {
