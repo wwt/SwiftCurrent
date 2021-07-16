@@ -147,7 +147,7 @@ struct Content_Previews: PreviewProvider {
 
 <details>
 
-~~The [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html) has compile-time type safety on the Input/Output types of the supplied [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html)s. This means that you will get a build error if the output of `FirstViewController` does not match the input type of `SecondViewController`.~~
+[WorkflowView] is specialized with your `startingArgs` type.  In [FlowRepresentable], these types are supplied by the `WorkflowInput` and `WorkflowOutput` associated types.  These all work together to create compile-time type safety when creating your flow. This means that you will get a build error if the output of `FR1` does not match the input type of `FR2`.
 </details>
 
 #### **What's going on with this `startingArgs`?**
