@@ -79,11 +79,25 @@ struct FR2_Previews: PreviewProvider {
 
 ### Let's talk about what is going on with these views
 
+#### **Why is `_workflowPointer` weak?**
+
+<details>
+
+The [FlowRepresentable] protocol requires there to be a `_workflowPointer` on you object, but protocols cannot enforce you to use `weak`. If you do not put `weak var _workflowPointer`, the [FlowRepresentable] will end up with a strong circular reference.
+</details>
+
 #### **What's this `shouldLoad()`?**
 
 <details>
 
-It is part of the [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) protocol. It has default implementations created for your convenience but is still implementable if you want to control when a [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) should load in the work flow.  It is called after `init` but before `body`.
+It is part of the [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) protocol. It has default implementations created for your convenience but is still implementable if you want to control when a [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) should load in the work flow.  It is called after `init` but before `body` in SwiftUI.
+</details>
+
+#### **Why is there a `WorkflowOutput` but no `WorkflowInput`?**
+
+<details>
+
+`WorkflowInput` is inferred from the initializer that you create. If you do not include an initializer, `WorkflowInput` will be `Never` otherwise `WorkflowInput` will be the type supplied in the initializer.  `WorkflowOutput` cannot be inferred to be anything other than `Never`. This means you must manually type `WorkflowOutput` when you want to pass data forward.
 </details>
 
 ## Launching the [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html)
