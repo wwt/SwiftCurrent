@@ -11,44 +11,48 @@ import SwiftCurrent
 import SwiftCurrent_SwiftUI
 
 struct AccountInformationView: View, FlowRepresentable {
-    @State var username = "changeme"
-    @State var password = "supersecure"
-    @State var usernameWorkflowLaunched = false
-    @State var passwordWorkflowLaunched = false
+    @State private var username = "changeme"
+    @State private var password = "supersecure"
+    @State private var usernameWorkflowLaunched = false
+    @State private var passwordWorkflowLaunched = false
+
+    let inspection = Inspection<Self>()
     weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
-        if !usernameWorkflowLaunched {
-            HStack {
-                Text("Username: \(username)")
-                Spacer()
-                Button("Change Username") {
-                    usernameWorkflowLaunched = true
+        Group { // swiftlint:disable:this closure_body_length
+            if !usernameWorkflowLaunched {
+                HStack {
+                    Text("Username: \(username)")
+                    Spacer()
+                    Button("Change Username") {
+                        usernameWorkflowLaunched = true
+                    }
                 }
+            } else {
+                WorkflowView(isLaunched: $usernameWorkflowLaunched, startingArgs: username)
+                    .thenProceed(with: WorkflowItem(MFAuthenticationView.self))
+                    .thenProceed(with: WorkflowItem(ChangeUsernameView.self))
+                    .onFinish {
+                        guard case .args(let newUsername as String) = $0 else { return }
+                        username = newUsername
+                        usernameWorkflowLaunched = false
+                    }
             }
-        } else {
-            WorkflowView(isLaunched: $usernameWorkflowLaunched, startingArgs: username)
-                .thenProceed(with: WorkflowItem(MFAuthenticationView.self))
-                .thenProceed(with: WorkflowItem(ChangeUsernameView.self))
-                .onFinish {
-                    guard case .args(let newUsername as String) = $0 else { return }
-                    username = newUsername
-                    usernameWorkflowLaunched = false
+            if !passwordWorkflowLaunched {
+                Button("Change Password") {
+                    passwordWorkflowLaunched = true
                 }
-        }
-        if !passwordWorkflowLaunched {
-            Button("Change Password") {
-                passwordWorkflowLaunched = true
+            } else {
+                WorkflowView(isLaunched: $passwordWorkflowLaunched, startingArgs: password)
+                    .thenProceed(with: WorkflowItem(MFAuthenticationView.self))
+                    .thenProceed(with: WorkflowItem(ChangePasswordView.self))
+                    .onFinish {
+                        guard case .args(let newPassword as String) = $0 else { return }
+                        password = newPassword
+                        passwordWorkflowLaunched = false
+                    }
             }
-        } else {
-            WorkflowView(isLaunched: $passwordWorkflowLaunched, startingArgs: password)
-                .thenProceed(with: WorkflowItem(MFAuthenticationView.self))
-                .thenProceed(with: WorkflowItem(ChangePasswordView.self))
-                .onFinish {
-                    guard case .args(let newPassword as String) = $0 else { return }
-                    password = newPassword
-                    passwordWorkflowLaunched = false
-                }
-        }
+        }.onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 }
