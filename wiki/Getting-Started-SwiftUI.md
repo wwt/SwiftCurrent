@@ -4,7 +4,7 @@ This guide will walk you through getting a [Workflow](https://wwt.github.io/Swif
 
 The app in this guide is going to be very simple.  It consists of a view that will host the [WorkflowView](https://wwt.github.io/SwiftCurrent/Structs/WorkflowView.html), a view to enter an email address, and an optional view for when the user enters an email with `@wwt.com` in it.  Here is a preview of what the app will look like:
 
-![Preview image of app]
+![Preview image of app](https://github.com/wwt/SwiftCurrent/blob/36c45fcc3cc66dba16d5d5c78bcd4bc865175a34/wiki/swiftUI.gif)
 
 ## Adding the dependency
 
