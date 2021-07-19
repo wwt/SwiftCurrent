@@ -1,4 +1,4 @@
-# Swift Package Manager with SwiftUI
+## Overview
 
 This guide will walk you through getting a [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html) up and running in a new iOS project.  If you would like to see an existing project, clone the repo and view the `SwiftUIExampleApp` scheme in `SwiftCurrent.xcworkspace`.
 
