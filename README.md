@@ -56,21 +56,31 @@ This quick start uses SPM, but for other approaches, [see our installation instr
 .product(name: "SwiftCurrent", package: "SwiftCurrent"),
 .product(name: "SwiftCurrent_UIKit", package: "SwiftCurrent")
 ```
-Then make your first FlowRepresentable view controller:
+Then make your first FlowRepresentable view controllers:
 ```swift
 import SwiftCurrent
 import SwiftCurrent_UIKit
-class ExampleViewController: UIWorkflowItem<Never, Never>, FlowRepresentable {
-    override func viewDidLoad() {
-        view.backgroundColor = .green
+class OptionalViewController: UIWorkflowItem<String, Never>, FlowRepresentable {
+    let input: String
+    required init(with args: String) {
+        input = args
+        super.init(nibName: nil, bundle: nil)
     }
+    required init?(coder: NSCoder) { nil }
+    override func viewDidLoad() { view.backgroundColor = .blue }
+    func shouldLoad() -> Bool { input.isEmpty }
+}
+class ExampleViewController: UIWorkflowItem<Never, Never>, FlowRepresentable {
+    override func viewDidLoad() { view.backgroundColor = .green }
 }
 ```
-Then from your root view controller, call: 
+Then from your root view controller, call:
 ```swift
 import SwiftCurrent
 ...
-launchInto(Workflow(ExampleViewController.self))
+let workflow = Workflow(OptionalViewController.self)
+    .thenProceed(with: ExampleViewController.self)
+launchInto(workflow, args: "Skip optional screen")
 ```
 
 And just like that you're started!
@@ -88,14 +98,17 @@ Then make your first FlowRepresentable view:
 import SwiftCurrent
 struct ExampleView: View, FlowRepresentable {
     weak var _workflowPointer: AnyFlowRepresentable?
-    var body: some View { Text("Welcome to SwiftCurrent") }
+    let input: String
+    init(with args: String) { input = args }
+    var body: some View { Text("Passed in: \(input)") }
+    func shouldLoad() -> Bool { !input.isEmpty }
 }
 ```
 Then from your ContentView body, add: 
 ```swift
 import SwiftCurrent_SwiftUI
 ...
-WorkflowView(isLaunched: .constant(true))
+WorkflowView(isLaunched: .constant(true), startingArgs: "Launched")
     .thenProceed(with: WorkflowItem(ExampleView.self))
 ```
 
@@ -117,4 +130,3 @@ If you like what you've seen, consider [giving us a star](https://github.com/wwt
 <!-- Social Media -->
 [![Stars](https://img.shields.io/github/stars/wwt/SwiftCurrent?style=social)](https://github.com/wwt/SwiftCurrent/stargazers)
 [![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2FSwiftCurrentWWT)](https://twitter.com/SwiftCurrentWWT)
- 
