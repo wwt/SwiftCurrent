@@ -2,7 +2,7 @@
 
 This guide will walk you through getting a [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html) up and running in a new iOS project.  If you would like to see an existing project, clone the repo and view the `SwiftUIExampleApp` scheme in `SwiftCurrent.xcworkspace`.
 
-The app in this guide is going to be very simple.  It consists of a view that will hold the [WorkflowView](https://wwt.github.io/SwiftCurrent/Structs/WorkflowView.html), a view to enter an email address, and an optional view for if your email contains `@wwt.com`.  Here is a preview of what the app will look like:
+The app in this guide is going to be very simple.  It consists of a view that will host the [WorkflowView](https://wwt.github.io/SwiftCurrent/Structs/WorkflowView.html), a view to enter an email address, and an optional view for if your email contains `@wwt.com`.  Here is a preview of what the app will look like:
 
 ![Preview image of app]
 
@@ -83,7 +83,7 @@ struct SecondView_Previews: PreviewProvider {
 
 <details>
 
-The [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) protocol requires there to be a `_workflowPointer` on your object, but protocols cannot enforce you to use `weak`. If you do not put `weak var _workflowPointer`, the [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) will end up with a strong circular reference.
+The [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) protocol requires there to be a `_workflowPointer` on your object, but protocols cannot enforce you to use `weak`. If you do not put `weak var _workflowPointer`, the [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) will end up with a strong circular reference when placed in a [WorkflowView](https://wwt.github.io/SwiftCurrent/Structs/WorkflowView.html).
 </details>
 
 #### **What's this `shouldLoad()`?**
@@ -97,12 +97,12 @@ It is part of the [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protoco
 
 <details>
 
-`WorkflowInput` is inferred from the initializer that you create. If you do not include an initializer, `WorkflowInput` will be `Never` otherwise `WorkflowInput` will be the type supplied in the initializer.  `WorkflowOutput` cannot be inferred to be anything other than `Never`. This means you must manually type `WorkflowOutput` when you want to pass data forward.
+`WorkflowInput` is inferred from the initializer that you create. If you do not include an initializer, `WorkflowInput` will be `Never`; otherwise `WorkflowInput` will be the type supplied in the initializer.  `WorkflowOutput` cannot be inferred to be anything other than `Never`. This means you must manually provide `WorkflowOutput` a type when you want to pass data forward.
 </details>
 
 ## Launching the [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html)
 
-PLACEHOLDER TEXT
+Next we add a [WorkflowView](https://wwt.github.io/SwiftCurrent/Structs/WorkflowView.html) that will proceed with `FirstView` and `SecondView` to the body of our starting app view, in this case `ContentView`.
 
 ```swift
 import SwiftUI
