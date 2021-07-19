@@ -32,9 +32,7 @@ final class MFAViewTests: XCTestCase {
     }
 
     func testMFAViewShowsAlertWhenCodeIsWrong() throws {
-        print("!!! Starting test")
         let exp = ViewHosting.loadView(MFAView(with: .none)).inspection.inspect { view in
-            print("!!! Inspect")
             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
             XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Code (enter 1234 to proceed): ")
             XCTAssertNoThrow(try view.vStack().textField(1).setInput("1111"))

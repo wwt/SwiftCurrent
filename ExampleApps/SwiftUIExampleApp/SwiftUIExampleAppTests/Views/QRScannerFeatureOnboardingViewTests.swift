@@ -17,6 +17,7 @@ import ViewInspector
 final class QRScannerFeatureOnboardingViewTests: XCTestCase {
     let defaultsKey = "OnboardedToQRScanningFeature"
     override func setUpWithError() throws {
+        print("!!! \(Self.self).setUpWithError()")
         Container.default.removeAll()
     }
 
@@ -39,6 +40,7 @@ final class QRScannerFeatureOnboardingViewTests: XCTestCase {
 //    }
 
     func testOnboardingProceedsInWorkflow() throws {
+        print("!!! \(Self.self).testOnboardingProceedsInWorkflow - Before setup: \(Container.default) \n\n")
         let proceedCalled = expectation(description: "Proceed called")
         let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
         defaults.set(false, forKey: defaultsKey)
@@ -47,10 +49,19 @@ final class QRScannerFeatureOnboardingViewTests: XCTestCase {
         // swiftlint:disable:next force_cast
         var onboardingView = erased.underlyingInstance as! QRScannerFeatureOnboardingView
         onboardingView.proceedInWorkflowStorage = { _ in
+            print("!!! \(Self.self).testOnboardingProceedsInWorkflow - proceedInWorkflowStorage called")
             proceedCalled.fulfill()
         }
         onboardingView._workflowPointer = erased
-        let exp = ViewHosting.loadView(onboardingView).inspection.inspect { view in
+        print("!!! \(Self.self).testOnboardingProceedsInWorkflow - After setup: \(Container.default) \n Using: \(defaults) \n With default: \(defaults.bool(forKey: defaultsKey))\n\n")
+
+        print("!!! \(Self.self).testOnboardingProceedsInWorkflow - about to loadView: \(onboardingView)")
+        let view = ViewHosting.loadView(onboardingView)
+        print("!!! \(Self.self).testOnboardingProceedsInWorkflow - about to add inspection to: \(view)")
+        let inspection = view.inspection
+        print("!!! \(Self.self).testOnboardingProceedsInWorkflow - about to inspect: \(inspection)")
+        let exp = inspection.inspect { view in
+            print("!!! \(Self.self).testOnboardingProceedsInWorkflow - Inspected: \(view)")
             XCTAssertNoThrow(try view.find(ViewType.Text.self))
             XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Learn about our awesome QR scanning feature!")
             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())

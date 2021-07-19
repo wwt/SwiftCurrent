@@ -40,7 +40,7 @@ final class ProfileFeatureOnboardingViewTests: XCTestCase {
 //    }
 
     func testOnboardingProceedsInWorkflow() throws {
-        print("!!! \(Self.self).testOnboardingProceedsInWorkflow - Start")
+        print("!!! \(Self.self).testOnboardingProceedsInWorkflow - Before setup: \(Container.default) \n\n")
         let proceedCalled = expectation(description: "Proceed called")
         let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
         defaults.set(false, forKey: defaultsKey)
@@ -48,14 +48,20 @@ final class ProfileFeatureOnboardingViewTests: XCTestCase {
         let erased = AnyFlowRepresentableView(type: ProfileFeatureOnboardingView.self, args: .none)
         // swiftlint:disable:next force_cast
         var onboardingView = erased.underlyingInstance as! ProfileFeatureOnboardingView
-        onboardingView.proceedInWorkflowStorage = { _ in            print("!!! \(Self.self).testOnboardingProceedsInWorkflow - proceedInWorkflowStorage called")
+        onboardingView.proceedInWorkflowStorage = { _ in
             print("!!! \(Self.self).testOnboardingProceedsInWorkflow - proceedInWorkflowStorage called")
             proceedCalled.fulfill()
         }
         onboardingView._workflowPointer = erased
-        print("!!! \(Self.self).testOnboardingProceedsInWorkflow - about to loadView")
-        let exp = ViewHosting.loadView(onboardingView).inspection.inspect { view in
-            print("!!! \(Self.self).testOnboardingProceedsInWorkflow - Inspected")
+        print("!!! \(Self.self).testOnboardingProceedsInWorkflow - After setup: \(Container.default) \n Using: \(defaults) \n With default: \(defaults.bool(forKey: defaultsKey))\n\n")
+
+        print("!!! \(Self.self).testOnboardingProceedsInWorkflow - about to loadView: \(onboardingView)")
+        let view = ViewHosting.loadView(onboardingView)
+        print("!!! \(Self.self).testOnboardingProceedsInWorkflow - about to add inspection to: \(view)")
+        let inspection = view.inspection
+        print("!!! \(Self.self).testOnboardingProceedsInWorkflow - about to inspect: \(inspection)")
+        let exp = inspection.inspect { view in
+            print("!!! \(Self.self).testOnboardingProceedsInWorkflow - Inspected: \(view)")
             XCTAssertNoThrow(try view.find(ViewType.Text.self))
             XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Learn about our awesome profile feature!")
             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
