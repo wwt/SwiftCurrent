@@ -90,7 +90,7 @@ The [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowReprese
 
 <details>
 
-It is part of the [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) protocol. It has default implementations created for your convenience but is still implementable if you want to control when a [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) should load in the work flow.  It is called after `init` but before `body` in SwiftUI.
+It is part of the [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) protocol. It has default implementations created for your convenience but is still implementable if you want to control when a [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) should load in the workflow.  It is called after `init` but before `body` in SwiftUI.
 </details>
 
 #### **Why is there a `WorkflowOutput` but no `WorkflowInput`?**
