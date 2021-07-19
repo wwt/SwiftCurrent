@@ -126,6 +126,7 @@
 		CAF586AE256CF2B40044C864 /* UIKitExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UIKitExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAF5871F256CF4DC0044C864 /* UIUTest_ObjC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UIUTest_ObjC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAF58721256CF4DC0044C864 /* UIUTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UIUTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D74A4D5A26A6115200010617 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D7E1264D264C6FBD00B6A712 /* UIKitConsumerAbandonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitConsumerAbandonTests.swift; sourceTree = "<group>"; };
 		D7E12655264C719B00B6A712 /* UIKitConsumerSkipTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitConsumerSkipTests.swift; sourceTree = "<group>"; };
 		D7E1265D264C73BA00B6A712 /* UIKitConsumerLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitConsumerLaunchTests.swift; sourceTree = "<group>"; };
@@ -267,6 +268,7 @@
 		CAF58521256CEE990044C864 = {
 			isa = PBXGroup;
 			children = (
+				D74A4D5A26A6115200010617 /* README.md */,
 				CAF58542256CEEAA0044C864 /* Frameworks */,
 				CA0536B126A0834B00BF8FC5 /* UIKitExample */,
 				CA0536AF26A0834B00BF8FC5 /* UIKitExampleTests */,
