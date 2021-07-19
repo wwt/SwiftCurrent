@@ -17,6 +17,7 @@ import ViewInspector
 final class ProfileFeatureOnboardingViewTests: XCTestCase {
     let defaultsKey = "OnboardedToProfileFeature"
     override func setUpWithError() throws {
+        print("!!! \(Self.self).setUpWithError()")
         Container.default.removeAll()
     }
 
@@ -39,6 +40,7 @@ final class ProfileFeatureOnboardingViewTests: XCTestCase {
 //    }
 
     func testOnboardingProceedsInWorkflow() throws {
+        print("!!! \(Self.self).testOnboardingProceedsInWorkflow - Start")
         let proceedCalled = expectation(description: "Proceed called")
         let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
         defaults.set(false, forKey: defaultsKey)
@@ -46,16 +48,20 @@ final class ProfileFeatureOnboardingViewTests: XCTestCase {
         let erased = AnyFlowRepresentableView(type: ProfileFeatureOnboardingView.self, args: .none)
         // swiftlint:disable:next force_cast
         var onboardingView = erased.underlyingInstance as! ProfileFeatureOnboardingView
-        onboardingView.proceedInWorkflowStorage = { _ in
+        onboardingView.proceedInWorkflowStorage = { _ in            print("!!! \(Self.self).testOnboardingProceedsInWorkflow - proceedInWorkflowStorage called")
+            print("!!! \(Self.self).testOnboardingProceedsInWorkflow - proceedInWorkflowStorage called")
             proceedCalled.fulfill()
         }
         onboardingView._workflowPointer = erased
+        print("!!! \(Self.self).testOnboardingProceedsInWorkflow - about to loadView")
         let exp = ViewHosting.loadView(onboardingView).inspection.inspect { view in
+            print("!!! \(Self.self).testOnboardingProceedsInWorkflow - Inspected")
             XCTAssertNoThrow(try view.find(ViewType.Text.self))
             XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Learn about our awesome profile feature!")
             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
         }
         wait(for: [exp, proceedCalled], timeout: 1)
+        print("!!! \(Self.self).testOnboardingProceedsInWorkflow - Complete")
     }
 
     func testOnboardingViewLoads_WhenNoValueIsInUserDefaults() throws {
