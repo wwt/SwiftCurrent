@@ -83,7 +83,7 @@ struct SecondView_Previews: PreviewProvider {
 
 <details>
 
-The [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) protocol requires there to be a `_workflowPointer` on you object, but protocols cannot enforce you to use `weak`. If you do not put `weak var _workflowPointer`, the [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) will end up with a strong circular reference.
+The [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) protocol requires there to be a `_workflowPointer` on your object, but protocols cannot enforce you to use `weak`. If you do not put `weak var _workflowPointer`, the [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) will end up with a strong circular reference.
 </details>
 
 #### **What's this `shouldLoad()`?**
