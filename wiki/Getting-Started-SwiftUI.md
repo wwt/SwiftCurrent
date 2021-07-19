@@ -102,7 +102,7 @@ It is part of the [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protoco
 
 ## Launching the [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html)
 
-Next we add a [WorkflowView](https://wwt.github.io/SwiftCurrent/Structs/WorkflowView.html) that will proceed with `FirstView` and `SecondView` to the body of our starting app view, in this case `ContentView`.
+Next we add a [WorkflowView](https://wwt.github.io/SwiftCurrent/Structs/WorkflowView.html) to the body of our starting app view, in this case `ContentView`.
 
 ```swift
 import SwiftUI
@@ -143,7 +143,7 @@ struct Content_Previews: PreviewProvider {
 
 <details>
 
-In SwiftUI, the [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html) type is handled by the [WorkflowView](https://wwt.github.io/SwiftCurrent/Structs/WorkflowView.html).  [WorkflowView](https://wwt.github.io/SwiftCurrent/Structs/WorkflowView.html) contains an underlying [AnyWorkflow](https://wwt.github.io/SwiftCurrent/Classes/AnyWorkflow.html) model that it manages and exposes as appropriate.
+In SwiftUI, the [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html) type is handled by the [WorkflowView](https://wwt.github.io/SwiftCurrent/Structs/WorkflowView.html).  That view contains an underlying [AnyWorkflow](https://wwt.github.io/SwiftCurrent/Classes/AnyWorkflow.html) that it manages and exposes as appropriate.
 </details>
 
 #### **Where is the type safety, I heard about?**
