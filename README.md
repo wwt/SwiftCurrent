@@ -123,6 +123,7 @@ And just like that you're started!
 - [[BETA] Getting Started with SwiftUI](https://github.com/wwt/SwiftCurrent/wiki/Getting-Started-with-SwiftUI)
 - [Developer Documentation](https://wwt.github.io/SwiftCurrent/index.html)
 - [Upgrade Path](https://github.com/wwt/SwiftCurrent/blob/main/wiki/UPGRADE_PATH.md)
+- [Contributing to SwiftCurrent](https://github.com/wwt/SwiftCurrent/blob/bb847f5934ebcb24c299aa0303974dd44c8d0c9c/.github/CONTRIBUTING.md)
 
 # Feedback
 
