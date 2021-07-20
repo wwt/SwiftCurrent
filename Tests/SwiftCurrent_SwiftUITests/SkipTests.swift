@@ -39,8 +39,7 @@ final class SkipTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR2.self))
                 .thenProceed(with: WorkflowItem(FR3.self))
-                .thenProceed(with: WorkflowItem(FR4.self))
-                .launch())
+                .thenProceed(with: WorkflowItem(FR4.self)))
             .inspection.inspect { viewUnderTest in
                 XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
                 XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
@@ -74,8 +73,7 @@ final class SkipTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR2.self))
                 .thenProceed(with: WorkflowItem(FR3.self))
-                .thenProceed(with: WorkflowItem(FR4.self))
-                .launch())
+                .thenProceed(with: WorkflowItem(FR4.self)))
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
                 XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
@@ -111,8 +109,7 @@ final class SkipTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR2.self))
                 .thenProceed(with: WorkflowItem(FR3.self))
                 .thenProceed(with: WorkflowItem(FR4.self))
-                .onFinish { _ in expectOnFinish.fulfill() }
-                .launch())
+                .onFinish { _ in expectOnFinish.fulfill() })
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
                 XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
@@ -147,8 +144,7 @@ final class SkipTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR2.self))
                 .thenProceed(with: WorkflowItem(FR3.self))
-                .thenProceed(with: WorkflowItem(FR4.self))
-                .launch())
+                .thenProceed(with: WorkflowItem(FR4.self)))
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
                 XCTAssertThrowsError(try viewUnderTest.find(FR2.self).actualView())
@@ -187,8 +183,7 @@ final class SkipTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR2.self))
                 .thenProceed(with: WorkflowItem(FR3.self))
                 .thenProceed(with: WorkflowItem(FR4.self))
-                .onFinish { _ in expectOnFinish.fulfill() }
-                .launch())
+                .onFinish { _ in expectOnFinish.fulfill() })
             .inspection.inspect { viewUnderTest in
                 XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
                 XCTAssertThrowsError(try viewUnderTest.find(FR2.self))

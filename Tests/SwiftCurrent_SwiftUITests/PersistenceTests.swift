@@ -38,8 +38,7 @@ final class PersistenceTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR1.self).persistence(.removedAfterProceeding))
                 .thenProceed(with: WorkflowItem(FR2.self))
                 .thenProceed(with: WorkflowItem(FR3.self))
-                .thenProceed(with: WorkflowItem(FR4.self))
-                .launch())
+                .thenProceed(with: WorkflowItem(FR4.self)))
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
                 XCTAssertThrowsError(try viewUnderTest.find(FR2.self).actualView().backUpInWorkflow())
@@ -73,8 +72,7 @@ final class PersistenceTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR2.self).persistence(.removedAfterProceeding))
                 .thenProceed(with: WorkflowItem(FR3.self))
-                .thenProceed(with: WorkflowItem(FR4.self))
-                .launch())
+                .thenProceed(with: WorkflowItem(FR4.self)))
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
                 XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
@@ -112,8 +110,7 @@ final class PersistenceTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR2.self))
                 .thenProceed(with: WorkflowItem(FR3.self))
                 .thenProceed(with: WorkflowItem(FR4.self).persistence(.removedAfterProceeding))
-                .onFinish { _ in expectOnFinish.fulfill() }
-                .launch())
+                .onFinish { _ in expectOnFinish.fulfill() })
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
                 XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
@@ -148,8 +145,7 @@ final class PersistenceTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR2.self).persistence(.removedAfterProceeding))
                 .thenProceed(with: WorkflowItem(FR3.self).persistence(.removedAfterProceeding))
-                .thenProceed(with: WorkflowItem(FR4.self))
-                .launch())
+                .thenProceed(with: WorkflowItem(FR4.self)))
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
                 XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
@@ -189,8 +185,7 @@ final class PersistenceTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR2.self).persistence(.removedAfterProceeding))
                 .thenProceed(with: WorkflowItem(FR3.self).persistence(.removedAfterProceeding))
                 .thenProceed(with: WorkflowItem(FR4.self).persistence(.removedAfterProceeding))
-                .onFinish { _ in expectOnFinish.fulfill() }
-                .launch())
+                .onFinish { _ in expectOnFinish.fulfill() })
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
                 XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
@@ -239,8 +234,7 @@ final class PersistenceTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR2.self).persistence(.removedAfterProceeding))
                 .thenProceed(with: WorkflowItem(FR3.self).persistence(.removedAfterProceeding))
                 .thenProceed(with: WorkflowItem(FR4.self).persistence(.removedAfterProceeding))
-                .onFinish { _ in expectOnFinish.fulfill() }
-                .launch())
+                .onFinish { _ in expectOnFinish.fulfill() })
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
                 XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
@@ -289,8 +283,7 @@ final class PersistenceTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR2.self).persistence(.removedAfterProceeding))
                 .thenProceed(with: WorkflowItem(FR3.self).persistence(.removedAfterProceeding))
                 .thenProceed(with: WorkflowItem(FR4.self).persistence(.removedAfterProceeding))
-                .onFinish { _ in expectOnFinish.fulfill() }
-                .launch())
+                .onFinish { _ in expectOnFinish.fulfill() })
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
                 XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
@@ -333,8 +326,7 @@ final class PersistenceTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR2.self).persistence(.removedAfterProceeding))
                 .thenProceed(with: WorkflowItem(FR3.self).persistence(.removedAfterProceeding))
                 .thenProceed(with: WorkflowItem(FR4.self).persistence(.removedAfterProceeding))
-                .onFinish { _ in expectOnFinish.fulfill() }
-                .launch())
+                .onFinish { _ in expectOnFinish.fulfill() })
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
                 XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
@@ -375,8 +367,7 @@ final class PersistenceTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR1.self).persistence(.persistWhenSkipped))
                 .thenProceed(with: WorkflowItem(FR2.self))
                 .thenProceed(with: WorkflowItem(FR3.self))
-                .thenProceed(with: WorkflowItem(FR4.self))
-                .launch())
+                .thenProceed(with: WorkflowItem(FR4.self)))
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().backUpInWorkflow())
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
@@ -411,8 +402,7 @@ final class PersistenceTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))
                 .thenProceed(with: WorkflowItem(FR3.self))
-                .thenProceed(with: WorkflowItem(FR4.self))
-                .launch())
+                .thenProceed(with: WorkflowItem(FR4.self)))
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
                 XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().backUpInWorkflow())
@@ -449,8 +439,7 @@ final class PersistenceTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR2.self))
                 .thenProceed(with: WorkflowItem(FR3.self))
                 .thenProceed(with: WorkflowItem(FR4.self).persistence(.persistWhenSkipped))
-                .onFinish { _ in expectOnFinish.fulfill() }
-                .launch())
+                .onFinish { _ in expectOnFinish.fulfill() })
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
                 XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
@@ -484,8 +473,7 @@ final class PersistenceTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))
                 .thenProceed(with: WorkflowItem(FR3.self).persistence(.persistWhenSkipped))
-                .thenProceed(with: WorkflowItem(FR4.self))
-                .launch())
+                .thenProceed(with: WorkflowItem(FR4.self)))
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
                 XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().backUpInWorkflow())
@@ -525,8 +513,7 @@ final class PersistenceTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))
                 .thenProceed(with: WorkflowItem(FR3.self).persistence(.persistWhenSkipped))
                 .thenProceed(with: WorkflowItem(FR4.self).persistence(.persistWhenSkipped))
-                .onFinish { _ in expectOnFinish.fulfill() }
-                .launch())
+                .onFinish { _ in expectOnFinish.fulfill() })
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR4.self))
             }

@@ -5,6 +5,7 @@
 //  Created by Tyler Thompson on 7/20/21.
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
+//  swiftlint:disable file_types_order
 
 import SwiftUI
 import SwiftCurrent
@@ -21,6 +22,7 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
     private var onAbandon = [() -> Void]()
 
     @ObservedObject private var model: WorkflowViewModel
+    @StateObject private var launcher: Launcher
 
     public var body: some View {
         if isLaunched {
@@ -37,10 +39,15 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
 
     init<A, FR>(_ workflowView: WorkflowView<A>, isLaunched: Binding<Bool>, item: WorkflowItem<FR, Content>) where Wrapped == Never, Args == FR.WorkflowOutput {
         wrapped = nil
-        workflow = AnyWorkflow(Workflow<FR>(item.metadata))
+        let wf = AnyWorkflow(Workflow<FR>(item.metadata))
+        workflow = wf
         launchArgs = workflowView.passedArgs
         _isLaunched = isLaunched
-        _model = ObservedObject(initialValue: WorkflowViewModel(isLaunched: isLaunched))
+        let model = WorkflowViewModel(isLaunched: isLaunched)
+        _model = ObservedObject(initialValue: model)
+        _launcher = StateObject(wrappedValue: Launcher(workflow: wf,
+                                                       responder: model,
+                                                       launchArgs: workflowView.passedArgs))
     }
 
     init<A, W, C, FR>(_ workflowView: ModifiedWorkflowView<A, W, C>, item: WorkflowItem<FR, Content>) where Wrapped == ModifiedWorkflowView<A, W, C>, Args == FR.WorkflowOutput {
@@ -50,6 +57,7 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
         workflow.append(item.metadata)
         launchArgs = workflowView.launchArgs
         _isLaunched = workflowView._isLaunched
+        _launcher = workflowView._launcher
     }
 
     private init(workflowView: Self, onFinish: [(AnyWorkflow.PassedArgs) -> Void], onAbandon: [() -> Void]) {
@@ -60,13 +68,18 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
         self.onAbandon = onAbandon
         launchArgs = workflowView.launchArgs
         _isLaunched = workflowView._isLaunched
+        _launcher = StateObject(wrappedValue: Launcher(workflow: workflowView.workflow,
+                                                       responder: workflowView.model,
+                                                       launchArgs: workflowView.launchArgs) { args in
+            onFinish.forEach { $0(args) }
+        })
+
     }
 
-    @discardableResult public func launch() -> Self {
+    private func launch() {
         workflow.launch(withOrchestrationResponder: model, passedArgs: launchArgs) { args in
             onFinish.forEach { $0(args) }
         }
-        return self
     }
 
     /// Adds an action to perform when this `Workflow` has finished.
@@ -81,6 +94,20 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
         var onAbandon = self.onAbandon
         onAbandon.append(closure)
         return Self(workflowView: self, onFinish: onFinish, onAbandon: onAbandon)
+    }
+}
+
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+private final class Launcher: ObservableObject {
+    init(workflow: AnyWorkflow,
+         responder: OrchestrationResponder,
+         launchArgs: AnyWorkflow.PassedArgs,
+         onFinish: ((AnyWorkflow.PassedArgs) -> Void)? = nil) {
+        if workflow.orchestrationResponder == nil {
+            workflow.launch(withOrchestrationResponder: responder, passedArgs: launchArgs) {
+                onFinish?($0)
+            }
+        }
     }
 }
 
