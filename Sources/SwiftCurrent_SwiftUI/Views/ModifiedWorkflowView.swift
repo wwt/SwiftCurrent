@@ -18,10 +18,11 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
     @ObservedObject private var model = WorkflowViewModel()
 
     public var body: some View {
-        VStack { // THIS SHOULD DIE TOO
-            model.erasedBody as? Content
-            wrapped
-        }.onReceive(inspection.notice) { inspection.visit(self, $0) }
+        if let body = model.erasedBody as? Content {
+            body.onReceive(inspection.notice) { inspection.visit(self, $0) }
+        } else {
+            wrapped.onReceive(inspection.notice) { inspection.visit(self, $0) }
+        }
     }
 
     init<A, FR>(_ workflowView: WorkflowView<A>, item: WorkflowItem<FR, Content>) where Wrapped == Never, Args == FR.WorkflowOutput {
