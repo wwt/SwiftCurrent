@@ -21,10 +21,6 @@ final class ProfileFeatureViewTests: XCTestCase {
         XCTAssertEqual(try viewUnderTest.find(ViewType.Text.self).string(), "Your name here")
         XCTAssertEqual(try viewUnderTest.find(ViewType.Section.self).header().text().string(), "Account Information:")
         XCTAssertNoThrow(try viewUnderTest.find(ViewType.Section.self).find(AccountInformationView.self))
-        XCTAssertEqual(try viewUnderTest.find(ViewType.Section.self, skipFound: 1).header().text().string(), "Personal Information:")
-//        XCTAssertNoThrow(try viewUnderTest.find(ViewType.Section.self, skipFound: 1).find(PersonalInformationView.self))
-        XCTAssertEqual(try viewUnderTest.find(ViewType.Section.self, skipFound: 2).header().text().string(), "Card Information:")
-        XCTAssertNoThrow(try viewUnderTest.find(ViewType.Section.self, skipFound: 2).find(CardInformationView.self))
         XCTAssertNoThrow(try viewUnderTest.find(ViewType.Button.self))
     }
 

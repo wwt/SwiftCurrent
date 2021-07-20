@@ -36,19 +36,6 @@ struct ProfileFeatureView: View, FlowRepresentable {
                     Divider()
                 }
                 Group {
-                    Section(header: Text("Personal Information:").font(.title)) {
-                        Text("name")
-                        Text("address")
-                    }
-                    Divider()
-                }
-                Group {
-                    Section(header: Text("Card Information:").font(.title)) {
-                        CardInformationView()
-                    }
-                    Divider()
-                }
-                Group {
                     Button("Clear User Defaults") {
                         Self.userDefaults.dictionaryRepresentation().keys.forEach(Self.userDefaults.removeObject(forKey:))
                     }
