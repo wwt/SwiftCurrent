@@ -50,7 +50,7 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
                                                        launchArgs: workflowView.passedArgs))
     }
 
-    init<A, W, C, FR>(_ workflowView: ModifiedWorkflowView<A, W, C>, item: WorkflowItem<FR, Content>) where Wrapped == ModifiedWorkflowView<A, W, C>, Args == FR.WorkflowOutput {
+    private init<A, W, C, FR>(_ workflowView: ModifiedWorkflowView<A, W, C>, item: WorkflowItem<FR, Content>) where Wrapped == ModifiedWorkflowView<A, W, C>, Args == FR.WorkflowOutput {
         model = workflowView.model
         wrapped = workflowView
         workflow = workflowView.workflow
