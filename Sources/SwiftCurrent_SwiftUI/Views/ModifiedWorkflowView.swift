@@ -15,11 +15,11 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
     let inspection = Inspection<Self>()
     let workflow: AnyWorkflow
 
-    @State private var erasedBody: Any?
+    @ObservedObject private var model = ViewModel()
 
     public var body: some View {
         VStack { // THIS SHOULD DIE TOO
-            erasedBody as? Content
+            model.body as? Content
             wrapped
         }.onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
@@ -27,32 +27,34 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
     init<A, FR>(_ workflowView: WorkflowView<A>, item: WorkflowItem<FR, Content>) where Wrapped == Never, Args == FR.WorkflowOutput {
         wrapped = nil
         workflow = AnyWorkflow(Workflow<FR>(item.metadata))
-        let launched = workflow.launch(withOrchestrationResponder: self, passedArgs: .none)
-        _erasedBody = State(initialValue: (launched?.value.instance as? AnyFlowRepresentableView)?.erasedView)
     }
 
     init<A, W, C, FR>(_ workflowView: ModifiedWorkflowView<A, W, C>, item: WorkflowItem<FR, Content>) where Wrapped == ModifiedWorkflowView<A, W, C>, Args == FR.WorkflowOutput {
+        model = workflowView.model
         wrapped = workflowView
         workflow = workflowView.workflow
-        workflow.orchestrationResponder = self
         workflow.append(item.metadata)
-        _erasedBody = workflowView._erasedBody
+        workflow.launch(withOrchestrationResponder: model, passedArgs: .none)
     }
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-extension ModifiedWorkflowView: OrchestrationResponder {
-    public func launch(to: AnyWorkflow.Element) { }
+private final class ViewModel: ObservableObject, OrchestrationResponder {
+    @Published var body: Any?
 
-    public func proceed(to: AnyWorkflow.Element, from: AnyWorkflow.Element) {
-        erasedBody = (to.value.instance as? AnyFlowRepresentableView)?.erasedView
+    func launch(to: AnyWorkflow.Element) {
+        body = (to.value.instance as? AnyFlowRepresentableView)?.erasedView
     }
 
-    public func backUp(from: AnyWorkflow.Element, to: AnyWorkflow.Element) { }
+    func proceed(to: AnyWorkflow.Element, from: AnyWorkflow.Element) {
+        body = (to.value.instance as? AnyFlowRepresentableView)?.erasedView
+    }
 
-    public func abandon(_ workflow: AnyWorkflow, onFinish: (() -> Void)?) { }
+    func backUp(from: AnyWorkflow.Element, to: AnyWorkflow.Element) { }
 
-    public func complete(_ workflow: AnyWorkflow, passedArgs: AnyWorkflow.PassedArgs, onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) { }
+    func abandon(_ workflow: AnyWorkflow, onFinish: (() -> Void)?) { }
+
+    func complete(_ workflow: AnyWorkflow, passedArgs: AnyWorkflow.PassedArgs, onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) { }
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
