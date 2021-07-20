@@ -20,7 +20,6 @@ final class ProfileFeatureOnboardingViewTests: XCTestCase {
         Container.default.removeAll()
     }
 
-    #warning("Pipeline has a really hard time with this, even though locally it continues to work great, replacement test below this test.")
     func testOnboardingInWorkflow() throws {
         let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
         defaults.set(false, forKey: defaultsKey)
