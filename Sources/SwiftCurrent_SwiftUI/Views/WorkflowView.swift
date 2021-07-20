@@ -90,29 +90,7 @@ public struct WorkflowView<Args>: View {
     }
 
     public var body: some View {
-        if isLaunched {
-            VStack {
-//                model.body
-            }
-            .onAppear {
-                guard !didLoad else { return }
-                didLoad = true
-                model.isLaunched = $isLaunched
-                model.onAbandon = onAbandon
-                workflow?.launch(withOrchestrationResponder: model,
-                                 passedArgs: passedArgs,
-                                 launchStyle: .new) { passedArgs in
-                    onFinish.forEach { $0(passedArgs) }
-                }
-            }
-            .onDisappear {
-                if !isLaunched {
-                    didLoad = false
-                    model.body = AnyView(EmptyView())
-                }
-            }
-            .onReceive(inspection.notice) { inspection.visit(self, $0) } // Needed for ViewInspector
-        }
+        noView()
     }
 
     /// Adds an action to perform when this `Workflow` has finished.
@@ -135,6 +113,11 @@ public struct WorkflowView<Args>: View {
                             onFinish: onFinish,
                             onAbandon: onAbandon,
                             passedArgs: passedArgs)
+    }
+
+    // swiftlint:disable:next unavailable_function
+    private func noView() -> EmptyView {
+        fatalError("WorkflowView needs information about what to present, make sure to call `.thenProceedWith(_:)`")
     }
 }
 

@@ -41,6 +41,16 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)
     }
 
+    func testWorkflowViewThrowsFatalErrorIfThenProceedNeverGetsCalled() {
+        XCTAssertThrowsFatalError {
+            _ = WorkflowView(isLaunched: .constant(true)).body
+        }
+
+        XCTAssertThrowsFatalError {
+            _ = WorkflowView(isLaunched: .constant(true), startingArgs: "").body
+        }
+    }
+
     func testWorkflowCanHaveMultipleOnFinishClosures() throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
