@@ -47,6 +47,7 @@
 		CAD026AC26A0C83B0075B818 /* Inspection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD026AB26A0C83B0075B818 /* Inspection.swift */; };
 		CAD026AF26A0C8680075B818 /* InspectableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD026AE26A0C8680075B818 /* InspectableExtensions.swift */; };
 		CAD026B126A0C8960075B818 /* ViewHostingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD026B026A0C8960075B818 /* ViewHostingExtensions.swift */; };
+		D74A4D5C26A7315F00010617 /* TestConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74A4D5B26A7315F00010617 /* TestConstant.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +100,7 @@
 		CAD026AB26A0C83B0075B818 /* Inspection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Inspection.swift; sourceTree = "<group>"; };
 		CAD026AE26A0C8680075B818 /* InspectableExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectableExtensions.swift; sourceTree = "<group>"; };
 		CAD026B026A0C8960075B818 /* ViewHostingExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewHostingExtensions.swift; sourceTree = "<group>"; };
+		D74A4D5B26A7315F00010617 /* TestConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestConstant.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +187,7 @@
 				CAD026A426A0C1E30075B818 /* Views */,
 				CAC34B5626A07F840039A373 /* Info.plist */,
 				CAD026A226A0BEB50075B818 /* DependencyInjectionTests.swift */,
+				D74A4D5B26A7315F00010617 /* TestConstant.swift */,
 			);
 			path = SwiftUIExampleAppTests;
 			sourceTree = "<group>";
@@ -407,6 +410,7 @@
 				CA84D8E926A0ED66006CF964 /* ChangePasswordViewTests.swift in Sources */,
 				CAD026B126A0C8960075B818 /* ViewHostingExtensions.swift in Sources */,
 				CAD026A626A0C1EF0075B818 /* ProfileFeatureOnboardingViewTests.swift in Sources */,
+				D74A4D5C26A7315F00010617 /* TestConstant.swift in Sources */,
 				CA84D8E726A0E72A006CF964 /* MapFeatureViewTests.swift in Sources */,
 				CA84D8E326A0E3F5006CF964 /* QRScannerFeatureOnboardingViewTests.swift in Sources */,
 				CA238D1426A1153B000A36EC /* ContentViewTests.swift in Sources */,

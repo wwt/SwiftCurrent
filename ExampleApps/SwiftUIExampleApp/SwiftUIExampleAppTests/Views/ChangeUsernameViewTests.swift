@@ -20,7 +20,7 @@ final class ChangeUsernameViewTests: XCTestCase {
             XCTAssertEqual(try view.find(ViewType.TextField.self).labelView().text().string(), "\(currentUsername)")
             XCTAssertNoThrow(try view.find(ViewType.Button.self))
         }
-        wait(for: [exp], timeout: 1)
+        wait(for: [exp], timeout: TestConstant.timeout)
     }
 
     func testChangeUsernameViewProceedsWithCorrectDataWhenNameChanged() {
@@ -39,6 +39,6 @@ final class ChangeUsernameViewTests: XCTestCase {
             XCTAssertNoThrow(try view.find(ViewType.TextField.self).setInput(newUsername))
             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
         }
-        wait(for: [exp, proceedCalled], timeout: 1)
+        wait(for: [exp, proceedCalled], timeout: TestConstant.timeout)
     }
 }
