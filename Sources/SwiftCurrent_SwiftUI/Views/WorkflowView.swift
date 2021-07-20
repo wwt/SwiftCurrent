@@ -145,26 +145,7 @@ extension WorkflowView where Args == Never {
      - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
      - Returns: a new `WorkflowView` with the additional `FlowRepresentable` item.
      */
-    public func thenProceed<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> WorkflowView<FR.WorkflowOutput> where FR.WorkflowInput == Never {
-        var workflow = self.workflow
-        if workflow == nil {
-            workflow = AnyWorkflow(Workflow<FR>(item.metadata))
-        } else {
-            workflow?.append(item.metadata)
-        }
-        return WorkflowView<FR.WorkflowOutput>(isLaunched: $isLaunched,
-                                               workflow: workflow,
-                                               onFinish: onFinish,
-                                               onAbandon: onAbandon,
-                                               passedArgs: passedArgs)
-    }
-
-    /**
-     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
-     - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
-     - Returns: a new `WorkflowView` with the additional `FlowRepresentable` item.
-     */
-    public func thenProceed2<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> ModifiedWorkflowView<FR.WorkflowOutput, Never, T> where FR.WorkflowInput == Never {
+    public func thenProceed<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> ModifiedWorkflowView<FR.WorkflowOutput, Never, T> where FR.WorkflowInput == Never {
         ModifiedWorkflowView(self, isLaunched: _isLaunched, item: item)
     }
 }
@@ -176,18 +157,8 @@ extension WorkflowView where Args == AnyWorkflow.PassedArgs {
      - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
      - Returns: a new `WorkflowView` with the additional `FlowRepresentable` item.
      */
-    public func thenProceed<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> WorkflowView<FR.WorkflowOutput> where FR.WorkflowInput == AnyWorkflow.PassedArgs {
-        var workflow = self.workflow
-        if workflow == nil {
-            workflow = AnyWorkflow(Workflow<FR>(item.metadata))
-        } else {
-            workflow?.append(item.metadata)
-        }
-        return WorkflowView<FR.WorkflowOutput>(isLaunched: $isLaunched,
-                                               workflow: workflow,
-                                               onFinish: onFinish,
-                                               onAbandon: onAbandon,
-                                               passedArgs: passedArgs)
+    public func thenProceed<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> ModifiedWorkflowView<FR.WorkflowOutput, Never, T> where FR.WorkflowInput == AnyWorkflow.PassedArgs {
+        ModifiedWorkflowView(self, isLaunched: _isLaunched, item: item)
     }
 
     /**
@@ -195,18 +166,8 @@ extension WorkflowView where Args == AnyWorkflow.PassedArgs {
      - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
      - Returns: a new `WorkflowView` with the additional `FlowRepresentable` item.
      */
-    public func thenProceed<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> WorkflowView<FR.WorkflowOutput> {
-        var workflow = self.workflow
-        if workflow == nil {
-            workflow = AnyWorkflow(Workflow<FR>(item.metadata))
-        } else {
-            workflow?.append(item.metadata)
-        }
-        return WorkflowView<FR.WorkflowOutput>(isLaunched: $isLaunched,
-                                               workflow: workflow,
-                                               onFinish: onFinish,
-                                               onAbandon: onAbandon,
-                                               passedArgs: passedArgs)
+    public func thenProceed<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> ModifiedWorkflowView<FR.WorkflowOutput, Never, T> {
+        ModifiedWorkflowView(self, isLaunched: _isLaunched, item: item)
     }
 }
 
@@ -217,26 +178,7 @@ extension WorkflowView {
      - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
      - Returns: a new `WorkflowView` with the additional `FlowRepresentable` item.
      */
-    public func thenProceed<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> WorkflowView<FR.WorkflowOutput> where Args == FR.WorkflowInput {
-        var workflow = self.workflow
-        if workflow == nil {
-            workflow = AnyWorkflow(Workflow<FR>(item.metadata))
-        } else {
-            workflow?.append(item.metadata)
-        }
-        return WorkflowView<FR.WorkflowOutput>(isLaunched: $isLaunched,
-                                               workflow: workflow,
-                                               onFinish: onFinish,
-                                               onAbandon: onAbandon,
-                                               passedArgs: passedArgs)
-    }
-
-    /**
-     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
-     - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
-     - Returns: a new `WorkflowView` with the additional `FlowRepresentable` item.
-     */
-    public func thenProceed2<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> ModifiedWorkflowView<FR.WorkflowOutput, Never, T> where Args == FR.WorkflowInput {
+    public func thenProceed<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> ModifiedWorkflowView<FR.WorkflowOutput, Never, T> where Args == FR.WorkflowInput {
         ModifiedWorkflowView(self, isLaunched: _isLaunched, item: item)
     }
 
@@ -245,17 +187,7 @@ extension WorkflowView {
      - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
      - Returns: a new `WorkflowView` with the additional `FlowRepresentable` item.
      */
-    public func thenProceed<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> WorkflowView<FR.WorkflowOutput> where FR.WorkflowInput == AnyWorkflow.PassedArgs {
-        var workflow = self.workflow
-        if workflow == nil {
-            workflow = AnyWorkflow(Workflow<FR>(item.metadata))
-        } else {
-            workflow?.append(item.metadata)
-        }
-        return WorkflowView<FR.WorkflowOutput>(isLaunched: $isLaunched,
-                                               workflow: workflow,
-                                               onFinish: onFinish,
-                                               onAbandon: onAbandon,
-                                               passedArgs: passedArgs)
+    public func thenProceed<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> ModifiedWorkflowView<FR.WorkflowOutput, Never, T> where FR.WorkflowInput == AnyWorkflow.PassedArgs {
+        ModifiedWorkflowView(self, isLaunched: _isLaunched, item: item)
     }
 }
