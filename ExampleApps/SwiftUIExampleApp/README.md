@@ -3,7 +3,7 @@
 ## Overview
 SwiftUIExampleApp is a simple app with 3 main features: Mapping, QR Code scanning, and a Profile.
 
-The project is designed to give you an idea of SwiftCurrent functionality and aims to keep UI code to a minimum.
+The project is designed to give you an idea of SwiftCurrent functionality while keeping UI code to a minimum.
 
 ## Areas of Interest
 Here is a list of things that are interesting to look at from a SwiftCurrent perspective.

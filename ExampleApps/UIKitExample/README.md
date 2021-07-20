@@ -1,56 +1,21 @@
 #  About UIKitExample
 
 ## Overview
-The app is designed to give you an idea of what SwiftCurrent can do with minimal overhead in the UI. The key areas of code you'll want to look at are: `SetupViewController.swift` and the view controllers referenced in the `Workflow`.
+UIKitExample showcases the usage of SwiftCurrent for a restaurant ordering App.
 
-We have exhaustive developer documentation on SwiftCurrent, and that documentation should be referenced for any questions regarding types, functions, and parameters.  This README will focus on how this example app is structured.  
+The project is designed to give you an idea of SwiftCurrent functionality while keeping UI code to a minimum.
 
-## Starting Controllers
+## Areas of Interest
+Here is a list of things that are interesting to look at from a SwiftCurrent perspective.
+
 ### SetupViewController
-#### Overview
-The `SetupViewController` is the starting point of the app.  It launches the ordering workflow.  
-
-## Order workflow controllers
-Unless otherwise stated, all view controllers in the order workflow are:
-
-- Have a `WorkflowInput` type of `Order` and a `WorkflowOutput` type of `Order`.
-- A `FlowRepresentable`.
-- Loaded from the `Main.storyboard`.
-
-
-### LocationsViewController
-#### Overview
-The `LocationsViewController` allows users to select which location from which they want to start their order.  It contains a list of locations, and upon selecting a location the view controller will create an `Order` with that location and passes the new `Order` to the next screen.
-
-#### SwiftCurrent related details
-`LocationsViewController` has an `WorkflowInput` type of `[Location]` and a `WorkflowOutput` type of `Order`.
-
-This view only loads if there is more than 1 `Location` to select.  If there is only 1 `Location`, that `Location` is automatically used to create a new `Order` and we move to the next screen.
+This is the entry point of the App, which launches a `Workflow` for placing an order.
 
 ### PickupOrDeliveryViewController
-#### Overview
-The `PickupOrDeliveryViewController` allows users to select an order type such as pickup or delivery.  If the order is a delivery type, a new workflow is launched to gather the user's address before moving to the next screen. 
+This screen launches an interim `Workflow` when selecting Delivery.
 
-#### SwiftCurrent related details
-This view only loads if there is more than 1 `OrderType` available at the given location.  If there is only 1 `OrderType` then that is automatically applied to the `Order` and we move to the next screen.
+### LocationsViewController
+This screen uses conditional loading logic in its `shouldLoad` method, and it has distinct input and output types.
 
-This view offers an example of launching a `Workflow` in a `Workflow`.
-
-### MenuSelectionViewController
-#### Overview
-
-#### SwiftCurrent related details
-
-
-### FoodSelectionViewController
-#### Overview
-The `FoodSelectionViewController` allows users to select their food options.  It presents 3 hardcoded options that are added to the order before moving to the next screen.
-
-#### SwiftCurrent related details
-This view always loads.
-
-
-### ReviewOrderViewController
-#### Overview
-
-#### SwiftCurrent related details
+### StoryboardLoadable
+This file configures SwiftCurrent to load our views from Storyboards.
