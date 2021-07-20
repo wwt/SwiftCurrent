@@ -12,6 +12,7 @@ import SwiftUI
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class WorkflowViewModel: ObservableObject {
     @Published var body = AnyView(EmptyView())
+    @Published var erasedBody: Any?
     var isLaunched: Binding<Bool>?
     var onAbandon = [() -> Void]()
 }
@@ -20,14 +21,17 @@ final class WorkflowViewModel: ObservableObject {
 extension WorkflowViewModel: OrchestrationResponder {
     func launch(to destination: AnyWorkflow.Element) {
         extractView(from: destination).model = self
+        erasedBody = extractView(from: destination).erasedView
     }
 
     func proceed(to destination: AnyWorkflow.Element, from source: AnyWorkflow.Element) {
         extractView(from: destination).model = self
+        erasedBody = extractView(from: destination).erasedView
     }
 
     func backUp(from source: AnyWorkflow.Element, to destination: AnyWorkflow.Element) {
         extractView(from: destination).model = self
+        erasedBody = extractView(from: destination).erasedView
     }
 
     func abandon(_ workflow: AnyWorkflow, onFinish: (() -> Void)?) {
@@ -39,6 +43,7 @@ extension WorkflowViewModel: OrchestrationResponder {
         if workflow.lastLoadedItem?.value.metadata.persistence == .removedAfterProceeding {
             if let lastPresentableItem = workflow.lastPresentableItem {
                 extractView(from: lastPresentableItem).model = self
+                erasedBody = extractView(from: lastPresentableItem).erasedView
             } else {
                 isLaunched?.wrappedValue = false
             }

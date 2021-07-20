@@ -53,7 +53,8 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         let expectViewLoaded = ViewHosting.loadView(
             WorkflowView(isLaunched: .constant(true))
                 .thenProceed2(with: WorkflowItem(FR1.self))
-                .thenProceed(with: WorkflowItem(FR2.self))).inspection.inspect { viewUnderTest in
+                .thenProceed(with: WorkflowItem(FR2.self))
+                .launch()).inspection.inspect { viewUnderTest in
             XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
             XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertEqual(try viewUnderTest.find(FR2.self).text().string(), "FR2 type")
