@@ -17,18 +17,21 @@ final class AnyFlowRepresentableView: AnyFlowRepresentable {
         }
     }
     private var setViewOnModel = { }
+    var erasedView: Any = EmptyView()
 
     init<FR: FlowRepresentable & View>(type: FR.Type, args: AnyWorkflow.PassedArgs) {
         super.init(type, args: args)
         guard let instance = underlyingInstance as? FR else {
             fatalError("Could not cast \(String(describing: underlyingInstance)) to expected type: \(FR.self)")
         }
+        erasedView = instance
         setViewOnModel = { [weak self] in
             self?.model?.body = AnyView(instance)
         }
     }
 
     func changeUnderlyingView<V: View>(to view: V) {
+        erasedView = view
         setViewOnModel = { [weak self] in
             self?.model?.body = AnyView(view)
         }
