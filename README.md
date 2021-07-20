@@ -38,6 +38,12 @@ The app is designed to give you an idea of what SwiftCurrent can do with minimal
 
 [We're working on it now!](https://github.com/wwt/SwiftCurrent/milestone/2)
 
+If you would like to try the beta release, please install the `BETA_SwiftCurrent_SwiftUI` product in SPM or the `BETA_SwiftUI` sub spec in CocoaPods.  For more detailed steps, [see our installation instructions](https://github.com/wwt/SwiftCurrent/wiki/Installation).  See [Getting Started with SwiftUI](https://github.com/wwt/SwiftCurrent/wiki/Getting-Started-with-SwiftUI) for a quick tutorial.
+
+In order to use the library with SwiftUI, your minimum targeted versions must meet: iOS 14.0, macOS 11, tvOS 14.0, or watchOS 7.0.
+
+For us, beta means that the API may change without warning until the full release.  However, we expect bugs to be at a minimum and documentation to be true and accurate.
+
 # Quick Start
 
 This quick start uses SPM, but for other approaches, [see our installation instructions](https://github.com/wwt/SwiftCurrent/wiki/Installation).
@@ -50,21 +56,60 @@ This quick start uses SPM, but for other approaches, [see our installation instr
 .product(name: "SwiftCurrent", package: "SwiftCurrent"),
 .product(name: "SwiftCurrent_UIKit", package: "SwiftCurrent")
 ```
-Then make your first FlowRepresentable view controller:
+Then make your first FlowRepresentable view controllers:
 ```swift
 import SwiftCurrent
 import SwiftCurrent_UIKit
-class ExampleViewController: UIWorkflowItem<Never, Never>, FlowRepresentable {
-    override func viewDidLoad() {
-        view.backgroundColor = .green
+class OptionalViewController: UIWorkflowItem<String, Never>, FlowRepresentable {
+    let input: String
+    required init(with args: String) {
+        input = args
+        super.init(nibName: nil, bundle: nil)
     }
+    required init?(coder: NSCoder) { nil }
+    override func viewDidLoad() { view.backgroundColor = .blue }
+    func shouldLoad() -> Bool { input.isEmpty }
+}
+class ExampleViewController: UIWorkflowItem<Never, Never>, FlowRepresentable {
+    override func viewDidLoad() { view.backgroundColor = .green }
 }
 ```
-Then from your root view controller, call: 
+Then from your root view controller, call:
 ```swift
 import SwiftCurrent
 ...
-launchInto(Workflow(ExampleViewController.self))
+let workflow = Workflow(OptionalViewController.self)
+    .thenProceed(with: ExampleViewController.self)
+launchInto(workflow, args: "Skip optional screen")
+```
+
+And just like that you're started!
+
+## [BETA] SwiftUI
+
+```swift
+.package(url: "https://github.com/wwt/SwiftCurrent.git", .upToNextMajor(from: "4.1.0")),
+...
+.product(name: "SwiftCurrent", package: "SwiftCurrent"),
+.product(name: "BETA_SwiftCurrent_SwiftUI", package: "SwiftCurrent")
+```
+Then make your first FlowRepresentable view:
+```swift
+import SwiftCurrent
+struct ExampleView: View, FlowRepresentable {
+    weak var _workflowPointer: AnyFlowRepresentable?
+    let input: String
+    init(with args: String) { input = args }
+    var body: some View { Text("Passed in: \(input)") }
+    func shouldLoad() -> Bool { !input.isEmpty }
+}
+```
+Then from your ContentView body, add: 
+```swift
+import SwiftCurrent_SwiftUI
+...
+WorkflowView(isLaunched: .constant(true), startingArgs: "Launched")
+    .thenProceed(with: WorkflowItem(ExampleView.self))
 ```
 
 And just like that you're started!
@@ -73,10 +118,12 @@ And just like that you're started!
 
 - [Why SwiftCurrent?](https://github.com/wwt/SwiftCurrent/wiki/Why-This-Library%3F)
 - [Installation](https://github.com/wwt/SwiftCurrent/wiki/Installation)
-- [Getting Started with Storyboards](https://github.com/wwt/SwiftCurrent/wiki/getting-started)
-- [Getting Started with Programmatic UIKit](https://github.com/wwt/SwiftCurrent/wiki/Getting-Started-with-Programmatic-UIKit)
+- [Getting Started with Storyboards](https://github.com/wwt/SwiftCurrent/wiki/Getting-Started-with-Storyboards)
+- [Getting Started with Programmatic UIKit Views](https://github.com/wwt/SwiftCurrent/wiki/Getting-Started-with-Programmatic-UIKit-Views)
+- [[BETA] Getting Started with SwiftUI](https://github.com/wwt/SwiftCurrent/wiki/Getting-Started-with-SwiftUI)
 - [Developer Documentation](https://wwt.github.io/SwiftCurrent/index.html)
 - [Upgrade Path](https://github.com/wwt/SwiftCurrent/blob/main/wiki/UPGRADE_PATH.md)
+- [Contributing to SwiftCurrent](https://github.com/wwt/SwiftCurrent/blob/bb847f5934ebcb24c299aa0303974dd44c8d0c9c/.github/CONTRIBUTING.md)
 
 # Feedback
 
@@ -85,4 +132,3 @@ If you like what you've seen, consider [giving us a star](https://github.com/wwt
 <!-- Social Media -->
 [![Stars](https://img.shields.io/github/stars/wwt/SwiftCurrent?style=social)](https://github.com/wwt/SwiftCurrent/stargazers)
 [![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2FSwiftCurrentWWT)](https://twitter.com/SwiftCurrentWWT)
- 
