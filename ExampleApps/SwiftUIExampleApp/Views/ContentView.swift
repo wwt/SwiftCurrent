@@ -10,7 +10,7 @@ import SwiftUI
 import SwiftCurrent_SwiftUI
 
 struct ContentView: View {
-    let inspection = Inspection<Self>()
+    let inspection = Inspection<Self>() // ViewInspector
     var body: some View {
         TabView {
             // NOTE: Using constant here guarantees the workflow cannot abandon, it stays launched forever.
@@ -35,7 +35,7 @@ struct ContentView: View {
                     Label("Profile", systemImage: "person.crop.circle")
                 }
         }
-        .onReceive(inspection.notice) { inspection.visit(self, $0) }
+        .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 }
 
