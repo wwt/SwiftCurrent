@@ -327,14 +327,14 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         let expectOnAbandon2 = expectation(description: "OnAbandon2 called")
         let expectViewLoaded = ViewHosting.loadView(
             WorkflowView(isLaunched: isLaunched)
-                .thenProceed(with: WorkflowItem(FR1.self))
+                .thenProceed2(with: WorkflowItem(FR1.self))
                 .onAbandon {
             XCTAssertFalse(isLaunched.wrappedValue)
             expectOnAbandon1.fulfill()
         }.onAbandon {
             XCTAssertFalse(isLaunched.wrappedValue)
             expectOnAbandon2.fulfill()
-        }).inspection.inspect { viewUnderTest in
+        }.launch()).inspection.inspect { viewUnderTest in
             XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().workflow?.abandon())
             XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
         }
@@ -352,9 +352,9 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
 
         let expectViewLoaded = ViewHosting.loadView(
             WorkflowView(isLaunched: .constant(true))
-                .thenProceed(with: WorkflowItem(FR1.self)
-                                .applyModifiers { $0.customModifier().background(Color.blue) })).inspection.inspect { viewUnderTest in
-            XCTAssertNoThrow(try viewUnderTest.vStack().anyView(0).view(FR1.self).background())
+                .thenProceed2(with: WorkflowItem(FR1.self)
+                                .applyModifiers { $0.customModifier().background(Color.blue) }).launch()).inspection.inspect { viewUnderTest in
+            XCTAssertNoThrow(try viewUnderTest.find(FR1.self).background())
         }
 
         wait(for: [expectViewLoaded], timeout: 0.3)
@@ -367,23 +367,31 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
 
             func customModifier() -> Self { self }
         }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
 
         let binding = Binding(wrappedValue: true)
         let workflowView = WorkflowView(isLaunched: binding)
-            .thenProceed(with: WorkflowItem(FR1.self)
+            .thenProceed2(with: WorkflowItem(FR1.self)
                             .applyModifiers { $0.customModifier().background(Color.blue) })
+            .thenProceed(with: WorkflowItem(FR2.self)).launch()
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { viewUnderTest in
             // Capture vstack for lifecycle simulation
-            let vstack = try viewUnderTest.vStack()
+            XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+
             binding.wrappedValue = false
-            XCTAssertNoThrow(try vstack.callOnDisappear())
             // Expected that there is no vstack at this point in the lifecycle
-            XCTAssertThrowsError(try viewUnderTest.vStack())
+            XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
+            XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
 
             // Change state to put the vstack back
             binding.wrappedValue = true
             // Starting state of the vstack when we come back should be an empty view
-            XCTAssertNoThrow(try viewUnderTest.vStack().anyView(0).emptyView())
+            XCTAssertNoThrow(try viewUnderTest.find(FR2.self).callOnChange(newValue: true))
+            XCTAssertNoThrow(try viewUnderTest.find(FR1.self))
+            XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
         }
 
         wait(for: [expectViewLoaded], timeout: 0.3)

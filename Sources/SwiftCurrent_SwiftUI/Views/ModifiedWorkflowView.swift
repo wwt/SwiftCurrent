@@ -27,6 +27,7 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
             if let body = model.erasedBody as? Content {
                 body
                     .onReceive(model.onAbandonPublisher) { onAbandon.forEach { $0() } }
+                    .onChange(of: isLaunched) { if $0 { launch() } }
                     .onReceive(inspection.notice) { inspection.visit(self, $0) }
             } else {
                 wrapped.onReceive(inspection.notice) { inspection.visit(self, $0) }
@@ -61,7 +62,7 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
         _isLaunched = workflowView._isLaunched
     }
 
-    public func launch() -> Self {
+    @discardableResult public func launch() -> Self {
         workflow.launch(withOrchestrationResponder: model, passedArgs: launchArgs) { args in
             onFinish.forEach { $0(args) }
         }
