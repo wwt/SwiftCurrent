@@ -27,15 +27,15 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectViewLoaded = ViewHosting.loadView(
             WorkflowView(isLaunched: .constant(true))
-                .thenProceed(with: WorkflowItem(FR1.self))
+                .thenProceed2(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR2.self))
                 .onFinish { _ in
             expectOnFinish.fulfill()
-        }).inspection.inspect { viewUnderTest in
-            XCTAssertEqual(try viewUnderTest.vStack().anyView(0).view(FR1.self).text().string(), "FR1 type")
-            XCTAssertNoThrow(try viewUnderTest.vStack().anyView(0).view(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertEqual(try viewUnderTest.vStack().anyView(0).view(FR2.self).text().string(), "FR2 type")
-            XCTAssertNoThrow(try viewUnderTest.vStack().anyView(0).view(FR2.self).actualView().proceedInWorkflow())
+        }.launch()).inspection.inspect { viewUnderTest in
+            XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
+            XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+            XCTAssertEqual(try viewUnderTest.find(FR2.self).text().string(), "FR2 type")
+            XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
         }
 
         wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.3)

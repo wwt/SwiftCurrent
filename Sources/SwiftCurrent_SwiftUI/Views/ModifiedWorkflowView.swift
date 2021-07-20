@@ -11,9 +11,12 @@ import SwiftCurrent
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
-    let wrapped: Wrapped?
     let inspection = Inspection<Self>()
-    let workflow: AnyWorkflow
+    private let wrapped: Wrapped?
+    private let workflow: AnyWorkflow
+    private var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
+//    private var onAbandon = [() -> Void]()
+//    private var passedArgs = AnyWorkflow.PassedArgs.none
 
     @ObservedObject private var model = WorkflowViewModel()
 
@@ -37,9 +40,25 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
         workflow.append(item.metadata)
     }
 
+    private init(workflowView: Self, onFinish: [(AnyWorkflow.PassedArgs) -> Void]) {
+        model = workflowView.model
+        wrapped = workflowView.wrapped
+        workflow = workflowView.workflow
+        self.onFinish = onFinish
+    }
+
     public func launch() -> Self {
-        workflow.launch(withOrchestrationResponder: model, passedArgs: .none)
+        workflow.launch(withOrchestrationResponder: model, passedArgs: .none) { args in
+            onFinish.forEach { $0(args) }
+        }
         return self
+    }
+
+    /// Adds an action to perform when this `Workflow` has finished.
+    public func onFinish(closure: @escaping (AnyWorkflow.PassedArgs) -> Void) -> Self {
+        var onFinish = self.onFinish
+        onFinish.append(closure)
+        return Self(workflowView: self, onFinish: onFinish)
     }
 }
 
