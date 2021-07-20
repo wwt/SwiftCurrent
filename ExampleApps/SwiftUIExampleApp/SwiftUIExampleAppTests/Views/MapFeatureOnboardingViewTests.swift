@@ -20,6 +20,10 @@ final class MapFeatureOnboardingViewTests: XCTestCase {
         print("!!! \(Self.self).setUpWithError()")
         Container.default.removeAll()
     }
+    override func tearDownWithError() throws {
+        ViewHosting.expel()
+        Container.default.removeAll()
+    }
 
     #warning("Pipeline has a really hard time with this, even though locally it continues to work great, replacement test below this test.")
     func testOnboardingInWorkflow() throws {
