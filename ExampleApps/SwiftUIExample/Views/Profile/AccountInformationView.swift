@@ -20,7 +20,7 @@ struct AccountInformationView: View, FlowRepresentable {
     weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
-        Group { // swiftlint:disable:this closure_body_length
+        VStack { // swiftlint:disable:this closure_body_length
             if !usernameWorkflowLaunched {
                 HStack {
                     Text("Username: \(username)")

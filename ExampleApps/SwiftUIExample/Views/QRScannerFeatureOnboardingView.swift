@@ -17,7 +17,7 @@ struct QRScannerFeatureOnboardingView: View, FlowRepresentable {
     weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
-        Group {
+        VStack {
             Text("Learn about our awesome QR scanning feature!")
             Button("Continue") {
                 userDefaults.set(true, forKey: "OnboardedToQRScanningFeature")

@@ -17,7 +17,7 @@ struct ProfileFeatureOnboardingView: View, FlowRepresentable {
     weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
-        Group {
+        VStack {
             Text("Learn about our awesome profile feature!")
             Button("Continue") {
                 userDefaults.set(true, forKey: "OnboardedToProfileFeature")

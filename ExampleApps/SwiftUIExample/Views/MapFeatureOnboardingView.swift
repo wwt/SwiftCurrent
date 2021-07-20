@@ -19,7 +19,7 @@ struct MapFeatureOnboardingView: View, FlowRepresentable {
     weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
-        Group {
+        VStack {
             Text("Learn about our awesome map feature!")
             Button("Continue") {
                 userDefaults.set(true, forKey: "OnboardedToMapFeature")

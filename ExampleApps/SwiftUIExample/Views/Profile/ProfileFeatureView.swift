@@ -16,7 +16,7 @@ struct ProfileFeatureView: View, FlowRepresentable {
     var body: some View {
         ScrollView {
             VStack {
-                Group {
+                VStack {
                     Image(systemName: "person.fill.questionmark")
                         .renderingMode(.template)
                         .resizable()
@@ -29,13 +29,13 @@ struct ProfileFeatureView: View, FlowRepresentable {
                     Text("Your name here").font(.title)
                     Divider()
                 }
-                Group {
+                VStack {
                     Section(header: Text("Account Information:").font(.title)) {
                         AccountInformationView().padding()
                     }
                     Divider()
                 }
-                Group {
+                VStack {
                     Button("Clear User Defaults") {
                         Self.userDefaults.dictionaryRepresentation().keys.forEach(Self.userDefaults.removeObject(forKey:))
                     }
