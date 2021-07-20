@@ -46,14 +46,11 @@ import SwiftCurrent
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowView<Args>: View {
     @Binding private var isLaunched: Bool
-    @StateObject private var model = WorkflowViewModel()
-    @State private var didLoad = false
-
-    let inspection = Inspection<Self>() // Needed for ViewInspector
-    private var workflow: AnyWorkflow?
-    private var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
-    private var onAbandon = [() -> Void]()
     var passedArgs = AnyWorkflow.PassedArgs.none
+
+    public var body: some View {
+        noView()
+    }
 
     /**
      Creates a `WorkflowView` that displays a `FlowRepresentable` when presented.
@@ -75,44 +72,6 @@ public struct WorkflowView<Args>: View {
         } else {
             passedArgs = .args(args)
         }
-    }
-
-    private init(isLaunched: Binding<Bool>,
-                 workflow: AnyWorkflow?,
-                 onFinish: [(AnyWorkflow.PassedArgs) -> Void],
-                 onAbandon: [() -> Void],
-                 passedArgs: AnyWorkflow.PassedArgs) {
-        _isLaunched = isLaunched
-        self.workflow = workflow
-        self.onFinish = onFinish
-        self.onAbandon = onAbandon
-        self.passedArgs = passedArgs
-    }
-
-    public var body: some View {
-        noView()
-    }
-
-    /// Adds an action to perform when this `Workflow` has finished.
-    public func onFinish(closure: @escaping (AnyWorkflow.PassedArgs) -> Void) -> Self {
-        var onFinish = self.onFinish
-        onFinish.append(closure)
-        return WorkflowView(isLaunched: $isLaunched,
-                            workflow: workflow,
-                            onFinish: onFinish,
-                            onAbandon: onAbandon,
-                            passedArgs: passedArgs)
-    }
-
-    /// Adds an action to perform when this `Workflow` has abandoned.
-    public func onAbandon(closure: @escaping () -> Void) -> Self {
-        var onAbandon = self.onAbandon
-        onAbandon.append(closure)
-        return WorkflowView(isLaunched: $isLaunched,
-                            workflow: workflow,
-                            onFinish: onFinish,
-                            onAbandon: onAbandon,
-                            passedArgs: passedArgs)
     }
 
     // swiftlint:disable:next unavailable_function
