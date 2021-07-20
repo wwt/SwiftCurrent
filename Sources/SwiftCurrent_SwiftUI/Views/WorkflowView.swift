@@ -92,7 +92,7 @@ public struct WorkflowView<Args>: View {
     public var body: some View {
         if isLaunched {
             VStack {
-                model.body
+//                model.body
             }
             .onAppear {
                 guard !didLoad else { return }

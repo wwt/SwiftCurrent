@@ -26,7 +26,7 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
 
     public var body: some View {
         if isLaunched {
-            if let body = model.erasedBody as? Content {
+            if let body = model.body as? Content {
                 body
                     .onReceive(model.onAbandonPublisher) { onAbandon.forEach { $0() } }
                     .onChange(of: isLaunched) { if $0 { launch() } }
@@ -73,7 +73,6 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
                                                        launchArgs: workflowView.launchArgs) { args in
             onFinish.forEach { $0(args) }
         })
-
     }
 
     private func launch() {
