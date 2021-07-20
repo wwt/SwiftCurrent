@@ -16,6 +16,10 @@ import CodeScanner
 @testable import SwiftUIExampleApp
 
 final class QRScanningViewTests: XCTestCase {
+    override func tearDownWithError() throws {
+        ViewHosting.expel()
+    }
+
     func testQRScanningView() throws {
         let exp = ViewHosting.loadView(QRScannerFeatureView()).inspection.inspect { viewUnderTest in
             XCTAssertEqual(try viewUnderTest.view(CodeScannerView.self).actualView().codeTypes, [.qr])

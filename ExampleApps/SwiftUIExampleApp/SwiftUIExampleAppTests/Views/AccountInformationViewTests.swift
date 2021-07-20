@@ -16,6 +16,10 @@ import CodeScanner
 @testable import SwiftUIExampleApp
 
 final class AccountInformationViewTests: XCTestCase {
+    override func tearDownWithError() throws {
+        ViewHosting.expel()
+    }
+
     func testAccountInformationView() throws {
         let exp = ViewHosting.loadView(AccountInformationView()).inspection.inspect { view in
             XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Username: changeme")
