@@ -39,7 +39,7 @@ extension WorkflowViewModel: OrchestrationResponder {
 
     func abandon(_ workflow: AnyWorkflow, onFinish: (() -> Void)?) {
         isLaunched?.wrappedValue = false
-        // erasedBody = nil
+        body = nil
         onAbandonPublisher.send()
         onAbandon.forEach { $0() }
     }

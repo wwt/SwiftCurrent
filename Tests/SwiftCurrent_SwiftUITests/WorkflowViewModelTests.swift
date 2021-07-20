@@ -44,6 +44,15 @@ final class WorkflowViewModelTests: XCTestCase {
             model.complete(AnyWorkflow(typedWorkflow), passedArgs: .none, onFinish: nil)
         }
     }
+
+    func testWorkflowViewModelSetsBodyToNilWhenAbandoning() {
+        let model = WorkflowViewModel()
+        model.body = ""
+        let typedWorkflow = Workflow(FR.self)
+        model.abandon(AnyWorkflow(typedWorkflow), onFinish: nil)
+
+        XCTAssertNil(model.body)
+    }
 }
 
 fileprivate struct FR: FlowRepresentable {
