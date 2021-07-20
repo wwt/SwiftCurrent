@@ -32,10 +32,8 @@ final class MapFeatureOnboardingViewTests: XCTestCase {
         let exp = ViewHosting.loadView(WorkflowView(isLaunched: .constant(true))
                                         .thenProceed(with: WorkflowItem(MapFeatureOnboardingView.self))
                                         .onFinish { _ in
-                                            print("!!! \(Self.self).testOnboardingInWorkflow - onFinish")
                                             workflowFinished.fulfill()
                                         }).inspection.inspect { view in
-                                            print("!!! \(Self.self).testOnboardingInWorkflow - Inspected")
                                             XCTAssertNoThrow(try view.find(ViewType.Text.self))
                                             XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Learn about our awesome map feature!")
                                             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
@@ -54,7 +52,6 @@ final class MapFeatureOnboardingViewTests: XCTestCase {
         // swiftlint:disable:next force_cast
         var onboardingView = erased.underlyingInstance as! MapFeatureOnboardingView
         onboardingView.proceedInWorkflowStorage = { _ in
-            print("!!! \(Self.self).testOnboardingProceedsInWorkflow - proceedInWorkflowStorage called")
             proceedCalled.fulfill()
         }
         onboardingView._workflowPointer = erased
@@ -67,7 +64,6 @@ final class MapFeatureOnboardingViewTests: XCTestCase {
         let inspection = view.inspection
         print("!!! \(Self.self).testOnboardingProceedsInWorkflow - about to inspect: \(inspection)")
         let exp = inspection.inspect { view in
-            print("!!! \(Self.self).testOnboardingProceedsInWorkflow - Inspected: \(view)")
             XCTAssertNoThrow(try view.find(ViewType.Text.self))
             XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Learn about our awesome map feature!")
             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
