@@ -17,7 +17,7 @@ struct ChangePasswordView: View, FlowRepresentable {
     @State private var submitted = false
     @State private var errors = [String]()
 
-    let inspection = Inspection<Self>()
+    let inspection = Inspection<Self>() // ViewInspector
 
     private let currentPassword: String
 
@@ -52,7 +52,7 @@ struct ChangePasswordView: View, FlowRepresentable {
         .onChange(of: oldPassword, perform: validateOldPassword)
         .onChange(of: newPassword, perform: validatePassword)
         .onChange(of: confirmNewPassword, perform: validatePassword)
-        .onReceive(inspection.notice) { inspection.visit(self, $0) }
+        .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 
     private func validateOldPassword(_ password: String) {

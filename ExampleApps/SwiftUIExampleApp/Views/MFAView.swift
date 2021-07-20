@@ -16,7 +16,7 @@ struct MFAView: View, FlowRepresentable {
     @State var enteredCode = ""
     @State var errorMessage: ErrorMessage?
 
-    let inspection = Inspection<Self>()
+    let inspection = Inspection<Self>() // ViewInspector
     weak var _workflowPointer: AnyFlowRepresentable?
 
     private let heldWorkflowData: AnyWorkflow.PassedArgs
@@ -55,7 +55,7 @@ struct MFAView: View, FlowRepresentable {
                 workflow?.abandon()
             })
         }
-        .onReceive(inspection.notice) { inspection.visit(self, $0) }
+        .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 }
 

@@ -16,7 +16,7 @@ struct AccountInformationView: View, FlowRepresentable {
     @State private var usernameWorkflowLaunched = false
     @State private var passwordWorkflowLaunched = false
 
-    let inspection = Inspection<Self>()
+    let inspection = Inspection<Self>() // ViewInspector
     weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
@@ -53,6 +53,6 @@ struct AccountInformationView: View, FlowRepresentable {
                         passwordWorkflowLaunched = false
                     }
             }
-        }.onReceive(inspection.notice) { inspection.visit(self, $0) }
+        }.onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 }

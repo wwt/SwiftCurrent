@@ -14,7 +14,7 @@ struct ChangeUsernameView: View, FlowRepresentable {
 
     @State private var currentUsername: String
 
-    let inspection = Inspection<Self>()
+    let inspection = Inspection<Self>() // ViewInspector
     weak var _workflowPointer: AnyFlowRepresentable?
 
     init(with username: String) {
@@ -30,6 +30,6 @@ struct ChangeUsernameView: View, FlowRepresentable {
             Button("Save") {
                 proceedInWorkflow(currentUsername)
             }
-        }.onReceive(inspection.notice) { inspection.visit(self, $0) }
+        }.onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 }

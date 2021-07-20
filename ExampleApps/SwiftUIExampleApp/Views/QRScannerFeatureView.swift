@@ -13,7 +13,7 @@ import CodeScanner
 struct QRScannerFeatureView: View, FlowRepresentable {
     @State private var scannedCode: ScannedCode?
 
-    let inspection = Inspection<Self>()
+    let inspection = Inspection<Self>() // ViewInspector
     weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
@@ -27,7 +27,7 @@ struct QRScannerFeatureView: View, FlowRepresentable {
         } content: { code in
             Text("SCANNED DATA: \(code.data)")
         }
-        .onReceive(inspection.notice) { inspection.visit(self, $0) }
+        .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 }
 

@@ -13,7 +13,7 @@ import Swinject
 struct QRScannerFeatureOnboardingView: View, FlowRepresentable {
     private var userDefaults: UserDefaults! { Container.default.resolve(UserDefaults.self) }
 
-    let inspection = Inspection<Self>()
+    let inspection = Inspection<Self>() // ViewInspector
     weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
@@ -24,7 +24,7 @@ struct QRScannerFeatureOnboardingView: View, FlowRepresentable {
                 proceedInWorkflow()
             }
         }
-        .onReceive(inspection.notice) { inspection.visit(self, $0) }
+        .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 
     func shouldLoad() -> Bool {
