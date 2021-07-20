@@ -26,7 +26,7 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
         if isLaunched {
             if let body = model.erasedBody as? Content {
                 body
-                    .onReceive(model.$erasedBody, perform: conditionallyAbandon)
+                    .onReceive(model.onAbandonPublisher) { onAbandon.forEach { $0() } }
                     .onReceive(inspection.notice) { inspection.visit(self, $0) }
             } else {
                 wrapped.onReceive(inspection.notice) { inspection.visit(self, $0) }
@@ -80,12 +80,6 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
         var onAbandon = self.onAbandon
         onAbandon.append(closure)
         return Self(workflowView: self, onFinish: onFinish, onAbandon: onAbandon)
-    }
-
-    private func conditionallyAbandon(_ erasedBody: Any?) {
-        if erasedBody == nil {
-            onAbandon.forEach { $0() }
-        }
     }
 }
 

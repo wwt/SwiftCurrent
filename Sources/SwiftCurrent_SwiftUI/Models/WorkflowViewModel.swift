@@ -8,11 +8,13 @@
 
 import SwiftCurrent
 import SwiftUI
+import Combine
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class WorkflowViewModel: ObservableObject {
     @Published var body = AnyView(EmptyView())
     @Published var erasedBody: Any?
+    var onAbandonPublisher = PassthroughSubject<Void, Never>()
     var isLaunched: Binding<Bool>?
     var onAbandon = [() -> Void]()
 
@@ -41,7 +43,8 @@ extension WorkflowViewModel: OrchestrationResponder {
 
     func abandon(_ workflow: AnyWorkflow, onFinish: (() -> Void)?) {
         isLaunched?.wrappedValue = false
-        erasedBody = nil
+        // erasedBody = nil
+        onAbandonPublisher.send()
         onAbandon.forEach { $0() }
     }
 
