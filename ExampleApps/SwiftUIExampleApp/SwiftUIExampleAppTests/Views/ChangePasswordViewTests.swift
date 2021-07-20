@@ -13,10 +13,6 @@ import ViewInspector
 @testable import SwiftUIExampleApp
 
 final class ChangePasswordViewTests: XCTestCase {
-    override func tearDownWithError() throws {
-        ViewHosting.expel()
-    }
-
     func testChangePasswordView() throws {
         let currentPassword = UUID().uuidString
         let exp = ViewHosting.loadView(ChangePasswordView(with: currentPassword)).inspection.inspect { view in
