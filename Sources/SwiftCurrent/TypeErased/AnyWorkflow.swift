@@ -15,7 +15,7 @@ public class AnyWorkflow {
     public typealias Element = LinkedList<_WorkflowItem>.Element
 
     /// The `OrchestrationResponder` of the wrapped `Workflow`.
-    public internal(set) var orchestrationResponder: OrchestrationResponder? {
+    public /*internal(set)*/ var orchestrationResponder: OrchestrationResponder? {
         get {
             storageBase.orchestrationResponder
         } set {
