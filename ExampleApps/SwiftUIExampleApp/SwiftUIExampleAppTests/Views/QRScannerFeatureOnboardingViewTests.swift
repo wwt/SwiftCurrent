@@ -17,31 +17,25 @@ import ViewInspector
 final class QRScannerFeatureOnboardingViewTests: XCTestCase {
     let defaultsKey = "OnboardedToQRScanningFeature"
     override func setUpWithError() throws {
-        print("!!! \(Self.self).setUpWithError()")
         Container.default.removeAll()
     }
 
     #warning("Pipeline has a really hard time with this, even though locally it continues to work great, replacement test below this test.")
     func testOnboardingInWorkflow() throws {
-        print("!!! \(Self.self).testOnboardingInWorkflow - start")
         let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
         defaults.set(false, forKey: defaultsKey)
         Container.default.register(UserDefaults.self) { _ in defaults }
         let workflowFinished = expectation(description: "View Proceeded")
-        print("!!! \(Self.self).testOnboardingInWorkflow - about to loadView")
         let exp = ViewHosting.loadView(WorkflowView(isLaunched: .constant(true))
                                         .thenProceed(with: WorkflowItem(QRScannerFeatureOnboardingView.self))
                                         .onFinish { _ in
-                                            print("!!! \(Self.self).testOnboardingInWorkflow - onFinish")
                                             workflowFinished.fulfill()
                                         }).inspection.inspect { view in
-                                            print("!!! \(Self.self).testOnboardingInWorkflow - Inspected")
                                             XCTAssertNoThrow(try view.find(ViewType.Text.self))
                                             XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Learn about our awesome QR scanning feature!")
                                             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
                                         }
         wait(for: [exp, workflowFinished], timeout: TestConstant.timeout)
-        print("!!! \(Self.self).testOnboardingInWorkflow - Complete")
     }
 
     func testOnboardingViewLoads_WhenNoValueIsInUserDefaults() throws {
