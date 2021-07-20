@@ -10,8 +10,7 @@ import Foundation
 
 enum TestConstant {
     static var timeout: TimeInterval {
-        10.0 // Debugging
-//        1.0 // Pipeline
+        10.0 // Pipeline
 //        0.1 // Local
     }
 }
