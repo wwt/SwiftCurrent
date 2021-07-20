@@ -17,10 +17,6 @@ final class ContentViewTests: XCTestCase {
     override func setUpWithError() throws {
         Container.default.removeAll()
     }
-    override func tearDownWithError() throws {
-        ViewHosting.expel()
-        Container.default.removeAll()
-    }
 
     func testContentView() throws {
         let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
