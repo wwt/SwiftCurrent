@@ -15,7 +15,6 @@ final class WorkflowViewModel: ObservableObject {
     @Published var body: Any?
     var onAbandonPublisher = PassthroughSubject<Void, Never>()
     var isLaunched: Binding<Bool>?
-    var onAbandon = [() -> Void]()
 
     init() { }
     init(isLaunched: Binding<Bool>) {
@@ -41,7 +40,6 @@ extension WorkflowViewModel: OrchestrationResponder {
         isLaunched?.wrappedValue = false
         body = nil
         onAbandonPublisher.send()
-        onAbandon.forEach { $0() }
     }
 
     func complete(_ workflow: AnyWorkflow, passedArgs: AnyWorkflow.PassedArgs, onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
