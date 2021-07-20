@@ -13,6 +13,10 @@ import ViewInspector
 @testable import SwiftUIExampleApp
 
 final class ChangeUsernameViewTests: XCTestCase {
+    override func tearDownWithError() throws {
+        ViewHosting.expel()
+    }
+
     func testChangeUsernameView() throws {
         let currentUsername = UUID().uuidString
         let exp = ViewHosting.loadView(ChangeUsernameView(with: currentUsername)).inspection.inspect { view in

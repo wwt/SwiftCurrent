@@ -15,6 +15,10 @@ import ViewInspector
 @testable import SwiftUIExampleApp
 
 final class ProfileFeatureViewTests: XCTestCase {
+    override func tearDownWithError() throws {
+        Container.default.removeAll()
+    }
+
     func testProfileFeatureView() throws {
         let viewUnderTest = try ProfileFeatureView().inspect()
         XCTAssertEqual(try viewUnderTest.find(ViewType.Image.self).actualImage(), Image(systemName: "person.fill.questionmark").renderingMode(.template).resizable())

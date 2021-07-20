@@ -13,6 +13,7 @@ import ViewInspector
 @testable import SwiftUIExampleApp
 
 final class CardInformationViewTests: XCTestCase {
+    #warning("This might be interesting to look into")
     func testCardInformationView() throws {
         let viewUnderTest = try CardInformationView().inspect()
         XCTAssertEqual(try viewUnderTest.text().string(), "Drivers License: ")

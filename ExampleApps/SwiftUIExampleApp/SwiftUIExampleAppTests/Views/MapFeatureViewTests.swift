@@ -12,6 +12,10 @@ import ViewInspector
 @testable import SwiftUIExampleApp
 
 final class MapFeatureViewTests: XCTestCase {
+    override func tearDownWithError() throws {
+        ViewHosting.expel()
+    }
+
     func testMapFeatureView() throws {
         let exp = ViewHosting.loadView(MapFeatureView()).inspection.inspect { view in
             let map = try view.map()
