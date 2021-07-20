@@ -54,12 +54,12 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         let expectOnFinish2 = expectation(description: "OnFinish2 called")
         let expectViewLoaded = ViewHosting.loadView(
             WorkflowView(isLaunched: .constant(true))
-                .thenProceed(with: WorkflowItem(FR1.self))
+                .thenProceed2(with: WorkflowItem(FR1.self))
                 .onFinish { _ in
             expectOnFinish1.fulfill()
         }.onFinish { _ in
             expectOnFinish2.fulfill()
-        }).inspection.inspect { viewUnderTest in
+        }.launch()).inspection.inspect { viewUnderTest in
             XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
         }
 
@@ -78,7 +78,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         let expected = UUID().uuidString
         let expectViewLoaded = ViewHosting.loadView(
             WorkflowView(isLaunched: .constant(true), startingArgs: expected)
-                .thenProceed(with: WorkflowItem(FR1.self))).inspection.inspect { viewUnderTest in
+                .thenProceed2(with: WorkflowItem(FR1.self)).launch()).inspection.inspect { viewUnderTest in
             XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().stringProperty, expected)
         }
 

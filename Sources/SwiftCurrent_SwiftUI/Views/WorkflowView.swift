@@ -53,7 +53,7 @@ public struct WorkflowView<Args>: View {
     private var workflow: AnyWorkflow?
     private var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
     private var onAbandon = [() -> Void]()
-    private var passedArgs = AnyWorkflow.PassedArgs.none
+    var passedArgs = AnyWorkflow.PassedArgs.none
 
     /**
      Creates a `WorkflowView` that displays a `FlowRepresentable` when presented.
@@ -229,6 +229,15 @@ extension WorkflowView {
                                                onFinish: onFinish,
                                                onAbandon: onAbandon,
                                                passedArgs: passedArgs)
+    }
+
+    /**
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
+     - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
+     - Returns: a new `WorkflowView` with the additional `FlowRepresentable` item.
+     */
+    public func thenProceed2<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> ModifiedWorkflowView<FR.WorkflowOutput, Never, T> where Args == FR.WorkflowInput {
+        ModifiedWorkflowView(self, item: item)
     }
 
     /**

@@ -14,6 +14,7 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
     let inspection = Inspection<Self>()
     private let wrapped: Wrapped?
     private let workflow: AnyWorkflow
+    private let launchArgs: AnyWorkflow.PassedArgs
     private var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
 //    private var onAbandon = [() -> Void]()
 //    private var passedArgs = AnyWorkflow.PassedArgs.none
@@ -31,6 +32,7 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
     init<A, FR>(_ workflowView: WorkflowView<A>, item: WorkflowItem<FR, Content>) where Wrapped == Never, Args == FR.WorkflowOutput {
         wrapped = nil
         workflow = AnyWorkflow(Workflow<FR>(item.metadata))
+        launchArgs = workflowView.passedArgs
     }
 
     init<A, W, C, FR>(_ workflowView: ModifiedWorkflowView<A, W, C>, item: WorkflowItem<FR, Content>) where Wrapped == ModifiedWorkflowView<A, W, C>, Args == FR.WorkflowOutput {
@@ -38,6 +40,7 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
         wrapped = workflowView
         workflow = workflowView.workflow
         workflow.append(item.metadata)
+        launchArgs = workflowView.launchArgs
     }
 
     private init(workflowView: Self, onFinish: [(AnyWorkflow.PassedArgs) -> Void]) {
@@ -45,10 +48,11 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
         wrapped = workflowView.wrapped
         workflow = workflowView.workflow
         self.onFinish = onFinish
+        launchArgs = workflowView.launchArgs
     }
 
     public func launch() -> Self {
-        workflow.launch(withOrchestrationResponder: model, passedArgs: .none) { args in
+        workflow.launch(withOrchestrationResponder: model, passedArgs: launchArgs) { args in
             onFinish.forEach { $0(args) }
         }
         return self
