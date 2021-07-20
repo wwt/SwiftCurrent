@@ -15,10 +15,6 @@ import ViewInspector
 @testable import SwiftUIExampleApp
 
 final class ProfileFeatureViewTests: XCTestCase {
-    override func tearDownWithError() throws {
-        Container.default.removeAll()
-    }
-
     func testProfileFeatureView() throws {
         let viewUnderTest = try ProfileFeatureView().inspect()
         XCTAssertEqual(try viewUnderTest.find(ViewType.Image.self).actualImage(), Image(systemName: "person.fill.questionmark").renderingMode(.template).resizable())
@@ -33,6 +29,7 @@ final class ProfileFeatureViewTests: XCTestCase {
     }
 
     func testClearUserDefaultsButton() throws {
+        addTeardownBlock { Container.default.removeAll() }
         let key = UUID().uuidString
         let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
         defaults.set(true, forKey: key)
