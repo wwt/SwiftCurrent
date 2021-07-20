@@ -44,6 +44,7 @@ final class ProfileFeatureOnboardingViewTests: XCTestCase {
         print("!!! \(Self.self).testOnboardingInWorkflow - Complete")
     }
 
+    // This test fails sporadically and the test above is preferred.
 //    func testOnboardingProceedsInWorkflow() throws {
 //        print("!!! \(Self.self).testOnboardingProceedsInWorkflow - Before setup: \(Container.default) \n\n")
 //        let proceedCalled = expectation(description: "Proceed called")
@@ -51,7 +52,6 @@ final class ProfileFeatureOnboardingViewTests: XCTestCase {
 //        defaults.set(false, forKey: defaultsKey)
 //        Container.default.register(UserDefaults.self) { _ in defaults }
 //        let erased = AnyFlowRepresentableView(type: ProfileFeatureOnboardingView.self, args: .none)
-//        // swiftlint:disable:next force_cast
 //        var onboardingView = erased.underlyingInstance as! ProfileFeatureOnboardingView
 //        onboardingView.proceedInWorkflowStorage = { _ in
 //            proceedCalled.fulfill()
