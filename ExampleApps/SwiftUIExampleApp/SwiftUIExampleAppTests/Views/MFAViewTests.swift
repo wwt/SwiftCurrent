@@ -13,10 +13,6 @@ import ViewInspector
 @testable import SwiftUIExampleApp
 
 final class MFAViewTests: XCTestCase {
-    override func tearDownWithError() throws {
-        ViewHosting.expel()
-    }
-
     func testMFAView() throws {
         let exp = ViewHosting.loadView(MFAView(with: .none)).inspection.inspect { view in
             XCTAssertEqual(try view.find(ViewType.Text.self, traversal: .depthFirst).string(),
