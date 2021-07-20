@@ -165,7 +165,7 @@ extension WorkflowView where Args == Never {
      - Returns: a new `WorkflowView` with the additional `FlowRepresentable` item.
      */
     public func thenProceed2<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> ModifiedWorkflowView<FR.WorkflowOutput, Never, T> where FR.WorkflowInput == Never {
-        ModifiedWorkflowView(self, item: item)
+        ModifiedWorkflowView(self, isLaunched: _isLaunched, item: item)
     }
 }
 
@@ -237,7 +237,7 @@ extension WorkflowView {
      - Returns: a new `WorkflowView` with the additional `FlowRepresentable` item.
      */
     public func thenProceed2<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> ModifiedWorkflowView<FR.WorkflowOutput, Never, T> where Args == FR.WorkflowInput {
-        ModifiedWorkflowView(self, item: item)
+        ModifiedWorkflowView(self, isLaunched: _isLaunched, item: item)
     }
 
     /**

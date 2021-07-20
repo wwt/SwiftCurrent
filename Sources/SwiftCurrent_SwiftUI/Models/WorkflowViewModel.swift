@@ -15,6 +15,11 @@ final class WorkflowViewModel: ObservableObject {
     @Published var erasedBody: Any?
     var isLaunched: Binding<Bool>?
     var onAbandon = [() -> Void]()
+
+    init() { }
+    init(isLaunched: Binding<Bool>) {
+        self.isLaunched = isLaunched
+    }
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
@@ -36,6 +41,7 @@ extension WorkflowViewModel: OrchestrationResponder {
 
     func abandon(_ workflow: AnyWorkflow, onFinish: (() -> Void)?) {
         isLaunched?.wrappedValue = false
+        erasedBody = nil
         onAbandon.forEach { $0() }
     }
 

@@ -160,12 +160,12 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         let expectedEnd = UUID().uuidString
         let expectViewLoaded = ViewHosting.loadView(
             WorkflowView(isLaunched: .constant(true), startingArgs: expectedFR1)
-                .thenProceed(with: WorkflowItem(FR1.self))
+                .thenProceed2(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR2.self))
                 .thenProceed(with: WorkflowItem(FR3.self))
                 .onFinish {
             XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedEnd)
-        }).inspection.inspect { viewUnderTest in
+        }.launch()).inspection.inspect { viewUnderTest in
             XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().property, expectedFR1)
             XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow(expectedFR2))
             XCTAssertEqual(try viewUnderTest.find(FR2.self).actualView().property, expectedFR2)
@@ -277,10 +277,10 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         }
         let expectViewLoaded = ViewHosting.loadView(
             WorkflowView(isLaunched: .constant(true))
-                .thenProceed(with: WorkflowItem(FR1.self))
+                .thenProceed2(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR2.self))
                 .thenProceed(with: WorkflowItem(FR3.self))
-                .thenProceed(with: WorkflowItem(FR4.self)))
+                .thenProceed(with: WorkflowItem(FR4.self)).launch())
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
                 XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().backUpInWorkflow())
@@ -304,11 +304,11 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         let expectOnAbandon = expectation(description: "OnAbandon called")
         let expectViewLoaded = ViewHosting.loadView(
             WorkflowView(isLaunched: isLaunched)
-                .thenProceed(with: WorkflowItem(FR1.self))
+                .thenProceed2(with: WorkflowItem(FR1.self))
                 .onAbandon {
             XCTAssertFalse(isLaunched.wrappedValue)
             expectOnAbandon.fulfill()
-        }).inspection.inspect { viewUnderTest in
+        }.launch()).inspection.inspect { viewUnderTest in
             XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
             XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().workflow?.abandon())
             XCTAssertThrowsError(try viewUnderTest.find(FR1.self))

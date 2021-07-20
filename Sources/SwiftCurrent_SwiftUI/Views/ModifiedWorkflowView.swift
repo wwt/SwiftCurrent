@@ -11,28 +11,35 @@ import SwiftCurrent
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
+    @Binding private var isLaunched: Bool
+
     let inspection = Inspection<Self>()
     private let wrapped: Wrapped?
     private let workflow: AnyWorkflow
     private let launchArgs: AnyWorkflow.PassedArgs
     private var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
-//    private var onAbandon = [() -> Void]()
-//    private var passedArgs = AnyWorkflow.PassedArgs.none
+    private var onAbandon = [() -> Void]()
 
-    @ObservedObject private var model = WorkflowViewModel()
+    @ObservedObject private var model: WorkflowViewModel
 
     public var body: some View {
-        if let body = model.erasedBody as? Content {
-            body.onReceive(inspection.notice) { inspection.visit(self, $0) }
-        } else {
-            wrapped.onReceive(inspection.notice) { inspection.visit(self, $0) }
+        if isLaunched {
+            if let body = model.erasedBody as? Content {
+                body
+                    .onReceive(model.$erasedBody, perform: conditionallyAbandon)
+                    .onReceive(inspection.notice) { inspection.visit(self, $0) }
+            } else {
+                wrapped.onReceive(inspection.notice) { inspection.visit(self, $0) }
+            }
         }
     }
 
-    init<A, FR>(_ workflowView: WorkflowView<A>, item: WorkflowItem<FR, Content>) where Wrapped == Never, Args == FR.WorkflowOutput {
+    init<A, FR>(_ workflowView: WorkflowView<A>, isLaunched: Binding<Bool>, item: WorkflowItem<FR, Content>) where Wrapped == Never, Args == FR.WorkflowOutput {
         wrapped = nil
         workflow = AnyWorkflow(Workflow<FR>(item.metadata))
         launchArgs = workflowView.passedArgs
+        _isLaunched = isLaunched
+        _model = ObservedObject(initialValue: WorkflowViewModel(isLaunched: isLaunched))
     }
 
     init<A, W, C, FR>(_ workflowView: ModifiedWorkflowView<A, W, C>, item: WorkflowItem<FR, Content>) where Wrapped == ModifiedWorkflowView<A, W, C>, Args == FR.WorkflowOutput {
@@ -41,14 +48,17 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
         workflow = workflowView.workflow
         workflow.append(item.metadata)
         launchArgs = workflowView.launchArgs
+        _isLaunched = workflowView._isLaunched
     }
 
-    private init(workflowView: Self, onFinish: [(AnyWorkflow.PassedArgs) -> Void]) {
+    private init(workflowView: Self, onFinish: [(AnyWorkflow.PassedArgs) -> Void], onAbandon: [() -> Void]) {
         model = workflowView.model
         wrapped = workflowView.wrapped
         workflow = workflowView.workflow
         self.onFinish = onFinish
+        self.onAbandon = onAbandon
         launchArgs = workflowView.launchArgs
+        _isLaunched = workflowView._isLaunched
     }
 
     public func launch() -> Self {
@@ -62,7 +72,20 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
     public func onFinish(closure: @escaping (AnyWorkflow.PassedArgs) -> Void) -> Self {
         var onFinish = self.onFinish
         onFinish.append(closure)
-        return Self(workflowView: self, onFinish: onFinish)
+        return Self(workflowView: self, onFinish: onFinish, onAbandon: onAbandon)
+    }
+
+    /// Adds an action to perform when this `Workflow` has abandoned.
+    public func onAbandon(closure: @escaping () -> Void) -> Self {
+        var onAbandon = self.onAbandon
+        onAbandon.append(closure)
+        return Self(workflowView: self, onFinish: onFinish, onAbandon: onAbandon)
+    }
+
+    private func conditionallyAbandon(_ erasedBody: Any?) {
+        if erasedBody == nil {
+            onAbandon.forEach { $0() }
+        }
     }
 }
 
