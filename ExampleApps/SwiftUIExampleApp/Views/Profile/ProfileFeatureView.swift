@@ -14,8 +14,8 @@ struct ProfileFeatureView: View, FlowRepresentable {
     weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
-        ScrollView { // swiftlint:disable:this closure_body_length
-            VStack { // swiftlint:disable:this closure_body_length
+        ScrollView {
+            VStack {
                 Group {
                     Image(systemName: "person.fill.questionmark")
                         .renderingMode(.template)

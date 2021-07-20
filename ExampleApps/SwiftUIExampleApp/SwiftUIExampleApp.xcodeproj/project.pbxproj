@@ -97,6 +97,7 @@
 		CAD026AE26A0C8680075B818 /* InspectableExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectableExtensions.swift; sourceTree = "<group>"; };
 		CAD026B026A0C8960075B818 /* ViewHostingExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewHostingExtensions.swift; sourceTree = "<group>"; };
 		D74A4D5B26A7315F00010617 /* TestConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestConstant.swift; sourceTree = "<group>"; };
+		D74A4D5D26A7471700010617 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +138,7 @@
 		CAC34B3626A07F830039A373 = {
 			isa = PBXGroup;
 			children = (
+				D74A4D5D26A7471700010617 /* README.md */,
 				CAC34B4126A07F830039A373 /* SwiftUIExampleApp */,
 				CAC34B5326A07F840039A373 /* SwiftUIExampleAppTests */,
 				CAC34B4026A07F830039A373 /* Products */,
