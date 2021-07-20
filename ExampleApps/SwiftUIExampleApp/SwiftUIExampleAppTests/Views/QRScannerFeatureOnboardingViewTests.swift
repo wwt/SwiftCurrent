@@ -23,49 +23,54 @@ final class QRScannerFeatureOnboardingViewTests: XCTestCase {
 
     #warning("Pipeline has a really hard time with this, even though locally it continues to work great, replacement test below this test.")
     func testOnboardingInWorkflow() throws {
+        print("!!! \(Self.self).testOnboardingInWorkflow - start")
         let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
         defaults.set(false, forKey: defaultsKey)
         Container.default.register(UserDefaults.self) { _ in defaults }
         let workflowFinished = expectation(description: "View Proceeded")
+        print("!!! \(Self.self).testOnboardingInWorkflow - about to loadView")
         let exp = ViewHosting.loadView(WorkflowView(isLaunched: .constant(true))
                                         .thenProceed(with: WorkflowItem(QRScannerFeatureOnboardingView.self))
                                         .onFinish { _ in
+                                            print("!!! \(Self.self).testOnboardingInWorkflow - onFinish")
                                             workflowFinished.fulfill()
                                         }).inspection.inspect { view in
+                                            print("!!! \(Self.self).testOnboardingInWorkflow - Inspected")
                                             XCTAssertNoThrow(try view.find(ViewType.Text.self))
                                             XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Learn about our awesome QR scanning feature!")
                                             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
                                         }
         wait(for: [exp, workflowFinished], timeout: 1)
+        print("!!! \(Self.self).testOnboardingInWorkflow - Complete")
     }
 
-    func testOnboardingProceedsInWorkflow() throws {
-        print("!!! \(Self.self).testOnboardingProceedsInWorkflow - Before setup: \(Container.default) \n\n")
-        let proceedCalled = expectation(description: "Proceed called")
-        let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
-        defaults.set(false, forKey: defaultsKey)
-        Container.default.register(UserDefaults.self) { _ in defaults }
-        let erased = AnyFlowRepresentableView(type: QRScannerFeatureOnboardingView.self, args: .none)
-        // swiftlint:disable:next force_cast
-        var onboardingView = erased.underlyingInstance as! QRScannerFeatureOnboardingView
-        onboardingView.proceedInWorkflowStorage = { _ in
-            proceedCalled.fulfill()
-        }
-        onboardingView._workflowPointer = erased
-        print("!!! \(Self.self).testOnboardingProceedsInWorkflow - After setup: \(Container.default) \n Using: \(defaults) \n With default: \(defaults.bool(forKey: defaultsKey))\n\n")
-
-        print("!!! \(Self.self).testOnboardingProceedsInWorkflow - about to loadView: \(onboardingView)")
-        let view = ViewHosting.loadView(onboardingView)
-        print("!!! \(Self.self).testOnboardingProceedsInWorkflow - about to add inspection to: \(view)")
-        let inspection = view.inspection
-        print("!!! \(Self.self).testOnboardingProceedsInWorkflow - about to inspect: \(inspection)")
-        let exp = inspection.inspect { view in
-            XCTAssertNoThrow(try view.find(ViewType.Text.self))
-            XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Learn about our awesome QR scanning feature!")
-            XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
-        }
-        wait(for: [exp, proceedCalled], timeout: 1)
-    }
+//    func testOnboardingProceedsInWorkflow() throws {
+//        print("!!! \(Self.self).testOnboardingProceedsInWorkflow - Before setup: \(Container.default) \n\n")
+//        let proceedCalled = expectation(description: "Proceed called")
+//        let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
+//        defaults.set(false, forKey: defaultsKey)
+//        Container.default.register(UserDefaults.self) { _ in defaults }
+//        let erased = AnyFlowRepresentableView(type: QRScannerFeatureOnboardingView.self, args: .none)
+//        // swiftlint:disable:next force_cast
+//        var onboardingView = erased.underlyingInstance as! QRScannerFeatureOnboardingView
+//        onboardingView.proceedInWorkflowStorage = { _ in
+//            proceedCalled.fulfill()
+//        }
+//        onboardingView._workflowPointer = erased
+//        print("!!! \(Self.self).testOnboardingProceedsInWorkflow - After setup: \(Container.default) \n Using: \(defaults) \n With default: \(defaults.bool(forKey: defaultsKey))\n\n")
+//
+//        print("!!! \(Self.self).testOnboardingProceedsInWorkflow - about to loadView: \(onboardingView)")
+//        let view = ViewHosting.loadView(onboardingView)
+//        print("!!! \(Self.self).testOnboardingProceedsInWorkflow - about to add inspection to: \(view)")
+//        let inspection = view.inspection
+//        print("!!! \(Self.self).testOnboardingProceedsInWorkflow - about to inspect: \(inspection)")
+//        let exp = inspection.inspect { view in
+//            XCTAssertNoThrow(try view.find(ViewType.Text.self))
+//            XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Learn about our awesome QR scanning feature!")
+//            XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
+//        }
+//        wait(for: [exp, proceedCalled], timeout: 1)
+//    }
 
     func testOnboardingViewLoads_WhenNoValueIsInUserDefaults() throws {
         let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
