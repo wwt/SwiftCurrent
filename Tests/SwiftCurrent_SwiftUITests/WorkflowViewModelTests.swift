@@ -14,28 +14,28 @@ import XCTest
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class WorkflowViewModelTests: XCTestCase {
     func testWorkflowViewModelThrowsFatalError_WhenLaunchedWithSomethingOtherThan_AnyFlowRepresentableView() {
-        let model = WorkflowViewModel()
+        let model = WorkflowViewModel(isLaunched: .constant(true))
         XCTAssertThrowsFatalError {
             model.launch(to: .createForTests(FR.self))
         }
     }
 
     func testWorkflowViewModelThrowsFatalError_WhenProceedingWithSomethingOtherThan_AnyFlowRepresentableView() {
-        let model = WorkflowViewModel()
+        let model = WorkflowViewModel(isLaunched: .constant(true))
         XCTAssertThrowsFatalError {
             model.proceed(to: .createForTests(FR.self), from: .createForTests(FR.self))
         }
     }
 
     func testWorkflowViewModelThrowsFatalError_WhenBackingUpWithSomethingOtherThan_AnyFlowRepresentableView() {
-        let model = WorkflowViewModel()
+        let model = WorkflowViewModel(isLaunched: .constant(true))
         XCTAssertThrowsFatalError {
             model.backUp(from: .createForTests(FR.self), to: .createForTests(FR.self))
         }
     }
 
     func testWorkflowViewModelThrowsFatalError_WhenCompletingWithSomethingOtherThan_AnyFlowRepresentableView() {
-        let model = WorkflowViewModel()
+        let model = WorkflowViewModel(isLaunched: .constant(true))
         let typedWorkflow = Workflow(FR.self).thenProceed(with: FR.self, flowPersistence: .removedAfterProceeding)
         let mock = MockOrchestrationResponder()
         let firstLoadedInstance = typedWorkflow.launch(withOrchestrationResponder: mock)
@@ -46,7 +46,7 @@ final class WorkflowViewModelTests: XCTestCase {
     }
 
     func testWorkflowViewModelSetsBodyToNilWhenAbandoning() {
-        let model = WorkflowViewModel()
+        let model = WorkflowViewModel(isLaunched: .constant(true))
         model.body = ""
         let typedWorkflow = Workflow(FR.self)
         model.abandon(AnyWorkflow(typedWorkflow), onFinish: nil)

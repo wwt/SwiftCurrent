@@ -16,7 +16,6 @@ final class WorkflowViewModel: ObservableObject {
     var onAbandonPublisher = PassthroughSubject<Void, Never>()
     var isLaunched: Binding<Bool>?
 
-    init() { }
     init(isLaunched: Binding<Bool>) {
         self.isLaunched = isLaunched
     }
