@@ -32,7 +32,7 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
                     .onChange(of: isLaunched) { if $0 { launch() } }
                     .onReceive(inspection.notice) { inspection.visit(self, $0) }
             } else {
-                wrapped.onReceive(inspection.notice) { inspection.visit(self, $0) }
+                wrapped?.onReceive(inspection.notice) { inspection.visit(self, $0) }
             }
         }
     }
