@@ -30,12 +30,12 @@ final class QRScannerFeatureOnboardingViewTests: XCTestCase {
         let exp = ViewHosting.loadView(WorkflowView(isLaunched: .constant(true))
                                         .thenProceed(with: WorkflowItem(QRScannerFeatureOnboardingView.self))
                                         .onFinish { _ in
-            workflowFinished.fulfill()
-        }).inspection.inspect { view in
-            XCTAssertNoThrow(try view.find(ViewType.Text.self))
-            XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Learn about our awesome QR scanning feature!")
-            XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
-        }
+                                            workflowFinished.fulfill()
+                                        }).inspection.inspect { view in
+                                            XCTAssertNoThrow(try view.find(ViewType.Text.self))
+                                            XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Learn about our awesome QR scanning feature!")
+                                            XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
+                                        }
         wait(for: [exp, workflowFinished], timeout: 1)
     }
 
