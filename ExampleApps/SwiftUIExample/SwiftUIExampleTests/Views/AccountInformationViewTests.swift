@@ -106,4 +106,18 @@ final class AccountInformationViewTests: XCTestCase {
             }
         ].compactMap { $0 }, timeout: TestConstant.timeout)
     }
+
+    func testAccountInformationCanLaunchBothWorkflows() throws {
+        let exp = ViewHosting.loadView(AccountInformationView()).inspection.inspect { view in
+            XCTAssertEqual(view.findAll(WorkflowView<String>.self).count, 0)
+
+            let firstButton = try view.find(ViewType.Button.self)
+            let secondButton = try view.find(ViewType.Button.self, skipFound: 1)
+            XCTAssertNoThrow(try secondButton.tap())
+            XCTAssertNoThrow(try firstButton.tap())
+
+            XCTAssertEqual(view.findAll(WorkflowView<String>.self).count, 2)
+        }
+        wait(for: [exp], timeout: TestConstant.timeout)
+    }
 }
