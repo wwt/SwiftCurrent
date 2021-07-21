@@ -32,7 +32,7 @@ As you continue to develop your applications, each view controller will become m
 
 Clone our repo, open `SwiftCurrent.xcworkspace`, target the `UIKitExample` scheme, and run to see our example app in action.
 
-The app is designed to give you an idea of what SwiftCurrent can do with minimal overhead in the UI. [See the README](https://github.com/wwt/SwiftCurrent/blob/8e11ce58cc5410d09a40d43fefc0e722c87906b3/ExampleApps/UIKitExample/README.md) for the example project for suggestions of where to start looking in the project.
+The [example app has a README](https://github.com/wwt/SwiftCurrent/blob/8e11ce58cc5410d09a40d43fefc0e722c87906b3/ExampleApps/UIKitExample/README.md) that details interesting usages.
 
 ## Interested but you need SwiftUI support?
 
