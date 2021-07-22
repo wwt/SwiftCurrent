@@ -76,6 +76,30 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         wait(for: [expectOnFinish1, expectOnFinish2, expectViewLoaded], timeout: 0.5)
     }
 
+    func testOnFinishWorksEvenWhenItIsNotTheLastItem() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowView(isLaunched: .constant(true))
+                .thenProceed(with: WorkflowItem(FR1.self))
+                .onFinish { _ in expectOnFinish.fulfill() } // what kind of monster does this?!
+                .thenProceed(with: WorkflowItem(FR2.self))).inspection.inspect { viewUnderTest in
+            XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
+            XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+            XCTAssertEqual(try viewUnderTest.find(FR2.self).text().string(), "FR2 type")
+            XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+        }
+
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.5)
+    }
+
     func testWorkflowPassesArgumentsToTheFirstItem() throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
@@ -350,6 +374,28 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         }
 
         wait(for: [expectOnAbandon1, expectOnAbandon2, expectViewLoaded], timeout: 0.5)
+    }
+
+    func testWorkflowViewCanAbandonEvenIfItIsNotTheLastStatement() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        let isLaunched = Binding(wrappedValue: true)
+        let expectOnAbandon = expectation(description: "OnAbandon called")
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowView(isLaunched: isLaunched)
+                .thenProceed(with: WorkflowItem(FR1.self))
+                .onAbandon { // Again, MONSTERS do this
+                    XCTAssertFalse(isLaunched.wrappedValue)
+                    expectOnAbandon.fulfill()
+                }
+                .thenProceed(with: WorkflowItem(FR1.self))).inspection.inspect { viewUnderTest in
+            XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().workflow?.abandon())
+            XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
+        }
+
+        wait(for: [expectOnAbandon, expectViewLoaded], timeout: 0.5)
     }
 
     func testWorkflowViewCanHaveModifiers() throws {

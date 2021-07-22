@@ -61,9 +61,7 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
         launchArgs = workflowView.launchArgs
         _isLaunched = workflowView._isLaunched
         _launcher = workflowView._launcher
-//        #warning("Test this")
-//        onFinish = workflowView.onFinish
-//        onAbandon = workflowView.onAbandon
+        onAbandon = workflowView.onAbandon
     }
 
     private init(workflowView: Self, onFinish: [(AnyWorkflow.PassedArgs) -> Void], onAbandon: [() -> Void]) {
