@@ -11,8 +11,14 @@ import SwiftCurrent_SwiftUI
 
 struct ContentView: View {
     let inspection = Inspection<Self>() // ViewInspector
+    enum Tab {
+        case map
+        case qr
+        case profile
+    }
+    @State var selectedTab: Tab = .map
     var body: some View {
-        TabView {
+        TabView(selection: $selectedTab) {
             // NOTE: Using constant here guarantees the workflow cannot abandon, it stays launched forever.
             WorkflowView(isLaunched: .constant(true))
                 .thenProceed(with: WorkflowItem(MapFeatureOnboardingView.self))
@@ -20,6 +26,7 @@ struct ContentView: View {
                 .tabItem {
                     Label("Map", systemImage: "map")
                 }
+                .tag(Tab.map)
 
             WorkflowView(isLaunched: .constant(true))
                 .thenProceed(with: WorkflowItem(QRScannerFeatureOnboardingView.self))
@@ -27,6 +34,7 @@ struct ContentView: View {
                 .tabItem {
                     Label("QR Scanner", systemImage: "camera")
                 }
+                .tag(Tab.qr)
 
             WorkflowView(isLaunched: .constant(true))
                 .thenProceed(with: WorkflowItem(ProfileFeatureOnboardingView.self))
@@ -34,6 +42,7 @@ struct ContentView: View {
                 .tabItem {
                     Label("Profile", systemImage: "person.crop.circle")
                 }
+                .tag(Tab.profile)
         }
         .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
