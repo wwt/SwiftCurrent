@@ -17,8 +17,9 @@ import SwiftCurrent
 @testable import SwiftUIExample
 
 final class AccountInformationViewTests: XCTestCase {
-    private typealias UsernameWorkflow = ModifiedWorkflowView<String, ModifiedWorkflowView<AnyWorkflow.PassedArgs, Never, MFAView>, ChangeUsernameView>
-    private typealias PasswordWorkflow = ModifiedWorkflowView<String, ModifiedWorkflowView<AnyWorkflow.PassedArgs, Never, MFAView>, ChangePasswordView>
+    private typealias MFAViewWorkflowView = ModifiedWorkflowView<AnyWorkflow.PassedArgs, Never, MFAView>
+    private typealias UsernameWorkflow = ModifiedWorkflowView<String, MFAViewWorkflowView, ChangeUsernameView>
+    private typealias PasswordWorkflow = ModifiedWorkflowView<String, MFAViewWorkflowView, ChangePasswordView>
 
     func testAccountInformationView() throws {
         let exp = ViewHosting.loadView(AccountInformationView()).inspection.inspect { view in
@@ -123,14 +124,16 @@ final class AccountInformationViewTests: XCTestCase {
 
     func testAccountInformationCanLaunchBothWorkflows() throws {
         let exp = ViewHosting.loadView(AccountInformationView()).inspection.inspect { view in
-            XCTAssertEqual(view.findAll(WorkflowView<String>.self).count, 0)
+            XCTAssertThrowsError(try view.find(UsernameWorkflow.self))
+            XCTAssertThrowsError(try view.find(PasswordWorkflow.self))
 
             let firstButton = try view.find(ViewType.Button.self)
             let secondButton = try view.find(ViewType.Button.self, skipFound: 1)
             XCTAssertNoThrow(try secondButton.tap())
             XCTAssertNoThrow(try firstButton.tap())
 
-            XCTAssertEqual(view.findAll(WorkflowView<String>.self).count, 2)
+            XCTAssertNoThrow(try view.vStack().view(MFAViewWorkflowView.self, 0))
+            XCTAssertNoThrow(try view.vStack().view(MFAViewWorkflowView.self, 1))
         }
         wait(for: [exp], timeout: TestConstant.timeout)
     }
