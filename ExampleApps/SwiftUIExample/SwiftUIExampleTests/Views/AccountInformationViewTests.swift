@@ -45,10 +45,15 @@ final class AccountInformationViewTests: XCTestCase {
             ViewHosting.loadView(usernameWorkflow)?.inspection.inspect { view in
                 XCTAssertNoThrow(try view.find(MFAView.self).actualView().proceedInWorkflow(.args("changeme")))
                 XCTAssertNoThrow(try view.find(ChangeUsernameView.self).actualView().proceedInWorkflow("newName"))
-                XCTAssertEqual(try accountInformation.find(ViewType.Text.self).string(), "Username: newName")
-                XCTAssertThrowsError(try view.vStack().view(UsernameWorkflow.self, 0))
             }
         ].compactMap { $0 }, timeout: TestConstant.timeout)
+
+        wait(for: [
+            ViewHosting.loadView(try accountInformation.actualView()).inspection.inspect { view in
+                XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Username: newName")
+                XCTAssertThrowsError(try view.vStack().view(UsernameWorkflow.self, 0))
+            }
+        ], timeout: TestConstant.timeout)
     }
 
     func testAccountInformationDoesNotBlowUp_IfUsernameWorkflowReturnsSomethingWEIRD() throws {
@@ -86,8 +91,13 @@ final class AccountInformationViewTests: XCTestCase {
             ViewHosting.loadView(passwordWorkflow)?.inspection.inspect { view in
                 XCTAssertNoThrow(try view.find(MFAView.self).actualView().proceedInWorkflow(.args("changeme")))
                 XCTAssertNoThrow(try view.find(ChangePasswordView.self).actualView().proceedInWorkflow("newPassword"))
-                XCTAssertEqual(try accountInformation.actualView().password, "newPassword")
-                XCTAssertThrowsError(try accountInformation.find(PasswordWorkflow.self))
+            }
+        ].compactMap { $0 }, timeout: TestConstant.timeout)
+
+        wait(for: [
+            ViewHosting.loadView(try accountInformation.actualView()).inspection.inspect { view in
+                XCTAssertEqual(try view.actualView().password, "newPassword")
+                XCTAssertThrowsError(try view.vStack().view(PasswordWorkflow.self, 0))
             }
         ].compactMap { $0 }, timeout: TestConstant.timeout)
     }
