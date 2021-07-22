@@ -26,7 +26,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         }
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isLaunched: .constant(true))
+            WorkflowLauncher(isLaunched: .constant(true))
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR2.self))
                 .onFinish { _ in
@@ -41,16 +41,6 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.5)
     }
 
-    func testWorkflowViewThrowsFatalErrorIfThenProceedNeverGetsCalled() {
-        XCTAssertThrowsFatalError {
-            _ = WorkflowView(isLaunched: .constant(true)).body
-        }
-
-        XCTAssertThrowsFatalError {
-            _ = WorkflowView(isLaunched: .constant(true), startingArgs: "").body
-        }
-    }
-
     func testWorkflowCanHaveMultipleOnFinishClosures() throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
@@ -63,7 +53,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         let expectOnFinish1 = expectation(description: "OnFinish1 called")
         let expectOnFinish2 = expectation(description: "OnFinish2 called")
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isLaunched: .constant(true))
+            WorkflowLauncher(isLaunched: .constant(true))
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .onFinish { _ in
             expectOnFinish1.fulfill()
@@ -87,7 +77,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         }
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isLaunched: .constant(true))
+            WorkflowLauncher(isLaunched: .constant(true))
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .onFinish { _ in expectOnFinish.fulfill() } // what kind of monster does this?!
                 .thenProceed(with: WorkflowItem(FR2.self))).inspection.inspect { viewUnderTest in
@@ -111,7 +101,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         }
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isLaunched: .constant(true))
+            WorkflowLauncher(isLaunched: .constant(true))
                 .onFinish { _ in expectOnFinish.fulfill() } // what kind of monster does this?!
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR2.self))).inspection.inspect { viewUnderTest in
@@ -135,7 +125,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         }
         let expected = UUID().uuidString
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isLaunched: .constant(true), startingArgs: expected)
+            WorkflowLauncher(isLaunched: .constant(true), startingArgs: expected)
                 .thenProceed(with: WorkflowItem(FR1.self))).inspection.inspect { viewUnderTest in
             XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().stringProperty, expected)
         }
@@ -154,7 +144,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         }
         let expected = UUID().uuidString
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isLaunched: .constant(true), startingArgs: expected)
+            WorkflowLauncher(isLaunched: .constant(true), startingArgs: expected)
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR1.self))).inspection.inspect { viewUnderTest in
             XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().property.extractArgs(defaultValue: nil) as? String, expected)
@@ -175,7 +165,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         }
         let expected = UUID().uuidString
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isLaunched: .constant(true), startingArgs: AnyWorkflow.PassedArgs.args(expected))
+            WorkflowLauncher(isLaunched: .constant(true), startingArgs: AnyWorkflow.PassedArgs.args(expected))
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR1.self))).inspection.inspect { viewUnderTest in
             XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().property.extractArgs(defaultValue: nil) as? String, expected)
@@ -217,7 +207,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         let expectedFR3 = Bool.random()
         let expectedEnd = UUID().uuidString
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isLaunched: .constant(true), startingArgs: expectedFR1)
+            WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedFR1)
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR2.self))
                 .thenProceed(with: WorkflowItem(FR3.self))
@@ -265,7 +255,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             var body: some View { Text("FR7 type") }
         }
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isLaunched: .constant(true))
+            WorkflowLauncher(isLaunched: .constant(true))
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR2.self))
                 .thenProceed(with: WorkflowItem(FR3.self))
@@ -300,7 +290,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             var body: some View { Text("FR3 type") }
         }
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isLaunched: .constant(true))
+            WorkflowLauncher(isLaunched: .constant(true))
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR2.self))
                 .thenProceed(with: WorkflowItem(FR3.self))
@@ -334,7 +324,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             var body: some View { Text("FR4 type") }
         }
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isLaunched: .constant(true))
+            WorkflowLauncher(isLaunched: .constant(true))
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR2.self))
                 .thenProceed(with: WorkflowItem(FR3.self))
@@ -361,7 +351,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         let isLaunched = Binding(wrappedValue: true)
         let expectOnAbandon = expectation(description: "OnAbandon called")
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isLaunched: isLaunched)
+            WorkflowLauncher(isLaunched: isLaunched)
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .onAbandon {
             XCTAssertFalse(isLaunched.wrappedValue)
@@ -375,7 +365,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         wait(for: [expectOnAbandon, expectViewLoaded], timeout: 0.5)
     }
 
-    func testWorkflowViewCanHaveMultipleOnAbandonCallbacks() throws {
+    func testWorkflowCanHaveMultipleOnAbandonCallbacks() throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
@@ -384,7 +374,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         let expectOnAbandon1 = expectation(description: "OnAbandon1 called")
         let expectOnAbandon2 = expectation(description: "OnAbandon2 called")
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isLaunched: isLaunched)
+            WorkflowLauncher(isLaunched: isLaunched)
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .onAbandon {
             XCTAssertFalse(isLaunched.wrappedValue)
@@ -400,7 +390,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         wait(for: [expectOnAbandon1, expectOnAbandon2, expectViewLoaded], timeout: 0.5)
     }
 
-    func testWorkflowViewCanAbandonEvenIfItIsNotTheLastStatement() throws {
+    func testWorkflowCanAbandonEvenIfItIsNotTheLastStatement() throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
@@ -408,7 +398,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         let isLaunched = Binding(wrappedValue: true)
         let expectOnAbandon = expectation(description: "OnAbandon called")
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isLaunched: isLaunched)
+            WorkflowLauncher(isLaunched: isLaunched)
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .onAbandon { // Again, MONSTERS do this
                     XCTAssertFalse(isLaunched.wrappedValue)
@@ -422,7 +412,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         wait(for: [expectOnAbandon, expectViewLoaded], timeout: 0.5)
     }
 
-    func testWorkflowViewCanAbandonEvenIfItIsTheFirstStatement() throws {
+    func testWorkflowLauncherCanAbandonEvenIfItIsTheFirstStatement() throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
@@ -430,7 +420,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         let isLaunched = Binding(wrappedValue: true)
         let expectOnAbandon = expectation(description: "OnAbandon called")
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isLaunched: isLaunched)
+            WorkflowLauncher(isLaunched: isLaunched)
                 .onAbandon { // Again, MONSTERS do this
                     XCTAssertFalse(isLaunched.wrappedValue)
                     expectOnAbandon.fulfill()
@@ -444,7 +434,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         wait(for: [expectOnAbandon, expectViewLoaded], timeout: 0.5)
     }
 
-    func testWorkflowViewCanHaveModifiers() throws {
+    func testWorkflowCanHaveModifiers() throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
@@ -453,7 +443,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         }
 
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isLaunched: .constant(true))
+            WorkflowLauncher(isLaunched: .constant(true))
                 .thenProceed(with: WorkflowItem(FR1.self)
                                 .applyModifiers { $0.customModifier().background(Color.blue) })).inspection.inspect { viewUnderTest in
             XCTAssertNoThrow(try viewUnderTest.find(FR1.self).background())
@@ -475,7 +465,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         }
 
         let binding = Binding(wrappedValue: true)
-        let workflowView = WorkflowView(isLaunched: binding)
+        let workflowView = WorkflowLauncher(isLaunched: binding)
             .thenProceed(with: WorkflowItem(FR1.self)
                             .applyModifiers { $0.customModifier().background(Color.blue) })
             .thenProceed(with: WorkflowItem(FR2.self))
@@ -514,7 +504,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectedArgs = UUID().uuidString
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isLaunched: .constant(true), startingArgs: expectedArgs)
+            WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR2.self))
                 .onFinish { _ in
@@ -548,7 +538,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectedArgs = UUID().uuidString
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isLaunched: .constant(true), startingArgs: AnyWorkflow.PassedArgs.args(expectedArgs))
+            WorkflowLauncher(isLaunched: .constant(true), startingArgs: AnyWorkflow.PassedArgs.args(expectedArgs))
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .onFinish { _ in
             expectOnFinish.fulfill()
@@ -587,7 +577,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectedArgs = UUID().uuidString
         let expectViewLoaded = ViewHosting.loadView(
-            WorkflowView(isLaunched: .constant(true))
+            WorkflowLauncher(isLaunched: .constant(true))
                 .thenProceed(with: WorkflowItem(FR1.self))
                 .thenProceed(with: WorkflowItem(FR2.self))
                 .thenProceed(with: WorkflowItem(FR3.self))

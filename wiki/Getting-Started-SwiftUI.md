@@ -2,7 +2,7 @@
 
 This guide will walk you through getting a [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html) up and running in a new iOS project.  If you would like to see an existing project, clone the repo and view the `SwiftUIExample` scheme in `SwiftCurrent.xcworkspace`.
 
-The app in this guide is going to be very simple.  It consists of a view that will host the [WorkflowView](https://wwt.github.io/SwiftCurrent/Structs/WorkflowView.html), a view to enter an email address, and an optional view for when the user enters an email with `@wwt.com` in it.  Here is a preview of what the app will look like:
+The app in this guide is going to be very simple.  It consists of a view that will host the [WorkflowLauncher](https://wwt.github.io/SwiftCurrent/Structs/WorkflowLauncher.html), a view to enter an email address, and an optional view for when the user enters an email with `@wwt.com` in it.  Here is a preview of what the app will look like:
 
 ![Preview image of app](https://github.com/wwt/SwiftCurrent/blob/36c45fcc3cc66dba16d5d5c78bcd4bc865175a34/wiki/swiftUI.gif)
 
@@ -83,7 +83,7 @@ struct SecondView_Previews: PreviewProvider {
 
 <details>
 
-The [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) protocol requires there to be a `_workflowPointer` on your object, but protocols cannot enforce you to use `weak`. If you do not put `weak var _workflowPointer`, the [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) will end up with a strong circular reference when placed in a [WorkflowView](https://wwt.github.io/SwiftCurrent/Structs/WorkflowView.html).
+The [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) protocol requires there to be a `_workflowPointer` on your object, but protocols cannot enforce you to use `weak`. If you do not put `weak var _workflowPointer`, the [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) will end up with a strong circular reference when placed in a [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html).
 </details>
 
 #### **What's this `shouldLoad()`?**
@@ -102,7 +102,7 @@ It is part of the [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protoco
 
 ## Launching the [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html)
 
-Next we add a [WorkflowView](https://wwt.github.io/SwiftCurrent/Structs/WorkflowView.html) to the body of our starting app view, in this case `ContentView`.
+Next we add a [WorkflowLauncher](https://wwt.github.io/SwiftCurrent/Structs/WorkflowLauncher.html) to the body of our starting app view, in this case `ContentView`.
 
 ```swift
 import SwiftUI
@@ -114,7 +114,7 @@ struct ContentView: View {
         if !workflowIsPresented {
             Button("Present") { $workflowIsPresented.wrappedValue = true }
         }
-        WorkflowView(isLaunched: $workflowIsPresented, startingArgs: "SwiftCurrent") // SwiftCurrent
+        WorkflowLauncher(isLaunched: $workflowIsPresented, startingArgs: "SwiftCurrent") // SwiftCurrent
             .thenProceed(with: WorkflowItem(FirstView.self) // SwiftCurrent
                             .applyModifiers { firstView in firstView.padding().border(.gray) })
             .thenProceed(with: WorkflowItem(SecondView.self) // SwiftCurrent
@@ -143,14 +143,14 @@ struct Content_Previews: PreviewProvider {
 
 <details>
 
-In SwiftUI, the [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html) type is handled by the [WorkflowView](https://wwt.github.io/SwiftCurrent/Structs/WorkflowView.html).  That view contains an underlying [AnyWorkflow](https://wwt.github.io/SwiftCurrent/Classes/AnyWorkflow.html) that it manages and exposes as appropriate.
+In SwiftUI, the [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html) type is handled by the library when you start with a [WorkflowLauncher](https://wwt.github.io/SwiftCurrent/Structs/WorkflowLauncher.html).
 </details>
 
 #### **Where is the type safety, I heard about?**
 
 <details>
 
-[WorkflowView](https://wwt.github.io/SwiftCurrent/Structs/WorkflowView.html) is specialized with your `startingArgs` type.  In [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html), these types are supplied by the `WorkflowInput` and `WorkflowOutput` associated types.  These all work together to create compile-time type safety when creating your flow. This means that you will get a build error if the output of `FirstView` does not match the input type of `SecondView`.
+[WorkflowLauncher](https://wwt.github.io/SwiftCurrent/Structs/WorkflowLauncher.html) is specialized with your `startingArgs` type.  In [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html), these types are supplied by the `WorkflowInput` and `WorkflowOutput` associated types.  These all work together to create compile-time type safety when creating your flow. This means that you will get a build error if the output of `FirstView` does not match the input type of `SecondView`.
 </details>
 
 #### **What's going on with this `startingArgs` and `passedArgs`?**

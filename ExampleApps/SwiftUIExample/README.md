@@ -9,10 +9,10 @@ The project is designed to give you an idea of SwiftCurrent functionality while 
 Here is a list of things that are interesting to look at from a SwiftCurrent perspective.
 
 ### ContentView
-This starting view shows the creation of the 3 main `WorkflowView`s and how SwiftCurrent can be helpful in a `TabView` setting. 
+This starting view shows the creation of the 3 main workflows and how SwiftCurrent can be helpful in a `TabView` setting. 
 
 ### FeatureOnboardingViews
 Each feature has an onboarding view. Look at these to see examples of single launch screens that can be placed at the start of a feature flow.
 
 ### AccountInformationView
-This view launches a `WorkflowView` that contains a blocking view, `MFAView`, which is an example of SwiftCurrent usage for feature security.
+This view launches a workflow that contains a blocking view, `MFAView`, which is an example of SwiftCurrent usage for feature security.

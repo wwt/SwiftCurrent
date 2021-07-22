@@ -11,10 +11,10 @@ import SwiftUI
 import SwiftCurrent
 
 /**
- A view used to store complex view type information from a `Workflow`
+ A view created by a `WorkflowLauncher`.
 
  ### Discussion
- You do not instantiate this view directly, rather you call `thenProceed(with:)` on a `WorkflowView`.
+ You do not instantiate this view directly, rather you call `thenProceed(with:)` on a `WorkflowLauncher`.
  */
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
@@ -46,41 +46,41 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
         }
     }
 
-    init<A, FR>(_ workflowView: WorkflowView<A>, isLaunched: Binding<Bool>, item: WorkflowItem<FR, Content>) where Wrapped == Never, Args == FR.WorkflowOutput {
+    init<A, FR>(_ WorkflowLauncher: WorkflowLauncher<A>, isLaunched: Binding<Bool>, item: WorkflowItem<FR, Content>) where Wrapped == Never, Args == FR.WorkflowOutput {
         wrapped = nil
         let wf = AnyWorkflow(Workflow<FR>(item.metadata))
         workflow = wf
-        launchArgs = workflowView.passedArgs
+        launchArgs = WorkflowLauncher.passedArgs
         _isLaunched = isLaunched
-        onFinish = workflowView.onFinish
-        onAbandon = workflowView.onAbandon
+        onFinish = WorkflowLauncher.onFinish
+        onAbandon = WorkflowLauncher.onAbandon
         let model = WorkflowViewModel(isLaunched: isLaunched)
         _model = StateObject(wrappedValue: model)
         _launcher = StateObject(wrappedValue: Launcher(workflow: wf,
                                                        responder: model,
-                                                       launchArgs: workflowView.passedArgs))
+                                                       launchArgs: WorkflowLauncher.passedArgs))
     }
 
-    private init<A, W, C, FR>(_ workflowView: ModifiedWorkflowView<A, W, C>, item: WorkflowItem<FR, Content>) where Wrapped == ModifiedWorkflowView<A, W, C>, Args == FR.WorkflowOutput {
-        _model = workflowView._model
-        wrapped = workflowView
-        workflow = workflowView.workflow
+    private init<A, W, C, FR>(_ WorkflowLauncher: ModifiedWorkflowView<A, W, C>, item: WorkflowItem<FR, Content>) where Wrapped == ModifiedWorkflowView<A, W, C>, Args == FR.WorkflowOutput {
+        _model = WorkflowLauncher._model
+        wrapped = WorkflowLauncher
+        workflow = WorkflowLauncher.workflow
         workflow.append(item.metadata)
-        launchArgs = workflowView.launchArgs
-        _isLaunched = workflowView._isLaunched
-        _launcher = workflowView._launcher
-        onAbandon = workflowView.onAbandon
+        launchArgs = WorkflowLauncher.launchArgs
+        _isLaunched = WorkflowLauncher._isLaunched
+        _launcher = WorkflowLauncher._launcher
+        onAbandon = WorkflowLauncher.onAbandon
     }
 
-    private init(workflowView: Self, onFinish: [(AnyWorkflow.PassedArgs) -> Void], onAbandon: [() -> Void]) {
-        _model = workflowView._model
-        wrapped = workflowView.wrapped
-        workflow = workflowView.workflow
+    private init(WorkflowLauncher: Self, onFinish: [(AnyWorkflow.PassedArgs) -> Void], onAbandon: [() -> Void]) {
+        _model = WorkflowLauncher._model
+        wrapped = WorkflowLauncher.wrapped
+        workflow = WorkflowLauncher.workflow
         self.onFinish = onFinish
         self.onAbandon = onAbandon
-        launchArgs = workflowView.launchArgs
-        _isLaunched = workflowView._isLaunched
-        _launcher = workflowView._launcher
+        launchArgs = WorkflowLauncher.launchArgs
+        _isLaunched = WorkflowLauncher._isLaunched
+        _launcher = WorkflowLauncher._launcher
     }
 
     private func launch() {
@@ -97,14 +97,14 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
     public func onFinish(closure: @escaping (AnyWorkflow.PassedArgs) -> Void) -> Self {
         var onFinish = self.onFinish
         onFinish.append(closure)
-        return Self(workflowView: self, onFinish: onFinish, onAbandon: onAbandon)
+        return Self(WorkflowLauncher: self, onFinish: onFinish, onAbandon: onAbandon)
     }
 
     /// Adds an action to perform when this `Workflow` has abandoned.
     public func onAbandon(closure: @escaping () -> Void) -> Self {
         var onAbandon = self.onAbandon
         onAbandon.append(closure)
-        return Self(workflowView: self, onFinish: onFinish, onAbandon: onAbandon)
+        return Self(WorkflowLauncher: self, onFinish: onFinish, onAbandon: onAbandon)
     }
 }
 
@@ -125,7 +125,7 @@ extension ModifiedWorkflowView where Args == Never {
     /**
      Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
      - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
-     - Returns: a new `WorkflowView` with the additional `FlowRepresentable` item.
+     - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
      */
     public func thenProceed<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> ModifiedWorkflowView<FR.WorkflowOutput, Self, T> where FR.WorkflowInput == Never {
         ModifiedWorkflowView<FR.WorkflowOutput, Self, T>(self, item: item)
@@ -137,7 +137,7 @@ extension ModifiedWorkflowView where Args == AnyWorkflow.PassedArgs {
     /**
      Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
      - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
-     - Returns: a new `WorkflowView` with the additional `FlowRepresentable` item.
+     - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
      */
     public func thenProceed<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> ModifiedWorkflowView<FR.WorkflowOutput, Self, T> where FR.WorkflowInput == AnyWorkflow.PassedArgs {
         ModifiedWorkflowView<FR.WorkflowOutput, Self, T>(self, item: item)
@@ -146,7 +146,7 @@ extension ModifiedWorkflowView where Args == AnyWorkflow.PassedArgs {
     /**
      Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
      - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
-     - Returns: a new `WorkflowView` with the additional `FlowRepresentable` item.
+     - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
      */
     public func thenProceed<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> ModifiedWorkflowView<FR.WorkflowOutput, Self, T> {
         ModifiedWorkflowView<FR.WorkflowOutput, Self, T>(self, item: item)
@@ -158,7 +158,7 @@ extension ModifiedWorkflowView {
     /**
      Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
      - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
-     - Returns: a new `WorkflowView` with the additional `FlowRepresentable` item.
+     - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
      */
     public func thenProceed<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> ModifiedWorkflowView<FR.WorkflowOutput, Self, T> where Args == FR.WorkflowInput {
         ModifiedWorkflowView<FR.WorkflowOutput, Self, T>(self, item: item)
@@ -167,7 +167,7 @@ extension ModifiedWorkflowView {
     /**
      Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
      - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
-     - Returns: a new `WorkflowView` with the additional `FlowRepresentable` item.
+     - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
      */
     public func thenProceed<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> ModifiedWorkflowView<FR.WorkflowOutput, Self, T> where FR.WorkflowInput == AnyWorkflow.PassedArgs {
         ModifiedWorkflowView<FR.WorkflowOutput, Self, T>(self, item: item)

@@ -11,7 +11,7 @@ import SwiftUI
 import SwiftCurrent
 
 /**
- A concrete type used to modify a `FlowRepresentable` in a `WorkflowView`.
+ A concrete type used to modify a `FlowRepresentable` in a workflow.
 
  ### Discussion
  `WorkflowItem` gives you the ability to specify changes you'd like to apply to a specific `FlowRepresentable` when it is time to present it in a `Workflow`.

@@ -41,17 +41,17 @@ final class ContentViewTests: XCTestCase {
         XCTAssertNotNil(wf2)
         XCTAssertNotNil(wf3)
         wait(for: [
-            ViewHosting.loadView(wf1)?.inspection.inspect { workflowView in
-                XCTAssertNoThrow(try workflowView.find(MapFeatureOnboardingView.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try workflowView.find(MapFeatureView.self))
+            ViewHosting.loadView(wf1)?.inspection.inspect { WorkflowLauncher in
+                XCTAssertNoThrow(try WorkflowLauncher.find(MapFeatureOnboardingView.self).actualView().proceedInWorkflow())
+                XCTAssertNoThrow(try WorkflowLauncher.find(MapFeatureView.self))
             },
-            ViewHosting.loadView(wf2)?.inspection.inspect { workflowView in
-                XCTAssertNoThrow(try workflowView.find(QRScannerFeatureOnboardingView.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try workflowView.find(QRScannerFeatureView.self))
+            ViewHosting.loadView(wf2)?.inspection.inspect { WorkflowLauncher in
+                XCTAssertNoThrow(try WorkflowLauncher.find(QRScannerFeatureOnboardingView.self).actualView().proceedInWorkflow())
+                XCTAssertNoThrow(try WorkflowLauncher.find(QRScannerFeatureView.self))
             },
-            ViewHosting.loadView(wf3)?.inspection.inspect { workflowView in
-                XCTAssertNoThrow(try workflowView.find(ProfileFeatureOnboardingView.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try workflowView.find(ProfileFeatureView.self))
+            ViewHosting.loadView(wf3)?.inspection.inspect { WorkflowLauncher in
+                XCTAssertNoThrow(try WorkflowLauncher.find(ProfileFeatureOnboardingView.self).actualView().proceedInWorkflow())
+                XCTAssertNoThrow(try WorkflowLauncher.find(ProfileFeatureView.self))
             }
         ].compactMap { $0 }, timeout: TestConstant.timeout)
     }

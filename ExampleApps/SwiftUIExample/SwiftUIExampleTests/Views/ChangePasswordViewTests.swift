@@ -27,7 +27,7 @@ final class ChangePasswordViewTests: XCTestCase {
     func testChangePasswordProceeds_IfAllInformationIsCorrect() throws {
         let currentPassword = UUID().uuidString
         let onFinish = expectation(description: "onFinish called")
-        let exp = ViewHosting.loadView(WorkflowView(isLaunched: .constant(true), startingArgs: currentPassword)
+        let exp = ViewHosting.loadView(WorkflowLauncher(isLaunched: .constant(true), startingArgs: currentPassword)
                                         .thenProceed(with: WorkflowItem(ChangePasswordView.self))
                                         .onFinish { _ in onFinish.fulfill() }).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(ViewType.TextField.self).setInput(currentPassword))

@@ -25,7 +25,7 @@ final class QRScannerFeatureOnboardingViewTests: XCTestCase {
         defaults.set(false, forKey: defaultsKey)
         Container.default.register(UserDefaults.self) { _ in defaults }
         let workflowFinished = expectation(description: "View Proceeded")
-        let exp = ViewHosting.loadView(WorkflowView(isLaunched: .constant(true))
+        let exp = ViewHosting.loadView(WorkflowLauncher(isLaunched: .constant(true))
                                         .thenProceed(with: WorkflowItem(QRScannerFeatureOnboardingView.self))
                                         .onFinish { _ in
                                             workflowFinished.fulfill()
