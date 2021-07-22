@@ -21,7 +21,7 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
     private var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
     private var onAbandon = [() -> Void]()
 
-    @ObservedObject private var model: WorkflowViewModel
+    @StateObject private var model: WorkflowViewModel
     @StateObject private var launcher: Launcher
 
     public var body: some View {
@@ -29,10 +29,13 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
             if let body = model.body as? Content {
                 body
                     .onReceive(model.onAbandonPublisher) { onAbandon.forEach { $0() } }
+                    .onReceive(model.onFinishPublisher, perform: _onFinish)
                     .onChange(of: isLaunched) { if $0 { launch() } }
                     .onReceive(inspection.notice) { inspection.visit(self, $0) }
             } else {
-                wrapped?.onReceive(inspection.notice) { inspection.visit(self, $0) }
+                wrapped?
+                    .onReceive(inspection.notice) { inspection.visit(self, $0) }
+                    .onReceive(model.onFinishPublisher, perform: _onFinish)
             }
         }
     }
@@ -44,41 +47,44 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
         launchArgs = workflowView.passedArgs
         _isLaunched = isLaunched
         let model = WorkflowViewModel(isLaunched: isLaunched)
-        _model = ObservedObject(initialValue: model)
+        _model = StateObject(wrappedValue: model)
         _launcher = StateObject(wrappedValue: Launcher(workflow: wf,
                                                        responder: model,
                                                        launchArgs: workflowView.passedArgs))
     }
 
     private init<A, W, C, FR>(_ workflowView: ModifiedWorkflowView<A, W, C>, item: WorkflowItem<FR, Content>) where Wrapped == ModifiedWorkflowView<A, W, C>, Args == FR.WorkflowOutput {
-        model = workflowView.model
+        _model = workflowView._model
         wrapped = workflowView
         workflow = workflowView.workflow
         workflow.append(item.metadata)
         launchArgs = workflowView.launchArgs
         _isLaunched = workflowView._isLaunched
         _launcher = workflowView._launcher
+//        #warning("Test this")
+//        onFinish = workflowView.onFinish
+//        onAbandon = workflowView.onAbandon
     }
 
     private init(workflowView: Self, onFinish: [(AnyWorkflow.PassedArgs) -> Void], onAbandon: [() -> Void]) {
-        model = workflowView.model
+        _model = workflowView._model
         wrapped = workflowView.wrapped
         workflow = workflowView.workflow
         self.onFinish = onFinish
         self.onAbandon = onAbandon
         launchArgs = workflowView.launchArgs
         _isLaunched = workflowView._isLaunched
-        _launcher = StateObject(wrappedValue: Launcher(workflow: workflowView.workflow,
-                                                       responder: workflowView.model,
-                                                       launchArgs: workflowView.launchArgs) { args in
-            onFinish.forEach { $0(args) }
-        })
+        _launcher = workflowView._launcher
     }
 
     private func launch() {
-        workflow.launch(withOrchestrationResponder: model, passedArgs: launchArgs) { args in
-            onFinish.forEach { $0(args) }
-        }
+        workflow.launch(withOrchestrationResponder: model, passedArgs: launchArgs)
+    }
+
+    private func _onFinish(_ args: AnyWorkflow.PassedArgs?) {
+        guard let args = args, !launcher.onFinishCalled else { return }
+        launcher.onFinishCalled = true
+        onFinish.forEach { $0(args) }
     }
 
     /// Adds an action to perform when this `Workflow` has finished.
@@ -98,14 +104,12 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 private final class Launcher: ObservableObject {
+    var onFinishCalled = false
     init(workflow: AnyWorkflow,
          responder: OrchestrationResponder,
-         launchArgs: AnyWorkflow.PassedArgs,
-         onFinish: ((AnyWorkflow.PassedArgs) -> Void)? = nil) {
+         launchArgs: AnyWorkflow.PassedArgs) {
         if workflow.orchestrationResponder == nil {
-            workflow.launch(withOrchestrationResponder: responder, passedArgs: launchArgs) {
-                onFinish?($0)
-            }
+            workflow.launch(withOrchestrationResponder: responder, passedArgs: launchArgs)
         }
     }
 }

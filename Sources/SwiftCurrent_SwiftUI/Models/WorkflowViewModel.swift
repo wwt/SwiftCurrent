@@ -13,7 +13,9 @@ import Combine
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class WorkflowViewModel: ObservableObject {
     @Published var body: Any?
-    var onAbandonPublisher = PassthroughSubject<Void, Never>()
+    let onAbandonPublisher = PassthroughSubject<Void, Never>()
+    let onFinishPublisher = CurrentValueSubject<AnyWorkflow.PassedArgs?, Never>(nil)
+
     var isLaunched: Binding<Bool>?
 
     init(isLaunched: Binding<Bool>) {
@@ -49,6 +51,7 @@ extension WorkflowViewModel: OrchestrationResponder {
                 isLaunched?.wrappedValue = false
             }
         }
+        onFinishPublisher.send(passedArgs)
         onFinish?(passedArgs)
     }
 

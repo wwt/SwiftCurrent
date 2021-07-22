@@ -35,7 +35,7 @@ final class AccountInformationViewTests: XCTestCase {
         let exp = ViewHosting.loadView(AccountInformationView()).inspection.inspect { view in
             accountInformation = view
             XCTAssertNoThrow(try view.find(ViewType.Button.self, traversal: .depthFirst).tap())
-            usernameWorkflow = try view.find(UsernameWorkflow.self).actualView()
+            usernameWorkflow = try view.vStack().view(UsernameWorkflow.self, 0).actualView()
         }
         wait(for: [exp], timeout: TestConstant.timeout)
 
@@ -46,7 +46,7 @@ final class AccountInformationViewTests: XCTestCase {
                 XCTAssertNoThrow(try view.find(MFAView.self).actualView().proceedInWorkflow(.args("changeme")))
                 XCTAssertNoThrow(try view.find(ChangeUsernameView.self).actualView().proceedInWorkflow("newName"))
                 XCTAssertEqual(try accountInformation.find(ViewType.Text.self).string(), "Username: newName")
-                XCTAssertThrowsError(try accountInformation.find(UsernameWorkflow.self))
+                XCTAssertThrowsError(try view.vStack().view(UsernameWorkflow.self, 0))
             }
         ].compactMap { $0 }, timeout: TestConstant.timeout)
     }
