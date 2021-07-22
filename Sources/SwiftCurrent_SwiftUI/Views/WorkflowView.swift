@@ -107,8 +107,8 @@ public struct WorkflowView<Args>: View {
     }
 
     // swiftlint:disable:next unavailable_function
-    private func noView() -> EmptyView {
-        fatalError("WorkflowView needs information about what to present, make sure to call `.thenProceedWith(_:)`")
+    private func noView() -> Text {
+        fatalError("WorkflowView needs information about what to present, make sure to call `.thenProceed(with:)`")
     }
 }
 
