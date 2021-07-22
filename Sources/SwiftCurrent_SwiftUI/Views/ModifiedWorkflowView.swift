@@ -10,6 +10,12 @@
 import SwiftUI
 import SwiftCurrent
 
+/**
+ A view used to store complex view type information from a `Workflow`
+
+ ### Discussion
+ You do not instantiate this view directly, rather you call `thenProceed(with:)` on a `WorkflowView`.
+ */
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
     @Binding private var isLaunched: Bool
