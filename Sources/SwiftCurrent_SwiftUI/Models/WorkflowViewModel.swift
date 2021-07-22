@@ -8,41 +8,50 @@
 
 import SwiftCurrent
 import SwiftUI
+import Combine
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class WorkflowViewModel: ObservableObject {
-    @Published var body = AnyView(EmptyView())
+    @Published var body: Any?
+    let onAbandonPublisher = PassthroughSubject<Void, Never>()
+    let onFinishPublisher = CurrentValueSubject<AnyWorkflow.PassedArgs?, Never>(nil)
+
     var isLaunched: Binding<Bool>?
-    var onAbandon = [() -> Void]()
+
+    init(isLaunched: Binding<Bool>) {
+        self.isLaunched = isLaunched
+    }
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension WorkflowViewModel: OrchestrationResponder {
     func launch(to destination: AnyWorkflow.Element) {
-        extractView(from: destination).model = self
+        body = extractView(from: destination).erasedView
     }
 
     func proceed(to destination: AnyWorkflow.Element, from source: AnyWorkflow.Element) {
-        extractView(from: destination).model = self
+        body = extractView(from: destination).erasedView
     }
 
     func backUp(from source: AnyWorkflow.Element, to destination: AnyWorkflow.Element) {
-        extractView(from: destination).model = self
+        body = extractView(from: destination).erasedView
     }
 
     func abandon(_ workflow: AnyWorkflow, onFinish: (() -> Void)?) {
         isLaunched?.wrappedValue = false
-        onAbandon.forEach { $0() }
+        body = nil
+        onAbandonPublisher.send()
     }
 
     func complete(_ workflow: AnyWorkflow, passedArgs: AnyWorkflow.PassedArgs, onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
         if workflow.lastLoadedItem?.value.metadata.persistence == .removedAfterProceeding {
             if let lastPresentableItem = workflow.lastPresentableItem {
-                extractView(from: lastPresentableItem).model = self
+                body = extractView(from: lastPresentableItem).erasedView
             } else {
                 isLaunched?.wrappedValue = false
             }
         }
+        onFinishPublisher.send(passedArgs)
         onFinish?(passedArgs)
     }
 

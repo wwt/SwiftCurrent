@@ -28,7 +28,7 @@ struct ChangePasswordView: View, FlowRepresentable {
     }
 
     var body: some View {
-        Form {
+        VStack {
             if !errors.isEmpty {
                 Text(errors.joined(separator: "\n")).foregroundColor(Color.red)
             }

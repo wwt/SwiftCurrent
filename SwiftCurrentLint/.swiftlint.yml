@@ -133,7 +133,7 @@ excluded: # paths to ignore during linting. Takes precedence over `included`.
   - Workflow/Package.swift
 
 line_length:
-  warning: 191
+  warning: 196
   error: 220
   ignores_comments: true
 

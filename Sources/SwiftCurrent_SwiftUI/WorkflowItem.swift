@@ -11,7 +11,7 @@ import SwiftUI
 import SwiftCurrent
 
 /**
- A concrete type used to modify a `FlowRepresentable` in a `WorkflowView`.
+ A concrete type used to modify a `FlowRepresentable` in a workflow.
 
  ### Discussion
  `WorkflowItem` gives you the ability to specify changes you'd like to apply to a specific `FlowRepresentable` when it is time to present it in a `Workflow`.
@@ -30,17 +30,25 @@ import SwiftCurrent
  ```
  */
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-public final class WorkflowItem<F: FlowRepresentable & View> {
+public final class WorkflowItem<F: FlowRepresentable & View, Content: View> {
     var metadata: FlowRepresentableMetadata!
     private var flowPersistenceClosure: (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default }
     private var modifierClosure: ((AnyFlowRepresentableView) -> Void)?
 
     /// Creates a `WorkflowItem` with no arguments from a `FlowRepresentable` that is also a View.
-    public init(_: F.Type) {
+    public init(_: F.Type) where Content == F {
         metadata = FlowRepresentableMetadata(F.self,
                                              launchStyle: .new,
                                              flowPersistence: flowPersistenceClosure,
                                              flowRepresentableFactory: factory)
+    }
+
+    private init(metadata: FlowRepresentableMetadata,
+                 persistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence,
+                 modifier: ((AnyFlowRepresentableView) -> Void)?) {
+        self.metadata = metadata
+        flowPersistenceClosure = persistence
+        modifierClosure = modifier
     }
 
     /**
@@ -48,14 +56,16 @@ public final class WorkflowItem<F: FlowRepresentable & View> {
 
      ### Important: The most recently defined (or last) use of this, is the only one that applies modifiers, unlike onAbandon or onFinish.
      */
-    public func applyModifiers<V: View>(@ViewBuilder _ closure: @escaping (F) -> V) -> Self {
+    public func applyModifiers<V: View>(@ViewBuilder _ closure: @escaping (F) -> V) -> WorkflowItem<F, V> {
         modifierClosure = {
             // We are essentially casting this to itself, that cannot fail. (Famous last words)
             // swiftlint:disable:next force_cast
             let instance = $0.underlyingInstance as! F
             $0.changeUnderlyingView(to: closure(instance))
         }
-        return self
+        return WorkflowItem<F, V>(metadata: metadata,
+                                  persistence: flowPersistenceClosure,
+                                  modifier: modifierClosure)
     }
 
     private func factory(args: AnyWorkflow.PassedArgs) -> AnyFlowRepresentable {

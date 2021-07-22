@@ -14,6 +14,10 @@ import Swinject
 @testable import SwiftUIExample
 
 final class ContentViewTests: XCTestCase {
+    private typealias MapWorkflow = ModifiedWorkflowView<Never, ModifiedWorkflowView<Never, Never, MapFeatureOnboardingView>, MapFeatureView>
+    private typealias QRScannerWorkflow = ModifiedWorkflowView<Never, ModifiedWorkflowView<Never, Never, QRScannerFeatureOnboardingView>, QRScannerFeatureView>
+    private typealias ProfileWorkflow = ModifiedWorkflowView<Never, ModifiedWorkflowView<Never, Never, ProfileFeatureOnboardingView>, ProfileFeatureView>
+
     override func setUpWithError() throws {
         Container.default.removeAll()
     }
@@ -21,33 +25,33 @@ final class ContentViewTests: XCTestCase {
     func testContentView() throws {
         let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
         Container.default.register(UserDefaults.self) { _ in defaults }
-        var wf1: WorkflowView<Never>!
-        var wf2: WorkflowView<Never>!
-        var wf3: WorkflowView<Never>!
+        var wf1: MapWorkflow!
+        var wf2: QRScannerWorkflow!
+        var wf3: ProfileWorkflow!
         let exp = ViewHosting.loadView(ContentView()).inspection.inspect { view in
-            wf1 = try view.tabView().view(WorkflowView<Never>.self, 0).actualView()
-            XCTAssertEqual(try view.tabView().view(WorkflowView<Never>.self, 0).tabItem().label().title().text().string(), "Map")
-            wf2 = try view.tabView().view(WorkflowView<Never>.self, 1).actualView()
-            XCTAssertEqual(try view.tabView().view(WorkflowView<Never>.self, 1).tabItem().label().title().text().string(), "QR Scanner")
-            wf3 = try view.tabView().view(WorkflowView<Never>.self, 2).actualView()
-            XCTAssertEqual(try view.tabView().view(WorkflowView<Never>.self, 2).tabItem().label().title().text().string(), "Profile")
+            wf1 = try view.tabView().view(MapWorkflow.self, 0).actualView()
+            XCTAssertEqual(try view.tabView().view(MapWorkflow.self, 0).tabItem().label().title().text().string(), "Map")
+            wf2 = try view.tabView().view(QRScannerWorkflow.self, 1).actualView()
+            XCTAssertEqual(try view.tabView().view(QRScannerWorkflow.self, 1).tabItem().label().title().text().string(), "QR Scanner")
+            wf3 = try view.tabView().view(ProfileWorkflow.self, 2).actualView()
+            XCTAssertEqual(try view.tabView().view(ProfileWorkflow.self, 2).tabItem().label().title().text().string(), "Profile")
         }
         wait(for: [exp], timeout: TestConstant.timeout)
         XCTAssertNotNil(wf1)
         XCTAssertNotNil(wf2)
         XCTAssertNotNil(wf3)
         wait(for: [
-            ViewHosting.loadView(wf1)?.inspection.inspect { workflowView in
-                XCTAssertNoThrow(try workflowView.find(MapFeatureOnboardingView.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try workflowView.find(MapFeatureView.self))
+            ViewHosting.loadView(wf1)?.inspection.inspect { WorkflowLauncher in
+                XCTAssertNoThrow(try WorkflowLauncher.find(MapFeatureOnboardingView.self).actualView().proceedInWorkflow())
+                XCTAssertNoThrow(try WorkflowLauncher.find(MapFeatureView.self))
             },
-            ViewHosting.loadView(wf2)?.inspection.inspect { workflowView in
-                XCTAssertNoThrow(try workflowView.find(QRScannerFeatureOnboardingView.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try workflowView.find(QRScannerFeatureView.self))
+            ViewHosting.loadView(wf2)?.inspection.inspect { WorkflowLauncher in
+                XCTAssertNoThrow(try WorkflowLauncher.find(QRScannerFeatureOnboardingView.self).actualView().proceedInWorkflow())
+                XCTAssertNoThrow(try WorkflowLauncher.find(QRScannerFeatureView.self))
             },
-            ViewHosting.loadView(wf3)?.inspection.inspect { workflowView in
-                XCTAssertNoThrow(try workflowView.find(ProfileFeatureOnboardingView.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try workflowView.find(ProfileFeatureView.self))
+            ViewHosting.loadView(wf3)?.inspection.inspect { WorkflowLauncher in
+                XCTAssertNoThrow(try WorkflowLauncher.find(ProfileFeatureOnboardingView.self).actualView().proceedInWorkflow())
+                XCTAssertNoThrow(try WorkflowLauncher.find(ProfileFeatureView.self))
             }
         ].compactMap { $0 }, timeout: TestConstant.timeout)
     }

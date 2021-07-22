@@ -102,7 +102,6 @@ extension FlowRepresentable {
 
     /// :nodoc: **WARNING: This will throw a fatal error.** Just a default implementation of the required `FlowRepresentable` initializer meant to satisfy the protocol requirements.
     public init() { // swiftlint:disable:this unavailable_function
-        // swiftlint:disable:next line_length
         fatalError("This initializer was only designed to satisfy a protocol requirement on FlowRepresentable. You must implement your own custom initializer on \(String(describing: Self.self))")
     }
 

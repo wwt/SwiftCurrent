@@ -13,7 +13,7 @@ import SwiftUI
 
 // Don't forget you need to make every view you want to test with ViewInspector Inspectable
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-extension WorkflowView: Inspectable { }
+extension ModifiedWorkflowView: Inspectable { }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension Inspection: InspectionEmissary where V: View { }
