@@ -47,6 +47,8 @@ import SwiftCurrent
 public struct WorkflowView<Args>: View {
     @Binding private var isLaunched: Bool
     var passedArgs = AnyWorkflow.PassedArgs.none
+    var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
+    var onAbandon = [() -> Void]()
 
     public var body: some View {
         noView()
@@ -72,6 +74,36 @@ public struct WorkflowView<Args>: View {
         } else {
             passedArgs = .args(args)
         }
+    }
+
+    private init(isLaunched: Binding<Bool>,
+                 startingArgs: AnyWorkflow.PassedArgs,
+                 onFinish: [(AnyWorkflow.PassedArgs) -> Void],
+                 onAbandon: [() -> Void]) {
+        _isLaunched = isLaunched
+        passedArgs = startingArgs
+        self.onFinish = onFinish
+        self.onAbandon = onAbandon
+    }
+
+    /// Adds an action to perform when this `Workflow` has finished.
+    public func onFinish(closure: @escaping (AnyWorkflow.PassedArgs) -> Void) -> Self {
+        var onFinish = self.onFinish
+        onFinish.append(closure)
+        return Self(isLaunched: _isLaunched,
+                    startingArgs: passedArgs,
+                    onFinish: onFinish,
+                    onAbandon: onAbandon)
+    }
+
+    /// Adds an action to perform when this `Workflow` has abandoned.
+    public func onAbandon(closure: @escaping () -> Void) -> Self {
+        var onAbandon = self.onAbandon
+        onAbandon.append(closure)
+        return Self(isLaunched: _isLaunched,
+                    startingArgs: passedArgs,
+                    onFinish: onFinish,
+                    onAbandon: onAbandon)
     }
 
     // swiftlint:disable:next unavailable_function

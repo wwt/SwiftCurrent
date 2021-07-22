@@ -46,6 +46,8 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
         workflow = wf
         launchArgs = workflowView.passedArgs
         _isLaunched = isLaunched
+        onFinish = workflowView.onFinish
+        onAbandon = workflowView.onAbandon
         let model = WorkflowViewModel(isLaunched: isLaunched)
         _model = StateObject(wrappedValue: model)
         _launcher = StateObject(wrappedValue: Launcher(workflow: wf,
