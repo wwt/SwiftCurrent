@@ -483,6 +483,38 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.5)
     }
 
+    func testWorkflowCanConvertAnyArgsToCorrectTypeForFirstItem() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            let data: String
+
+            var body: some View { Text("FR1 type") }
+
+            init(with data: String) {
+                self.data = data
+            }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            init(with str: String) { }
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let expectedArgs = UUID().uuidString
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowView(isLaunched: .constant(true), startingArgs: AnyWorkflow.PassedArgs.args(expectedArgs))
+                .thenProceed(with: WorkflowItem(FR1.self))
+                .onFinish { _ in
+            expectOnFinish.fulfill()
+        }).inspection.inspect { viewUnderTest in
+            XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
+            XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().data, expectedArgs)
+            XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+        }
+
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.5)
+    }
+
     func testWorkflowCanHaveAPassthroughRepresentableInTheMiddle() throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
