@@ -3,6 +3,7 @@
 
 <!-- (See our contributing guidelines for more details) -->
 ## Checklist:
+- [ ] Did you sign the [Contributor License Agreement](https://cla-assistant.io/wwt/SwiftCurrent)?
 - [ ] Is the linter reporting 0 errors?
 - [ ] Did you comply with our [styleguide](https://github.com/wwt/SwiftCurrent/blob/main/.github/STYLEGUIDE.md)?
 - [ ] Is there [adequate test coverage](https://github.com/wwt/SwiftCurrent/blob/main/.github/CONTRIBUTING.md#test-etiquette) for your new code?
