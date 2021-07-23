@@ -353,6 +353,29 @@ class WorkflowConsumerTests: XCTestCase {
 
         XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
     }
+
+    func testFlowRepresentable_WithPassthroughInputAndOutput_PassesDataForward() {
+        struct FR1: PassthroughFlowRepresentable {
+            var _workflowPointer: AnyFlowRepresentable?
+        }
+        struct FR2: FlowRepresentable {
+            var _workflowPointer: AnyFlowRepresentable?
+            let name: String
+            init(with name: String) { self.name = name }
+        }
+
+        let expectedArgs = UUID().uuidString
+
+        let wf = Workflow(FR1.self)
+            .thenProceed(with: FR2.self)
+
+        wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
+
+        (wf.first?.value.instance?.underlyingInstance as? FR1)?.proceedInWorkflow()
+
+        XCTAssert(wf.first?.next?.value.instance?.underlyingInstance is FR2)
+        XCTAssertEqual((wf.first?.next?.value.instance?.underlyingInstance as? FR2)?.name, expectedArgs)
+    }
 }
 
 extension WorkflowConsumerTests {
