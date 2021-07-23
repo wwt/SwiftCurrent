@@ -17,6 +17,10 @@ If you have an idea or change you would like to request, please go to [issues](h
 ## Pull Requests
 PRs have a checklist that walks you through the things that you should do for any PR. This document provides greater detail and context around what some of those checklist items mean. Please take the time to read through this document and our styleguide before contributing so that we can keep SwiftCurrent clean, and maintainable. By the time you submit code we want to be focused on the logic, not the formatting, or patterns. Also please be sure to read the section on testing in this guide as tests are incredibly important to us.
 
+## Sign the CLA
+
+Before you can contribute to SwiftCurrent, you will need to sign the [Contributor License Agreement](https://cla-assistant.io/wwt/SwiftCurrent).
+
 ## Style guide
 Please review our [style guide](STYLEGUIDE.md) to ensure the least amount of rework and changes in your pull request.  If there are changes that you would like to make to the style guide, the process is:
 1. Propose your change as an issue for tracking.
