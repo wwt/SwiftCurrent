@@ -14,7 +14,7 @@ If you found a bug in SwiftCurrent, thank you!  Please go to [issues](https://gi
 ### Feature requests
 If you have an idea or change you would like to request, please go to [issues](https://github.com/wwt/SwiftCurrent/issues/new/choose) and use the `Feature request` template to make your request.  We'll reach out to you as soon as we can to discuss.  The more "why" you put into your request, the better we will be able to help build a solution that meets our styling and achieves your goals.
 
-## Pull Requests:
+## Pull Requests
 PRs have a checklist that walks you through the things that you should do for any PR. This document provides greater detail and context around what some of those checklist items mean. Please take the time to read through this document and our styleguide before contributing so that we can keep SwiftCurrent clean, and maintainable. By the time you submit code we want to be focused on the logic, not the formatting, or patterns. Also please be sure to read the section on testing in this guide as tests are incredibly important to us.
 
 ## Style guide
