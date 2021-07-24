@@ -148,6 +148,15 @@ extension ModifiedWorkflowView where Args == AnyWorkflow.PassedArgs {
      - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
      - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
      */
+    public func thenProceed<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> ModifiedWorkflowView<FR.WorkflowOutput, Self, T> where FR.WorkflowInput == Never {
+        ModifiedWorkflowView<FR.WorkflowOutput, Self, T>(self, item: item)
+    }
+
+    /**
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
+     - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
+     - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
+     */
     public func thenProceed<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> ModifiedWorkflowView<FR.WorkflowOutput, Self, T> {
         ModifiedWorkflowView<FR.WorkflowOutput, Self, T>(self, item: item)
     }
@@ -170,6 +179,15 @@ extension ModifiedWorkflowView {
      - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
      */
     public func thenProceed<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> ModifiedWorkflowView<FR.WorkflowOutput, Self, T> where FR.WorkflowInput == AnyWorkflow.PassedArgs {
+        ModifiedWorkflowView<FR.WorkflowOutput, Self, T>(self, item: item)
+    }
+
+    /**
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
+     - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
+     - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
+     */
+    public func thenProceed<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> ModifiedWorkflowView<FR.WorkflowOutput, Self, T> where FR.WorkflowInput == Never {
         ModifiedWorkflowView<FR.WorkflowOutput, Self, T>(self, item: item)
     }
 }
