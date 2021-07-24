@@ -870,6 +870,71 @@ class WorkflowConsumerTests: XCTestCase {
         XCTAssert(wf.first?.next?.value.instance?.underlyingInstance is FR2)
     }
 
+    func testWhenInputIsConcreteTypeArgsWithDefaultFlowPersistence_WorkflowCanProceedToTheSameInputTypeItem() throws {
+        struct FR1: FlowRepresentable {
+            typealias WorkflowOutput = String
+            var _workflowPointer: AnyFlowRepresentable?
+            init(with args: String) { }
+        }
+        struct FR2: FlowRepresentable {
+            var _workflowPointer: AnyFlowRepresentable?
+            init(with args: String) { }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let wf = Workflow(FR1.self).thenProceed(with: FR2.self)
+
+        wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
+
+        try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow("")
+        XCTAssert(wf.first?.next?.value.instance?.underlyingInstance is FR2)
+    }
+
+    func testWhenInputIsConcreteTypeWithAutoclosureFlowPersistence_WorkflowCanProceedToTheSameInputTypeItem() throws {
+        struct FR1: FlowRepresentable {
+            typealias WorkflowOutput = String
+            var _workflowPointer: AnyFlowRepresentable?
+            init(with args: String) { }
+        }
+        struct FR2: FlowRepresentable {
+            var _workflowPointer: AnyFlowRepresentable?
+            init(with args: String) { }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let wf = Workflow(FR1.self, flowPersistence: .persistWhenSkipped).thenProceed(with: FR2.self)
+
+        wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
+
+        XCTAssertEqual(wf.first?.value.metadata.persistence, .persistWhenSkipped)
+        try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow("")
+        XCTAssert(wf.first?.next?.value.instance?.underlyingInstance is FR2)
+    }
+
+    func testWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToTheSameInputTypeItem() throws {
+        struct FR1: FlowRepresentable {
+            typealias WorkflowOutput = String
+            var _workflowPointer: AnyFlowRepresentable?
+            init(with args: String) { }
+        }
+        struct FR2: FlowRepresentable {
+            var _workflowPointer: AnyFlowRepresentable?
+            init(with args: String) { }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let wf = Workflow(FR1.self, flowPersistence: {
+            XCTAssertEqual($0, expectedArgs)
+            return .persistWhenSkipped
+        }).thenProceed(with: FR2.self)
+
+        wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
+
+        XCTAssertEqual(wf.first?.value.metadata.persistence, .persistWhenSkipped)
+        try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow("")
+        XCTAssert(wf.first?.next?.value.instance?.underlyingInstance is FR2)
+    }
+
     // MARK: Generic Proceed Tests
 
     // MARK: Input Type == Never
@@ -946,14 +1011,14 @@ class WorkflowConsumerTests: XCTestCase {
         }
         let expectedArgs = UUID().uuidString
 
-        let wf = Workflow(FR0.self).thenProceed(with: FR1.self, flowPersistence: .persistWhenSkipped).thenProceed(with: FR2.self)
+        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self, flowPersistence: .persistWhenSkipped)
 
         wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
         try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR0).proceedInWorkflow()
 
-        XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
         try XCTUnwrap(wf.first?.next?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow()
         XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
+        XCTAssertEqual(wf.first?.next?.next?.value.metadata.persistence, .persistWhenSkipped)
     }
 
     func testProceedingWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToAnotherNeverItem() throws {
@@ -968,14 +1033,14 @@ class WorkflowConsumerTests: XCTestCase {
         }
         let expectedArgs = UUID().uuidString
 
-        let wf = Workflow(FR0.self).thenProceed(with: FR1.self, flowPersistence: { .persistWhenSkipped }).thenProceed(with: FR2.self)
+        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self, flowPersistence: { .persistWhenSkipped })
 
         wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
         try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR0).proceedInWorkflow()
 
-        XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
         try XCTUnwrap(wf.first?.next?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow()
         XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
+        XCTAssertEqual(wf.first?.next?.next?.value.metadata.persistence, .persistWhenSkipped)
     }
 
     func testProceedingWhenInputIsNeverWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
@@ -1013,14 +1078,14 @@ class WorkflowConsumerTests: XCTestCase {
         }
         let expectedArgs = UUID().uuidString
 
-        let wf = Workflow(FR0.self).thenProceed(with: FR1.self, flowPersistence: .persistWhenSkipped).thenProceed(with: FR2.self)
+        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self, flowPersistence: .persistWhenSkipped)
 
         wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
         try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR0).proceedInWorkflow()
 
-        XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
         try XCTUnwrap(wf.first?.next?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow()
         XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
+        XCTAssertEqual(wf.first?.next?.next?.value.metadata.persistence, .persistWhenSkipped)
     }
 
     func testProceedingWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
@@ -1036,14 +1101,14 @@ class WorkflowConsumerTests: XCTestCase {
         }
         let expectedArgs = UUID().uuidString
 
-        let wf = Workflow(FR0.self).thenProceed(with: FR1.self, flowPersistence: { .persistWhenSkipped }).thenProceed(with: FR2.self)
+        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self, flowPersistence: { _ in .persistWhenSkipped })
 
         wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
         try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR0).proceedInWorkflow()
 
-        XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
         try XCTUnwrap(wf.first?.next?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow()
         XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
+        XCTAssertEqual(wf.first?.next?.next?.value.metadata.persistence, .persistWhenSkipped)
     }
 
     func testProceedingWhenInputIsNeverWithDefaultFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
@@ -1083,14 +1148,14 @@ class WorkflowConsumerTests: XCTestCase {
         }
         let expectedArgs = UUID().uuidString
 
-        let wf = Workflow(FR0.self).thenProceed(with: FR1.self, flowPersistence: .persistWhenSkipped).thenProceed(with: FR2.self)
+        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self, flowPersistence: .persistWhenSkipped)
 
         wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
         try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR0).proceedInWorkflow()
 
-        XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
         try XCTUnwrap(wf.first?.next?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow(1)
         XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
+        XCTAssertEqual(wf.first?.next?.next?.value.metadata.persistence, .persistWhenSkipped)
     }
 
     func testProceedingWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
@@ -1107,14 +1172,17 @@ class WorkflowConsumerTests: XCTestCase {
         }
         let expectedArgs = UUID().uuidString
 
-        let wf = Workflow(FR0.self).thenProceed(with: FR1.self, flowPersistence: { .persistWhenSkipped }).thenProceed(with: FR2.self)
+        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self, flowPersistence: {
+            XCTAssertEqual($0, 1)
+            return .persistWhenSkipped
+        })
 
         wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
         try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR0).proceedInWorkflow()
 
-        XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
         try XCTUnwrap(wf.first?.next?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow(1)
         XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
+        XCTAssertEqual(wf.first?.next?.next?.value.metadata.persistence, .persistWhenSkipped)
     }
 
 
@@ -1162,26 +1230,27 @@ class WorkflowConsumerTests: XCTestCase {
         XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
     }
 
-//    func testProceedingWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToNeverItem() throws {
-//        struct FR0: PassthroughFlowRepresentable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//        }
-//        struct FR1: FlowRepresentable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            init(with args: AnyWorkflow.PassedArgs) { }
-//        }
-//        struct FR2: FlowRepresentable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//        }
-//        let expectedArgs = UUID().uuidString
-//
-//        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self)
-//
-//        wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
-//
-//        try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow()
-//        XCTAssert(wf.first?.next?.value.instance?.underlyingInstance is FR2)
-//    }
+    func testProceedingWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToNeverItem() throws {
+        struct FR0: PassthroughFlowRepresentable {
+            var _workflowPointer: AnyFlowRepresentable?
+        }
+        struct FR1: FlowRepresentable {
+            var _workflowPointer: AnyFlowRepresentable?
+            init(with args: AnyWorkflow.PassedArgs) { }
+        }
+        struct FR2: FlowRepresentable {
+            var _workflowPointer: AnyFlowRepresentable?
+        }
+        let expectedArgs = UUID().uuidString
+
+        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self)
+
+        wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
+        try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR0).proceedInWorkflow()
+
+        try XCTUnwrap(wf.first?.next?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow()
+        XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
+    }
 
     func testProceedingWhenInputIsAnyWorkflowPassedArgsWithAutoclosureFlowPersistence_WorkflowCanProceedToNeverItem() throws {
         struct FR0: PassthroughFlowRepresentable {
@@ -1196,14 +1265,14 @@ class WorkflowConsumerTests: XCTestCase {
         }
         let expectedArgs = UUID().uuidString
 
-        let wf = Workflow(FR0.self).thenProceed(with: FR1.self, flowPersistence: .persistWhenSkipped).thenProceed(with: FR2.self)
+        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self, flowPersistence: .persistWhenSkipped)
 
         wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
         try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR0).proceedInWorkflow()
 
-        XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
         try XCTUnwrap(wf.first?.next?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow()
         XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
+        XCTAssertEqual(wf.first?.next?.next?.value.metadata.persistence, .persistWhenSkipped)
     }
 
     func testProceedingWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToNeverItem() throws {
@@ -1232,27 +1301,28 @@ class WorkflowConsumerTests: XCTestCase {
         XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
     }
 
-//    func testProceedingWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
-//        struct FR0: PassthroughFlowRepresentable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//        }
-//        struct FR1: FlowRepresentable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            init(with args: AnyWorkflow.PassedArgs) { }
-//        }
-//        struct FR2: FlowRepresentable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            init(with args: AnyWorkflow.PassedArgs) { }
-//        }
-//        let expectedArgs = UUID().uuidString
-//
-//        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self)
-//
-//        wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
-//
-//        try XCTUnwrap(wf.first?.next?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow()
-//        XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
-//    }
+    func testProceedingWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
+        struct FR0: PassthroughFlowRepresentable {
+            var _workflowPointer: AnyFlowRepresentable?
+        }
+        struct FR1: FlowRepresentable {
+            var _workflowPointer: AnyFlowRepresentable?
+            init(with args: AnyWorkflow.PassedArgs) { }
+        }
+        struct FR2: FlowRepresentable {
+            var _workflowPointer: AnyFlowRepresentable?
+            init(with args: AnyWorkflow.PassedArgs) { }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self)
+
+        wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
+        try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR0).proceedInWorkflow()
+
+        try XCTUnwrap(wf.first?.next?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow()
+        XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
+    }
 
     func testProceedingWhenInputIsAnyWorkflowPassedArgsWithAutoclosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
         struct FR0: PassthroughFlowRepresentable {
@@ -1268,21 +1338,21 @@ class WorkflowConsumerTests: XCTestCase {
         }
         let expectedArgs = UUID().uuidString
 
-        let wf = Workflow(FR0.self).thenProceed(with: FR1.self, flowPersistence: .persistWhenSkipped).thenProceed(with: FR2.self)
+        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self, flowPersistence: .persistWhenSkipped)
 
         wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
         try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR0).proceedInWorkflow()
 
-        XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
         try XCTUnwrap(wf.first?.next?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow()
         XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
+        XCTAssertEqual(wf.first?.next?.next?.value.metadata.persistence, .persistWhenSkipped)
     }
 
     func testProceedingWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
         struct FR0: PassthroughFlowRepresentable {
             var _workflowPointer: AnyFlowRepresentable?
         }
-        struct FR1: FlowRepresentable {
+        struct FR1: PassthroughFlowRepresentable {
             var _workflowPointer: AnyFlowRepresentable?
             init(with args: AnyWorkflow.PassedArgs) { }
         }
@@ -1292,42 +1362,42 @@ class WorkflowConsumerTests: XCTestCase {
         }
         let expectedArgs = UUID().uuidString
 
-        let wf = Workflow(FR0.self).thenProceed(with: FR1.self, flowPersistence: {
+        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self, flowPersistence: {
             XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
             return .persistWhenSkipped
-        }).thenProceed(with: FR2.self)
+        })
 
         wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
         try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR0).proceedInWorkflow()
 
-        XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
         try XCTUnwrap(wf.first?.next?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow()
         XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
+        XCTAssertEqual(wf.first?.next?.next?.value.metadata.persistence, .persistWhenSkipped)
     }
 
-//    func testProceedingWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
-//        struct FR0: PassthroughFlowRepresentable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//        }
-//        struct FR1: FlowRepresentable {
-//            typealias WorkflowOutput = Int
-//            var _workflowPointer: AnyFlowRepresentable?
-//            init(with args: AnyWorkflow.PassedArgs) { }
-//        }
-//        struct FR2: FlowRepresentable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            init(with args: Int) { }
-//        }
-//        let expectedArgs = UUID().uuidString
-//
-//        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self)
-//
-//        wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
-//        try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR0).proceedInWorkflow()
-//
-//        try XCTUnwrap(wf.first?.next?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow(1)
-//        XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
-//    }
+    func testProceedingWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
+        struct FR0: PassthroughFlowRepresentable {
+            var _workflowPointer: AnyFlowRepresentable?
+        }
+        struct FR1: FlowRepresentable {
+            typealias WorkflowOutput = Int
+            var _workflowPointer: AnyFlowRepresentable?
+            init(with args: AnyWorkflow.PassedArgs) { }
+        }
+        struct FR2: FlowRepresentable {
+            var _workflowPointer: AnyFlowRepresentable?
+            init(with args: Int) { }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self)
+
+        wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
+        try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR0).proceedInWorkflow()
+
+        try XCTUnwrap(wf.first?.next?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow(1)
+        XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
+    }
 
     func testProceedingWhenInputIsAnyWorkflowPassedArgsWithAutoclosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
         struct FR0: PassthroughFlowRepresentable {
@@ -1344,14 +1414,14 @@ class WorkflowConsumerTests: XCTestCase {
         }
         let expectedArgs = UUID().uuidString
 
-        let wf = Workflow(FR0.self).thenProceed(with: FR1.self, flowPersistence: .persistWhenSkipped).thenProceed(with: FR2.self)
+        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self, flowPersistence: .persistWhenSkipped)
 
         wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
         try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR0).proceedInWorkflow()
 
-        XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
         try XCTUnwrap(wf.first?.next?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow(1)
         XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
+        XCTAssertEqual(wf.first?.next?.next?.value.metadata.persistence, .persistWhenSkipped)
     }
 
     func testProceedingWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
@@ -1369,17 +1439,17 @@ class WorkflowConsumerTests: XCTestCase {
         }
         let expectedArgs = UUID().uuidString
 
-        let wf = Workflow(FR0.self).thenProceed(with: FR1.self, flowPersistence: {
-            XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
+        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self, flowPersistence: {
+            XCTAssertEqual($0, 1)
             return .persistWhenSkipped
-        }).thenProceed(with: FR2.self)
+        })
 
         wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
         try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR0).proceedInWorkflow()
 
-        XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
         try XCTUnwrap(wf.first?.next?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow(1)
         XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
+        XCTAssertEqual(wf.first?.next?.next?.value.metadata.persistence, .persistWhenSkipped)
     }
 
     // MARK: Input Type == Concrete Type
@@ -1460,14 +1530,14 @@ class WorkflowConsumerTests: XCTestCase {
         }
         let expectedArgs = UUID().uuidString
 
-        let wf = Workflow(FR0.self).thenProceed(with: FR1.self, flowPersistence: .persistWhenSkipped).thenProceed(with: FR2.self)
+        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self, flowPersistence: .persistWhenSkipped)
 
         wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
         try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR0).proceedInWorkflow()
 
-        XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
         try XCTUnwrap(wf.first?.next?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow()
         XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
+        XCTAssertEqual(wf.first?.next?.next?.value.metadata.persistence, .persistWhenSkipped)
     }
 
     func testProceedingWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToNeverItem() throws {
@@ -1483,17 +1553,14 @@ class WorkflowConsumerTests: XCTestCase {
         }
         let expectedArgs = UUID().uuidString
 
-        let wf = Workflow(FR0.self).thenProceed(with: FR1.self, flowPersistence: {
-            XCTAssertEqual($0, expectedArgs)
-            return .persistWhenSkipped
-        }).thenProceed(with: FR2.self)
+        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self, flowPersistence: { .persistWhenSkipped })
 
         wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
         try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR0).proceedInWorkflow()
 
-        XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
         try XCTUnwrap(wf.first?.next?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow()
         XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
+        XCTAssertEqual(wf.first?.next?.next?.value.metadata.persistence, .persistWhenSkipped)
     }
 
     func testProceedingWhenInputIsConcreteTypeWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
@@ -1533,14 +1600,14 @@ class WorkflowConsumerTests: XCTestCase {
         }
         let expectedArgs = UUID().uuidString
 
-        let wf = Workflow(FR0.self).thenProceed(with: FR1.self, flowPersistence: .persistWhenSkipped).thenProceed(with: FR2.self)
+        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self, flowPersistence: .persistWhenSkipped)
 
         wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
         try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR0).proceedInWorkflow()
 
-        XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
         try XCTUnwrap(wf.first?.next?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow()
         XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
+        XCTAssertEqual(wf.first?.next?.next?.value.metadata.persistence, .persistWhenSkipped)
     }
 
     func testProceedingWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
@@ -1557,17 +1624,14 @@ class WorkflowConsumerTests: XCTestCase {
         }
         let expectedArgs = UUID().uuidString
 
-        let wf = Workflow(FR0.self).thenProceed(with: FR1.self, flowPersistence: {
-            XCTAssertEqual($0, expectedArgs)
-            return .persistWhenSkipped
-        }).thenProceed(with: FR2.self)
+        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self, flowPersistence: { _ in .persistWhenSkipped })
 
         wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
         try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR0).proceedInWorkflow()
 
-        XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
         try XCTUnwrap(wf.first?.next?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow()
         XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
+        XCTAssertEqual(wf.first?.next?.next?.value.metadata.persistence, .persistWhenSkipped)
     }
 
     func testProceedingWhenInputIsConcreteTypeArgsWithDefaultFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
@@ -1609,14 +1673,14 @@ class WorkflowConsumerTests: XCTestCase {
         }
         let expectedArgs = UUID().uuidString
 
-        let wf = Workflow(FR0.self).thenProceed(with: FR1.self, flowPersistence: .persistWhenSkipped).thenProceed(with: FR2.self)
+        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self, flowPersistence: .persistWhenSkipped)
 
         wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
         try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR0).proceedInWorkflow()
 
-        XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
         try XCTUnwrap(wf.first?.next?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow(1)
         XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
+        XCTAssertEqual(wf.first?.next?.next?.value.metadata.persistence, .persistWhenSkipped)
     }
 
     func testProceedingWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
@@ -1634,266 +1698,117 @@ class WorkflowConsumerTests: XCTestCase {
         }
         let expectedArgs = UUID().uuidString
 
-        let wf = Workflow(FR0.self).thenProceed(with: FR1.self, flowPersistence: {
-            XCTAssertEqual($0, expectedArgs)
+        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self, flowPersistence: {
+            XCTAssertEqual($0, 1)
             return .persistWhenSkipped
-        }).thenProceed(with: FR2.self)
+        })
 
         wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
         try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR0).proceedInWorkflow()
 
-        XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
         try XCTUnwrap(wf.first?.next?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow(1)
+        XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
+        XCTAssertEqual(wf.first?.next?.next?.value.metadata.persistence, .persistWhenSkipped)
+    }
+
+    func testProceedingWhenInputIsConcreteTypeArgsWithDefaultFlowPersistence_WorkflowCanProceedToTheSameInputTypeItem() throws {
+        struct FR0: PassthroughFlowRepresentable {
+            var _workflowPointer: AnyFlowRepresentable?
+        }
+        struct FR1: FlowRepresentable {
+            typealias WorkflowOutput = String
+            var _workflowPointer: AnyFlowRepresentable?
+            init(with args: String) { }
+        }
+        struct FR2: FlowRepresentable {
+            var _workflowPointer: AnyFlowRepresentable?
+            init(with args: String) { }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self)
+
+        wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
+        try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR0).proceedInWorkflow()
+
+        try XCTUnwrap(wf.first?.next?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow("")
         XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
     }
 
+    func testProceedingWhenInputIsConcreteTypeWithAutoclosureFlowPersistence_WorkflowCanProceedToTheSameInputTypeItem() throws {
+        struct FR0: PassthroughFlowRepresentable {
+            var _workflowPointer: AnyFlowRepresentable?
+        }
+        struct FR1: FlowRepresentable {
+            typealias WorkflowOutput = String
+            var _workflowPointer: AnyFlowRepresentable?
+            init(with args: String) { }
+        }
+        struct FR2: FlowRepresentable {
+            var _workflowPointer: AnyFlowRepresentable?
+            init(with args: String) { }
+        }
+        let expectedArgs = UUID().uuidString
 
+        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self, flowPersistence: .persistWhenSkipped)
 
+        wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
+        try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR0).proceedInWorkflow()
 
+        try XCTUnwrap(wf.first?.next?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow("")
+        XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
+        XCTAssertEqual(wf.first?.next?.next?.value.metadata.persistence, .persistWhenSkipped)
+    }
 
-//    func testWorkflowCanBeInitialized_WithFlowPersistenceClosure() {
-//        struct FR1: FlowRepresentable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            init(with name: String) { }
-//        }
-//        let expectation = self.expectation(description: "FlowPersistence closure called")
-//        let expectedArgs = UUID().uuidString
-//
-//        let wf = Workflow(FR1.self) { args in
-//            XCTAssertEqual(args, expectedArgs)
-//            expectation.fulfill()
-//            return .persistWhenSkipped
-//        }
-//
-//        wf.launch(withOrchestrationResponder: MockOrchestrationResponder(),
-//                  args: expectedArgs)
-//
-//        wait(for: [expectation], timeout: 0.1)
-//
-//        XCTAssertEqual(wf.first?.value.metadata.persistence, .persistWhenSkipped)
-//    }
-//
-//    func testWorkflowCanBeInitialized_WithFlowPersistenceClosure_WhenTheFirstItemHasNoInput() {
-//        struct FR1: FlowRepresentable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//        }
-//        let expectation = self.expectation(description: "FlowPersistence closure called")
-//        let expectedArgs = UUID().uuidString
-//
-//        let wf = Workflow(FR1.self) {
-//            expectation.fulfill()
-//            return .persistWhenSkipped
-//        }
-//
-//        wf.launch(withOrchestrationResponder: MockOrchestrationResponder(),
-//                  args: expectedArgs)
-//
-//        wait(for: [expectation], timeout: 0.1)
-//
-//        XCTAssertEqual(wf.first?.value.metadata.persistence, .persistWhenSkipped)
-//    }
-//
-//    func testWorkflowCanBeInitialized_WithFlowPersistenceClosure_WhenTheFirstItemHasPassedArgsInput() {
-//        struct FR1: FlowRepresentable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            init(with args: AnyWorkflow.PassedArgs) { }
-//        }
-//        let expectation = self.expectation(description: "FlowPersistence closure called")
-//        let expectedArgs = UUID().uuidString
-//
-//        let wf = Workflow(FR1.self) { args in
-//            expectation.fulfill()
-//            XCTAssertEqual(args.extractArgs(defaultValue: nil) as? String, expectedArgs)
-//            return .persistWhenSkipped
-//        }
-//
-//        wf.launch(withOrchestrationResponder: MockOrchestrationResponder(),
-//                  args: expectedArgs)
-//
-//        wait(for: [expectation], timeout: 0.1)
-//
-//        XCTAssertEqual(wf.first?.value.metadata.persistence, .persistWhenSkipped)
-//    }
-//
-//    func testWorkflowCanProceed_WithFlowPersistenceAutoClosure_WhenTheFirstItemHasPassedArgsInput() {
-//        struct FR1: FlowRepresentable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//        }
-//        struct FR2: FlowRepresentable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            init(with args: AnyWorkflow.PassedArgs) { }
-//        }
-//        let wf = Workflow(FR1.self)
-//            .thenProceed(with: FR2.self, flowPersistence: .persistWhenSkipped)
-//
-//        wf.launch(withOrchestrationResponder: MockOrchestrationResponder())
-//
-//        (wf.first?.value.instance?.underlyingInstance as? FR1)?.proceedInWorkflow()
-//
-//        XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
-//    }
-//
-//    func testWorkflowCanProceed_WithFlowPersistenceClosure() {
-//        struct FR1: FlowRepresentable {
-//            typealias WorkflowOutput = String
-//            var _workflowPointer: AnyFlowRepresentable?
-//        }
-//        struct FR2: FlowRepresentable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            init(with name: String) { }
-//        }
-//        let expectation = self.expectation(description: "FlowPersistence closure called")
-//        let expectedArgs = UUID().uuidString
-//
-//        let wf = Workflow(FR1.self)
-//            .thenProceed(with: FR2.self) { args in
-//                XCTAssertEqual(args, expectedArgs)
-//                expectation.fulfill()
-//                return .persistWhenSkipped
-//            }
-//
-//        wf.launch(withOrchestrationResponder: MockOrchestrationResponder())
-//
-//        (wf.first?.value.instance?.underlyingInstance as? FR1)?.proceedInWorkflow(expectedArgs)
-//
-//        wait(for: [expectation], timeout: 0.1)
-//
-//        XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
-//    }
-//
-//    func testWorkflowCanProceed_WithFlowPersistenceAutoClosure_WhenRepresentableHasInputOfPassedArgs() {
-//        struct FR1: FlowRepresentable {
-//            typealias WorkflowOutput = String
-//            var _workflowPointer: AnyFlowRepresentable?
-//        }
-//        struct FR2: FlowRepresentable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            init(with name: AnyWorkflow.PassedArgs) { }
-//        }
-//        let expectedArgs = UUID().uuidString
-//
-//        let wf = Workflow(FR1.self)
-//            .thenProceed(with: FR2.self, flowPersistence: .persistWhenSkipped)
-//
-//        wf.launch(withOrchestrationResponder: MockOrchestrationResponder())
-//
-//        (wf.first?.value.instance?.underlyingInstance as? FR1)?.proceedInWorkflow(expectedArgs)
-//
-//        XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
-//    }
-//
-//    func testPassthroughFlowRepresentable_PassesDataForward() {
-//        struct FR1: PassthroughFlowRepresentable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//        }
-//        struct FR2: FlowRepresentable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            let name: String
-//            init(with name: String) { self.name = name }
-//        }
-//
-//        let expectedArgs = UUID().uuidString
-//
-//        let wf = Workflow(FR1.self)
-//            .thenProceed(with: FR2.self)
-//
-//        wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
-//
-//        (wf.first?.value.instance?.underlyingInstance as? FR1)?.proceedInWorkflow()
-//
-//        XCTAssert(wf.first?.next?.value.instance?.underlyingInstance is FR2)
-//        XCTAssertEqual((wf.first?.next?.value.instance?.underlyingInstance as? FR2)?.name, expectedArgs)
-//    }
-//
-//    func testPassthroughFlowRepresentable_CanSetFlowPersistence() {
-//        struct FR1: PassthroughFlowRepresentable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//        }
-//        struct FR2: FlowRepresentable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//        }
-//
-//        let expectedArgs = UUID().uuidString
-//
-//        let wf = Workflow(FR2.self)
-//            .thenProceed(with: FR1.self, flowPersistence: .persistWhenSkipped)
-//
-//        wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
-//
-//        (wf.first?.value.instance?.underlyingInstance as? FR2)?.proceedInWorkflow()
-//
-//        XCTAssert(wf.first?.next?.value.instance?.underlyingInstance is FR1)
-//        XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
-//    }
-//
-//    func testMultiplePassthroughFlowRepresentable_CanSetFlowPersistenceWithClosure() {
-//        struct FR1: PassthroughFlowRepresentable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//        }
-//        struct FR2: PassthroughFlowRepresentable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//        }
-//
-//        let expectedArgs = UUID().uuidString
-//
-//        let wf = Workflow(FR2.self)
-//            .thenProceed(with: FR1.self, flowPersistence: { args in
-//                XCTAssertEqual(args.extractArgs(defaultValue: nil) as? String, expectedArgs)
-//                return .persistWhenSkipped
-//            })
-//            .thenProceed(with: FR1.self, flowPersistence: { args in
-//                XCTAssertEqual(args.extractArgs(defaultValue: nil) as? String, expectedArgs)
-//                return .persistWhenSkipped
-//            })
-//
-//        wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
-//        (wf.first?.value.instance?.underlyingInstance as? FR2)?.proceedInWorkflow()
-//
-//        XCTAssert(wf.first?.next?.value.instance?.underlyingInstance is FR1)
-//        XCTAssertEqual(wf.first?.next?.value.metadata.persistence, .persistWhenSkipped)
-//        (wf.first?.next?.value.instance?.underlyingInstance as? FR1)?.proceedInWorkflow()
-//        XCTAssertEqual(wf.first?.next?.next?.value.metadata.persistence, .persistWhenSkipped)
-//    }
-//
-//    func testPassthroughFlowRepresentable_SendsDataToNextItem_WhenItsInputIsNever() {
-//        struct FR1: PassthroughFlowRepresentable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//        }
-//        struct FR2: FlowRepresentable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//        }
-//
-//        let expectedArgs = UUID().uuidString
-//
-//        let wf = Workflow(FR1.self)
-//            .thenProceed(with: FR2.self)
-//
-//        wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
-//
-//        (wf.first?.value.instance?.underlyingInstance as? FR1)?.proceedInWorkflow()
-//
-//        XCTAssert(wf.first?.next?.value.instance?.underlyingInstance is FR2)
-//    }
-//
-//    func testPassthroughFlowRepresentable_CanSetPersistenceWithClosure() {
-//        struct FR1: PassthroughFlowRepresentable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//        }
-//        struct FR2: FlowRepresentable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//        }
-//
-//        let expectedArgs = UUID().uuidString
-//
-//        let wf = Workflow(FR1.self)
-//            .thenProceed(with: FR2.self)
-//
-//        wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
-//
-//        (wf.first?.value.instance?.underlyingInstance as? FR1)?.proceedInWorkflow()
-//
-//        XCTAssert(wf.first?.next?.value.instance?.underlyingInstance is FR2)
-//    }
+    func testProceedingWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToTheSameInputTypeItem() throws {
+        struct FR0: PassthroughFlowRepresentable {
+            var _workflowPointer: AnyFlowRepresentable?
+        }
+        struct FR1: FlowRepresentable {
+            typealias WorkflowOutput = String
+            var _workflowPointer: AnyFlowRepresentable?
+            init(with args: String) { }
+        }
+        struct FR2: FlowRepresentable {
+            var _workflowPointer: AnyFlowRepresentable?
+            init(with args: String) { }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self, flowPersistence: { _ in .persistWhenSkipped })
+
+        wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
+        try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR0).proceedInWorkflow()
+
+        try XCTUnwrap(wf.first?.next?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow("")
+        XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
+        XCTAssertEqual(wf.first?.next?.next?.value.metadata.persistence, .persistWhenSkipped)
+    }
+
+    func testProceedingWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToAnyWorkflowPassedArgsItem() throws {
+        struct FR0: PassthroughFlowRepresentable {
+            var _workflowPointer: AnyFlowRepresentable?
+        }
+        struct FR1: FlowRepresentable {
+            typealias WorkflowOutput = String
+            var _workflowPointer: AnyFlowRepresentable?
+            init(with args: String) { }
+        }
+        struct FR2: FlowRepresentable {
+            var _workflowPointer: AnyFlowRepresentable?
+            init(with args: AnyWorkflow.PassedArgs) { }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let wf = Workflow(FR0.self).thenProceed(with: FR1.self).thenProceed(with: FR2.self, flowPersistence: .persistWhenSkipped)
+
+        wf.launch(withOrchestrationResponder: MockOrchestrationResponder(), args: expectedArgs)
+        try XCTUnwrap(wf.first?.value.instance?.underlyingInstance as? FR0).proceedInWorkflow()
+
+        try XCTUnwrap(wf.first?.next?.value.instance?.underlyingInstance as? FR1).proceedInWorkflow(expectedArgs)
+        XCTAssert(wf.first?.next?.next?.value.instance?.underlyingInstance is FR2)
+        XCTAssertEqual(wf.first?.next?.next?.value.metadata.persistence, .persistWhenSkipped)
+    }
 
 }
 
