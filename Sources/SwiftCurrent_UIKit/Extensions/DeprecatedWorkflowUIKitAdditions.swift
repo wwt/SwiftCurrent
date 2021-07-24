@@ -82,7 +82,7 @@ extension Workflow where F.WorkflowOutput == Never {
      - Parameter flowPersistence: a `FlowPersistence` representing how this item in the workflow should persist.
      - Returns: a new workflow with the additional `FlowRepresentable` item.
      */
-    @available(*, deprecated, renamed: "thenPresent(_:launchStyle:flowPersistence:)")
+    @available(*, deprecated, renamed: "thenProceed(with:launchStyle:flowPersistence:)")
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: LaunchStyle.PresentationType = .default,
                                                    flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where FR.WorkflowInput == Never {
@@ -99,7 +99,7 @@ extension Workflow where F.WorkflowOutput == Never {
      - Parameter flowPersistence: a `FlowPersistence` representing how this item in the workflow should persist.
      - Returns: a new workflow with the additional `FlowRepresentable` item.
      */
-    @available(*, deprecated, renamed: "thenPresent(_:launchStyle:flowPersistence:)")
+    @available(*, deprecated, renamed: "thenProceed(with:launchStyle:flowPersistence:)")
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: LaunchStyle.PresentationType = .default,
                                                    flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where FR.WorkflowInput == AnyWorkflow.PassedArgs {
@@ -118,7 +118,7 @@ extension Workflow {
      - Parameter flowPersistence: a `FlowPersistence` representing how this item in the workflow should persist.
      - Returns: a new workflow with the additional `FlowRepresentable` item.
      */
-    @available(*, deprecated, renamed: "thenPresent(_:launchStyle:flowPersistence:)")
+    @available(*, deprecated, renamed: "thenProceed(with:launchStyle:flowPersistence:)")
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: LaunchStyle.PresentationType = .default,
                                                    flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where F.WorkflowOutput == FR.WorkflowInput {
@@ -135,7 +135,7 @@ extension Workflow {
      - Parameter flowPersistence: a closure taking in the `FlowRepresentable.WorkflowInput` and returning a `FlowPersistence` representing how this item in the workflow should persist.
      - Returns: a new workflow with the additional `FlowRepresentable` item.
      */
-    @available(*, deprecated, renamed: "thenPresent(_:launchStyle:flowPersistence:)")
+    @available(*, deprecated, renamed: "thenProceed(with:launchStyle:flowPersistence:)")
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: LaunchStyle.PresentationType = .default,
                                                    flowPersistence: @escaping (FR.WorkflowInput) -> FlowPersistence) -> Workflow<FR> where F.WorkflowOutput == FR.WorkflowInput {
@@ -156,7 +156,7 @@ extension Workflow {
      - Parameter flowPersistence: a `FlowPersistence` representing how this item in the workflow should persist.
      - Returns: a new workflow with the additional `FlowRepresentable` item.
      */
-    @available(*, deprecated, renamed: "thenPresent(_:launchStyle:flowPersistence:)")
+    @available(*, deprecated, renamed: "thenProceed(with:launchStyle:flowPersistence:)")
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: LaunchStyle.PresentationType = .default,
                                                    flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where FR.WorkflowInput == Never {
@@ -173,7 +173,7 @@ extension Workflow {
      - Parameter flowPersistence: a `FlowPersistence` representing how this item in the workflow should persist.
      - Returns: a new workflow with the additional `FlowRepresentable` item.
      */
-    @available(*, deprecated, renamed: "thenPresent(_:launchStyle:flowPersistence:)")
+    @available(*, deprecated, renamed: "thenProceed(with:launchStyle:flowPersistence:)")
     public func thenPresent<FR: FlowRepresentable>(_ type: FR.Type,
                                                    presentationType: LaunchStyle.PresentationType = .default,
                                                    flowPersistence: @escaping @autoclosure () -> FlowPersistence = .default) -> Workflow<FR> where FR.WorkflowInput == AnyWorkflow.PassedArgs {
