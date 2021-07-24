@@ -25,10 +25,10 @@ class SetupViewControllerTests: XCTestCase {
         testViewController.launchWorkflowButton?.simulateTouch()
 
         XCTAssertWorkflowLaunched(listener: listener, workflow: Workflow(LocationsViewController.self)
-                                    .thenPresent(PickupOrDeliveryViewController.self)
-                                    .thenPresent(MenuSelectionViewController.self)
-                                    .thenPresent(FoodSelectionViewController.self)
-                                    .thenPresent(ReviewOrderViewController.self),
+                                    .thenProceed(with: PickupOrDeliveryViewController.self)
+                                    .thenProceed(with: MenuSelectionViewController.self)
+                                    .thenProceed(with: FoodSelectionViewController.self)
+                                    .thenProceed(with: ReviewOrderViewController.self),
                                   passedArgs: [
                                     .args([Location]()),
                                     .args(Order(location: nil)),

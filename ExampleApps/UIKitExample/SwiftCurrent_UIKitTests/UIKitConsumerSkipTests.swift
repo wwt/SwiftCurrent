@@ -49,7 +49,7 @@ class UIKitConsumerSkipTests: XCTestCase {
             required init?(coder: NSCoder) { nil }
         }
         let flow = Workflow(FR1.self)
-            .thenPresent(FR2.self)
+            .thenProceed(with: FR2.self)
 
         let root = UIViewController()
         UIApplication.shared.windows.first?.rootViewController = root
@@ -71,8 +71,8 @@ class UIKitConsumerSkipTests: XCTestCase {
         nav.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
-            .thenPresent(FR2.self)
-            .thenPresent(FR3.self))
+                            .thenProceed(with: FR2.self)
+                            .thenProceed(with: FR3.self))
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
         XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
@@ -91,9 +91,9 @@ class UIKitConsumerSkipTests: XCTestCase {
         nav.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
-            .thenPresent(FR2.self)
-            .thenPresent(FR3.self)
-            .thenPresent(FR4.self))
+                            .thenProceed(with: FR2.self)
+                            .thenProceed(with: FR3.self)
+                            .thenProceed(with: FR4.self))
 
         XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
@@ -117,8 +117,8 @@ class UIKitConsumerSkipTests: XCTestCase {
         nav.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
-            .thenPresent(FR2.self)
-            .thenPresent(FR3.self))
+                            .thenProceed(with: FR2.self)
+                            .thenProceed(with: FR3.self))
 
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow("worked")
@@ -139,8 +139,8 @@ class UIKitConsumerSkipTests: XCTestCase {
         root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self)
-                    .thenPresent(FR3.self), withLaunchStyle: .modal)
+                            .thenProceed(with: FR2.self)
+                            .thenProceed(with: FR3.self), withLaunchStyle: .modal)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
         XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
@@ -176,9 +176,9 @@ class UIKitConsumerSkipTests: XCTestCase {
         nav.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
-            .thenPresent(FR2.self)
-            .thenPresent(FR3.self)
-            .thenPresent(FR4.self), args: obj)
+                            .thenProceed(with: FR2.self)
+                            .thenProceed(with: FR3.self)
+                            .thenProceed(with: FR4.self), args: obj)
         XCTAssertUIViewControllerDisplayed(ofType: FR4.self)
         XCTAssert((UIApplication.topViewController() as? FR4)?.data as? Obj === obj)
     }
@@ -198,7 +198,7 @@ class UIKitConsumerSkipTests: XCTestCase {
         nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
-            .thenPresent(FR2.self), args: obj)
+                        .thenProceed(with: FR2.self), args: obj)
         XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         XCTAssert((UIApplication.topViewController() as? FR2)?.data as? Obj === obj)
     }
@@ -219,9 +219,9 @@ class UIKitConsumerSkipTests: XCTestCase {
 
         var callbackCalled = false
         root.launchInto(Workflow(FR1.self)
-            .thenPresent(FR2.self)
-            .thenPresent(FR3.self)
-            .thenPresent(FR4.self), args: obj) { args in
+                            .thenProceed(with: FR2.self)
+                            .thenProceed(with: FR3.self)
+                            .thenProceed(with: FR4.self), args: obj) { args in
             callbackCalled = true
             XCTAssert(args.extractArgs(defaultValue: nil) as? Obj === obj)
         }
@@ -247,8 +247,8 @@ class UIKitConsumerSkipTests: XCTestCase {
 
         var callbackCalled = false
         root.launchInto(Workflow(FR1.self)
-                            .thenPresent(FR2.self)
-                            .thenPresent(FR3.self), args: obj) { args in
+                            .thenProceed(with: FR2.self)
+                            .thenProceed(with: FR3.self), args: obj) { args in
             callbackCalled = true
             XCTAssert(args.extractArgs(defaultValue: nil) as? Obj === obj)
         }

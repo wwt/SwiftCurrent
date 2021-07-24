@@ -18,7 +18,7 @@ class UIKitPresenterTests: XCTestCase {
         class FR1: TestViewController { }
         class FR2: TestViewController { }
 
-        let wf = Workflow(FR1.self).thenPresent(FR2.self)
+        let wf = Workflow(FR1.self).thenProceed(with: FR2.self)
         let rootController = UIViewController()
         rootController.loadForTesting()
 

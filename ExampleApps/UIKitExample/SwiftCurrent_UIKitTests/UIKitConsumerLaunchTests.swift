@@ -108,7 +108,7 @@ class UIKitConsumerLaunchTests: XCTestCase {
         let nav = UINavigationController()
         nav.loadForTesting()
 
-        nav.launchInto(Workflow(FR1.self, presentationType: .navigationStack), withLaunchStyle: .navigationStack)
+        nav.launchInto(Workflow(FR1.self, launchStyle: .navigationStack), withLaunchStyle: .navigationStack)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         XCTAssertNil(nav.mostRecentlyPresentedViewController)
         XCTAssertNotNil(UIApplication.topViewController()?.navigationController)
@@ -167,7 +167,7 @@ class UIKitConsumerLaunchTests: XCTestCase {
         controller.loadForTesting()
 
         rootController.launchInto(Workflow(ExpectedModal.self)
-            .thenPresent(ExpectedModalPreferNav.self, presentationType: .navigationStack),
+                                    .thenProceed(with: ExpectedModalPreferNav.self, launchStyle: .navigationStack),
                                   withLaunchStyle: .modal)
         RunLoop.current.singlePass()
 
@@ -206,8 +206,8 @@ class UIKitConsumerLaunchTests: XCTestCase {
 
         rootController.launchInto(
             Workflow(ExpectedModal.self)
-                .thenPresent(ExpectedModalPreferNav.self,
-                      presentationType: .navigationStack),
+                .thenProceed(with: ExpectedModalPreferNav.self,
+                             launchStyle: .navigationStack),
             withLaunchStyle: .modal)
         RunLoop.current.singlePass()
 
@@ -233,7 +233,7 @@ class UIKitConsumerLaunchTests: XCTestCase {
         firstView.loadForTesting()
         firstView.present(controller, animated: false)
 
-        let workflow = Workflow(ExpectedModal.self, presentationType: .navigationStack)
+        let workflow = Workflow(ExpectedModal.self, launchStyle: .navigationStack)
 
         rootController.launchInto(workflow, withLaunchStyle: .modal)
         RunLoop.current.singlePass()
@@ -260,7 +260,7 @@ class UIKitConsumerLaunchTests: XCTestCase {
         firstView.loadForTesting()
         firstView.present(controller, animated: false)
 
-        let workflow = Workflow(ExpectedNav.self, presentationType: .navigationStack)
+        let workflow = Workflow(ExpectedNav.self, launchStyle: .navigationStack)
         rootController.launchInto(workflow, withLaunchStyle: .modal)
         RunLoop.current.singlePass()
 
@@ -284,7 +284,7 @@ class UIKitConsumerLaunchTests: XCTestCase {
         controller.loadForTesting()
 
         let workflow = Workflow(TestViewController.self)
-            .thenPresent(ExpectedModal.self, presentationType: .modal)
+            .thenProceed(with: ExpectedModal.self, launchStyle: .modal)
 
         rootController.launchInto(workflow)
 
@@ -362,7 +362,7 @@ class UIKitConsumerLaunchTests: XCTestCase {
         controller.loadForTesting()
 
         rootController.launchInto(Workflow(ExpectedNav.self)
-            .thenPresent(ExpectedModal.self, presentationType: .modal))
+                                    .thenProceed(with: ExpectedModal.self, launchStyle: .modal))
 
         XCTAssertUIViewControllerDisplayed(ofType: ExpectedNav.self)
         XCTAssertEqual(controller.viewControllers.count, 2)

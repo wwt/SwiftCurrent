@@ -41,8 +41,8 @@ class UIKitConsumerPersistenceTests: XCTestCase {
         nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistence: .removedAfterProceeding)
-                    .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
+                        .thenProceed(with: FR2.self, flowPersistence: .removedAfterProceeding)
+                        .thenProceed(with: FR3.self), withLaunchStyle: .navigationStack)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
         XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
@@ -61,8 +61,8 @@ class UIKitConsumerPersistenceTests: XCTestCase {
         nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self, flowPersistence: .removedAfterProceeding)
-                    .thenPresent(FR2.self)
-                    .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
+                        .thenProceed(with: FR2.self)
+                        .thenProceed(with: FR3.self), withLaunchStyle: .navigationStack)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
         XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
@@ -78,8 +78,8 @@ class UIKitConsumerPersistenceTests: XCTestCase {
         nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistence: .removedAfterProceeding)
-                    .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
+                        .thenProceed(with: FR2.self, flowPersistence: .removedAfterProceeding)
+                        .thenProceed(with: FR3.self), withLaunchStyle: .navigationStack)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
         XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
@@ -101,11 +101,11 @@ class UIKitConsumerPersistenceTests: XCTestCase {
         nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistence: { data in
-                        XCTAssertEqual(data as? String, "blah")
-                        return .removedAfterProceeding
-                    })
-                    .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
+                        .thenProceed(with: FR2.self, flowPersistence: { data in
+                            XCTAssertEqual(data as? String, "blah")
+                            return .removedAfterProceeding
+                        })
+                        .thenProceed(with: FR3.self), withLaunchStyle: .navigationStack)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow("blah")
         XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
@@ -127,8 +127,8 @@ class UIKitConsumerPersistenceTests: XCTestCase {
         root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistence: .removedAfterProceeding)
-                    .thenPresent(FR3.self), withLaunchStyle: .modal)
+                            .thenProceed(with: FR2.self, flowPersistence: .removedAfterProceeding)
+                            .thenProceed(with: FR3.self), withLaunchStyle: .modal)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
         XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
@@ -147,8 +147,8 @@ class UIKitConsumerPersistenceTests: XCTestCase {
         root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self, flowPersistence: .removedAfterProceeding)
-                    .thenPresent(FR2.self)
-                    .thenPresent(FR3.self), withLaunchStyle: .modal)
+                            .thenProceed(with: FR2.self)
+                            .thenProceed(with: FR3.self), withLaunchStyle: .modal)
 
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
@@ -166,8 +166,8 @@ class UIKitConsumerPersistenceTests: XCTestCase {
         root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistence: .removedAfterProceeding)
-                    .thenPresent(FR3.self), withLaunchStyle: .modal)
+                            .thenProceed(with: FR2.self, flowPersistence: .removedAfterProceeding)
+                            .thenProceed(with: FR3.self), withLaunchStyle: .modal)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
         XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
@@ -189,11 +189,11 @@ class UIKitConsumerPersistenceTests: XCTestCase {
         root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistence: { data in
-                        XCTAssertEqual(data as? String, "blah")
-                        return .removedAfterProceeding
-                    })
-                    .thenPresent(FR3.self), withLaunchStyle: .modal)
+                            .thenProceed(with: FR2.self, flowPersistence: { data in
+                                XCTAssertEqual(data as? String, "blah")
+                                return .removedAfterProceeding
+                            })
+                            .thenProceed(with: FR3.self), withLaunchStyle: .modal)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow("blah")
         XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
@@ -216,8 +216,8 @@ class UIKitConsumerPersistenceTests: XCTestCase {
         nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistence: .hiddenInitially)
-                    .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
+                        .thenProceed(with: FR2.self, flowPersistence: .hiddenInitially)
+                        .thenProceed(with: FR3.self), withLaunchStyle: .navigationStack)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
         XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
@@ -239,8 +239,8 @@ class UIKitConsumerPersistenceTests: XCTestCase {
         nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistence: .hiddenInitially)
-                    .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
+                        .thenProceed(with: FR2.self, flowPersistence: .hiddenInitially)
+                        .thenProceed(with: FR3.self), withLaunchStyle: .navigationStack)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
         XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
@@ -263,8 +263,8 @@ class UIKitConsumerPersistenceTests: XCTestCase {
         nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistence: .hiddenInitially)
-                    .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
+                        .thenProceed(with: FR2.self, flowPersistence: .hiddenInitially)
+                        .thenProceed(with: FR3.self), withLaunchStyle: .navigationStack)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
         XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
@@ -285,8 +285,8 @@ class UIKitConsumerPersistenceTests: XCTestCase {
         nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self, flowPersistence: .hiddenInitially)
-                    .thenPresent(FR2.self)
-                    .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
+                        .thenProceed(with: FR2.self)
+                        .thenProceed(with: FR3.self), withLaunchStyle: .navigationStack)
         XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         (UIApplication.topViewController()?.navigationController)?.popViewController(animated: false)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
@@ -303,8 +303,8 @@ class UIKitConsumerPersistenceTests: XCTestCase {
         nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self, flowPersistence: .hiddenInitially)
-                    .thenPresent(FR2.self)
-                    .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
+                        .thenProceed(with: FR2.self)
+                        .thenProceed(with: FR3.self), withLaunchStyle: .navigationStack)
         XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         (UIApplication.topViewController()?.navigationController)?.popViewController(animated: false)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
@@ -323,8 +323,8 @@ class UIKitConsumerPersistenceTests: XCTestCase {
         nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistence: .hiddenInitially)
-                    .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
+                        .thenProceed(with: FR2.self, flowPersistence: .hiddenInitially)
+                        .thenProceed(with: FR3.self), withLaunchStyle: .navigationStack)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
         XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
@@ -345,8 +345,8 @@ class UIKitConsumerPersistenceTests: XCTestCase {
         nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistence: { _ in .hiddenInitially })
-                    .thenPresent(FR3.self), withLaunchStyle: .navigationStack)
+                        .thenProceed(with: FR2.self, flowPersistence: { _ in .hiddenInitially })
+                        .thenProceed(with: FR3.self), withLaunchStyle: .navigationStack)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow("blah")
         XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
@@ -367,8 +367,8 @@ class UIKitConsumerPersistenceTests: XCTestCase {
         root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistence: .hiddenInitially)
-                    .thenPresent(FR3.self), withLaunchStyle: .modal)
+                            .thenProceed(with: FR2.self, flowPersistence: .hiddenInitially)
+                            .thenProceed(with: FR3.self), withLaunchStyle: .modal)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
         XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
@@ -389,8 +389,8 @@ class UIKitConsumerPersistenceTests: XCTestCase {
         root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistence: .hiddenInitially)
-                    .thenPresent(FR3.self), withLaunchStyle: .modal)
+                            .thenProceed(with: FR2.self, flowPersistence: .hiddenInitially)
+                            .thenProceed(with: FR3.self), withLaunchStyle: .modal)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
         XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
@@ -409,8 +409,8 @@ class UIKitConsumerPersistenceTests: XCTestCase {
         root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self, flowPersistence: .hiddenInitially)
-                    .thenPresent(FR2.self)
-                    .thenPresent(FR3.self), withLaunchStyle: .modal)
+                            .thenProceed(with: FR2.self)
+                            .thenProceed(with: FR3.self), withLaunchStyle: .modal)
         XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         UIApplication.topViewController()?.dismiss(animated: false)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
@@ -427,8 +427,8 @@ class UIKitConsumerPersistenceTests: XCTestCase {
         root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistence: .hiddenInitially)
-                    .thenPresent(FR3.self), withLaunchStyle: .modal)
+                            .thenProceed(with: FR2.self, flowPersistence: .hiddenInitially)
+                            .thenProceed(with: FR3.self), withLaunchStyle: .modal)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
         XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
@@ -449,8 +449,8 @@ class UIKitConsumerPersistenceTests: XCTestCase {
         root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
-                    .thenPresent(FR2.self, flowPersistence: { _ in .hiddenInitially })
-                    .thenPresent(FR3.self), withLaunchStyle: .modal)
+                            .thenProceed(with: FR2.self, flowPersistence: { _ in .hiddenInitially })
+                            .thenProceed(with: FR3.self), withLaunchStyle: .modal)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow("blah")
         XCTAssertUIViewControllerDisplayed(ofType: FR3.self)

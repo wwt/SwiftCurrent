@@ -44,8 +44,8 @@ class UIKitConsumerWorkflowChainingTests: XCTestCase {
         nav.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
-            .thenPresent(FR2.self)
-            .thenPresent(FR3.self))
+                            .thenProceed(with: FR2.self)
+                            .thenProceed(with: FR3.self))
 
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
@@ -65,7 +65,7 @@ class UIKitConsumerWorkflowChainingTests: XCTestCase {
         class FR1: TestViewController { }
         class FR2: TestViewController {
             func launchSecondary() {
-                let wf = Workflow(FR_1.self, presentationType: .modal)
+                let wf = Workflow(FR_1.self, launchStyle: .modal)
                 launchInto(wf) { args in
                     self.data = args.extractArgs(defaultValue: nil)
                     wf.abandon(animated: false)
@@ -79,8 +79,8 @@ class UIKitConsumerWorkflowChainingTests: XCTestCase {
         nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
-            .thenPresent(FR2.self)
-            .thenPresent(FR3.self))
+                        .thenProceed(with: FR2.self)
+                        .thenProceed(with: FR3.self))
 
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
@@ -114,8 +114,8 @@ class UIKitConsumerWorkflowChainingTests: XCTestCase {
         nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
-            .thenPresent(FR2.self)
-            .thenPresent(FR3.self))
+                        .thenProceed(with: FR2.self)
+                        .thenProceed(with: FR3.self))
 
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
@@ -149,8 +149,8 @@ class UIKitConsumerWorkflowChainingTests: XCTestCase {
         vc.loadForTesting()
         
         vc.launchInto(Workflow(FR1.self)
-                        .thenPresent(FR2.self)
-                        .thenPresent(FR3.self), withLaunchStyle: .modal)
+                        .thenProceed(with: FR2.self)
+                        .thenProceed(with: FR3.self), withLaunchStyle: .modal)
         
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
@@ -184,8 +184,8 @@ class UIKitConsumerWorkflowChainingTests: XCTestCase {
         nav.loadForTesting()
 
         nav.launchInto(Workflow(FR1.self)
-            .thenPresent(FR2.self)
-            .thenPresent(FR3.self))
+                        .thenProceed(with: FR2.self)
+                        .thenProceed(with: FR3.self))
 
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
