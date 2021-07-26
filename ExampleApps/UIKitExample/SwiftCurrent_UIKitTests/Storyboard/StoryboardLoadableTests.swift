@@ -88,6 +88,10 @@ class StoryboardLoadableTests: XCTestCase {
         })
 
         XCTAssertNoThrow(try ExceptionCatcher.catch {
+            AnyFlowRepresentable(InheritedNoInputViewController.self, args: .none)
+        })
+
+        XCTAssertNoThrow(try ExceptionCatcher.catch {
             AnyFlowRepresentable(TestInputViewController.self, args: .args("some"))
         })
 
@@ -138,3 +142,4 @@ class PassthroughViewController: UIViewController, StoryboardLoadable, Passthrou
 }
 
 class InheritedPassthroughViewController: PassthroughViewController {}
+class InheritedNoInputViewController: TestNoInputViewController {}
