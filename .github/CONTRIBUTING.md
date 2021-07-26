@@ -14,8 +14,16 @@ If you found a bug in SwiftCurrent, thank you!  Please go to [issues](https://gi
 ### Feature requests
 If you have an idea or change you would like to request, please go to [issues](https://github.com/wwt/SwiftCurrent/issues/new/choose) and use the `Feature request` template to make your request.  We'll reach out to you as soon as we can to discuss.  The more "why" you put into your request, the better we will be able to help build a solution that meets our styling and achieves your goals.
 
-## Pull Requests:
+## Pull Requests
 PRs have a checklist that walks you through the things that you should do for any PR. This document provides greater detail and context around what some of those checklist items mean. Please take the time to read through this document and our styleguide before contributing so that we can keep SwiftCurrent clean, and maintainable. By the time you submit code we want to be focused on the logic, not the formatting, or patterns. Also please be sure to read the section on testing in this guide as tests are incredibly important to us.
+
+## Sign the CLA
+
+Before you can contribute to SwiftCurrent, you will need to sign the [Contributor License Agreement](https://cla-assistant.io/wwt/SwiftCurrent).
+
+## Code of Conduct
+
+Please make sure to read and observe the [Code of Conduct](https://github.com/wwt/SwiftCurrent/blob/main/.github/CODE_OF_CONDUCT.md).
 
 ## Style guide
 Please review our [style guide](STYLEGUIDE.md) to ensure the least amount of rework and changes in your pull request.  If there are changes that you would like to make to the style guide, the process is:
