@@ -60,7 +60,6 @@ open class AnyFlowRepresentable {
                 var instance = FR._factory(FR.self)
                 _storage = AnyFlowRepresentableStorage(&instance)
             case _ where FR.WorkflowInput.self == AnyWorkflow.PassedArgs.self:
-                //                var instance = FR(with: args as! FR.WorkflowInput)
                 // swiftlint:disable:next force_cast
                 var instance = FR._factory(FR.self, with: args as! FR.WorkflowInput)
                 _storage = AnyFlowRepresentableStorage(&instance)

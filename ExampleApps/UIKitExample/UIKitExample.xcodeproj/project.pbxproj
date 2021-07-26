@@ -55,6 +55,8 @@
 		CAF58743256CF55E0044C864 /* UIUTest in Frameworks */ = {isa = PBXBuildFile; productRef = CAF58742256CF55E0044C864 /* UIUTest */; };
 		D7226A5C267820070066E9E6 /* SwiftCurrent in Frameworks */ = {isa = PBXBuildFile; productRef = D7226A5B267820070066E9E6 /* SwiftCurrent */; };
 		D7226A602678238F0066E9E6 /* SwiftCurrent_UIKit in Frameworks */ = {isa = PBXBuildFile; productRef = D7226A5F2678238F0066E9E6 /* SwiftCurrent_UIKit */; };
+		D73767A926AF5D2D000A6A6E /* TermsOfServiceViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73767A826AF5D2D000A6A6E /* TermsOfServiceViewControllerTests.swift */; };
+		D73767AB26AF625F000A6A6E /* TermsOfServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73767AA26AF625F000A6A6E /* TermsOfServiceViewController.swift */; };
 		D7E1264E264C6FBD00B6A712 /* UIKitConsumerAbandonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1264D264C6FBD00B6A712 /* UIKitConsumerAbandonTests.swift */; };
 		D7E12656264C719B00B6A712 /* UIKitConsumerSkipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E12655264C719B00B6A712 /* UIKitConsumerSkipTests.swift */; };
 		D7E1265E264C73BA00B6A712 /* UIKitConsumerLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1265D264C73BA00B6A712 /* UIKitConsumerLaunchTests.swift */; };
@@ -128,6 +130,8 @@
 		CAF586AE256CF2B40044C864 /* UIKitExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UIKitExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAF5871F256CF4DC0044C864 /* UIUTest_ObjC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UIUTest_ObjC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAF58721256CF4DC0044C864 /* UIUTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UIUTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D73767A826AF5D2D000A6A6E /* TermsOfServiceViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceViewControllerTests.swift; sourceTree = "<group>"; };
+		D73767AA26AF625F000A6A6E /* TermsOfServiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceViewController.swift; sourceTree = "<group>"; };
 		D74A4D5A26A6115200010617 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D7E1264D264C6FBD00B6A712 /* UIKitConsumerAbandonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitConsumerAbandonTests.swift; sourceTree = "<group>"; };
 		D7E12655264C719B00B6A712 /* UIKitConsumerSkipTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitConsumerSkipTests.swift; sourceTree = "<group>"; };
@@ -185,6 +189,7 @@
 				CA0536E326A0848B00BF8FC5 /* TestFinder.swift */,
 				CA0536DD26A0848B00BF8FC5 /* ViewControllerTest.swift */,
 				CA0536B026A0834B00BF8FC5 /* Info.plist */,
+				D73767A826AF5D2D000A6A6E /* TermsOfServiceViewControllerTests.swift */,
 			);
 			path = UIKitExampleTests;
 			sourceTree = "<group>";
@@ -225,6 +230,7 @@
 				CA0536BF26A0834B00BF8FC5 /* EnterAddressViewController.swift */,
 				CA0536C026A0834B00BF8FC5 /* ReviewOrderViewController.swift */,
 				CA0536C126A0834B00BF8FC5 /* PickupOrDeliveryViewController.swift */,
+				D73767AA26AF625F000A6A6E /* TermsOfServiceViewController.swift */,
 			);
 			path = Ordering;
 			sourceTree = "<group>";
@@ -484,6 +490,7 @@
 				CA0536D926A0834B00BF8FC5 /* SceneDelegate.swift in Sources */,
 				CA0536CF26A0834B00BF8FC5 /* LocationsViewController.swift in Sources */,
 				CA0536D226A0834B00BF8FC5 /* EnterAddressViewController.swift in Sources */,
+				D73767AB26AF625F000A6A6E /* TermsOfServiceViewController.swift in Sources */,
 				CA0536D026A0834B00BF8FC5 /* FoodSelectionViewController.swift in Sources */,
 				CA0536D326A0834B00BF8FC5 /* ReviewOrderViewController.swift in Sources */,
 			);
@@ -518,6 +525,7 @@
 				CA0536E926A0848B00BF8FC5 /* ReviewOrderViewControllerTests.swift in Sources */,
 				CA0536EE26A0848B00BF8FC5 /* FoodSelectionViewControllerTests.swift in Sources */,
 				CA0536E826A0848B00BF8FC5 /* SetupViewControllerTests.swift in Sources */,
+				D73767A926AF5D2D000A6A6E /* TermsOfServiceViewControllerTests.swift in Sources */,
 				CA0536EA26A0848B00BF8FC5 /* ViewControllerTest.swift in Sources */,
 				CA0536EC26A0848B00BF8FC5 /* LocationsViewControllerTests.swift in Sources */,
 				CA0536F026A0848B00BF8FC5 /* TestFinder.swift in Sources */,
