@@ -18,8 +18,7 @@ ignore:
   - "Tests"
   - "SwiftCurrentLint"
   - "Sources/SwiftCurrent/Deprecations"
-  - "SwiftCurrentExample/SwiftCurrentExampleTests"
-  - "SwiftCurrentExample/SwiftCurrent_UIKitTests"
+  - "ExampleApps/**/*Tests"
   - "fastlane"
   
 comment:
