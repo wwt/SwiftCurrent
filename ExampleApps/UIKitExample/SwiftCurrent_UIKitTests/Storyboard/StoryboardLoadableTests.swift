@@ -90,6 +90,10 @@ class StoryboardLoadableTests: XCTestCase {
         XCTAssertNoThrow(try ExceptionCatcher.catch {
             AnyFlowRepresentable(TestInputViewController.self, args: .args("some"))
         })
+
+        XCTAssertNoThrow(try ExceptionCatcher.catch {
+            AnyFlowRepresentable(PassthroughViewController.self, args: .args("some"))
+        })
     }
 }
 
@@ -115,4 +119,16 @@ class TestInputViewController: UIWorkflowItem<String, Never>, StoryboardLoadable
     }
 
     required init?(coder: NSCoder) { nil }
+}
+
+// Literally just make sure it compiles....
+class PassthroughViewController: UIViewController, StoryboardLoadable, PassthroughFlowRepresentable {
+    var _workflowPointer: AnyFlowRepresentable?
+
+    static var storyboardId: String {
+        String(describing: Self.self)
+    }
+    static var storyboard: UIStoryboard {
+        UIStoryboard(name: "TestStoryboard", bundle: Bundle(for: Self.self))
+    }
 }

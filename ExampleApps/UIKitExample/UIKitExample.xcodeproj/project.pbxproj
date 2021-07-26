@@ -42,6 +42,7 @@
 		CA9226EB26406C5B00BD0366 /* StoryboardLoadableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9226EA26406C5B00BD0366 /* StoryboardLoadableTests.swift */; };
 		CA9226F326406F2000BD0366 /* TestStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA9226F226406F2000BD0366 /* TestStoryboard.storyboard */; };
 		CA9226F92640724D00BD0366 /* ExceptionCatcher in Frameworks */ = {isa = PBXBuildFile; productRef = CA9226F82640724D00BD0366 /* ExceptionCatcher */; };
+		CA9F44B926ACA3220055020A /* GenericConstraintTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9F44B826ACA3220055020A /* GenericConstraintTests.swift */; };
 		CAC1C235256D8DA300DBD0D4 /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1C232256D8DA300DBD0D4 /* TopViewController.swift */; };
 		CAC1C23D256D8DB100DBD0D4 /* WaitUntil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1C23C256D8DB100DBD0D4 /* WaitUntil.swift */; };
 		CAC1C24F256D8F0400DBD0D4 /* ModalStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1C24E256D8F0400DBD0D4 /* ModalStyleTests.swift */; };
@@ -115,6 +116,7 @@
 		CA875ABF257353B300243FA4 /* CustomAssertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAssertions.swift; sourceTree = "<group>"; };
 		CA9226EA26406C5B00BD0366 /* StoryboardLoadableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardLoadableTests.swift; sourceTree = "<group>"; };
 		CA9226F226406F2000BD0366 /* TestStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TestStoryboard.storyboard; sourceTree = "<group>"; };
+		CA9F44B826ACA3220055020A /* GenericConstraintTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericConstraintTests.swift; sourceTree = "<group>"; };
 		CAC1C232256D8DA300DBD0D4 /* TopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
 		CAC1C23C256D8DB100DBD0D4 /* WaitUntil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitUntil.swift; sourceTree = "<group>"; };
 		CAC1C24D256D8F0300DBD0D4 /* UIKitConsumerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitConsumerTests.swift; sourceTree = "<group>"; };
@@ -312,6 +314,7 @@
 				CA357F19263E67DE003D1ACB /* UIKitPresenterTests.swift */,
 				CA50C90E2640E78000FAA8FE /* Storyboard */,
 				CA087B422640E7A100A994D8 /* TestUtilities */,
+				CA9F44B826ACA3220055020A /* GenericConstraintTests.swift */,
 			);
 			path = SwiftCurrent_UIKitTests;
 			sourceTree = "<group>";
@@ -502,6 +505,7 @@
 				CA357F1A263E67DE003D1ACB /* UIKitPresenterTests.swift in Sources */,
 				CAC1C23D256D8DB100DBD0D4 /* WaitUntil.swift in Sources */,
 				D7E1265E264C73BA00B6A712 /* UIKitConsumerLaunchTests.swift in Sources */,
+				CA9F44B926ACA3220055020A /* GenericConstraintTests.swift in Sources */,
 				CA655AA2265B4F3200F37E47 /* MockOrchestrationResponder.swift in Sources */,
 				D7E12656264C719B00B6A712 /* UIKitConsumerSkipTests.swift in Sources */,
 			);

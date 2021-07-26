@@ -9,20 +9,13 @@
 import SwiftUI
 import SwiftCurrent
 
-struct MFAView: View, FlowRepresentable {
-    typealias WorkflowOutput = AnyWorkflow.PassedArgs
-
+struct MFAView: View, PassthroughFlowRepresentable {
     @State var pushSent = false
     @State var enteredCode = ""
     @State var errorMessage: ErrorMessage?
 
     let inspection = Inspection<Self>() // ViewInspector
     weak var _workflowPointer: AnyFlowRepresentable?
-
-    private let heldWorkflowData: AnyWorkflow.PassedArgs
-    init(with data: AnyWorkflow.PassedArgs) {
-        heldWorkflowData = data
-    }
 
     var body: some View {
         VStack(spacing: 30) {
@@ -42,7 +35,7 @@ struct MFAView: View, FlowRepresentable {
                 TextField("Enter Code:", text: $enteredCode)
                 Button("Submit") {
                     if enteredCode == "1234" {
-                        proceedInWorkflow(heldWorkflowData)
+                        proceedInWorkflow()
                     } else {
                         errorMessage = ErrorMessage(message: "Invalid code entered, abandoning workflow.")
                     }

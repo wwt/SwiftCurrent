@@ -29,7 +29,7 @@ class ModalStyleTests: XCTestCase {
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self,
-                             presentationType: .modal(.fullScreen)))
+                                 launchStyle: .modal(.fullScreen)))
 
         XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
         XCTAssertEqual(UIApplication.topViewController()?.modalPresentationStyle, .fullScreen)
@@ -41,7 +41,7 @@ class ModalStyleTests: XCTestCase {
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self,
-                             presentationType: .modal(.pageSheet)))
+                                 launchStyle: .modal(.pageSheet)))
 
         XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
         XCTAssertEqual(UIApplication.topViewController()?.modalPresentationStyle, .pageSheet)
@@ -52,7 +52,7 @@ class ModalStyleTests: XCTestCase {
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self,
-                             presentationType: .modal(.formSheet)))
+                                 launchStyle: .modal(.formSheet)))
 
         XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
         XCTAssertEqual(UIApplication.topViewController()?.modalPresentationStyle, .formSheet)
@@ -63,7 +63,7 @@ class ModalStyleTests: XCTestCase {
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self,
-                             presentationType: .modal(.currentContext)))
+                                 launchStyle: .modal(.currentContext)))
 
         XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
         XCTAssertEqual(UIApplication.topViewController()?.modalPresentationStyle, .currentContext)
@@ -77,7 +77,7 @@ class ModalStyleTests: XCTestCase {
         print("!!!! \(Date().timeIntervalSince1970) - testShowModalAsCustom - about to launchInto from: \(String(describing: UIApplication.topViewController()))")
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self,
-                             presentationType: .modal(.custom)))
+                                 launchStyle: .modal(.custom)))
         print("!!!! \(Date().timeIntervalSince1970) - testShowModalAsCustom - Completed launchInto")
 
         XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
@@ -90,7 +90,7 @@ class ModalStyleTests: XCTestCase {
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self,
-                             presentationType: .modal(.overFullScreen)))
+                                 launchStyle: .modal(.overFullScreen)))
 
         XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
         XCTAssertEqual(UIApplication.topViewController()?.modalPresentationStyle, .overFullScreen)
@@ -101,7 +101,7 @@ class ModalStyleTests: XCTestCase {
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self,
-                             presentationType: .modal(.overCurrentContext)))
+                                 launchStyle: .modal(.overCurrentContext)))
 
         XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
         XCTAssertEqual(UIApplication.topViewController()?.modalPresentationStyle, .overCurrentContext)
@@ -112,7 +112,7 @@ class ModalStyleTests: XCTestCase {
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self,
-                             presentationType: .modal(.popover)))
+                                 launchStyle: .modal(.popover)))
 
         XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
         XCTAssertEqual(UIApplication.topViewController()?.modalPresentationStyle, .popover)
@@ -124,7 +124,7 @@ class ModalStyleTests: XCTestCase {
 
         UIApplication.topViewController()?
             .launchInto(Workflow(TestViewController.self,
-                             presentationType: .modal(.automatic)))
+                                 launchStyle: .modal(.automatic)))
 
         XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
         XCTAssertEqual(UIApplication.topViewController()?.modalPresentationStyle, UIViewController().modalPresentationStyle)
@@ -235,7 +235,7 @@ class ModalStyleTests: XCTestCase {
         RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
-            .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
+            .launchInto(Workflow(TestViewController.self, launchStyle: .navigationStack),
                              withLaunchStyle: .modal(.fullScreen))
 
         XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
@@ -247,7 +247,7 @@ class ModalStyleTests: XCTestCase {
         vc.loadForTesting()
 
         UIApplication.topViewController()?
-            .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
+            .launchInto(Workflow(TestViewController.self, launchStyle: .navigationStack),
                              withLaunchStyle: .modal(.pageSheet))
 
         XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
@@ -258,7 +258,7 @@ class ModalStyleTests: XCTestCase {
         RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
-            .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
+            .launchInto(Workflow(TestViewController.self, launchStyle: .navigationStack),
                              withLaunchStyle: .modal(.formSheet))
 
         XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
@@ -269,7 +269,7 @@ class ModalStyleTests: XCTestCase {
         RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
-            .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
+            .launchInto(Workflow(TestViewController.self, launchStyle: .navigationStack),
                              withLaunchStyle: .modal(.currentContext))
 
         XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
@@ -280,7 +280,7 @@ class ModalStyleTests: XCTestCase {
         RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
-            .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
+            .launchInto(Workflow(TestViewController.self, launchStyle: .navigationStack),
                              withLaunchStyle: .modal(.custom))
 
         XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
@@ -291,7 +291,7 @@ class ModalStyleTests: XCTestCase {
         RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
-            .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
+            .launchInto(Workflow(TestViewController.self, launchStyle: .navigationStack),
                              withLaunchStyle: .modal(.overFullScreen))
 
         XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
@@ -302,7 +302,7 @@ class ModalStyleTests: XCTestCase {
         RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
-            .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
+            .launchInto(Workflow(TestViewController.self, launchStyle: .navigationStack),
                              withLaunchStyle: .modal(.overCurrentContext))
 
         XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
@@ -313,7 +313,7 @@ class ModalStyleTests: XCTestCase {
         RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
-            .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
+            .launchInto(Workflow(TestViewController.self, launchStyle: .navigationStack),
                              withLaunchStyle: .modal(.popover))
 
         XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
@@ -325,7 +325,7 @@ class ModalStyleTests: XCTestCase {
         RootViewController.standard.loadForTesting()
 
         UIApplication.topViewController()?
-            .launchInto(Workflow(TestViewController.self, presentationType: .navigationStack),
+            .launchInto(Workflow(TestViewController.self, launchStyle: .navigationStack),
                              withLaunchStyle: .modal(.automatic))
 
         XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)

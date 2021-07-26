@@ -18,16 +18,16 @@ class UIKitPresenterTests: XCTestCase {
         class FR1: TestViewController { }
         class FR2: TestViewController { }
 
-        let wf = Workflow(FR1.self).thenPresent(FR2.self)
+        let wf = Workflow(FR1.self).thenProceed(with: FR2.self)
         let rootController = UIViewController()
         rootController.loadForTesting()
 
         let presenter = UIKitPresenter(rootController, launchStyle: .modal)
 
         wf.orchestrationResponder = presenter
-        var fr1 = FR1(with: .none)
+        let afr = AnyFlowRepresentable(FR1.self, args: .none)
         let metadata = FlowRepresentableMetadata(FR1.self, launchStyle: ls, flowPersistence: { _ in .default })
-        let node = AnyWorkflow.Element(with: _WorkflowItem(metadata: metadata, instance: AnyFlowRepresentable(&fr1)))
+        let node = AnyWorkflow.Element(with: _WorkflowItem(metadata: metadata, instance: afr))
 
         XCTAssertThrowsFatalError {
             presenter.proceed(to: node, from: node)

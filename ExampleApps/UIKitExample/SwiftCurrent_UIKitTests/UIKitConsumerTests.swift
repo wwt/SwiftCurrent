@@ -67,9 +67,9 @@ class UIKitConsumerTests: XCTestCase {
         nav.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
-                            .thenPresent(FR2.self)
-                            .thenPresent(FR3.self)
-                            .thenPresent(FR4.self))
+                            .thenProceed(with: FR2.self)
+                            .thenProceed(with: FR3.self)
+                            .thenProceed(with: FR4.self))
 
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
@@ -94,9 +94,9 @@ class UIKitConsumerTests: XCTestCase {
 
         var callbackCalled = false
         root.launchInto(Workflow(FR1.self)
-                            .thenPresent(FR2.self)
-                            .thenPresent(FR3.self)
-                            .thenPresent(FR4.self), args: obj) { args in
+                            .thenProceed(with: FR2.self)
+                            .thenProceed(with: FR3.self)
+                            .thenProceed(with: FR4.self), args: obj) { args in
             callbackCalled = true
             XCTAssert(args.extractArgs(defaultValue: nil) as? Obj === obj)
         }
@@ -131,8 +131,8 @@ class UIKitConsumerTests: XCTestCase {
         nav.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
-                            .thenPresent(MockFlowRepresentable.self)
-                            .thenPresent(FR2.self))
+                            .thenProceed(with: MockFlowRepresentable.self)
+                            .thenProceed(with: FR2.self))
 
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
 
@@ -213,7 +213,7 @@ class UIKitConsumerTests: XCTestCase {
             required init?(coder: NSCoder) { fatalError() }
         }
 
-        let wf = Workflow(FR1.self, presentationType: .modal) { args in
+        let wf = Workflow(FR1.self, launchStyle: .modal) { args in
             expectation.fulfill()
             XCTAssertEqual(args, expectedArgs)
             return .persistWhenSkipped
@@ -233,7 +233,7 @@ class UIKitConsumerTests: XCTestCase {
         let expectedArgs = UUID().uuidString
         class FR1: UIWorkflowItem<Never, Never>, FlowRepresentable { }
 
-        let wf = Workflow(FR1.self, presentationType: .modal, flowPersistence: .persistWhenSkipped)
+        let wf = Workflow(FR1.self, launchStyle: .modal, flowPersistence: .persistWhenSkipped)
 
         let root = UIViewController()
         root.loadForTesting()
@@ -252,7 +252,7 @@ class UIKitConsumerTests: XCTestCase {
             required init?(coder: NSCoder) { fatalError() }
         }
 
-        let wf = Workflow(FR1.self, presentationType: .modal, flowPersistence: .persistWhenSkipped)
+        let wf = Workflow(FR1.self, launchStyle: .modal, flowPersistence: .persistWhenSkipped)
 
         let root = UIViewController()
         root.loadForTesting()
@@ -273,7 +273,7 @@ class UIKitConsumerTests: XCTestCase {
         }
 
         let wf = Workflow(FR1.self)
-            .thenPresent(FR2.self, presentationType: .modal, flowPersistence: .persistWhenSkipped)
+            .thenProceed(with: FR2.self, launchStyle: .modal, flowPersistence: .persistWhenSkipped)
 
         let root = UIViewController()
         root.loadForTesting()

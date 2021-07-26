@@ -19,6 +19,9 @@ open class AnyFlowRepresentable {
         _storage.underlyingInstance
     }
 
+    var isPassthrough = false
+    var argsHolder: AnyWorkflow.PassedArgs
+
     var workflow: AnyWorkflow? {
         get {
             _storage.workflow
@@ -45,17 +48,13 @@ open class AnyFlowRepresentable {
 
     fileprivate var _storage: AnyFlowRepresentableStorageBase
 
-    init<FR: FlowRepresentable>(_ instance: inout FR) {
-        _storage = AnyFlowRepresentableStorage(&instance)
-        _storage._workflowPointer = self
-    }
-
     /**
      Creates an erased `FlowRepresentable` by using its initializer
      - Parameter type: The `FlowRepresentable` type to create an instance of
      - Parameter args: The `AnyWorkflow.PassedArgs` to create the instance with. This ends up being cast into the `FlowRepresentable.WorkflowInput`.
      */
     public init<FR: FlowRepresentable>(_ type: FR.Type, args: AnyWorkflow.PassedArgs) {
+        argsHolder = args
         switch args {
             case _ where FR.WorkflowInput.self == Never.self:
                 var instance = FR._factory(FR.self)
@@ -71,6 +70,7 @@ open class AnyFlowRepresentable {
             default: fatalError("No arguments were passed to representable: \(FR.self), but it expected: \(FR.WorkflowInput.self)")
         }
         _storage._workflowPointer = self
+        isPassthrough = FR.self is _PassthroughIdentifiable.Type
     }
 
     func shouldLoad() -> Bool { _storage.shouldLoad() }

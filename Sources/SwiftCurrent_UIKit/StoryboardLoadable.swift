@@ -71,6 +71,15 @@ extension StoryboardLoadable {
 }
 
 @available(iOS 13.0, *)
+extension PassthroughFlowRepresentable where Self: StoryboardLoadable {
+    /// :nodoc: **WARNING: This will throw a fatal error.** Just a default implementation of the required `FlowRepresentable` initializer meant to satisfy the protocol requirements.
+    public init(with args: WorkflowInput) { self.init() }
+
+    // swiftlint:disable:next missing_docs
+    public init?(coder: NSCoder, with args: WorkflowInput) { self.init(coder: coder) }
+}
+
+@available(iOS 13.0, *)
 extension StoryboardLoadable where WorkflowInput == Never {
     // No public docs necessary, this cannot be called.
     // swiftlint:disable:next missing_docs

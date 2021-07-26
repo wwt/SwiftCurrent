@@ -203,9 +203,9 @@ class UIKitConsumerAbandonTests: XCTestCase {
         root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
-            .thenPresent(FR2.self, presentationType: .modal)
-            .thenPresent(FR3.self)
-            .thenPresent(FR4.self), withLaunchStyle: .navigationStack)
+                            .thenProceed(with: FR2.self, launchStyle: .modal)
+                            .thenProceed(with: FR3.self)
+                            .thenProceed(with: FR4.self), withLaunchStyle: .navigationStack)
 
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         XCTAssertNotNil(UIApplication.topViewController()?.navigationController)
@@ -230,9 +230,9 @@ class UIKitConsumerAbandonTests: XCTestCase {
         root.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
-            .thenPresent(FR2.self)
-            .thenPresent(FR3.self)
-            .thenPresent(FR4.self), withLaunchStyle: .modal)
+                            .thenProceed(with: FR2.self)
+                            .thenProceed(with: FR3.self)
+                            .thenProceed(with: FR4.self), withLaunchStyle: .modal)
 
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
@@ -252,9 +252,9 @@ class UIKitConsumerAbandonTests: XCTestCase {
         class FR4: TestViewController { }
 
         let wf = Workflow(FR1.self)
-            .thenPresent(FR2.self)
-            .thenPresent(FR3.self)
-            .thenPresent(FR4.self)
+            .thenProceed(with: FR2.self)
+            .thenProceed(with: FR3.self)
+            .thenProceed(with: FR4.self)
         
         let root = UIViewController()
         root.loadForTesting()
@@ -282,9 +282,9 @@ class UIKitConsumerAbandonTests: XCTestCase {
         class FR4: TestViewController { }
 
         let wf = Workflow(FR1.self)
-            .thenPresent(FR2.self)
-            .thenPresent(FR3.self)
-            .thenPresent(FR4.self)
+            .thenProceed(with: FR2.self)
+            .thenProceed(with: FR3.self)
+            .thenProceed(with: FR4.self)
         
         let root = UIViewController()
         root.loadForTesting()
@@ -314,9 +314,9 @@ class UIKitConsumerAbandonTests: XCTestCase {
         class FR4: TestViewController { }
 
         let wf = Workflow(FR1.self)
-            .thenPresent(FR2.self, presentationType: .modal)
-            .thenPresent(FR3.self, presentationType: .modal)
-            .thenPresent(FR4.self, presentationType: .modal)
+            .thenProceed(with: FR2.self, launchStyle: .modal)
+            .thenProceed(with: FR3.self, launchStyle: .modal)
+            .thenProceed(with: FR4.self, launchStyle: .modal)
         
         let root = UIViewController()
         root.loadForTesting()
@@ -349,9 +349,9 @@ class UIKitConsumerAbandonTests: XCTestCase {
         root.loadForTesting()
         root.launchInto(
             Workflow(FR1.self)
-                .thenPresent(FR2.self, presentationType: .modal)
-                .thenPresent(FR3.self)
-                .thenPresent(FR4.self),
+                .thenProceed(with: FR2.self, launchStyle: .modal)
+                .thenProceed(with: FR3.self)
+                .thenProceed(with: FR4.self),
             withLaunchStyle: .navigationStack)
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         XCTAssertNotNil(UIApplication.topViewController()?.navigationController)
@@ -375,9 +375,9 @@ class UIKitConsumerAbandonTests: XCTestCase {
         let root = UIViewController()
         root.loadForTesting()
         root.launchInto(Workflow(FR1.self)
-            .thenPresent(FR2.self, presentationType: .modal)
-            .thenPresent(FR3.self, presentationType: .navigationStack)
-            .thenPresent(FR4.self, presentationType: .modal),
+                            .thenProceed(with: FR2.self, launchStyle: .modal)
+                            .thenProceed(with: FR3.self, launchStyle: .navigationStack)
+                            .thenProceed(with: FR4.self, launchStyle: .modal),
                         withLaunchStyle: .navigationStack)
 
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
@@ -403,9 +403,9 @@ class UIKitConsumerAbandonTests: XCTestCase {
         root.loadForTesting()
         root.launchInto(
             Workflow(FR1.self)
-                .thenPresent(FR2.self, presentationType: .modal)
-                .thenPresent(FR3.self, presentationType: .navigationStack)
-                .thenPresent(FR4.self, presentationType: .modal),
+                .thenProceed(with: FR2.self, launchStyle: .modal)
+                .thenProceed(with: FR3.self, launchStyle: .navigationStack)
+                .thenProceed(with: FR4.self, launchStyle: .modal),
             withLaunchStyle: .navigationStack)
 
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
@@ -432,9 +432,9 @@ class UIKitConsumerAbandonTests: XCTestCase {
         nav.loadForTesting()
 
         root.launchInto(Workflow(FR1.self)
-            .thenPresent(FR2.self, presentationType: .modal)
-            .thenPresent(FR3.self, presentationType: .navigationStack)
-            .thenPresent(FR4.self, presentationType: .modal),
+                            .thenProceed(with: FR2.self, launchStyle: .modal)
+                            .thenProceed(with: FR3.self, launchStyle: .navigationStack)
+                            .thenProceed(with: FR4.self, launchStyle: .modal),
                         withLaunchStyle: .navigationStack)
 
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
