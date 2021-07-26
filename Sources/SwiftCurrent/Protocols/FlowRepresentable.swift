@@ -110,7 +110,20 @@ extension FlowRepresentable {
     public static func _factory<FR: FlowRepresentable>(_: FR.Type) -> FR { Self() as! FR }
     // No public docs necessary, as this should not be used by consumers.
     // swiftlint:disable:next missing_docs force_cast
-    public static func _factory<FR: FlowRepresentable>(_: FR.Type, with args: WorkflowInput) -> FR { Self(with: args) as! FR }
+    public static func _factory<FR: FlowRepresentable>(_ type: FR.Type, with args: WorkflowInput) -> FR { FR(with: args as! FR.WorkflowInput) }
+//        var debugArgs = args
+//        var debugType = type
+//        var debugInit = Self(with: args)
+//        var debugCast = Self(with: args) as? FR
+//        // swiftlint:disable:next force_cast
+//        var debugUsingType = type.init(with: args as! FR.WorkflowInput)
+//        // swiftlint:disable:next force_cast
+//        var debugFRInit = FR(with: args as! FR.WorkflowInput)
+//
+//        // swiftlint:disable:next force_cast
+//        return Self(with: args) as! FR
+//        return debugFRInit
+//    }
 }
 
 extension FlowRepresentable {
