@@ -206,6 +206,7 @@
 				CA0536C326A0834B00BF8FC5 /* AppDelegate.swift */,
 				CA0536C426A0834B00BF8FC5 /* Protocols */,
 				CA0536C626A0834B00BF8FC5 /* Info.plist */,
+				D73767AA26AF625F000A6A6E /* TermsOfServiceViewController.swift */,
 				CA0536C726A0834B00BF8FC5 /* SceneDelegate.swift */,
 			);
 			path = UIKitExample;
@@ -230,7 +231,6 @@
 				CA0536BF26A0834B00BF8FC5 /* EnterAddressViewController.swift */,
 				CA0536C026A0834B00BF8FC5 /* ReviewOrderViewController.swift */,
 				CA0536C126A0834B00BF8FC5 /* PickupOrDeliveryViewController.swift */,
-				D73767AA26AF625F000A6A6E /* TermsOfServiceViewController.swift */,
 			);
 			path = Ordering;
 			sourceTree = "<group>";

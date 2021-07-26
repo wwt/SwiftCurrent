@@ -26,17 +26,18 @@ class TermsOfServiceViewControllerTests: ViewControllerTest<TermsOfServiceViewCo
         XCTAssert(callbackCalled)
     }
 
-    // This turned into a pain.
-//    func testRejectingAgreementAbandonsWorkflow() {
-//        let mockResponder = MockOrchestrationResponder()
-//        mockResponder.complete_EnableDefaultImplementation = true
-//        let workflowBeingAbandoned = Workflow(TermsOfServiceViewController.self)
-//        workflowBeingAbandoned.launch(withOrchestrationResponder: mockResponder) { _ in XCTFail("Should not complete Workflow") }
-//
-//        testViewController.rejectButton?.simulateTouch()
-//
-//        XCTAssertEqual(mockResponder.abandonCalled, 1)
-//    }
+    func testRejectingAgreementAbandonsWorkflow() {
+        let mockResponder = MockOrchestrationResponder()
+        mockResponder.complete_EnableDefaultImplementation = true
+        let workflowBeingAbandoned = Workflow(TermsOfServiceViewController.self)
+        workflowBeingAbandoned.launch(withOrchestrationResponder: mockResponder) { _ in XCTFail("Should not complete Workflow") }
+
+        testViewController = mockResponder.lastTo?.value.instance?.underlyingInstance as? TermsOfServiceViewController
+
+        testViewController.rejectButton?.simulateTouch()
+
+        XCTAssertEqual(mockResponder.abandonCalled, 1)
+    }
 }
 
 fileprivate extension UIViewController {
@@ -44,8 +45,7 @@ fileprivate extension UIViewController {
         view.viewWithAccessibilityIdentifier("acceptButton") as? UIButton
     }
 
-    // Still want this at some point.
-//    var rejectButton: UIButton? {
-//        view.viewWithAccessibilityIdentifier("rejectButton") as? UIButton
-//    }
+    var rejectButton: UIButton? {
+        view.viewWithAccessibilityIdentifier("rejectButton") as? UIButton
+    }
 }

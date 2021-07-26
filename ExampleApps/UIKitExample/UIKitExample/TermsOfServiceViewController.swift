@@ -19,5 +19,6 @@ class TermsOfServiceViewController: UIViewController, PassthroughFlowRepresentab
     }
 
     @IBAction private func rejectTerms(_ sender: Any) {
+        abandonWorkflow()
     }
 }
