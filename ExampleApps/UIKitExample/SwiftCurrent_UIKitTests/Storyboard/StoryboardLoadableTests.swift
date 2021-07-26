@@ -51,9 +51,9 @@ class StoryboardLoadableTests: XCTestCase {
             }
         }
 
-        XCTAssertThrowsFatalError {
+        XCTAssertThrowsError(try ExceptionCatcher.catch {
             _ = TestInputViewController._factory(Test.self, with: "some")
-        }
+        })
     }
 
     func testStoryboardLoadable_WithInputOfNever_ThrowsErrorWhenItIsOfADifferentTypeOnStoryboard() throws {
@@ -94,6 +94,10 @@ class StoryboardLoadableTests: XCTestCase {
         XCTAssertNoThrow(try ExceptionCatcher.catch {
             AnyFlowRepresentable(PassthroughViewController.self, args: .args("some"))
         })
+
+        XCTAssertNoThrow(try ExceptionCatcher.catch {
+            AnyFlowRepresentable(InheritedPassthroughViewController.self, args: .args("some"))
+        })
     }
 }
 
@@ -132,3 +136,5 @@ class PassthroughViewController: UIViewController, StoryboardLoadable, Passthrou
         UIStoryboard(name: "TestStoryboard", bundle: Bundle(for: Self.self))
     }
 }
+
+class InheritedPassthroughViewController: PassthroughViewController {}

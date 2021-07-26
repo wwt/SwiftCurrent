@@ -105,6 +105,7 @@ extension FlowRepresentable {
         fatalError("This initializer was only designed to satisfy a protocol requirement on FlowRepresentable. You must implement your own custom initializer on \(String(describing: Self.self))")
     }
 
+    #warning("Come back to make sure this is working")
     // No public docs necessary, as this should not be used by consumers.
     // swiftlint:disable:next missing_docs force_cast
     public static func _factory<FR: FlowRepresentable>(_: FR.Type) -> FR { Self() as! FR }
