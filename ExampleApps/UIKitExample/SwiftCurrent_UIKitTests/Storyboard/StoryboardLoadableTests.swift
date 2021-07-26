@@ -90,6 +90,10 @@ class StoryboardLoadableTests: XCTestCase {
         XCTAssertNoThrow(try ExceptionCatcher.catch {
             AnyFlowRepresentable(TestInputViewController.self, args: .args("some"))
         })
+
+        XCTAssertNoThrow(try ExceptionCatcher.catch {
+            AnyFlowRepresentable(PassthroughViewController.self, args: .args("some"))
+        })
     }
 }
 
