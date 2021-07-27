@@ -1,3 +1,5 @@
+ ![SwiftCurrent](wiki/swiftcurrent-logo.png)
+
 <!-- Library Information -->
 [![Supported Platforms](https://img.shields.io/cocoapods/p/SwiftCurrent)](https://github.com/wwt/SwiftCurrent/security/policy)
 [![Swift Package Manager](https://img.shields.io/badge/Swift_Package_Manager-supported-brightgreen)](https://github.com/wwt/SwiftCurrent/wiki/Installation#swift-package-manager)
