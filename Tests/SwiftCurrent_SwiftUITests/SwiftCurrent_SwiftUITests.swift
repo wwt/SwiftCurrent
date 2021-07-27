@@ -38,7 +38,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
         }
 
-        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.5)
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWorkflowCanHaveMultipleOnFinishClosures() throws {
@@ -63,7 +63,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
         }
 
-        wait(for: [expectOnFinish1, expectOnFinish2, expectViewLoaded], timeout: 0.5)
+        wait(for: [expectOnFinish1, expectOnFinish2, expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testOnFinishWorksEvenWhenItIsNotTheLastItem() throws {
@@ -87,7 +87,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
         }
 
-        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.5)
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testOnFinishWorksEvenWhenItIsTheFirstItem() throws {
@@ -111,7 +111,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
         }
 
-        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.5)
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWorkflowPassesArgumentsToTheFirstItem() throws {
@@ -130,7 +130,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().stringProperty, expected)
         }
 
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWorkflowPassesArgumentsToTheFirstItem_WhenThatFirstItemTakesInAnyWorkflowPassedArgs() throws {
@@ -150,7 +150,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().property.extractArgs(defaultValue: nil) as? String, expected)
         }
 
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWorkflowPassesArgumentsToTheFirstItem_WhenThatFirstItemTakesInAnyWorkflowPassedArgs_AndTheLaunchArgsAreAnyWorkflowPassedArgs() throws {
@@ -171,7 +171,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().property.extractArgs(defaultValue: nil) as? String, expected)
         }
 
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWorkflowPassesArgumentsToAllItems() throws {
@@ -222,7 +222,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow(expectedEnd))
         }
 
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testLargeWorkflowCanBeFollowed() throws {
@@ -273,7 +273,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
                 XCTAssertNoThrow(try viewUnderTest.find(FR7.self).actualView().proceedInWorkflow())
             }
 
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWorkflowOnlyShowsOneViewAtATime() throws {
@@ -340,7 +340,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
                 XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
             }
 
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWorkflowSetsBindingBooleanToFalseWhenAbandoned() throws {
@@ -362,7 +362,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
         }
 
-        wait(for: [expectOnAbandon, expectViewLoaded], timeout: 0.5)
+        wait(for: [expectOnAbandon, expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWorkflowCanHaveMultipleOnAbandonCallbacks() throws {
@@ -387,7 +387,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
         }
 
-        wait(for: [expectOnAbandon1, expectOnAbandon2, expectViewLoaded], timeout: 0.5)
+        wait(for: [expectOnAbandon1, expectOnAbandon2, expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWorkflowCanAbandonEvenIfItIsNotTheLastStatement() throws {
@@ -409,7 +409,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
         }
 
-        wait(for: [expectOnAbandon, expectViewLoaded], timeout: 0.5)
+        wait(for: [expectOnAbandon, expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWorkflowLauncherCanAbandonEvenIfItIsTheFirstStatement() throws {
@@ -431,7 +431,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
         }
 
-        wait(for: [expectOnAbandon, expectViewLoaded], timeout: 0.5)
+        wait(for: [expectOnAbandon, expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWorkflowCanHaveModifiers() throws {
@@ -449,7 +449,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             XCTAssertNoThrow(try viewUnderTest.find(FR1.self).background())
         }
 
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWorkflowRelaunchesWhenSubsequentlyLaunched() throws {
@@ -482,7 +482,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
         }
 
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWorkflowCanHaveAPassthroughRepresentable() throws {
@@ -516,7 +516,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
         }
 
-        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.5)
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWorkflowCanConvertAnyArgsToCorrectTypeForFirstItem() throws {
@@ -548,7 +548,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
         }
 
-        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.5)
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWorkflowCanHaveAPassthroughRepresentableInTheMiddle() throws {
@@ -592,6 +592,6 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
         }
 
-        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.5)
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
     }
 }
