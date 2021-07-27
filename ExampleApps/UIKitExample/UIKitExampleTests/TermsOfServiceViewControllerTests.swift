@@ -31,8 +31,8 @@ class TermsOfServiceViewControllerTests: ViewControllerTest<TermsOfServiceViewCo
         mockResponder.complete_EnableDefaultImplementation = true
         let workflowBeingAbandoned = Workflow(TermsOfServiceViewController.self)
         workflowBeingAbandoned.launch(withOrchestrationResponder: mockResponder) { _ in XCTFail("Should not complete Workflow") }
-
         testViewController = mockResponder.lastTo?.value.instance?.underlyingInstance as? TermsOfServiceViewController
+        testViewController.loadForTesting()
 
         testViewController.rejectButton?.simulateTouch()
 
