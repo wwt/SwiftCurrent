@@ -2,6 +2,8 @@
 ### Linked Issue: 
 
 <!-- (See our contributing guidelines for more details) -->
+
+<!-- Please remove any items below that may not apply to your Pull Request -->
 ## Checklist:
 - [ ] Did you sign the [Contributor License Agreement](https://cla-assistant.io/wwt/SwiftCurrent)?
 - [ ] Is the linter reporting 0 errors?
