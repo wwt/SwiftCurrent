@@ -1,4 +1,4 @@
- ![SwiftCurrent](wiki/swiftcurrent-logo.png)
+ ![SwiftCurrent](https://github.com/wwt/SwiftCurrent/blob/2288ab3f79854849bf6b0822269d93fa7dfdf22d/wiki/swiftcurrent-logo.png)
 
 <!-- Library Information -->
 [![Supported Platforms](https://img.shields.io/cocoapods/p/SwiftCurrent)](https://github.com/wwt/SwiftCurrent/security/policy)
