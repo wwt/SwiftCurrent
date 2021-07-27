@@ -32,6 +32,7 @@ class SetupViewController: UIViewController {
         ]
         launchInto(
             Workflow(LocationsViewController.self)
+                .thenProceed(with: TermsOfServiceViewController.self)
                 .thenProceed(with: PickupOrDeliveryViewController.self)
                 .thenProceed(with: MenuSelectionViewController.self, flowPersistence: .persistWhenSkipped)
                 .thenProceed(with: FoodSelectionViewController.self)

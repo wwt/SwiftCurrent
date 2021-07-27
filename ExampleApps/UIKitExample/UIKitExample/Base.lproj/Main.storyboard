@@ -4,13 +4,14 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Setup View Controller-->
         <scene sceneID="Aug-N7-o56">
             <objects>
-                <viewController storyboardIdentifier="SetupViewController" id="DkS-f3-MqN" customClass="SetupViewController" customModule="SwiftCurrentExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SetupViewController" id="DkS-f3-MqN" customClass="SetupViewController" customModule="UIKitExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CZ2-3B-nfM">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -40,7 +41,7 @@
         <!--Pick A Location-->
         <scene sceneID="nNO-at-iVD">
             <objects>
-                <viewController storyboardIdentifier="LocationsViewController" title="Pick A Location" id="kIk-VN-P05" customClass="LocationsViewController" customModule="SwiftCurrentExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LocationsViewController" title="Pick A Location" id="kIk-VN-P05" customClass="LocationsViewController" customModule="UIKitExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YAL-0N-pnQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -87,7 +88,7 @@
         <!--Pickup or Delivery-->
         <scene sceneID="VK7-I6-f1O">
             <objects>
-                <viewController storyboardIdentifier="PickupOrDeliveryViewController" title="Pickup or Delivery" id="n66-oX-fj3" customClass="PickupOrDeliveryViewController" customModule="SwiftCurrentExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PickupOrDeliveryViewController" title="Pickup or Delivery" id="n66-oX-fj3" customClass="PickupOrDeliveryViewController" customModule="UIKitExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Yxi-4w-BAu">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -128,7 +129,7 @@
         <!--Menu Selection-->
         <scene sceneID="qQP-8A-Hqf">
             <objects>
-                <viewController storyboardIdentifier="MenuSelectionViewController" title="Menu Selection" id="WjK-u5-gZy" customClass="MenuSelectionViewController" customModule="SwiftCurrentExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MenuSelectionViewController" title="Menu Selection" id="WjK-u5-gZy" customClass="MenuSelectionViewController" customModule="UIKitExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ria-rr-LOI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -169,7 +170,7 @@
         <!--Food Selection-->
         <scene sceneID="saP-pS-0aI">
             <objects>
-                <viewController storyboardIdentifier="FoodSelectionViewController" title="Food Selection" id="0mc-nI-5G7" customClass="FoodSelectionViewController" customModule="SwiftCurrentExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FoodSelectionViewController" title="Food Selection" id="0mc-nI-5G7" customClass="FoodSelectionViewController" customModule="UIKitExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="j7p-c7-yfv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -221,7 +222,7 @@
         <!--Review-->
         <scene sceneID="ddg-IT-yhd">
             <objects>
-                <viewController storyboardIdentifier="ReviewOrderViewController" title="Review" id="3FA-RF-3Hb" customClass="ReviewOrderViewController" customModule="SwiftCurrentExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ReviewOrderViewController" title="Review" id="3FA-RF-3Hb" customClass="ReviewOrderViewController" customModule="UIKitExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="s9i-zP-RIi">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -315,10 +316,57 @@
             </objects>
             <point key="canvasLocation" x="3853.6231884057975" y="20.758928571428569"/>
         </scene>
+        <!--Terms Of Service View Controller-->
+        <scene sceneID="0zQ-bA-9bz">
+            <objects>
+                <viewController storyboardIdentifier="TermsOfServiceViewController" id="HVo-Np-Zdi" customClass="TermsOfServiceViewController" customModule="UIKitExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Pbt-kd-Zjl">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terms of Service" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FNZ-K8-PhY">
+                                <rect key="frame" x="117.5" y="84" width="179" height="30"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sMH-Vc-0jR">
+                                <rect key="frame" x="40" y="154" width="49" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="acceptButton"/>
+                                <state key="normal" title="Accept"/>
+                                <connections>
+                                    <action selector="acceptTerms:" destination="HVo-Np-Zdi" eventType="touchUpInside" id="19M-yr-lPk"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fWz-Sc-Fby">
+                                <rect key="frame" x="330" y="154" width="44" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="rejectButton"/>
+                                <state key="normal" title="Reject"/>
+                                <connections>
+                                    <action selector="rejectTerms:" destination="HVo-Np-Zdi" eventType="touchUpInside" id="N0y-g6-HOy"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="tuF-GA-YEj"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="sMH-Vc-0jR" firstAttribute="leading" secondItem="tuF-GA-YEj" secondAttribute="leading" constant="40" id="7Ov-6V-xAR"/>
+                            <constraint firstItem="FNZ-K8-PhY" firstAttribute="centerX" secondItem="Pbt-kd-Zjl" secondAttribute="centerX" id="DRv-Cz-EMa"/>
+                            <constraint firstItem="fWz-Sc-Fby" firstAttribute="centerY" secondItem="sMH-Vc-0jR" secondAttribute="centerY" id="VkA-zb-cAz"/>
+                            <constraint firstItem="tuF-GA-YEj" firstAttribute="trailing" secondItem="fWz-Sc-Fby" secondAttribute="trailing" constant="40" id="Vs9-FC-lVk"/>
+                            <constraint firstItem="FNZ-K8-PhY" firstAttribute="top" secondItem="tuF-GA-YEj" secondAttribute="top" constant="40" id="m71-Fc-ttT"/>
+                            <constraint firstItem="sMH-Vc-0jR" firstAttribute="top" secondItem="FNZ-K8-PhY" secondAttribute="bottom" constant="40" id="zGR-WX-fTY"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ai0-Ax-TpG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="243" y="690"/>
+        </scene>
         <!--Enter Address View Controller-->
         <scene sceneID="VTb-QS-TVj">
             <objects>
-                <viewController storyboardIdentifier="EnterAddressViewController" id="1U9-wD-f9Q" customClass="EnterAddressViewController" customModule="SwiftCurrentExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EnterAddressViewController" id="1U9-wD-f9Q" customClass="EnterAddressViewController" customModule="UIKitExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6Ne-a5-zdK">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -354,4 +402,9 @@
             <point key="canvasLocation" x="1593" y="690"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

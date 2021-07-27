@@ -57,13 +57,13 @@ extension StoryboardLoadable {
     /// :nodoc: **WARNING: This will throw a fatal error.** Just a default implementation of the required `FlowRepresentable` initializer meant to satisfy the protocol requirements.
     public init(with args: WorkflowInput) { // swiftlint:disable:this unavailable_function
         // swiftlint:disable:next line_length
-        fatalError("The StoryboardLoadable protocol provided a default implementation if this initializer so that consumers didn't have to worry about it in their UIViewController. If you encounter this error and need this initializer, simply add it to \(String(describing: Self.self))")
+        fatalError("The StoryboardLoadable protocol provided a default implementation of this initializer so that consumers didn't have to worry about it in their UIViewController. If you encounter this error and need this initializer, simply add it to \(String(describing: Self.self))")
     }
 
     // No public docs necessary, as this should not be used by consumers.
     // swiftlint:disable:next missing_docs
     public static func _factory<FR: FlowRepresentable>(_: FR.Type, with args: WorkflowInput) -> FR {
-        guard let viewController = storyboard.instantiateViewController(identifier: storyboardId, creator: { Self(coder: $0, with: args) }) as? FR else {
+        guard let viewController = storyboard.instantiateViewController(identifier: storyboardId, creator: { (FR.self as? Self.Type)?.init(coder: $0, with: args) }) as? FR else {
             fatalError("Unable to instantiate a view controller from storyboard: \(storyboard), with id: \(storyboardId), of type: \(String(describing: FR.self))")
         }
         return viewController
@@ -88,7 +88,7 @@ extension StoryboardLoadable where WorkflowInput == Never {
     // No public docs necessary, as this should not be used by consumers.
     // swiftlint:disable:next missing_docs
     public static func _factory<FR: FlowRepresentable>(_: FR.Type) -> FR {
-        guard let viewController = storyboard.instantiateViewController(identifier: storyboardId, creator: { Self(coder: $0) }) as? FR else {
+        guard let viewController = storyboard.instantiateViewController(identifier: storyboardId, creator: { (FR.self as? Self.Type)?.init(coder: $0) }) as? FR else {
             fatalError("Unable to instantiate a view controller from storyboard: \(storyboard), with id: \(storyboardId), of type: \(String(describing: FR.self))")
         }
         return viewController

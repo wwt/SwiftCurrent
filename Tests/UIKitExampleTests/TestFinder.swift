@@ -20,6 +20,7 @@ class TestFinder: XCTestCase {
         XCTestSuite(forTestCaseClass: ReviewOrderViewControllerTests.self).tests.forEach { suite.addTest($0) }
         XCTestSuite(forTestCaseClass: EnterAddressViewControllerTests.self).tests.forEach { suite.addTest($0) }
         XCTestSuite(forTestCaseClass: SetupViewControllerTests.self).tests.forEach { suite.addTest($0) }
+        XCTestSuite(forTestCaseClass: TermsOfServiceViewControllerTests.self).tests.forEach { suite.addTest($0) }
         return suite
     }
 
