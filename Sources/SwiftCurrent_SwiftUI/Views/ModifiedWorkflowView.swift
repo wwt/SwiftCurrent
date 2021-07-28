@@ -46,41 +46,41 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
         }
     }
 
-    init<A, FR>(_ WorkflowLauncher: WorkflowLauncher<A>, isLaunched: Binding<Bool>, item: WorkflowItem<FR, Content>) where Wrapped == Never, Args == FR.WorkflowOutput {
+    init<A, FR>(_ workflowLauncher: WorkflowLauncher<A>, isLaunched: Binding<Bool>, item: WorkflowItem<FR, Content>) where Wrapped == Never, Args == FR.WorkflowOutput {
         wrapped = nil
         let wf = AnyWorkflow(Workflow<FR>(item.metadata))
         workflow = wf
-        launchArgs = WorkflowLauncher.passedArgs
+        launchArgs = workflowLauncher.passedArgs
         _isLaunched = isLaunched
-        onFinish = WorkflowLauncher.onFinish
-        onAbandon = WorkflowLauncher.onAbandon
-        let model = WorkflowViewModel(isLaunched: isLaunched)
+        onFinish = workflowLauncher.onFinish
+        onAbandon = workflowLauncher.onAbandon
+        let model = WorkflowViewModel(isLaunched: isLaunched, launchArgs: workflowLauncher.passedArgs)
         _model = StateObject(wrappedValue: model)
         _launcher = StateObject(wrappedValue: Launcher(workflow: wf,
                                                        responder: model,
-                                                       launchArgs: WorkflowLauncher.passedArgs))
+                                                       launchArgs: workflowLauncher.passedArgs))
     }
 
-    private init<A, W, C, FR>(_ WorkflowLauncher: ModifiedWorkflowView<A, W, C>, item: WorkflowItem<FR, Content>) where Wrapped == ModifiedWorkflowView<A, W, C>, Args == FR.WorkflowOutput {
-        _model = WorkflowLauncher._model
-        wrapped = WorkflowLauncher
-        workflow = WorkflowLauncher.workflow
+    private init<A, W, C, FR>(_ workflowLauncher: ModifiedWorkflowView<A, W, C>, item: WorkflowItem<FR, Content>) where Wrapped == ModifiedWorkflowView<A, W, C>, Args == FR.WorkflowOutput {
+        _model = workflowLauncher._model
+        wrapped = workflowLauncher
+        workflow = workflowLauncher.workflow
         workflow.append(item.metadata)
-        launchArgs = WorkflowLauncher.launchArgs
-        _isLaunched = WorkflowLauncher._isLaunched
-        _launcher = WorkflowLauncher._launcher
-        onAbandon = WorkflowLauncher.onAbandon
+        launchArgs = workflowLauncher.launchArgs
+        _isLaunched = workflowLauncher._isLaunched
+        _launcher = workflowLauncher._launcher
+        onAbandon = workflowLauncher.onAbandon
     }
 
-    private init(WorkflowLauncher: Self, onFinish: [(AnyWorkflow.PassedArgs) -> Void], onAbandon: [() -> Void]) {
-        _model = WorkflowLauncher._model
-        wrapped = WorkflowLauncher.wrapped
-        workflow = WorkflowLauncher.workflow
+    private init(workflowLauncher: Self, onFinish: [(AnyWorkflow.PassedArgs) -> Void], onAbandon: [() -> Void]) {
+        _model = workflowLauncher._model
+        wrapped = workflowLauncher.wrapped
+        workflow = workflowLauncher.workflow
         self.onFinish = onFinish
         self.onAbandon = onAbandon
-        launchArgs = WorkflowLauncher.launchArgs
-        _isLaunched = WorkflowLauncher._isLaunched
-        _launcher = WorkflowLauncher._launcher
+        launchArgs = workflowLauncher.launchArgs
+        _isLaunched = workflowLauncher._isLaunched
+        _launcher = workflowLauncher._launcher
     }
 
     private func launch() {
@@ -97,14 +97,14 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
     public func onFinish(closure: @escaping (AnyWorkflow.PassedArgs) -> Void) -> Self {
         var onFinish = self.onFinish
         onFinish.append(closure)
-        return Self(WorkflowLauncher: self, onFinish: onFinish, onAbandon: onAbandon)
+        return Self(workflowLauncher: self, onFinish: onFinish, onAbandon: onAbandon)
     }
 
     /// Adds an action to perform when this `Workflow` has abandoned.
     public func onAbandon(closure: @escaping () -> Void) -> Self {
         var onAbandon = self.onAbandon
         onAbandon.append(closure)
-        return Self(WorkflowLauncher: self, onFinish: onFinish, onAbandon: onAbandon)
+        return Self(workflowLauncher: self, onFinish: onFinish, onAbandon: onAbandon)
     }
 }
 
