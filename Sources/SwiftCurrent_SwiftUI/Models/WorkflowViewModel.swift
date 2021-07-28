@@ -42,10 +42,10 @@ extension WorkflowViewModel: OrchestrationResponder {
     func abandon(_ workflow: AnyWorkflow, onFinish: (() -> Void)?) {
         isLaunched?.wrappedValue = false
         body = nil
+        onAbandonPublisher.send()
         if isLaunched?.wrappedValue == true {
             workflow.launch(withOrchestrationResponder: self, passedArgs: launchArgs)
         }
-        onAbandonPublisher.send()
     }
 
     func complete(_ workflow: AnyWorkflow, passedArgs: AnyWorkflow.PassedArgs, onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
