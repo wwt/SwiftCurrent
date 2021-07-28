@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 extension UIApplication {
-    static func topViewController(of controller: UIViewController? = UIApplication.shared.windows.first?.rootViewController) -> UIViewController? {
+    static func topViewController(of controller: UIViewController? = UIApplication.shared.windows.last?.rootViewController) -> UIViewController? {
         if let navigationController = controller as? UINavigationController,
             let visible = navigationController.visibleViewController {
             return topViewController(of: visible)
