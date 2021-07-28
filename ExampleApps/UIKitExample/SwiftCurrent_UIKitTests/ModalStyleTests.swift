@@ -14,6 +14,12 @@ import UIUTest
 import SwiftCurrent_UIKit
 
 class ModalStyleTests: XCTestCase {
+    override class func setUp() {
+        print("!!!! \(Date().timeIntervalSince1970) - ModalStyleTests - class setup starting. Top view controller: \(String(describing: UIApplication.topViewController()))")
+        waitUntil(UIApplication.topViewController() != nil)
+        print("!!!! \(Date().timeIntervalSince1970) - ModalStyleTests - class setup ending. Top view controller: \(String(describing: UIApplication.topViewController()))")
+    }
+
     override func setUp() {
         UIView.setAnimationsEnabled(false)
         UIViewController.initializeTestable()
