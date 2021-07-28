@@ -77,7 +77,7 @@ class ModalStyleTests: XCTestCase {
         let topViewController = standardRoot.loadForTesting()
         print("!!!! \(Date().timeIntervalSince1970) - testShowModalAsCustom - \(String(describing: topViewController)) was loaded for testing")
 
-        XCTAssertIdentical(topViewController, UIApplication.topViewController(), "loadForTesting() failed to update the top view controller")
+        XCTAssert(topViewController === UIApplication.topViewController(), "\(String(describing: topViewController)) should be \(String(describing: UIApplication.topViewController())) - loadForTesting() failed to update the top view controller")
 
         print("!!!! \(Date().timeIntervalSince1970) - testShowModalAsCustom - about to launchInto from: \(String(describing: UIApplication.topViewController()))")
         UIApplication.topViewController()?.launchInto(Workflow(TestViewController.self,
