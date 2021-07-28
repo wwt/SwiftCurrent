@@ -485,6 +485,39 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
+    func testWorkflowRelaunchesWhenAbandoned_WithAConstantOfTrue() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+
+            func abandon() {
+                workflow?.abandon()
+            }
+        }
+        let onFinishCalled = expectation(description: "onFinish Called")
+
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true))
+            .thenProceed(with: WorkflowItem(FR1.self))
+            .thenProceed(with: WorkflowItem(FR2.self))
+            .onFinish { _ in
+                onFinishCalled.fulfill()
+            }
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { viewUnderTest in
+            XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+            XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().abandon())
+
+            XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
+            XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+            XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+        }
+
+        wait(for: [expectViewLoaded, onFinishCalled], timeout: TestConstant.timeout)
+    }
+
     func testWorkflowCanHaveAPassthroughRepresentable() throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             typealias WorkflowOutput = AnyWorkflow.PassedArgs
