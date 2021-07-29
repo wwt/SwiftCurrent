@@ -14,6 +14,12 @@ import UIUTest
 import SwiftCurrent_UIKit
 
 class ModalStyleTests: XCTestCase {
+    override class func setUp() {
+        print("!!!! \(Date().timeIntervalSince1970) - ModalStyleTests - class setup starting. Top view controller: \(String(describing: UIApplication.topViewController()))")
+        waitUntil(UIApplication.topViewController() != nil)
+        print("!!!! \(Date().timeIntervalSince1970) - ModalStyleTests - class setup ending. Top view controller: \(String(describing: UIApplication.topViewController()))")
+    }
+
     override func setUp() {
         UIView.setAnimationsEnabled(false)
         UIViewController.initializeTestable()
@@ -70,19 +76,14 @@ class ModalStyleTests: XCTestCase {
     }
 
     func testShowModalAsCustom() {
-        print("!!!! \(Date().timeIntervalSince1970) - testShowModalAsCustom - About to loadForTesting")
         RootViewController.standard.loadForTesting()
-        print("!!!! \(Date().timeIntervalSince1970) - testShowModalAsCustom - Completed loadForTesting")
+        XCTAssertNotNil(UIApplication.topViewController(), "loadForTesting() failed to update the top view controller")
 
-        print("!!!! \(Date().timeIntervalSince1970) - testShowModalAsCustom - about to launchInto from: \(String(describing: UIApplication.topViewController()))")
-        UIApplication.topViewController()?
-            .launchInto(Workflow(TestViewController.self,
-                                 launchStyle: .modal(.custom)))
-        print("!!!! \(Date().timeIntervalSince1970) - testShowModalAsCustom - Completed launchInto")
+        UIApplication.topViewController()?.launchInto(Workflow(TestViewController.self,
+                                               launchStyle: .modal(.custom)))
 
         XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
         XCTAssertEqual(UIApplication.topViewController()?.modalPresentationStyle.rawValue, UIModalPresentationStyle.custom.rawValue)
-        print("!!!! \(Date().timeIntervalSince1970) - testShowModalAsCustom - RawValue: \(String(describing: UIApplication.topViewController()?.modalPresentationStyle.rawValue))")
     }
 
     func testShowModalOverFullScreen() {

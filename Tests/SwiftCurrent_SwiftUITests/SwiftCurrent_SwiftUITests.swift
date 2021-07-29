@@ -303,7 +303,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
                 XCTAssertThrowsError(try viewUnderTest.find(ViewType.Text.self, skipFound: 1))
             }
 
-        wait(for: [expectViewLoaded], timeout: 0.3)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testMovingBiDirectionallyInAWorkflow() throws {
