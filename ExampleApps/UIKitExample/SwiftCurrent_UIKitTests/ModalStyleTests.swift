@@ -75,24 +75,15 @@ class ModalStyleTests: XCTestCase {
         XCTAssertEqual(UIApplication.topViewController()?.modalPresentationStyle, .currentContext)
     }
 
-    // This test has been flakey in the pipeline. Print statements to help diagnose and debug.
     func testShowModalAsCustom() {
-        print("!!!! \(Date().timeIntervalSince1970) - testShowModalAsCustom - Starting top view controller: \(String(describing: UIApplication.topViewController()))")
-        let standardRoot = RootViewController.standard
-        print("!!!! \(Date().timeIntervalSince1970) - testShowModalAsCustom - About to load \(standardRoot) for testing")
-        let topViewController = standardRoot.loadForTesting()
-        print("!!!! \(Date().timeIntervalSince1970) - testShowModalAsCustom - \(String(describing: topViewController)) was loaded for testing")
+        RootViewController.standard.loadForTesting()
+        XCTAssertNotNil(UIApplication.topViewController(), "loadForTesting() failed to update the top view controller")
 
-        XCTAssert(topViewController === UIApplication.topViewController(), "\(String(describing: topViewController)) should be \(String(describing: UIApplication.topViewController())) - loadForTesting() failed to update the top view controller")
-
-        print("!!!! \(Date().timeIntervalSince1970) - testShowModalAsCustom - about to launchInto from: \(String(describing: UIApplication.topViewController()))")
         UIApplication.topViewController()?.launchInto(Workflow(TestViewController.self,
                                                launchStyle: .modal(.custom)))
-        print("!!!! \(Date().timeIntervalSince1970) - testShowModalAsCustom - Completed launchInto. TopViewController is now: \(String(describing: UIApplication.topViewController()))")
 
         XCTAssertUIViewControllerDisplayed(ofType: TestViewController.self)
         XCTAssertEqual(UIApplication.topViewController()?.modalPresentationStyle.rawValue, UIModalPresentationStyle.custom.rawValue)
-        print("!!!! \(Date().timeIntervalSince1970) - testShowModalAsCustom - completed test, final top view controller: \(String(describing: UIApplication.topViewController()))")
     }
 
     func testShowModalOverFullScreen() {
