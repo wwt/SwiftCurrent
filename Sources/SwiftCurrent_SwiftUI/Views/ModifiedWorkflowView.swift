@@ -21,11 +21,12 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
     @Binding private var isLaunched: Bool
 
     let inspection = Inspection<Self>()
-    private let wrapped: Wrapped?
-    private let workflow: AnyWorkflow
-    private let launchArgs: AnyWorkflow.PassedArgs
-    private var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
-    private var onAbandon = [() -> Void]()
+    // These need to be state variables to survive SwiftUI re-rendering. Change under penalty of torture BY the codebase you modified.
+    @State private var wrapped: Wrapped?
+    @State private var workflow: AnyWorkflow
+    @State private var launchArgs: AnyWorkflow.PassedArgs
+    @State private var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
+    @State private var onAbandon = [() -> Void]()
 
     @StateObject private var model: WorkflowViewModel
     @StateObject private var launcher: Launcher
@@ -46,41 +47,41 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
         }
     }
 
-    init<A, FR>(_ WorkflowLauncher: WorkflowLauncher<A>, isLaunched: Binding<Bool>, item: WorkflowItem<FR, Content>) where Wrapped == Never, Args == FR.WorkflowOutput {
-        wrapped = nil
+    init<A, FR>(_ workflowLauncher: WorkflowLauncher<A>, isLaunched: Binding<Bool>, item: WorkflowItem<FR, Content>) where Wrapped == Never, Args == FR.WorkflowOutput {
+        _wrapped = State(initialValue: nil)
         let wf = AnyWorkflow(Workflow<FR>(item.metadata))
-        workflow = wf
-        launchArgs = WorkflowLauncher.passedArgs
+        _workflow = State(initialValue: wf)
+        _launchArgs = State(initialValue: workflowLauncher.passedArgs)
         _isLaunched = isLaunched
-        onFinish = WorkflowLauncher.onFinish
-        onAbandon = WorkflowLauncher.onAbandon
-        let model = WorkflowViewModel(isLaunched: isLaunched)
+        _onFinish = State(initialValue: workflowLauncher.onFinish)
+        _onAbandon = State(initialValue: workflowLauncher.onAbandon)
+        let model = WorkflowViewModel(isLaunched: isLaunched, launchArgs: workflowLauncher.passedArgs)
         _model = StateObject(wrappedValue: model)
         _launcher = StateObject(wrappedValue: Launcher(workflow: wf,
                                                        responder: model,
-                                                       launchArgs: WorkflowLauncher.passedArgs))
+                                                       launchArgs: workflowLauncher.passedArgs))
     }
 
-    private init<A, W, C, FR>(_ WorkflowLauncher: ModifiedWorkflowView<A, W, C>, item: WorkflowItem<FR, Content>) where Wrapped == ModifiedWorkflowView<A, W, C>, Args == FR.WorkflowOutput {
-        _model = WorkflowLauncher._model
-        wrapped = WorkflowLauncher
-        workflow = WorkflowLauncher.workflow
+    private init<A, W, C, FR>(_ workflowLauncher: ModifiedWorkflowView<A, W, C>, item: WorkflowItem<FR, Content>) where Wrapped == ModifiedWorkflowView<A, W, C>, Args == FR.WorkflowOutput {
+        _model = workflowLauncher._model
+        _wrapped = State(initialValue: workflowLauncher)
+        _workflow = workflowLauncher._workflow
+        _launchArgs = workflowLauncher._launchArgs
+        _isLaunched = workflowLauncher._isLaunched
+        _launcher = workflowLauncher._launcher
+        _onAbandon = workflowLauncher._onAbandon
         workflow.append(item.metadata)
-        launchArgs = WorkflowLauncher.launchArgs
-        _isLaunched = WorkflowLauncher._isLaunched
-        _launcher = WorkflowLauncher._launcher
-        onAbandon = WorkflowLauncher.onAbandon
     }
 
-    private init(WorkflowLauncher: Self, onFinish: [(AnyWorkflow.PassedArgs) -> Void], onAbandon: [() -> Void]) {
-        _model = WorkflowLauncher._model
-        wrapped = WorkflowLauncher.wrapped
-        workflow = WorkflowLauncher.workflow
-        self.onFinish = onFinish
-        self.onAbandon = onAbandon
-        launchArgs = WorkflowLauncher.launchArgs
-        _isLaunched = WorkflowLauncher._isLaunched
-        _launcher = WorkflowLauncher._launcher
+    private init(workflowLauncher: Self, onFinish: [(AnyWorkflow.PassedArgs) -> Void], onAbandon: [() -> Void]) {
+        _model = workflowLauncher._model
+        _wrapped = workflowLauncher._wrapped
+        _workflow = workflowLauncher._workflow
+        _onFinish = State(initialValue: onFinish)
+        _onAbandon = State(initialValue: onAbandon)
+        _launchArgs = workflowLauncher._launchArgs
+        _isLaunched = workflowLauncher._isLaunched
+        _launcher = workflowLauncher._launcher
     }
 
     private func launch() {
@@ -97,14 +98,14 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
     public func onFinish(closure: @escaping (AnyWorkflow.PassedArgs) -> Void) -> Self {
         var onFinish = self.onFinish
         onFinish.append(closure)
-        return Self(WorkflowLauncher: self, onFinish: onFinish, onAbandon: onAbandon)
+        return Self(workflowLauncher: self, onFinish: onFinish, onAbandon: onAbandon)
     }
 
     /// Adds an action to perform when this `Workflow` has abandoned.
     public func onAbandon(closure: @escaping () -> Void) -> Self {
         var onAbandon = self.onAbandon
         onAbandon.append(closure)
-        return Self(WorkflowLauncher: self, onFinish: onFinish, onAbandon: onAbandon)
+        return Self(workflowLauncher: self, onFinish: onFinish, onAbandon: onAbandon)
     }
 }
 

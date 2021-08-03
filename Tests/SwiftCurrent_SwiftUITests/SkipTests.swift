@@ -47,7 +47,7 @@ final class SkipTests: XCTestCase {
                 XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
             }
 
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testSkippingMiddleItemInAWorkflow() throws {
@@ -81,7 +81,7 @@ final class SkipTests: XCTestCase {
                 XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
             }
 
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testSkippingLastItemInAWorkflow() throws {
@@ -117,7 +117,7 @@ final class SkipTests: XCTestCase {
                 XCTAssertThrowsError(try viewUnderTest.find(FR4.self))
             }
 
-        wait(for: [expectViewLoaded, expectOnFinish], timeout: 0.5)
+        wait(for: [expectViewLoaded, expectOnFinish], timeout: TestConstant.timeout)
     }
 
     func testSkippingMultipleItemsInAWorkflow() throws {
@@ -152,7 +152,7 @@ final class SkipTests: XCTestCase {
                 XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
             }
 
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testSkippingAllItemsInAWorkflow() throws {
@@ -191,6 +191,6 @@ final class SkipTests: XCTestCase {
                 XCTAssertThrowsError(try viewUnderTest.find(FR4.self))
             }
 
-        wait(for: [expectOnFinish, expectViewLoaded], timeout: 0.5)
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
     }
 }

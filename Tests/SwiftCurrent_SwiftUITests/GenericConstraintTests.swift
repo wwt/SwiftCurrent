@@ -40,7 +40,7 @@ final class GenericConstraintTests: XCTestCase {
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsNever_FlowPersistenceCanBeSetWithClosure() {
@@ -58,7 +58,7 @@ final class GenericConstraintTests: XCTestCase {
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectation, expectViewLoaded], timeout: 0.5)
+        wait(for: [expectation, expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsNeverWithDefaultFlowPersistence_WorkflowCanProceedToAnotherNeverItem() throws {
@@ -79,7 +79,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsNeverWithAutoclosureFlowPersistence_WorkflowCanProceedToAnotherNeverItem() throws {
@@ -101,7 +101,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToAnotherNeverItem() throws {
@@ -123,7 +123,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsNeverWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
@@ -145,7 +145,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsNeverWithAutoclosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
@@ -168,7 +168,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
@@ -191,7 +191,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsNeverWithDefaultFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
@@ -214,7 +214,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsNeverWithAutoclosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
@@ -238,7 +238,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
@@ -262,7 +262,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
 
@@ -283,7 +283,7 @@ final class GenericConstraintTests: XCTestCase {
 
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsAnyWorkflowPassedArgs_FlowPersistenceCanBeSetWithClosure() {
@@ -305,7 +305,7 @@ final class GenericConstraintTests: XCTestCase {
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded, expectation], timeout: 0.5)
+        wait(for: [expectViewLoaded, expectation], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToNeverItem() throws {
@@ -329,7 +329,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsAnyWorkflowPassedArgsWithAutoclosureFlowPersistence_WorkflowCanProceedToNeverItem() throws {
@@ -354,7 +354,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToNeverItem() throws {
@@ -382,7 +382,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
@@ -407,7 +407,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsAnyWorkflowPassedArgsWithAutoclosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
@@ -433,7 +433,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
@@ -462,7 +462,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
@@ -488,7 +488,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsAnyWorkflowPassedArgsWithAutoclosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
@@ -515,7 +515,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
@@ -545,7 +545,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     // MARK: Input Type == Concrete Type
@@ -564,7 +564,7 @@ final class GenericConstraintTests: XCTestCase {
 
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsConcreteType_FlowPersistenceCanBeSetWithClosure() {
@@ -586,7 +586,7 @@ final class GenericConstraintTests: XCTestCase {
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded, expectation], timeout: 0.5)
+        wait(for: [expectViewLoaded, expectation], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsConcreteTypeWithDefaultFlowPersistence_WorkflowCanProceedToNeverItem() throws {
@@ -610,7 +610,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsConcreteTypeWithAutoclosureFlowPersistence_WorkflowCanProceedToNeverItem() throws {
@@ -635,7 +635,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToNeverItem() throws {
@@ -663,7 +663,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsConcreteTypeWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
@@ -688,7 +688,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsConcreteTypeWithAutoclosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
@@ -714,7 +714,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
@@ -743,7 +743,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsConcreteTypeArgsWithDefaultFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
@@ -769,7 +769,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsConcreteTypeWithAutoclosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
@@ -796,7 +796,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
@@ -826,7 +826,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsConcreteTypeArgsWithDefaultFlowPersistence_WorkflowCanProceedToTheSameInputTypeItem() throws {
@@ -852,7 +852,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(""))
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsConcreteTypeWithAutoclosureFlowPersistence_WorkflowCanProceedToTheSameInputTypeItem() throws {
@@ -879,7 +879,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(""))
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToTheSameInputTypeItem() throws {
@@ -909,7 +909,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(""))
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     // MARK: Generic Proceed Tests
@@ -936,7 +936,7 @@ final class GenericConstraintTests: XCTestCase {
 
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsNever_FlowPersistenceCanBeSetWithClosure() throws {
@@ -962,7 +962,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded, expectation], timeout: 0.5)
+        wait(for: [expectViewLoaded, expectation], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsNeverWithDefaultFlowPersistence_WorkflowCanProceedToAnotherNeverItem() throws {
@@ -991,7 +991,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsNeverWithAutoclosureFlowPersistence_WorkflowCanProceedToAnotherNeverItem() throws {
@@ -1021,7 +1021,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR2.self))
             XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToAnotherNeverItem() throws {
@@ -1051,7 +1051,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR2.self))
             XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsNeverWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
@@ -1081,7 +1081,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsNeverWithAutoclosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
@@ -1112,7 +1112,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR2.self))
             XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
@@ -1143,7 +1143,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR2.self))
             XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsNeverWithDefaultFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
@@ -1174,7 +1174,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsNeverWithAutoclosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
@@ -1206,7 +1206,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR2.self))
             XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
@@ -1241,7 +1241,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR2.self))
             XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
 
@@ -1268,7 +1268,7 @@ final class GenericConstraintTests: XCTestCase {
 
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsAnyWorkflowPassedArgs_FlowPersistenceCanBeSetWithClosure() throws {
@@ -1296,7 +1296,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded, expectation], timeout: 0.5)
+        wait(for: [expectViewLoaded, expectation], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToNeverItem() throws {
@@ -1326,7 +1326,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsAnyWorkflowPassedArgsWithAutoclosureFlowPersistence_WorkflowCanProceedToNeverItem() throws {
@@ -1357,7 +1357,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR2.self))
             XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToNeverItem() throws {
@@ -1390,7 +1390,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
@@ -1421,7 +1421,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsAnyWorkflowPassedArgsWithAutoclosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
@@ -1453,7 +1453,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR2.self))
             XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
@@ -1488,7 +1488,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR2.self))
             XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
@@ -1520,7 +1520,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsAnyWorkflowPassedArgsWithAutoclosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
@@ -1553,7 +1553,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR2.self))
             XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
@@ -1589,7 +1589,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR2.self))
             XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     // MARK: Input Type == Concrete Type
@@ -1613,7 +1613,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsConcreteType_FlowPersistenceCanBeSetWithClosure() throws {
@@ -1641,7 +1641,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded, expectation], timeout: 0.5)
+        wait(for: [expectViewLoaded, expectation], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsConcreteTypeWithDefaultFlowPersistence_WorkflowCanProceedToNeverItem() throws {
@@ -1671,7 +1671,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsConcreteTypeWithAutoclosureFlowPersistence_WorkflowCanProceedToNeverItem() throws {
@@ -1702,7 +1702,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR2.self))
             XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToNeverItem() throws {
@@ -1733,7 +1733,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR2.self))
             XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsConcreteTypeWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
@@ -1764,7 +1764,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsConcreteTypeWithAutoclosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
@@ -1796,7 +1796,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR2.self))
             XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
@@ -1828,7 +1828,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR2.self))
             XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsConcreteTypeArgsWithDefaultFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
@@ -1860,7 +1860,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsConcreteTypeWithAutoclosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
@@ -1893,7 +1893,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR2.self))
             XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
@@ -1929,7 +1929,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR2.self))
             XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsConcreteTypeArgsWithDefaultFlowPersistence_WorkflowCanProceedToTheSameInputTypeItem() throws {
@@ -1961,7 +1961,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(""))
             XCTAssertNoThrow(try view.find(FR2.self))
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsConcreteTypeWithAutoclosureFlowPersistence_WorkflowCanProceedToTheSameInputTypeItem() throws {
@@ -1994,7 +1994,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR2.self))
             XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToTheSameInputTypeItem() throws {
@@ -2027,7 +2027,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR2.self))
             XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToAnyWorkflowPassedArgsItem() throws {
@@ -2060,7 +2060,7 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR2.self))
             XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testProceedingTwiceWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToNeverItem() throws {
@@ -2092,6 +2092,6 @@ final class GenericConstraintTests: XCTestCase {
             XCTAssertNoThrow(try view.find(FR2.self))
             XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
         }
-        wait(for: [expectViewLoaded], timeout: 0.5)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 }

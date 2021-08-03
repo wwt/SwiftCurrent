@@ -459,13 +459,15 @@ class UIKitConsumerPersistenceTests: XCTestCase {
     }
 
     func testDefaultWorkflow_LaunchedFromModal_CanDestroyAllItems_AndStillProceedThroughFlow_AndCallOnFinish() {
-        class FR1: TestViewController { }
-        class FR2: TestViewController { }
-        class FR3: TestViewController { }
+        print("!!!! \(Date().timeIntervalSince1970) - testDefaultWorkflow_LaunchedFromModal_CanDestroyAllItems_AndStillProceedThroughFlow_AndCallOnFinish - Starting top view controller: \(String(describing: UIApplication.topViewController()))")
+        class FR1: TestViewController { override func viewDidLoad() { print("!!!! \(Date().timeIntervalSince1970) - FR1 - viewDidLoad()") } }
+        class FR2: TestViewController { override func viewDidLoad() { print("!!!! \(Date().timeIntervalSince1970) - FR2 - viewDidLoad()") } }
+        class FR3: TestViewController { override func viewDidLoad() { print("!!!! \(Date().timeIntervalSince1970) - FR3 - viewDidLoad()") } }
         let root = UIViewController()
         root.loadForTesting()
 
         let expectOnFinish = self.expectation(description: "onFinish called")
+        print("!!!! \(Date().timeIntervalSince1970) - testDefaultWorkflow_LaunchedFromModal_CanDestroyAllItems_AndStillProceedThroughFlow_AndCallOnFinish - Before launch top view controller: \(String(describing: UIApplication.topViewController()))")
         root.launchInto(Workflow(FR1.self, flowPersistence: .removedAfterProceeding)
                             .thenProceed(with: FR2.self, flowPersistence: .removedAfterProceeding)
                             .thenProceed(with: FR3.self, flowPersistence: .removedAfterProceeding)) { _ in
@@ -473,13 +475,21 @@ class UIKitConsumerPersistenceTests: XCTestCase {
             XCTAssertNil(UIApplication.topViewController()?.presentingViewController)
             expectOnFinish.fulfill()
         }
+
+        print("!!!! \(Date().timeIntervalSince1970) - testDefaultWorkflow_LaunchedFromModal_CanDestroyAllItems_AndStillProceedThroughFlow_AndCallOnFinish - After launch top view controller: \(String(describing: UIApplication.topViewController()))")
         XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
         XCTAssert(UIApplication.topViewController()?.presentingViewController === root)
+
+        print("!!!! \(Date().timeIntervalSince1970) - testDefaultWorkflow_LaunchedFromModal_CanDestroyAllItems_AndStillProceedThroughFlow_AndCallOnFinish - Proceeding from FR1: \(String(describing: UIApplication.topViewController()))")
         (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
         XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
         XCTAssert(UIApplication.topViewController()?.presentingViewController === root)
+
+        print("!!!! \(Date().timeIntervalSince1970) - testDefaultWorkflow_LaunchedFromModal_CanDestroyAllItems_AndStillProceedThroughFlow_AndCallOnFinish - Proceeding from FR2: \(String(describing: UIApplication.topViewController()))")
         (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
         XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
+
+        print("!!!! \(Date().timeIntervalSince1970) - testDefaultWorkflow_LaunchedFromModal_CanDestroyAllItems_AndStillProceedThroughFlow_AndCallOnFinish - Proceeding from FR3: \(String(describing: UIApplication.topViewController()))")
         (UIApplication.topViewController() as? FR3)?.proceedInWorkflow(nil)
 
         wait(for: [expectOnFinish], timeout: 3)
