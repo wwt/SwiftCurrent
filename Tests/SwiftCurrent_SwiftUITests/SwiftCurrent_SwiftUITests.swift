@@ -627,4 +627,56 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
 
         wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
     }
+
+    func testWorkflowCorrectlyHandlesState() throws {
+        final class Launcher: ObservableObject {
+            var onFinishCalled = false
+            init(workflow: AnyWorkflow,
+                 responder: OrchestrationResponder,
+                 launchArgs: AnyWorkflow.PassedArgs) {
+                if workflow.orchestrationResponder == nil {
+                    workflow.launch(withOrchestrationResponder: responder, passedArgs: launchArgs)
+                }
+            }
+        }
+        struct ModifiedWorkflowViewExplorer<A, W, C>: View, Inspectable {
+            @Binding var isLaunched: Bool
+
+            let inspection = Inspection<Self>()
+            @State var wrapped: W?
+            @State var workflow: AnyWorkflow
+            @State var launchArgs: AnyWorkflow.PassedArgs
+            @State var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
+            @State var onAbandon = [() -> Void]()
+
+            @StateObject private var model: WorkflowViewModel
+            @StateObject private var launcher: Launcher
+
+            var body: some View { EmptyView() }
+        }
+
+        struct FR1: View, FlowRepresentable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+
+            var body: some View {
+                Button("Proceed") { proceedInWorkflow() }
+            }
+        }
+
+        struct FR2: View, FlowRepresentable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+
+            var body: some View {
+                Button("Abandon") { workflow?.abandon() }
+            }
+        }
+
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true))
+            .thenProceed(with: WorkflowItem(FR1.self))
+
+        let explorer = unsafeBitCast(workflowView, to: ModifiedWorkflowViewExplorer<Never, Never, FR1>.self)
+
+        // if the unsafeBitCast worked, then everything is a state var.
+        XCTAssertNil(explorer.wrapped)
+    }
 }
