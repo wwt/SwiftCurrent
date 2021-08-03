@@ -663,14 +663,6 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             }
         }
 
-        struct FR2: View, FlowRepresentable {
-            weak var _workflowPointer: AnyFlowRepresentable?
-
-            var body: some View {
-                Button("Abandon") { workflow?.abandon() }
-            }
-        }
-
         let workflowView = WorkflowLauncher(isLaunched: .constant(true))
             .thenProceed(with: WorkflowItem(FR1.self))
 
