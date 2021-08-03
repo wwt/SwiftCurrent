@@ -21,7 +21,7 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
     @Binding private var isLaunched: Bool
 
     let inspection = Inspection<Self>()
-    // These need to be state variables to survive SwiftUI re-rendering. Change under penalty of death.
+    // These need to be state variables to survive SwiftUI re-rendering. Change under penalty of torture BY the codebase you modified.
     @State private var wrapped: Wrapped?
     @State private var workflow: AnyWorkflow
     @State private var launchArgs: AnyWorkflow.PassedArgs
