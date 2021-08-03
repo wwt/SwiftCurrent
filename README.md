@@ -34,13 +34,13 @@ As you continue to develop your applications, each view controller will become m
 
 Clone our repo, open `SwiftCurrent.xcworkspace`, target the `UIKitExample` scheme, and run to see our example app in action.
 
-The [example app has a README](https://github.com/wwt/SwiftCurrent/blob/8e11ce58cc5410d09a40d43fefc0e722c87906b3/ExampleApps/UIKitExample/README.md) that details interesting usages.
+The [example app has a README](https://github.com/wwt/SwiftCurrent/blob/main/ExampleApps/UIKitExample/README.md) that details interesting usages.
 
 ## Interested but you need SwiftUI support?
 
 [We're working on it now!](https://github.com/wwt/SwiftCurrent/milestone/2)
 
-If you would like to try the beta release, please install the `BETA_SwiftCurrent_SwiftUI` product in SPM or the `BETA_SwiftUI` sub spec in CocoaPods.  For more detailed steps, [see our installation instructions](https://github.com/wwt/SwiftCurrent/wiki/Installation).  See [Getting Started with SwiftUI](https://github.com/wwt/SwiftCurrent/wiki/Getting-Started-with-SwiftUI) for a quick tutorial.  To see the example app for SwiftUI, clone our repo, open `SwiftCurrent.xcworkspace`, target the `SwiftUIExample` scheme, and run. The [example app has a README](https://github.com/wwt/SwiftCurrent/blob/8e11ce58cc5410d09a40d43fefc0e722c87906b3/ExampleApps/SwiftUIExample/README.md) that details interesting usages.
+If you would like to try the beta release, please install the `BETA_SwiftCurrent_SwiftUI` product in SPM or the `BETA_SwiftUI` sub spec in CocoaPods.  For more detailed steps, [see our installation instructions](https://github.com/wwt/SwiftCurrent/wiki/Installation).  See [Getting Started with SwiftUI](https://github.com/wwt/SwiftCurrent/wiki/Getting-Started-with-SwiftUI) for a quick tutorial.  To see the example app for SwiftUI, clone our repo, open `SwiftCurrent.xcworkspace`, target the `SwiftUIExample` scheme, and run. The [example app has a README](https://github.com/wwt/SwiftCurrent/blob/main/ExampleApps/SwiftUIExample/README.md) that details interesting usages.
 
 In order to use the library with SwiftUI, your minimum targeted versions must meet: iOS 14.0, macOS 11, tvOS 14.0, or watchOS 7.0.
 
@@ -125,7 +125,7 @@ And just like that you're started!
 - [[BETA] Getting Started with SwiftUI](https://github.com/wwt/SwiftCurrent/wiki/Getting-Started-with-SwiftUI)
 - [Developer Documentation](https://wwt.github.io/SwiftCurrent/index.html)
 - [Upgrade Path](https://github.com/wwt/SwiftCurrent/blob/main/wiki/UPGRADE_PATH.md)
-- [Contributing to SwiftCurrent](https://github.com/wwt/SwiftCurrent/blob/bb847f5934ebcb24c299aa0303974dd44c8d0c9c/.github/CONTRIBUTING.md)
+- [Contributing to SwiftCurrent](https://github.com/wwt/SwiftCurrent/blob/main/.github/CONTRIBUTING.md)
 
 # Feedback
 
