@@ -17,6 +17,10 @@ Pod::Spec.new do |s|
   s.module_name = 'SwiftCurrent'
 
   s.subspec 'Core' do |ss|
+    ss.ios.deployment_target = '11.0'
+    ss.macos.deployment_target = '11.0'
+    ss.tvos.deployment_target = '14.0'
+    ss.watchos.deployment_target = '7.0'
     ss.source_files = 'Sources/SwiftCurrent/**/*.{swift,h,m}'
   end
   
@@ -28,6 +32,9 @@ Pod::Spec.new do |s|
 
   s.subspec 'BETA_SwiftUI' do |ss|
     ss.ios.deployment_target = '11.0'
+    ss.macos.deployment_target = '11.0'
+    ss.tvos.deployment_target = '14.0'
+    ss.watchos.deployment_target = '7.0'
     ss.source_files = 'Sources/SwiftCurrent_SwiftUI/**/*.{swift,h,m}'
     ss.dependency 'SwiftCurrent/Core'
   end
