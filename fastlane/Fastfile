@@ -17,8 +17,12 @@ platform :ios do
   end
 
   lane :build_swiftpm do
-    sh('swift build --package-path="../" -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios14.0-simulator"')
-    sh('swift build --package-path="../" -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk appletvsimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-tvos14.0-simulator"')
+    sh('swift build --package-path="../" --sdk "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios14.0-simulator"')
+    sh('swift build --package-path="../" --sdk "`xcrun --sdk appletvsimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-tvos14.0-simulator"')
+
+    ## Possible new approach starting here though this first line should be included if we don't continue
+    # Confirm Core can build against Swift without any Apple SDK requirements
+    sh('swift build --package-path="./" --target SwiftCurrent')
   end
 
   lane :cocoapods_liblint do
