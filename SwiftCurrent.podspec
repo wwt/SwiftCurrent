@@ -25,6 +25,7 @@ Pod::Spec.new do |s|
   
   s.subspec 'UIKit' do |ss|
     ss.ios.deployment_target = '11.0'
+    ss.tvos.deployment_target = '14.0'
     ss.source_files = 'Sources/SwiftCurrent_UIKit/**/*.{swift,h,m}'
     ss.dependency 'SwiftCurrent/Core'
   end
