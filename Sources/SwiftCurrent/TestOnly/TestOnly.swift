@@ -10,7 +10,7 @@
 
 import Foundation
 
-@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.4, *)
+@available(iOS 11.0, macOS 10.14, tvOS 13, watchOS 7.4, *)
 extension Notification.Name {
     #if canImport(XCTest)
     /// :nodoc: A notification only available when tests are being run that lets you know a workflow has been launched.
@@ -20,7 +20,7 @@ extension Notification.Name {
     #endif
 }
 
-@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.4, *)
+@available(iOS 11.0, macOS 10.14, tvOS 13, watchOS 7.4, *)
 extension FlowRepresentable {
     #if canImport(XCTest)
     /// :nodoc: Your tests may want to manually set the closure so they can make assertions it was called, this is simply a convenience available for that.
