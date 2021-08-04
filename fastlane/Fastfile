@@ -18,6 +18,7 @@ platform :ios do
 
   lane :build_swiftpm do
     sh('swift build --package-path="../" -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios14.0-simulator"')
+    sh('swift build --package-path="../" -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk appletvsimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-tvos14.0-simulator"')
   end
 
   lane :cocoapods_liblint do
