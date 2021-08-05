@@ -121,13 +121,15 @@ extension UIModalPresentationStyle {
     static func styleFor(_ style: LaunchStyle.PresentationType.ModalPresentationStyle) -> UIModalPresentationStyle? {
         switch style {
             case .fullScreen: return .fullScreen
-            case .pageSheet: return .pageSheet
-            case .formSheet: return .formSheet
             case .currentContext: return .currentContext
             case .custom: return .custom
             case .overFullScreen: return .overFullScreen
             case .overCurrentContext: return .overCurrentContext
+            #if !os(tvOS)
+            case .pageSheet: return .pageSheet
+            case .formSheet: return .formSheet
             case .popover: return .popover
+            #endif
             case .automatic: if #available(iOS 13.0, *) {
                 return .automatic
             }

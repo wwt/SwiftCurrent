@@ -10,15 +10,19 @@
 
 import Foundation
 
-#if canImport(XCTest)
+@available(iOS 11.0, macOS 10.14, tvOS 13, watchOS 7.4, *)
 extension Notification.Name {
+    #if canImport(XCTest)
     /// :nodoc: A notification only available when tests are being run that lets you know a workflow has been launched.
     public static var workflowLaunched: Notification.Name {
         .init(rawValue: "WorkflowLaunched")
     }
+    #endif
 }
 
+@available(iOS 11.0, macOS 10.14, tvOS 13, watchOS 7.4, *)
 extension FlowRepresentable {
+    #if canImport(XCTest)
     /// :nodoc: Your tests may want to manually set the closure so they can make assertions it was called, this is simply a convenience available for that.
     public var proceedInWorkflowStorage: ((AnyWorkflow.PassedArgs) -> Void)? {
         get { { _workflowPointer?.proceedInWorkflowStorage?($0) } }
@@ -38,5 +42,5 @@ extension FlowRepresentable {
             }
         }
     }
+    #endif
 }
-#endif
