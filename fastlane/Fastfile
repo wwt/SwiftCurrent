@@ -17,12 +17,19 @@ platform :ios do
   end
 
   lane :build_swiftpm do
+    # Confirm Core can build against Swift without any Apple SDK requirements
+    sh('swift build --package-path="../" --target SwiftCurrent')
+    sh('swift build --package-path="../" --target SwiftCurrent --sdk "`xcrun --sdk watchsimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-watchos7.0-simulator"')
+    sh('swift build --package-path="../" --target SwiftCurrent --sdk "`xcrun --sdk macosx --show-sdk-path`"')
+
+    # Confirm SwiftCurrent_SwiftUI
+    sh('swift build --package-path="../" --target SwiftCurrent_SwiftUI')
+    sh('swift build --package-path="../" --target SwiftCurrent_SwiftUI --sdk "`xcrun --sdk watchsimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-watchos7.0-simulator"')
+    sh('swift build --package-path="../" --target SwiftCurrent_SwiftUI --sdk "`xcrun --sdk macosx --show-sdk-path`"')
+
+    # Confirm all products against iOS and tvOS
     sh('swift build --package-path="../" --sdk "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios14.0-simulator"')
     sh('swift build --package-path="../" --sdk "`xcrun --sdk appletvsimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-tvos14.0-simulator"')
-
-    ## Possible new approach starting here though this first line should be included if we don't continue
-    # Confirm Core can build against Swift without any Apple SDK requirements
-    sh('swift build --package-path="./" --target SwiftCurrent')
   end
 
   lane :cocoapods_liblint do
