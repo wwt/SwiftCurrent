@@ -116,9 +116,9 @@ struct ContentView: View {
         }
         WorkflowLauncher(isLaunched: $workflowIsPresented, startingArgs: "SwiftCurrent") // SwiftCurrent
             .thenProceed(with: WorkflowItem(FirstView.self) // SwiftCurrent
-                            .applyModifiers { firstView in firstView.padding().border(.gray) })
+                            .applyModifiers { firstView in firstView.padding().border(Color.gray) })
             .thenProceed(with: WorkflowItem(SecondView.self) // SwiftCurrent
-                            .applyModifiers { $0.padding().border(.gray) })
+                            .applyModifiers { $0.padding().border(Color.gray) })
             .onFinish { passedArgs in // SwiftCurrent
                 workflowIsPresented = false
                 guard case .args(let emailAddress as String) = passedArgs else {
