@@ -32,19 +32,20 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
     @StateObject private var launcher: Launcher
 
     public var body: some View {
-        if isLaunched {
-            if let body = model.body as? Content {
-                body
-                    .onReceive(model.onAbandonPublisher) { onAbandon.forEach { $0() } }
-                    .onReceive(model.onFinishPublisher, perform: _onFinish)
-                    .onChange(of: isLaunched) { if $0 { launch() } }
-                    .onReceive(inspection.notice) { inspection.visit(self, $0) }
-            } else {
-                wrapped?
-                    .onReceive(inspection.notice) { inspection.visit(self, $0) }
-                    .onReceive(model.onFinishPublisher, perform: _onFinish)
+        ConditionalViewWrapper {
+            if isLaunched {
+                if let body = model.body as? Content {
+                    body
+                        .onReceive(model.onAbandonPublisher) { onAbandon.forEach { $0() } }
+                        .onReceive(model.onFinishPublisher, perform: _onFinish)
+                } else {
+                    wrapped?
+                        .onReceive(model.onFinishPublisher, perform: _onFinish)
+                }
             }
         }
+        .onReceive(inspection.notice) { inspection.visit(self, $0) }
+        .onChange(of: isLaunched) { if !$0 { resetWorkflow() } }
     }
 
     init<A, FR>(_ workflowLauncher: WorkflowLauncher<A>, isLaunched: Binding<Bool>, item: WorkflowItem<FR, Content>) where Wrapped == Never, Args == FR.WorkflowOutput {
@@ -84,7 +85,7 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
         _launcher = workflowLauncher._launcher
     }
 
-    private func launch() {
+    private func resetWorkflow() {
         workflow.launch(withOrchestrationResponder: model, passedArgs: launchArgs)
     }
 
@@ -107,6 +108,8 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
         onAbandon.append(closure)
         return Self(workflowLauncher: self, onFinish: onFinish, onAbandon: onAbandon)
     }
+
+    private func ConditionalViewWrapper<V: View>(@ViewBuilder builder: () -> V) -> some View { builder() }
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
