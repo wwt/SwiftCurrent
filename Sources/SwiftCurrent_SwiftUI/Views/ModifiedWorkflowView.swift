@@ -35,8 +35,7 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
         ConditionalViewWrapper {
             if isLaunched {
                 if let body = model.body as? Content {
-                    body
-                        .onReceive(model.onAbandonPublisher) { onAbandon.forEach { $0() } }
+                    body.onReceive(model.onAbandonPublisher) { onAbandon.forEach { $0() } }
                 } else {
                     wrapped
                 }

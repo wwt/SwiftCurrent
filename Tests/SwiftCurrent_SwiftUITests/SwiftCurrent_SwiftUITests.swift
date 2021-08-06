@@ -115,7 +115,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     }
 
     func testWorkflowCanFinishMultipleTimes() throws {
-        throw XCTSkip("We are currently unable to test this because of a limitation in ViewInspector, see here: ")
+        throw XCTSkip("We are currently unable to test this because of a limitation in ViewInspector, see here: https://github.com/nalexn/ViewInspector/issues/126")
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
@@ -489,7 +489,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     }
 
     func testWorkflowRelaunchesWhenSubsequentlyLaunched() throws {
-        throw XCTSkip("We are currently unable to test this because of a limitation in ViewInspector, see here: ")
+        throw XCTSkip("We are currently unable to test this because of a limitation in ViewInspector, see here: https://github.com/nalexn/ViewInspector/issues/126")
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
