@@ -37,14 +37,13 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
                 if let body = model.body as? Content {
                     body
                         .onReceive(model.onAbandonPublisher) { onAbandon.forEach { $0() } }
-                        .onReceive(model.onFinishPublisher, perform: _onFinish)
                 } else {
-                    wrapped?
-                        .onReceive(model.onFinishPublisher, perform: _onFinish)
+                    wrapped
                 }
             }
         }
         .onReceive(inspection.notice) { inspection.visit(self, $0) }
+        .onReceive(model.onFinishPublisher, perform: _onFinish)
         .onChange(of: isLaunched) { if !$0 { resetWorkflow() } }
     }
 
@@ -86,6 +85,7 @@ public struct ModifiedWorkflowView<Args, Wrapped: View, Content: View>: View {
     }
 
     private func resetWorkflow() {
+        launcher.onFinishCalled = false
         workflow.launch(withOrchestrationResponder: model, passedArgs: launchArgs)
     }
 
