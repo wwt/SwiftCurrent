@@ -43,7 +43,7 @@ public final class WorkflowItem<F: FlowRepresentable & View, Content: View> {
                                              flowRepresentableFactory: factory)
     }
 
-    #if canImport(UIKit)
+    #if os(iOS)
     /// Creates a `WorkflowItem` from a `UIViewController`.
     @available(iOS 14.0, *)
     public init<VC: FlowRepresentable & UIViewController>(_: VC.Type) where F == ViewControllerWrapper<VC>, Content == F {

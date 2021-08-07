@@ -9,7 +9,7 @@
 import SwiftUI
 import SwiftCurrent
 
-#if canImport(UIKit)
+#if os(iOS)
 @available(iOS 14.0, *)
 public struct ViewControllerWrapper<F: FlowRepresentable & UIViewController>: View, UIViewControllerRepresentable, FlowRepresentable {
     public typealias UIViewControllerType = F
