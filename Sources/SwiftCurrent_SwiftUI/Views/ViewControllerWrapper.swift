@@ -3,12 +3,14 @@
 //  
 //
 //  Created by Tyler Thompson on 8/7/21.
+//  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
 
 import SwiftUI
 import SwiftCurrent
 
-@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+#if canImport(UIKit)
+@available(iOS 14.0, *)
 public struct ViewControllerWrapper<F: FlowRepresentable & UIViewController>: View, UIViewControllerRepresentable, FlowRepresentable {
     public typealias UIViewControllerType = F
     public typealias WorkflowInput = F.WorkflowInput
@@ -16,7 +18,7 @@ public struct ViewControllerWrapper<F: FlowRepresentable & UIViewController>: Vi
 
     public weak var _workflowPointer: AnyFlowRepresentable?
 
-    public static func _factory<FR>(_ type: FR.Type) -> FR where FR : FlowRepresentable {
+    public static func _factory<FR>(_ type: FR.Type) -> FR where FR: FlowRepresentable {
         FR()
     }
 
@@ -41,3 +43,4 @@ public struct ViewControllerWrapper<F: FlowRepresentable & UIViewController>: Vi
 
     public func updateUIViewController(_ uiViewController: F, context: Context) { }
 }
+#endif

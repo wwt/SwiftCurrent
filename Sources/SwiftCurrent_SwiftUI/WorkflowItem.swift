@@ -43,13 +43,16 @@ public final class WorkflowItem<F: FlowRepresentable & View, Content: View> {
                                              flowRepresentableFactory: factory)
     }
 
+    #if canImport(UIKit)
     /// Creates a `WorkflowItem` from a `UIViewController`.
+    @available(iOS 14.0, *)
     public init<VC: FlowRepresentable & UIViewController>(_: VC.Type) where F == ViewControllerWrapper<VC>, Content == F {
         metadata = FlowRepresentableMetadata(ViewControllerWrapper<VC>.self,
                                              launchStyle: .new,
                                              flowPersistence: flowPersistenceClosure,
                                              flowRepresentableFactory: factory)
     }
+    #endif
 
     private init(metadata: FlowRepresentableMetadata,
                  persistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence,

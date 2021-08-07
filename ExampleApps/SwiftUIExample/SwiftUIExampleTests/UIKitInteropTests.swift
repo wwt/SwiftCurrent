@@ -5,6 +5,7 @@
 //  Created by Tyler Thompson on 8/7/21.
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
+//  swiftlint:disable file_types_order
 
 import XCTest
 import SwiftUI
@@ -105,7 +106,7 @@ final class UIKitInteropTests: XCTestCase {
         XCTAssertUIViewControllerDisplayed(isInstance: vc)
 
         let proceedCalled = expectation(description: "proceedCalled")
-        vc.proceedInWorkflowStorage = { args in
+        vc.proceedInWorkflowStorage = { _ in
             proceedCalled.fulfill()
         }
 
