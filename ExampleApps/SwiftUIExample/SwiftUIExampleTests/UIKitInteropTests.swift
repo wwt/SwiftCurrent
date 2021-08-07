@@ -14,6 +14,7 @@ import UIUTest
 import ViewInspector
 
 import SwiftCurrent
+import SwiftCurrent_UIKit
 @testable import SwiftCurrent_SwiftUI
 @testable import SwiftUIExample
 
@@ -55,6 +56,61 @@ final class UIKitInteropTests: XCTestCase {
         vc.emailTextField?.simulateTouch()
         vc.emailTextField?.simulateTyping(vc?.welcomeLabel?.text)
         vc.saveButton?.simulateTouch()
+
+        wait(for: [proceedCalled], timeout: TestConstant.timeout)
+    }
+
+    func testPuttingAUIKitViewThatDoesNotTakeInDataInsideASwiftUIWorkflow() throws {
+        final class FR1: UIWorkflowItem<Never, Never>, FlowRepresentable {
+            let nextButton = UIButton()
+
+            @objc private func nextPressed() {
+                proceedInWorkflow()
+            }
+
+            override func viewDidLoad() {
+                nextButton.setTitle("Next", for: .normal)
+                nextButton.setTitleColor(.systemBlue, for: .normal)
+                nextButton.addTarget(self, action: #selector(nextPressed), for: .touchUpInside)
+
+                view.addSubview(nextButton)
+
+                nextButton.translatesAutoresizingMaskIntoConstraints = false
+                nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+                nextButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+            }
+        }
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true))
+            .thenProceed(with: WorkflowItem(FR1.self))
+        var vc: FR1!
+
+        let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
+            let wrapper = try workflowLauncher.view(ViewControllerWrapper<FR1>.self)
+            let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<FR1>>.self)
+            vc = try wrapper.actualView().makeUIViewController(context: context)
+        }
+
+        wait(for: [exp], timeout: TestConstant.timeout)
+
+        // UIUTest's loadForTesting method does not work because it uses the deprecated `keyWindow` property.
+        let window = UIApplication.shared.windows.first
+        window?.removeViewsFromRootViewController()
+
+        window?.rootViewController = vc
+        vc.loadViewIfNeeded()
+        vc.view.layoutIfNeeded()
+
+        CATransaction.flush()   // flush pending CoreAnimation operations to display the new view controller
+
+        XCTAssertUIViewControllerDisplayed(isInstance: vc)
+
+        let proceedCalled = expectation(description: "proceedCalled")
+        vc.proceedInWorkflowStorage = { args in
+            proceedCalled.fulfill()
+        }
+
+        XCTAssertEqual(vc.nextButton.willRespondToUser, true)
+        vc.nextButton.simulateTouch()
 
         wait(for: [proceedCalled], timeout: TestConstant.timeout)
     }
