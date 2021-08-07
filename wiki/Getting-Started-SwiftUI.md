@@ -168,40 +168,31 @@ You can use your `UIViewController`s that are [FlowRepresentable](https://wwt.gi
 ```swift
 // This is programmatic but could just as easily have been StoryboardLoadable
 final class FirstViewController: UIWorkflowItem<Never, Never>, FlowRepresentable { // SwiftCurrent
-            typealias WorkflowOutput = String // SwiftCurrent
-            let nextButton = UIButton()
+    typealias WorkflowOutput = String // SwiftCurrent
+    let nextButton = UIButton()
 
-            @objc private func nextPressed() {
-                proceedInWorkflow("string value") // SwiftCurrent
-            }
+    @objc private func nextPressed() {
+        proceedInWorkflow("string value") // SwiftCurrent
+    }
 
-            override func viewDidLoad() {
-                nextButton.setTitle("Next", for: .normal)
-                nextButton.setTitleColor(.systemBlue, for: .normal)
-                nextButton.addTarget(self, action: #selector(nextPressed), for: .touchUpInside)
+    override func viewDidLoad() {
+        nextButton.setTitle("Next", for: .normal)
+        nextButton.setTitleColor(.systemBlue, for: .normal)
+        nextButton.addTarget(self, action: #selector(nextPressed), for: .touchUpInside)
 
-                view.addSubview(nextButton)
+        view.addSubview(nextButton)
 
-                nextButton.translatesAutoresizingMaskIntoConstraints = false
-                nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-                nextButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-            }
-        }
+        nextButton.translatesAutoresizingMaskIntoConstraints = false
+        nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        nextButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    }
+}
 ```
 
 Now in SwiftUI simply reference that controller.
 
 ```swift
 WorkflowLauncher(isLaunched: $workflowIsPresented) // SwiftCurrent
-            .thenProceed(with: WorkflowItem(FirstViewController.self) // SwiftCurrent
-            .thenProceed(with: WorkflowItem(SecondView.self) // SwiftCurrent
-                            .applyModifiers { $0.padding().border(Color.gray) })
-            .onFinish { passedArgs in // SwiftCurrent
-                workflowIsPresented = false
-                guard case .args(let emailAddress as String) = passedArgs else {
-                    print("No email address supplied")
-                    return
-                }
-                print(emailAddress)
-            }
+    .thenProceed(with: WorkflowItem(FirstViewController.self)) // SwiftCurrent
+    .thenProceed(with: WorkflowItem(SecondView.self))
 ```
