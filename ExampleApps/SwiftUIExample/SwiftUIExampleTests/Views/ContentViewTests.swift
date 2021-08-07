@@ -9,6 +9,8 @@
 import XCTest
 import ViewInspector
 import Swinject
+import SwiftUI
+import UIKit
 
 @testable import SwiftCurrent_SwiftUI
 @testable import SwiftUIExample
