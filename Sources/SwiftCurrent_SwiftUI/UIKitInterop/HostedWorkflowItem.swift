@@ -9,6 +9,27 @@ import UIKit
 import SwiftUI
 import SwiftCurrent
 
+/**
+ A wrapper around `UIHostingController` that is `FlowRepresentable`.
+
+ ### Discussion
+ `HostedWorkflowItem` is designed to be used in UIKit workflows that want to interoperate with SwiftUI. You do not need to inherit from this class, nor do you need to reference it outside of your workflow creation.
+
+ #### Example
+ ```swift
+ struct SwiftUIView: View, FlowRepresentable {
+     weak var _workflowPointer: AnyFlowRepresentable?
+
+     var body: some View {
+         Text("My View")
+     }
+ }
+
+ // from the UIViewController launching the Workflow:
+ launchInto(Workflow(FlowRepresentableViewController.self)
+         .thenProceed(with: HostedWorkflowItem<SwiftUIView>.self))
+ ```
+ */
 @available(iOS 13.0, *)
 public final class HostedWorkflowItem<Content: FlowRepresentable & View>: UIHostingController<Content>, FlowRepresentable {
     public typealias WorkflowInput = Content.WorkflowInput
