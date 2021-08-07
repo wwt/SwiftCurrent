@@ -6,10 +6,11 @@
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
 
+#if os(iOS)
 import SwiftUI
 import SwiftCurrent
 
-#if os(iOS)
+/// A wrapper for exposing `UIViewController`s that are `FlowRepresentable` to SwiftUI.
 @available(iOS 14.0, *)
 public struct ViewControllerWrapper<F: FlowRepresentable & UIViewController>: View, UIViewControllerRepresentable, FlowRepresentable {
     public typealias UIViewControllerType = F
