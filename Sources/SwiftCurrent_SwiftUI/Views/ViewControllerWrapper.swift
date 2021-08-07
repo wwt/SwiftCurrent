@@ -18,10 +18,6 @@ public struct ViewControllerWrapper<F: FlowRepresentable & UIViewController>: Vi
 
     public weak var _workflowPointer: AnyFlowRepresentable?
 
-    public static func _factory<FR>(_ type: FR.Type) -> FR where FR: FlowRepresentable {
-        FR()
-    }
-
     let args: WorkflowInput?
     public init(with args: F.WorkflowInput) {
         self.args = args
