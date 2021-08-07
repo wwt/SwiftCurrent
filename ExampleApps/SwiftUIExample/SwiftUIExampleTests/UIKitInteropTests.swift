@@ -34,15 +34,7 @@ final class UIKitInteropTests: XCTestCase {
 
         wait(for: [exp], timeout: TestConstant.timeout)
 
-        // UIUTest's loadForTesting method does not work because it uses the deprecated `keyWindow` property.
-        let window = UIApplication.shared.windows.first
-        window?.removeViewsFromRootViewController()
-
-        window?.rootViewController = vc
-        vc.loadViewIfNeeded()
-        vc.view.layoutIfNeeded()
-
-        CATransaction.flush()   // flush pending CoreAnimation operations to display the new view controller
+        vc.loadOnDevice()
 
         XCTAssertUIViewControllerDisplayed(isInstance: vc)
 
@@ -93,15 +85,7 @@ final class UIKitInteropTests: XCTestCase {
 
         wait(for: [exp], timeout: TestConstant.timeout)
 
-        // UIUTest's loadForTesting method does not work because it uses the deprecated `keyWindow` property.
-        let window = UIApplication.shared.windows.first
-        window?.removeViewsFromRootViewController()
-
-        window?.rootViewController = vc
-        vc.loadViewIfNeeded()
-        vc.view.layoutIfNeeded()
-
-        CATransaction.flush()   // flush pending CoreAnimation operations to display the new view controller
+        vc.loadOnDevice()
 
         XCTAssertUIViewControllerDisplayed(isInstance: vc)
 
@@ -114,6 +98,75 @@ final class UIKitInteropTests: XCTestCase {
         vc.nextButton.simulateTouch()
 
         wait(for: [proceedCalled], timeout: TestConstant.timeout)
+    }
+
+    func testPuttingAUIKitViewFromStoryboardInsideASwiftUIWorkflow() throws {
+        let launchArgs = UUID().uuidString
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: launchArgs)
+            .thenProceed(with: WorkflowItem(TestInputViewController.self))
+        var vc: TestInputViewController!
+
+        let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
+            let wrapper = try workflowLauncher.view(ViewControllerWrapper<TestInputViewController>.self)
+            let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<TestInputViewController>>.self)
+            vc = try wrapper.actualView().makeUIViewController(context: context)
+        }
+
+        wait(for: [exp], timeout: TestConstant.timeout)
+
+        vc.loadOnDevice()
+
+        XCTAssertUIViewControllerDisplayed(isInstance: vc)
+
+        let proceedCalled = expectation(description: "proceedCalled")
+        vc.proceedInWorkflowStorage = { _ in
+            proceedCalled.fulfill()
+        }
+
+        vc.proceedInWorkflow()
+
+        wait(for: [proceedCalled], timeout: TestConstant.timeout)
+    }
+
+    func testPuttingAUIKitViewFromStoryboardThatDoesNotTakeInDataInsideASwiftUIWorkflow() throws {
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true))
+            .thenProceed(with: WorkflowItem(TestNoInputViewController.self))
+        var vc: TestNoInputViewController!
+
+        let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
+            let wrapper = try workflowLauncher.view(ViewControllerWrapper<TestNoInputViewController>.self)
+            let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<TestNoInputViewController>>.self)
+            vc = try wrapper.actualView().makeUIViewController(context: context)
+        }
+
+        wait(for: [exp], timeout: TestConstant.timeout)
+
+        vc.loadOnDevice()
+
+        XCTAssertUIViewControllerDisplayed(isInstance: vc)
+
+        let proceedCalled = expectation(description: "proceedCalled")
+        vc.proceedInWorkflowStorage = { _ in
+            proceedCalled.fulfill()
+        }
+
+        vc.proceedInWorkflow()
+
+        wait(for: [proceedCalled], timeout: TestConstant.timeout)
+    }
+}
+
+extension UIViewController {
+    func loadOnDevice() {
+        // UIUTest's loadForTesting method does not work because it uses the deprecated `keyWindow` property.
+        let window = UIApplication.shared.windows.first
+        window?.removeViewsFromRootViewController()
+
+        window?.rootViewController = self
+        loadViewIfNeeded()
+        view.layoutIfNeeded()
+
+        CATransaction.flush()   // flush pending CoreAnimation operations to display the new view controller
     }
 }
 
@@ -133,4 +186,28 @@ extension UIKitInteropProgrammaticViewController {
 
 struct FakeContext {
     let coordinator: (String, String) = ("", "")
+}
+
+class TestNoInputViewController: UIWorkflowItem<Never, Never>, StoryboardLoadable {
+    static var storyboardId: String {
+        String(describing: Self.self)
+    }
+    static var storyboard: UIStoryboard {
+        UIStoryboard(name: "UIKitInterop", bundle: Bundle(for: Self.self))
+    }
+}
+
+class TestInputViewController: UIWorkflowItem<String, Never>, StoryboardLoadable {
+    static var storyboardId: String {
+        String(describing: Self.self)
+    }
+    static var storyboard: UIStoryboard {
+        UIStoryboard(name: "UIKitInterop", bundle: Bundle(for: Self.self))
+    }
+
+    required init?(coder: NSCoder, with name: String) {
+        super.init(coder: coder)
+    }
+
+    required init?(coder: NSCoder) { nil }
 }

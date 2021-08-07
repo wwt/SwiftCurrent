@@ -43,6 +43,7 @@
 		CAC68D8726BEF7FC005955F3 /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC68D8326BEF7FC005955F3 /* TopViewController.swift */; };
 		CAC68D8826BEF7FC005955F3 /* WaitUntil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC68D8426BEF7FC005955F3 /* WaitUntil.swift */; };
 		CAC68D8926BEF7FC005955F3 /* UIKitAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC68D8526BEF7FC005955F3 /* UIKitAssertions.swift */; };
+		CAC68D8C26BF26F0005955F3 /* UIKitInterop.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAC68D8B26BF26F0005955F3 /* UIKitInterop.storyboard */; };
 		CAD0269726A0AEE00075B818 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD0269626A0AEE00075B818 /* ChangePasswordView.swift */; };
 		CAD0269A26A0BE390075B818 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = CAD0269926A0BE390075B818 /* Swinject */; };
 		CAD0269F26A0BE810075B818 /* ContainerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD0269E26A0BE810075B818 /* ContainerExtensions.swift */; };
@@ -100,6 +101,7 @@
 		CAC68D8326BEF7FC005955F3 /* TopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
 		CAC68D8426BEF7FC005955F3 /* WaitUntil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaitUntil.swift; sourceTree = "<group>"; };
 		CAC68D8526BEF7FC005955F3 /* UIKitAssertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitAssertions.swift; sourceTree = "<group>"; };
+		CAC68D8B26BF26F0005955F3 /* UIKitInterop.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = UIKitInterop.storyboard; sourceTree = "<group>"; };
 		CAD0269626A0AEE00075B818 /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 		CAD0269E26A0BE810075B818 /* ContainerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerExtensions.swift; sourceTree = "<group>"; };
 		CAD026A026A0BE9A0075B818 /* DependencyInjected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjected.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				CAD026A226A0BEB50075B818 /* DependencyInjectionTests.swift */,
 				D74A4D5B26A7315F00010617 /* TestConstant.swift */,
 				CAC68D7D26BEF558005955F3 /* UIKitInteropTests.swift */,
+				CAC68D8B26BF26F0005955F3 /* UIKitInterop.storyboard */,
 			);
 			path = SwiftUIExampleTests;
 			sourceTree = "<group>";
@@ -399,6 +402,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAC68D8C26BF26F0005955F3 /* UIKitInterop.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
