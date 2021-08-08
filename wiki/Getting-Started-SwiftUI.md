@@ -194,5 +194,5 @@ Now in SwiftUI simply reference that controller.
 ```swift
 WorkflowLauncher(isLaunched: $workflowIsPresented) // SwiftCurrent
     .thenProceed(with: WorkflowItem(FirstViewController.self)) // SwiftCurrent
-    .thenProceed(with: WorkflowItem(SecondView.self))
+    .thenProceed(with: WorkflowItem(SecondView.self)) // SwiftCurrent
 ```
