@@ -32,6 +32,12 @@ jobs:
           ignorePreReleases: "false"
           toTag: ${{ steps.bump_version.outputs.version }}
           token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build XCFrameworks
+        run: |
+          # BE CAREFUL this script rewrites the package.swift and you do not want that change committed
+          .github/build-xcframework.sh SwiftCurrent "iOS" "iOS Simulator" "WatchOS" "WatchOS Simulator" "TvOS" "TvOS Simulator" "macOS"
+          .github/build-xcframework.sh SwiftCurrent_UIKit "iOS" "iOS Simulator" "TvOS" "TvOS Simulator"
+          .github/build-xcframework.sh SwiftCurrent_SwiftUI "iOS" "iOS Simulator" "WatchOS" "WatchOS Simulator" "TvOS" "TvOS Simulator" "macOS"
       - name: Create a GitHub release
         uses: actions/create-release@v1
         env:

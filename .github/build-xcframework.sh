@@ -8,7 +8,7 @@ set -e
 NAME=$1
 
 # Build the scheme for all platforms that we plan to support
-for PLATFORM in "iOS" "iOS Simulator"; do
+for PLATFORM in "${@:2}"; do
 
     case $PLATFORM in
     "iOS")
@@ -16,6 +16,21 @@ for PLATFORM in "iOS" "iOS Simulator"; do
     ;;
     "iOS Simulator")
     RELEASE_FOLDER="Release-iphonesimulator"
+    ;;
+    "WatchOS")
+    RELEASE_FOLDER="Release-watchos"
+    ;;
+    "WatchOS Simulator")
+    RELEASE_FOLDER="Release-watchossimulator"
+    ;;
+    "TvOS")
+    RELEASE_FOLDER="Release-tvos"
+    ;;
+    "TvOS Simulator")
+    RELEASE_FOLDER="Release-tvossimulator"
+    ;;
+    "macOS")
+    RELEASE_FOLDER="Release-macos"
     ;;
     esac
 
@@ -58,19 +73,9 @@ for PLATFORM in "iOS" "iOS Simulator"; do
         cp -r $RESOURCES_BUNDLE_PATH $FRAMEWORK_PATH
     fi
 
+    framework_builder="${framework_builder} -framework ${RELEASE_FOLDER}.xcarchive/Products/usr/local/lib/${NAME}.framework"
 done
 
-xcodebuild -create-xcframework \
--framework Release-iphoneos.xcarchive/Products/usr/local/lib/$NAME.framework \
--framework Release-iphonesimulator.xcarchive/Products/usr/local/lib/$NAME.framework \
--output $NAME.xcframework
+cmd="xcodebuild -create-xcframework ${framework_builder} -output ${NAME}.xcframework"
 
-# .library(
-#             name: "SwiftCurrent", type: .dynamic,
-#             targets: ["SwiftCurrent"]),
-#         .library(
-#             name: "SwiftCurrent_UIKit", type: .dynamic,
-#             targets: ["SwiftCurrent_UIKit"]),
-#         .library(
-#             name: "BETA_SwiftCurrent_SwiftUI", type: .dynamic,
-#             targets: ["SwiftCurrent_SwiftUI"])
+eval $cmd
