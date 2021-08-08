@@ -45,6 +45,7 @@
 		CAD026AC26A0C83B0075B818 /* Inspection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD026AB26A0C83B0075B818 /* Inspection.swift */; };
 		CAD026AF26A0C8680075B818 /* InspectableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD026AE26A0C8680075B818 /* InspectableExtensions.swift */; };
 		CAD026B126A0C8960075B818 /* ViewHostingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD026B026A0C8960075B818 /* ViewHostingExtensions.swift */; };
+		CAE6927926C0708500B9E905 /* SwiftCurrent_Testing in Frameworks */ = {isa = PBXBuildFile; productRef = CAE6927826C0708500B9E905 /* SwiftCurrent_Testing */; };
 		D74A4D5C26A7315F00010617 /* TestConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74A4D5B26A7315F00010617 /* TestConstant.swift */; };
 /* End PBXBuildFile section */
 
@@ -117,6 +118,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAC34B7A26A0801E0039A373 /* ViewInspector in Frameworks */,
+				CAE6927926C0708500B9E905 /* SwiftCurrent_Testing in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +300,7 @@
 			name = SwiftUIExampleTests;
 			packageProductDependencies = (
 				CAC34B7926A0801E0039A373 /* ViewInspector */,
+				CAE6927826C0708500B9E905 /* SwiftCurrent_Testing */,
 			);
 			productName = SwiftUIExampleTests;
 			productReference = CAC34B5026A07F840039A373 /* SwiftUIExampleTests.xctest */;
@@ -709,6 +712,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CAD0269826A0BE390075B818 /* XCRemoteSwiftPackageReference "Swinject" */;
 			productName = Swinject;
+		};
+		CAE6927826C0708500B9E905 /* SwiftCurrent_Testing */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftCurrent_Testing;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

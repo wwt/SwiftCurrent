@@ -9,6 +9,7 @@
 import XCTest
 import ViewInspector
 
+import SwiftCurrent_Testing
 @testable import SwiftCurrent_SwiftUI
 @testable import SwiftUIExample
 
