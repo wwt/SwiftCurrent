@@ -1,8 +1,9 @@
 //
-//  File.swift
+//  CustomAssertions.swift
 //  
 //
 //  Created by Tyler Thompson on 8/8/21.
+//  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
 
 import XCTest
@@ -11,6 +12,7 @@ import XCTest
 @testable import SwiftCurrent_UIKit
 @testable import SwiftCurrent_SwiftUI
 
+/// Assert that a workflow was launched and matches the workflow passed in
 public func XCTAssertWorkflowLaunched<F>(from VC: UIViewController, workflow: Workflow<F>, passedArgs: [AnyWorkflow.PassedArgs]) {
     let last = VC.launchedWorkflows.last
     XCTAssertNotNil(last, "No workflow found")
@@ -35,4 +37,3 @@ public func XCTAssertWorkflowLaunched<F>(from VC: UIViewController, workflow: Wo
         XCTAssert(actual == expected, "Expected type: \(expected), but got: \(actual)")
     }
 }
-

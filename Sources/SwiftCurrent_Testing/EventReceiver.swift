@@ -26,6 +26,12 @@ enum EventReceiver {
         if let responder = responder as? UIKitPresenter {
             responder.launchedFromVC.launchedWorkflows.append(workflow)
         }
+        workflow.onFinish = onFinish
+        workflow.launchStyle = style
+    }
+
+    static func flowRepresentableMetadataCreated(metadata: FlowRepresentableMetadata, type: Any) {
+        metadata.flowRepresentableType = type
     }
 }
 
@@ -46,11 +52,28 @@ class NotificationReceiver: NSObject {
                                        style: style,
                                        onFinish: onFinish)
     }
+
+    @objc static func flowRepresentableMetadataCreated(notification: Notification) {
+        guard let dict = notification.object as? [String: Any],
+              let metadata = dict["metadata"] as? FlowRepresentableMetadata,
+              let type = dict["type"] else {
+            fatalError("FlowRepresentableMetadataCreated notification has incorrect format, this may be because you need to update SwiftCurrent_Testing")
+        }
+
+        EventReceiver.flowRepresentableMetadataCreated(metadata: metadata, type: type)
+    }
 }
 
 @nonobjc extension NotificationCenter {
     @objc override public class func beforeTestExecution() {
-        NotificationCenter.default.addObserver(NotificationReceiver.self, selector: #selector(NotificationReceiver.workflowLaunched(notification:)), name: .workflowLaunched, object: nil)
+        NotificationCenter.default.addObserver(NotificationReceiver.self,
+                                               selector: #selector(NotificationReceiver.workflowLaunched(notification:)),
+                                               name: .workflowLaunched,
+                                               object: nil)
+        NotificationCenter.default.addObserver(NotificationReceiver.self,
+                                               selector: #selector(NotificationReceiver.flowRepresentableMetadataCreated(notification:)),
+                                               name: .flowRepresentableMetadataCreated,
+                                               object: nil)
     }
 }
 

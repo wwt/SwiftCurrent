@@ -66,8 +66,7 @@ class PickupOrDeliveryViewControllerTests: ViewControllerTest<PickupOrDeliveryVi
                                   passedArgs: [.args(Order(location: nil))])
 
         let mock = MockOrchestrationResponder()
-        #warning("COME BACK TO THIS")
-//        listener.workflow?.orchestrationResponder = mock
+        testViewController.launchedWorkflows.last?.orchestrationResponder = mock
 
         var proceedInWorkflowCalled = false
         testViewController._proceedInWorkflow = { data in
@@ -76,7 +75,7 @@ class PickupOrDeliveryViewControllerTests: ViewControllerTest<PickupOrDeliveryVi
             XCTAssertEqual(data as? Order, orderOutput)
         }
 
-//        listener.onFinish?(.args(orderOutput))
+        testViewController.launchedWorkflows.last?.onFinish?(.args(orderOutput))
 
         XCTAssertEqual(mock.abandonCalled, 1)
 

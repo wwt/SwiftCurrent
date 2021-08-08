@@ -18,6 +18,11 @@ extension Notification.Name {
     public static var workflowLaunched: Notification.Name {
         .init(rawValue: "WorkflowLaunched")
     }
+
+    /// :nodoc: A notification only available when tests are being run that lets you know a FlowRepresentableMetaData has been created.
+    public static var flowRepresentableMetadataCreated: Notification.Name {
+        .init(rawValue: "FlowRepresentableMetadataCreated")
+    }
     #endif
 }
 
@@ -35,6 +40,15 @@ enum EventReceiver {
             "args": args,
             "style": style,
             "onFinish": onFinish as Any
+        ])
+        #endif
+    }
+
+    static func flowRepresentableMetadataCreated<F: FlowRepresentable>(metadata: FlowRepresentableMetadata, type: F.Type) {
+        #if canImport(XCTest)
+        NotificationCenter.default.post(name: .flowRepresentableMetadataCreated, object: [
+            "metadata": metadata,
+            "type": type
         ])
         #endif
     }

@@ -11,15 +11,16 @@ import UIKit
 import SwiftCurrent
 extension UIViewController {
     private static var associatedKey = "_uiViewController_launchedWorkflows_assoc_key"
-    var launchedWorkflows: [AnyWorkflow] {
+    /// An array of all workflows launched by this UIViewController.
+    public var launchedWorkflows: [AnyWorkflow] {
         get {
-            guard let value = objc_getAssociatedObject(self, &UIViewController.associatedKey) as? [AnyWorkflow] else {
+            guard let value = objc_getAssociatedObject(self, &Self.associatedKey) as? [AnyWorkflow] else {
                 return []
             }
             return value
         }
         set(newValue) {
-            objc_setAssociatedObject(self, &UIViewController.associatedKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &Self.associatedKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
 }
