@@ -9,11 +9,11 @@
 import Foundation
 import SwiftCurrent
 extension FlowRepresentableMetadata {
-    private static var associatedKey = "_flowRepresentableMetadata_flowRepresentableType_assoc_key"
+    private static var associatedKey = "_flowRepresentableMetadata_flowRepresentableTypeDescriptor_assoc_key"
     /// The type of `FlowRepresentable` that the metadata is about.
-    public var flowRepresentableType: Any {
+    public var flowRepresentableTypeDescriptor: String {
         get {
-            guard let value = objc_getAssociatedObject(self, &Self.associatedKey) else {
+            guard let value = objc_getAssociatedObject(self, &Self.associatedKey) as? String else {
                 return "ERROR: No flowRepresentableType found on \(self)"
             }
             return value

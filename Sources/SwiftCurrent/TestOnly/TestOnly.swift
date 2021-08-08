@@ -48,7 +48,7 @@ enum EventReceiver {
         #if canImport(XCTest)
         NotificationCenter.default.post(name: .flowRepresentableMetadataCreated, object: [
             "metadata": metadata,
-            "type": type
+            "type": String(describing: type)
         ])
         #endif
     }

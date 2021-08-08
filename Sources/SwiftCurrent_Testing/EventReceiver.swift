@@ -30,8 +30,8 @@ enum EventReceiver {
         workflow.launchStyle = style
     }
 
-    static func flowRepresentableMetadataCreated(metadata: FlowRepresentableMetadata, type: Any) {
-        metadata.flowRepresentableType = type
+    static func flowRepresentableMetadataCreated(metadata: FlowRepresentableMetadata, descriptor: String) {
+        metadata.flowRepresentableTypeDescriptor = descriptor
     }
 }
 
@@ -56,11 +56,11 @@ class NotificationReceiver: NSObject {
     @objc static func flowRepresentableMetadataCreated(notification: Notification) {
         guard let dict = notification.object as? [String: Any],
               let metadata = dict["metadata"] as? FlowRepresentableMetadata,
-              let type = dict["type"] else {
+              let type = dict["type"] as? String else {
             fatalError("FlowRepresentableMetadataCreated notification has incorrect format, this may be because you need to update SwiftCurrent_Testing")
         }
 
-        EventReceiver.flowRepresentableMetadataCreated(metadata: metadata, type: type)
+        EventReceiver.flowRepresentableMetadataCreated(metadata: metadata, descriptor: type)
     }
 }
 

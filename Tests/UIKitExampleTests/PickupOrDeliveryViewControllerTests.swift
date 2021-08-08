@@ -62,8 +62,7 @@ class PickupOrDeliveryViewControllerTests: ViewControllerTest<PickupOrDeliveryVi
 
         testViewController.deliveryButton?.simulateTouch()
         XCTAssertWorkflowLaunched(from: testViewController,
-                                  workflow: Workflow(EnterAddressViewController.self),
-                                  passedArgs: [.args(Order(location: nil))])
+                                  workflow: Workflow(EnterAddressViewController.self))
 
         let mock = MockOrchestrationResponder()
         testViewController.launchedWorkflows.last?.orchestrationResponder = mock

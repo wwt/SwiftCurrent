@@ -29,15 +29,7 @@ class SetupViewControllerTests: XCTestCase {
                                     .thenProceed(with: PickupOrDeliveryViewController.self)
                                     .thenProceed(with: MenuSelectionViewController.self)
                                     .thenProceed(with: FoodSelectionViewController.self)
-                                    .thenProceed(with: ReviewOrderViewController.self),
-                                  passedArgs: [
-                                    .args([Location]()),
-                                    .args(Order(location: nil)),
-                                    .args(Order(location: nil)),
-                                    .args(Order(location: nil)),
-                                    .args(Order(location: nil)),
-                                    .args(Order(location: nil)),
-                                  ])
+                                    .thenProceed(with: ReviewOrderViewController.self))
     }
 }
 

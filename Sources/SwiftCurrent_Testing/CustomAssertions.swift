@@ -13,27 +13,22 @@ import XCTest
 @testable import SwiftCurrent_SwiftUI
 
 /// Assert that a workflow was launched and matches the workflow passed in
-public func XCTAssertWorkflowLaunched<F>(from VC: UIViewController, workflow: Workflow<F>, passedArgs: [AnyWorkflow.PassedArgs]) {
+public func XCTAssertWorkflowLaunched<F>(from VC: UIViewController, workflow: Workflow<F>, file: StaticString = #filePath, line: UInt = #line) {
     let last = VC.launchedWorkflows.last
-    XCTAssertNotNil(last, "No workflow found")
+    XCTAssertNotNil(last, "No workflow found", file: file, line: line)
     guard let listenerWorkflow = last,
           listenerWorkflow.count == workflow.count else {
-        XCTFail("workflow does not contain correct representables")
+        XCTFail("workflow does not contain correct representables", file: file, line: line)
         return
     }
 
     for node in listenerWorkflow {
-        let position = node.position
-        guard passedArgs.indices.contains(position) else {
-            XCTFail("Could not determine correct passedArgs to use, please make sure you have PassedArgs for every FlowRepresentable in your expected Workflow")
-            return
-        }
-        let actual = type(of: node.value.metadata.flowRepresentableFactory(passedArgs[position]).underlyingInstance)
+        let actual = node.value.metadata.flowRepresentableTypeDescriptor
         guard let workflowNode = workflow.first?.traverse(node.position) else {
-            XCTFail("expected workflow not as long as actual workflow")
+            XCTFail("expected workflow not as long as actual workflow", file: file, line: line)
             return
         }
-        let expected = type(of: workflowNode.value.metadata.flowRepresentableFactory(passedArgs[position]).underlyingInstance)
-        XCTAssert(actual == expected, "Expected type: \(expected), but got: \(actual)")
+        let expected = workflowNode.value.metadata.flowRepresentableTypeDescriptor
+        XCTAssert(actual == expected, "Expected type: \(expected), but got: \(actual)", file: file, line: line)
     }
 }
