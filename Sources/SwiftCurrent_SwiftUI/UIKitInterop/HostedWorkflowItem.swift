@@ -51,8 +51,6 @@ public final class HostedWorkflowItem<Content: FlowRepresentable & View>: UIHost
         super.init(rootView: Content._factory(Content.self))
     }
 
-    @objc dynamic required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
+    @objc dynamic required init?(coder aDecoder: NSCoder) { super.init(coder: aDecoder) }
 }
 #endif

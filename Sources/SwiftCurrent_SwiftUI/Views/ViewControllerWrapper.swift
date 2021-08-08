@@ -30,9 +30,8 @@ public struct ViewControllerWrapper<F: FlowRepresentable & UIViewController>: Vi
         var vc: F = {
             if let args = args {
                 return F._factory(F.self, with: args)
-            } else {
-                return F._factory(F.self)
             }
+            return F._factory(F.self)
         }()
         vc._workflowPointer = _workflowPointer
         return vc
