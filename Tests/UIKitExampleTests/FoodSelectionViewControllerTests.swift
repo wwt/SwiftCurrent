@@ -9,6 +9,8 @@
 import Foundation
 import XCTest
 
+import SwiftCurrent_Testing
+
 @testable import UIKitExample
 
 class FoodSelectionViewControllerTests: ViewControllerTest<FoodSelectionViewController> {

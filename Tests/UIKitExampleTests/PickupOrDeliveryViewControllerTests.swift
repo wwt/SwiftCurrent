@@ -9,6 +9,8 @@
 import Foundation
 import XCTest
 
+import SwiftCurrent_Testing
+
 @testable import UIKitExample
 @testable import SwiftCurrent
 
@@ -56,16 +58,16 @@ class PickupOrDeliveryViewControllerTests: ViewControllerTest<PickupOrDeliveryVi
     func testSelectingDeliveryLaunchesWorkflowAndSetsSelectionOnOrder() {
         let unique = UUID().uuidString
         loadFromStoryboard(args: .args(Order(location: Location(name: unique, address: Address(), orderTypes: [], menuTypes: []))))
-        let listener = WorkflowListener()
         let orderOutput = Order(location: Location(name: unique, address: Address(), orderTypes: [], menuTypes: []))
 
         testViewController.deliveryButton?.simulateTouch()
-        XCTAssertWorkflowLaunched(listener: listener,
+        XCTAssertWorkflowLaunched(from: testViewController,
                                   workflow: Workflow(EnterAddressViewController.self),
                                   passedArgs: [.args(Order(location: nil))])
 
         let mock = MockOrchestrationResponder()
-        listener.workflow?.orchestrationResponder = mock
+        #warning("COME BACK TO THIS")
+//        listener.workflow?.orchestrationResponder = mock
 
         var proceedInWorkflowCalled = false
         testViewController._proceedInWorkflow = { data in
@@ -74,7 +76,7 @@ class PickupOrDeliveryViewControllerTests: ViewControllerTest<PickupOrDeliveryVi
             XCTAssertEqual(data as? Order, orderOutput)
         }
 
-        listener.onFinish?(.args(orderOutput))
+//        listener.onFinish?(.args(orderOutput))
 
         XCTAssertEqual(mock.abandonCalled, 1)
 

@@ -9,8 +9,10 @@
 import Foundation
 import XCTest
 
-@testable import UIKitExample
+import SwiftCurrent_Testing
 import SwiftCurrent
+
+@testable import UIKitExample
 
 class SetupViewControllerTests: XCTestCase {
     var testViewController: SetupViewController!
@@ -20,11 +22,9 @@ class SetupViewControllerTests: XCTestCase {
     }
 
     func testLaunchingMultiLocationWorkflow() {
-        let listener = WorkflowListener()
-
         testViewController.launchWorkflowButton?.simulateTouch()
 
-        XCTAssertWorkflowLaunched(listener: listener, workflow: Workflow(LocationsViewController.self)
+        XCTAssertWorkflowLaunched(from: testViewController, workflow: Workflow(LocationsViewController.self)
                                     .thenProceed(with: TermsOfServiceViewController.self)
                                     .thenProceed(with: PickupOrDeliveryViewController.self)
                                     .thenProceed(with: MenuSelectionViewController.self)

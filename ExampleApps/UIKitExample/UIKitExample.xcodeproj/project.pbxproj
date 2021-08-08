@@ -34,7 +34,6 @@
 		CA0536EF26A0848B00BF8FC5 /* Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536E226A0848B00BF8FC5 /* Convenience.swift */; };
 		CA0536F026A0848B00BF8FC5 /* TestFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536E326A0848B00BF8FC5 /* TestFinder.swift */; };
 		CA0536F126A0848B00BF8FC5 /* MockOrchestrationResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536E526A0848B00BF8FC5 /* MockOrchestrationResponder.swift */; };
-		CA0536F226A0848B00BF8FC5 /* WorkflowListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536E626A0848B00BF8FC5 /* WorkflowListener.swift */; };
 		CA357F1A263E67DE003D1ACB /* UIKitPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA357F19263E67DE003D1ACB /* UIKitPresenterTests.swift */; };
 		CA357F1F263E68AD003D1ACB /* UIKitAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA357F1E263E68AD003D1ACB /* UIKitAssertions.swift */; };
 		CA655AA2265B4F3200F37E47 /* MockOrchestrationResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA655AA1265B4F3200F37E47 /* MockOrchestrationResponder.swift */; };
@@ -53,6 +52,7 @@
 		CAF5873F256CF55E0044C864 /* CwlPosixPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = CAF5873E256CF55E0044C864 /* CwlPosixPreconditionTesting */; };
 		CAF58741256CF55E0044C864 /* CwlPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = CAF58740256CF55E0044C864 /* CwlPreconditionTesting */; };
 		CAF58743256CF55E0044C864 /* UIUTest in Frameworks */ = {isa = PBXBuildFile; productRef = CAF58742256CF55E0044C864 /* UIUTest */; };
+		CAF9F43226C03BFC00C27E5B /* SwiftCurrent_Testing in Frameworks */ = {isa = PBXBuildFile; productRef = CAF9F43126C03BFC00C27E5B /* SwiftCurrent_Testing */; };
 		D7226A5C267820070066E9E6 /* SwiftCurrent in Frameworks */ = {isa = PBXBuildFile; productRef = D7226A5B267820070066E9E6 /* SwiftCurrent */; };
 		D7226A602678238F0066E9E6 /* SwiftCurrent_UIKit in Frameworks */ = {isa = PBXBuildFile; productRef = D7226A5F2678238F0066E9E6 /* SwiftCurrent_UIKit */; };
 		D73767A926AF5D2D000A6A6E /* TermsOfServiceViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73767A826AF5D2D000A6A6E /* TermsOfServiceViewControllerTests.swift */; };
@@ -111,7 +111,6 @@
 		CA0536E226A0848B00BF8FC5 /* Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Convenience.swift; path = ../../../Tests/UIKitExampleTests/Convenience.swift; sourceTree = "<group>"; };
 		CA0536E326A0848B00BF8FC5 /* TestFinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestFinder.swift; path = ../../../Tests/UIKitExampleTests/TestFinder.swift; sourceTree = "<group>"; };
 		CA0536E526A0848B00BF8FC5 /* MockOrchestrationResponder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockOrchestrationResponder.swift; sourceTree = "<group>"; };
-		CA0536E626A0848B00BF8FC5 /* WorkflowListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkflowListener.swift; sourceTree = "<group>"; };
 		CA357F19263E67DE003D1ACB /* UIKitPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitPresenterTests.swift; sourceTree = "<group>"; };
 		CA357F1E263E68AD003D1ACB /* UIKitAssertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitAssertions.swift; sourceTree = "<group>"; };
 		CA655AA1265B4F3200F37E47 /* MockOrchestrationResponder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockOrchestrationResponder.swift; path = ../../../Tests/UIKitExampleTests/Mocks/MockOrchestrationResponder.swift; sourceTree = "<group>"; };
@@ -166,6 +165,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAF58743256CF55E0044C864 /* UIUTest in Frameworks */,
+				CAF9F43226C03BFC00C27E5B /* SwiftCurrent_Testing in Frameworks */,
 				CAF58741256CF55E0044C864 /* CwlPreconditionTesting in Frameworks */,
 				CAF5873F256CF55E0044C864 /* CwlPosixPreconditionTesting in Frameworks */,
 			);
@@ -247,7 +247,6 @@
 			isa = PBXGroup;
 			children = (
 				CA0536E526A0848B00BF8FC5 /* MockOrchestrationResponder.swift */,
-				CA0536E626A0848B00BF8FC5 /* WorkflowListener.swift */,
 			);
 			name = Mocks;
 			path = ../../../Tests/UIKitExampleTests/Mocks;
@@ -391,6 +390,7 @@
 				CAF5873E256CF55E0044C864 /* CwlPosixPreconditionTesting */,
 				CAF58740256CF55E0044C864 /* CwlPreconditionTesting */,
 				CAF58742256CF55E0044C864 /* UIUTest */,
+				CAF9F43126C03BFC00C27E5B /* SwiftCurrent_Testing */,
 			);
 			productName = SwiftCurrentExampleTests;
 			productReference = CAF586AE256CF2B40044C864 /* UIKitExampleTests.xctest */;
@@ -529,7 +529,6 @@
 				CA0536EA26A0848B00BF8FC5 /* ViewControllerTest.swift in Sources */,
 				CA0536EC26A0848B00BF8FC5 /* LocationsViewControllerTests.swift in Sources */,
 				CA0536F026A0848B00BF8FC5 /* TestFinder.swift in Sources */,
-				CA0536F226A0848B00BF8FC5 /* WorkflowListener.swift in Sources */,
 				CA0536EB26A0848B00BF8FC5 /* PickupOrDeliveryViewControllerTests.swift in Sources */,
 				CA0536E726A0848B00BF8FC5 /* EnterAddressViewControllerTests.swift in Sources */,
 				CA0536EF26A0848B00BF8FC5 /* Convenience.swift in Sources */,
@@ -922,6 +921,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CAF58712256CF40C0044C864 /* XCRemoteSwiftPackageReference "UIUTest" */;
 			productName = UIUTest;
+		};
+		CAF9F43126C03BFC00C27E5B /* SwiftCurrent_Testing */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftCurrent_Testing;
 		};
 		D7226A5B267820070066E9E6 /* SwiftCurrent */ = {
 			isa = XCSwiftPackageProductDependency;

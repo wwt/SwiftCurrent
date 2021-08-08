@@ -29,15 +29,6 @@ extension UIViewController {
                         args: args,
                         withLaunchStyle: launchStyle.rawValue,
                         onFinish: onFinish)
-        #if canImport(XCTest)
-        NotificationCenter.default.post(name: .workflowLaunched, object: [
-            "workflow": AnyWorkflow(workflow),
-            "launchFrom": self,
-            "args": args,
-            "style": launchStyle,
-            "onFinish": onFinish
-        ])
-        #endif
     }
 
     /**
@@ -53,14 +44,6 @@ extension UIViewController {
         workflow.launch(withOrchestrationResponder: UIKitPresenter(self, launchStyle: launchStyle),
                         launchStyle: launchStyle.rawValue,
                         onFinish: onFinish)
-        #if canImport(XCTest)
-        NotificationCenter.default.post(name: .workflowLaunched, object: [
-            "workflow": AnyWorkflow(workflow),
-            "launchFrom": self,
-            "style": launchStyle,
-            "onFinish": onFinish as Any
-        ])
-        #endif
     }
 }
 
