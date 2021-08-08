@@ -13,6 +13,7 @@ import UIUTest
 // Do *not* change to @testable import, we want tests driven from the consumer standpoint
 import SwiftCurrent
 import SwiftCurrent_UIKit
+import SwiftCurrent_Testing
 
 class UIKitConsumerAbandonTests: XCTestCase {
     static var testCallbackCalled = false

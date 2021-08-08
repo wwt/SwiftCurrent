@@ -48,6 +48,7 @@
 		CAC1C250256D8F0400DBD0D4 /* UIKitConsumerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1C24D256D8F0300DBD0D4 /* UIKitConsumerTests.swift */; };
 		CAC1C26D256D8FA500DBD0D4 /* CwlPosixPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = CAC1C26C256D8FA500DBD0D4 /* CwlPosixPreconditionTesting */; };
 		CAC1C26F256D8FA500DBD0D4 /* CwlPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = CAC1C26E256D8FA500DBD0D4 /* CwlPreconditionTesting */; };
+		CAE6927726C0701000B9E905 /* SwiftCurrent_Testing in Frameworks */ = {isa = PBXBuildFile; productRef = CAE6927626C0701000B9E905 /* SwiftCurrent_Testing */; };
 		CAF58714256CF40C0044C864 /* UIUTest in Frameworks */ = {isa = PBXBuildFile; productRef = CAF58713256CF40C0044C864 /* UIUTest */; };
 		CAF5873F256CF55E0044C864 /* CwlPosixPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = CAF5873E256CF55E0044C864 /* CwlPosixPreconditionTesting */; };
 		CAF58741256CF55E0044C864 /* CwlPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = CAF58740256CF55E0044C864 /* CwlPreconditionTesting */; };
@@ -157,6 +158,7 @@
 				CA9226F92640724D00BD0366 /* ExceptionCatcher in Frameworks */,
 				CAF58714256CF40C0044C864 /* UIUTest in Frameworks */,
 				CAC1C26F256D8FA500DBD0D4 /* CwlPreconditionTesting in Frameworks */,
+				CAE6927726C0701000B9E905 /* SwiftCurrent_Testing in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,6 +369,7 @@
 				CAC1C26C256D8FA500DBD0D4 /* CwlPosixPreconditionTesting */,
 				CAC1C26E256D8FA500DBD0D4 /* CwlPreconditionTesting */,
 				CA9226F82640724D00BD0366 /* ExceptionCatcher */,
+				CAE6927626C0701000B9E905 /* SwiftCurrent_Testing */,
 			);
 			productName = WorkflowTests;
 			productReference = CAF58635256CF0E50044C864 /* SwiftCurrent_UIKitTests.xctest */;
@@ -901,6 +904,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CAF586A0256CF2560044C864 /* XCRemoteSwiftPackageReference "CwlPreconditionTesting" */;
 			productName = CwlPreconditionTesting;
+		};
+		CAE6927626C0701000B9E905 /* SwiftCurrent_Testing */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftCurrent_Testing;
 		};
 		CAF58713256CF40C0044C864 /* UIUTest */ = {
 			isa = XCSwiftPackageProductDependency;
