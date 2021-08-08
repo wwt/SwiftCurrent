@@ -115,7 +115,6 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     }
 
     func testWorkflowCanFinishMultipleTimes() throws {
-        throw XCTSkip("We are currently unable to test this because of a limitation in ViewInspector, see here: https://github.com/nalexn/ViewInspector/issues/126")
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
@@ -124,8 +123,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR2 type") }
         }
-        let expectOnFinish1 = expectation(description: "OnFinish1 called")
-        let expectOnFinish2 = expectation(description: "OnFinish2 called")
+        let expectOnFinish = expectation(description: "OnFinish1 called")
         var showWorkflow = Binding(wrappedValue: true)
         let expectViewLoaded = ViewHosting.loadView(
             WorkflowLauncher(isLaunched: showWorkflow)
@@ -137,17 +135,19 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         }).inspection.inspect { viewUnderTest in
             XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+            XCTAssertNoThrow(try viewUnderTest.find(FR2.self).callOnChange(newValue: false))
             showWorkflow.wrappedValue = true
             showWorkflow.update()
             XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+            XCTAssertNoThrow(try viewUnderTest.find(FR2.self).callOnChange(newValue: false))
             showWorkflow.wrappedValue = true
             showWorkflow.update()
             XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
             XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
         }
 
-        wait(for: [expectOnFinish1, expectOnFinish2, expectViewLoaded], timeout: TestConstant.timeout)
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testWorkflowPassesArgumentsToTheFirstItem() throws {
@@ -489,7 +489,6 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     }
 
     func testWorkflowRelaunchesWhenSubsequentlyLaunched() throws {
-        throw XCTSkip("We are currently unable to test this because of a limitation in ViewInspector, see here: https://github.com/nalexn/ViewInspector/issues/126")
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
@@ -514,7 +513,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
 
             binding.wrappedValue = true
-            XCTAssertNoThrow(try viewUnderTest.callOnChange(newValue: false))
+            XCTAssertNoThrow(try viewUnderTest.find(FR2.self).callOnChange(newValue: false))
             XCTAssertNoThrow(try viewUnderTest.find(FR1.self))
             XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
         }

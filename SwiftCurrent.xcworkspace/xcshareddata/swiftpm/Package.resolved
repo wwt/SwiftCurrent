@@ -77,9 +77,9 @@
         "package": "ViewInspector",
         "repositoryURL": "https://github.com/nalexn/ViewInspector.git",
         "state": {
-          "branch": null,
-          "revision": "a9b0d2af51b8afbbcb6a3e1005aabf8726852a77",
-          "version": "0.8.1"
+          "branch": "0.8.2",
+          "revision": "d58fff9ee856bd226247b5d0d8ad8a9b7edccc7e",
+          "version": null
         }
       }
     ]
