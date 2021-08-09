@@ -73,7 +73,7 @@ final class SwiftUIInteropTests: XCTestCase {
 }
 
 extension SwiftUIInteropTests {
-    class TestViewController: UIViewController, PassthroughFlowRepresentable {
+    private class TestViewController: UIViewController, PassthroughFlowRepresentable {
         weak var _workflowPointer: AnyFlowRepresentable?
 
         required init() {
