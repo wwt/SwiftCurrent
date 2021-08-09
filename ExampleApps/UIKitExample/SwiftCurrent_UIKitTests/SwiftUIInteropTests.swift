@@ -70,6 +70,38 @@ final class SwiftUIInteropTests: XCTestCase {
         (UIApplication.topViewController() as? HostedWorkflowItem<FR2>)?.proceedInWorkflow()
         XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
     }
+
+    func testLaunchingIntoAWorkflowMixedWithSwiftUIViewsThatShouldNotLoad() {
+        class FR1: TestViewController { }
+        struct FR2: View, FlowRepresentable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+
+            let str: String
+
+            init(with str: String) {
+                self.str = str
+            }
+
+            var body: some View {
+                Text("FR2")
+            }
+
+            func shouldLoad() -> Bool { false }
+        }
+        class FR3: TestViewController { }
+
+        let root = UIViewController()
+        let nav = UINavigationController(rootViewController: root)
+        let expectedArgs = UUID().uuidString
+        nav.loadForTesting()
+        root.launchInto(Workflow(FR1.self)
+                            .thenProceed(with: HostedWorkflowItem<FR2>.self)
+                            .thenProceed(with: FR3.self), args: expectedArgs)
+
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow()
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
+    }
 }
 
 extension SwiftUIInteropTests {
