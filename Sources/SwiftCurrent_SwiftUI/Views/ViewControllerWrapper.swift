@@ -1,6 +1,7 @@
 //
 //  ViewControllerWrapper.swift
-//  
+//  SwiftCurrent_SwiftUI
+//
 //
 //  Created by Tyler Thompson on 8/7/21.
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
