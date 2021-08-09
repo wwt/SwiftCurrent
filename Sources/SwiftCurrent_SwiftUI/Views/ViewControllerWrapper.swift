@@ -11,7 +11,7 @@ import SwiftUI
 import SwiftCurrent
 
 /// A wrapper for exposing `UIViewController`s that are `FlowRepresentable` to SwiftUI.
-@available(iOS 14.0, *)
+@available(iOS 14.0, macOS 11, tvOS 14.0, *)
 public struct ViewControllerWrapper<F: FlowRepresentable & UIViewController>: View, UIViewControllerRepresentable, FlowRepresentable {
     public typealias UIViewControllerType = F
     public typealias WorkflowInput = F.WorkflowInput
