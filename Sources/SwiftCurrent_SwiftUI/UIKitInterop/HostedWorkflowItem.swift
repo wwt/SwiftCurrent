@@ -30,7 +30,7 @@ import SwiftCurrent
          .thenProceed(with: HostedWorkflowItem<SwiftUIView>.self))
  ```
  */
-@available(iOS 13.0, *)
+@available(iOS 14.0, macOS 11, tvOS 14.0, *)
 public final class HostedWorkflowItem<Content: FlowRepresentable & View>: UIHostingController<Content>, FlowRepresentable {
     public typealias WorkflowInput = Content.WorkflowInput
     public typealias WorkflowOutput = Content.WorkflowOutput
