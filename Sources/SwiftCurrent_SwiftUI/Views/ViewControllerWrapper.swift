@@ -6,7 +6,7 @@
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
 
-#if os(iOS)
+#if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)
 import SwiftUI
 import SwiftCurrent
 

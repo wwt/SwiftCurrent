@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 import SwiftCurrent
 
-#if os(iOS) && canImport(UIKit)
+#if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)
 import UIKit
 #endif
 
@@ -47,7 +47,7 @@ public final class WorkflowItem<F: FlowRepresentable & View, Content: View> {
                                              flowRepresentableFactory: factory)
     }
 
-    #if os(iOS) && canImport(UIKit)
+    #if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)
     /// Creates a `WorkflowItem` from a `UIViewController`.
     @available(iOS 14.0, *)
     public init<VC: FlowRepresentable & UIViewController>(_: VC.Type) where F == ViewControllerWrapper<VC>, Content == F {

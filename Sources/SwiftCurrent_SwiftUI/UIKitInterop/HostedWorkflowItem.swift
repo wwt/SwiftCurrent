@@ -4,7 +4,7 @@
 //  Created by Tyler Thompson on 8/7/21.
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 
-#if os(iOS) && canImport(UIKit)
+#if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)
 import UIKit
 import SwiftUI
 import SwiftCurrent
