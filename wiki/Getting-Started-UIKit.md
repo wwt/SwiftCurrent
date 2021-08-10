@@ -263,6 +263,9 @@ It's easy to forget to set the accessibility identifier on the button, please ch
 You can use your SwiftUI `View`s that are [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) in your UIKit workflows. Start with your `View`
 
 ```swift
+import SwiftUI
+import SwiftCurrent
+
 struct SwiftUIView: View, FlowRepresentable { // SwiftCurrent
     weak var _workflowPointer: AnyFlowRepresentable? // SwiftCurrent
 
@@ -273,7 +276,7 @@ struct SwiftUIView: View, FlowRepresentable { // SwiftCurrent
 
 ```
 
-Now in your UIKit workflow simply use a HostedWorkflowItem.
+Now in your UIKit workflow simply use a HostedWorkflowItem (While in BETA, `import SwiftCurrent_SwiftUI` is necessary)
 
 ```swift
 launchInto(Workflow(HostedWorkflowItem<SwiftUIView>.self)) // SwiftCurrent

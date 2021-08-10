@@ -166,6 +166,10 @@ In SwiftUI, the [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.h
 You can use your `UIViewController`s that are [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) in your SwiftUI workflows. This is as seamless as it normally is to add to a workflow in SwiftUI. Start with your `UIViewController`
 
 ```swift
+import UIKit
+import SwiftCurrent
+import SwiftCurrent_UIKit
+
 // This is programmatic but could just as easily have been StoryboardLoadable
 final class FirstViewController: UIWorkflowItem<Never, Never>, FlowRepresentable { // SwiftCurrent
     typealias WorkflowOutput = String // SwiftCurrent
