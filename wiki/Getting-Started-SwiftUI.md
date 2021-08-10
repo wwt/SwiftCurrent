@@ -112,7 +112,7 @@ struct ContentView: View {
     @State var workflowIsPresented = false
     var body: some View {
         if !workflowIsPresented {
-            Button("Present") { $workflowIsPresented.wrappedValue = true }
+            Button("Present") { workflowIsPresented = true }
         }
         WorkflowLauncher(isLaunched: $workflowIsPresented, startingArgs: "SwiftCurrent") // SwiftCurrent
             .thenProceed(with: WorkflowItem(FirstView.self) // SwiftCurrent
