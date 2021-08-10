@@ -38,11 +38,13 @@
 		CA357F1A263E67DE003D1ACB /* UIKitPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA357F19263E67DE003D1ACB /* UIKitPresenterTests.swift */; };
 		CA357F1F263E68AD003D1ACB /* UIKitAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA357F1E263E68AD003D1ACB /* UIKitAssertions.swift */; };
 		CA655AA2265B4F3200F37E47 /* MockOrchestrationResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA655AA1265B4F3200F37E47 /* MockOrchestrationResponder.swift */; };
+		CA74CD6A26BF3E2300592870 /* SwiftUIInteropTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA74CD6926BF3E2300592870 /* SwiftUIInteropTests.swift */; };
 		CA875AC0257353B300243FA4 /* CustomAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA875ABF257353B300243FA4 /* CustomAssertions.swift */; };
 		CA9226EB26406C5B00BD0366 /* StoryboardLoadableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9226EA26406C5B00BD0366 /* StoryboardLoadableTests.swift */; };
 		CA9226F326406F2000BD0366 /* TestStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA9226F226406F2000BD0366 /* TestStoryboard.storyboard */; };
 		CA9226F92640724D00BD0366 /* ExceptionCatcher in Frameworks */ = {isa = PBXBuildFile; productRef = CA9226F82640724D00BD0366 /* ExceptionCatcher */; };
 		CA9F44B926ACA3220055020A /* GenericConstraintTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9F44B826ACA3220055020A /* GenericConstraintTests.swift */; };
+		CAA32F1826BF3F6000DB271E /* BETA_SwiftCurrent_SwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = CAA32F1726BF3F6000DB271E /* BETA_SwiftCurrent_SwiftUI */; };
 		CAC1C235256D8DA300DBD0D4 /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1C232256D8DA300DBD0D4 /* TopViewController.swift */; };
 		CAC1C23D256D8DB100DBD0D4 /* WaitUntil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1C23C256D8DB100DBD0D4 /* WaitUntil.swift */; };
 		CAC1C24F256D8F0400DBD0D4 /* ModalStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1C24E256D8F0400DBD0D4 /* ModalStyleTests.swift */; };
@@ -115,6 +117,7 @@
 		CA357F19263E67DE003D1ACB /* UIKitPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitPresenterTests.swift; sourceTree = "<group>"; };
 		CA357F1E263E68AD003D1ACB /* UIKitAssertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitAssertions.swift; sourceTree = "<group>"; };
 		CA655AA1265B4F3200F37E47 /* MockOrchestrationResponder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockOrchestrationResponder.swift; path = ../../../Tests/UIKitExampleTests/Mocks/MockOrchestrationResponder.swift; sourceTree = "<group>"; };
+		CA74CD6926BF3E2300592870 /* SwiftUIInteropTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIInteropTests.swift; sourceTree = "<group>"; };
 		CA875ABF257353B300243FA4 /* CustomAssertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAssertions.swift; sourceTree = "<group>"; };
 		CA9226EA26406C5B00BD0366 /* StoryboardLoadableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardLoadableTests.swift; sourceTree = "<group>"; };
 		CA9226F226406F2000BD0366 /* TestStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TestStoryboard.storyboard; sourceTree = "<group>"; };
@@ -146,6 +149,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7226A5C267820070066E9E6 /* SwiftCurrent in Frameworks */,
+				CAA32F1826BF3F6000DB271E /* BETA_SwiftCurrent_SwiftUI in Frameworks */,
 				D7226A602678238F0066E9E6 /* SwiftCurrent_UIKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -321,6 +325,7 @@
 				CA50C90E2640E78000FAA8FE /* Storyboard */,
 				CA087B422640E7A100A994D8 /* TestUtilities */,
 				CA9F44B826ACA3220055020A /* GenericConstraintTests.swift */,
+				CA74CD6926BF3E2300592870 /* SwiftUIInteropTests.swift */,
 			);
 			path = SwiftCurrent_UIKitTests;
 			sourceTree = "<group>";
@@ -344,6 +349,7 @@
 			packageProductDependencies = (
 				D7226A5B267820070066E9E6 /* SwiftCurrent */,
 				D7226A5F2678238F0066E9E6 /* SwiftCurrent_UIKit */,
+				CAA32F1726BF3F6000DB271E /* BETA_SwiftCurrent_SwiftUI */,
 			);
 			productName = SwiftCurrentExample;
 			productReference = CAF5852A256CEE990044C864 /* UIKitExample.app */;
@@ -503,6 +509,7 @@
 				CAC1C24F256D8F0400DBD0D4 /* ModalStyleTests.swift in Sources */,
 				CA357F1F263E68AD003D1ACB /* UIKitAssertions.swift in Sources */,
 				CAC1C250256D8F0400DBD0D4 /* UIKitConsumerTests.swift in Sources */,
+				CA74CD6A26BF3E2300592870 /* SwiftUIInteropTests.swift in Sources */,
 				CA9226EB26406C5B00BD0366 /* StoryboardLoadableTests.swift in Sources */,
 				CAC1C235256D8DA300DBD0D4 /* TopViewController.swift in Sources */,
 				D7E1264E264C6FBD00B6A712 /* UIKitConsumerAbandonTests.swift in Sources */,
@@ -892,6 +899,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CA9226F72640724D00BD0366 /* XCRemoteSwiftPackageReference "ExceptionCatcher" */;
 			productName = ExceptionCatcher;
+		};
+		CAA32F1726BF3F6000DB271E /* BETA_SwiftCurrent_SwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BETA_SwiftCurrent_SwiftUI;
 		};
 		CAC1C26C256D8FA500DBD0D4 /* CwlPosixPreconditionTesting */ = {
 			isa = XCSwiftPackageProductDependency;

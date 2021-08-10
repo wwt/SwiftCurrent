@@ -161,3 +161,42 @@ In SwiftUI, the [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.h
 
 `passedArgs` are the [AnyWorkflow.PassedArgs](https://wwt.github.io/SwiftCurrent/Classes/AnyWorkflow/PassedArgs.html) coming from the last view in the workflow.  `onFinish` is only called when the user has gone through all the screens in the `Workflow` by navigation or skipping.  For this workflow, `passedArgs` is going to be the output of `FirstView` or `SecondView` depending on the email signature typed in `FirstView`.  To extract the value, we unwrap the variable within the case of `.args()` as we expect this workflow to return some argument.
 </details>
+
+## Interoperability With UIKit
+You can use your `UIViewController`s that are [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) in your SwiftUI workflows. This is as seamless as it normally is to add to a workflow in SwiftUI. Start with your `UIViewController`
+
+```swift
+import UIKit
+import SwiftCurrent
+import SwiftCurrent_UIKit
+
+// This is programmatic but could just as easily have been StoryboardLoadable
+final class FirstViewController: UIWorkflowItem<Never, Never>, FlowRepresentable { // SwiftCurrent
+    typealias WorkflowOutput = String // SwiftCurrent
+    let nextButton = UIButton()
+
+    @objc private func nextPressed() {
+        proceedInWorkflow("string value") // SwiftCurrent
+    }
+
+    override func viewDidLoad() {
+        nextButton.setTitle("Next", for: .normal)
+        nextButton.setTitleColor(.systemBlue, for: .normal)
+        nextButton.addTarget(self, action: #selector(nextPressed), for: .touchUpInside)
+
+        view.addSubview(nextButton)
+
+        nextButton.translatesAutoresizingMaskIntoConstraints = false
+        nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        nextButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    }
+}
+```
+
+Now in SwiftUI simply reference that controller.
+
+```swift
+WorkflowLauncher(isLaunched: $workflowIsPresented) // SwiftCurrent
+    .thenProceed(with: WorkflowItem(FirstViewController.self)) // SwiftCurrent
+    .thenProceed(with: WorkflowItem(SecondView.self)) // SwiftCurrent
+```
