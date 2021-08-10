@@ -10,6 +10,10 @@ import Foundation
 import SwiftUI
 import SwiftCurrent
 
+#if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)
+import UIKit
+#endif
+
 /**
  A concrete type used to modify a `FlowRepresentable` in a workflow.
 
@@ -42,6 +46,17 @@ public final class WorkflowItem<F: FlowRepresentable & View, Content: View> {
                                              flowPersistence: flowPersistenceClosure,
                                              flowRepresentableFactory: factory)
     }
+
+    #if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)
+    /// Creates a `WorkflowItem` from a `UIViewController`.
+    @available(iOS 14.0, macOS 11, tvOS 14.0, *)
+    public init<VC: FlowRepresentable & UIViewController>(_: VC.Type) where F == ViewControllerWrapper<VC>, Content == F {
+        metadata = FlowRepresentableMetadata(ViewControllerWrapper<VC>.self,
+                                             launchStyle: .new,
+                                             flowPersistence: flowPersistenceClosure,
+                                             flowRepresentableFactory: factory)
+    }
+    #endif
 
     private init(metadata: FlowRepresentableMetadata,
                  persistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence,
