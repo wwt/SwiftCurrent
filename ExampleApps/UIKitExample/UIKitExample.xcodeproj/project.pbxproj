@@ -35,6 +35,7 @@
 		CA0536F026A0848B00BF8FC5 /* TestFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536E326A0848B00BF8FC5 /* TestFinder.swift */; };
 		CA0536F126A0848B00BF8FC5 /* MockOrchestrationResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536E526A0848B00BF8FC5 /* MockOrchestrationResponder.swift */; };
 		CA0536F226A0848B00BF8FC5 /* WorkflowListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536E626A0848B00BF8FC5 /* WorkflowListener.swift */; };
+		CA1D73B526C416E4002C9E45 /* TestConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1D73B426C416E4002C9E45 /* TestConstant.swift */; };
 		CA357F1A263E67DE003D1ACB /* UIKitPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA357F19263E67DE003D1ACB /* UIKitPresenterTests.swift */; };
 		CA357F1F263E68AD003D1ACB /* UIKitAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA357F1E263E68AD003D1ACB /* UIKitAssertions.swift */; };
 		CA655AA2265B4F3200F37E47 /* MockOrchestrationResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA655AA1265B4F3200F37E47 /* MockOrchestrationResponder.swift */; };
@@ -114,6 +115,7 @@
 		CA0536E326A0848B00BF8FC5 /* TestFinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestFinder.swift; path = ../../../Tests/UIKitExampleTests/TestFinder.swift; sourceTree = "<group>"; };
 		CA0536E526A0848B00BF8FC5 /* MockOrchestrationResponder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockOrchestrationResponder.swift; sourceTree = "<group>"; };
 		CA0536E626A0848B00BF8FC5 /* WorkflowListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkflowListener.swift; sourceTree = "<group>"; };
+		CA1D73B426C416E4002C9E45 /* TestConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestConstant.swift; sourceTree = "<group>"; };
 		CA357F19263E67DE003D1ACB /* UIKitPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitPresenterTests.swift; sourceTree = "<group>"; };
 		CA357F1E263E68AD003D1ACB /* UIKitAssertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitAssertions.swift; sourceTree = "<group>"; };
 		CA655AA1265B4F3200F37E47 /* MockOrchestrationResponder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockOrchestrationResponder.swift; path = ../../../Tests/UIKitExampleTests/Mocks/MockOrchestrationResponder.swift; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 				CA087B422640E7A100A994D8 /* TestUtilities */,
 				CA9F44B826ACA3220055020A /* GenericConstraintTests.swift */,
 				CA74CD6926BF3E2300592870 /* SwiftUIInteropTests.swift */,
+				CA1D73B426C416E4002C9E45 /* TestConstant.swift */,
 			);
 			path = SwiftCurrent_UIKitTests;
 			sourceTree = "<group>";
@@ -517,6 +520,7 @@
 				D7E12666264C75CF00B6A712 /* UIKitConsumerWorkflowChainingTests.swift in Sources */,
 				D7E1266E264C76D000B6A712 /* UIKitConsumerPersistenceTests.swift in Sources */,
 				CA357F1A263E67DE003D1ACB /* UIKitPresenterTests.swift in Sources */,
+				CA1D73B526C416E4002C9E45 /* TestConstant.swift in Sources */,
 				CAC1C23D256D8DB100DBD0D4 /* WaitUntil.swift in Sources */,
 				D7E1265E264C73BA00B6A712 /* UIKitConsumerLaunchTests.swift in Sources */,
 				CA9F44B926ACA3220055020A /* GenericConstraintTests.swift in Sources */,

@@ -80,6 +80,66 @@ class UIKitConsumerTests: XCTestCase {
         XCTAssertUIViewControllerDisplayed(ofType: FR4.self)
     }
 
+    func testAnyWorkflowCanBeFullyFollowed() {
+        class FR1: TestViewController { }
+        class FR2: TestViewController { }
+        class FR3: TestViewController { }
+        class FR4: TestViewController { }
+
+        let root = UIViewController()
+        let nav = UINavigationController(rootViewController: root)
+        nav.loadForTesting()
+
+        root.launchInto(AnyWorkflow(Workflow(FR1.self)
+                            .thenProceed(with: FR2.self)
+                            .thenProceed(with: FR3.self)
+                            .thenProceed(with: FR4.self)))
+
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
+        (UIApplication.topViewController() as? FR3)?.proceedInWorkflow(nil)
+        XCTAssertUIViewControllerDisplayed(ofType: FR4.self)
+    }
+
+    func testAnyWorkflowThatTakesInArgumentsCanBeFullyFollowed() {
+        class FR1: TestViewController { }
+        class FR2: TestViewController { }
+        class FR3: TestViewController { }
+        class FR4: TestViewController { }
+
+        let root = UIViewController()
+        let nav = UINavigationController(rootViewController: root)
+        nav.loadForTesting()
+
+        let onFinishCalled = expectation(description: "onFinish Called")
+        let expected = UUID().uuidString
+        root.launchInto(AnyWorkflow(Workflow(FR1.self)
+                            .thenProceed(with: FR2.self)
+                            .thenProceed(with: FR3.self)
+                            .thenProceed(with: FR4.self)), args: expected) {
+                                guard case .args(let str as String) = $0 else {
+                                    XCTFail("Should've gotten a string back")
+                                    return
+                                }
+                                XCTAssertEqual(str, expected)
+                                onFinishCalled.fulfill()
+                            }
+
+        XCTAssertUIViewControllerDisplayed(ofType: FR1.self)
+        (UIApplication.topViewController() as? FR1)?.proceedInWorkflow(\.data)
+        XCTAssertUIViewControllerDisplayed(ofType: FR2.self)
+        (UIApplication.topViewController() as? FR2)?.proceedInWorkflow(\.data)
+        XCTAssertUIViewControllerDisplayed(ofType: FR3.self)
+        (UIApplication.topViewController() as? FR3)?.proceedInWorkflow(\.data)
+        XCTAssertUIViewControllerDisplayed(ofType: FR4.self)
+        (UIApplication.topViewController() as? FR4)?.proceedInWorkflow(\.data)
+
+        wait(for: [onFinishCalled], timeout: TestConstant.timeout)
+    }
+
     func testFinishingWorkflowCallsBack() {
         class FR1: TestViewController { }
         class FR2: TestViewController { }
@@ -303,6 +363,10 @@ extension UIKitConsumerTests {
 
         func next() {
             proceedInWorkflow(data)
+        }
+
+        func proceedInWorkflow(_ keyPath: KeyPath<UIKitConsumerTests.TestViewController, WorkflowOutput>) {
+            proceedInWorkflow(self[keyPath: keyPath])
         }
     }
 }
