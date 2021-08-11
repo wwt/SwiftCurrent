@@ -127,6 +127,10 @@ And just like that you're started!
 - [Upgrade Path](https://github.com/wwt/SwiftCurrent/blob/main/wiki/UPGRADE_PATH.md)
 - [Contributing to SwiftCurrent](https://github.com/wwt/SwiftCurrent/blob/main/.github/CONTRIBUTING.md)
 
+# Special Thanks
+
+While we appreciate all of our dependencies, SwiftCurrent would not be nearly as fun to work on without all of the great work done on [ViewInspector](https://github.com/nalexn/ViewInspector) and [UIUTest](https://github.com/nallick/UIUTest).
+
 # Feedback
 
 If you like what you've seen, consider [giving us a star](https://github.com/wwt/SwiftCurrent/stargazers)! If you don't, let us know [how we can improve](https://github.com/wwt/SwiftCurrent/discussions/new).
