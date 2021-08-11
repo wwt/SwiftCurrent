@@ -48,7 +48,7 @@ extension UIViewController {
 
     /**
      When using UIKit this is how you launch a workflow
-     - Parameter workflow: `Workflow` to launch
+     - Parameter workflow: `AnyWorkflow` to launch
      - Parameter args: Args to pass to the first `FlowRepresentable`
      - Parameter launchStyle: The `PresentationType` used to launch the workflow
      - Parameter onFinish: A callback that is called when the last item in the workflow proceeds; called with the `AnyWorkflow.PassedArgs` the workflow finished with.
@@ -75,7 +75,7 @@ extension UIViewController {
 
     /**
      When using UIKit this is how you launch a workflow
-     - Parameter workflow: `Workflow` to launch
+     - Parameter workflow: `AnyWorkflow` to launch
      - Parameter launchStyle: The `PresentationType` used to launch the workflow
      - Parameter onFinish: A callback that is called when the last item in the workflow proceeds; called with the `AnyWorkflow.PassedArgs` the workflow finished with.
      - Note: In the background this applies a UIKitPresenter, if you call launch on workflow directly you'll need to apply one yourself
