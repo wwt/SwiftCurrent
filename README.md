@@ -137,7 +137,7 @@ If you like what you've seen, consider [giving us a star](https://github.com/wwt
 
 # Special Thanks
 
-SwiftCurrent would not be nearly as fun to work on without all of the great work done on our test dependencies:
+SwiftCurrent would not be nearly as amazing without all of the great work done by the authors of our test dependencies:
 
 - [CwlCatchException](https://github.com/mattgallagher/CwlCatchException)
 - [CwlPreconditionTesting](https://github.com/mattgallagher/CwlPreconditionTesting)
