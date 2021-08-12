@@ -62,18 +62,6 @@ extension UIViewController {
                         passedArgs: .args(args),
                         launchStyle: launchStyle.rawValue,
                         onFinish: onFinish)
-<<<<<<< HEAD
-=======
-        #if DEBUG && canImport(XCTest)
-        NotificationCenter.default.post(name: .workflowLaunched, object: [
-            "workflow": workflow,
-            "launchFrom": self,
-            "args": args,
-            "style": launchStyle,
-            "onFinish": onFinish
-        ])
-        #endif
->>>>>>> main
     }
 
     /**
@@ -90,17 +78,6 @@ extension UIViewController {
                         passedArgs: .none,
                         launchStyle: launchStyle.rawValue,
                         onFinish: onFinish)
-<<<<<<< HEAD
-=======
-        #if DEBUG && canImport(XCTest)
-        NotificationCenter.default.post(name: .workflowLaunched, object: [
-            "workflow": workflow,
-            "launchFrom": self,
-            "style": launchStyle,
-            "onFinish": onFinish as Any
-        ])
-        #endif
->>>>>>> main
     }
 }
 
