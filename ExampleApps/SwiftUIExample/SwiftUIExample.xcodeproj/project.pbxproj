@@ -36,6 +36,14 @@
 		CAC34B7D26A0803C0039A373 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = CAC34B7C26A0803C0039A373 /* CodeScanner */; };
 		CAC34B8226A080910039A373 /* BETA_SwiftCurrent_SwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = CAC34B8126A080910039A373 /* BETA_SwiftCurrent_SwiftUI */; };
 		CAC34B8426A080910039A373 /* SwiftCurrent in Frameworks */ = {isa = PBXBuildFile; productRef = CAC34B8326A080910039A373 /* SwiftCurrent */; };
+		CAC68D7A26BEDAA1005955F3 /* UIKitInteropProgrammaticViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC68D7926BEDAA1005955F3 /* UIKitInteropProgrammaticViewController.swift */; };
+		CAC68D7C26BEDAF0005955F3 /* SwiftCurrent_UIKit in Frameworks */ = {isa = PBXBuildFile; productRef = CAC68D7B26BEDAF0005955F3 /* SwiftCurrent_UIKit */; };
+		CAC68D7E26BEF558005955F3 /* UIKitInteropTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC68D7D26BEF558005955F3 /* UIKitInteropTests.swift */; };
+		CAC68D8126BEF5B8005955F3 /* UIUTest in Frameworks */ = {isa = PBXBuildFile; productRef = CAC68D8026BEF5B8005955F3 /* UIUTest */; };
+		CAC68D8726BEF7FC005955F3 /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC68D8326BEF7FC005955F3 /* TopViewController.swift */; };
+		CAC68D8826BEF7FC005955F3 /* WaitUntil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC68D8426BEF7FC005955F3 /* WaitUntil.swift */; };
+		CAC68D8926BEF7FC005955F3 /* UIKitAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC68D8526BEF7FC005955F3 /* UIKitAssertions.swift */; };
+		CAC68D8C26BF26F0005955F3 /* UIKitInterop.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAC68D8B26BF26F0005955F3 /* UIKitInterop.storyboard */; };
 		CAD0269726A0AEE00075B818 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD0269626A0AEE00075B818 /* ChangePasswordView.swift */; };
 		CAD0269A26A0BE390075B818 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = CAD0269926A0BE390075B818 /* Swinject */; };
 		CAD0269F26A0BE810075B818 /* ContainerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD0269E26A0BE810075B818 /* ContainerExtensions.swift */; };
@@ -89,6 +97,12 @@
 		CAC34B7026A07FE90039A373 /* MapFeatureOnboardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapFeatureOnboardingView.swift; sourceTree = "<group>"; };
 		CAC34B7126A07FE90039A373 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		CAC34B7226A07FE90039A373 /* MapFeatureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapFeatureView.swift; sourceTree = "<group>"; };
+		CAC68D7926BEDAA1005955F3 /* UIKitInteropProgrammaticViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitInteropProgrammaticViewController.swift; sourceTree = "<group>"; };
+		CAC68D7D26BEF558005955F3 /* UIKitInteropTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitInteropTests.swift; sourceTree = "<group>"; };
+		CAC68D8326BEF7FC005955F3 /* TopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
+		CAC68D8426BEF7FC005955F3 /* WaitUntil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaitUntil.swift; sourceTree = "<group>"; };
+		CAC68D8526BEF7FC005955F3 /* UIKitAssertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitAssertions.swift; sourceTree = "<group>"; };
+		CAC68D8B26BF26F0005955F3 /* UIKitInterop.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = UIKitInterop.storyboard; sourceTree = "<group>"; };
 		CAD0269626A0AEE00075B818 /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 		CAD0269E26A0BE810075B818 /* ContainerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerExtensions.swift; sourceTree = "<group>"; };
 		CAD026A026A0BE9A0075B818 /* DependencyInjected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjected.swift; sourceTree = "<group>"; };
@@ -107,6 +121,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAC34B8226A080910039A373 /* BETA_SwiftCurrent_SwiftUI in Frameworks */,
+				CAC68D7C26BEDAF0005955F3 /* SwiftCurrent_UIKit in Frameworks */,
 				CAC34B8426A080910039A373 /* SwiftCurrent in Frameworks */,
 				CAC34B7D26A0803C0039A373 /* CodeScanner in Frameworks */,
 				CAD0269A26A0BE390075B818 /* Swinject in Frameworks */,
@@ -117,6 +132,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAC68D8126BEF5B8005955F3 /* UIUTest in Frameworks */,
 				CAC34B7A26A0801E0039A373 /* ViewInspector in Frameworks */,
 				CAE6927926C0708500B9E905 /* SwiftCurrent_Testing in Frameworks */,
 			);
@@ -160,6 +176,7 @@
 		CAC34B4126A07F830039A373 /* SwiftUIExample */ = {
 			isa = PBXGroup;
 			children = (
+				CAC68D7826BEDA8B005955F3 /* UIKitInterop */,
 				CAD026AA26A0C7F80075B818 /* ViewInspector */,
 				CAD0269D26A0BE610075B818 /* DependencyInjection */,
 				CAC34B6D26A07FE90039A373 /* Views */,
@@ -182,11 +199,14 @@
 		CAC34B5326A07F840039A373 /* SwiftUIExampleTests */ = {
 			isa = PBXGroup;
 			children = (
+				CAC68D8226BEF7FC005955F3 /* TestUtilities */,
 				CAD026AD26A0C8570075B818 /* ViewInspector */,
 				CAD026A426A0C1E30075B818 /* Views */,
 				CAC34B5626A07F840039A373 /* Info.plist */,
 				CAD026A226A0BEB50075B818 /* DependencyInjectionTests.swift */,
 				D74A4D5B26A7315F00010617 /* TestConstant.swift */,
+				CAC68D7D26BEF558005955F3 /* UIKitInteropTests.swift */,
+				CAC68D8B26BF26F0005955F3 /* UIKitInterop.storyboard */,
 			);
 			path = SwiftUIExampleTests;
 			sourceTree = "<group>";
@@ -210,6 +230,25 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CAC68D7826BEDA8B005955F3 /* UIKitInterop */ = {
+			isa = PBXGroup;
+			children = (
+				CAC68D7926BEDAA1005955F3 /* UIKitInteropProgrammaticViewController.swift */,
+			);
+			path = UIKitInterop;
+			sourceTree = "<group>";
+		};
+		CAC68D8226BEF7FC005955F3 /* TestUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				CAC68D8326BEF7FC005955F3 /* TopViewController.swift */,
+				CAC68D8426BEF7FC005955F3 /* WaitUntil.swift */,
+				CAC68D8526BEF7FC005955F3 /* UIKitAssertions.swift */,
+			);
+			name = TestUtilities;
+			path = ../../UIKitExample/SwiftCurrent_UIKitTests/TestUtilities;
 			sourceTree = "<group>";
 		};
 		CAD0269D26A0BE610075B818 /* DependencyInjection */ = {
@@ -279,6 +318,7 @@
 				CAC34B8126A080910039A373 /* BETA_SwiftCurrent_SwiftUI */,
 				CAC34B8326A080910039A373 /* SwiftCurrent */,
 				CAD0269926A0BE390075B818 /* Swinject */,
+				CAC68D7B26BEDAF0005955F3 /* SwiftCurrent_UIKit */,
 			);
 			productName = SwiftUIExample;
 			productReference = CAC34B3F26A07F830039A373 /* SwiftUIExample.app */;
@@ -300,7 +340,11 @@
 			name = SwiftUIExampleTests;
 			packageProductDependencies = (
 				CAC34B7926A0801E0039A373 /* ViewInspector */,
+<<<<<<< HEAD
 				CAE6927826C0708500B9E905 /* SwiftCurrent_Testing */,
+=======
+				CAC68D8026BEF5B8005955F3 /* UIUTest */,
+>>>>>>> main
 			);
 			productName = SwiftUIExampleTests;
 			productReference = CAC34B5026A07F840039A373 /* SwiftUIExampleTests.xctest */;
@@ -338,6 +382,7 @@
 				CAC34B7826A0801E0039A373 /* XCRemoteSwiftPackageReference "ViewInspector" */,
 				CAC34B7B26A0803C0039A373 /* XCRemoteSwiftPackageReference "CodeScanner" */,
 				CAD0269826A0BE390075B818 /* XCRemoteSwiftPackageReference "Swinject" */,
+				CAC68D7F26BEF5B8005955F3 /* XCRemoteSwiftPackageReference "UIUTest" */,
 			);
 			productRefGroup = CAC34B4026A07F830039A373 /* Products */;
 			projectDirPath = "";
@@ -363,6 +408,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAC68D8C26BF26F0005955F3 /* UIKitInterop.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,6 +424,7 @@
 				CAC34B4326A07F830039A373 /* SwiftUIExampleApp.swift in Sources */,
 				CA0536F426A0887800BF8FC5 /* ProfileFeatureView.swift in Sources */,
 				CA4B40B926A09E5800B18626 /* ChangeUsernameView.swift in Sources */,
+				CAC68D7A26BEDAA1005955F3 /* UIKitInteropProgrammaticViewController.swift in Sources */,
 				CA7B821026A123F6005AA87D /* InspectableSheet.swift in Sources */,
 				CAD0269726A0AEE00075B818 /* ChangePasswordView.swift in Sources */,
 				CAD026AC26A0C83B0075B818 /* Inspection.swift in Sources */,
@@ -402,6 +449,8 @@
 				CA7B820D26A11C53005AA87D /* ProfileFeatureViewTests.swift in Sources */,
 				CA7B821426A12DEC005AA87D /* AccountInformationViewTests.swift in Sources */,
 				CA7B821226A12642005AA87D /* QRScanningViewTests.swift in Sources */,
+				CAC68D8826BEF7FC005955F3 /* WaitUntil.swift in Sources */,
+				CAC68D8926BEF7FC005955F3 /* UIKitAssertions.swift in Sources */,
 				CAD026A326A0BEB50075B818 /* DependencyInjectionTests.swift in Sources */,
 				CA7B82A126A1FB97005AA87D /* MFAViewTests.swift in Sources */,
 				CA84D8E926A0ED66006CF964 /* ChangePasswordViewTests.swift in Sources */,
@@ -409,6 +458,8 @@
 				CAD026A626A0C1EF0075B818 /* ProfileFeatureOnboardingViewTests.swift in Sources */,
 				D74A4D5C26A7315F00010617 /* TestConstant.swift in Sources */,
 				CA84D8E726A0E72A006CF964 /* MapFeatureViewTests.swift in Sources */,
+				CAC68D8726BEF7FC005955F3 /* TopViewController.swift in Sources */,
+				CAC68D7E26BEF558005955F3 /* UIKitInteropTests.swift in Sources */,
 				CA84D8E326A0E3F5006CF964 /* QRScannerFeatureOnboardingViewTests.swift in Sources */,
 				CA238D1426A1153B000A36EC /* ContentViewTests.swift in Sources */,
 				CA84D8E526A0E5A8006CF964 /* MapFeatureOnboardingViewTests.swift in Sources */,
@@ -679,6 +730,14 @@
 				minimumVersion = 1.0.7;
 			};
 		};
+		CAC68D7F26BEF5B8005955F3 /* XCRemoteSwiftPackageReference "UIUTest" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nallick/UIUTest.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.8.0;
+			};
+		};
 		CAD0269826A0BE390075B818 /* XCRemoteSwiftPackageReference "Swinject" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Swinject/Swinject";
@@ -707,6 +766,15 @@
 		CAC34B8326A080910039A373 /* SwiftCurrent */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftCurrent;
+		};
+		CAC68D7B26BEDAF0005955F3 /* SwiftCurrent_UIKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftCurrent_UIKit;
+		};
+		CAC68D8026BEF5B8005955F3 /* UIUTest */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CAC68D7F26BEF5B8005955F3 /* XCRemoteSwiftPackageReference "UIUTest" */;
+			productName = UIUTest;
 		};
 		CAD0269926A0BE390075B818 /* Swinject */ = {
 			isa = XCSwiftPackageProductDependency;
