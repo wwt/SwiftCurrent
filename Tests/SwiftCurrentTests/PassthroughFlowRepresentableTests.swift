@@ -17,7 +17,7 @@ class PassthroughFlowRepresentableTests: XCTestCase {
         }
         let passthrough = FR1()
 
-        XCTAssertThrowsFatalError {
+        try XCTAssertThrowsFatalError {
             passthrough.proceedInWorkflow()
         }
     }

@@ -209,7 +209,7 @@ class WorkflowConsumerTests: XCTestCase {
         XCTAssert(mockOrchestrationResponder.allTos[3].value.instance?.underlyingInstance is FR4, "Expected orchestration responder to proceed to FR4, but was: \(String(describing: mockOrchestrationResponder.allTos[3].value.instance?.underlyingInstance))")
     }
 
-    func testWorkflowThrowsFatalError_WhenLaunchedWithWrongArgumentType() {
+    func testWorkflowThrowsFatalError_WhenLaunchedWithWrongArgumentType() throws {
         struct FR1: FlowRepresentable {
             var _workflowPointer: AnyFlowRepresentable?
             init(with name: String) { }
@@ -217,7 +217,7 @@ class WorkflowConsumerTests: XCTestCase {
 
         let wf = Workflow(FR1.self) { args in .default }
 
-        XCTAssertThrowsFatalError {
+        try XCTAssertThrowsFatalError {
             wf.launch(withOrchestrationResponder: MockOrchestrationResponder(),
                       args: 1)
         }

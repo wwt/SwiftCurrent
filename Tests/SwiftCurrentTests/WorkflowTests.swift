@@ -59,24 +59,24 @@ class WorkflowTests: XCTestCase {
         XCTAssert(instance.shouldLoad() == true)
     }
 
-    func testAnyFlowRepresentableThrowsFatalErrorIfItSomehowHasATypeMismatch() {
+    func testAnyFlowRepresentableThrowsFatalErrorIfItSomehowHasATypeMismatch() throws {
         class FR1: TestFlowRepresentable<String, Int>, FlowRepresentable {
             required init(with args: String) { }
         }
 
-        XCTAssertThrowsFatalError {
+        try XCTAssertThrowsFatalError {
             _ = AnyFlowRepresentable(FR1.self, args: .args(12.34))
         }
     }
 
-    func testFlowRepresentableThrowsFatalErrorIfNoCustomEmptyInitSupplied() {
+    func testFlowRepresentableThrowsFatalErrorIfNoCustomEmptyInitSupplied() throws {
         class FR1: FlowRepresentable {
             weak var _workflowPointer: AnyFlowRepresentable?
 
             required init(with name:String) { }
         }
 
-        XCTAssertThrowsFatalError {
+        try XCTAssertThrowsFatalError {
             _ = FR1()
         }
     }
