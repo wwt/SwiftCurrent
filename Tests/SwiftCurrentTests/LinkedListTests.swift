@@ -471,16 +471,16 @@ class LinkedListTests: XCTestCase {
         XCTAssertEqual(list.first?.traverse(2)?.value, 3)
     }
 
-    func testSwapWithInvalidStart() {
+    func testSwapWithInvalidStart() throws {
         let list = LinkedList([1, 3, 2])
-        XCTAssertThrowsFatalError {
+        try XCTAssertThrowsFatalError {
             list.swapAt(20, 2)
         }
     }
 
-    func testSwapWithInvalidEnd() {
+    func testSwapWithInvalidEnd() throws {
         let list = LinkedList([1, 3, 2])
-        XCTAssertThrowsFatalError {
+        try XCTAssertThrowsFatalError {
             list.swapAt(1, 12)
         }
     }

@@ -134,3 +134,13 @@ If you like what you've seen, consider [giving us a star](https://github.com/wwt
 <!-- Social Media -->
 [![Stars](https://img.shields.io/github/stars/wwt/SwiftCurrent?style=social)](https://github.com/wwt/SwiftCurrent/stargazers)
 [![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2FSwiftCurrentWWT)](https://twitter.com/SwiftCurrentWWT)
+
+# Special Thanks
+
+SwiftCurrent would not be nearly as amazing without all of the great work done by the authors of our test dependencies:
+
+- [CwlCatchException](https://github.com/mattgallagher/CwlCatchException)
+- [CwlPreconditionTesting](https://github.com/mattgallagher/CwlPreconditionTesting)
+- [ExceptionCatcher](https://github.com/sindresorhus/ExceptionCatcher)
+- [UIUTest](https://github.com/nallick/UIUTest)
+- [ViewInspector](https://github.com/nalexn/ViewInspector)
