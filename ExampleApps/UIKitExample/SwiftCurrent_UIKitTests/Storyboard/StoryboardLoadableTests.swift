@@ -14,7 +14,7 @@ import SwiftCurrent
 @testable import SwiftCurrent_UIKit
 
 class StoryboardLoadableTests: XCTestCase {
-    func testStoryboardLoadableThrowsErrorWhenYouCallDefaultInitImplementation() {
+    func testStoryboardLoadableThrowsErrorWhenYouCallDefaultInitImplementation() throws {
         class Test: UIWorkflowItem<String, Never>, StoryboardLoadable {
             static var storyboardId: String = ""
             static var storyboard: UIStoryboard = UIStoryboard()
@@ -25,7 +25,7 @@ class StoryboardLoadableTests: XCTestCase {
             required init?(coder: NSCoder) { nil }
         }
 
-        XCTAssertThrowsFatalError {
+        try XCTAssertThrowsFatalError {
             _ = Test(with: "")
         }
     }
@@ -77,7 +77,7 @@ class StoryboardLoadableTests: XCTestCase {
             }
         }
 
-        XCTAssertThrowsFatalError {
+        try XCTAssertThrowsFatalError {
             _ = TestNoInputViewController._factory(Test.self)
         }
     }
