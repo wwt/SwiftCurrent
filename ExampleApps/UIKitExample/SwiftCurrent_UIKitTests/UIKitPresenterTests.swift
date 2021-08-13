@@ -13,7 +13,7 @@ import XCTest
 @testable import SwiftCurrent_UIKit
 
 class UIKitPresenterTests: XCTestCase {
-    func testUnknownLaunchStyleThrowsFatalError() {
+    func testUnknownLaunchStyleThrowsFatalError() throws {
         let ls = LaunchStyle.new
         class FR1: TestViewController { }
         class FR2: TestViewController { }
@@ -29,7 +29,7 @@ class UIKitPresenterTests: XCTestCase {
         let metadata = FlowRepresentableMetadata(FR1.self, launchStyle: ls, flowPersistence: { _ in .default })
         let node = AnyWorkflow.Element(with: _WorkflowItem(metadata: metadata, instance: afr))
 
-        XCTAssertThrowsFatalError {
+        try XCTAssertThrowsFatalError {
             presenter.proceed(to: node, from: node)
         }
     }
