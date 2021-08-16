@@ -5,10 +5,13 @@ on: [ pull_request ]
 jobs:
   test:
     runs-on: macos-latest
+    env:
+        working-directory: CI
     steps:
       - uses: actions/checkout@v2
       - name: Run TESTS
         run: bundle exec fastlane unit_test
+        working-directory: ${{ env.working-directory }}
       - name: Codecov
         uses: codecov/codecov-action@v1.5.2
         with:
@@ -24,16 +27,23 @@ jobs:
   build_for_package_managers:
     needs: test
     runs-on: macos-latest
+    env:
+        working-directory: CI
     steps:
       - uses: actions/checkout@v2
       - name: Validate SwiftPM BUILDs
         run: bundle exec fastlane build_swiftpm
+        working-directory: ${{ env.working-directory }}
       - name: Validate Cocoapods Can Deploy (lib lint)
         run: bundle exec fastlane cocoapods_liblint
+        working-directory: ${{ env.working-directory }}
 
   lint: 
     runs-on: macos-latest
+    env:
+        working-directory: CI
     steps:
       - uses: actions/checkout@v2
       - name: Swiftlint
         run: bundle exec fastlane lint
+        working-directory: ${{ env.working-directory }}
