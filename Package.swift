@@ -43,7 +43,8 @@ let package = Package(
             publicHeadersPath: "Include"),
         .target(
             name: "SwiftCurrent_Testing",
-            dependencies: ["SwiftCurrent_Testing_ObjC", "SwiftCurrent", "SwiftCurrent_UIKit", "SwiftCurrent_SwiftUI"]),
+            dependencies: ["SwiftCurrent_Testing_ObjC",
+                           "SwiftCurrent"]),
         .testTarget(
             name: "SwiftCurrentTests",
             dependencies: [

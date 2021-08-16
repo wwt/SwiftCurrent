@@ -14,8 +14,14 @@ import SwiftCurrent_Testing_ObjC
 #endif
 
 @testable import SwiftCurrent
+
+#if canImport(SwiftCurrent_UIKit)
 @testable import SwiftCurrent_UIKit
-@testable import SwiftCurrent_SwiftUI
+#endif
+
+//#if canImport(SwiftCurrent_SwiftUI)
+//@testable import SwiftCurrent_SwiftUI
+//#endif
 
 enum EventReceiver {
     static func workflowLaunched(workflow: AnyWorkflow,
@@ -23,9 +29,12 @@ enum EventReceiver {
                                  args: AnyWorkflow.PassedArgs,
                                  style: LaunchStyle,
                                  onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
+        #if canImport(SwiftCurrent_UIKit)
         if let responder = responder as? UIKitPresenter {
             responder.launchedFromVC.launchedWorkflows.append(workflow)
         }
+        #endif
+        
         workflow.onFinish = onFinish
         workflow.launchStyle = style
     }

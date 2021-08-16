@@ -6,11 +6,11 @@
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
 
+#if canImport(XCTest) && canImport(UIKit)
 import XCTest
+import UIKit
 
 @testable import SwiftCurrent
-@testable import SwiftCurrent_UIKit
-@testable import SwiftCurrent_SwiftUI
 
 /// Assert that a workflow was launched and matches the workflow passed in
 public func XCTAssertWorkflowLaunched<F>(from VC: UIViewController, workflow: Workflow<F>, file: StaticString = #filePath, line: UInt = #line) {
@@ -32,3 +32,4 @@ public func XCTAssertWorkflowLaunched<F>(from VC: UIViewController, workflow: Wo
         XCTAssert(actual == expected, "Expected type: \(expected), but got: \(actual)", file: file, line: line)
     }
 }
+#endif
