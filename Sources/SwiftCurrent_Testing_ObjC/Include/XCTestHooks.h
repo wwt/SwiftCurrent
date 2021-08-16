@@ -6,7 +6,6 @@
 //  Copyright © 2020 Tyler Thompson. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
