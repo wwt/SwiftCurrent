@@ -22,20 +22,6 @@
          </BuildActionEntry>
          <BuildActionEntry
             buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CA185E11256DD2F3008C9143"
-               BuildableName = "libSwiftCurrentLint.a"
-               BlueprintName = "SwiftCurrentLint"
-               ReferencedContainer = "container:../../SwiftCurrentLint/SwiftCurrentLint.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
             buildForRunning = "NO"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
@@ -60,6 +46,20 @@
                BuildableName = "SwiftCurrent_Testing"
                BlueprintName = "SwiftCurrent_Testing"
                ReferencedContainer = "container:../..">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CA185E11256DD2F3008C9143"
+               BuildableName = "libSwiftCurrentLint.a"
+               BlueprintName = "SwiftCurrentLint"
+               ReferencedContainer = "container:../../CI/SwiftCurrentLint/SwiftCurrentLint.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

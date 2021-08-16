@@ -45,7 +45,7 @@
                BlueprintIdentifier = "CA185E11256DD2F3008C9143"
                BuildableName = "libSwiftCurrentLint.a"
                BlueprintName = "SwiftCurrentLint"
-               ReferencedContainer = "container:SwiftCurrentLint/SwiftCurrentLint.xcodeproj">
+               ReferencedContainer = "container:CI/SwiftCurrentLint/SwiftCurrentLint.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -89,10 +89,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CA185E11256DD2F3008C9143"
-            BuildableName = "libSwiftCurrentLint.a"
-            BlueprintName = "SwiftCurrentLint"
-            ReferencedContainer = "container:SwiftCurrentLint/SwiftCurrentLint.xcodeproj">
+            BlueprintIdentifier = "SwiftCurrent"
+            BuildableName = "SwiftCurrent"
+            BlueprintName = "SwiftCurrent"
+            ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
