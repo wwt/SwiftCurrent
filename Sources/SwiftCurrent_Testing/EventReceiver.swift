@@ -19,10 +19,6 @@ import SwiftCurrent_Testing_ObjC
 @testable import SwiftCurrent_UIKit
 #endif
 
-//#if canImport(SwiftCurrent_SwiftUI)
-//@testable import SwiftCurrent_SwiftUI
-//#endif
-
 enum EventReceiver {
     static func workflowLaunched(workflow: AnyWorkflow,
                                  responder: OrchestrationResponder,
@@ -34,7 +30,6 @@ enum EventReceiver {
             responder.launchedFromVC.launchedWorkflows.append(workflow)
         }
         #endif
-        
         workflow.onFinish = onFinish
         workflow.launchStyle = style
     }
