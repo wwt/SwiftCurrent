@@ -67,16 +67,6 @@
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "SwiftCurrent-SwiftUITests"
-               BuildableName = "SwiftCurrent-SwiftUITests"
-               BlueprintName = "SwiftCurrent-SwiftUITests"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
