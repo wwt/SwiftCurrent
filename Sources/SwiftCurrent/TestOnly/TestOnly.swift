@@ -33,23 +33,27 @@ enum EventReceiver {
                                  args: AnyWorkflow.PassedArgs,
                                  style: LaunchStyle,
                                  onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
-        #if DEBUG && canImport(XCTest)
-        NotificationCenter.default.post(name: .workflowLaunched, object: [
-            "workflow": workflow,
-            "responder": responder,
-            "args": args,
-            "style": style,
-            "onFinish": onFinish as Any
-        ])
-        #endif
+        if #available(iOS 11.0, macOS 10.14, tvOS 13, watchOS 7.4, *) {
+            #if DEBUG && canImport(XCTest)
+            NotificationCenter.default.post(name: .workflowLaunched, object: [
+                "workflow": workflow,
+                "responder": responder,
+                "args": args,
+                "style": style,
+                "onFinish": onFinish as Any
+            ])
+            #endif
+        }
     }
 
     static func flowRepresentableMetadataCreated<F: FlowRepresentable>(metadata: FlowRepresentableMetadata, type: F.Type) {
-        #if DEBUG && canImport(XCTest)
-        NotificationCenter.default.post(name: .flowRepresentableMetadataCreated, object: [
-            "metadata": metadata,
-            "type": String(describing: type)
-        ])
-        #endif
+        if #available(iOS 11.0, macOS 10.14, tvOS 13, watchOS 7.4, *) {
+            #if DEBUG && canImport(XCTest)
+            NotificationCenter.default.post(name: .flowRepresentableMetadataCreated, object: [
+                "metadata": metadata,
+                "type": String(describing: type)
+            ])
+            #endif
+        }
     }
 }

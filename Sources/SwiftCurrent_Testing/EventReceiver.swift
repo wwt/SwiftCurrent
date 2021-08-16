@@ -35,6 +35,7 @@ enum EventReceiver {
     }
 }
 
+@available(iOS 11.0, macOS 10.14, tvOS 13, watchOS 7.4, *)
 class NotificationReceiver: NSObject {
     @objc static func workflowLaunched(notification: Notification) {
         guard let dict = notification.object as? [String: Any?],
@@ -66,14 +67,16 @@ class NotificationReceiver: NSObject {
 
 @nonobjc extension NotificationCenter {
     @objc override public class func beforeTestExecution() {
-        NotificationCenter.default.addObserver(NotificationReceiver.self,
-                                               selector: #selector(NotificationReceiver.workflowLaunched(notification:)),
-                                               name: .workflowLaunched,
-                                               object: nil)
-        NotificationCenter.default.addObserver(NotificationReceiver.self,
-                                               selector: #selector(NotificationReceiver.flowRepresentableMetadataCreated(notification:)),
-                                               name: .flowRepresentableMetadataCreated,
-                                               object: nil)
+        if #available(iOS 11.0, macOS 10.14, tvOS 13, watchOS 7.4, *) {
+            NotificationCenter.default.addObserver(NotificationReceiver.self,
+                                                   selector: #selector(NotificationReceiver.workflowLaunched(notification:)),
+                                                   name: .workflowLaunched,
+                                                   object: nil)
+            NotificationCenter.default.addObserver(NotificationReceiver.self,
+                                                   selector: #selector(NotificationReceiver.flowRepresentableMetadataCreated(notification:)),
+                                                   name: .flowRepresentableMetadataCreated,
+                                                   object: nil)
+        }
     }
 }
 
