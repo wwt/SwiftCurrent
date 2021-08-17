@@ -34,17 +34,6 @@ platform :ios do
         ]
       )
       xcodebuild(
-        scheme: 'SwiftCurrent_Testing',
-        destination: [
-          'platform=iOS Simulator,name=iPhone 8',
-          'platform=tvOS Simulator,name=Apple TV',
-          'platform=watchOS Simulator,name=Apple Watch Series 5 - 44mm',
-          'platform=iOS Simulator,name=iPad Pro (12.9-inch) (4th generation)',
-          'platform=macOS',
-          'platform=macOS,variant=Mac Catalyst',
-        ]
-      )
-      xcodebuild(
         scheme: 'SwiftCurrent_UIKit',
         destination: [
           'platform=iOS Simulator,name=iPhone 8',
@@ -62,6 +51,17 @@ platform :ios do
           'platform=iOS Simulator,name=iPad Pro (12.9-inch) (4th generation)',
           'platform=macOS',
           'platform=macOS,variant=Mac Catalyst',
+        ]
+      )
+      xcodebuild(
+        scheme: 'SwiftCurrent_Testing',
+        destination: [
+          'platform=iOS Simulator,name=iPhone 8',
+          'platform=tvOS Simulator,name=Apple TV',
+          'platform=iOS Simulator,name=iPad Pro (12.9-inch) (4th generation)',
+          'platform=macOS',
+          'platform=macOS,variant=Mac Catalyst',
+          'platform=watchOS Simulator,name=Apple Watch Series 5 - 44mm',
         ]
       )
     end
