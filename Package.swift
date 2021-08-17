@@ -49,6 +49,7 @@ let package = Package(
             name: "SwiftCurrentTests",
             dependencies: [
                 "SwiftCurrent",
+                "SwiftCurrent_Testing",
                 "CwlPreconditionTesting",
                 "CwlCatchException",
                 "ExceptionCatcher",
