@@ -6,7 +6,7 @@
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
 
-#if canImport(UIKit)
+#if canImport(UIKit) && !os(watchOS)
 import UIKit
 import SwiftCurrent
 extension UIViewController {
