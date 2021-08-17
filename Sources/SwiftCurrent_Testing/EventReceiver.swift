@@ -7,7 +7,6 @@
 //  swiftlint:disable file_types_order
 
 import Foundation
-import XCTest
 
 #if canImport(SwiftCurrent_Testing_ObjC)
 import SwiftCurrent_Testing_ObjC
