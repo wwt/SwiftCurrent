@@ -6,8 +6,7 @@
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
 
-// Xcode 12.4 does not have this compiler. YES this could not be more hacky, please come up with a better solution.
-#if compiler(>=5.4.2) && canImport(XCTest) && canImport(UIKit)
+#if ((os(watchOS) && swift(>=5.5)) || !os(watchOS)) && canImport(XCTest) && canImport(UIKit)
 import XCTest
 import UIKit
 
