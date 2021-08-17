@@ -33,10 +33,8 @@
 		CA0536EE26A0848B00BF8FC5 /* FoodSelectionViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536E126A0848B00BF8FC5 /* FoodSelectionViewControllerTests.swift */; };
 		CA0536EF26A0848B00BF8FC5 /* Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536E226A0848B00BF8FC5 /* Convenience.swift */; };
 		CA0536F026A0848B00BF8FC5 /* TestFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536E326A0848B00BF8FC5 /* TestFinder.swift */; };
-		CA0536F126A0848B00BF8FC5 /* MockOrchestrationResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536E526A0848B00BF8FC5 /* MockOrchestrationResponder.swift */; };
 		CA357F1A263E67DE003D1ACB /* UIKitPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA357F19263E67DE003D1ACB /* UIKitPresenterTests.swift */; };
 		CA357F1F263E68AD003D1ACB /* UIKitAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA357F1E263E68AD003D1ACB /* UIKitAssertions.swift */; };
-		CA655AA2265B4F3200F37E47 /* MockOrchestrationResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA655AA1265B4F3200F37E47 /* MockOrchestrationResponder.swift */; };
 		CA6FB0DB26C6AC8200FB3285 /* TestConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FB0DA26C6AC8200FB3285 /* TestConstant.swift */; };
 		CA74CD6A26BF3E2300592870 /* SwiftUIInteropTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA74CD6926BF3E2300592870 /* SwiftUIInteropTests.swift */; };
 		CA875AC0257353B300243FA4 /* CustomAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA875ABF257353B300243FA4 /* CustomAssertions.swift */; };
@@ -114,10 +112,8 @@
 		CA0536E126A0848B00BF8FC5 /* FoodSelectionViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FoodSelectionViewControllerTests.swift; path = ../../../Tests/UIKitExampleTests/FoodSelectionViewControllerTests.swift; sourceTree = "<group>"; };
 		CA0536E226A0848B00BF8FC5 /* Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Convenience.swift; path = ../../../Tests/UIKitExampleTests/Convenience.swift; sourceTree = "<group>"; };
 		CA0536E326A0848B00BF8FC5 /* TestFinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestFinder.swift; path = ../../../Tests/UIKitExampleTests/TestFinder.swift; sourceTree = "<group>"; };
-		CA0536E526A0848B00BF8FC5 /* MockOrchestrationResponder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockOrchestrationResponder.swift; sourceTree = "<group>"; };
 		CA357F19263E67DE003D1ACB /* UIKitPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitPresenterTests.swift; sourceTree = "<group>"; };
 		CA357F1E263E68AD003D1ACB /* UIKitAssertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitAssertions.swift; sourceTree = "<group>"; };
-		CA655AA1265B4F3200F37E47 /* MockOrchestrationResponder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockOrchestrationResponder.swift; path = ../../../Tests/UIKitExampleTests/Mocks/MockOrchestrationResponder.swift; sourceTree = "<group>"; };
 		CA6FB0DA26C6AC8200FB3285 /* TestConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestConstant.swift; path = ../../../SwiftUIExample/SwiftUIExampleTests/TestConstant.swift; sourceTree = "<group>"; };
 		CA74CD6926BF3E2300592870 /* SwiftUIInteropTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIInteropTests.swift; sourceTree = "<group>"; };
 		CA875ABF257353B300243FA4 /* CustomAssertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAssertions.swift; sourceTree = "<group>"; };
@@ -190,7 +186,6 @@
 				CA0536E126A0848B00BF8FC5 /* FoodSelectionViewControllerTests.swift */,
 				CA0536DF26A0848B00BF8FC5 /* LocationsViewControllerTests.swift */,
 				CA0536E026A0848B00BF8FC5 /* MenuSelectionViewControllerTests.swift */,
-				CA0536E426A0848B00BF8FC5 /* Mocks */,
 				CA0536DE26A0848B00BF8FC5 /* PickupOrDeliveryViewControllerTests.swift */,
 				CA0536DC26A0848B00BF8FC5 /* ReviewOrderViewControllerTests.swift */,
 				CA0536DB26A0848B00BF8FC5 /* SetupViewControllerTests.swift */,
@@ -251,15 +246,6 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		CA0536E426A0848B00BF8FC5 /* Mocks */ = {
-			isa = PBXGroup;
-			children = (
-				CA0536E526A0848B00BF8FC5 /* MockOrchestrationResponder.swift */,
-			);
-			name = Mocks;
-			path = ../../../Tests/UIKitExampleTests/Mocks;
-			sourceTree = "<group>";
-		};
 		CA087B422640E7A100A994D8 /* TestUtilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -317,7 +303,6 @@
 		CAF58636256CF0E50044C864 /* SwiftCurrent_UIKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				CA655AA1265B4F3200F37E47 /* MockOrchestrationResponder.swift */,
 				CAC1C24E256D8F0400DBD0D4 /* ModalStyleTests.swift */,
 				D7E1264D264C6FBD00B6A712 /* UIKitConsumerAbandonTests.swift */,
 				D7E1265D264C73BA00B6A712 /* UIKitConsumerLaunchTests.swift */,
@@ -527,7 +512,6 @@
 				CAC1C23D256D8DB100DBD0D4 /* WaitUntil.swift in Sources */,
 				D7E1265E264C73BA00B6A712 /* UIKitConsumerLaunchTests.swift in Sources */,
 				CA9F44B926ACA3220055020A /* GenericConstraintTests.swift in Sources */,
-				CA655AA2265B4F3200F37E47 /* MockOrchestrationResponder.swift in Sources */,
 				D7E12656264C719B00B6A712 /* UIKitConsumerSkipTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -546,7 +530,6 @@
 				CA0536EB26A0848B00BF8FC5 /* PickupOrDeliveryViewControllerTests.swift in Sources */,
 				CA0536E726A0848B00BF8FC5 /* EnterAddressViewControllerTests.swift in Sources */,
 				CA0536EF26A0848B00BF8FC5 /* Convenience.swift in Sources */,
-				CA0536F126A0848B00BF8FC5 /* MockOrchestrationResponder.swift in Sources */,
 				CA0536ED26A0848B00BF8FC5 /* MenuSelectionViewControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

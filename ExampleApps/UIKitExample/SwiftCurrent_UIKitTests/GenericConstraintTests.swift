@@ -10,6 +10,7 @@ import XCTest
 
 import SwiftCurrent
 import SwiftCurrent_UIKit
+import SwiftCurrent_Testing
 final class GenericConstraintTests: XCTestCase {
     // MARK: Generic Initializer Tests
 
