@@ -44,7 +44,8 @@ let package = Package(
         .target(
             name: "SwiftCurrent_Testing",
             dependencies: ["SwiftCurrent_Testing_ObjC",
-                           "SwiftCurrent"]),
+                           "SwiftCurrent",
+                           "SwiftCurrent_UIKit"]),
         .testTarget(
             name: "SwiftCurrentTests",
             dependencies: [
@@ -60,6 +61,7 @@ let package = Package(
             name: "SwiftCurrent-SwiftUITests",
             dependencies: [
                 "SwiftCurrent",
+                "SwiftCurrent_Testing",
                 "SwiftCurrent_SwiftUI",
                 "CwlPreconditionTesting",
                 "CwlCatchException",
