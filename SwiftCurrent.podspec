@@ -12,6 +12,7 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'https://github.com/wwt/SwiftCurrent.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '11.0'
+  s.tvos.deployment_target = '14.0'
   s.swift_version = '5.1'
 
   s.module_name = 'SwiftCurrent'
