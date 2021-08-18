@@ -9,11 +9,14 @@
 // Xcode 12.4 does not have this compiler. YES this could not be more hacky, please come up with a better solution.
 #if ((os(watchOS) && compiler(>=5.4.2)) || !os(watchOS)) && canImport(XCTest) && canImport(UIKit)
 import XCTest
+#if !os(watchOS)
 import UIKit
+#endif
 
 @testable import SwiftCurrent
 
 /// Assert that a workflow was launched and matches the workflow passed in
+#if !os(watchOS)
 public func XCTAssertWorkflowLaunched<F>(from VC: UIViewController, workflow: Workflow<F>, file: StaticString = #filePath, line: UInt = #line) {
     let last = VC.launchedWorkflows.last
     XCTAssertNotNil(last, "No workflow found", file: file, line: line)
@@ -33,4 +36,5 @@ public func XCTAssertWorkflowLaunched<F>(from VC: UIViewController, workflow: Wo
         XCTAssert(actual == expected, "Expected type: \(expected), but got: \(actual)", file: file, line: line)
     }
 }
+#endif
 #endif
