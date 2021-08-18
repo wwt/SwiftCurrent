@@ -40,6 +40,7 @@ let package = Package(
         .target(
             name: "SwiftCurrent_Testing_ObjC",
             dependencies: [],
+            exclude: ["SwiftCurrent_UIKitTests-Bridging-Header.h", "SwiftUIExampleTests-Bridging-Header.h", "UIKitExampleTests-Bridging-Header.h"],
             publicHeadersPath: "Include"),
         .target(
             name: "SwiftCurrent_Testing",
