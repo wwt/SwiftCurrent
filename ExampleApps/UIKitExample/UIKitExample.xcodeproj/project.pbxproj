@@ -35,6 +35,8 @@
 		CA0536F026A0848B00BF8FC5 /* TestFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536E326A0848B00BF8FC5 /* TestFinder.swift */; };
 		CA357F1A263E67DE003D1ACB /* UIKitPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA357F19263E67DE003D1ACB /* UIKitPresenterTests.swift */; };
 		CA357F1F263E68AD003D1ACB /* UIKitAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA357F1E263E68AD003D1ACB /* UIKitAssertions.swift */; };
+		CA4A6F1C26CDAEA600BE3E74 /* TestEventReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4A6F1B26CDAEA600BE3E74 /* TestEventReceiver.swift */; };
+		CA4A6F1E26CDAED100BE3E74 /* TestEventReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4A6F1D26CDAED100BE3E74 /* TestEventReceiver.swift */; };
 		CA6FB0DB26C6AC8200FB3285 /* TestConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FB0DA26C6AC8200FB3285 /* TestConstant.swift */; };
 		CA74CD6A26BF3E2300592870 /* SwiftUIInteropTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA74CD6926BF3E2300592870 /* SwiftUIInteropTests.swift */; };
 		CA875AC0257353B300243FA4 /* AssertThrowsFatalError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA875ABF257353B300243FA4 /* AssertThrowsFatalError.swift */; };
@@ -57,7 +59,6 @@
 		D7226A602678238F0066E9E6 /* SwiftCurrent_UIKit in Frameworks */ = {isa = PBXBuildFile; productRef = D7226A5F2678238F0066E9E6 /* SwiftCurrent_UIKit */; };
 		D73767A926AF5D2D000A6A6E /* TermsOfServiceViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73767A826AF5D2D000A6A6E /* TermsOfServiceViewControllerTests.swift */; };
 		D73767AB26AF625F000A6A6E /* TermsOfServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73767AA26AF625F000A6A6E /* TermsOfServiceViewController.swift */; };
-		D7DBD21B26CD969B00F1E39B /* EventReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD20E26CD969B00F1E39B /* EventReceiver.swift */; };
 		D7DBD21C26CD969B00F1E39B /* MockOrchestrationResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD20F26CD969B00F1E39B /* MockOrchestrationResponder.swift */; };
 		D7DBD21D26CD969B00F1E39B /* ViewControllerAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD21026CD969B00F1E39B /* ViewControllerAdditions.swift */; };
 		D7DBD21E26CD969B00F1E39B /* AnyWorkflowAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD21126CD969B00F1E39B /* AnyWorkflowAdditions.swift */; };
@@ -67,7 +68,6 @@
 		D7DBD22226CD969B00F1E39B /* NSObjectLoadable.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD21A26CD969B00F1E39B /* NSObjectLoadable.m */; };
 		D7DBD23126CD96C500F1E39B /* XCTestHooks.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD22426CD96C500F1E39B /* XCTestHooks.m */; };
 		D7DBD23226CD96C500F1E39B /* NSObjectLoadable.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD22926CD96C500F1E39B /* NSObjectLoadable.m */; };
-		D7DBD23326CD96C500F1E39B /* EventReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD22B26CD96C500F1E39B /* EventReceiver.swift */; };
 		D7DBD23426CD96C500F1E39B /* MockOrchestrationResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD22C26CD96C500F1E39B /* MockOrchestrationResponder.swift */; };
 		D7DBD23526CD96C500F1E39B /* ViewControllerAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD22D26CD96C500F1E39B /* ViewControllerAdditions.swift */; };
 		D7DBD23626CD96C500F1E39B /* AnyWorkflowAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD22E26CD96C500F1E39B /* AnyWorkflowAdditions.swift */; };
@@ -128,6 +128,8 @@
 		CA0536E326A0848B00BF8FC5 /* TestFinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestFinder.swift; path = ../../../Tests/UIKitExampleTests/TestFinder.swift; sourceTree = "<group>"; };
 		CA357F19263E67DE003D1ACB /* UIKitPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitPresenterTests.swift; sourceTree = "<group>"; };
 		CA357F1E263E68AD003D1ACB /* UIKitAssertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitAssertions.swift; sourceTree = "<group>"; };
+		CA4A6F1B26CDAEA600BE3E74 /* TestEventReceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestEventReceiver.swift; sourceTree = "<group>"; };
+		CA4A6F1D26CDAED100BE3E74 /* TestEventReceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestEventReceiver.swift; sourceTree = "<group>"; };
 		CA6FB0DA26C6AC8200FB3285 /* TestConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestConstant.swift; path = ../../../SwiftUIExample/SwiftUIExampleTests/TestConstant.swift; sourceTree = "<group>"; };
 		CA74CD6926BF3E2300592870 /* SwiftUIInteropTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIInteropTests.swift; sourceTree = "<group>"; };
 		CA875ABF257353B300243FA4 /* AssertThrowsFatalError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssertThrowsFatalError.swift; sourceTree = "<group>"; };
@@ -148,7 +150,6 @@
 		D73767A826AF5D2D000A6A6E /* TermsOfServiceViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceViewControllerTests.swift; sourceTree = "<group>"; };
 		D73767AA26AF625F000A6A6E /* TermsOfServiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceViewController.swift; sourceTree = "<group>"; };
 		D74A4D5A26A6115200010617 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		D7DBD20E26CD969B00F1E39B /* EventReceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventReceiver.swift; sourceTree = "<group>"; };
 		D7DBD20F26CD969B00F1E39B /* MockOrchestrationResponder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockOrchestrationResponder.swift; sourceTree = "<group>"; };
 		D7DBD21026CD969B00F1E39B /* ViewControllerAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerAdditions.swift; sourceTree = "<group>"; };
 		D7DBD21126CD969B00F1E39B /* AnyWorkflowAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyWorkflowAdditions.swift; sourceTree = "<group>"; };
@@ -162,7 +163,6 @@
 		D7DBD22626CD96C500F1E39B /* NSObjectLoadable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSObjectLoadable.h; sourceTree = "<group>"; };
 		D7DBD22726CD96C500F1E39B /* XCTestHooks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCTestHooks.h; sourceTree = "<group>"; };
 		D7DBD22926CD96C500F1E39B /* NSObjectLoadable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSObjectLoadable.m; sourceTree = "<group>"; };
-		D7DBD22B26CD96C500F1E39B /* EventReceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventReceiver.swift; sourceTree = "<group>"; };
 		D7DBD22C26CD96C500F1E39B /* MockOrchestrationResponder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockOrchestrationResponder.swift; sourceTree = "<group>"; };
 		D7DBD22D26CD96C500F1E39B /* ViewControllerAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerAdditions.swift; sourceTree = "<group>"; };
 		D7DBD22E26CD96C500F1E39B /* AnyWorkflowAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyWorkflowAdditions.swift; sourceTree = "<group>"; };
@@ -358,7 +358,7 @@
 		D7DBD20D26CD969B00F1E39B /* SwiftCurrent_Testing */ = {
 			isa = PBXGroup;
 			children = (
-				D7DBD20E26CD969B00F1E39B /* EventReceiver.swift */,
+				CA4A6F1B26CDAEA600BE3E74 /* TestEventReceiver.swift */,
 				D7DBD20F26CD969B00F1E39B /* MockOrchestrationResponder.swift */,
 				D7DBD21026CD969B00F1E39B /* ViewControllerAdditions.swift */,
 				D7DBD21126CD969B00F1E39B /* AnyWorkflowAdditions.swift */,
@@ -412,7 +412,7 @@
 		D7DBD22A26CD96C500F1E39B /* SwiftCurrent_Testing */ = {
 			isa = PBXGroup;
 			children = (
-				D7DBD22B26CD96C500F1E39B /* EventReceiver.swift */,
+				CA4A6F1D26CDAED100BE3E74 /* TestEventReceiver.swift */,
 				D7DBD22C26CD96C500F1E39B /* MockOrchestrationResponder.swift */,
 				D7DBD22D26CD96C500F1E39B /* ViewControllerAdditions.swift */,
 				D7DBD22E26CD96C500F1E39B /* AnyWorkflowAdditions.swift */,
@@ -605,7 +605,6 @@
 				D7DBD23126CD96C500F1E39B /* XCTestHooks.m in Sources */,
 				CA74CD6A26BF3E2300592870 /* SwiftUIInteropTests.swift in Sources */,
 				CA9226EB26406C5B00BD0366 /* StoryboardLoadableTests.swift in Sources */,
-				D7DBD23326CD96C500F1E39B /* EventReceiver.swift in Sources */,
 				D7DBD23726CD96C500F1E39B /* FlowRepresentableMetadataAdditions.swift in Sources */,
 				CAC1C235256D8DA300DBD0D4 /* TopViewController.swift in Sources */,
 				D7DBD23526CD96C500F1E39B /* ViewControllerAdditions.swift in Sources */,
@@ -617,6 +616,7 @@
 				D7DBD23426CD96C500F1E39B /* MockOrchestrationResponder.swift in Sources */,
 				CA357F1A263E67DE003D1ACB /* UIKitPresenterTests.swift in Sources */,
 				CA6FB0DB26C6AC8200FB3285 /* TestConstant.swift in Sources */,
+				CA4A6F1E26CDAED100BE3E74 /* TestEventReceiver.swift in Sources */,
 				CAC1C23D256D8DB100DBD0D4 /* WaitUntil.swift in Sources */,
 				D7E1265E264C73BA00B6A712 /* UIKitConsumerLaunchTests.swift in Sources */,
 				D7DBD23226CD96C500F1E39B /* NSObjectLoadable.m in Sources */,
@@ -636,7 +636,6 @@
 				CA0536E826A0848B00BF8FC5 /* SetupViewControllerTests.swift in Sources */,
 				D73767A926AF5D2D000A6A6E /* TermsOfServiceViewControllerTests.swift in Sources */,
 				CA0536EA26A0848B00BF8FC5 /* ViewControllerTest.swift in Sources */,
-				D7DBD21B26CD969B00F1E39B /* EventReceiver.swift in Sources */,
 				CA0536EC26A0848B00BF8FC5 /* LocationsViewControllerTests.swift in Sources */,
 				D7DBD21F26CD969B00F1E39B /* FlowRepresentableMetadataAdditions.swift in Sources */,
 				D7DBD21E26CD969B00F1E39B /* AnyWorkflowAdditions.swift in Sources */,
@@ -647,6 +646,7 @@
 				CA0536E726A0848B00BF8FC5 /* EnterAddressViewControllerTests.swift in Sources */,
 				CA0536EF26A0848B00BF8FC5 /* Convenience.swift in Sources */,
 				D7DBD22226CD969B00F1E39B /* NSObjectLoadable.m in Sources */,
+				CA4A6F1C26CDAEA600BE3E74 /* TestEventReceiver.swift in Sources */,
 				CA0536ED26A0848B00BF8FC5 /* MenuSelectionViewControllerTests.swift in Sources */,
 				D7DBD21C26CD969B00F1E39B /* MockOrchestrationResponder.swift in Sources */,
 			);
