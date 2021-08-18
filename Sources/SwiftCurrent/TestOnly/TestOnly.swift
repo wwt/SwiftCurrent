@@ -13,7 +13,6 @@ import Foundation
 
 @available(iOS 11.0, macOS 10.14, tvOS 13, watchOS 7.4, *)
 extension Notification.Name {
-    #if DEBUG
     /// :nodoc: A notification only available when tests are being run that lets you know a workflow has been launched.
     public static var workflowLaunched: Notification.Name {
         .init(rawValue: "WorkflowLaunched")
@@ -23,7 +22,6 @@ extension Notification.Name {
     public static var flowRepresentableMetadataCreated: Notification.Name {
         .init(rawValue: "FlowRepresentableMetadataCreated")
     }
-    #endif
 }
 
 // internal class that essentially delegates to SwiftCurrent_Testing. You cannot directly import that library without creating a circular reference so you need a middle man, like NotificationCenter.
@@ -33,7 +31,6 @@ enum EventReceiver {
                                  args: AnyWorkflow.PassedArgs,
                                  style: LaunchStyle,
                                  onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
-        #if DEBUG
         if #available(iOS 11.0, macOS 10.14, tvOS 13, watchOS 7.4, *) {
             guard NSClassFromString("XCTest") != nil else { return }
             NotificationCenter.default.post(name: .workflowLaunched, object: [
@@ -44,18 +41,15 @@ enum EventReceiver {
                 "onFinish": onFinish as Any
             ])
         }
-        #endif
     }
 
     static func flowRepresentableMetadataCreated<F: FlowRepresentable>(metadata: FlowRepresentableMetadata, type: F.Type) {
         if #available(iOS 11.0, macOS 10.14, tvOS 13, watchOS 7.4, *) {
-            #if DEBUG
             guard NSClassFromString("XCTest") != nil else { return }
             NotificationCenter.default.post(name: .flowRepresentableMetadataCreated, object: [
                 "metadata": metadata,
                 "type": String(describing: type)
             ])
-            #endif
         }
     }
 }

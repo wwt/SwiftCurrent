@@ -1,5 +1,5 @@
 //
-//  EventReceiver.swift
+//  TestEventReceiver.swift
 //  
 //
 //  Created by Tyler Thompson on 8/8/21.
@@ -18,7 +18,7 @@ import SwiftCurrent_Testing_ObjC
 import UIKit
 #endif
 
-enum EventReceiver {
+enum TestEventReceiver {
     static func workflowLaunched(workflow: AnyWorkflow,
                                  responder: OrchestrationResponder,
                                  args: AnyWorkflow.PassedArgs,
@@ -50,7 +50,7 @@ class NotificationReceiver: NSObject {
             fatalError("WorkflowLaunched notification has incorrect format, this may be because you need to update SwiftCurrent_Testing")
         }
 
-        EventReceiver.workflowLaunched(workflow: workflow,
+        TestEventReceiver.workflowLaunched(workflow: workflow,
                                        responder: responder,
                                        args: args,
                                        style: style,
@@ -64,7 +64,7 @@ class NotificationReceiver: NSObject {
             fatalError("FlowRepresentableMetadataCreated notification has incorrect format, this may be because you need to update SwiftCurrent_Testing")
         }
 
-        EventReceiver.flowRepresentableMetadataCreated(metadata: metadata, descriptor: type)
+        TestEventReceiver.flowRepresentableMetadataCreated(metadata: metadata, descriptor: type)
     }
 }
 

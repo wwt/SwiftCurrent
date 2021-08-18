@@ -46,6 +46,10 @@ Pod::Spec.new do |s|
     ss.source_files = ['Sources/SwiftCurrent_Testing/**/*.{swift,h,m}', 'Sources/SwiftCurrent_Testing_ObjC/**/*.{swift,h,m}']
     ss.exclude_files = 'Sources/SwiftCurrent_Testing_ObjC/*-Bridging-Header.h'
     ss.dependency 'SwiftCurrent/Core'
+    ss.weak_framework = "XCTest"
+    ss.pod_target_xcconfig = {
+      'FRAMEWORK_SEARCH_PATHS' => '$(inherited) "$(PLATFORM_DIR)/Developer/Library/Frameworks"',
+    }
   end
 
   s.pod_target_xcconfig = {
