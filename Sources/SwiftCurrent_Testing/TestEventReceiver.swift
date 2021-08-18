@@ -51,10 +51,10 @@ class NotificationReceiver: NSObject {
         }
 
         TestEventReceiver.workflowLaunched(workflow: workflow,
-                                       responder: responder,
-                                       args: args,
-                                       style: style,
-                                       onFinish: onFinish)
+                                           responder: responder,
+                                           args: args,
+                                           style: style,
+                                           onFinish: onFinish)
     }
 
     @objc static func flowRepresentableMetadataCreated(notification: Notification) {
