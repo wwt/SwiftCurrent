@@ -14,21 +14,6 @@ platform :ios do
       workspace: '../SwiftCurrent.xcworkspace',
       derived_data_path: "~/Library/Developer/Xcode/DerivedData",
     )
-    scan(
-      code_coverage: true,
-      scheme:  'SwiftCurrent_SwiftUI',
-      workspace: '../SwiftCurrent.xcworkspace',
-      derived_data_path: "~/Library/Developer/Xcode/DerivedData",
-    )
-    # DISABLE_DIAMOND_PROBLEM_DIAGNOSTIC=YES is a hacky workaround for an Xcode 12.4 bug with Swift Package Manager
-    # REMOVE the entire line when the pipline is updated to Xcode 12.5 or later
-    scan(
-      code_coverage: true,
-      scheme:  'ALL_UI_TESTS',
-      workspace: '../SwiftCurrent.xcworkspace',
-      xcodebuild_command: 'env NSUnbufferedIO=YES DISABLE_DIAMOND_PROBLEM_DIAGNOSTIC=YES xcodebuild',
-      derived_data_path: "~/Library/Developer/Xcode/DerivedData",
-    )
   end
 
   lane :build_swiftpm do
