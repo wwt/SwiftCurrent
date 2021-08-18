@@ -44,8 +44,7 @@ let package = Package(
         .target(
             name: "SwiftCurrent_Testing",
             dependencies: ["SwiftCurrent_Testing_ObjC",
-                           "SwiftCurrent",
-                           "SwiftCurrent_UIKit"]),
+                           "SwiftCurrent"]),
         .testTarget(
             name: "SwiftCurrentTests",
             dependencies: [
