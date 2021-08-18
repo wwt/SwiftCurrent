@@ -37,7 +37,7 @@
 		CA357F1F263E68AD003D1ACB /* UIKitAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA357F1E263E68AD003D1ACB /* UIKitAssertions.swift */; };
 		CA6FB0DB26C6AC8200FB3285 /* TestConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FB0DA26C6AC8200FB3285 /* TestConstant.swift */; };
 		CA74CD6A26BF3E2300592870 /* SwiftUIInteropTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA74CD6926BF3E2300592870 /* SwiftUIInteropTests.swift */; };
-		CA875AC0257353B300243FA4 /* CustomAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA875ABF257353B300243FA4 /* CustomAssertions.swift */; };
+		CA875AC0257353B300243FA4 /* AssertThrowsFatalError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA875ABF257353B300243FA4 /* AssertThrowsFatalError.swift */; };
 		CA9226EB26406C5B00BD0366 /* StoryboardLoadableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9226EA26406C5B00BD0366 /* StoryboardLoadableTests.swift */; };
 		CA9226F326406F2000BD0366 /* TestStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA9226F226406F2000BD0366 /* TestStoryboard.storyboard */; };
 		CA9226F92640724D00BD0366 /* ExceptionCatcher in Frameworks */ = {isa = PBXBuildFile; productRef = CA9226F82640724D00BD0366 /* ExceptionCatcher */; };
@@ -49,16 +49,30 @@
 		CAC1C250256D8F0400DBD0D4 /* UIKitConsumerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1C24D256D8F0300DBD0D4 /* UIKitConsumerTests.swift */; };
 		CAC1C26D256D8FA500DBD0D4 /* CwlPosixPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = CAC1C26C256D8FA500DBD0D4 /* CwlPosixPreconditionTesting */; };
 		CAC1C26F256D8FA500DBD0D4 /* CwlPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = CAC1C26E256D8FA500DBD0D4 /* CwlPreconditionTesting */; };
-		CAE6927726C0701000B9E905 /* SwiftCurrent_Testing in Frameworks */ = {isa = PBXBuildFile; productRef = CAE6927626C0701000B9E905 /* SwiftCurrent_Testing */; };
 		CAF58714256CF40C0044C864 /* UIUTest in Frameworks */ = {isa = PBXBuildFile; productRef = CAF58713256CF40C0044C864 /* UIUTest */; };
 		CAF5873F256CF55E0044C864 /* CwlPosixPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = CAF5873E256CF55E0044C864 /* CwlPosixPreconditionTesting */; };
 		CAF58741256CF55E0044C864 /* CwlPreconditionTesting in Frameworks */ = {isa = PBXBuildFile; productRef = CAF58740256CF55E0044C864 /* CwlPreconditionTesting */; };
 		CAF58743256CF55E0044C864 /* UIUTest in Frameworks */ = {isa = PBXBuildFile; productRef = CAF58742256CF55E0044C864 /* UIUTest */; };
-		CAF9F43226C03BFC00C27E5B /* SwiftCurrent_Testing in Frameworks */ = {isa = PBXBuildFile; productRef = CAF9F43126C03BFC00C27E5B /* SwiftCurrent_Testing */; };
 		D7226A5C267820070066E9E6 /* SwiftCurrent in Frameworks */ = {isa = PBXBuildFile; productRef = D7226A5B267820070066E9E6 /* SwiftCurrent */; };
 		D7226A602678238F0066E9E6 /* SwiftCurrent_UIKit in Frameworks */ = {isa = PBXBuildFile; productRef = D7226A5F2678238F0066E9E6 /* SwiftCurrent_UIKit */; };
 		D73767A926AF5D2D000A6A6E /* TermsOfServiceViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73767A826AF5D2D000A6A6E /* TermsOfServiceViewControllerTests.swift */; };
 		D73767AB26AF625F000A6A6E /* TermsOfServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73767AA26AF625F000A6A6E /* TermsOfServiceViewController.swift */; };
+		D7DBD21B26CD969B00F1E39B /* EventReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD20E26CD969B00F1E39B /* EventReceiver.swift */; };
+		D7DBD21C26CD969B00F1E39B /* MockOrchestrationResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD20F26CD969B00F1E39B /* MockOrchestrationResponder.swift */; };
+		D7DBD21D26CD969B00F1E39B /* ViewControllerAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD21026CD969B00F1E39B /* ViewControllerAdditions.swift */; };
+		D7DBD21E26CD969B00F1E39B /* AnyWorkflowAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD21126CD969B00F1E39B /* AnyWorkflowAdditions.swift */; };
+		D7DBD21F26CD969B00F1E39B /* FlowRepresentableMetadataAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD21226CD969B00F1E39B /* FlowRepresentableMetadataAdditions.swift */; };
+		D7DBD22026CD969B00F1E39B /* CustomAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD21326CD969B00F1E39B /* CustomAssertions.swift */; };
+		D7DBD22126CD969B00F1E39B /* XCTestHooks.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD21526CD969B00F1E39B /* XCTestHooks.m */; };
+		D7DBD22226CD969B00F1E39B /* NSObjectLoadable.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD21A26CD969B00F1E39B /* NSObjectLoadable.m */; };
+		D7DBD23126CD96C500F1E39B /* XCTestHooks.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD22426CD96C500F1E39B /* XCTestHooks.m */; };
+		D7DBD23226CD96C500F1E39B /* NSObjectLoadable.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD22926CD96C500F1E39B /* NSObjectLoadable.m */; };
+		D7DBD23326CD96C500F1E39B /* EventReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD22B26CD96C500F1E39B /* EventReceiver.swift */; };
+		D7DBD23426CD96C500F1E39B /* MockOrchestrationResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD22C26CD96C500F1E39B /* MockOrchestrationResponder.swift */; };
+		D7DBD23526CD96C500F1E39B /* ViewControllerAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD22D26CD96C500F1E39B /* ViewControllerAdditions.swift */; };
+		D7DBD23626CD96C500F1E39B /* AnyWorkflowAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD22E26CD96C500F1E39B /* AnyWorkflowAdditions.swift */; };
+		D7DBD23726CD96C500F1E39B /* FlowRepresentableMetadataAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD22F26CD96C500F1E39B /* FlowRepresentableMetadataAdditions.swift */; };
+		D7DBD23826CD96C500F1E39B /* CustomAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD23026CD96C500F1E39B /* CustomAssertions.swift */; };
 		D7E1264E264C6FBD00B6A712 /* UIKitConsumerAbandonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1264D264C6FBD00B6A712 /* UIKitConsumerAbandonTests.swift */; };
 		D7E12656264C719B00B6A712 /* UIKitConsumerSkipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E12655264C719B00B6A712 /* UIKitConsumerSkipTests.swift */; };
 		D7E1265E264C73BA00B6A712 /* UIKitConsumerLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E1265D264C73BA00B6A712 /* UIKitConsumerLaunchTests.swift */; };
@@ -116,7 +130,7 @@
 		CA357F1E263E68AD003D1ACB /* UIKitAssertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitAssertions.swift; sourceTree = "<group>"; };
 		CA6FB0DA26C6AC8200FB3285 /* TestConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestConstant.swift; path = ../../../SwiftUIExample/SwiftUIExampleTests/TestConstant.swift; sourceTree = "<group>"; };
 		CA74CD6926BF3E2300592870 /* SwiftUIInteropTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIInteropTests.swift; sourceTree = "<group>"; };
-		CA875ABF257353B300243FA4 /* CustomAssertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAssertions.swift; sourceTree = "<group>"; };
+		CA875ABF257353B300243FA4 /* AssertThrowsFatalError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssertThrowsFatalError.swift; sourceTree = "<group>"; };
 		CA9226EA26406C5B00BD0366 /* StoryboardLoadableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardLoadableTests.swift; sourceTree = "<group>"; };
 		CA9226F226406F2000BD0366 /* TestStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TestStoryboard.storyboard; sourceTree = "<group>"; };
 		CA9F44B826ACA3220055020A /* GenericConstraintTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericConstraintTests.swift; sourceTree = "<group>"; };
@@ -134,6 +148,26 @@
 		D73767A826AF5D2D000A6A6E /* TermsOfServiceViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceViewControllerTests.swift; sourceTree = "<group>"; };
 		D73767AA26AF625F000A6A6E /* TermsOfServiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceViewController.swift; sourceTree = "<group>"; };
 		D74A4D5A26A6115200010617 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		D7DBD20E26CD969B00F1E39B /* EventReceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventReceiver.swift; sourceTree = "<group>"; };
+		D7DBD20F26CD969B00F1E39B /* MockOrchestrationResponder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockOrchestrationResponder.swift; sourceTree = "<group>"; };
+		D7DBD21026CD969B00F1E39B /* ViewControllerAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerAdditions.swift; sourceTree = "<group>"; };
+		D7DBD21126CD969B00F1E39B /* AnyWorkflowAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyWorkflowAdditions.swift; sourceTree = "<group>"; };
+		D7DBD21226CD969B00F1E39B /* FlowRepresentableMetadataAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowRepresentableMetadataAdditions.swift; sourceTree = "<group>"; };
+		D7DBD21326CD969B00F1E39B /* CustomAssertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAssertions.swift; sourceTree = "<group>"; };
+		D7DBD21526CD969B00F1E39B /* XCTestHooks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCTestHooks.m; sourceTree = "<group>"; };
+		D7DBD21726CD969B00F1E39B /* NSObjectLoadable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSObjectLoadable.h; sourceTree = "<group>"; };
+		D7DBD21826CD969B00F1E39B /* XCTestHooks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCTestHooks.h; sourceTree = "<group>"; };
+		D7DBD21A26CD969B00F1E39B /* NSObjectLoadable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSObjectLoadable.m; sourceTree = "<group>"; };
+		D7DBD22426CD96C500F1E39B /* XCTestHooks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCTestHooks.m; sourceTree = "<group>"; };
+		D7DBD22626CD96C500F1E39B /* NSObjectLoadable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSObjectLoadable.h; sourceTree = "<group>"; };
+		D7DBD22726CD96C500F1E39B /* XCTestHooks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCTestHooks.h; sourceTree = "<group>"; };
+		D7DBD22926CD96C500F1E39B /* NSObjectLoadable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSObjectLoadable.m; sourceTree = "<group>"; };
+		D7DBD22B26CD96C500F1E39B /* EventReceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventReceiver.swift; sourceTree = "<group>"; };
+		D7DBD22C26CD96C500F1E39B /* MockOrchestrationResponder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockOrchestrationResponder.swift; sourceTree = "<group>"; };
+		D7DBD22D26CD96C500F1E39B /* ViewControllerAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerAdditions.swift; sourceTree = "<group>"; };
+		D7DBD22E26CD96C500F1E39B /* AnyWorkflowAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyWorkflowAdditions.swift; sourceTree = "<group>"; };
+		D7DBD22F26CD96C500F1E39B /* FlowRepresentableMetadataAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowRepresentableMetadataAdditions.swift; sourceTree = "<group>"; };
+		D7DBD23026CD96C500F1E39B /* CustomAssertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAssertions.swift; sourceTree = "<group>"; };
 		D7E1264D264C6FBD00B6A712 /* UIKitConsumerAbandonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitConsumerAbandonTests.swift; sourceTree = "<group>"; };
 		D7E12655264C719B00B6A712 /* UIKitConsumerSkipTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitConsumerSkipTests.swift; sourceTree = "<group>"; };
 		D7E1265D264C73BA00B6A712 /* UIKitConsumerLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitConsumerLaunchTests.swift; sourceTree = "<group>"; };
@@ -160,7 +194,6 @@
 				CA9226F92640724D00BD0366 /* ExceptionCatcher in Frameworks */,
 				CAF58714256CF40C0044C864 /* UIUTest in Frameworks */,
 				CAC1C26F256D8FA500DBD0D4 /* CwlPreconditionTesting in Frameworks */,
-				CAE6927726C0701000B9E905 /* SwiftCurrent_Testing in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,7 +202,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAF58743256CF55E0044C864 /* UIUTest in Frameworks */,
-				CAF9F43226C03BFC00C27E5B /* SwiftCurrent_Testing in Frameworks */,
 				CAF58741256CF55E0044C864 /* CwlPreconditionTesting in Frameworks */,
 				CAF5873F256CF55E0044C864 /* CwlPosixPreconditionTesting in Frameworks */,
 			);
@@ -181,6 +213,8 @@
 		CA0536AF26A0834B00BF8FC5 /* UIKitExampleTests */ = {
 			isa = PBXGroup;
 			children = (
+				D7DBD20D26CD969B00F1E39B /* SwiftCurrent_Testing */,
+				D7DBD21426CD969B00F1E39B /* SwiftCurrent_Testing_ObjC */,
 				CA0536E226A0848B00BF8FC5 /* Convenience.swift */,
 				CA0536DA26A0848B00BF8FC5 /* EnterAddressViewControllerTests.swift */,
 				CA0536E126A0848B00BF8FC5 /* FoodSelectionViewControllerTests.swift */,
@@ -250,7 +284,7 @@
 			isa = PBXGroup;
 			children = (
 				CA6FB0DA26C6AC8200FB3285 /* TestConstant.swift */,
-				CA875ABF257353B300243FA4 /* CustomAssertions.swift */,
+				CA875ABF257353B300243FA4 /* AssertThrowsFatalError.swift */,
 				CAC1C232256D8DA300DBD0D4 /* TopViewController.swift */,
 				CA357F1E263E68AD003D1ACB /* UIKitAssertions.swift */,
 				CAC1C23C256D8DB100DBD0D4 /* WaitUntil.swift */,
@@ -303,6 +337,8 @@
 		CAF58636256CF0E50044C864 /* SwiftCurrent_UIKitTests */ = {
 			isa = PBXGroup;
 			children = (
+				D7DBD22A26CD96C500F1E39B /* SwiftCurrent_Testing */,
+				D7DBD22326CD96C500F1E39B /* SwiftCurrent_Testing_ObjC */,
 				CAC1C24E256D8F0400DBD0D4 /* ModalStyleTests.swift */,
 				D7E1264D264C6FBD00B6A712 /* UIKitConsumerAbandonTests.swift */,
 				D7E1265D264C73BA00B6A712 /* UIKitConsumerLaunchTests.swift */,
@@ -317,6 +353,74 @@
 				CA74CD6926BF3E2300592870 /* SwiftUIInteropTests.swift */,
 			);
 			path = SwiftCurrent_UIKitTests;
+			sourceTree = "<group>";
+		};
+		D7DBD20D26CD969B00F1E39B /* SwiftCurrent_Testing */ = {
+			isa = PBXGroup;
+			children = (
+				D7DBD20E26CD969B00F1E39B /* EventReceiver.swift */,
+				D7DBD20F26CD969B00F1E39B /* MockOrchestrationResponder.swift */,
+				D7DBD21026CD969B00F1E39B /* ViewControllerAdditions.swift */,
+				D7DBD21126CD969B00F1E39B /* AnyWorkflowAdditions.swift */,
+				D7DBD21226CD969B00F1E39B /* FlowRepresentableMetadataAdditions.swift */,
+				D7DBD21326CD969B00F1E39B /* CustomAssertions.swift */,
+			);
+			name = SwiftCurrent_Testing;
+			path = ../../../Sources/SwiftCurrent_Testing;
+			sourceTree = "<group>";
+		};
+		D7DBD21426CD969B00F1E39B /* SwiftCurrent_Testing_ObjC */ = {
+			isa = PBXGroup;
+			children = (
+				D7DBD21526CD969B00F1E39B /* XCTestHooks.m */,
+				D7DBD21626CD969B00F1E39B /* Include */,
+				D7DBD21A26CD969B00F1E39B /* NSObjectLoadable.m */,
+			);
+			name = SwiftCurrent_Testing_ObjC;
+			path = ../../../Sources/SwiftCurrent_Testing_ObjC;
+			sourceTree = "<group>";
+		};
+		D7DBD21626CD969B00F1E39B /* Include */ = {
+			isa = PBXGroup;
+			children = (
+				D7DBD21726CD969B00F1E39B /* NSObjectLoadable.h */,
+				D7DBD21826CD969B00F1E39B /* XCTestHooks.h */,
+			);
+			path = Include;
+			sourceTree = "<group>";
+		};
+		D7DBD22326CD96C500F1E39B /* SwiftCurrent_Testing_ObjC */ = {
+			isa = PBXGroup;
+			children = (
+				D7DBD22426CD96C500F1E39B /* XCTestHooks.m */,
+				D7DBD22526CD96C500F1E39B /* Include */,
+				D7DBD22926CD96C500F1E39B /* NSObjectLoadable.m */,
+			);
+			name = SwiftCurrent_Testing_ObjC;
+			path = ../../../Sources/SwiftCurrent_Testing_ObjC;
+			sourceTree = "<group>";
+		};
+		D7DBD22526CD96C500F1E39B /* Include */ = {
+			isa = PBXGroup;
+			children = (
+				D7DBD22626CD96C500F1E39B /* NSObjectLoadable.h */,
+				D7DBD22726CD96C500F1E39B /* XCTestHooks.h */,
+			);
+			path = Include;
+			sourceTree = "<group>";
+		};
+		D7DBD22A26CD96C500F1E39B /* SwiftCurrent_Testing */ = {
+			isa = PBXGroup;
+			children = (
+				D7DBD22B26CD96C500F1E39B /* EventReceiver.swift */,
+				D7DBD22C26CD96C500F1E39B /* MockOrchestrationResponder.swift */,
+				D7DBD22D26CD96C500F1E39B /* ViewControllerAdditions.swift */,
+				D7DBD22E26CD96C500F1E39B /* AnyWorkflowAdditions.swift */,
+				D7DBD22F26CD96C500F1E39B /* FlowRepresentableMetadataAdditions.swift */,
+				D7DBD23026CD96C500F1E39B /* CustomAssertions.swift */,
+			);
+			name = SwiftCurrent_Testing;
+			path = ../../../Sources/SwiftCurrent_Testing;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -363,7 +467,6 @@
 				CAC1C26C256D8FA500DBD0D4 /* CwlPosixPreconditionTesting */,
 				CAC1C26E256D8FA500DBD0D4 /* CwlPreconditionTesting */,
 				CA9226F82640724D00BD0366 /* ExceptionCatcher */,
-				CAE6927626C0701000B9E905 /* SwiftCurrent_Testing */,
 			);
 			productName = WorkflowTests;
 			productReference = CAF58635256CF0E50044C864 /* SwiftCurrent_UIKitTests.xctest */;
@@ -387,7 +490,6 @@
 				CAF5873E256CF55E0044C864 /* CwlPosixPreconditionTesting */,
 				CAF58740256CF55E0044C864 /* CwlPreconditionTesting */,
 				CAF58742256CF55E0044C864 /* UIUTest */,
-				CAF9F43126C03BFC00C27E5B /* SwiftCurrent_Testing */,
 			);
 			productName = SwiftCurrentExampleTests;
 			productReference = CAF586AE256CF2B40044C864 /* UIKitExampleTests.xctest */;
@@ -500,19 +602,27 @@
 				CAC1C24F256D8F0400DBD0D4 /* ModalStyleTests.swift in Sources */,
 				CA357F1F263E68AD003D1ACB /* UIKitAssertions.swift in Sources */,
 				CAC1C250256D8F0400DBD0D4 /* UIKitConsumerTests.swift in Sources */,
+				D7DBD23126CD96C500F1E39B /* XCTestHooks.m in Sources */,
 				CA74CD6A26BF3E2300592870 /* SwiftUIInteropTests.swift in Sources */,
 				CA9226EB26406C5B00BD0366 /* StoryboardLoadableTests.swift in Sources */,
+				D7DBD23326CD96C500F1E39B /* EventReceiver.swift in Sources */,
+				D7DBD23726CD96C500F1E39B /* FlowRepresentableMetadataAdditions.swift in Sources */,
 				CAC1C235256D8DA300DBD0D4 /* TopViewController.swift in Sources */,
+				D7DBD23526CD96C500F1E39B /* ViewControllerAdditions.swift in Sources */,
 				D7E1264E264C6FBD00B6A712 /* UIKitConsumerAbandonTests.swift in Sources */,
-				CA875AC0257353B300243FA4 /* CustomAssertions.swift in Sources */,
+				CA875AC0257353B300243FA4 /* AssertThrowsFatalError.swift in Sources */,
+				D7DBD23626CD96C500F1E39B /* AnyWorkflowAdditions.swift in Sources */,
 				D7E12666264C75CF00B6A712 /* UIKitConsumerWorkflowChainingTests.swift in Sources */,
 				D7E1266E264C76D000B6A712 /* UIKitConsumerPersistenceTests.swift in Sources */,
+				D7DBD23426CD96C500F1E39B /* MockOrchestrationResponder.swift in Sources */,
 				CA357F1A263E67DE003D1ACB /* UIKitPresenterTests.swift in Sources */,
 				CA6FB0DB26C6AC8200FB3285 /* TestConstant.swift in Sources */,
 				CAC1C23D256D8DB100DBD0D4 /* WaitUntil.swift in Sources */,
 				D7E1265E264C73BA00B6A712 /* UIKitConsumerLaunchTests.swift in Sources */,
+				D7DBD23226CD96C500F1E39B /* NSObjectLoadable.m in Sources */,
 				CA9F44B926ACA3220055020A /* GenericConstraintTests.swift in Sources */,
 				D7E12656264C719B00B6A712 /* UIKitConsumerSkipTests.swift in Sources */,
+				D7DBD23826CD96C500F1E39B /* CustomAssertions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -521,16 +631,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA0536E926A0848B00BF8FC5 /* ReviewOrderViewControllerTests.swift in Sources */,
+				D7DBD22126CD969B00F1E39B /* XCTestHooks.m in Sources */,
 				CA0536EE26A0848B00BF8FC5 /* FoodSelectionViewControllerTests.swift in Sources */,
 				CA0536E826A0848B00BF8FC5 /* SetupViewControllerTests.swift in Sources */,
 				D73767A926AF5D2D000A6A6E /* TermsOfServiceViewControllerTests.swift in Sources */,
 				CA0536EA26A0848B00BF8FC5 /* ViewControllerTest.swift in Sources */,
+				D7DBD21B26CD969B00F1E39B /* EventReceiver.swift in Sources */,
 				CA0536EC26A0848B00BF8FC5 /* LocationsViewControllerTests.swift in Sources */,
+				D7DBD21F26CD969B00F1E39B /* FlowRepresentableMetadataAdditions.swift in Sources */,
+				D7DBD21E26CD969B00F1E39B /* AnyWorkflowAdditions.swift in Sources */,
+				D7DBD22026CD969B00F1E39B /* CustomAssertions.swift in Sources */,
 				CA0536F026A0848B00BF8FC5 /* TestFinder.swift in Sources */,
+				D7DBD21D26CD969B00F1E39B /* ViewControllerAdditions.swift in Sources */,
 				CA0536EB26A0848B00BF8FC5 /* PickupOrDeliveryViewControllerTests.swift in Sources */,
 				CA0536E726A0848B00BF8FC5 /* EnterAddressViewControllerTests.swift in Sources */,
 				CA0536EF26A0848B00BF8FC5 /* Convenience.swift in Sources */,
+				D7DBD22226CD969B00F1E39B /* NSObjectLoadable.m in Sources */,
 				CA0536ED26A0848B00BF8FC5 /* MenuSelectionViewControllerTests.swift in Sources */,
+				D7DBD21C26CD969B00F1E39B /* MockOrchestrationResponder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -739,6 +857,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = TT.WorkflowTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "../../Sources/SwiftCurrent_Testing_ObjC/SwiftCurrent_UIKitTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -762,6 +881,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = TT.WorkflowTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "../../Sources/SwiftCurrent_Testing_ObjC/SwiftCurrent_UIKitTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/UIKitExample.app/UIKitExample";
@@ -785,6 +905,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = TT.SwiftCurrentExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "../../Sources/SwiftCurrent_Testing_ObjC/UIKitExampleTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -809,6 +930,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = TT.SwiftCurrentExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "../../Sources/SwiftCurrent_Testing_ObjC/UIKitExampleTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/UIKitExample.app/UIKitExample";
@@ -903,10 +1025,6 @@
 			package = CAF586A0256CF2560044C864 /* XCRemoteSwiftPackageReference "CwlPreconditionTesting" */;
 			productName = CwlPreconditionTesting;
 		};
-		CAE6927626C0701000B9E905 /* SwiftCurrent_Testing */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SwiftCurrent_Testing;
-		};
 		CAF58713256CF40C0044C864 /* UIUTest */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CAF58712256CF40C0044C864 /* XCRemoteSwiftPackageReference "UIUTest" */;
@@ -926,10 +1044,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CAF58712256CF40C0044C864 /* XCRemoteSwiftPackageReference "UIUTest" */;
 			productName = UIUTest;
-		};
-		CAF9F43126C03BFC00C27E5B /* SwiftCurrent_Testing */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SwiftCurrent_Testing;
 		};
 		D7226A5B267820070066E9E6 /* SwiftCurrent */ = {
 			isa = XCSwiftPackageProductDependency;

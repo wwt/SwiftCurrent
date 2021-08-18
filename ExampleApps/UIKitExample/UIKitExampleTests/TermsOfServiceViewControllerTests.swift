@@ -11,7 +11,6 @@ import XCTest
 
 @testable import UIKitExample
 import SwiftCurrent
-import SwiftCurrent_Testing
 
 class TermsOfServiceViewControllerTests: ViewControllerTest<TermsOfServiceViewController> {
     func testAcceptingAgreementContinuesForward() {

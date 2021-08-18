@@ -64,7 +64,6 @@
 		D7DBD20726CD923600F1E39B /* NSObjectLoadable.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD20526CD923600F1E39B /* NSObjectLoadable.m */; };
 		D7DBD20926CD92A200F1E39B /* NSObjectLoadable.h in Headers */ = {isa = PBXBuildFile; fileRef = D7DBD20326CD923600F1E39B /* NSObjectLoadable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D7DBD20A26CD92A300F1E39B /* XCTestHooks.h in Headers */ = {isa = PBXBuildFile; fileRef = D7DBD20426CD923600F1E39B /* XCTestHooks.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D7DBD20C26CD93B100F1E39B /* SwiftUIExampleTests-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = D7DBD20B26CD93B100F1E39B /* SwiftUIExampleTests-Bridging-Header.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,7 +132,6 @@
 		D7DBD20326CD923600F1E39B /* NSObjectLoadable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSObjectLoadable.h; sourceTree = "<group>"; };
 		D7DBD20426CD923600F1E39B /* XCTestHooks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCTestHooks.h; sourceTree = "<group>"; };
 		D7DBD20526CD923600F1E39B /* NSObjectLoadable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSObjectLoadable.m; sourceTree = "<group>"; };
-		D7DBD20B26CD93B100F1E39B /* SwiftUIExampleTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftUIExampleTests-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -339,7 +337,6 @@
 				D7DBD20126CD923600F1E39B /* XCTestHooks.m */,
 				D7DBD20226CD923600F1E39B /* Include */,
 				D7DBD20526CD923600F1E39B /* NSObjectLoadable.m */,
-				D7DBD20B26CD93B100F1E39B /* SwiftUIExampleTests-Bridging-Header.h */,
 			);
 			name = SwiftCurrent_Testing_ObjC;
 			path = ../../../Sources/SwiftCurrent_Testing_ObjC;
@@ -361,7 +358,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D7DBD20C26CD93B100F1E39B /* SwiftUIExampleTests-Bridging-Header.h in Headers */,
 				D7DBD20926CD92A200F1E39B /* NSObjectLoadable.h in Headers */,
 				D7DBD20A26CD92A300F1E39B /* XCTestHooks.h in Headers */,
 			);

@@ -9,8 +9,6 @@
 import Foundation
 import XCTest
 
-import SwiftCurrent_Testing
-
 @testable import UIKitExample
 @testable import SwiftCurrent
 
