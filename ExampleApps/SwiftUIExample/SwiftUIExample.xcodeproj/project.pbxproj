@@ -62,8 +62,6 @@
 		D7DBD1FF26CD920700F1E39B /* CustomAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD1F926CD920700F1E39B /* CustomAssertions.swift */; };
 		D7DBD20626CD923600F1E39B /* XCTestHooks.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD20126CD923600F1E39B /* XCTestHooks.m */; };
 		D7DBD20726CD923600F1E39B /* NSObjectLoadable.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD20526CD923600F1E39B /* NSObjectLoadable.m */; };
-		D7DBD20926CD92A200F1E39B /* NSObjectLoadable.h in Headers */ = {isa = PBXBuildFile; fileRef = D7DBD20326CD923600F1E39B /* NSObjectLoadable.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D7DBD20A26CD92A300F1E39B /* XCTestHooks.h in Headers */ = {isa = PBXBuildFile; fileRef = D7DBD20426CD923600F1E39B /* XCTestHooks.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -353,18 +351,6 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		D7DBD20826CD928B00F1E39B /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D7DBD20926CD92A200F1E39B /* NSObjectLoadable.h in Headers */,
-				D7DBD20A26CD92A300F1E39B /* XCTestHooks.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
 		CAC34B3E26A07F830039A373 /* SwiftUIExample */ = {
 			isa = PBXNativeTarget;
@@ -394,7 +380,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CAC34B6726A07F840039A373 /* Build configuration list for PBXNativeTarget "SwiftUIExampleTests" */;
 			buildPhases = (
-				D7DBD20826CD928B00F1E39B /* Headers */,
 				CAC34B4C26A07F840039A373 /* Sources */,
 				CAC34B4D26A07F840039A373 /* Frameworks */,
 				CAC34B4E26A07F840039A373 /* Resources */,
