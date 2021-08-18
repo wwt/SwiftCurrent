@@ -8,7 +8,7 @@ platform :ios do
   end
 
   lane :unit_test do
-    sh("../../.github/rewrite-package-swift.sh ../../Package.swift"
+    sh("../../.github/rewrite-package-swift.sh ../../Package.swift")
     scan(
       code_coverage: true,
       scheme:  'SwiftCurrent',
