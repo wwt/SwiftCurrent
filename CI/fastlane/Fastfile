@@ -24,7 +24,7 @@ platform :ios do
       code_coverage: true,
       scheme:  'ALL_UI_TESTS',
       workspace: '../SwiftCurrent.xcworkspace',
-      xcodebuild_command: 'env NSUnbufferedIO=YES DISABLE_DIAMOND_PROBLEM_DIAGNOSTIC=YES xcodebuild'
+      xcodebuild_command: 'env NSUnbufferedIO=YES DISABLE_DIAMOND_PROBLEM_DIAGNOSTIC=YES xcodebuild',
       derived_data_path: "~/Library/Developer/Xcode/DerivedData",
     )
   end
