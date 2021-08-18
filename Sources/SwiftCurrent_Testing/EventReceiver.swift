@@ -14,8 +14,8 @@ import SwiftCurrent_Testing_ObjC
 
 @testable import SwiftCurrent
 
-#if canImport(SwiftCurrent_UIKit)
-@testable import SwiftCurrent_UIKit
+#if canImport(UIKit) && !os(watchOS)
+import UIKit
 #endif
 
 enum EventReceiver {
@@ -24,9 +24,9 @@ enum EventReceiver {
                                  args: AnyWorkflow.PassedArgs,
                                  style: LaunchStyle,
                                  onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
-        #if canImport(SwiftCurrent_UIKit)
-        if let responder = responder as? UIKitPresenter {
-            responder.launchedFromVC.launchedWorkflows.append(workflow)
+        #if canImport(UIKit) && !os(watchOS)
+        if let vc = Mirror(reflecting: responder).descendant("launchedFromVC") as? UIViewController {
+            vc.launchedWorkflows.append(workflow)
         }
         #endif
         workflow.onFinish = onFinish
