@@ -45,7 +45,7 @@ Pod::Spec.new do |s|
     ss.ios.deployment_target = '11.0'
     ss.macos.deployment_target = '11.0'
     ss.tvos.deployment_target = '14.0'
-    ss.watchos.deployment_target = '7.0'
+    # ss.watchos.deployment_target = '7.0' # Xcode 12.4 is unable to lib lint this. When the pipeline is moved to 12.5 we can comment this back in.
     ss.source_files = ['Sources/SwiftCurrent_Testing/**/*.{swift,h,m}', 'Sources/SwiftCurrent_Testing_ObjC/**/*.{swift,h,m}']
     ss.exclude_files = 'Sources/SwiftCurrent_Testing_ObjC/*-Bridging-Header.h'
     ss.dependency 'SwiftCurrent/Core'
