@@ -4,7 +4,7 @@ This guide will walk you through getting a [Workflow](https://wwt.github.io/Swif
 
 The app in this guide is going to be very simple.  It consists of a screen that will launch the [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html), a screen to enter an email address, and an optional screen for when the user enters an email with `@wwt.com` in it.  Here is a preview of what the app will look like:
 
-![Preview image of app](https://raw.githubusercontent.com/wwt/SwiftCurrent/main/wiki/programmatic.gif)
+![Preview image of app](https://raw.githubusercontent.com/wwt/SwiftCurrent/main/.github/wiki/storyboard.gif)
 
 ## Adding the dependency
 
@@ -14,104 +14,103 @@ For instructions on SPM and CocoaPods, [check out our installation page.](https:
 
 SwiftCurrent is so convenient that you may miss the couple lines that are calls to the library.  To make it easier, we've marked our code snippets with `// SwiftCurrent` to highlight items that are coming from the library.
 
-## Create your view controllers
+## Create the convenience protocols for storyboard loading
 
-Create two view controllers that inherit from [UIWorkflowItem<I, O>](https://wwt.github.io/SwiftCurrent/Classes/UIWorkflowItem.html) and implement [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html).
+It is best practice to use the [StoryboardLoadable](https://wwt.github.io/SwiftCurrent/Protocols/StoryboardLoadable.html) protocol to connect your [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) to your Storyboard.  Additionally, to limit the amount of duplicate code, you can make a convenience protocol for each storyboard.
 
 ```swift
 import UIKit
-import SwiftCurrent
 import SwiftCurrent_UIKit
 
-class FirstViewController: UIWorkflowItem<String, String>, FlowRepresentable { // SwiftCurrent
-    private let name: String
-    private let emailTextField = UITextField()
-    private let welcomeLabel = UILabel()
-    private let saveButton = UIButton()
+extension StoryboardLoadable { // SwiftCurrent
+    // Assumes that your storyboardId will be the same as your UIViewController class name
+    static var storyboardId: String { String(describing: Self.self) }
+}
 
-    required init(with name: String) { // SwiftCurrent
+protocol MainStoryboardLoadable: StoryboardLoadable { }
+extension MainStoryboardLoadable {
+    static var storyboard: UIStoryboard { UIStoryboard(name: "Main", bundle: Bundle(for: Self.self)) }
+}
+```
+
+NOTE: [StoryboardLoadable](https://wwt.github.io/SwiftCurrent/Protocols/StoryboardLoadable.html) is only available in iOS 13.0 and later.
+
+## Create your view controllers
+
+Create two view controllers that both conform to `MainStoryboardLoadable` and inherit from [UIWorkflowItem<I, O>](https://wwt.github.io/SwiftCurrent/Classes/UIWorkflowItem.html).
+
+```swift
+import UIKit
+import SwiftCurrent_UIKit
+
+class FirstViewController: UIWorkflowItem<String, String>, MainStoryboardLoadable { // SwiftCurrent
+    private let name: String
+
+    @IBOutlet private weak var emailTextField: UITextField!
+    @IBOutlet private weak var welcomeLabel: UILabel! {
+        willSet(this) {
+            this.text = "Welcome \(name)!"
+        }
+    }
+
+    required init?(coder: NSCoder, with name: String) { // SwiftCurrent
         self.name = name
-        super.init(nibName: nil, bundle: nil)
-        configureViews()
+        super.init(coder: coder)
     }
 
     required init?(coder: NSCoder) { nil }
 
-    @objc private func savePressed() {
+    @IBAction private func savePressed(_ sender: Any) {
         proceedInWorkflow(emailTextField.text ?? "") // SwiftCurrent
-    }
-
-    private func configureViews() {
-        view.backgroundColor = .systemGray5
-
-        welcomeLabel.text = "Welcome \(name)!"
-
-        emailTextField.backgroundColor = .systemGray3
-        emailTextField.borderStyle = .roundedRect
-        emailTextField.placeholder = "Enter email..."
-
-        saveButton.setTitle("Save", for: .normal)
-        saveButton.setTitleColor(.systemBlue, for: .normal)
-        saveButton.addTarget(self, action: #selector(savePressed), for: .touchUpInside)
-
-        view.addSubview(welcomeLabel)
-        view.addSubview(emailTextField)
-        view.addSubview(saveButton)
-
-        welcomeLabel.translatesAutoresizingMaskIntoConstraints = false
-        welcomeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        welcomeLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
-
-        emailTextField.translatesAutoresizingMaskIntoConstraints = false
-        emailTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        emailTextField.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 16).isActive = true
-        emailTextField.widthAnchor.constraint(equalToConstant: 300).isActive = true
-
-        saveButton.translatesAutoresizingMaskIntoConstraints = false
-        saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        saveButton.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 24).isActive = true
     }
 }
 
 // This screen shows an employee only screen
-class SecondViewController: UIWorkflowItem<String, String>, FlowRepresentable { // SwiftCurrent
+class SecondViewController: UIWorkflowItem<String, String>, MainStoryboardLoadable { // SwiftCurrent
     private let email: String
-    private let finishButton = UIButton()
-
-    required init(with email: String) { // SwiftCurrent
+    required init?(coder: NSCoder, with email: String) { // SwiftCurrent
         self.email = email
-        super.init(nibName: nil, bundle: nil)
-        configureViews()
+        super.init(coder: coder)
     }
 
     required init?(coder: NSCoder) { nil }
 
-    func shouldLoad() -> Bool { // SwiftCurrent
-        return email.contains("@wwt.com")
-    }
-
-    @objc private func finishPressed() {
+    @IBAction private func finishPressed(_ sender: Any) {
         proceedInWorkflow(email) // SwiftCurrent
     }
 
-    private func configureViews() {
-        view.backgroundColor = .systemGray5
-
-        finishButton.setTitle("Finish", for: .normal)
-        finishButton.setTitleColor(.systemBlue, for: .normal)
-        finishButton.addTarget(self, action: #selector(finishPressed), for: .touchUpInside)
-        finishButton.accessibilityIdentifier = "finish"
-
-        view.addSubview(finishButton)
-
-        finishButton.translatesAutoresizingMaskIntoConstraints = false
-        finishButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        finishButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    func shouldLoad() -> Bool { // SwiftCurrent
+        return email.contains("@wwt.com")
     }
 }
 ```
 
 ### Let's talk about what is going on with these view controllers
+
+#### **Where are the [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html)s you mentioned earlier?**
+
+<details>
+
+You could declare these view controllers with `class FirstViewController: UIWorkflowItem<String, String>, FlowRepresentable, MainStoryboardLoadable`, but the [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) is not specifically needed, so we excluded it from our example.
+</details>
+
+#### **Why is [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) not needed in the declaration?**
+
+<details>
+
+These view controllers adhere to [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) by the combination of [UIWorkflowItem](https://wwt.github.io/SwiftCurrent/Classes/UIWorkflowItem.html) and [StoryboardLoadable](https://wwt.github.io/SwiftCurrent/Protocols/StoryboardLoadable.html).
+
+1. The [UIWorkflowItem<I, O>](https://wwt.github.io/SwiftCurrent/Classes/UIWorkflowItem.html) class implements a subset of the requirements for [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html).
+1. [StoryboardLoadable](https://wwt.github.io/SwiftCurrent/Protocols/StoryboardLoadable.html) implements the remaining subset and requires that it is only applied to a [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html).
+
+</details>
+
+#### **Why these initializers?**
+
+<details>
+
+[StoryboardLoadable](https://wwt.github.io/SwiftCurrent/Protocols/StoryboardLoadable.html) helps guide XCode to give you compiler errors with the appropriate fix-its to generate `required init?(coder: NSCoder, with args: String)`. These initializers allow you to load from a storyboard while also having compile-time safety in your properties.  You will notice that both view controllers store the argument string on a `private let` property.
+</details>
 
 #### **What's this `shouldLoad()`?**
 
@@ -130,27 +129,12 @@ import SwiftCurrent
 import SwiftCurrent_UIKit
 
 class ViewController: UIViewController {
-    private let launchButton = UIButton()
-
-    override func viewDidLoad() {
-        launchButton.setTitle("Launch Workflow", for: .normal)
-        launchButton.setTitleColor(.systemBlue, for: .normal)
-        launchButton.addTarget(self, action: #selector(didTapLaunchWorkflow), for: .touchUpInside)
-
-        view.addSubview(launchButton)
-
-        launchButton.translatesAutoresizingMaskIntoConstraints = false
-        launchButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        launchButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-    }
-
-    @objc private func didTapLaunchWorkflow() {
+    @IBAction private func launchWorkflow() {
         let workflow = Workflow(FirstViewController.self) // SwiftCurrent
-            .thenPresent(SecondViewController.self) // SwiftCurrent
-
-        launchInto(workflow, args: "Noble Six") { passedArgs in // SwiftCurrent
+                            .thenPresent(SecondViewController.self) // SwiftCurrent
+        
+        launchInto(workflow, args: "Some Name") { passedArgs in // SwiftCurrent
             workflow.abandon()
-
             guard case .args(let emailAddress as String) = passedArgs else {
                 print("No email address supplied")
                 return
@@ -198,6 +182,7 @@ import XCTest
 import UIUTest
 import SwiftCurrent
 
+// This assumes your project was called GettingStarted.
 @testable import GettingStarted
 
 class SecondViewControllerTests: XCTestCase {
@@ -258,26 +243,3 @@ At a high level we are loading the view controller for testing (similar to befor
 <details>
 It's easy to forget to set the accessibility identifier on the button, please check that first. Second, if you don't call `loadForTesting()` your view controller doesn't make it to the window and the hit testing of `simulateTouch()` will also fail. Finally, make sure the button is visible and tappable on the simulator you are using.
 </details>
-
-## BETA Interoperability With SwiftUI
-You can use your SwiftUI `View`s that are [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) in your UIKit workflows. Start with your `View`
-
-```swift
-import SwiftUI
-import SwiftCurrent
-
-struct SwiftUIView: View, FlowRepresentable { // SwiftCurrent
-    weak var _workflowPointer: AnyFlowRepresentable? // SwiftCurrent
-
-    var body: some View {
-        Text("FR2")
-    }
-}
-
-```
-
-Now in your UIKit workflow simply use a HostedWorkflowItem (While in BETA, `import SwiftCurrent_SwiftUI` is necessary)
-
-```swift
-launchInto(Workflow(HostedWorkflowItem<SwiftUIView>.self)) // SwiftCurrent
-```

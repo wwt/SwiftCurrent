@@ -1,5 +1,5 @@
 //
-//  CustomAssertions.swift
+//  AssertThrowsFatalError.swift
 //  WorkflowTests
 //
 //  Created by Tyler Thompson on 9/2/19.

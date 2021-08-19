@@ -31,7 +31,7 @@
                BlueprintIdentifier = "CA185E11256DD2F3008C9143"
                BuildableName = "libSwiftCurrentLint.a"
                BlueprintName = "SwiftCurrentLint"
-               ReferencedContainer = "container:SwiftCurrentLint/SwiftCurrentLint.xcodeproj">
+               ReferencedContainer = "container:.github/SwiftCurrentLint/SwiftCurrentLint.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -49,16 +49,6 @@
                BlueprintIdentifier = "CAF58634256CF0E50044C864"
                BuildableName = "SwiftCurrent_UIKitTests.xctest"
                BlueprintName = "SwiftCurrent_UIKitTests"
-               ReferencedContainer = "container:ExampleApps/UIKitExample/UIKitExample.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CAF586AD256CF2B40044C864"
-               BuildableName = "UIKitExampleTests.xctest"
-               BlueprintName = "UIKitExampleTests"
                ReferencedContainer = "container:ExampleApps/UIKitExample/UIKitExample.xcodeproj">
             </BuildableReference>
          </TestableReference>

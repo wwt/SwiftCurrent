@@ -1,0 +1,106 @@
+fastlane_version "2.27.0"
+default_platform :ios
+
+platform :ios do
+  before_all do
+    ENV["FASTLANE_EXPLICIT_OPEN_SIMULATOR"] = "2"
+    clear_derived_data
+  end
+
+  lane :unit_test do
+    scan(
+      code_coverage: true,
+      scheme:  'SwiftCurrent',
+      workspace: '../SwiftCurrent.xcworkspace',
+      derived_data_path: "~/Library/Developer/Xcode/DerivedData",
+    )
+  end
+
+  lane :build_swiftpm do
+    # Confirm Core can build against Swift without any Apple SDK requirements
+    sh('rm -rf ../../SwiftCurrent.xcworkspace/')
+    Dir.chdir("..") do
+      xcodebuild(
+        scheme: 'SwiftCurrent',
+        destination: [
+          'platform=iOS Simulator,name=iPhone 8',
+          'platform=tvOS Simulator,name=Apple TV',
+          'platform=watchOS Simulator,name=Apple Watch Series 5 - 44mm',
+          'platform=iOS Simulator,name=iPad Pro (12.9-inch) (4th generation)',
+          'platform=macOS',
+          'platform=macOS,variant=Mac Catalyst',
+        ]
+      )
+      xcodebuild(
+        scheme: 'SwiftCurrent_UIKit',
+        destination: [
+          'platform=iOS Simulator,name=iPhone 8',
+          'platform=tvOS Simulator,name=Apple TV',
+          'platform=iOS Simulator,name=iPad Pro (12.9-inch) (4th generation)',
+          'platform=macOS,variant=Mac Catalyst',
+        ]
+      )
+      xcodebuild(
+        scheme: 'BETA_SwiftCurrent_SwiftUI',
+        destination: [
+          'platform=iOS Simulator,name=iPhone 8',
+          'platform=tvOS Simulator,name=Apple TV',
+          'platform=watchOS Simulator,name=Apple Watch Series 5 - 44mm',
+          'platform=iOS Simulator,name=iPad Pro (12.9-inch) (4th generation)',
+          'platform=macOS',
+          'platform=macOS,variant=Mac Catalyst',
+        ]
+      )
+      xcodebuild(
+        scheme: 'SwiftCurrent_Testing',
+        destination: [
+          'platform=iOS Simulator,name=iPhone 8',
+          'platform=tvOS Simulator,name=Apple TV',
+          'platform=iOS Simulator,name=iPad Pro (12.9-inch) (4th generation)',
+          'platform=macOS',
+          'platform=macOS,variant=Mac Catalyst',
+          'platform=watchOS Simulator,name=Apple Watch Series 5 - 44mm',
+        ]
+      )
+    end
+  end
+
+  lane :cocoapods_liblint do
+    pod_lib_lint(podspec: '../SwiftCurrent.podspec', allow_warnings: true)
+  end
+
+  lane :lint do 
+    swiftlint(
+      config_file: 'SwiftCurrentLint/.swiftlint.yml',
+      raise_if_swiftlint_error: true,
+      strict: true
+    )
+  end
+
+  lane :lintfix do 
+    sh('swiftlint --fix --config=../../SwiftCurrentLint/.swiftlint.yml')
+  end
+
+  desc "Release a new version with a patch bump_type"
+  lane :patch do
+    release("patch")
+  end
+
+  desc "Release a new version with a minor bump_type"
+  lane :minor do
+    release("minor")
+  end
+
+  desc "Release a new version with a major bump_type"
+  lane :major do
+    release("major")
+  end
+
+  def release(type)
+    podspec_name = "../SwiftCurrent.podspec"
+    version = version_bump_podspec(path: podspec_name,
+                                   bump_type: type)
+    echo(message: "New Version: #{version}")
+    echo(message: "##[set-output name=version;]#{version}")
+  end
+end
