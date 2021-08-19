@@ -6,7 +6,7 @@ jobs:
   test:
     runs-on: macos-latest
     env:
-        working-directory: CI
+        working-directory: .github
     steps:
       - uses: actions/checkout@v2
       - name: Run TESTS

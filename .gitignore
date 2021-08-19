@@ -59,12 +59,12 @@ Carthage/Build
 # For more information about the recommended setup visit:
 # https://docs.fastlane.tools/best-practices/source-control/#source-control
 
-CI/fastlane/report.xml
-CI/fastlane/Preview.html
-CI/fastlane/screenshots
-CI/fastlane/test_output
-CI/fastlane/reports
-CI/fastlane/xcov_report
+**/*/fastlane/report.xml
+**/*/fastlane/Preview.html
+**/*/fastlane/screenshots
+**/*/fastlane/test_output
+**/*/fastlane/reports
+**/*/fastlane/xcov_report
 
 reports/*.html
 
@@ -72,7 +72,7 @@ node_modules
 npm-debug.log
 *.xcuserstate
 .DS_Store
-CI/Gemfile.lock
+**/*/Gemfile.lock
 dependency-check-report.html
 
 .DS_Store
