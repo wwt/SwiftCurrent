@@ -36,7 +36,7 @@ for PLATFORM in "${@:2}"; do
 
   ARCHIVE_PATH=$RELEASE_FOLDER
 
-  ./rewrite-package-swift Package.swift
+  .github/rewrite-package-swift.sh Package.swift
 
   xcodebuild archive -workspace . -scheme "$NAME" \
     -destination "generic/platform=$PLATFORM" \
