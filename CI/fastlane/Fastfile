@@ -18,8 +18,6 @@ platform :ios do
 
   lane :build_swiftpm do
     # Confirm Core can build against Swift without any Apple SDK requirements
-    sh('swift package clean')
-    sh('swift build --package-path="../../" --target SwiftCurrent')
     sh('rm -rf ../../SwiftCurrent.xcworkspace/')
     Dir.chdir("..") do
       xcodebuild(
