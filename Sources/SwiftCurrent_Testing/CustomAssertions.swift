@@ -15,8 +15,8 @@ import UIKit
 
 @testable import SwiftCurrent
 
-/// Assert that a workflow was launched and matches the workflow passed in
 #if !os(watchOS)
+/// Assert that a workflow was launched and matches the workflow passed in
 public func XCTAssertWorkflowLaunched<F>(from VC: UIViewController, workflow: Workflow<F>, file: StaticString = #filePath, line: UInt = #line) {
     let last = VC.launchedWorkflows.last
     XCTAssertNotNil(last, "No workflow found", file: file, line: line)
