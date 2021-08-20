@@ -102,8 +102,22 @@ public struct WorkflowLauncher<Args> {
                     onAbandon: onAbandon)
     }
 
-    public func thenProceed<A, W, C>(with closure: @autoclosure () -> WorkflowItem<A, W, C>) -> WorkflowItem<Args, W, C> {
-        WorkflowItem(self, isLaunched: _isLaunched, wrap: closure())
+    public func thenProceed<W, C>(with closure: @autoclosure () -> WorkflowItem<Args, W, C>) -> some View {
+        let item = WorkflowItem(self, isLaunched: _isLaunched, wrap: closure())
+        let wf = AnyWorkflow.empty
+        item.modify(workflow: wf)
+        let model = WorkflowViewModel(isLaunched: _isLaunched, launchArgs: passedArgs)
+        let launcher = Launcher(workflow: wf,
+                                responder: model,
+                                launchArgs: passedArgs)
+        return item
+            .environmentObject(model)
+            .environmentObject(launcher)
+//        _model = StateObject(wrappedValue: model)
+//        _launcher = StateObject(wrappedValue: Launcher(workflow: wf,
+//                                                       responder: model,
+//                                                       launchArgs: launcher.passedArgs))
+
     }
 }
 

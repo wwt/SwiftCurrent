@@ -18,37 +18,37 @@ struct ContentView: View {
     }
     @State var selectedTab: Tab = .map
     var body: some View {
-        WorkflowLauncher(isLaunched: .constant(true))
-            .thenProceed(with: WorkflowItem(FR1.self)
-                            .thenProceed(with: WorkflowItem(FR2.self)
-                            .thenProceed(with: WorkflowItem(FR3.self))))
-//        TabView(selection: $selectedTab) {
-//            // NOTE: Using constant here guarantees the workflow cannot abandon, it stays launched forever.
-//            WorkflowLauncher(isLaunched: .constant(true))
-//                .thenProceed(with: WorkflowItem(MapFeatureOnboardingView.self))
-//                .thenProceed(with: WorkflowItem(MapFeatureView.self))
-//                .tabItem {
-//                    Label("Map", systemImage: "map")
-//                }
-//                .tag(Tab.map)
-//
-//            WorkflowLauncher(isLaunched: .constant(true))
-//                .thenProceed(with: WorkflowItem(QRScannerFeatureOnboardingView.self))
-//                .thenProceed(with: WorkflowItem(QRScannerFeatureView.self))
-//                .tabItem {
-//                    Label("QR Scanner", systemImage: "camera")
-//                }
-//                .tag(Tab.qr)
-//
-//            WorkflowLauncher(isLaunched: .constant(true))
-//                .thenProceed(with: WorkflowItem(ProfileFeatureOnboardingView.self))
-//                .thenProceed(with: WorkflowItem(ProfileFeatureView.self))
-//                .tabItem {
-//                    Label("Profile", systemImage: "person.crop.circle")
-//                }
-//                .tag(Tab.profile)
-//        }
-//        .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
+//        WorkflowLauncher(isLaunched: .constant(true))
+//            .thenProceed(with: WorkflowItem(FR1.self)
+//                            .thenProceed(with: WorkflowItem(FR2.self)
+//                            .thenProceed(with: WorkflowItem(FR3.self))))
+        TabView(selection: $selectedTab) {
+            // NOTE: Using constant here guarantees the workflow cannot abandon, it stays launched forever.
+            WorkflowLauncher(isLaunched: .constant(true))
+                .thenProceed(with: WorkflowItem(MapFeatureOnboardingView.self)
+                .thenProceed(with: WorkflowItem(MapFeatureView.self)))
+                .tabItem {
+                    Label("Map", systemImage: "map")
+                }
+                .tag(Tab.map)
+
+            WorkflowLauncher(isLaunched: .constant(true))
+                .thenProceed(with: WorkflowItem(QRScannerFeatureOnboardingView.self)
+                .thenProceed(with: WorkflowItem(QRScannerFeatureView.self)))
+                .tabItem {
+                    Label("QR Scanner", systemImage: "camera")
+                }
+                .tag(Tab.qr)
+
+            WorkflowLauncher(isLaunched: .constant(true))
+                .thenProceed(with: WorkflowItem(ProfileFeatureOnboardingView.self)
+                .thenProceed(with: WorkflowItem(ProfileFeatureView.self)))
+                .tabItem {
+                    Label("Profile", systemImage: "person.crop.circle")
+                }
+                .tag(Tab.profile)
+        }
+        .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 }
 

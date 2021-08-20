@@ -23,8 +23,6 @@ protocol WorkflowModifier {
  */
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
-    @Binding private var isLaunched: Bool
-
     let inspection = Inspection<Self>()
     // These need to be state variables to survive SwiftUI re-rendering. Change under penalty of torture BY the codebase you modified.
     @State private var wrapped: Wrapped?
@@ -33,12 +31,12 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
     @State private var onAbandon = [() -> Void]()
     @State private var metadata: FlowRepresentableMetadata
 
-    @StateObject private var model: WorkflowViewModel
-    @StateObject private var launcher: Launcher
+    @EnvironmentObject private var model: WorkflowViewModel
+    @EnvironmentObject private var launcher: Launcher
 
     public var body: some View {
-        ConditionalViewWrapper {
-            if isLaunched {
+        VStack {
+            if model.isLaunched?.wrappedValue == true {
                 if let body = model.body as? Content {
                     body.onReceive(model.onAbandonPublisher) { onAbandon.forEach { $0() } }
                 } else {
@@ -48,11 +46,10 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
         }
         .onReceive(inspection.notice) { inspection.visit(self, $0) }
         .onReceive(model.onFinishPublisher, perform: _onFinish)
-        .onChange(of: isLaunched) { if !$0 { resetWorkflow() } }
+        .onChange(of: model.isLaunched?.wrappedValue) { if $0 == false { resetWorkflow() } }
     }
 
     private init<A, W, C, A1, W1, C1>(previous: WorkflowItem<A, W, C>, _ closure: () -> Wrapped) where Wrapped == WorkflowItem<A1, W1, C1> {
-        _isLaunched = previous._isLaunched
         let wrapped = closure()
         _wrapped = State(initialValue: wrapped)
         _launchArgs = previous._launchArgs
@@ -64,7 +61,6 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
     }
 
     public init(_ item: Content.Type) where Wrapped == Never, Args == Content.WorkflowOutput, Content: FlowRepresentable & View {
-        _isLaunched = Binding { false } set: { _ in } // default value, overridden later
         _launchArgs = State(initialValue: .none) // default value, overridden later
         let metadata = FlowRepresentableMetadata(Content.self,
                                                  launchStyle: .new,
@@ -75,27 +71,14 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
                                                     return afrv
                                                  })
         _metadata = State(initialValue: metadata)
-        // All of this is a lie
-        let model = WorkflowViewModel(isLaunched: _isLaunched, launchArgs: .none)
-        _model = StateObject(wrappedValue: model)
-        _launcher = StateObject(wrappedValue: Launcher(workflow: nil,
-                                                       responder: model,
-                                                       launchArgs: .none))
     }
 
-    init<A>(_ launcher: WorkflowLauncher<Args>, isLaunched: Binding<Bool>, wrap: WorkflowItem<A, Wrapped, Content>) {
-        _isLaunched = isLaunched
+    init(_ launcher: WorkflowLauncher<Args>, isLaunched: Binding<Bool>, wrap: WorkflowItem<Args, Wrapped, Content>) {
         _launchArgs = State(initialValue: launcher.passedArgs)
         _onFinish = State(initialValue: launcher.onFinish)
         _onAbandon = State(initialValue: launcher.onAbandon)
         _metadata = wrap._metadata
-        let wf = AnyWorkflow.empty
-        wrap.modify(workflow: wf)
-        let model = WorkflowViewModel(isLaunched: isLaunched, launchArgs: launcher.passedArgs)
-        _model = StateObject(wrappedValue: model)
-        _launcher = StateObject(wrappedValue: Launcher(workflow: wf,
-                                                       responder: model,
-                                                       launchArgs: launcher.passedArgs))
+        _wrapped = wrap._wrapped
     }
 
     public func thenProceed<A, W, C>(with closure: @autoclosure () -> WorkflowItem<A, W, C>) -> WorkflowItem<Args, WorkflowItem<A, W, C>, Content> {
@@ -105,13 +88,10 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
     }
 
     private init(workflowLauncher: Self, onFinish: [(AnyWorkflow.PassedArgs) -> Void], onAbandon: [() -> Void]) {
-        _model = workflowLauncher._model
         _wrapped = workflowLauncher._wrapped
         _onFinish = State(initialValue: onFinish)
         _onAbandon = State(initialValue: onAbandon)
         _launchArgs = workflowLauncher._launchArgs
-        _isLaunched = workflowLauncher._isLaunched
-        _launcher = workflowLauncher._launcher
         _metadata = workflowLauncher._metadata
     }
 
@@ -152,7 +132,7 @@ extension WorkflowItem: WorkflowModifier {
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-private final class Launcher: ObservableObject {
+final class Launcher: ObservableObject {
     var onFinishCalled = false
     var workflow: AnyWorkflow?
     init(workflow: AnyWorkflow?,
