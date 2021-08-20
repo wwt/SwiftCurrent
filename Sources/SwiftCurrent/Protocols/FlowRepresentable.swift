@@ -168,3 +168,14 @@ extension FlowRepresentable {
         try _workflowPointer?.backUpInWorkflowStorage?()
     }
 }
+
+extension Never: FlowRepresentable {
+    public var _workflowPointer: AnyFlowRepresentable? {
+        get {
+            nil
+        } set { } // swiftlint:disable:this unused_setter_value
+    }
+
+    // swiftlint:disable:next unavailable_function
+    public init() { fatalError("Cannot initialize Never") }
+}

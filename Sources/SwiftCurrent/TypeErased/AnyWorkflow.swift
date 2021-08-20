@@ -14,6 +14,10 @@ public class AnyWorkflow {
     /// The `LinkedList.Node` type of a `Workflow`.
     public typealias Element = LinkedList<_WorkflowItem>.Element
 
+    public static var empty: AnyWorkflow {
+        AnyWorkflow(Workflow<Never>())
+    }
+
     /// The `OrchestrationResponder` of the wrapped `Workflow`.
     public internal(set) var orchestrationResponder: OrchestrationResponder? {
         get {
@@ -39,6 +43,11 @@ public class AnyWorkflow {
     /// Appends `FlowRepresentableMetadata` to the `Workflow`.
     public func append(_ metadata: FlowRepresentableMetadata) {
         storageBase.append(metadata)
+    }
+
+    /// The first item in the `Workflow`.
+    public var first: AnyWorkflow.Element? {
+        storageBase.first
     }
 
     /**
@@ -102,6 +111,7 @@ extension AnyWorkflow {
 fileprivate class AnyWorkflowStorageBase {
     var orchestrationResponder: OrchestrationResponder?
     var count: Int { fatalError("Count not overridden by AnyWorkflowStorage") }
+    var first: AnyWorkflow.Element? { fatalError("first not overriden by AnyWorkflowStorage") }
 
     // https://github.com/wwt/SwiftCurrent/blob/main/.github/STYLEGUIDE.md#type-erasure
     // swiftlint:disable:next unavailable_function
@@ -146,6 +156,8 @@ fileprivate final class AnyWorkflowStorage<F: FlowRepresentable>: AnyWorkflowSto
     }
 
     override var count: Int { workflow.count }
+
+    override var first: AnyWorkflow.Element? { workflow.first }
 
     init(_ workflow: Workflow<F>) {
         self.workflow = workflow
