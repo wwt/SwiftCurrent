@@ -11,13 +11,8 @@ import SwiftUI
 import SwiftCurrent
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-public protocol WorkflowModifier {
+protocol WorkflowModifier {
     func modify(workflow: AnyWorkflow)
-}
-
-@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-extension Never: WorkflowModifier {
-    public func modify(workflow: AnyWorkflow) { }
 }
 
 /**
@@ -27,7 +22,7 @@ extension Never: WorkflowModifier {
  You do not instantiate this view directly, rather you call `thenProceed(with:)` on a `WorkflowLauncher`.
  */
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-public struct WorkflowItem<Args, Wrapped: View & WorkflowModifier, Content: View>: View, WorkflowModifier {
+public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
     @Binding private var isLaunched: Bool
 
     let inspection = Inspection<Self>()
@@ -103,11 +98,6 @@ public struct WorkflowItem<Args, Wrapped: View & WorkflowModifier, Content: View
                                                        launchArgs: launcher.passedArgs))
     }
 
-    public func modify(workflow: AnyWorkflow) {
-        workflow.append(metadata)
-        wrapped?.modify(workflow: workflow)
-    }
-
     public func thenProceed<A, W, C>(with closure: @autoclosure () -> WorkflowItem<A, W, C>) -> WorkflowItem<Args, WorkflowItem<A, W, C>, Content> {
         WorkflowItem<Args, WorkflowItem<A, W, C>, Content>(previous: self) {
             closure()
@@ -127,8 +117,7 @@ public struct WorkflowItem<Args, Wrapped: View & WorkflowModifier, Content: View
 
     private func resetWorkflow() {
         launcher.onFinishCalled = false
-        #warning("COMe back to this too, and all the other things you broke...just...everything")
-//        workflow.launch(withOrchestrationResponder: model, passedArgs: launchArgs)
+        launcher.workflow?.launch(withOrchestrationResponder: model, passedArgs: launchArgs)
     }
 
     private func _onFinish(_ args: AnyWorkflow.PassedArgs?) {
@@ -155,11 +144,21 @@ public struct WorkflowItem<Args, Wrapped: View & WorkflowModifier, Content: View
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension WorkflowItem: WorkflowModifier {
+    func modify(workflow: AnyWorkflow) {
+        workflow.append(metadata)
+        (wrapped as? WorkflowModifier)?.modify(workflow: workflow)
+    }
+}
+
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 private final class Launcher: ObservableObject {
     var onFinishCalled = false
+    var workflow: AnyWorkflow?
     init(workflow: AnyWorkflow?,
          responder: OrchestrationResponder,
          launchArgs: AnyWorkflow.PassedArgs) {
+        self.workflow = workflow
         if workflow?.orchestrationResponder == nil {
             workflow?.launch(withOrchestrationResponder: responder, passedArgs: launchArgs)
         }
