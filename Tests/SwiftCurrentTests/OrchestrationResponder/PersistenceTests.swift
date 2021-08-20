@@ -8,6 +8,7 @@
 import Foundation
 import XCTest
 
+import SwiftCurrent_Testing
 @testable import SwiftCurrent
 
 class PersistenceTests: XCTestCase {

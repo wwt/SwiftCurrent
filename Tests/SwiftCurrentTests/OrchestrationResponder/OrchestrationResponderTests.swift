@@ -9,6 +9,7 @@ import Foundation
 import XCTest
 
 import SwiftCurrent
+import SwiftCurrent_Testing
 
 class OrchestrationResponderTests: XCTestCase {
     func testWorkflowCanProceedForwardThroughFlow() {

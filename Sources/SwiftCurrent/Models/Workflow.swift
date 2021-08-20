@@ -134,6 +134,12 @@ public final class Workflow<F: FlowRepresentable>: LinkedList<_WorkflowItem> {
 
         orchestrationResponder.launchOrProceed(to: first, from: root)
 
+        EventReceiver.workflowLaunched(workflow: AnyWorkflow(self),
+                                       responder: orchestrationResponder,
+                                       args: passedArgs,
+                                       style: launchStyle,
+                                       onFinish: onFinish)
+
         return firstLoadedInstance
     }
 

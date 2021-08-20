@@ -36,11 +36,7 @@ for PLATFORM in "${@:2}"; do
 
   ARCHIVE_PATH=$RELEASE_FOLDER
 
-  # Rewrite Package.swift so that it declares dynamic libraries, since the approach does not work with static libraries
-  perl -i -p0e 's/type: .static,//g' Package.swift
-  perl -i -p0e 's/type: .dynamic,//g' Package.swift
-  perl -i -p0e 's/BETA_//g' Package.swift
-  perl -i -p0e 's/(library[^,]*,)/$1 type: .dynamic,/g' Package.swift
+  .github/rewrite-package-swift.sh Package.swift
 
   xcodebuild archive -workspace . -scheme "$NAME" \
     -destination "generic/platform=$PLATFORM" \

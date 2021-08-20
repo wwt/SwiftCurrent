@@ -9,8 +9,9 @@
 import Foundation
 import XCTest
 
-@testable import UIKitExample
 import SwiftCurrent
+
+@testable import UIKitExample
 
 class SetupViewControllerTests: XCTestCase {
     var testViewController: SetupViewController!
@@ -20,24 +21,14 @@ class SetupViewControllerTests: XCTestCase {
     }
 
     func testLaunchingMultiLocationWorkflow() {
-        let listener = WorkflowListener()
-
         testViewController.launchWorkflowButton?.simulateTouch()
 
-        XCTAssertWorkflowLaunched(listener: listener, workflow: Workflow(LocationsViewController.self)
+        XCTAssertWorkflowLaunched(from: testViewController, workflow: Workflow(LocationsViewController.self)
                                     .thenProceed(with: TermsOfServiceViewController.self)
                                     .thenProceed(with: PickupOrDeliveryViewController.self)
                                     .thenProceed(with: MenuSelectionViewController.self)
                                     .thenProceed(with: FoodSelectionViewController.self)
-                                    .thenProceed(with: ReviewOrderViewController.self),
-                                  passedArgs: [
-                                    .args([Location]()),
-                                    .args(Order(location: nil)),
-                                    .args(Order(location: nil)),
-                                    .args(Order(location: nil)),
-                                    .args(Order(location: nil)),
-                                    .args(Order(location: nil)),
-                                  ])
+                                    .thenProceed(with: ReviewOrderViewController.self))
     }
 }
 

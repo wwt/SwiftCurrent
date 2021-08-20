@@ -54,6 +54,7 @@ public class FlowRepresentableMetadata {
         self.launchStyle = launchStyle
         self.flowPersistence = flowPersistence
         self.flowRepresentableFactory = flowRepresentableFactory
+        EventReceiver.flowRepresentableMetadataCreated(metadata: self, type: FR.self)
     }
 
     func setPersistence(_ args: AnyWorkflow.PassedArgs) -> FlowPersistence {

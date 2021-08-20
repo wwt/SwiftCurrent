@@ -15,7 +15,10 @@ let package = Package(
             targets: ["SwiftCurrent_UIKit"]),
         .library(
             name: "BETA_SwiftCurrent_SwiftUI",
-            targets: ["SwiftCurrent_SwiftUI"])
+            targets: ["SwiftCurrent_SwiftUI"]),
+        .library(
+            name: "SwiftCurrent_Testing",
+            targets: ["SwiftCurrent_Testing_ObjC", "SwiftCurrent_Testing"])
     ],
     dependencies: [
         .package(url: "https://github.com/mattgallagher/CwlPreconditionTesting.git", from: Version("2.0.0-beta.1")),
@@ -34,10 +37,20 @@ let package = Package(
         .target(
             name: "SwiftCurrent_SwiftUI",
             dependencies: ["SwiftCurrent"]),
+        .target(
+            name: "SwiftCurrent_Testing_ObjC",
+            dependencies: [],
+            exclude: ["SwiftCurrent_UIKitTests-Bridging-Header.h", "SwiftUIExampleTests-Bridging-Header.h", "UIKitExampleTests-Bridging-Header.h"],
+            publicHeadersPath: "Include"),
+        .target(
+            name: "SwiftCurrent_Testing",
+            dependencies: ["SwiftCurrent_Testing_ObjC",
+                           "SwiftCurrent"]),
         .testTarget(
             name: "SwiftCurrentTests",
             dependencies: [
                 "SwiftCurrent",
+                "SwiftCurrent_Testing",
                 "CwlPreconditionTesting",
                 "CwlCatchException",
                 "ExceptionCatcher",
@@ -48,6 +61,7 @@ let package = Package(
             name: "SwiftCurrent-SwiftUITests",
             dependencies: [
                 "SwiftCurrent",
+                "SwiftCurrent_Testing",
                 "SwiftCurrent_SwiftUI",
                 "CwlPreconditionTesting",
                 "CwlCatchException",

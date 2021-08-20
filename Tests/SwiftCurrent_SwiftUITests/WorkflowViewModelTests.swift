@@ -10,6 +10,7 @@ import XCTest
 import ViewInspector
 import SwiftUI
 
+import SwiftCurrent_Testing
 @testable import SwiftCurrent
 @testable import SwiftCurrent_SwiftUI
 
