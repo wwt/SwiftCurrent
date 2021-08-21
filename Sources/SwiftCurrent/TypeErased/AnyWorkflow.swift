@@ -46,11 +46,6 @@ public class AnyWorkflow {
         storageBase.append(metadata)
     }
 
-    /// The first item in the `Workflow`.
-    public var first: AnyWorkflow.Element? {
-        storageBase.first
-    }
-
     /**
      Launches the `Workflow`.
 
@@ -112,7 +107,6 @@ extension AnyWorkflow {
 fileprivate class AnyWorkflowStorageBase {
     var orchestrationResponder: OrchestrationResponder?
     var count: Int { fatalError("Count not overridden by AnyWorkflowStorage") }
-    var first: AnyWorkflow.Element? { fatalError("first not overriden by AnyWorkflowStorage") }
 
     // https://github.com/wwt/SwiftCurrent/blob/main/.github/STYLEGUIDE.md#type-erasure
     // swiftlint:disable:next unavailable_function
@@ -157,8 +151,6 @@ fileprivate final class AnyWorkflowStorage<F: FlowRepresentable>: AnyWorkflowSto
     }
 
     override var count: Int { workflow.count }
-
-    override var first: AnyWorkflow.Element? { workflow.first }
 
     init(_ workflow: Workflow<F>) {
         self.workflow = workflow

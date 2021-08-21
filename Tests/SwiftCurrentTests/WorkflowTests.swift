@@ -80,6 +80,12 @@ class WorkflowTests: XCTestCase {
             _ = FR1()
         }
     }
+
+    func testNeverFlowRepresentableThrowsErrorIfYouTryToInitializeIt() throws {
+        try XCTAssertThrowsFatalError {
+            Never()
+        }
+    }
 }
 
 extension WorkflowTests {
