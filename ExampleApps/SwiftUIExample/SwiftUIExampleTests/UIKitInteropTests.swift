@@ -79,7 +79,7 @@ final class UIKitInteropTests: XCTestCase {
         var vc: FR1!
 
         let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
-            let wrapper = try workflowLauncher.view(WorkflowItem<Never, Never, ViewControllerWrapper<FR1>>.self)
+            let wrapper = try workflowLauncher.view(WorkflowItem<ViewControllerWrapper<FR1>, Never, ViewControllerWrapper<FR1>>.self)
                 .view(ViewControllerWrapper<FR1>.self)
 
             let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<FR1>>.self)
@@ -138,7 +138,7 @@ final class UIKitInteropTests: XCTestCase {
         var vc: TestNoInputViewController!
 
         let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
-            let wrapper = try workflowLauncher.view(WorkflowItem<Never, Never, ViewControllerWrapper<TestNoInputViewController>>.self)
+            let wrapper = try workflowLauncher.view(WorkflowItem<ViewControllerWrapper<TestNoInputViewController>, Never, ViewControllerWrapper<TestNoInputViewController>>.self)
                 .view(ViewControllerWrapper<TestNoInputViewController>.self)
             let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<TestNoInputViewController>>.self)
             vc = try wrapper.actualView().makeUIViewController(context: context)
