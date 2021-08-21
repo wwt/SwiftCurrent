@@ -10,6 +10,10 @@
 import SwiftUI
 import SwiftCurrent
 
+#if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)
+import UIKit
+#endif
+
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 protocol WorkflowModifier {
     func modify(workflow: AnyWorkflow)
@@ -69,6 +73,23 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
                                                  })
         _metadata = State(initialValue: metadata)
     }
+
+    #if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)
+    /// Creates a `WorkflowItem` from a `UIViewController`.
+    @available(iOS 14.0, macOS 11, tvOS 14.0, *)
+    public init<VC: FlowRepresentable & UIViewController>(_: VC.Type) where Content == ViewControllerWrapper<VC>, Wrapped == Never, Args == Content.WorkflowOutput {
+        _launchArgs = State(initialValue: .none)
+        let metadata = FlowRepresentableMetadata(ViewControllerWrapper<VC>.self,
+                                                 launchStyle: .new,
+                                                 flowPersistence: { _ in .default },
+                                                 flowRepresentableFactory: {
+                                                    let afrv = AnyFlowRepresentableView(type: Content.self, args: $0)
+//                                                        modifierClosure?(afrv)
+                                                    return afrv
+                                                 })
+        _metadata = State(initialValue: metadata)
+    }
+    #endif
 
     init<A>(_ launcher: WorkflowLauncher<A>, isLaunched: Binding<Bool>, wrap: WorkflowItem<Args, Wrapped, Content>) {
         _launchArgs = State(initialValue: launcher.passedArgs)

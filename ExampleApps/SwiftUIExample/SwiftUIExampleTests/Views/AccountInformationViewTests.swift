@@ -16,8 +16,6 @@ import SwiftCurrent
 @testable import SwiftCurrent_SwiftUI // 🤮 it sucks that this is necessary
 @testable import SwiftUIExample
 
-#warning("Come back to these tests, they are having issues with the environment objects for WorkflowItem")
-
 final class AccountInformationViewTests: XCTestCase {
     private typealias MFAViewWorkflowView = WorkflowLauncherView<WorkflowItem<AnyWorkflow.PassedArgs, Never, MFAView>>
     private typealias UsernameWorkflow = WorkflowLauncherView<WorkflowItem<AnyWorkflow.PassedArgs, WorkflowItem<String, Never, ChangeUsernameView>, MFAView>>
