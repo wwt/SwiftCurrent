@@ -133,8 +133,8 @@ included: # paths to include during linting. `--path` is ignored if present.
 #   - Workflow/Package.swift
 
 line_length:
-  warning: 196
-  error: 220
+  warning: 205
+  error: 250
   ignores_comments: true
 
 nesting:

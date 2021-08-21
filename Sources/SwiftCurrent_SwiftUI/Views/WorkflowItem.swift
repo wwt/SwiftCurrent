@@ -112,16 +112,6 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         launcher.workflow?.launch(withOrchestrationResponder: model, passedArgs: launchArgs)
     }
 
-    /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.
-    public func persistence(_ persistence: @escaping @autoclosure () -> FlowPersistence) -> Self {
-//        flowPersistenceClosure = { _ in persistence() }
-//        metadata = FlowRepresentableMetadata(F.self,
-//                                             launchStyle: .new,
-//                                             flowPersistence: flowPersistenceClosure,
-//                                             flowRepresentableFactory: factory)
-        return self
-    }
-
     private func ViewBuilder<V: View>(@ViewBuilder builder: () -> V) -> some View { builder() }
 }
 
@@ -218,3 +208,51 @@ final class Launcher: ObservableObject {
 //        ModifiedWorkflowView<FR.WorkflowOutput, Self, T>(self, item: item)
 //    }
 //}
+
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension WorkflowItem {
+    /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.
+    public func persistence(_ persistence: @escaping @autoclosure () -> FlowPersistence) -> Self {
+//        flowPersistenceClosure = { _ in persistence() }
+//        metadata = FlowRepresentableMetadata(F.self,
+//                                             launchStyle: .new,
+//                                             flowPersistence: flowPersistenceClosure,
+//                                             flowRepresentableFactory: factory)
+        return self
+    }
+
+    /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.
+    public func persistence(_ persistence: @escaping (F.WorkflowInput) -> FlowPersistence) -> Self {
+//        flowPersistenceClosure = {
+//            guard case .args(let arg as F.WorkflowInput) = $0 else {
+//                fatalError("Could not cast \(String(describing: $0)) to expected type: \(F.WorkflowInput.self)")
+//            }
+//            return persistence(arg)
+//        }
+//        metadata = FlowRepresentableMetadata(F.self,
+//                                             launchStyle: .new,
+//                                             flowPersistence: flowPersistenceClosure,
+//                                             flowRepresentableFactory: factory)
+        return self
+    }
+
+    /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.
+    public func persistence(_ persistence: @escaping (F.WorkflowInput) -> FlowPersistence) -> Self where F.WorkflowInput == AnyWorkflow.PassedArgs {
+//        flowPersistenceClosure = { persistence($0) }
+//        metadata = FlowRepresentableMetadata(F.self,
+//                                             launchStyle: .new,
+//                                             flowPersistence: flowPersistenceClosure,
+//                                             flowRepresentableFactory: factory)
+        return self
+    }
+
+    /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.
+    public func persistence(_ persistence: @escaping () -> FlowPersistence) -> Self where F.WorkflowInput == Never {
+//        flowPersistenceClosure = { _ in persistence() }
+//        metadata = FlowRepresentableMetadata(F.self,
+//                                             launchStyle: .new,
+//                                             flowPersistence: flowPersistenceClosure,
+//                                             flowRepresentableFactory: factory)
+        return self
+    }
+}

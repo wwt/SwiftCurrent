@@ -43,24 +43,23 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("API for this test not yet supported")
-//    func testWhenInputIsNever_FlowPersistenceCanBeSetWithClosure() {
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        let expectation = self.expectation(description: "FlowPersistence closure called")
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true))
-//            .thenProceed(with: WorkflowItem(FR1.self).persistence {
-//                defer { expectation.fulfill() }
-//                return .persistWhenSkipped
-//            })
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
-//        }
-//        wait(for: [expectation, expectViewLoaded], timeout: TestConstant.timeout)
-//    }
+    func testWhenInputIsNever_FlowPersistenceCanBeSetWithClosure() {
+        struct FR1: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        let expectation = self.expectation(description: "FlowPersistence closure called")
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true))
+            .thenProceed(with: WorkflowItem(FR1.self).persistence {
+                defer { expectation.fulfill() }
+                return .persistWhenSkipped
+            })
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+        }
+        wait(for: [expectation, expectViewLoaded], timeout: TestConstant.timeout)
+    }
 
     func testWhenInputIsNeverWithDefaultFlowPersistence_WorkflowCanProceedToAnotherNeverItem() throws {
         struct FR1: FlowRepresentable, View, Inspectable {
@@ -105,28 +104,27 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("API for this test not yet supported")
-//    func testWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToAnotherNeverItem() throws {
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        struct FR2: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true))
-//            .thenProceed(with: WorkflowItem(FR1.self).persistence { .persistWhenSkipped }
-//            .thenProceed(with: WorkflowItem(FR2.self)))
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//
-//            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
-//            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-//            XCTAssertNoThrow(try view.find(FR2.self))
-//        }
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
+    func testWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToAnotherNeverItem() throws {
+        struct FR1: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        struct FR2: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true))
+            .thenProceed(with: WorkflowItem(FR1.self).persistence { .persistWhenSkipped }
+            .thenProceed(with: WorkflowItem(FR2.self)))
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+
+            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+            XCTAssertNoThrow(try view.find(FR2.self))
+        }
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
 
     func testWhenInputIsNeverWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
         struct FR1: FlowRepresentable, View, Inspectable {
@@ -173,29 +171,28 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("API for this test not yet supported")
-//    func testWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        struct FR2: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: AnyWorkflow.PassedArgs) { }
-//        }
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true))
-//            .thenProceed(with: WorkflowItem(FR1.self).persistence { .persistWhenSkipped }
-//            .thenProceed(with: WorkflowItem(FR2.self)))
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//
-//            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
-//            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-//            XCTAssertNoThrow(try view.find(FR2.self))
-//        }
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
+    func testWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
+        struct FR1: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        struct FR2: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: AnyWorkflow.PassedArgs) { }
+        }
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true))
+            .thenProceed(with: WorkflowItem(FR1.self).persistence { .persistWhenSkipped }
+            .thenProceed(with: WorkflowItem(FR2.self)))
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+
+            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+            XCTAssertNoThrow(try view.find(FR2.self))
+        }
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
 
     func testWhenInputIsNeverWithDefaultFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
         struct FR1: FlowRepresentable, View, Inspectable {
@@ -244,30 +241,29 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("API for this test not yet supported")
-//    func testWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            typealias WorkflowOutput = Int
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        struct FR2: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: Int) { }
-//        }
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true))
-//            .thenProceed(with: WorkflowItem(FR1.self).persistence { .persistWhenSkipped }
-//            .thenProceed(with: WorkflowItem(FR2.self)))
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//
-//            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
-//            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
-//            XCTAssertNoThrow(try view.find(FR2.self))
-//        }
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
+    func testWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
+        struct FR1: FlowRepresentable, View, Inspectable {
+            typealias WorkflowOutput = Int
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        struct FR2: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: Int) { }
+        }
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true))
+            .thenProceed(with: WorkflowItem(FR1.self).persistence { .persistWhenSkipped }
+            .thenProceed(with: WorkflowItem(FR2.self)))
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+
+            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
+            XCTAssertNoThrow(try view.find(FR2.self))
+        }
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
 
 
     // MARK: Input Type == AnyWorkflow.PassedArgs
@@ -290,28 +286,27 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("API for this test not yet supported")
-//    func testWhenInputIsAnyWorkflowPassedArgs_FlowPersistenceCanBeSetWithClosure() {
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: AnyWorkflow.PassedArgs) { }
-//        }
-//        let expectedArgs = UUID().uuidString
-//
-//        let expectation = self.expectation(description: "FlowPersistence closure called")
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
-//            .thenProceed(with: WorkflowItem(FR1.self).persistence {
-//                XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
-//                defer { expectation.fulfill() }
-//                return .persistWhenSkipped
-//            })
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
-//        }
-//        wait(for: [expectViewLoaded, expectation], timeout: TestConstant.timeout)
-//    }
+    func testWhenInputIsAnyWorkflowPassedArgs_FlowPersistenceCanBeSetWithClosure() {
+        struct FR1: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: AnyWorkflow.PassedArgs) { }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let expectation = self.expectation(description: "FlowPersistence closure called")
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
+            .thenProceed(with: WorkflowItem(FR1.self).persistence {
+                XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
+                defer { expectation.fulfill() }
+                return .persistWhenSkipped
+            })
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+        }
+        wait(for: [expectViewLoaded, expectation], timeout: TestConstant.timeout)
+    }
 
     func testWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToNeverItem() throws {
         struct FR1: FlowRepresentable, View, Inspectable {
@@ -362,34 +357,33 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("API for this test not yet supported")
-//    func testWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToNeverItem() throws {
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: AnyWorkflow.PassedArgs) { }
-//        }
-//        struct FR2: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        let expectedArgs = UUID().uuidString
-//
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
-//            .thenProceed(with: WorkflowItem(FR1.self).persistence {
-//                XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
-//                return .persistWhenSkipped
-//            })
-//            .thenProceed(with: WorkflowItem(FR2.self))
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//
-//            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
-//            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-//            XCTAssertNoThrow(try view.find(FR2.self))
-//        }
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
+    func testWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToNeverItem() throws {
+        struct FR1: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: AnyWorkflow.PassedArgs) { }
+        }
+        struct FR2: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
+            .thenProceed(with: WorkflowItem(FR1.self).persistence {
+                XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
+                return .persistWhenSkipped
+            }
+            .thenProceed(with: WorkflowItem(FR2.self)))
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+
+            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+            XCTAssertNoThrow(try view.find(FR2.self))
+        }
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
 
     func testWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
         struct FR1: FlowRepresentable, View, Inspectable {
@@ -442,35 +436,34 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("API for this test not yet supported")
-//    func testWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: AnyWorkflow.PassedArgs) { }
-//        }
-//        struct FR2: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: AnyWorkflow.PassedArgs) { }
-//        }
-//        let expectedArgs = UUID().uuidString
-//
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
-//            .thenProceed(with: WorkflowItem(FR1.self).persistence {
-//                XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
-//                return .persistWhenSkipped
-//            })
-//            .thenProceed(with: WorkflowItem(FR2.self))
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//
-//            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
-//            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-//            XCTAssertNoThrow(try view.find(FR2.self))
-//        }
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
+    func testWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
+        struct FR1: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: AnyWorkflow.PassedArgs) { }
+        }
+        struct FR2: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: AnyWorkflow.PassedArgs) { }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
+            .thenProceed(with: WorkflowItem(FR1.self).persistence {
+                XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
+                return .persistWhenSkipped
+            }
+            .thenProceed(with: WorkflowItem(FR2.self)))
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+
+            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+            XCTAssertNoThrow(try view.find(FR2.self))
+        }
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
 
     func testWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
         struct FR1: FlowRepresentable, View, Inspectable {
@@ -525,36 +518,35 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("API for this test not yet supported")
-//    func testWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            typealias WorkflowOutput = Int
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: AnyWorkflow.PassedArgs) { }
-//        }
-//        struct FR2: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: Int) { }
-//        }
-//        let expectedArgs = UUID().uuidString
-//
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
-//            .thenProceed(with: WorkflowItem(FR1.self).persistence {
-//                XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
-//                return .persistWhenSkipped
-//            })
-//            .thenProceed(with: WorkflowItem(FR2.self))
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//
-//            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
-//            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
-//            XCTAssertNoThrow(try view.find(FR2.self))
-//        }
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
+    func testWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
+        struct FR1: FlowRepresentable, View, Inspectable {
+            typealias WorkflowOutput = Int
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: AnyWorkflow.PassedArgs) { }
+        }
+        struct FR2: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: Int) { }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
+            .thenProceed(with: WorkflowItem(FR1.self).persistence {
+                XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
+                return .persistWhenSkipped
+            }
+            .thenProceed(with: WorkflowItem(FR2.self)))
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+
+            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
+            XCTAssertNoThrow(try view.find(FR2.self))
+        }
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
 
     // MARK: Input Type == Concrete Type
     func testWhenInputIsConcreteType_FlowPersistenceCanBeSetWithAutoclosure() {
@@ -575,28 +567,27 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("API for this test not yet supported")
-//    func testWhenInputIsConcreteType_FlowPersistenceCanBeSetWithClosure() {
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: String) { }
-//        }
-//        let expectedArgs = UUID().uuidString
-//
-//        let expectation = self.expectation(description: "FlowPersistence closure called")
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
-//            .thenProceed(with: WorkflowItem(FR1.self).persistence {
-//                XCTAssertEqual($0, expectedArgs)
-//                defer { expectation.fulfill() }
-//                return .persistWhenSkipped
-//            })
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
-//        }
-//        wait(for: [expectViewLoaded, expectation], timeout: TestConstant.timeout)
-//    }
+    func testWhenInputIsConcreteType_FlowPersistenceCanBeSetWithClosure() {
+        struct FR1: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: String) { }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let expectation = self.expectation(description: "FlowPersistence closure called")
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
+            .thenProceed(with: WorkflowItem(FR1.self).persistence {
+                XCTAssertEqual($0, expectedArgs)
+                defer { expectation.fulfill() }
+                return .persistWhenSkipped
+            })
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+        }
+        wait(for: [expectViewLoaded, expectation], timeout: TestConstant.timeout)
+    }
 
     func testWhenInputIsConcreteTypeWithDefaultFlowPersistence_WorkflowCanProceedToNeverItem() throws {
         struct FR1: FlowRepresentable, View, Inspectable {
@@ -647,34 +638,33 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("API for this test not yet supported")
-//    func testWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToNeverItem() throws {
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: String) { }
-//        }
-//        struct FR2: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        let expectedArgs = UUID().uuidString
-//
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
-//            .thenProceed(with: WorkflowItem(FR1.self).persistence {
-//                XCTAssertEqual($0, expectedArgs)
-//                return .persistWhenSkipped
-//            })
-//            .thenProceed(with: WorkflowItem(FR2.self))
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//
-//            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
-//            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-//            XCTAssertNoThrow(try view.find(FR2.self))
-//        }
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
+    func testWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToNeverItem() throws {
+        struct FR1: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: String) { }
+        }
+        struct FR2: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
+            .thenProceed(with: WorkflowItem(FR1.self).persistence {
+                XCTAssertEqual($0, expectedArgs)
+                return .persistWhenSkipped
+            }
+            .thenProceed(with: WorkflowItem(FR2.self)))
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+
+            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+            XCTAssertNoThrow(try view.find(FR2.self))
+        }
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
 
     func testWhenInputIsConcreteTypeWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
         struct FR1: FlowRepresentable, View, Inspectable {
@@ -727,35 +717,34 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("API for this test not yet supported")
-//    func testWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: String) { }
-//        }
-//        struct FR2: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: AnyWorkflow.PassedArgs) { }
-//        }
-//        let expectedArgs = UUID().uuidString
-//
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
-//            .thenProceed(with: WorkflowItem(FR1.self).persistence {
-//                XCTAssertEqual($0, expectedArgs)
-//                return .persistWhenSkipped
-//            })
-//            .thenProceed(with: WorkflowItem(FR2.self))
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//
-//            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
-//            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-//            XCTAssertNoThrow(try view.find(FR2.self))
-//        }
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
+    func testWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
+        struct FR1: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: String) { }
+        }
+        struct FR2: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: AnyWorkflow.PassedArgs) { }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
+            .thenProceed(with: WorkflowItem(FR1.self).persistence {
+                XCTAssertEqual($0, expectedArgs)
+                return .persistWhenSkipped
+            }
+            .thenProceed(with: WorkflowItem(FR2.self)))
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+
+            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+            XCTAssertNoThrow(try view.find(FR2.self))
+        }
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
 
     func testWhenInputIsConcreteTypeArgsWithDefaultFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
         struct FR1: FlowRepresentable, View, Inspectable {
@@ -810,36 +799,35 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("API for this test not yet supported")
-//    func testWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            typealias WorkflowOutput = Int
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: String) { }
-//        }
-//        struct FR2: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: Int) { }
-//        }
-//        let expectedArgs = UUID().uuidString
-//
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
-//            .thenProceed(with: WorkflowItem(FR1.self).persistence {
-//                XCTAssertEqual($0, expectedArgs)
-//                return .persistWhenSkipped
-//            })
-//            .thenProceed(with: WorkflowItem(FR2.self))
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//
-//            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
-//            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
-//            XCTAssertNoThrow(try view.find(FR2.self))
-//        }
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
+    func testWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
+        struct FR1: FlowRepresentable, View, Inspectable {
+            typealias WorkflowOutput = Int
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: String) { }
+        }
+        struct FR2: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: Int) { }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
+            .thenProceed(with: WorkflowItem(FR1.self).persistence {
+                XCTAssertEqual($0, expectedArgs)
+                return .persistWhenSkipped
+            }
+            .thenProceed(with: WorkflowItem(FR2.self)))
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+
+            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
+            XCTAssertNoThrow(try view.find(FR2.self))
+        }
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
 
     func testWhenInputIsConcreteTypeArgsWithDefaultFlowPersistence_WorkflowCanProceedToTheSameInputTypeItem() throws {
         struct FR1: FlowRepresentable, View, Inspectable {
@@ -894,36 +882,35 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("API for this test not yet supported")
-//    func testWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToTheSameInputTypeItem() throws {
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            typealias WorkflowOutput = String
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: String) { }
-//        }
-//        struct FR2: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: String) { }
-//        }
-//        let expectedArgs = UUID().uuidString
-//
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
-//            .thenProceed(with: WorkflowItem(FR1.self).persistence {
-//                XCTAssertEqual($0, expectedArgs)
-//                return .persistWhenSkipped
-//            })
-//            .thenProceed(with: WorkflowItem(FR2.self))
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//
-//            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
-//            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(""))
-//            XCTAssertNoThrow(try view.find(FR2.self))
-//        }
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
+    func testWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToTheSameInputTypeItem() throws {
+        struct FR1: FlowRepresentable, View, Inspectable {
+            typealias WorkflowOutput = String
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: String) { }
+        }
+        struct FR2: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: String) { }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
+            .thenProceed(with: WorkflowItem(FR1.self).persistence {
+                XCTAssertEqual($0, expectedArgs)
+                return .persistWhenSkipped
+            }
+            .thenProceed(with: WorkflowItem(FR2.self)))
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+
+            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(""))
+            XCTAssertNoThrow(try view.find(FR2.self))
+        }
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
 
     // MARK: Generic Proceed Tests
 
@@ -952,32 +939,31 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("API for this test not yet supported")
-//    func testProceedingWhenInputIsNever_FlowPersistenceCanBeSetWithClosure() throws {
-//        struct FR0: PassthroughFlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        let expectedArgs = UUID().uuidString
-//
-//        let expectation = self.expectation(description: "FlowPersistence closure called")
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
-//            .thenProceed(with: WorkflowItem(FR0.self))
-//            .thenProceed(with: WorkflowItem(FR1.self).persistence {
-//                defer { expectation.fulfill() }
-//                return .persistWhenSkipped
-//            })
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//            XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-//            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
-//        }
-//        wait(for: [expectViewLoaded, expectation], timeout: TestConstant.timeout)
-//    }
+    func testProceedingWhenInputIsNever_FlowPersistenceCanBeSetWithClosure() throws {
+        struct FR0: PassthroughFlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        struct FR1: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let expectation = self.expectation(description: "FlowPersistence closure called")
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
+            .thenProceed(with: WorkflowItem(FR0.self)
+            .thenProceed(with: WorkflowItem(FR1.self).persistence {
+                defer { expectation.fulfill() }
+                return .persistWhenSkipped
+            }))
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+            XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
+            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+        }
+        wait(for: [expectViewLoaded, expectation], timeout: TestConstant.timeout)
+    }
 
     func testProceedingWhenInputIsNeverWithDefaultFlowPersistence_WorkflowCanProceedToAnotherNeverItem() throws {
         struct FR0: PassthroughFlowRepresentable, View, Inspectable {
@@ -1038,36 +1024,35 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("API for this test not yet supported")
-//    func testProceedingWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToAnotherNeverItem() throws {
-//        struct FR0: PassthroughFlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        struct FR2: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        let expectedArgs = UUID().uuidString
-//
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
-//            .thenProceed(with: WorkflowItem(FR0.self))
-//            .thenProceed(with: WorkflowItem(FR1.self))
-//            .thenProceed(with: WorkflowItem(FR2.self).persistence { .persistWhenSkipped })
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//            XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-//
-//            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-//            XCTAssertNoThrow(try view.find(FR2.self))
-//            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
-//        }
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
+    func testProceedingWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToAnotherNeverItem() throws {
+        struct FR0: PassthroughFlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        struct FR1: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        struct FR2: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
+            .thenProceed(with: WorkflowItem(FR0.self)
+            .thenProceed(with: WorkflowItem(FR1.self)
+            .thenProceed(with: WorkflowItem(FR2.self).persistence { .persistWhenSkipped })))
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+            XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
+
+            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+            XCTAssertNoThrow(try view.find(FR2.self))
+            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+        }
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
 
     func testProceedingWhenInputIsNeverWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
         struct FR0: PassthroughFlowRepresentable, View, Inspectable {
@@ -1130,37 +1115,36 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("API for this test not yet supported")
-//    func testProceedingWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
-//        struct FR0: PassthroughFlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        struct FR2: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: AnyWorkflow.PassedArgs) { }
-//        }
-//        let expectedArgs = UUID().uuidString
-//
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
-//            .thenProceed(with: WorkflowItem(FR0.self))
-//            .thenProceed(with: WorkflowItem(FR1.self))
-//            .thenProceed(with: WorkflowItem(FR2.self).persistence { _ in .persistWhenSkipped })
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//            XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-//
-//            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-//            XCTAssertNoThrow(try view.find(FR2.self))
-//            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
-//        }
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
+    func testProceedingWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
+        struct FR0: PassthroughFlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        struct FR1: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        struct FR2: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: AnyWorkflow.PassedArgs) { }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
+            .thenProceed(with: WorkflowItem(FR0.self)
+            .thenProceed(with: WorkflowItem(FR1.self)
+            .thenProceed(with: WorkflowItem(FR2.self).persistence { _ in .persistWhenSkipped })))
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+            XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
+
+            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+            XCTAssertNoThrow(try view.find(FR2.self))
+            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+        }
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
 
     func testProceedingWhenInputIsNeverWithDefaultFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
         struct FR0: PassthroughFlowRepresentable, View, Inspectable {
@@ -1225,41 +1209,40 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("API for this test not yet supported")
-//    func testProceedingWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
-//        struct FR0: PassthroughFlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            typealias WorkflowOutput = Int
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        struct FR2: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: Int) { }
-//        }
-//        let expectedArgs = UUID().uuidString
-//
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
-//            .thenProceed(with: WorkflowItem(FR0.self))
-//            .thenProceed(with: WorkflowItem(FR1.self))
-//            .thenProceed(with: WorkflowItem(FR2.self).persistence {
-//                XCTAssertEqual($0, 1)
-//                return .persistWhenSkipped
-//            })
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//            XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-//
-//            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
-//            XCTAssertNoThrow(try view.find(FR2.self))
-//            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
-//        }
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
+    func testProceedingWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
+        struct FR0: PassthroughFlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        struct FR1: FlowRepresentable, View, Inspectable {
+            typealias WorkflowOutput = Int
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        struct FR2: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: Int) { }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
+            .thenProceed(with: WorkflowItem(FR0.self)
+            .thenProceed(with: WorkflowItem(FR1.self)
+            .thenProceed(with: WorkflowItem(FR2.self).persistence {
+                XCTAssertEqual($0, 1)
+                return .persistWhenSkipped
+            })))
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+            XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
+
+            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
+            XCTAssertNoThrow(try view.find(FR2.self))
+            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+        }
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
 
 
     // MARK: Input Type == AnyWorkflow.PassedArgs
@@ -1288,34 +1271,33 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("API for this test not yet supported")
-//    func testProceedingWhenInputIsAnyWorkflowPassedArgs_FlowPersistenceCanBeSetWithClosure() throws {
-//        struct FR0: PassthroughFlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: AnyWorkflow.PassedArgs) { }
-//        }
-//        let expectedArgs = UUID().uuidString
-//
-//        let expectation = self.expectation(description: "FlowPersistence closure called")
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
-//            .thenProceed(with: WorkflowItem(FR0.self))
-//            .thenProceed(with: WorkflowItem(FR1.self).persistence {
-//                XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
-//                defer { expectation.fulfill() }
-//                return .persistWhenSkipped
-//            })
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//            XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-//            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
-//        }
-//        wait(for: [expectViewLoaded, expectation], timeout: TestConstant.timeout)
-//    }
+    func testProceedingWhenInputIsAnyWorkflowPassedArgs_FlowPersistenceCanBeSetWithClosure() throws {
+        struct FR0: PassthroughFlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        struct FR1: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: AnyWorkflow.PassedArgs) { }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let expectation = self.expectation(description: "FlowPersistence closure called")
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
+            .thenProceed(with: WorkflowItem(FR0.self)
+            .thenProceed(with: WorkflowItem(FR1.self).persistence {
+                XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
+                defer { expectation.fulfill() }
+                return .persistWhenSkipped
+            }))
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+            XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
+            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+        }
+        wait(for: [expectViewLoaded, expectation], timeout: TestConstant.timeout)
+    }
 
     func testProceedingWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToNeverItem() throws {
         struct FR0: PassthroughFlowRepresentable, View, Inspectable {
@@ -1378,39 +1360,38 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("API for this test not yet supported")
-//    func testProceedingWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToNeverItem() throws {
-//        struct FR0: PassthroughFlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: AnyWorkflow.PassedArgs) { }
-//        }
-//        struct FR2: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        let expectedArgs = UUID().uuidString
-//
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
-//            .thenProceed(with: WorkflowItem(FR0.self))
-//            .thenProceed(with: WorkflowItem(FR1.self).persistence {
-//                XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
-//                return .persistWhenSkipped
-//            }).thenProceed(with: WorkflowItem(FR2.self))
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//            XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-//
-//            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
-//            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-//            XCTAssertNoThrow(try view.find(FR2.self))
-//        }
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
+    func testProceedingWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToNeverItem() throws {
+        struct FR0: PassthroughFlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        struct FR1: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: AnyWorkflow.PassedArgs) { }
+        }
+        struct FR2: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
+            .thenProceed(with: WorkflowItem(FR0.self)
+            .thenProceed(with: WorkflowItem(FR1.self).persistence {
+                XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
+                return .persistWhenSkipped
+            }.thenProceed(with: WorkflowItem(FR2.self))))
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+            XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
+
+            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+            XCTAssertNoThrow(try view.find(FR2.self))
+        }
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
 
     func testProceedingWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
         struct FR0: PassthroughFlowRepresentable, View, Inspectable {
@@ -1475,41 +1456,40 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("API for this test not yet supported")
-//    func testProceedingWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
-//        struct FR0: PassthroughFlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        struct FR1: PassthroughFlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: AnyWorkflow.PassedArgs) { }
-//        }
-//        struct FR2: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: AnyWorkflow.PassedArgs) { }
-//        }
-//        let expectedArgs = UUID().uuidString
-//
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
-//            .thenProceed(with: WorkflowItem(FR0.self))
-//            .thenProceed(with: WorkflowItem(FR1.self))
-//            .thenProceed(with: WorkflowItem(FR2.self).persistence {
-//                XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
-//                return .persistWhenSkipped
-//            })
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//            XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-//
-//            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-//            XCTAssertNoThrow(try view.find(FR2.self))
-//            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
-//        }
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
+    func testProceedingWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
+        struct FR0: PassthroughFlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        struct FR1: PassthroughFlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: AnyWorkflow.PassedArgs) { }
+        }
+        struct FR2: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: AnyWorkflow.PassedArgs) { }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
+            .thenProceed(with: WorkflowItem(FR0.self)
+            .thenProceed(with: WorkflowItem(FR1.self)
+            .thenProceed(with: WorkflowItem(FR2.self).persistence {
+                XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
+                return .persistWhenSkipped
+            })))
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+            XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
+
+            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+            XCTAssertNoThrow(try view.find(FR2.self))
+            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+        }
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
 
     func testProceedingWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
         struct FR0: PassthroughFlowRepresentable, View, Inspectable {
@@ -1576,42 +1556,41 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("API for this test not yet supported")
-//    func testProceedingWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
-//        struct FR0: PassthroughFlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            typealias WorkflowOutput = Int
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: AnyWorkflow.PassedArgs) { }
-//        }
-//        struct FR2: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: Int) { }
-//        }
-//        let expectedArgs = UUID().uuidString
-//
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
-//            .thenProceed(with: WorkflowItem(FR0.self))
-//            .thenProceed(with: WorkflowItem(FR1.self))
-//            .thenProceed(with: WorkflowItem(FR2.self).persistence {
-//                XCTAssertEqual($0, 1)
-//                return .persistWhenSkipped
-//            })
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//            XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-//
-//            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
-//            XCTAssertNoThrow(try view.find(FR2.self))
-//            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
-//        }
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
+    func testProceedingWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
+        struct FR0: PassthroughFlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        struct FR1: FlowRepresentable, View, Inspectable {
+            typealias WorkflowOutput = Int
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: AnyWorkflow.PassedArgs) { }
+        }
+        struct FR2: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: Int) { }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
+            .thenProceed(with: WorkflowItem(FR0.self)
+            .thenProceed(with: WorkflowItem(FR1.self)
+            .thenProceed(with: WorkflowItem(FR2.self).persistence {
+                XCTAssertEqual($0, 1)
+                return .persistWhenSkipped
+            })))
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+            XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
+
+            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
+            XCTAssertNoThrow(try view.find(FR2.self))
+            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+        }
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
 
     // MARK: Input Type == Concrete Type
     func testProceedingWhenInputIsConcreteType_FlowPersistenceCanBeSetWithAutoclosure() throws {
@@ -1637,34 +1616,33 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("API for this test not yet supported")
-//    func testProceedingWhenInputIsConcreteType_FlowPersistenceCanBeSetWithClosure() throws {
-//        struct FR0: PassthroughFlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: String) { }
-//        }
-//        let expectedArgs = UUID().uuidString
-//
-//        let expectation = self.expectation(description: "FlowPersistence closure called")
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
-//            .thenProceed(with: WorkflowItem(FR0.self))
-//            .thenProceed(with: WorkflowItem(FR1.self).persistence {
-//                XCTAssertEqual($0, expectedArgs)
-//                defer { expectation.fulfill() }
-//                return .persistWhenSkipped
-//            })
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//            XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-//            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
-//        }
-//        wait(for: [expectViewLoaded, expectation], timeout: TestConstant.timeout)
-//    }
+    func testProceedingWhenInputIsConcreteType_FlowPersistenceCanBeSetWithClosure() throws {
+        struct FR0: PassthroughFlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        struct FR1: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: String) { }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let expectation = self.expectation(description: "FlowPersistence closure called")
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
+            .thenProceed(with: WorkflowItem(FR0.self)
+            .thenProceed(with: WorkflowItem(FR1.self).persistence {
+                XCTAssertEqual($0, expectedArgs)
+                defer { expectation.fulfill() }
+                return .persistWhenSkipped
+            }))
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+            XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
+            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+        }
+        wait(for: [expectViewLoaded, expectation], timeout: TestConstant.timeout)
+    }
 
     func testProceedingWhenInputIsConcreteTypeWithDefaultFlowPersistence_WorkflowCanProceedToNeverItem() throws {
         struct FR0: PassthroughFlowRepresentable, View, Inspectable {
@@ -1727,37 +1705,36 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("API for this test not yet supported")
-//    func testProceedingWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToNeverItem() throws {
-//        struct FR0: PassthroughFlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: String) { }
-//        }
-//        struct FR2: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        let expectedArgs = UUID().uuidString
-//
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
-//            .thenProceed(with: WorkflowItem(FR0.self))
-//            .thenProceed(with: WorkflowItem(FR1.self))
-//            .thenProceed(with: WorkflowItem(FR2.self).persistence { .persistWhenSkipped })
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//            XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-//
-//            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-//            XCTAssertNoThrow(try view.find(FR2.self))
-//            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
-//        }
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
+    func testProceedingWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToNeverItem() throws {
+        struct FR0: PassthroughFlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        struct FR1: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: String) { }
+        }
+        struct FR2: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
+            .thenProceed(with: WorkflowItem(FR0.self)
+            .thenProceed(with: WorkflowItem(FR1.self)
+            .thenProceed(with: WorkflowItem(FR2.self).persistence { .persistWhenSkipped })))
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+            XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
+
+            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+            XCTAssertNoThrow(try view.find(FR2.self))
+            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+        }
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
 
     func testProceedingWhenInputIsConcreteTypeWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
         struct FR0: PassthroughFlowRepresentable, View, Inspectable {
@@ -1822,38 +1799,37 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("API for this test not yet supported")
-//    func testProceedingWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
-//        struct FR0: PassthroughFlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: String) { }
-//        }
-//        struct FR2: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: AnyWorkflow.PassedArgs) { }
-//        }
-//        let expectedArgs = UUID().uuidString
-//
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
-//            .thenProceed(with: WorkflowItem(FR0.self))
-//            .thenProceed(with: WorkflowItem(FR1.self))
-//            .thenProceed(with: WorkflowItem(FR2.self).persistence { _ in .persistWhenSkipped })
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//            XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-//
-//            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-//            XCTAssertNoThrow(try view.find(FR2.self))
-//            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
-//        }
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
+    func testProceedingWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
+        struct FR0: PassthroughFlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        struct FR1: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: String) { }
+        }
+        struct FR2: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: AnyWorkflow.PassedArgs) { }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
+            .thenProceed(with: WorkflowItem(FR0.self)
+            .thenProceed(with: WorkflowItem(FR1.self)
+            .thenProceed(with: WorkflowItem(FR2.self).persistence { _ in .persistWhenSkipped })))
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+            XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
+
+            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+            XCTAssertNoThrow(try view.find(FR2.self))
+            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+        }
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
 
     func testProceedingWhenInputIsConcreteTypeArgsWithDefaultFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
         struct FR0: PassthroughFlowRepresentable, View, Inspectable {
@@ -1920,42 +1896,41 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("API for this test not yet supported")
-//    func testProceedingWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
-//        struct FR0: PassthroughFlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            typealias WorkflowOutput = Int
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: String) { }
-//        }
-//        struct FR2: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: Int) { }
-//        }
-//        let expectedArgs = UUID().uuidString
-//
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
-//            .thenProceed(with: WorkflowItem(FR0.self))
-//            .thenProceed(with: WorkflowItem(FR1.self))
-//            .thenProceed(with: WorkflowItem(FR2.self).persistence {
-//                XCTAssertEqual($0, 1)
-//                return .persistWhenSkipped
-//            })
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//            XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-//
-//            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
-//            XCTAssertNoThrow(try view.find(FR2.self))
-//            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
-//        }
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
+    func testProceedingWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
+        struct FR0: PassthroughFlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        struct FR1: FlowRepresentable, View, Inspectable {
+            typealias WorkflowOutput = Int
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: String) { }
+        }
+        struct FR2: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: Int) { }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
+            .thenProceed(with: WorkflowItem(FR0.self)
+            .thenProceed(with: WorkflowItem(FR1.self)
+            .thenProceed(with: WorkflowItem(FR2.self).persistence {
+                XCTAssertEqual($0, 1)
+                return .persistWhenSkipped
+            })))
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+            XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
+
+            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
+            XCTAssertNoThrow(try view.find(FR2.self))
+            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+        }
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
 
     func testProceedingWhenInputIsConcreteTypeArgsWithDefaultFlowPersistence_WorkflowCanProceedToTheSameInputTypeItem() throws {
         struct FR0: PassthroughFlowRepresentable, View, Inspectable {
@@ -2022,39 +1997,38 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("API for this test not yet supported")
-//    func testProceedingWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToTheSameInputTypeItem() throws {
-//        struct FR0: PassthroughFlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            typealias WorkflowOutput = String
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: String) { }
-//        }
-//        struct FR2: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: String) { }
-//        }
-//        let expectedArgs = UUID().uuidString
-//
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
-//            .thenProceed(with: WorkflowItem(FR0.self))
-//            .thenProceed(with: WorkflowItem(FR1.self))
-//            .thenProceed(with: WorkflowItem(FR2.self).persistence { _ in .persistWhenSkipped })
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//            XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-//
-//            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(""))
-//            XCTAssertNoThrow(try view.find(FR2.self))
-//            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
-//        }
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
+    func testProceedingWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToTheSameInputTypeItem() throws {
+        struct FR0: PassthroughFlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        struct FR1: FlowRepresentable, View, Inspectable {
+            typealias WorkflowOutput = String
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: String) { }
+        }
+        struct FR2: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: String) { }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
+            .thenProceed(with: WorkflowItem(FR0.self)
+            .thenProceed(with: WorkflowItem(FR1.self)
+            .thenProceed(with: WorkflowItem(FR2.self).persistence { _ in .persistWhenSkipped })))
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+            XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
+
+            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(""))
+            XCTAssertNoThrow(try view.find(FR2.self))
+            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+        }
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
 
     func testProceedingWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToAnyWorkflowPassedArgsItem() throws {
         struct FR0: PassthroughFlowRepresentable, View, Inspectable {
