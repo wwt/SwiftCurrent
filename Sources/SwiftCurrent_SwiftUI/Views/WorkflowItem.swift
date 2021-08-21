@@ -31,7 +31,9 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
     // These need to be state variables to survive SwiftUI re-rendering. Change under penalty of torture BY the codebase you modified.
     @State private var wrapped: Wrapped?
     @State private var launchArgs: AnyWorkflow.PassedArgs
-    @State private var metadata: FlowRepresentableMetadata
+    @State private var metadata: FlowRepresentableMetadata!
+    @State private var modifierClosure: ((AnyFlowRepresentableView) -> Void)?
+    @State private var flowPersistenceClosure: (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default }
 
     @EnvironmentObject private var model: WorkflowViewModel
     @EnvironmentObject private var launcher: Launcher
@@ -57,26 +59,32 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         _model = previous._model
         _launcher = previous._launcher
         _metadata = previous._metadata
+        _modifierClosure = previous._modifierClosure
+        _flowPersistenceClosure = previous._flowPersistenceClosure
     }
 
-    private init<C>(previous: WorkflowItem<F, Wrapped, C>) {
+    private init<C>(previous: WorkflowItem<F, Wrapped, C>,
+                    modifierClosure: @escaping ((AnyFlowRepresentableView) -> Void),
+                    flowPersistenceClosure: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) {
         _wrapped = previous._wrapped
         _launchArgs = previous._launchArgs
         _model = previous._model
         _launcher = previous._launcher
-        _metadata = previous._metadata
+        _modifierClosure = State(initialValue: modifierClosure)
+        _flowPersistenceClosure = State(initialValue: flowPersistenceClosure)
+        let metadata = FlowRepresentableMetadata(F.self,
+                                                 launchStyle: .new,
+                                                 flowPersistence: flowPersistenceClosure,
+                                                 flowRepresentableFactory: factory)
+        _metadata = State(initialValue: metadata)
     }
 
     public init(_ item: F.Type) where Wrapped == Never, Content == F, Content: FlowRepresentable & View {
         _launchArgs = State(initialValue: .none) // default value, overridden later
         let metadata = FlowRepresentableMetadata(Content.self,
                                                  launchStyle: .new,
-                                                 flowPersistence: { _ in .default },
-                                                 flowRepresentableFactory: {
-                                                    let afrv = AnyFlowRepresentableView(type: Content.self, args: $0)
-//                                                        modifierClosure?(afrv)
-                                                    return afrv
-                                                 })
+                                                 flowPersistence: flowPersistenceClosure,
+                                                 flowRepresentableFactory: factory)
         _metadata = State(initialValue: metadata)
     }
 
@@ -87,12 +95,8 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         _launchArgs = State(initialValue: .none)
         let metadata = FlowRepresentableMetadata(ViewControllerWrapper<VC>.self,
                                                  launchStyle: .new,
-                                                 flowPersistence: { _ in .default },
-                                                 flowRepresentableFactory: {
-                                                    let afrv = AnyFlowRepresentableView(type: Content.self, args: $0)
-//                                                        modifierClosure?(afrv)
-                                                    return afrv
-                                                 })
+                                                 flowPersistence: flowPersistenceClosure,
+                                                 flowRepresentableFactory: factory)
         _metadata = State(initialValue: metadata)
     }
     #endif
@@ -115,23 +119,22 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
      ### Important: The most recently defined (or last) use of this, is the only one that applies modifiers, unlike onAbandon or onFinish.
      */
     public func applyModifiers<V: View>(@ViewBuilder _ closure: @escaping (F) -> V) -> WorkflowItem<F, Wrapped, V> {
-        return WorkflowItem<F, Wrapped, V>(previous: self)
-//        modifierClosure = {
-//            // We are essentially casting this to itself, that cannot fail. (Famous last words)
-//            // swiftlint:disable:next force_cast
-//            let instance = $0.underlyingInstance as! F
-//            $0.changeUnderlyingView(to: closure(instance))
-//        }
-//        return WorkflowItem<F, V>(metadata: metadata,
-//                                  persistence: flowPersistenceClosure,
-//                                  modifier: modifierClosure)
+        WorkflowItem<F, Wrapped, V>(previous: self,
+                                    modifierClosure: {
+                                        // We are essentially casting this to itself, that cannot fail. (Famous last words)
+                                        // swiftlint:disable:next force_cast
+                                        let instance = $0.underlyingInstance as! F
+                                        $0.changeUnderlyingView(to: closure(instance))
+                                    },
+                                    flowPersistenceClosure: flowPersistenceClosure)
     }
-
 
     private init(workflowLauncher: Self, onFinish: [(AnyWorkflow.PassedArgs) -> Void], onAbandon: [() -> Void]) {
         _wrapped = workflowLauncher._wrapped
         _launchArgs = workflowLauncher._launchArgs
         _metadata = workflowLauncher._metadata
+        _modifierClosure = workflowLauncher._modifierClosure
+        _flowPersistenceClosure = workflowLauncher._flowPersistenceClosure
     }
 
     private func resetWorkflow() {
@@ -140,6 +143,12 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
     }
 
     private func ViewBuilder<V: View>(@ViewBuilder builder: () -> V) -> some View { builder() }
+
+    private func factory(args: AnyWorkflow.PassedArgs) -> AnyFlowRepresentable {
+        let afrv = AnyFlowRepresentableView(type: F.self, args: args)
+        modifierClosure?(afrv)
+        return afrv
+    }
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
@@ -238,48 +247,38 @@ final class Launcher: ObservableObject {
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension WorkflowItem {
+    // swiftlint:disable trailing_closure
     /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.
     public func persistence(_ persistence: @escaping @autoclosure () -> FlowPersistence) -> Self {
-//        flowPersistenceClosure = { _ in persistence() }
-//        metadata = FlowRepresentableMetadata(F.self,
-//                                             launchStyle: .new,
-//                                             flowPersistence: flowPersistenceClosure,
-//                                             flowRepresentableFactory: factory)
-        return self
+        Self(previous: self,
+             modifierClosure: modifierClosure ?? { _ in },
+             flowPersistenceClosure: { _ in persistence() })
     }
 
     /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.
     public func persistence(_ persistence: @escaping (F.WorkflowInput) -> FlowPersistence) -> Self {
-//        flowPersistenceClosure = {
-//            guard case .args(let arg as F.WorkflowInput) = $0 else {
-//                fatalError("Could not cast \(String(describing: $0)) to expected type: \(F.WorkflowInput.self)")
-//            }
-//            return persistence(arg)
-//        }
-//        metadata = FlowRepresentableMetadata(F.self,
-//                                             launchStyle: .new,
-//                                             flowPersistence: flowPersistenceClosure,
-//                                             flowRepresentableFactory: factory)
-        return self
+        Self(previous: self,
+             modifierClosure: modifierClosure ?? { _ in },
+             flowPersistenceClosure: {
+                guard case .args(let arg as F.WorkflowInput) = $0 else {
+                    fatalError("Could not cast \(String(describing: $0)) to expected type: \(F.WorkflowInput.self)")
+                }
+                return persistence(arg)
+             })
     }
 
     /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.
     public func persistence(_ persistence: @escaping (F.WorkflowInput) -> FlowPersistence) -> Self where F.WorkflowInput == AnyWorkflow.PassedArgs {
-//        flowPersistenceClosure = { persistence($0) }
-//        metadata = FlowRepresentableMetadata(F.self,
-//                                             launchStyle: .new,
-//                                             flowPersistence: flowPersistenceClosure,
-//                                             flowRepresentableFactory: factory)
-        return self
+        Self(previous: self,
+             modifierClosure: modifierClosure ?? { _ in },
+             flowPersistenceClosure: persistence)
     }
 
     /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.
     public func persistence(_ persistence: @escaping () -> FlowPersistence) -> Self where F.WorkflowInput == Never {
-//        flowPersistenceClosure = { _ in persistence() }
-//        metadata = FlowRepresentableMetadata(F.self,
-//                                             launchStyle: .new,
-//                                             flowPersistence: flowPersistenceClosure,
-//                                             flowRepresentableFactory: factory)
-        return self
+        Self(previous: self,
+             modifierClosure: modifierClosure ?? { _ in },
+             flowPersistenceClosure: { _ in persistence() })
     }
+    // swiftlint:enable trailing_closure
 }
