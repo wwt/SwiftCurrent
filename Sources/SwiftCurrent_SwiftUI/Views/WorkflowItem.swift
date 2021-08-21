@@ -70,7 +70,7 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
         _metadata = State(initialValue: metadata)
     }
 
-    init(_ launcher: WorkflowLauncher<Args>, isLaunched: Binding<Bool>, wrap: WorkflowItem<Args, Wrapped, Content>) {
+    init<A>(_ launcher: WorkflowLauncher<A>, isLaunched: Binding<Bool>, wrap: WorkflowItem<Args, Wrapped, Content>) {
         _launchArgs = State(initialValue: launcher.passedArgs)
         _onAbandon = State(initialValue: launcher.onAbandon)
         _metadata = wrap._metadata
@@ -101,6 +101,16 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
 //        onAbandon.append(closure)
 //        return Self(workflowLauncher: self, onFinish: onFinish, onAbandon: onAbandon)
 //    }
+
+    /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.
+    public func persistence(_ persistence: @escaping @autoclosure () -> FlowPersistence) -> Self {
+//        flowPersistenceClosure = { _ in persistence() }
+//        metadata = FlowRepresentableMetadata(F.self,
+//                                             launchStyle: .new,
+//                                             flowPersistence: flowPersistenceClosure,
+//                                             flowRepresentableFactory: factory)
+        return self
+    }
 
     private func ViewBuilder<V: View>(@ViewBuilder builder: () -> V) -> some View { builder() }
 }
