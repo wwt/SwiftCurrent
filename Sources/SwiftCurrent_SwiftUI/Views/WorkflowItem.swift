@@ -15,25 +15,6 @@ protocol WorkflowModifier {
     func modify(workflow: AnyWorkflow)
 }
 
-@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-struct OnFinishModifier: ViewModifier {
-    @EnvironmentObject private var model: WorkflowViewModel
-    let onFinish: (AnyWorkflow.PassedArgs?) -> Void
-    func body(content: Content) -> some View {
-        content
-            .onReceive(model.onFinishPublisher) {
-                onFinish($0)
-            }
-    }
-}
-
-@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-extension View {
-    public func onFinishWorkflow(perform: @escaping (AnyWorkflow.PassedArgs?) -> Void) -> some View {
-        modifier(OnFinishModifier(onFinish: perform))
-    }
-}
-
 /**
  A view created by a `WorkflowLauncher`.
 
