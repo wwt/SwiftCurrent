@@ -45,7 +45,6 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
             }
         }
         .onReceive(inspection.notice) { inspection.visit(self, $0) }
-        .onReceive(model.onFinishPublisher, perform: _onFinish)
         .onChange(of: model.isLaunched?.wrappedValue) { if $0 == false { resetWorkflow() } }
     }
 

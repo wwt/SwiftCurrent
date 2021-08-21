@@ -103,28 +103,31 @@ public struct WorkflowLauncher<Args> {
                     onAbandon: onAbandon)
     }
 
-    public func thenProceed<W, C>(with closure: @autoclosure () -> WorkflowItem<Args, W, C>) -> LauncherView<WorkflowItem<Args, W, C>> {
+    public func thenProceed<W, C>(with closure: @autoclosure () -> WorkflowItem<Args, W, C>) -> WorkflowLauncherView<WorkflowItem<Args, W, C>> {
         let item = WorkflowItem(self, isLaunched: _isLaunched, wrap: closure())
         let wf = AnyWorkflow.empty
         item.modify(workflow: wf)
-        return LauncherView(item: item,
-                            workflow: wf,
-                            isLaunched: _isLaunched,
-                            launchArgs: passedArgs)
+        return WorkflowLauncherView(item: item,
+                                    workflow: wf,
+                                    isLaunched: _isLaunched,
+                                    launchArgs: passedArgs)
     }
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-public struct LauncherView<Content: View>: View {
+public struct WorkflowLauncherView<Content: View>: View {
     @State private var content: Content
     @StateObject private var model: WorkflowViewModel
     @StateObject private var launcher: Launcher
+    @State private var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
+
     let inspection = Inspection<Self>()
 
     public var body: some View {
         content
             .environmentObject(model)
             .environmentObject(launcher)
+            .onReceive(model.onFinishPublisher, perform: _onFinish)
             .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 
@@ -137,12 +140,24 @@ public struct LauncherView<Content: View>: View {
         _content = State(wrappedValue: item)
     }
 
+    private init(current: Self, onFinish: [(AnyWorkflow.PassedArgs) -> Void]) {
+        _model = current._model
+        _launcher = current._launcher
+        _content = current._content
+        _onFinish = State(initialValue: onFinish)
+    }
+
+    private func _onFinish(_ args: AnyWorkflow.PassedArgs?) {
+        guard let args = args, !launcher.onFinishCalled else { return }
+        launcher.onFinishCalled = true
+        onFinish.forEach { $0(args) }
+    }
+
     /// Adds an action to perform when this `Workflow` has finished.
     public func onFinish(closure: @escaping (AnyWorkflow.PassedArgs) -> Void) -> Self {
-//        var onFinish = self.onFinish
-//        onFinish.append(closure)
-//        return Self(workflowLauncher: self, onFinish: onFinish, onAbandon: onAbandon)
-        return self
+        var onFinish = self.onFinish
+        onFinish.append(closure)
+        return Self(current: self, onFinish: onFinish/*, onAbandon: onAbandon*/)
     }
 }
 
