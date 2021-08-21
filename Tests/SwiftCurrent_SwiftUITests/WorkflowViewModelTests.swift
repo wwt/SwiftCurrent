@@ -16,43 +16,23 @@ import SwiftCurrent_Testing
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class WorkflowViewModelTests: XCTestCase {
-    func testWorkflowViewModelThrowsFatalError_WhenLaunchedWithSomethingOtherThan_AnyFlowRepresentableView() throws {
-        let model = WorkflowViewModel(isLaunched: .constant(true), launchArgs: .none)
+    func testAnyWorkflowElementModelThrowsFatalError_WhenExtractCalledOnSomethingOtherThan_AnyFlowRepresentableView() throws {
         try XCTAssertThrowsFatalError {
-            model.launch(to: .createForTests(FR.self))
+            _ = AnyWorkflow.Element.createForTests(FR.self).extractView()
         }
     }
 
-    func testWorkflowViewModelThrowsFatalError_WhenProceedingWithSomethingOtherThan_AnyFlowRepresentableView() throws {
-        let model = WorkflowViewModel(isLaunched: .constant(true), launchArgs: .none)
-        try XCTAssertThrowsFatalError {
-            model.proceed(to: .createForTests(FR.self), from: .createForTests(FR.self))
-        }
-    }
-
-    func testWorkflowViewModelThrowsFatalError_WhenBackingUpWithSomethingOtherThan_AnyFlowRepresentableView() throws {
-        let model = WorkflowViewModel(isLaunched: .constant(true), launchArgs: .none)
-        try XCTAssertThrowsFatalError {
-            model.backUp(from: .createForTests(FR.self), to: .createForTests(FR.self))
-        }
-    }
-
-    func testWorkflowViewModelThrowsFatalError_WhenCompletingWithSomethingOtherThan_AnyFlowRepresentableView() throws {
-        let model = WorkflowViewModel(isLaunched: .constant(true), launchArgs: .none)
-        let typedWorkflow = Workflow(FR.self).thenProceed(with: FR.self, flowPersistence: .removedAfterProceeding)
-        let mock = MockOrchestrationResponder()
-        let firstLoadedInstance = typedWorkflow.launch(withOrchestrationResponder: mock)
-        firstLoadedInstance?.value.instance?.proceedInWorkflowStorage?(.none)
-        try XCTAssertThrowsFatalError {
-            model.complete(AnyWorkflow(typedWorkflow), passedArgs: .none, onFinish: nil)
-        }
+    func testAnyWorkflowElementReturnsNil_WhenExtractCalledOnNilValue() throws {
+        let element = AnyWorkflow.Element.createForTests(FR.self)
+        element.value.instance = nil
+        XCTAssertNil(element.extractView())
     }
 
     func testWorkflowViewModelSetsBodyToNilWhenAbandoning() {
         let isLaunched = Binding(wrappedValue: true)
         let model = WorkflowViewModel(isLaunched: isLaunched, launchArgs: .none)
-        model.body = ""
         let typedWorkflow = Workflow(FR.self)
+        model.body = typedWorkflow.first!
         model.abandon(AnyWorkflow(typedWorkflow), onFinish: nil)
 
         XCTAssertNil(model.body)

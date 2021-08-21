@@ -22,6 +22,7 @@ import UIKit
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: View>: View {
     // These need to be state variables to survive SwiftUI re-rendering. Change under penalty of torture BY the codebase you modified.
+    @State private var content: Content?
     @State private var wrapped: Wrapped?
     @State private var metadata: FlowRepresentableMetadata!
     @State private var modifierClosure: ((AnyFlowRepresentableView) -> Void)?
@@ -33,7 +34,7 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
     public var body: some View {
         ViewBuilder {
             if model.isLaunched == true {
-                if let body = model.body as? Content {
+                if let body = model.body?.extractView() as? Content {
                     body
                 } else {
                     wrapped
