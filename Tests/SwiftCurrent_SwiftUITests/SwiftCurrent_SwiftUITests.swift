@@ -666,35 +666,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    #warning("Come back to this")
     func testWorkflowCorrectlyHandlesState() throws {
-        throw XCTSkip("This needs to be redone now that the underlying types have fundamentally changed.")
-        final class Launcher: ObservableObject {
-            var onFinishCalled = false
-            init(workflow: AnyWorkflow,
-                 responder: OrchestrationResponder,
-                 launchArgs: AnyWorkflow.PassedArgs) {
-                if workflow.orchestrationResponder == nil {
-                    workflow.launch(withOrchestrationResponder: responder, passedArgs: launchArgs)
-                }
-            }
-        }
-        struct ModifiedWorkflowViewExplorer<A, W, C>: View, Inspectable {
-            @Binding var isLaunched: Bool
-
-            let inspection = Inspection<Self>()
-            @State var wrapped: W?
-            @State var workflow: AnyWorkflow
-            @State var launchArgs: AnyWorkflow.PassedArgs
-            @State var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
-            @State var onAbandon = [() -> Void]()
-
-            @StateObject private var model: WorkflowViewModel
-            @StateObject private var launcher: Launcher
-
-            var body: some View { EmptyView() }
-        }
-
         struct FR1: View, FlowRepresentable {
             weak var _workflowPointer: AnyFlowRepresentable?
 
@@ -706,9 +678,27 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         let workflowView = WorkflowLauncher(isLaunched: .constant(true))
             .thenProceed(with: WorkflowItem(FR1.self))
 
-        let explorer = unsafeBitCast(workflowView, to: ModifiedWorkflowViewExplorer<Never, Never, FR1>.self)
+        typealias WorkflowViewContent = State<WorkflowItem<FR1, Never, FR1>>
+        let content = try XCTUnwrap(Mirror(reflecting: workflowView).descendant("_content") as? WorkflowViewContent)
 
-        // if the unsafeBitCast worked, then everything is a state var.
-        XCTAssertNil(explorer.wrapped)
+        // Note: Only add to these exceptions if you are *certain* the property should not be @State. Err on the side of the property being @State
+        let exceptions = ["_model", "_launcher", "_location", "_value"]
+
+        let mirror = Mirror(reflecting: content.wrappedValue)
+
+        XCTAssertGreaterThan(mirror.children.count, 0)
+
+        mirror.children.forEach {
+            guard let label = $0.label, !exceptions.contains(label) else { return }
+            XCTAssert($0.value is StateIdentifiable, "Property named: \(label) was note @State")
+        }
     }
+}
+
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+protocol StateIdentifiable { }
+
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension State: StateIdentifiable {
+
 }

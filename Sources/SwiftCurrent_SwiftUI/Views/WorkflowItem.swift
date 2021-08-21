@@ -27,7 +27,6 @@ protocol WorkflowModifier {
  */
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: View>: View {
-    let inspection = Inspection<Self>()
     // These need to be state variables to survive SwiftUI re-rendering. Change under penalty of torture BY the codebase you modified.
     @State private var wrapped: Wrapped?
     @State private var launchArgs: AnyWorkflow.PassedArgs
@@ -48,7 +47,6 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
                 }
             }
         }
-        .onReceive(inspection.notice) { inspection.visit(self, $0) }
         .onChange(of: model.isLaunched?.wrappedValue) { if $0 == false { resetWorkflow() } }
     }
 
