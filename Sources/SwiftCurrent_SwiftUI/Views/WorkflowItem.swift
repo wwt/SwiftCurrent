@@ -5,7 +5,6 @@
 //  Created by Tyler Thompson on 7/20/21.
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
-//  swiftlint:disable file_types_order
 
 import SwiftUI
 import SwiftCurrent
@@ -13,11 +12,6 @@ import SwiftCurrent
 #if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)
 import UIKit
 #endif
-
-@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-protocol WorkflowModifier {
-    func modify(workflow: AnyWorkflow)
-}
 
 /**
  A view created by a `WorkflowLauncher`.
@@ -148,20 +142,6 @@ extension WorkflowItem: WorkflowModifier {
     func modify(workflow: AnyWorkflow) {
         workflow.append(metadata)
         (wrapped as? WorkflowModifier)?.modify(workflow: workflow)
-    }
-}
-
-@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-final class Launcher: ObservableObject {
-    var onFinishCalled = false
-    var workflow: AnyWorkflow?
-    init(workflow: AnyWorkflow?,
-         responder: OrchestrationResponder,
-         launchArgs: AnyWorkflow.PassedArgs) {
-        self.workflow = workflow
-        if workflow?.orchestrationResponder == nil {
-            workflow?.launch(withOrchestrationResponder: responder, passedArgs: launchArgs)
-        }
     }
 }
 
