@@ -109,13 +109,6 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
                                     flowPersistenceClosure: flowPersistenceClosure)
     }
 
-    private init(workflowLauncher: Self, onFinish: [(AnyWorkflow.PassedArgs) -> Void], onAbandon: [() -> Void]) {
-        _wrapped = workflowLauncher._wrapped
-        _metadata = workflowLauncher._metadata
-        _modifierClosure = workflowLauncher._modifierClosure
-        _flowPersistenceClosure = workflowLauncher._flowPersistenceClosure
-    }
-
     private func resetWorkflow() {
         launcher.workflow.launch(withOrchestrationResponder: model, passedArgs: launcher.launchArgs)
     }
