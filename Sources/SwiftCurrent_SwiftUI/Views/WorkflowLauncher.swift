@@ -175,7 +175,7 @@ extension WorkflowLauncher where Args == Never {
      - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
      - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
      */
-    public func thenProceed<W, C>(with closure: @autoclosure () -> WorkflowItem<Never, W, C>) -> WorkflowLauncherView<WorkflowItem<Never, W, C>> {
+    public func thenProceed<FR: FlowRepresentable, W, C>(with closure: @autoclosure () -> WorkflowItem<FR, W, C>) -> WorkflowLauncherView<WorkflowItem<FR, W, C>> where FR.WorkflowInput == Never {
         let item = WorkflowItem(self, isLaunched: _isLaunched, wrap: closure())
         let wf = AnyWorkflow.empty
         item.modify(workflow: wf)
@@ -195,7 +195,7 @@ extension WorkflowLauncher where Args == AnyWorkflow.PassedArgs {
      - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
      - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
      */
-    public func thenProceed<A, W, C>(with closure: @autoclosure () -> WorkflowItem<A, W, C>) -> WorkflowLauncherView<WorkflowItem<A, W, C>> {
+    public func thenProceed<FR: FlowRepresentable, W, C>(with closure: @autoclosure () -> WorkflowItem<FR, W, C>) -> WorkflowLauncherView<WorkflowItem<FR, W, C>> {
         let item = WorkflowItem(self, isLaunched: _isLaunched, wrap: closure())
         let wf = AnyWorkflow.empty
         item.modify(workflow: wf)
@@ -212,7 +212,7 @@ extension WorkflowLauncher where Args == AnyWorkflow.PassedArgs {
      - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
      - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
      */
-    public func thenProceed<W, C>(with closure: @autoclosure () -> WorkflowItem<AnyWorkflow.PassedArgs, W, C>) -> WorkflowLauncherView<WorkflowItem<AnyWorkflow.PassedArgs, W, C>> {
+    public func thenProceed<FR: FlowRepresentable, W, C>(with closure: @autoclosure () -> WorkflowItem<FR, W, C>) -> WorkflowLauncherView<WorkflowItem<FR, W, C>> where FR.WorkflowInput == AnyWorkflow.PassedArgs {
         let item = WorkflowItem(self, isLaunched: _isLaunched, wrap: closure())
         let wf = AnyWorkflow.empty
         item.modify(workflow: wf)
@@ -232,7 +232,7 @@ extension WorkflowLauncher {
      - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
      - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
      */
-    public func thenProceed<W, C>(with closure: @autoclosure () -> WorkflowItem<Args, W, C>) -> WorkflowLauncherView<WorkflowItem<Args, W, C>> {
+    public func thenProceed<FR: FlowRepresentable, W, C>(with closure: @autoclosure () -> WorkflowItem<FR, W, C>) -> WorkflowLauncherView<WorkflowItem<FR, W, C>> {
         let item = WorkflowItem(self, isLaunched: _isLaunched, wrap: closure())
         let wf = AnyWorkflow.empty
         item.modify(workflow: wf)
@@ -249,7 +249,7 @@ extension WorkflowLauncher {
      - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
      - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
      */
-    public func thenProceed<W, C>(with closure: @autoclosure () -> WorkflowItem<AnyWorkflow.PassedArgs, W, C>) -> WorkflowLauncherView<WorkflowItem<AnyWorkflow.PassedArgs, W, C>> {
+    public func thenProceed<FR: FlowRepresentable, W, C>(with closure: @autoclosure () -> WorkflowItem<FR, W, C>) -> WorkflowLauncherView<WorkflowItem<FR, W, C>> where FR.WorkflowInput == AnyWorkflow.PassedArgs {
         let item = WorkflowItem(self, isLaunched: _isLaunched, wrap: closure())
         let wf = AnyWorkflow.empty
         item.modify(workflow: wf)

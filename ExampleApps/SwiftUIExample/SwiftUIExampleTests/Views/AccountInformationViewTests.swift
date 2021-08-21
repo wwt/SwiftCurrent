@@ -17,9 +17,9 @@ import SwiftCurrent
 @testable import SwiftUIExample
 
 final class AccountInformationViewTests: XCTestCase {
-    private typealias MFAViewWorkflowView = WorkflowLauncherView<WorkflowItem<AnyWorkflow.PassedArgs, Never, MFAView>>
-    private typealias UsernameWorkflow = WorkflowLauncherView<WorkflowItem<AnyWorkflow.PassedArgs, WorkflowItem<String, Never, ChangeUsernameView>, MFAView>>
-    private typealias PasswordWorkflow = WorkflowLauncherView<WorkflowItem<AnyWorkflow.PassedArgs, WorkflowItem<String, Never, ChangePasswordView>, MFAView>>
+    private typealias MFAViewWorkflowView = WorkflowLauncherView<WorkflowItem<MFAView, Never, MFAView>>
+    private typealias UsernameWorkflow = WorkflowLauncherView<WorkflowItem<MFAView, WorkflowItem<ChangeUsernameView, Never, ChangeUsernameView>, MFAView>>
+    private typealias PasswordWorkflow = WorkflowLauncherView<WorkflowItem<MFAView, WorkflowItem<ChangePasswordView, Never, ChangePasswordView>, MFAView>>
 
     func testAccountInformationView() throws {
         let exp = ViewHosting.loadView(AccountInformationView()).inspection.inspect { view in

@@ -27,7 +27,7 @@ final class UIKitInteropTests: XCTestCase {
         var vc: UIKitInteropProgrammaticViewController!
 
         let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
-            let wrapper = try workflowLauncher.view(WorkflowItem<String, Never, ViewControllerWrapper<UIKitInteropProgrammaticViewController>>.self)
+            let wrapper = try workflowLauncher.view(WorkflowItem<ViewControllerWrapper<UIKitInteropProgrammaticViewController>, Never, ViewControllerWrapper<UIKitInteropProgrammaticViewController>>.self)
                 .view(ViewControllerWrapper<UIKitInteropProgrammaticViewController>.self)
             let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<UIKitInteropProgrammaticViewController>>.self)
             vc = try wrapper.actualView().makeUIViewController(context: context)
@@ -110,7 +110,7 @@ final class UIKitInteropTests: XCTestCase {
         var vc: TestInputViewController!
 
         let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
-            let wrapper = try workflowLauncher.view(WorkflowItem<String, Never, ViewControllerWrapper<TestInputViewController>>.self)
+            let wrapper = try workflowLauncher.view(WorkflowItem<ViewControllerWrapper<TestInputViewController>, Never, ViewControllerWrapper<TestInputViewController>>.self)
                 .view(ViewControllerWrapper<TestInputViewController>.self)
             let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<TestInputViewController>>.self)
             vc = try wrapper.actualView().makeUIViewController(context: context)

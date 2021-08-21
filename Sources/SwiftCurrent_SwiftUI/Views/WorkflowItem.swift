@@ -26,7 +26,7 @@ protocol WorkflowModifier {
  You do not instantiate this view directly, rather you call `thenProceed(with:)` on a `WorkflowLauncher`.
  */
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
+public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: View>: View {
     let inspection = Inspection<Self>()
     // These need to be state variables to survive SwiftUI re-rendering. Change under penalty of torture BY the codebase you modified.
     @State private var wrapped: Wrapped?
@@ -59,7 +59,7 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
         _metadata = previous._metadata
     }
 
-    public init(_ item: Content.Type) where Wrapped == Never, Args == Content.WorkflowInput, Content: FlowRepresentable & View {
+    public init(_ item: F.Type) where Wrapped == Never, Content == F, Content: FlowRepresentable & View {
         _launchArgs = State(initialValue: .none) // default value, overridden later
         let metadata = FlowRepresentableMetadata(Content.self,
                                                  launchStyle: .new,
@@ -75,7 +75,7 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
     #if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)
     /// Creates a `WorkflowItem` from a `UIViewController`.
     @available(iOS 14.0, macOS 11, tvOS 14.0, *)
-    public init<VC: FlowRepresentable & UIViewController>(_: VC.Type) where Content == ViewControllerWrapper<VC>, Wrapped == Never, Args == VC.WorkflowInput {
+    public init<VC: FlowRepresentable & UIViewController>(_: VC.Type) where Content == ViewControllerWrapper<VC>, Wrapped == Never, F == ViewControllerWrapper<VC> {
         _launchArgs = State(initialValue: .none)
         let metadata = FlowRepresentableMetadata(ViewControllerWrapper<VC>.self,
                                                  launchStyle: .new,
@@ -89,14 +89,14 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
     }
     #endif
 
-    init<A>(_ launcher: WorkflowLauncher<A>, isLaunched: Binding<Bool>, wrap: WorkflowItem<Args, Wrapped, Content>) {
+    init<A>(_ launcher: WorkflowLauncher<A>, isLaunched: Binding<Bool>, wrap: WorkflowItem<F, Wrapped, Content>) {
         _launchArgs = State(initialValue: launcher.passedArgs)
         _metadata = wrap._metadata
         _wrapped = wrap._wrapped
     }
 
-    public func thenProceed<A, W, C>(with closure: @autoclosure () -> WorkflowItem<A, W, C>) -> WorkflowItem<Args, WorkflowItem<A, W, C>, Content> where Wrapped == Never {
-        WorkflowItem<Args, WorkflowItem<A, W, C>, Content>(previous: self) {
+    public func thenProceed<A, W, C>(with closure: @autoclosure () -> WorkflowItem<A, W, C>) -> WorkflowItem<F, WorkflowItem<A, W, C>, Content> where Wrapped == Never {
+        WorkflowItem<F, WorkflowItem<A, W, C>, Content>(previous: self) {
             closure()
         }
     }
