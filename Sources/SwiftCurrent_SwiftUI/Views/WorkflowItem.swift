@@ -31,7 +31,6 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
     // These need to be state variables to survive SwiftUI re-rendering. Change under penalty of torture BY the codebase you modified.
     @State private var wrapped: Wrapped?
     @State private var launchArgs: AnyWorkflow.PassedArgs
-    @State private var onAbandon = [() -> Void]()
     @State private var metadata: FlowRepresentableMetadata
 
     @EnvironmentObject private var model: WorkflowViewModel
@@ -41,7 +40,7 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
         ViewBuilder {
             if model.isLaunched?.wrappedValue == true {
                 if let body = model.body as? Content {
-                    body.onReceive(model.onAbandonPublisher) { onAbandon.forEach { $0() } }
+                    body
                 } else {
                     wrapped
                 }
@@ -55,7 +54,6 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
         let wrapped = closure()
         _wrapped = State(initialValue: wrapped)
         _launchArgs = previous._launchArgs
-        _onAbandon = previous._onAbandon
         _model = previous._model
         _launcher = previous._launcher
         _metadata = previous._metadata
@@ -93,7 +91,6 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
 
     init<A>(_ launcher: WorkflowLauncher<A>, isLaunched: Binding<Bool>, wrap: WorkflowItem<Args, Wrapped, Content>) {
         _launchArgs = State(initialValue: launcher.passedArgs)
-        _onAbandon = State(initialValue: launcher.onAbandon)
         _metadata = wrap._metadata
         _wrapped = wrap._wrapped
     }
@@ -106,7 +103,6 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
 
     private init(workflowLauncher: Self, onFinish: [(AnyWorkflow.PassedArgs) -> Void], onAbandon: [() -> Void]) {
         _wrapped = workflowLauncher._wrapped
-        _onAbandon = State(initialValue: onAbandon)
         _launchArgs = workflowLauncher._launchArgs
         _metadata = workflowLauncher._metadata
     }
@@ -115,13 +111,6 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
         launcher.onFinishCalled = false
         launcher.workflow?.launch(withOrchestrationResponder: model, passedArgs: launchArgs)
     }
-
-//    /// Adds an action to perform when this `Workflow` has abandoned.
-//    public func onAbandon(closure: @escaping () -> Void) -> Self {
-//        var onAbandon = self.onAbandon
-//        onAbandon.append(closure)
-//        return Self(workflowLauncher: self, onFinish: onFinish, onAbandon: onAbandon)
-//    }
 
     /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.
     public func persistence(_ persistence: @escaping @autoclosure () -> FlowPersistence) -> Self {

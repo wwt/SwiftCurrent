@@ -110,6 +110,7 @@ public struct WorkflowLauncherView<Content: View>: View {
     @StateObject private var model: WorkflowViewModel
     @StateObject private var launcher: Launcher
     @State private var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
+    @State private var onAbandon = [() -> Void]()
 
     let inspection = Inspection<Self>()
 
@@ -118,6 +119,7 @@ public struct WorkflowLauncherView<Content: View>: View {
             .environmentObject(model)
             .environmentObject(launcher)
             .onReceive(model.onFinishPublisher, perform: _onFinish)
+            .onReceive(model.onAbandonPublisher) { onAbandon.forEach { $0() } }
             .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 
@@ -130,11 +132,12 @@ public struct WorkflowLauncherView<Content: View>: View {
         _content = State(wrappedValue: item)
     }
 
-    private init(current: Self, onFinish: [(AnyWorkflow.PassedArgs) -> Void]) {
+    private init(current: Self, onFinish: [(AnyWorkflow.PassedArgs) -> Void], onAbandon: [() -> Void]) {
         _model = current._model
         _launcher = current._launcher
         _content = current._content
         _onFinish = State(initialValue: onFinish)
+        _onAbandon = State(initialValue: onAbandon)
     }
 
     private func _onFinish(_ args: AnyWorkflow.PassedArgs?) {
@@ -147,15 +150,14 @@ public struct WorkflowLauncherView<Content: View>: View {
     public func onFinish(closure: @escaping (AnyWorkflow.PassedArgs) -> Void) -> Self {
         var onFinish = self.onFinish
         onFinish.append(closure)
-        return Self(current: self, onFinish: onFinish/*, onAbandon: onAbandon*/)
+        return Self(current: self, onFinish: onFinish, onAbandon: onAbandon)
     }
 
     /// Adds an action to perform when this `Workflow` has abandoned.
     public func onAbandon(closure: @escaping () -> Void) -> Self {
-//        var onAbandon = self.onAbandon
-//        onAbandon.append(closure)
-//        return Self(workflowLauncher: self, onFinish: onFinish, onAbandon: onAbandon)
-        return self
+        var onAbandon = self.onAbandon
+        onAbandon.append(closure)
+        return Self(current: self, onFinish: onFinish, onAbandon: onAbandon)
     }
 }
 
