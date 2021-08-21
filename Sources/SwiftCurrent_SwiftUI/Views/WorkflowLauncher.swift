@@ -113,11 +113,6 @@ public struct WorkflowLauncher<Args> {
         return item
             .environmentObject(model)
             .environmentObject(launcher)
-//        _model = StateObject(wrappedValue: model)
-//        _launcher = StateObject(wrappedValue: Launcher(workflow: wf,
-//                                                       responder: model,
-//                                                       launchArgs: launcher.passedArgs))
-
     }
 }
 
