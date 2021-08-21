@@ -15,6 +15,25 @@ protocol WorkflowModifier {
     func modify(workflow: AnyWorkflow)
 }
 
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+struct OnFinishModifier: ViewModifier {
+    @EnvironmentObject private var model: WorkflowViewModel
+    let onFinish: (AnyWorkflow.PassedArgs?) -> Void
+    func body(content: Content) -> some View {
+        content
+            .onReceive(model.onFinishPublisher) {
+                onFinish($0)
+            }
+    }
+}
+
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension View {
+    public func onFinishWorkflow(perform: @escaping (AnyWorkflow.PassedArgs?) -> Void) -> some View {
+        modifier(OnFinishModifier(onFinish: perform))
+    }
+}
+
 /**
  A view created by a `WorkflowLauncher`.
 
@@ -81,7 +100,7 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
         _wrapped = wrap._wrapped
     }
 
-    public func thenProceed<A, W, C>(with closure: @autoclosure () -> WorkflowItem<A, W, C>) -> WorkflowItem<Args, WorkflowItem<A, W, C>, Content> {
+    public func thenProceed<A, W, C>(with closure: @autoclosure () -> WorkflowItem<A, W, C>) -> WorkflowItem<Args, WorkflowItem<A, W, C>, Content> where Wrapped == Never {
         WorkflowItem<Args, WorkflowItem<A, W, C>, Content>(previous: self) {
             closure()
         }
