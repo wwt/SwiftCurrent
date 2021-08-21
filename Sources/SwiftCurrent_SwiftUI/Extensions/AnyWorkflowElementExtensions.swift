@@ -12,9 +12,9 @@ import SwiftCurrent
 extension AnyWorkflow.Element {
     func extractView() -> Any? {
         guard let instance = value.instance else { return nil }
-        guard let instance = instance as? AnyFlowRepresentableView else {
+        guard let afrv = instance as? AnyFlowRepresentableView else {
             fatalError("Could not cast \(String(describing: value.instance)) to expected type: AnyFlowRepresentableView")
         }
-        return instance.erasedView
+        return afrv.erasedView
     }
 }
