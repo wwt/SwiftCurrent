@@ -168,6 +168,7 @@ public struct WorkflowLauncherView<Content: View>: View {
     }
 }
 
+// swiftlint:disable line_length
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension WorkflowLauncher where Args == Never {
     /**
@@ -261,3 +262,5 @@ extension WorkflowLauncher {
                                     onAbandon: onAbandon)
     }
 }
+
+// swiftlint:enable line_length

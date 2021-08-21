@@ -14,6 +14,7 @@ public class AnyWorkflow {
     /// The `LinkedList.Node` type of a `Workflow`.
     public typealias Element = LinkedList<_WorkflowItem>.Element
 
+    /// An empty `AnyWorkflow`. Mostly used as a base for dynamically building a workflow.
     public static var empty: AnyWorkflow {
         AnyWorkflow(Workflow<Never>())
     }

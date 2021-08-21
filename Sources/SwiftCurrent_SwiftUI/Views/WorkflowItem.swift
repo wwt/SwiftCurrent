@@ -107,12 +107,6 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         _wrapped = wrap._wrapped
     }
 
-    public func thenProceed<A, W, C>(with closure: @autoclosure () -> WorkflowItem<A, W, C>) -> WorkflowItem<F, WorkflowItem<A, W, C>, Content> where Wrapped == Never {
-        WorkflowItem<F, WorkflowItem<A, W, C>, Content>(previous: self) {
-            closure()
-        }
-    }
-
     /**
      Provides a way to apply modifiers to your `FlowRepresentable` view.
 
@@ -173,77 +167,78 @@ final class Launcher: ObservableObject {
     }
 }
 
-//@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-//extension ModifiedWorkflowView where Args == Never {
-//    /**
-//     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
-//     - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
-//     - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
-//     */
-//    public func thenProceed<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> ModifiedWorkflowView<FR.WorkflowOutput, Self, T> where FR.WorkflowInput == Never {
-//        ModifiedWorkflowView<FR.WorkflowOutput, Self, T>(self, item: item)
-//    }
-//}
-//
-//@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-//extension ModifiedWorkflowView where Args == AnyWorkflow.PassedArgs {
-//    /**
-//     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
-//     - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
-//     - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
-//     */
-//    public func thenProceed<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> ModifiedWorkflowView<FR.WorkflowOutput, Self, T> where FR.WorkflowInput == AnyWorkflow.PassedArgs {
-//        ModifiedWorkflowView<FR.WorkflowOutput, Self, T>(self, item: item)
-//    }
-//
-//    /**
-//     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
-//     - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
-//     - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
-//     */
-//    public func thenProceed<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> ModifiedWorkflowView<FR.WorkflowOutput, Self, T> where FR.WorkflowInput == Never {
-//        ModifiedWorkflowView<FR.WorkflowOutput, Self, T>(self, item: item)
-//    }
-//
-//    /**
-//     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
-//     - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
-//     - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
-//     */
-//    public func thenProceed<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> ModifiedWorkflowView<FR.WorkflowOutput, Self, T> {
-//        ModifiedWorkflowView<FR.WorkflowOutput, Self, T>(self, item: item)
-//    }
-//}
-//
-//@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-//extension ModifiedWorkflowView {
-//    /**
-//     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
-//     - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
-//     - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
-//     */
-//    public func thenProceed<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> ModifiedWorkflowView<FR.WorkflowOutput, Self, T> where Args == FR.WorkflowInput {
-//        ModifiedWorkflowView<FR.WorkflowOutput, Self, T>(self, item: item)
-//    }
-//
-//    /**
-//     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
-//     - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
-//     - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
-//     */
-//    public func thenProceed<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> ModifiedWorkflowView<FR.WorkflowOutput, Self, T> where FR.WorkflowInput == AnyWorkflow.PassedArgs {
-//        ModifiedWorkflowView<FR.WorkflowOutput, Self, T>(self, item: item)
-//    }
-//
-//    /**
-//     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
-//     - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
-//     - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
-//     */
-//    public func thenProceed<FR: FlowRepresentable & View, T>(with item: WorkflowItem<FR, T>) -> ModifiedWorkflowView<FR.WorkflowOutput, Self, T> where FR.WorkflowInput == Never {
-//        ModifiedWorkflowView<FR.WorkflowOutput, Self, T>(self, item: item)
-//    }
-//}
+// swiftlint:disable line_length
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension WorkflowItem where F.WorkflowOutput == Never {
+    /**
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
+     - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
+     - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
+     */
+    public func thenProceed<FR: FlowRepresentable, W, C>(with closure: @autoclosure () -> WorkflowItem<FR, W, C>) -> WorkflowItem<F, WorkflowItem<FR, W, C>, Content> where Wrapped == Never, FR.WorkflowInput == Never {
+        WorkflowItem<F, WorkflowItem<FR, W, C>, Content>(previous: self, closure)
+    }
+}
+
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension WorkflowItem where F.WorkflowOutput == AnyWorkflow.PassedArgs {
+    /**
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
+     - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
+     - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
+     */
+    public func thenProceed<FR: FlowRepresentable, W, C>(with closure: @autoclosure () -> WorkflowItem<FR, W, C>) -> WorkflowItem<F, WorkflowItem<FR, W, C>, Content> where Wrapped == Never, FR.WorkflowInput == AnyWorkflow.PassedArgs {
+        WorkflowItem<F, WorkflowItem<FR, W, C>, Content>(previous: self, closure)
+    }
+
+    /**
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
+     - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
+     - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
+     */
+    public func thenProceed<FR: FlowRepresentable, W, C>(with closure: @autoclosure () -> WorkflowItem<FR, W, C>) -> WorkflowItem<F, WorkflowItem<FR, W, C>, Content> where Wrapped == Never, FR.WorkflowInput == Never {
+        WorkflowItem<F, WorkflowItem<FR, W, C>, Content>(previous: self, closure)
+    }
+
+    /**
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
+     - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
+     - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
+     */
+    public func thenProceed<FR: FlowRepresentable, W, C>(with closure: @autoclosure () -> WorkflowItem<FR, W, C>) -> WorkflowItem<F, WorkflowItem<FR, W, C>, Content> where Wrapped == Never {
+        WorkflowItem<F, WorkflowItem<FR, W, C>, Content>(previous: self, closure)
+    }
+}
+
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension WorkflowItem {
+    /**
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
+     - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
+     - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
+     */
+    public func thenProceed<FR: FlowRepresentable, W, C>(with closure: @autoclosure () -> WorkflowItem<FR, W, C>) -> WorkflowItem<F, WorkflowItem<FR, W, C>, Content> where Wrapped == Never, F.WorkflowOutput == FR.WorkflowInput {
+        WorkflowItem<F, WorkflowItem<FR, W, C>, Content>(previous: self, closure)
+    }
+
+    /**
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
+     - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
+     - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
+     */
+    public func thenProceed<FR: FlowRepresentable, W, C>(with closure: @autoclosure () -> WorkflowItem<FR, W, C>) -> WorkflowItem<F, WorkflowItem<FR, W, C>, Content> where Wrapped == Never, FR.WorkflowInput == AnyWorkflow.PassedArgs {
+        WorkflowItem<F, WorkflowItem<FR, W, C>, Content>(previous: self, closure)
+    }
+
+    /**
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
+     - Parameter workflowItem: a `WorkflowItem` that holds onto the next `FlowRepresentable` in the workflow.
+     - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
+     */
+    public func thenProceed<FR: FlowRepresentable, W, C>(with closure: @autoclosure () -> WorkflowItem<FR, W, C>) -> WorkflowItem<F, WorkflowItem<FR, W, C>, Content> where Wrapped == Never, FR.WorkflowInput == Never {
+        WorkflowItem<F, WorkflowItem<FR, W, C>, Content>(previous: self, closure)
+    }
+}
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension WorkflowItem {
@@ -282,3 +277,5 @@ extension WorkflowItem {
     }
     // swiftlint:enable trailing_closure
 }
+
+// swiftlint:enable line_length

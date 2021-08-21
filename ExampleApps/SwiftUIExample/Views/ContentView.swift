@@ -18,10 +18,6 @@ struct ContentView: View {
     }
     @State var selectedTab: Tab = .map
     var body: some View {
-//        WorkflowLauncher(isLaunched: .constant(true))
-//            .thenProceed(with: WorkflowItem(FR1.self)
-//                            .thenProceed(with: WorkflowItem(FR2.self)
-//                            .thenProceed(with: WorkflowItem(FR3.self))))
         TabView(selection: $selectedTab) {
             // NOTE: Using constant here guarantees the workflow cannot abandon, it stays launched forever.
             WorkflowLauncher(isLaunched: .constant(true))
@@ -49,33 +45,6 @@ struct ContentView: View {
                 .tag(Tab.profile)
         }
         .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
-    }
-}
-
-import SwiftCurrent
-
-struct FR1: View, FlowRepresentable {
-    weak var _workflowPointer: AnyFlowRepresentable?
-    var body: some View {
-        Button("I am \(String(describing: Self.self)), PROCEED") {
-            proceedInWorkflow()
-        }
-    }
-}
-
-struct FR2: View, FlowRepresentable {
-    weak var _workflowPointer: AnyFlowRepresentable?
-    var body: some View {
-        Button("I am \(String(describing: Self.self)), PROCEED") {
-            proceedInWorkflow()
-        }
-    }
-}
-
-struct FR3: View, FlowRepresentable {
-    weak var _workflowPointer: AnyFlowRepresentable?
-    var body: some View {
-        Text("I am \(String(describing: Self.self))")
     }
 }
 
