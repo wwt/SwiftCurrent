@@ -5,6 +5,7 @@
 //  Created by Tyler Thompson on 7/12/21.
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
+//  swiftlint:disable file_types_order
 
 import SwiftUI
 import SwiftCurrent
@@ -102,28 +103,46 @@ public struct WorkflowLauncher<Args> {
                     onAbandon: onAbandon)
     }
 
-    public func thenProceed<W, C>(with closure: @autoclosure () -> WorkflowItem<Args, W, C>) -> some View {
+    public func thenProceed<W, C>(with closure: @autoclosure () -> WorkflowItem<Args, W, C>) -> LauncherView<WorkflowItem<Args, W, C>> {
         let item = WorkflowItem(self, isLaunched: _isLaunched, wrap: closure())
         let wf = AnyWorkflow.empty
         item.modify(workflow: wf)
-        let model = WorkflowViewModel(isLaunched: _isLaunched, launchArgs: passedArgs)
-        let launcher = Launcher(workflow: wf,
-                                responder: model,
-                                launchArgs: passedArgs)
-        return item
+        return LauncherView(item: item,
+                            workflow: wf,
+                            isLaunched: _isLaunched,
+                            launchArgs: passedArgs)
+    }
+}
+
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+public struct LauncherView<Content: View>: View {
+    @State private var content: Content
+    @StateObject private var model: WorkflowViewModel
+    @StateObject private var launcher: Launcher
+    let inspection = Inspection<Self>()
+
+    public var body: some View {
+        content
             .environmentObject(model)
             .environmentObject(launcher)
+            .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 
-    public func thenProceed<W, C>(with closure: @autoclosure () -> WorkflowItem<Args, W, C>) -> WorkflowItem<Args, W, C> {
-        let item = WorkflowItem(self, isLaunched: _isLaunched, wrap: closure())
-        let wf = AnyWorkflow.empty
-        item.modify(workflow: wf)
-        let model = WorkflowViewModel(isLaunched: _isLaunched, launchArgs: passedArgs)
-        let launcher = Launcher(workflow: wf,
-                                responder: model,
-                                launchArgs: passedArgs)
-        return item
+    init(item: Content, workflow: AnyWorkflow, isLaunched: Binding<Bool>, launchArgs: AnyWorkflow.PassedArgs) {
+        let model = WorkflowViewModel(isLaunched: isLaunched, launchArgs: launchArgs)
+        _model = StateObject(wrappedValue: model)
+        _launcher = StateObject(wrappedValue: Launcher(workflow: workflow,
+                                                       responder: model,
+                                                       launchArgs: launchArgs))
+        _content = State(wrappedValue: item)
+    }
+
+    /// Adds an action to perform when this `Workflow` has finished.
+    public func onFinish(closure: @escaping (AnyWorkflow.PassedArgs) -> Void) -> Self {
+//        var onFinish = self.onFinish
+//        onFinish.append(closure)
+//        return Self(workflowLauncher: self, onFinish: onFinish, onAbandon: onAbandon)
+        return self
     }
 }
 
