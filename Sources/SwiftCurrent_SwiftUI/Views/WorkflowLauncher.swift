@@ -149,6 +149,14 @@ public struct WorkflowLauncherView<Content: View>: View {
         onFinish.append(closure)
         return Self(current: self, onFinish: onFinish/*, onAbandon: onAbandon*/)
     }
+
+    /// Adds an action to perform when this `Workflow` has abandoned.
+    public func onAbandon(closure: @escaping () -> Void) -> Self {
+//        var onAbandon = self.onAbandon
+//        onAbandon.append(closure)
+//        return Self(workflowLauncher: self, onFinish: onFinish, onAbandon: onAbandon)
+        return self
+    }
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
