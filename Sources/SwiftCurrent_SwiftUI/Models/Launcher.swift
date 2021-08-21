@@ -11,7 +11,6 @@ import SwiftCurrent
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class Launcher: ObservableObject {
-    var onFinishCalled = false
     var workflow: AnyWorkflow
     var launchArgs: AnyWorkflow.PassedArgs
     init(workflow: AnyWorkflow,

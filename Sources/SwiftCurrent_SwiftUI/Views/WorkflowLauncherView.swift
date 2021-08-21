@@ -53,8 +53,7 @@ public struct WorkflowLauncherView<Content: View>: View {
     }
 
     private func _onFinish(_ args: AnyWorkflow.PassedArgs?) {
-        guard let args = args, !launcher.onFinishCalled else { return }
-        launcher.onFinishCalled = true
+        guard let args = args else { return }
         onFinish.forEach { $0(args) }
     }
 
