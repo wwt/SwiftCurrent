@@ -35,7 +35,7 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
     @EnvironmentObject private var launcher: Launcher
 
     public var body: some View {
-        VStack {
+        ViewBuilder {
             if model.isLaunched?.wrappedValue == true {
                 if let body = model.body as? Content {
                     body.onReceive(model.onAbandonPublisher) { onAbandon.forEach { $0() } }
@@ -120,7 +120,7 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
         return Self(workflowLauncher: self, onFinish: onFinish, onAbandon: onAbandon)
     }
 
-    private func ConditionalViewWrapper<V: View>(@ViewBuilder builder: () -> V) -> some View { builder() }
+    private func ViewBuilder<V: View>(@ViewBuilder builder: () -> V) -> some View { builder() }
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)

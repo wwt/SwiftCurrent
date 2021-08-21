@@ -114,6 +114,17 @@ public struct WorkflowLauncher<Args> {
             .environmentObject(model)
             .environmentObject(launcher)
     }
+
+    public func thenProceed<W, C>(with closure: @autoclosure () -> WorkflowItem<Args, W, C>) -> WorkflowItem<Args, W, C> {
+        let item = WorkflowItem(self, isLaunched: _isLaunched, wrap: closure())
+        let wf = AnyWorkflow.empty
+        item.modify(workflow: wf)
+        let model = WorkflowViewModel(isLaunched: _isLaunched, launchArgs: passedArgs)
+        let launcher = Launcher(workflow: wf,
+                                responder: model,
+                                launchArgs: passedArgs)
+        return item
+    }
 }
 
 //@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
