@@ -27,7 +27,6 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
     // These need to be state variables to survive SwiftUI re-rendering. Change under penalty of torture BY the codebase you modified.
     @State private var wrapped: Wrapped?
     @State private var launchArgs: AnyWorkflow.PassedArgs
-    @State private var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
     @State private var onAbandon = [() -> Void]()
     @State private var metadata: FlowRepresentableMetadata
 
@@ -52,7 +51,6 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
         let wrapped = closure()
         _wrapped = State(initialValue: wrapped)
         _launchArgs = previous._launchArgs
-        _onFinish = previous._onFinish
         _onAbandon = previous._onAbandon
         _model = previous._model
         _launcher = previous._launcher
@@ -74,7 +72,6 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
 
     init(_ launcher: WorkflowLauncher<Args>, isLaunched: Binding<Bool>, wrap: WorkflowItem<Args, Wrapped, Content>) {
         _launchArgs = State(initialValue: launcher.passedArgs)
-        _onFinish = State(initialValue: launcher.onFinish)
         _onAbandon = State(initialValue: launcher.onAbandon)
         _metadata = wrap._metadata
         _wrapped = wrap._wrapped
@@ -88,7 +85,6 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
 
     private init(workflowLauncher: Self, onFinish: [(AnyWorkflow.PassedArgs) -> Void], onAbandon: [() -> Void]) {
         _wrapped = workflowLauncher._wrapped
-        _onFinish = State(initialValue: onFinish)
         _onAbandon = State(initialValue: onAbandon)
         _launchArgs = workflowLauncher._launchArgs
         _metadata = workflowLauncher._metadata
@@ -99,25 +95,12 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
         launcher.workflow?.launch(withOrchestrationResponder: model, passedArgs: launchArgs)
     }
 
-    private func _onFinish(_ args: AnyWorkflow.PassedArgs?) {
-        guard let args = args, !launcher.onFinishCalled else { return }
-        launcher.onFinishCalled = true
-        onFinish.forEach { $0(args) }
-    }
-
-    /// Adds an action to perform when this `Workflow` has finished.
-    public func onFinish(closure: @escaping (AnyWorkflow.PassedArgs) -> Void) -> Self {
-        var onFinish = self.onFinish
-        onFinish.append(closure)
-        return Self(workflowLauncher: self, onFinish: onFinish, onAbandon: onAbandon)
-    }
-
-    /// Adds an action to perform when this `Workflow` has abandoned.
-    public func onAbandon(closure: @escaping () -> Void) -> Self {
-        var onAbandon = self.onAbandon
-        onAbandon.append(closure)
-        return Self(workflowLauncher: self, onFinish: onFinish, onAbandon: onAbandon)
-    }
+//    /// Adds an action to perform when this `Workflow` has abandoned.
+//    public func onAbandon(closure: @escaping () -> Void) -> Self {
+//        var onAbandon = self.onAbandon
+//        onAbandon.append(closure)
+//        return Self(workflowLauncher: self, onFinish: onFinish, onAbandon: onAbandon)
+//    }
 
     private func ViewBuilder<V: View>(@ViewBuilder builder: () -> V) -> some View { builder() }
 }

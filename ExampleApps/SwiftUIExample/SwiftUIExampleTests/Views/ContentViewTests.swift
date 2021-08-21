@@ -14,9 +14,9 @@ import Swinject
 @testable import SwiftUIExample
 
 final class ContentViewTests: XCTestCase {
-    private typealias MapWorkflow = WorkflowItem<Never, WorkflowItem<Never, Never, MapFeatureView>, MapFeatureOnboardingView>
-    private typealias QRScannerWorkflow = WorkflowItem<Never, WorkflowItem<Never, Never, QRScannerFeatureView>, QRScannerFeatureOnboardingView>
-    private typealias ProfileWorkflow = WorkflowItem<Never, WorkflowItem<Never, Never, ProfileFeatureView>, ProfileFeatureOnboardingView>
+    private typealias MapWorkflow = WorkflowLauncherView<WorkflowItem<Never, WorkflowItem<Never, Never, MapFeatureView>, MapFeatureOnboardingView>>
+    private typealias QRScannerWorkflow = WorkflowLauncherView<WorkflowItem<Never, WorkflowItem<Never, Never, QRScannerFeatureView>, QRScannerFeatureOnboardingView>>
+    private typealias ProfileWorkflow = WorkflowLauncherView<WorkflowItem<Never, WorkflowItem<Never, Never, ProfileFeatureView>, ProfileFeatureOnboardingView>>
 
     override func setUpWithError() throws {
         Container.default.removeAll()
