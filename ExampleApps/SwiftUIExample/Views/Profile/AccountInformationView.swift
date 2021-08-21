@@ -33,11 +33,11 @@ struct AccountInformationView: View, FlowRepresentable {
                 WorkflowLauncher(isLaunched: $usernameWorkflowLaunched, startingArgs: AnyWorkflow.PassedArgs.args(username))
                     .thenProceed(with: WorkflowItem(MFAView.self)
                     .thenProceed(with: WorkflowItem(ChangeUsernameView.self)))
-//                    .onFinish {
-//                        guard case .args(let newUsername as String) = $0 else { return }
-//                        username = newUsername
-//                        usernameWorkflowLaunched = false
-//                    }
+                    .onFinish {
+                        guard case .args(let newUsername as String) = $0 else { return }
+                        username = newUsername
+                        usernameWorkflowLaunched = false
+                    }
             }
             if !passwordWorkflowLaunched {
                 Button("Change Password") {
@@ -47,11 +47,11 @@ struct AccountInformationView: View, FlowRepresentable {
                 WorkflowLauncher(isLaunched: $passwordWorkflowLaunched, startingArgs: AnyWorkflow.PassedArgs.args(password))
                     .thenProceed(with: WorkflowItem(MFAView.self)
                     .thenProceed(with: WorkflowItem(ChangePasswordView.self)))
-//                    .onFinish {
-//                        guard case .args(let newPassword as String) = $0 else { return }
-//                        password = newPassword
-//                        passwordWorkflowLaunched = false
-//                    }
+                    .onFinish {
+                        guard case .args(let newPassword as String) = $0 else { return }
+                        password = newPassword
+                        passwordWorkflowLaunched = false
+                    }
             }
         }.onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
