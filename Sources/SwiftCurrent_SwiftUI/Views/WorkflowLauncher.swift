@@ -123,13 +123,20 @@ public struct WorkflowLauncherView<Content: View>: View {
             .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 
-    init(item: Content, workflow: AnyWorkflow, isLaunched: Binding<Bool>, launchArgs: AnyWorkflow.PassedArgs) {
+    init(item: Content,
+         workflow: AnyWorkflow,
+         isLaunched: Binding<Bool>,
+         launchArgs: AnyWorkflow.PassedArgs,
+         onFinish: [(AnyWorkflow.PassedArgs) -> Void],
+         onAbandon: [() -> Void]) {
         let model = WorkflowViewModel(isLaunched: isLaunched, launchArgs: launchArgs)
         _model = StateObject(wrappedValue: model)
         _launcher = StateObject(wrappedValue: Launcher(workflow: workflow,
                                                        responder: model,
                                                        launchArgs: launchArgs))
         _content = State(wrappedValue: item)
+        _onFinish = State(initialValue: onFinish)
+        _onAbandon = State(initialValue: onAbandon)
     }
 
     private init(current: Self, onFinish: [(AnyWorkflow.PassedArgs) -> Void], onAbandon: [() -> Void]) {
@@ -175,7 +182,9 @@ extension WorkflowLauncher where Args == Never {
         return WorkflowLauncherView(item: item,
                                     workflow: wf,
                                     isLaunched: _isLaunched,
-                                    launchArgs: passedArgs)
+                                    launchArgs: passedArgs,
+                                    onFinish: onFinish,
+                                    onAbandon: onAbandon)
     }
 }
 
@@ -193,7 +202,9 @@ extension WorkflowLauncher where Args == AnyWorkflow.PassedArgs {
         return WorkflowLauncherView(item: item,
                                     workflow: wf,
                                     isLaunched: _isLaunched,
-                                    launchArgs: passedArgs)
+                                    launchArgs: passedArgs,
+                                    onFinish: onFinish,
+                                    onAbandon: onAbandon)
     }
 
     /**
@@ -208,7 +219,9 @@ extension WorkflowLauncher where Args == AnyWorkflow.PassedArgs {
         return WorkflowLauncherView(item: item,
                                     workflow: wf,
                                     isLaunched: _isLaunched,
-                                    launchArgs: passedArgs)
+                                    launchArgs: passedArgs,
+                                    onFinish: onFinish,
+                                    onAbandon: onAbandon)
     }
 }
 
@@ -226,7 +239,9 @@ extension WorkflowLauncher {
         return WorkflowLauncherView(item: item,
                                     workflow: wf,
                                     isLaunched: _isLaunched,
-                                    launchArgs: passedArgs)
+                                    launchArgs: passedArgs,
+                                    onFinish: onFinish,
+                                    onAbandon: onAbandon)
     }
 
     /**
@@ -241,6 +256,8 @@ extension WorkflowLauncher {
         return WorkflowLauncherView(item: item,
                                     workflow: wf,
                                     isLaunched: _isLaunched,
-                                    launchArgs: passedArgs)
+                                    launchArgs: passedArgs,
+                                    onFinish: onFinish,
+                                    onAbandon: onAbandon)
     }
 }
