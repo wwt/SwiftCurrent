@@ -14,14 +14,17 @@ import SwiftUI
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class WorkflowItemTests: XCTestCase {
-    #warning("API for this test not yet supported")
-//    func testWorkflowItemThrowsFatalError_IfPersistenceCannotBeCast() throws {
-//        try XCTAssertThrowsFatalError {
-//            _ = WorkflowItem(FR.self).persistence { _ in
-//                    .default
-//            }.metadata.setPersistence(.args(1))
-//        }
-//    }
+    func testWorkflowItemThrowsFatalError_IfPersistenceCannotBeCast() throws {
+        let item = WorkflowItem(FR.self).persistence { _ in
+            .default
+        }
+        
+        let metadata = try XCTUnwrap((Mirror(reflecting: item).descendant("_metadata") as? State<FlowRepresentableMetadata?>)?.wrappedValue)
+
+        try XCTAssertThrowsFatalError {
+            _ = metadata.setPersistence(.args(1))
+        }
+    }
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
