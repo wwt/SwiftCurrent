@@ -61,7 +61,7 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
         _metadata = previous._metadata
     }
 
-    public init(_ item: Content.Type) where Wrapped == Never, Args == Content.WorkflowOutput, Content: FlowRepresentable & View {
+    public init(_ item: Content.Type) where Wrapped == Never, Args == Content.WorkflowInput, Content: FlowRepresentable & View {
         _launchArgs = State(initialValue: .none) // default value, overridden later
         let metadata = FlowRepresentableMetadata(Content.self,
                                                  launchStyle: .new,
@@ -77,7 +77,7 @@ public struct WorkflowItem<Args, Wrapped: View, Content: View>: View {
     #if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)
     /// Creates a `WorkflowItem` from a `UIViewController`.
     @available(iOS 14.0, macOS 11, tvOS 14.0, *)
-    public init<VC: FlowRepresentable & UIViewController>(_: VC.Type) where Content == ViewControllerWrapper<VC>, Wrapped == Never, Args == Content.WorkflowOutput {
+    public init<VC: FlowRepresentable & UIViewController>(_: VC.Type) where Content == ViewControllerWrapper<VC>, Wrapped == Never, Args == VC.WorkflowInput {
         _launchArgs = State(initialValue: .none)
         let metadata = FlowRepresentableMetadata(ViewControllerWrapper<VC>.self,
                                                  launchStyle: .new,

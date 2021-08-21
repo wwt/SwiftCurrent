@@ -103,34 +103,35 @@ final class UIKitInteropTests: XCTestCase {
         wait(for: [proceedCalled], timeout: TestConstant.timeout)
     }
 
-    #warning("Still have a compiler issue here")
-//    func testPuttingAUIKitViewFromStoryboardInsideASwiftUIWorkflow() throws {
-//        let launchArgs = UUID().uuidString
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: launchArgs)
-//            .thenProceed(with: WorkflowItem(TestInputViewController.self))
-//        var vc: TestInputViewController!
-//
-//        let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
-//            let wrapper = try workflowLauncher.view(ViewControllerWrapper<TestInputViewController>.self)
-//            let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<TestInputViewController>>.self)
-//            vc = try wrapper.actualView().makeUIViewController(context: context)
-//        }
-//
-//        wait(for: [exp], timeout: TestConstant.timeout)
-//
-//        vc.loadOnDevice()
-//
-//        XCTAssertUIViewControllerDisplayed(isInstance: vc)
-//
-//        let proceedCalled = expectation(description: "proceedCalled")
-//        vc.proceedInWorkflowStorage = { _ in
-//            proceedCalled.fulfill()
-//        }
-//
-//        vc.proceedInWorkflow()
-//
-//        wait(for: [proceedCalled], timeout: TestConstant.timeout)
-//    }
+    // swiftlint:disable force_cast
+    func testPuttingAUIKitViewFromStoryboardInsideASwiftUIWorkflow() throws {
+        let launchArgs = UUID().uuidString
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: launchArgs)
+            .thenProceed(with: WorkflowItem(TestInputViewController.self))
+        var vc: TestInputViewController!
+
+        let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
+            let wrapper = try workflowLauncher.view(WorkflowItem<String, Never, ViewControllerWrapper<TestInputViewController>>.self)
+                .view(ViewControllerWrapper<TestInputViewController>.self)
+            let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<TestInputViewController>>.self)
+            vc = try wrapper.actualView().makeUIViewController(context: context)
+        }
+
+        wait(for: [exp], timeout: TestConstant.timeout)
+
+        vc.loadOnDevice()
+
+        XCTAssertUIViewControllerDisplayed(isInstance: vc)
+
+        let proceedCalled = expectation(description: "proceedCalled")
+        vc.proceedInWorkflowStorage = { _ in
+            proceedCalled.fulfill()
+        }
+
+        vc.proceedInWorkflow()
+
+        wait(for: [proceedCalled], timeout: TestConstant.timeout)
+    }
 
     func testPuttingAUIKitViewFromStoryboardThatDoesNotTakeInDataInsideASwiftUIWorkflow() throws {
         let workflowView = WorkflowLauncher(isLaunched: .constant(true))
