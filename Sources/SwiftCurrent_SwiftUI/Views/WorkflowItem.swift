@@ -59,6 +59,14 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         _metadata = previous._metadata
     }
 
+    private init<C>(previous: WorkflowItem<F, Wrapped, C>) {
+        _wrapped = previous._wrapped
+        _launchArgs = previous._launchArgs
+        _model = previous._model
+        _launcher = previous._launcher
+        _metadata = previous._metadata
+    }
+
     public init(_ item: F.Type) where Wrapped == Never, Content == F, Content: FlowRepresentable & View {
         _launchArgs = State(initialValue: .none) // default value, overridden later
         let metadata = FlowRepresentableMetadata(Content.self,
@@ -100,6 +108,25 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
             closure()
         }
     }
+
+    /**
+     Provides a way to apply modifiers to your `FlowRepresentable` view.
+
+     ### Important: The most recently defined (or last) use of this, is the only one that applies modifiers, unlike onAbandon or onFinish.
+     */
+    public func applyModifiers<V: View>(@ViewBuilder _ closure: @escaping (F) -> V) -> WorkflowItem<F, Wrapped, V> {
+        return WorkflowItem<F, Wrapped, V>(previous: self)
+//        modifierClosure = {
+//            // We are essentially casting this to itself, that cannot fail. (Famous last words)
+//            // swiftlint:disable:next force_cast
+//            let instance = $0.underlyingInstance as! F
+//            $0.changeUnderlyingView(to: closure(instance))
+//        }
+//        return WorkflowItem<F, V>(metadata: metadata,
+//                                  persistence: flowPersistenceClosure,
+//                                  modifier: modifierClosure)
+    }
+
 
     private init(workflowLauncher: Self, onFinish: [(AnyWorkflow.PassedArgs) -> Void], onAbandon: [() -> Void]) {
         _wrapped = workflowLauncher._wrapped
