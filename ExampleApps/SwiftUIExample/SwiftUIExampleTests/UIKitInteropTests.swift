@@ -103,7 +103,6 @@ final class UIKitInteropTests: XCTestCase {
         wait(for: [proceedCalled], timeout: TestConstant.timeout)
     }
 
-    // swiftlint:disable force_cast
     func testPuttingAUIKitViewFromStoryboardInsideASwiftUIWorkflow() throws {
         let launchArgs = UUID().uuidString
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: launchArgs)
