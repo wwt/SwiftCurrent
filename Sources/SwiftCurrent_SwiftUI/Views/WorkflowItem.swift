@@ -23,7 +23,6 @@ import UIKit
 public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: View>: View {
     // These need to be state variables to survive SwiftUI re-rendering. Change under penalty of torture BY the codebase you modified.
     @State private var wrapped: Wrapped?
-    @State private var launchArgs: AnyWorkflow.PassedArgs
     @State private var metadata: FlowRepresentableMetadata!
     @State private var modifierClosure: ((AnyFlowRepresentableView) -> Void)?
     @State private var flowPersistenceClosure: (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default }
@@ -33,7 +32,7 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
 
     public var body: some View {
         ViewBuilder {
-            if model.isLaunched?.wrappedValue == true {
+            if model.isLaunched == true {
                 if let body = model.body as? Content {
                     body
                 } else {
@@ -41,13 +40,12 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
                 }
             }
         }
-        .onChange(of: model.isLaunched?.wrappedValue) { if $0 == false { resetWorkflow() } }
+        .onChange(of: model.isLaunched) { if $0 == false { resetWorkflow() } }
     }
 
     private init<A, W, C, A1, W1, C1>(previous: WorkflowItem<A, W, C>, _ closure: () -> Wrapped) where Wrapped == WorkflowItem<A1, W1, C1> {
         let wrapped = closure()
         _wrapped = State(initialValue: wrapped)
-        _launchArgs = previous._launchArgs
         _model = previous._model
         _launcher = previous._launcher
         _metadata = previous._metadata
@@ -59,7 +57,6 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
                     modifierClosure: @escaping ((AnyFlowRepresentableView) -> Void),
                     flowPersistenceClosure: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) {
         _wrapped = previous._wrapped
-        _launchArgs = previous._launchArgs
         _model = previous._model
         _launcher = previous._launcher
         _modifierClosure = State(initialValue: modifierClosure)
@@ -72,7 +69,6 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
     }
 
     public init(_ item: F.Type) where Wrapped == Never, Content == F, Content: FlowRepresentable & View {
-        _launchArgs = State(initialValue: .none) // default value, overridden later
         let metadata = FlowRepresentableMetadata(Content.self,
                                                  launchStyle: .new,
                                                  flowPersistence: flowPersistenceClosure,
@@ -84,7 +80,6 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
     /// Creates a `WorkflowItem` from a `UIViewController`.
     @available(iOS 14.0, macOS 11, tvOS 14.0, *)
     public init<VC: FlowRepresentable & UIViewController>(_: VC.Type) where Content == ViewControllerWrapper<VC>, Wrapped == Never, F == ViewControllerWrapper<VC> {
-        _launchArgs = State(initialValue: .none)
         let metadata = FlowRepresentableMetadata(ViewControllerWrapper<VC>.self,
                                                  launchStyle: .new,
                                                  flowPersistence: flowPersistenceClosure,
@@ -94,7 +89,6 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
     #endif
 
     init<A>(_ launcher: WorkflowLauncher<A>, isLaunched: Binding<Bool>, wrap: WorkflowItem<F, Wrapped, Content>) {
-        _launchArgs = State(initialValue: launcher.passedArgs)
         _metadata = wrap._metadata
         _wrapped = wrap._wrapped
     }
@@ -117,7 +111,6 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
 
     private init(workflowLauncher: Self, onFinish: [(AnyWorkflow.PassedArgs) -> Void], onAbandon: [() -> Void]) {
         _wrapped = workflowLauncher._wrapped
-        _launchArgs = workflowLauncher._launchArgs
         _metadata = workflowLauncher._metadata
         _modifierClosure = workflowLauncher._modifierClosure
         _flowPersistenceClosure = workflowLauncher._flowPersistenceClosure
@@ -125,7 +118,7 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
 
     private func resetWorkflow() {
         launcher.onFinishCalled = false
-        launcher.workflow?.launch(withOrchestrationResponder: model, passedArgs: launchArgs)
+        launcher.workflow.launch(withOrchestrationResponder: model, passedArgs: launcher.launchArgs)
     }
 
     private func ViewBuilder<V: View>(@ViewBuilder builder: () -> V) -> some View { builder() }

@@ -16,11 +16,11 @@ final class WorkflowViewModel: ObservableObject {
     let onAbandonPublisher = PassthroughSubject<Void, Never>()
     let onFinishPublisher = CurrentValueSubject<AnyWorkflow.PassedArgs?, Never>(nil)
 
-    var isLaunched: Binding<Bool>?
+    @Binding var isLaunched: Bool
     private let launchArgs: AnyWorkflow.PassedArgs
 
     init(isLaunched: Binding<Bool>, launchArgs: AnyWorkflow.PassedArgs) {
-        self.isLaunched = isLaunched
+        _isLaunched = isLaunched
         self.launchArgs = launchArgs
     }
 }
@@ -40,10 +40,10 @@ extension WorkflowViewModel: OrchestrationResponder {
     }
 
     func abandon(_ workflow: AnyWorkflow, onFinish: (() -> Void)?) {
-        isLaunched?.wrappedValue = false
+        isLaunched = false
         body = nil
         onAbandonPublisher.send()
-        if isLaunched?.wrappedValue == true {
+        if isLaunched == true {
             workflow.launch(withOrchestrationResponder: self, passedArgs: launchArgs)
         }
     }
@@ -53,7 +53,7 @@ extension WorkflowViewModel: OrchestrationResponder {
             if let lastPresentableItem = workflow.lastPresentableItem {
                 body = extractView(from: lastPresentableItem).erasedView
             } else {
-                isLaunched?.wrappedValue = false
+                isLaunched = false
             }
         }
         onFinishPublisher.send(passedArgs)
