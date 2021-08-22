@@ -28,20 +28,17 @@ public struct WorkflowLauncherView<Content: View>: View {
             .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 
-    init(item: Content,
-         workflow: AnyWorkflow,
-         isLaunched: Binding<Bool>,
-         launchArgs: AnyWorkflow.PassedArgs,
-         onFinish: [(AnyWorkflow.PassedArgs) -> Void],
-         onAbandon: [() -> Void]) {
-        let model = WorkflowViewModel(isLaunched: isLaunched, launchArgs: launchArgs)
+    init<A, F, W, C>(item: Content, workflowLauncher: WorkflowLauncher<A>) where Content == WorkflowItem<F, W, C> {
+        let wf = AnyWorkflow.empty
+        item.modify(workflow: wf)
+        let model = WorkflowViewModel(isLaunched: workflowLauncher.$isLaunched, launchArgs: workflowLauncher.passedArgs)
         _model = StateObject(wrappedValue: model)
-        _launcher = StateObject(wrappedValue: Launcher(workflow: workflow,
+        _launcher = StateObject(wrappedValue: Launcher(workflow: wf,
                                                        responder: model,
-                                                       launchArgs: launchArgs))
+                                                       launchArgs: workflowLauncher.passedArgs))
         _content = State(wrappedValue: item)
-        _onFinish = State(initialValue: onFinish)
-        _onAbandon = State(initialValue: onAbandon)
+        _onFinish = State(initialValue: workflowLauncher.onFinish)
+        _onAbandon = State(initialValue: workflowLauncher.onAbandon)
     }
 
     private init(current: Self, onFinish: [(AnyWorkflow.PassedArgs) -> Void], onAbandon: [() -> Void]) {

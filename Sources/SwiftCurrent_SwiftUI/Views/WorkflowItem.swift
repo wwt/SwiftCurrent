@@ -89,11 +89,6 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
     }
     #endif
 
-    init<A>(_ launcher: WorkflowLauncher<A>, isLaunched: Binding<Bool>, wrap: WorkflowItem<F, Wrapped, Content>) {
-        _metadata = wrap._metadata
-        _wrapped = wrap._wrapped
-    }
-
     /**
      Provides a way to apply modifiers to your `FlowRepresentable` view.
 

@@ -45,7 +45,7 @@ import SwiftCurrent
 ///  ```
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowLauncher<Args> {
-    @Binding private var isLaunched: Bool
+    @Binding var isLaunched: Bool
     var passedArgs = AnyWorkflow.PassedArgs.none
     var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
     var onAbandon = [() -> Void]()
@@ -112,15 +112,7 @@ extension WorkflowLauncher where Args == Never {
      - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
      */
     public func thenProceed<FR: FlowRepresentable, W, C>(with closure: @autoclosure () -> WorkflowItem<FR, W, C>) -> WorkflowLauncherView<WorkflowItem<FR, W, C>> where FR.WorkflowInput == Never {
-        let item = WorkflowItem(self, isLaunched: _isLaunched, wrap: closure())
-        let wf = AnyWorkflow.empty
-        item.modify(workflow: wf)
-        return WorkflowLauncherView(item: item,
-                                    workflow: wf,
-                                    isLaunched: _isLaunched,
-                                    launchArgs: passedArgs,
-                                    onFinish: onFinish,
-                                    onAbandon: onAbandon)
+        WorkflowLauncherView(item: closure(), workflowLauncher: self)
     }
 }
 
@@ -132,15 +124,7 @@ extension WorkflowLauncher where Args == AnyWorkflow.PassedArgs {
      - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
      */
     public func thenProceed<FR: FlowRepresentable, W, C>(with closure: @autoclosure () -> WorkflowItem<FR, W, C>) -> WorkflowLauncherView<WorkflowItem<FR, W, C>> {
-        let item = WorkflowItem(self, isLaunched: _isLaunched, wrap: closure())
-        let wf = AnyWorkflow.empty
-        item.modify(workflow: wf)
-        return WorkflowLauncherView(item: item,
-                                    workflow: wf,
-                                    isLaunched: _isLaunched,
-                                    launchArgs: passedArgs,
-                                    onFinish: onFinish,
-                                    onAbandon: onAbandon)
+        WorkflowLauncherView(item: closure(), workflowLauncher: self)
     }
 
     /**
@@ -149,15 +133,7 @@ extension WorkflowLauncher where Args == AnyWorkflow.PassedArgs {
      - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
      */
     public func thenProceed<FR: FlowRepresentable, W, C>(with closure: @autoclosure () -> WorkflowItem<FR, W, C>) -> WorkflowLauncherView<WorkflowItem<FR, W, C>> where FR.WorkflowInput == AnyWorkflow.PassedArgs {
-        let item = WorkflowItem(self, isLaunched: _isLaunched, wrap: closure())
-        let wf = AnyWorkflow.empty
-        item.modify(workflow: wf)
-        return WorkflowLauncherView(item: item,
-                                    workflow: wf,
-                                    isLaunched: _isLaunched,
-                                    launchArgs: passedArgs,
-                                    onFinish: onFinish,
-                                    onAbandon: onAbandon)
+        WorkflowLauncherView(item: closure(), workflowLauncher: self)
     }
 }
 
@@ -169,15 +145,7 @@ extension WorkflowLauncher {
      - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
      */
     public func thenProceed<FR: FlowRepresentable, W, C>(with closure: @autoclosure () -> WorkflowItem<FR, W, C>) -> WorkflowLauncherView<WorkflowItem<FR, W, C>> {
-        let item = WorkflowItem(self, isLaunched: _isLaunched, wrap: closure())
-        let wf = AnyWorkflow.empty
-        item.modify(workflow: wf)
-        return WorkflowLauncherView(item: item,
-                                    workflow: wf,
-                                    isLaunched: _isLaunched,
-                                    launchArgs: passedArgs,
-                                    onFinish: onFinish,
-                                    onAbandon: onAbandon)
+        WorkflowLauncherView(item: closure(), workflowLauncher: self)
     }
 
     /**
@@ -186,15 +154,7 @@ extension WorkflowLauncher {
      - Returns: a new `ModifiedWorkflowView` with the additional `FlowRepresentable` item.
      */
     public func thenProceed<FR: FlowRepresentable, W, C>(with closure: @autoclosure () -> WorkflowItem<FR, W, C>) -> WorkflowLauncherView<WorkflowItem<FR, W, C>> where FR.WorkflowInput == AnyWorkflow.PassedArgs {
-        let item = WorkflowItem(self, isLaunched: _isLaunched, wrap: closure())
-        let wf = AnyWorkflow.empty
-        item.modify(workflow: wf)
-        return WorkflowLauncherView(item: item,
-                                    workflow: wf,
-                                    isLaunched: _isLaunched,
-                                    launchArgs: passedArgs,
-                                    onFinish: onFinish,
-                                    onAbandon: onAbandon)
+        WorkflowLauncherView(item: closure(), workflowLauncher: self)
     }
 }
 
