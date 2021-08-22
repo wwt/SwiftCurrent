@@ -59,13 +59,6 @@ extension WorkflowViewModel: OrchestrationResponder {
         onFinishPublisher.send(passedArgs)
         onFinish?(passedArgs)
     }
-
-    private func extractView(from element: AnyWorkflow.Element) -> AnyFlowRepresentableView {
-        guard let instance = element.value.instance as? AnyFlowRepresentableView else {
-            fatalError("Could not cast \(String(describing: element.value.instance)) to expected type: AnyFlowRepresentableView")
-        }
-        return instance
-    }
 }
 
 extension AnyWorkflow {
