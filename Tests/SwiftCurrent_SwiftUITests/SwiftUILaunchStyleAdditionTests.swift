@@ -15,11 +15,11 @@ final class LaunchStyleAdditionTests: XCTestCase {
     func testPresentationTypeInitializer() {
         XCTAssertNil(LaunchStyle.SwiftUI.PresentationType(rawValue: .new))
         XCTAssertEqual(LaunchStyle.SwiftUI.PresentationType(rawValue: .default), .default)
-        XCTAssertEqual(LaunchStyle.SwiftUI.PresentationType(rawValue: ._navigationLink), .navigationLink)
+        XCTAssertEqual(LaunchStyle.SwiftUI.PresentationType(rawValue: ._swiftUI_navigationLink), .navigationLink)
     }
 
     func testKnownPresentationTypes_AreUnique() {
-        XCTAssertFalse(LaunchStyle.default === LaunchStyle._navigationLink)
+        XCTAssertFalse(LaunchStyle.default === LaunchStyle._swiftUI_navigationLink)
         XCTAssertFalse(LaunchStyle.SwiftUI.PresentationType.default.rawValue === LaunchStyle.SwiftUI.PresentationType.navigationLink.rawValue)
     }
 
