@@ -94,12 +94,13 @@ final class GenericConstraintTests: XCTestCase {
         }
         let workflowView = WorkflowLauncher(isLaunched: .constant(true))
             .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self)))
+                            .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -115,13 +116,14 @@ final class GenericConstraintTests: XCTestCase {
         }
         let workflowView = WorkflowLauncher(isLaunched: .constant(true))
             .thenProceed(with: WorkflowItem(FR1.self).persistence(.persistWhenSkipped)
-            .thenProceed(with: WorkflowItem(FR2.self)))
+                            .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -137,13 +139,14 @@ final class GenericConstraintTests: XCTestCase {
         }
         let workflowView = WorkflowLauncher(isLaunched: .constant(true))
             .thenProceed(with: WorkflowItem(FR1.self).persistence { .persistWhenSkipped }
-            .thenProceed(with: WorkflowItem(FR2.self)))
+                            .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -160,12 +163,13 @@ final class GenericConstraintTests: XCTestCase {
         }
         let workflowView = WorkflowLauncher(isLaunched: .constant(true))
             .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self)))
+                            .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -182,13 +186,14 @@ final class GenericConstraintTests: XCTestCase {
         }
         let workflowView = WorkflowLauncher(isLaunched: .constant(true))
             .thenProceed(with: WorkflowItem(FR1.self).persistence(.persistWhenSkipped)
-            .thenProceed(with: WorkflowItem(FR2.self)))
+                            .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -205,13 +210,14 @@ final class GenericConstraintTests: XCTestCase {
         }
         let workflowView = WorkflowLauncher(isLaunched: .constant(true))
             .thenProceed(with: WorkflowItem(FR1.self).persistence { .persistWhenSkipped }
-            .thenProceed(with: WorkflowItem(FR2.self)))
+                            .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -229,12 +235,13 @@ final class GenericConstraintTests: XCTestCase {
         }
         let workflowView = WorkflowLauncher(isLaunched: .constant(true))
             .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self)))
+                            .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -252,13 +259,14 @@ final class GenericConstraintTests: XCTestCase {
         }
         let workflowView = WorkflowLauncher(isLaunched: .constant(true))
             .thenProceed(with: WorkflowItem(FR1.self).persistence(.persistWhenSkipped)
-            .thenProceed(with: WorkflowItem(FR2.self)))
+                            .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -276,13 +284,14 @@ final class GenericConstraintTests: XCTestCase {
         }
         let workflowView = WorkflowLauncher(isLaunched: .constant(true))
             .thenProceed(with: WorkflowItem(FR1.self).persistence { .persistWhenSkipped }
-            .thenProceed(with: WorkflowItem(FR2.self)))
+                            .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -301,7 +310,6 @@ final class GenericConstraintTests: XCTestCase {
             .thenProceed(with: WorkflowItem(FR1.self).persistence(.persistWhenSkipped))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
@@ -360,12 +368,13 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self)))
+                            .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -384,13 +393,14 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR1.self).persistence(.persistWhenSkipped)
-            .thenProceed(with: WorkflowItem(FR2.self)))
+                            .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -415,10 +425,11 @@ final class GenericConstraintTests: XCTestCase {
             .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -438,12 +449,13 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self)))
+                            .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -463,13 +475,14 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR1.self).persistence(.persistWhenSkipped)
-            .thenProceed(with: WorkflowItem(FR2.self)))
+                            .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -495,10 +508,11 @@ final class GenericConstraintTests: XCTestCase {
             .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -519,12 +533,13 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self)))
+                            .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -545,13 +560,14 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR1.self).persistence(.persistWhenSkipped)
-            .thenProceed(with: WorkflowItem(FR2.self)))
+                            .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -578,10 +594,11 @@ final class GenericConstraintTests: XCTestCase {
             .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -657,12 +674,13 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self)))
+                            .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -681,13 +699,14 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR1.self).persistence(.persistWhenSkipped)
-            .thenProceed(with: WorkflowItem(FR2.self)))
+                            .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -712,10 +731,11 @@ final class GenericConstraintTests: XCTestCase {
             .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -735,12 +755,13 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self)))
+                            .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -760,13 +781,14 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR1.self).persistence(.persistWhenSkipped)
-            .thenProceed(with: WorkflowItem(FR2.self)))
+                            .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -792,10 +814,11 @@ final class GenericConstraintTests: XCTestCase {
             .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -816,12 +839,13 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self)))
+                            .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -842,13 +866,14 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR1.self).persistence(.persistWhenSkipped)
-            .thenProceed(with: WorkflowItem(FR2.self)))
+                            .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -875,10 +900,11 @@ final class GenericConstraintTests: XCTestCase {
             .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -899,12 +925,14 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self)))
+                            .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
 
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(""))
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -925,13 +953,14 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR1.self).persistence(.persistWhenSkipped)
-            .thenProceed(with: WorkflowItem(FR2.self)))
+                            .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(""))
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -958,10 +987,11 @@ final class GenericConstraintTests: XCTestCase {
             .thenProceed(with: WorkflowItem(FR2.self)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
             XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(""))
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR2.self))
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -983,12 +1013,13 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self).persistence(.persistWhenSkipped)))
+                            .thenProceed(with: WorkflowItem(FR1.self).persistence(.persistWhenSkipped)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1007,14 +1038,16 @@ final class GenericConstraintTests: XCTestCase {
         let expectation = self.expectation(description: "FlowPersistence closure called")
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self).persistence {
-                defer { expectation.fulfill() }
-                return .persistWhenSkipped
-            }))
+                            .thenProceed(with: WorkflowItem(FR1.self).persistence {
+                                defer { expectation.fulfill() }
+                                return .persistWhenSkipped
+                            }))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+            }
         }
         wait(for: [expectViewLoaded, expectation], timeout: TestConstant.timeout)
     }
@@ -1036,14 +1069,17 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self))))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self))))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1065,15 +1101,18 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
-            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                    XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1095,15 +1134,18 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self).persistence { .persistWhenSkipped })))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self).persistence { .persistWhenSkipped })))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
-            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                    XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1126,14 +1168,17 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self))))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self))))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1156,15 +1201,18 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
-            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                    XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1187,15 +1235,18 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self).persistence { _ in .persistWhenSkipped })))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self).persistence { _ in .persistWhenSkipped })))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
-            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                    XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1219,14 +1270,17 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self))))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self))))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1250,15 +1304,18 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
-            XCTAssertNoThrow(try view.find(FR2.self))
-            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                    XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1282,18 +1339,21 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self).persistence {
-                XCTAssertEqual($0, 1)
-                return .persistWhenSkipped
-            })))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self).persistence {
+                                                XCTAssertEqual($0, 1)
+                                                return .persistWhenSkipped
+                                            })))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
-            XCTAssertNoThrow(try view.find(FR2.self))
-            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                    XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1315,12 +1375,13 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self).persistence(.persistWhenSkipped)))
+                            .thenProceed(with: WorkflowItem(FR1.self).persistence(.persistWhenSkipped)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1340,15 +1401,17 @@ final class GenericConstraintTests: XCTestCase {
         let expectation = self.expectation(description: "FlowPersistence closure called")
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self).persistence {
-                XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
-                defer { expectation.fulfill() }
-                return .persistWhenSkipped
-            }))
+                            .thenProceed(with: WorkflowItem(FR1.self).persistence {
+                                XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
+                                defer { expectation.fulfill() }
+                                return .persistWhenSkipped
+                            }))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+            }
         }
         wait(for: [expectViewLoaded, expectation], timeout: TestConstant.timeout)
     }
@@ -1371,14 +1434,17 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self))))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self))))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1401,15 +1467,18 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
-            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                    XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1432,17 +1501,20 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self).persistence {
-                XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
-                return .persistWhenSkipped
-            }.thenProceed(with: WorkflowItem(FR2.self))))
+                            .thenProceed(with: WorkflowItem(FR1.self).persistence {
+                                XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
+                                return .persistWhenSkipped
+                            }.thenProceed(with: WorkflowItem(FR2.self))))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1466,14 +1538,17 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self))))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self))))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1497,15 +1572,18 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
-            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                    XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1529,18 +1607,21 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self).persistence {
-                XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
-                return .persistWhenSkipped
-            })))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self).persistence {
+                                                XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
+                                                return .persistWhenSkipped
+                                            })))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
-            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                    XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1565,14 +1646,17 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self))))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self))))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1597,15 +1681,18 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
-            XCTAssertNoThrow(try view.find(FR2.self))
-            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                    XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1630,18 +1717,21 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self).persistence {
-                XCTAssertEqual($0, 1)
-                return .persistWhenSkipped
-            })))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self).persistence {
+                                                XCTAssertEqual($0, 1)
+                                                return .persistWhenSkipped
+                                            })))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
-            XCTAssertNoThrow(try view.find(FR2.self))
-            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                    XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1661,11 +1751,13 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self).persistence(.persistWhenSkipped)))
+                            .thenProceed(with: WorkflowItem(FR1.self).persistence(.persistWhenSkipped)))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1685,15 +1777,17 @@ final class GenericConstraintTests: XCTestCase {
         let expectation = self.expectation(description: "FlowPersistence closure called")
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self).persistence {
-                XCTAssertEqual($0, expectedArgs)
-                defer { expectation.fulfill() }
-                return .persistWhenSkipped
-            }))
+                            .thenProceed(with: WorkflowItem(FR1.self).persistence {
+                                XCTAssertEqual($0, expectedArgs)
+                                defer { expectation.fulfill() }
+                                return .persistWhenSkipped
+                            }))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+            }
         }
         wait(for: [expectViewLoaded, expectation], timeout: TestConstant.timeout)
     }
@@ -1716,14 +1810,17 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self))))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self))))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1746,15 +1843,18 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
-            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                    XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1777,15 +1877,18 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self).persistence { .persistWhenSkipped })))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self).persistence { .persistWhenSkipped })))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
-            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                    XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1809,14 +1912,17 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self))))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self))))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1840,15 +1946,18 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
-            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                    XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1872,15 +1981,18 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self).persistence { _ in .persistWhenSkipped })))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self).persistence { _ in .persistWhenSkipped })))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try view.find(FR2.self))
-            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                    XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1905,14 +2017,17 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self))))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self))))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1937,15 +2052,18 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
-            XCTAssertNoThrow(try view.find(FR2.self))
-            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                    XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -1970,18 +2088,21 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self).persistence {
-                XCTAssertEqual($0, 1)
-                return .persistWhenSkipped
-            })))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self).persistence {
+                                                XCTAssertEqual($0, 1)
+                                                return .persistWhenSkipped
+                                            })))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
-            XCTAssertNoThrow(try view.find(FR2.self))
-            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(1))
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                    XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -2006,14 +2127,17 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self))))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self))))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(""))
-            XCTAssertNoThrow(try view.find(FR2.self))
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(""))
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -2038,15 +2162,18 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(""))
-            XCTAssertNoThrow(try view.find(FR2.self))
-            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(""))
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                    XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -2071,15 +2198,18 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self).persistence { _ in .persistWhenSkipped })))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self).persistence { _ in .persistWhenSkipped })))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(""))
-            XCTAssertNoThrow(try view.find(FR2.self))
-            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(""))
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                    XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -2104,15 +2234,18 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(expectedArgs))
-            XCTAssertNoThrow(try view.find(FR2.self))
-            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(expectedArgs))
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                    XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -2136,15 +2269,18 @@ final class GenericConstraintTests: XCTestCase {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
             .thenProceed(with: WorkflowItem(FR0.self)
-            .thenProceed(with: WorkflowItem(FR1.self)
-            .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))))
+                            .thenProceed(with: WorkflowItem(FR1.self)
+                                            .thenProceed(with: WorkflowItem(FR2.self).persistence(.persistWhenSkipped))))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
-
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(expectedArgs))
-            XCTAssertNoThrow(try view.find(FR2.self))
-            XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+            try view.actualView().inspectWrapped { view in
+                XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(expectedArgs))
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(FR2.self))
+                    XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
+                }
+            }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }

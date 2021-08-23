@@ -9,7 +9,7 @@ import Foundation
 
 enum TestConstant {
     static var timeout: TimeInterval {
-        5.0 // Pipeline
-//        return 0.1; #warning("Local timeout should not be checked in")
+//        5.0 // Pipeline
+        return 0.1; #warning("Local timeout should not be checked in")
     }
 }
