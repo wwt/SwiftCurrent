@@ -41,10 +41,16 @@ final class PersistenceTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR4.self))))))
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
-                XCTAssertThrowsError(try viewUnderTest.find(FR2.self).actualView().backUpInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
+                try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                    XCTAssertThrowsError(try viewUnderTest.find(FR2.self).actualView().backUpInWorkflow())
+                    XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                    try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                        XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
+                        try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                            XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
+                        }
+                    }
+                }
             }
 
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
@@ -75,12 +81,24 @@ final class PersistenceTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR4.self))))))
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().backUpInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
+                try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                    XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                    try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                        XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().backUpInWorkflow())
+                    }
+                }
+                try viewUnderTest.actualView().inspect { viewUnderTest in
+                    XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+                    try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                        XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                        try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                            XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
+                            try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                                XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
+                            }
+                        }
+                    }
+                }
             }
 
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
@@ -113,11 +131,19 @@ final class PersistenceTests: XCTestCase {
                 .onFinish { _ in expectOnFinish.fulfill() })
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
-                XCTAssertThrowsError(try viewUnderTest.find(FR4.self))
-                XCTAssertNoThrow(try viewUnderTest.find(FR3.self))
+                try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                    XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                    try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                        XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
+                        try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                            XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
+                            XCTAssertThrowsError(try viewUnderTest.find(FR4.self))
+                        }
+                        try viewUnderTest.actualView().inspect { viewUnderTest in
+                            XCTAssertNoThrow(try viewUnderTest.find(FR3.self))
+                        }
+                    }
+                }
             }
 
         wait(for: [expectViewLoaded, expectOnFinish], timeout: TestConstant.timeout)
@@ -148,13 +174,27 @@ final class PersistenceTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR4.self))))))
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().backUpInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
+                try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                    XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                    try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                        XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
+                        try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                            XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().backUpInWorkflow())
+                        }
+                    }
+                }
+                try viewUnderTest.actualView().inspect { viewUnderTest in
+                    XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+                    try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                        XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                        try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                            XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
+                            try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                                XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
+                            }
+                        }
+                    }
+                }
             }
 
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
@@ -188,15 +228,21 @@ final class PersistenceTests: XCTestCase {
                 .onFinish { _ in expectOnFinish.fulfill() })
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
-                XCTAssertThrowsError(try viewUnderTest.find(FR4.self).actualView().backUpInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
-                XCTAssertThrowsError(try viewUnderTest.find(FR4.self))
-                XCTAssertThrowsError(try viewUnderTest.find(FR3.self))
-                XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
-                XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
-                XCTAssertFalse(binding.wrappedValue, "Binding should be flipped to false")
+                try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                    XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                    try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                        XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
+                        try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                            XCTAssertThrowsError(try viewUnderTest.find(FR4.self).actualView().backUpInWorkflow())
+                            XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
+                            XCTAssertThrowsError(try viewUnderTest.find(FR4.self))
+                            XCTAssertThrowsError(try viewUnderTest.find(FR3.self))
+                            XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
+                            XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
+                            XCTAssertFalse(binding.wrappedValue, "Binding should be flipped to false")
+                        }
+                    }
+                }
             }
 
         wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
@@ -237,15 +283,21 @@ final class PersistenceTests: XCTestCase {
                 .onFinish { _ in expectOnFinish.fulfill() })
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
-                XCTAssertThrowsError(try viewUnderTest.find(FR4.self).actualView().backUpInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
-                XCTAssertThrowsError(try viewUnderTest.find(FR4.self))
-                XCTAssertThrowsError(try viewUnderTest.find(FR3.self))
-                XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
-                XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
-                XCTAssertFalse(binding.wrappedValue, "Binding should be flipped to false")
+                try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                    XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                    try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                        XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
+                        try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                            XCTAssertThrowsError(try viewUnderTest.find(FR4.self).actualView().backUpInWorkflow())
+                            XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
+                            XCTAssertThrowsError(try viewUnderTest.find(FR4.self))
+                            XCTAssertThrowsError(try viewUnderTest.find(FR3.self))
+                            XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
+                            XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
+                            XCTAssertFalse(binding.wrappedValue, "Binding should be flipped to false")
+                        }
+                    }
+                }
             }
 
         wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
@@ -286,15 +338,21 @@ final class PersistenceTests: XCTestCase {
                 .onFinish { _ in expectOnFinish.fulfill() })
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
-                XCTAssertThrowsError(try viewUnderTest.find(FR4.self).actualView().backUpInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
-                XCTAssertThrowsError(try viewUnderTest.find(FR4.self))
-                XCTAssertThrowsError(try viewUnderTest.find(FR3.self))
-                XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
-                XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
-                XCTAssertFalse(binding.wrappedValue, "Binding should be flipped to false")
+                try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                    XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                    try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                        XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
+                        try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                            XCTAssertThrowsError(try viewUnderTest.find(FR4.self).actualView().backUpInWorkflow())
+                            XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
+                            XCTAssertThrowsError(try viewUnderTest.find(FR4.self))
+                            XCTAssertThrowsError(try viewUnderTest.find(FR3.self))
+                            XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
+                            XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
+                            XCTAssertFalse(binding.wrappedValue, "Binding should be flipped to false")
+                        }
+                    }
+                }
             }
 
         wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
@@ -329,15 +387,21 @@ final class PersistenceTests: XCTestCase {
                 .onFinish { _ in expectOnFinish.fulfill() })
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
-                XCTAssertThrowsError(try viewUnderTest.find(FR4.self).actualView().backUpInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
-                XCTAssertThrowsError(try viewUnderTest.find(FR4.self))
-                XCTAssertThrowsError(try viewUnderTest.find(FR3.self))
-                XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
-                XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
-                XCTAssertFalse(binding.wrappedValue, "Binding should be flipped to false")
+                try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                    XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                    try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                        XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
+                        try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                            XCTAssertThrowsError(try viewUnderTest.find(FR4.self).actualView().backUpInWorkflow())
+                            XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
+                            XCTAssertThrowsError(try viewUnderTest.find(FR4.self))
+                            XCTAssertThrowsError(try viewUnderTest.find(FR3.self))
+                            XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
+                            XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
+                            XCTAssertFalse(binding.wrappedValue, "Binding should be flipped to false")
+                        }
+                    }
+                }
             }
 
         wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
@@ -369,11 +433,21 @@ final class PersistenceTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR3.self)
                 .thenProceed(with: WorkflowItem(FR4.self))))))
             .inspection.inspect { viewUnderTest in
-                XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().backUpInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
+                try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                    XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().backUpInWorkflow())
+                }
+                try viewUnderTest.actualView().inspect { viewUnderTest in
+                    XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+                    try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                        XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                        try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                            XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
+                            try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                                XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
+                            }
+                        }
+                    }
+                }
             }
 
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
@@ -405,10 +479,20 @@ final class PersistenceTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR4.self))))))
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().backUpInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
+                try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                    try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                        XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().backUpInWorkflow())
+                    }
+                }
+                try viewUnderTest.actualView().inspect { viewUnderTest in
+                    XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                    try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                        XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
+                        try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                            XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
+                        }
+                    }
+                }
             }
 
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
@@ -442,8 +526,12 @@ final class PersistenceTests: XCTestCase {
                 .onFinish { _ in expectOnFinish.fulfill() })
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
+                try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                    XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                    try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                        XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
+                    }
+                }
             }
 
         wait(for: [expectViewLoaded, expectOnFinish], timeout: TestConstant.timeout)
@@ -476,12 +564,23 @@ final class PersistenceTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR4.self))))))
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().backUpInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().backUpInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
+                try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                    try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                        try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                            XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().backUpInWorkflow())
+                        }
+                        try viewUnderTest.actualView().inspect { viewUnderTest in
+                            XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().backUpInWorkflow())
+                        }
+                        try viewUnderTest.actualView().inspect { viewUnderTest in
+                            XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                            try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                                XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
+                            }
+                        }
+                    }
+                }
             }
-
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
@@ -515,7 +614,13 @@ final class PersistenceTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR4.self).persistence(.persistWhenSkipped)))))
                 .onFinish { _ in expectOnFinish.fulfill() })
             .inspection.inspect { viewUnderTest in
-                XCTAssertNoThrow(try viewUnderTest.find(FR4.self))
+                try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                    try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                        try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                            XCTAssertNoThrow(try viewUnderTest.find(FR4.self))
+                        }
+                    }
+                }
             }
 
         wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
