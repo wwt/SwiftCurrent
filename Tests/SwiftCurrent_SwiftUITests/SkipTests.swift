@@ -169,10 +169,10 @@ final class SkipTests: XCTestCase {
                     XCTAssertThrowsError(try viewUnderTest.find(FR2.self).actualView())
                     try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
                         XCTAssertThrowsError(try viewUnderTest.find(FR3.self).actualView())
+                        try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                            XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
+                        }
                     }
-                }
-                try viewUnderTest.actualView().inspect { viewUnderTest in
-                    XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
                 }
             }
 
