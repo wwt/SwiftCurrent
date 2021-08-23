@@ -56,11 +56,11 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
                 }
             }
         }
-        .onReceive(model.$body, perform: {
+        .onReceive(model.$body) {
             if let body = $0?.extractView() as? Content {
                   content = body
             }
-        })
+        }
         .onChange(of: model.isLaunched) { if $0 == false { resetWorkflow() } }
     }
 
