@@ -21,23 +21,19 @@ import SwiftCurrent
 /// WorkflowLauncher(isLaunched: $isLaunched.animation(), args: "String in")
 ///     .thenProceed(with: WorkflowItem(FirstView.self)
 ///                     .applyModifiers {
-///         if true { // Enabling transition animation
 ///             $0.background(Color.gray)
 ///                 .transition(.slide)
 ///                 .animation(.spring())
-///         }
-///     })
+///     }
 ///     .thenProceed(with: WorkflowItem(SecondView.self)
 ///                     .persistence(.removedAfterProceeding)
 ///                     .applyModifiers {
-///         if true {
 ///             $0.SecondViewSpecificModifier()
 ///                 .padding(10)
 ///                 .background(Color.purple)
 ///                 .transition(.opacity)
 ///                 .animation(.easeInOut)
-///         }
-///     })
+///     }))
 ///     .onAbandon { print("isLaunched is now false") }
 ///     .onFinish { args in print("Finished 1: \(args)") }
 ///     .onFinish { print("Finished 2: \($0)") }

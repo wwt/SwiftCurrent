@@ -9,6 +9,12 @@
 import SwiftUI
 import SwiftCurrent
 
+/**
+ A view created by a `WorkflowLauncher`.
+
+ ### Discussion
+ You do not instantiate this view directly, rather you call `thenProceed(with:)` on a `WorkflowLauncher`.
+ */
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowLauncherView<Content: View>: View {
     @State private var content: Content

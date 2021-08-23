@@ -14,10 +14,21 @@ import UIKit
 #endif
 
 /**
- A view created by a `WorkflowLauncher`.
+ A concrete type used to modify a `FlowRepresentable` in a workflow.
 
  ### Discussion
- You do not instantiate this view directly, rather you call `thenProceed(with:)` on a `WorkflowLauncher`.
+ `WorkflowItem` gives you the ability to specify changes you'd like to apply to a specific `FlowRepresentable` when it is time to present it in a `Workflow`. You should create `WorkflowItem`s inside a `thenProceed(with:)` call on `WorkflowLauncher`.
+
+ #### Example
+ ```swift
+ WorkflowItem(FirstView.self)
+            .persistence(.removedAfterProceeding) // affects only FirstView
+            .applyModifiers {
+                $0.background(Color.gray) // $0 is a FirstView instance
+                    .transition(.slide)
+                    .animation(.spring())
+            }
+  ```
  */
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: View>: View {
@@ -35,7 +46,7 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         ViewBuilder {
             if model.isLaunched == true {
                 if let body = model.body?.extractView() as? Content {
-                    body
+                    content ?? body
                 } else {
                     wrapped
                 }
