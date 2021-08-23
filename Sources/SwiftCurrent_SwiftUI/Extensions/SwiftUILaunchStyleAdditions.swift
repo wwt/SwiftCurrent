@@ -1,5 +1,5 @@
 //  swiftlint:disable:this file_name
-//  LaunchStyleAdditions.swift
+//  SwiftUILaunchStyleAdditions.swift
 //  SwiftCurrent_SwiftUI
 //
 //  Created by Tyler Thompson on 8/22/21.
