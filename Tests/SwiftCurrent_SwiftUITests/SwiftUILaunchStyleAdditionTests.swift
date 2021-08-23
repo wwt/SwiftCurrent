@@ -1,5 +1,5 @@
 //
-//  LaunchStyleAdditionTests.swift
+//  SwiftUILaunchStyleAdditionTests.swift
 //  SwiftCurrent_SwiftUITests
 //
 //  Created by Tyler Thompson on 8/22/21.
