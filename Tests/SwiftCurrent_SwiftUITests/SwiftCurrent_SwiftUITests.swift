@@ -34,8 +34,10 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         }).inspection.inspect { viewUnderTest in
             XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
             XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertEqual(try viewUnderTest.find(FR2.self).text().string(), "FR2 type")
-            XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+            try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                XCTAssertEqual(try viewUnderTest.find(FR2.self).text().string(), "FR2 type")
+                XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+            }
         }
 
         wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
@@ -367,14 +369,26 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
                 .thenProceed(with: WorkflowItem(FR4.self))))))
             .inspection.inspect { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
-                try viewUnderTest.actualView().inspect { viewUnderTest in
+                try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
                     XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().backUpInWorkflow())
+                }
+                try viewUnderTest.actualView().inspect { viewUnderTest in
                     XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
-                    XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
-                    XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().backUpInWorkflow())
-                    XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
-                    XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
-                    XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
+                    try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                        XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                        try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                            XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().backUpInWorkflow())
+                        }
+                        try viewUnderTest.actualView().inspect { viewUnderTest in
+                            XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                            try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                                XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
+                                try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                                    XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
@@ -526,10 +540,14 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
             try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
                 XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().abandon())
+                XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
             }
-            XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
-            XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
-            XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+            try viewUnderTest.actualView().inspect { viewUnderTest in
+                XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+                try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                    XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                }
+            }
         }
 
         wait(for: [expectViewLoaded, onFinishCalled], timeout: TestConstant.timeout)
