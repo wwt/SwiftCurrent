@@ -24,4 +24,14 @@ extension WorkflowItem {
         }
         return expectation
     }
+
+    @discardableResult func inspect(inspection: @escaping (InspectableView<ViewType.View<Self>>) throws -> Void) throws -> XCTestExpectation {
+        // Waiting for 0.0 seems insane but think about it like "We are waiting for this command to get off the stack"
+        // Then quit thinking about it, know it was deliberate, and move on.
+        let expectation = self.inspection.inspect(after: 0.0, inspection)
+        defer {
+            XCTWaiter().wait(for: [expectation], timeout: 0.0)
+        }
+        return expectation
+    }
 }
