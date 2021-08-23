@@ -12,8 +12,10 @@ import SwiftCurrent
 @testable import SwiftCurrent_SwiftUI
 
 final class LaunchStyleAdditionTests: XCTestCase {
-    func testPresentationTypeIsNil_IfInvalidLaunchStyleGiven() {
+    func testPresentationTypeInitializer() {
         XCTAssertNil(LaunchStyle.PresentationType(rawValue: .new))
+        XCTAssertEqual(LaunchStyle.PresentationType(rawValue: .default), .default)
+        XCTAssertEqual(LaunchStyle.PresentationType(rawValue: ._navigationLink), .navigationLink)
     }
 
     func testKnownPresentationTypes_AreUnique() {
