@@ -43,12 +43,11 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
     @EnvironmentObject private var model: WorkflowViewModel
     @EnvironmentObject private var launcher: Launcher
 
+    let inspection = Inspection<Self>()
+
     public var body: some View {
         ViewBuilder {
             if model.isLaunched == true {
-//                if content == nil {
-//                    VStack()
-//                }
                 if model.body?.extractView() is Content {
                     content
                 } else {
@@ -58,9 +57,10 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         }
         .onReceive(model.$body) {
             if let body = $0?.extractView() as? Content {
-                  content = body
+                content = body
             }
         }
+        .onReceive(inspection.notice) { inspection.visit(self, $0) }
         .onChange(of: model.isLaunched) { if $0 == false { resetWorkflow() } }
     }
 
