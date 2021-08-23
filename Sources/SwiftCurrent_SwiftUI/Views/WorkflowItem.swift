@@ -38,6 +38,7 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
     @State private var metadata: FlowRepresentableMetadata!
     @State private var modifierClosure: ((AnyFlowRepresentableView) -> Void)?
     @State private var flowPersistenceClosure: (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default }
+    @State private var launchStyle: LaunchStyle.PresentationType = .default
 
     @EnvironmentObject private var model: WorkflowViewModel
     @EnvironmentObject private var launcher: Launcher
@@ -63,9 +64,11 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         _metadata = previous._metadata
         _modifierClosure = previous._modifierClosure
         _flowPersistenceClosure = previous._flowPersistenceClosure
+        _launchStyle = previous._launchStyle
     }
 
     private init<C>(previous: WorkflowItem<F, Wrapped, C>,
+                    launchStyle: LaunchStyle.PresentationType,
                     modifierClosure: @escaping ((AnyFlowRepresentableView) -> Void),
                     flowPersistenceClosure: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) {
         _wrapped = previous._wrapped
@@ -73,8 +76,9 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         _launcher = previous._launcher
         _modifierClosure = State(initialValue: modifierClosure)
         _flowPersistenceClosure = State(initialValue: flowPersistenceClosure)
+        _launchStyle = State(initialValue: launchStyle)
         let metadata = FlowRepresentableMetadata(F.self,
-                                                 launchStyle: .new,
+                                                 launchStyle: launchStyle.rawValue,
                                                  flowPersistence: flowPersistenceClosure,
                                                  flowRepresentableFactory: factory)
         _metadata = State(initialValue: metadata)
@@ -107,6 +111,7 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
      */
     public func applyModifiers<V: View>(@ViewBuilder _ closure: @escaping (F) -> V) -> WorkflowItem<F, Wrapped, V> {
         WorkflowItem<F, Wrapped, V>(previous: self,
+                                    launchStyle: launchStyle,
                                     modifierClosure: {
                                         // We are essentially casting this to itself, that cannot fail. (Famous last words)
                                         // swiftlint:disable:next force_cast
@@ -216,6 +221,7 @@ extension WorkflowItem {
     /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.
     public func persistence(_ persistence: @escaping @autoclosure () -> FlowPersistence) -> Self {
         Self(previous: self,
+             launchStyle: launchStyle,
              modifierClosure: modifierClosure ?? { _ in },
              flowPersistenceClosure: { _ in persistence() })
     }
@@ -223,6 +229,7 @@ extension WorkflowItem {
     /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.
     public func persistence(_ persistence: @escaping (F.WorkflowInput) -> FlowPersistence) -> Self {
         Self(previous: self,
+             launchStyle: launchStyle,
              modifierClosure: modifierClosure ?? { _ in },
              flowPersistenceClosure: {
                 guard case .args(let arg as F.WorkflowInput) = $0 else {
@@ -235,6 +242,7 @@ extension WorkflowItem {
     /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.
     public func persistence(_ persistence: @escaping (F.WorkflowInput) -> FlowPersistence) -> Self where F.WorkflowInput == AnyWorkflow.PassedArgs {
         Self(previous: self,
+             launchStyle: launchStyle,
              modifierClosure: modifierClosure ?? { _ in },
              flowPersistenceClosure: persistence)
     }
@@ -242,10 +250,21 @@ extension WorkflowItem {
     /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.
     public func persistence(_ persistence: @escaping () -> FlowPersistence) -> Self where F.WorkflowInput == Never {
         Self(previous: self,
+             launchStyle: launchStyle,
              modifierClosure: modifierClosure ?? { _ in },
              flowPersistenceClosure: { _ in persistence() })
     }
     // swiftlint:enable trailing_closure
 }
 
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension WorkflowItem {
+    /// Sets the presentationType on the `FlowRepresentable` of the `WorkflowItem`.
+    public func presentationType(_ presentationType: @escaping @autoclosure () -> LaunchStyle.PresentationType) -> Self {
+        Self(previous: self,
+             launchStyle: presentationType(),
+             modifierClosure: modifierClosure ?? { _ in },
+             flowPersistenceClosure: flowPersistenceClosure)
+    }
+}
 // swiftlint:enable line_length

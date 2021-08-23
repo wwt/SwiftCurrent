@@ -1,0 +1,56 @@
+//  swiftlint:disable:this file_name
+//  LaunchStyleAdditions.swift
+//  SwiftCurrent_SwiftUI
+//
+//  Created by Tyler Thompson on 8/22/21.
+//  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
+//
+
+import SwiftCurrent
+
+extension LaunchStyle {
+    static let _navigationLink = LaunchStyle.new
+    static let _modal = LaunchStyle.new
+    static let _modal_fullscreen = LaunchStyle.new
+}
+
+extension LaunchStyle {
+    /// A type indicating how a `FlowRepresentable` should be presented.
+    public enum PresentationType: RawRepresentable {
+        /**
+        Indicates a `FlowRepresentable` can be launched contextually.
+        - Important: This swaps out SwiftUI Views and does not animate by default; you can supply your own animations.
+        */
+        case `default`
+
+        /**
+        Indicates a `FlowRepresentable` should be wrapped in a NavigationLink.
+        - Important: You are responsible for supplying a NavigationView.
+        */
+        case navigationLink
+
+        /// Creates a `PresentationType` from a `LaunchStyle`, or returns nil if no mapping exists.
+        public init?(rawValue: LaunchStyle) {
+            switch rawValue {
+                case .default: self = .default
+                case ._navigationLink: self = .navigationLink
+                default: return nil
+            }
+        }
+
+        /// The corresponding `LaunchStyle` for this `PresentationType`
+        public var rawValue: LaunchStyle {
+            switch self {
+                case .navigationLink: return ._navigationLink
+                case .default: return .default
+            }
+        }
+    }
+}
+
+extension LaunchStyle.PresentationType: Equatable {
+    /// :nodoc: Equatable protocol requirement.
+    public static func == (lhs: LaunchStyle.PresentationType, rhs: LaunchStyle.PresentationType) -> Bool {
+        lhs.rawValue === rhs.rawValue
+    }
+}

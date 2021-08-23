@@ -20,6 +20,13 @@ extension FlowRepresentable {
             item.value.instance === _workflowPointer
         }?.value.metadata.persistence
     }
+
+    var presentationType: LaunchStyle.PresentationType? {
+        guard let metadata = workflow?.first(where: { item in
+            item.value.instance === _workflowPointer
+        })?.value.metadata else { return nil }
+        return LaunchStyle.PresentationType(rawValue: metadata.launchStyle)
+    }
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
@@ -39,6 +46,21 @@ final class GenericConstraintTests: XCTestCase {
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+        }
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
+
+    func testWhenInputIsNever_PresentationTypeCanBeSetWithAutoclosure() {
+        struct FR1: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true))
+            .thenProceed(with: WorkflowItem(FR1.self).presentationType(.navigationLink))
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+            XCTAssertEqual(try view.find(FR1.self).actualView().presentationType, .navigationLink)
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -265,7 +287,6 @@ final class GenericConstraintTests: XCTestCase {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-
     // MARK: Input Type == AnyWorkflow.PassedArgs
 
     func testWhenInputIsAnyWorkflowPassedArgs_FlowPersistenceCanBeSetWithAutoclosure() {
@@ -282,6 +303,23 @@ final class GenericConstraintTests: XCTestCase {
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
 
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+        }
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
+
+    func testWhenInputIsAnyWorkflowPassedArgs_PresentationTypeCanBeSetWithAutoclosure() {
+        struct FR1: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: AnyWorkflow.PassedArgs) { }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
+            .thenProceed(with: WorkflowItem(FR1.self).presentationType(.navigationLink))
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+            XCTAssertEqual(try view.find(FR1.self).actualView().presentationType, .navigationLink)
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
@@ -561,8 +599,24 @@ final class GenericConstraintTests: XCTestCase {
             .thenProceed(with: WorkflowItem(FR1.self).persistence(.persistWhenSkipped))
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
+        }
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
+
+    func testWhenInputIsConcreteType_PresentationTypeCanBeSetWithAutoclosure() {
+        struct FR1: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: String) { }
+        }
+        let expectedArgs = UUID().uuidString
+
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs)
+            .thenProceed(with: WorkflowItem(FR1.self).presentationType(.navigationLink))
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+            XCTAssertEqual(try view.find(FR1.self).actualView().presentationType, .navigationLink)
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
