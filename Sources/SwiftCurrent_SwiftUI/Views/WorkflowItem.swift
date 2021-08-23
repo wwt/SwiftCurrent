@@ -38,7 +38,7 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
     @State private var metadata: FlowRepresentableMetadata!
     @State private var modifierClosure: ((AnyFlowRepresentableView) -> Void)?
     @State private var flowPersistenceClosure: (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default }
-    @State private var launchStyle: LaunchStyle.PresentationType = .default
+    @State private var launchStyle: LaunchStyle.SwiftUI.PresentationType = .default
 
     @EnvironmentObject private var model: WorkflowViewModel
     @EnvironmentObject private var launcher: Launcher
@@ -68,7 +68,7 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
     }
 
     private init<C>(previous: WorkflowItem<F, Wrapped, C>,
-                    launchStyle: LaunchStyle.PresentationType,
+                    launchStyle: LaunchStyle.SwiftUI.PresentationType,
                     modifierClosure: @escaping ((AnyFlowRepresentableView) -> Void),
                     flowPersistenceClosure: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) {
         _wrapped = previous._wrapped
@@ -260,7 +260,7 @@ extension WorkflowItem {
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension WorkflowItem {
     /// Sets the presentationType on the `FlowRepresentable` of the `WorkflowItem`.
-    public func presentationType(_ presentationType: @escaping @autoclosure () -> LaunchStyle.PresentationType) -> Self {
+    public func presentationType(_ presentationType: @escaping @autoclosure () -> LaunchStyle.SwiftUI.PresentationType) -> Self {
         Self(previous: self,
              launchStyle: presentationType(),
              modifierClosure: modifierClosure ?? { _ in },

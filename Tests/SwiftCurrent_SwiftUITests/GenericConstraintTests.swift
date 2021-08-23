@@ -21,11 +21,11 @@ extension FlowRepresentable {
         }?.value.metadata.persistence
     }
 
-    var presentationType: LaunchStyle.PresentationType? {
+    var presentationType: LaunchStyle.SwiftUI.PresentationType? {
         guard let metadata = workflow?.first(where: { item in
             item.value.instance === _workflowPointer
         })?.value.metadata else { return nil }
-        return LaunchStyle.PresentationType(rawValue: metadata.launchStyle)
+        return LaunchStyle.SwiftUI.PresentationType(rawValue: metadata.launchStyle)
     }
 }
 

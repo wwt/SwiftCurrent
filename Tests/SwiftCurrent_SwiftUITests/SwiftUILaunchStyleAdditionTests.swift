@@ -13,19 +13,19 @@ import SwiftCurrent
 
 final class LaunchStyleAdditionTests: XCTestCase {
     func testPresentationTypeInitializer() {
-        XCTAssertNil(LaunchStyle.PresentationType(rawValue: .new))
-        XCTAssertEqual(LaunchStyle.PresentationType(rawValue: .default), .default)
-        XCTAssertEqual(LaunchStyle.PresentationType(rawValue: ._navigationLink), .navigationLink)
+        XCTAssertNil(LaunchStyle.SwiftUI.PresentationType(rawValue: .new))
+        XCTAssertEqual(LaunchStyle.SwiftUI.PresentationType(rawValue: .default), .default)
+        XCTAssertEqual(LaunchStyle.SwiftUI.PresentationType(rawValue: ._navigationLink), .navigationLink)
     }
 
     func testKnownPresentationTypes_AreUnique() {
-        XCTAssertFalse(LaunchStyle.default == LaunchStyle._navigationLink)
-        XCTAssertFalse(LaunchStyle.PresentationType.default == LaunchStyle.PresentationType.navigationLink)
+        XCTAssertFalse(LaunchStyle.default === LaunchStyle._navigationLink)
+        XCTAssertFalse(LaunchStyle.SwiftUI.PresentationType.default.rawValue === LaunchStyle.SwiftUI.PresentationType.navigationLink.rawValue)
     }
 
     func testPresentationTypes_AreCorrectlyEquatable() {
-        XCTAssertEqual(LaunchStyle.PresentationType.default, .default)
-        XCTAssertEqual(LaunchStyle.PresentationType.navigationLink, .navigationLink)
-        XCTAssertNotEqual(LaunchStyle.PresentationType.default, .navigationLink)
+        XCTAssertEqual(LaunchStyle.SwiftUI.PresentationType.default, .default)
+        XCTAssertEqual(LaunchStyle.SwiftUI.PresentationType.navigationLink, .navigationLink)
+        XCTAssertNotEqual(LaunchStyle.SwiftUI.PresentationType.default, .navigationLink)
     }
 }
