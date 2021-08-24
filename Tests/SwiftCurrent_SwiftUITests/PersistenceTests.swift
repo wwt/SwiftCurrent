@@ -35,13 +35,14 @@ final class PersistenceTests: XCTestCase, View {
         }
         let expectViewLoaded = ViewHosting.loadView(
             WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self).persistence(.removedAfterProceeding) {
+                thenProceed(with: FR1.self) {
                     thenProceed(with: FR2.self) {
                         thenProceed(with: FR3.self) {
                             thenProceed(with: FR4.self)
                         }
                     }
                 }
+                .persistence(.removedAfterProceeding)
             }
         ).inspection.inspect { viewUnderTest in
             XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
@@ -80,11 +81,12 @@ final class PersistenceTests: XCTestCase, View {
         let expectViewLoaded = ViewHosting.loadView(
             WorkflowLauncher(isLaunched: .constant(true)) {
                 thenProceed(with: FR1.self) {
-                    thenProceed(with: FR2.self).persistence(.removedAfterProceeding) {
+                    thenProceed(with: FR2.self) {
                         thenProceed(with: FR3.self) {
                             thenProceed(with: FR4.self)
                         }
                     }
+                    .persistence(.removedAfterProceeding)
                 }
             }
         ).inspection.inspect { fr1 in
@@ -140,7 +142,7 @@ final class PersistenceTests: XCTestCase, View {
                     }
                 }
             }
-            .onFinish { _ in expectOnFinish.fulfill() })
+            .onFinish { _ in expectOnFinish.fulfill() }
         ).inspection.inspect { viewUnderTest in
             XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
             try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
@@ -181,11 +183,13 @@ final class PersistenceTests: XCTestCase, View {
         let expectViewLoaded = ViewHosting.loadView(
             WorkflowLauncher(isLaunched: .constant(true)) {
                 thenProceed(with: FR1.self) {
-                    thenProceed(with: FR2.self).persistence(.removedAfterProceeding) {
-                        thenProceed(with: FR3.self).persistence(.removedAfterProceeding) {
+                    thenProceed(with: FR2.self) {
+                        thenProceed(with: FR3.self) {
                             thenProceed(with: FR4.self)
                         }
+                        .persistence(.removedAfterProceeding)
                     }
+                    .persistence(.removedAfterProceeding)
                 }
             }
         ).inspection.inspect { fr1 in
@@ -237,14 +241,18 @@ final class PersistenceTests: XCTestCase, View {
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectViewLoaded = ViewHosting.loadView(
             WorkflowLauncher(isLaunched: binding) {
-                thenProceed(with: FR1.self).persistence(.removedAfterProceeding) {
-                    thenProceed(with: FR2.self).persistence(.removedAfterProceeding) {
-                        thenProceed(with: FR3.self).persistence(.removedAfterProceeding) {
+                thenProceed(with: FR1.self) {
+                    thenProceed(with: FR2.self) {
+                        thenProceed(with: FR3.self) {
                             thenProceed(with: FR4.self).persistence(.removedAfterProceeding)
                         }
+                        .persistence(.removedAfterProceeding)
                     }
+                    .persistence(.removedAfterProceeding)
                 }
-            }.onFinish { _ in expectOnFinish.fulfill() })
+                .persistence(.removedAfterProceeding)
+            }
+            .onFinish { _ in expectOnFinish.fulfill() })
             .inspection.inspect { fr1 in
                 XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
                 try fr1.actualView().inspectWrapped { fr2 in
@@ -299,12 +307,15 @@ final class PersistenceTests: XCTestCase, View {
         let expectViewLoaded = ViewHosting.loadView(
             WorkflowLauncher(isLaunched: binding, startingArgs: expectedStart) {
                 thenProceed(with: FR1.self) {
-                    thenProceed(with: FR2.self).persistence(.removedAfterProceeding) {
-                        thenProceed(with: FR3.self).persistence(.removedAfterProceeding) {
+                    thenProceed(with: FR2.self) {
+                        thenProceed(with: FR3.self) {
                             thenProceed(with: FR4.self).persistence(.removedAfterProceeding)
                         }
+                        .persistence(.removedAfterProceeding)
                     }
-                }.persistence {
+                    .persistence(.removedAfterProceeding)
+                }
+                .persistence {
                     XCTAssertEqual($0, expectedStart)
                     return .removedAfterProceeding
                 }
@@ -362,12 +373,15 @@ final class PersistenceTests: XCTestCase, View {
             WorkflowLauncher(isLaunched: binding, startingArgs: expectedStart) {
                 thenProceed(with: FR1.self) {
 
-                    thenProceed(with: FR2.self).persistence(.removedAfterProceeding) {
-                        thenProceed(with: FR3.self).persistence(.removedAfterProceeding) {
+                    thenProceed(with: FR2.self) {
+                        thenProceed(with: FR3.self) {
                             thenProceed(with: FR4.self).persistence(.removedAfterProceeding)
                         }
+                        .persistence(.removedAfterProceeding)
                     }
-                }.persistence {
+                    .persistence(.removedAfterProceeding)
+                }
+                .persistence {
                     XCTAssertNotNil(expectedStart.extractArgs(defaultValue: 1) as? String)
                     XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedStart.extractArgs(defaultValue: 1) as? String)
                     return .removedAfterProceeding
@@ -425,12 +439,15 @@ final class PersistenceTests: XCTestCase, View {
             WorkflowLauncher(isLaunched: binding) {
                 thenProceed(with: FR1.self) {
 
-                    thenProceed(with: FR2.self).persistence(.removedAfterProceeding) {
-                        thenProceed(with: FR3.self).persistence(.removedAfterProceeding) {
+                    thenProceed(with: FR2.self) {
+                        thenProceed(with: FR3.self) {
                             thenProceed(with: FR4.self).persistence(.removedAfterProceeding)
                         }
+                        .persistence(.removedAfterProceeding)
                     }
-                }.persistence { .removedAfterProceeding }
+                    .persistence(.removedAfterProceeding)
+                }
+                .persistence { .removedAfterProceeding }
             }
             .onFinish { _ in expectOnFinish.fulfill() })
             .inspection.inspect { fr1 in
@@ -482,13 +499,14 @@ final class PersistenceTests: XCTestCase, View {
         }
         let expectViewLoaded = ViewHosting.loadView(
             WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self).persistence(.persistWhenSkipped) {
+                thenProceed(with: FR1.self) {
                     thenProceed(with: FR2.self) {
                         thenProceed(with: FR3.self) {
                             thenProceed(with: FR4.self)
                         }
                     }
                 }
+                .persistence(.persistWhenSkipped)
             }
         ).inspection.inspect { fr1 in
             try fr1.actualView().inspectWrapped { fr2 in
@@ -532,11 +550,12 @@ final class PersistenceTests: XCTestCase, View {
         let expectViewLoaded = ViewHosting.loadView(
             WorkflowLauncher(isLaunched: .constant(true)) {
                 thenProceed(with: FR1.self) {
-                    thenProceed(with: FR2.self).persistence(.persistWhenSkipped) {
+                    thenProceed(with: FR2.self) {
                         thenProceed(with: FR3.self) {
                             thenProceed(with: FR4.self)
                         }
                     }
+                    .persistence(.persistWhenSkipped)
                 }
             }
         ).inspection.inspect { fr1 in
@@ -626,11 +645,13 @@ final class PersistenceTests: XCTestCase, View {
         let expectViewLoaded = ViewHosting.loadView(
             WorkflowLauncher(isLaunched: .constant(true)) {
                 thenProceed(with: FR1.self) {
-                    thenProceed(with: FR2.self).persistence(.persistWhenSkipped) {
-                        thenProceed(with: FR3.self).persistence(.persistWhenSkipped) {
+                    thenProceed(with: FR2.self) {
+                        thenProceed(with: FR3.self) {
                             thenProceed(with: FR4.self)
                         }
+                        .persistence(.persistWhenSkipped)
                     }
+                    .persistence(.persistWhenSkipped)
                 }
             }
         ).inspection.inspect { fr1 in
@@ -684,13 +705,16 @@ final class PersistenceTests: XCTestCase, View {
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectViewLoaded = ViewHosting.loadView(
             WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self).persistence(.persistWhenSkipped) {
-                    thenProceed(with: FR2.self).persistence(.persistWhenSkipped) {
-                        thenProceed(with: FR3.self).persistence(.persistWhenSkipped) {
+                thenProceed(with: FR1.self) {
+                    thenProceed(with: FR2.self) {
+                        thenProceed(with: FR3.self) {
                             thenProceed(with: FR4.self).persistence(.persistWhenSkipped)
                         }
+                        .persistence(.persistWhenSkipped)
                     }
+                    .persistence(.persistWhenSkipped)
                 }
+                .persistence(.persistWhenSkipped)
             }
             .onFinish { _ in expectOnFinish.fulfill() })
             .inspection.inspect { fr1 in
