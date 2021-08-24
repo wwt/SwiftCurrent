@@ -9,6 +9,7 @@
 import XCTest
 import SwiftCurrent
 import Algorithms
+import SwiftUI
 
 @testable import SwiftCurrent_SwiftUI
 
