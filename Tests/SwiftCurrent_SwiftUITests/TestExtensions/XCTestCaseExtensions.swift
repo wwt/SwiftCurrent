@@ -1,8 +1,9 @@
 //
-//  File.swift
-//  
+//  XCTestCaseExtensions.swift
+//  SwiftCurrent_SwiftUITests
 //
 //  Created by Morgan Zellers on 8/24/21.
+//  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
 
 import SwiftUI
