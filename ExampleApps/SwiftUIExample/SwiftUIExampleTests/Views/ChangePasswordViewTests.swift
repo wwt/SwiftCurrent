@@ -29,13 +29,14 @@ final class ChangePasswordViewTests: XCTestCase, View {
         let currentPassword = UUID().uuidString
         let onFinish = expectation(description: "onFinish called")
         let exp = ViewHosting.loadView(WorkflowLauncher(isLaunched: .constant(true), startingArgs: currentPassword) {
-                                        thenProceed(with: ChangePasswordView.self) }
-                                        .onFinish { _ in onFinish.fulfill() }).inspection.inspect { view in
+            thenProceed(with: ChangePasswordView.self)
+        }
+        .onFinish { _ in onFinish.fulfill() }).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(ViewType.TextField.self).setInput(currentPassword))
             XCTAssertNoThrow(try view.find(ViewType.TextField.self, skipFound: 1).setInput("asdfF1"))
             XCTAssertNoThrow(try view.find(ViewType.TextField.self, skipFound: 2).setInput("asdfF1"))
             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
-        } // swiftlint:disable:this closure_end_indentation
+        }
         wait(for: [exp, onFinish], timeout: TestConstant.timeout)
     }
 
