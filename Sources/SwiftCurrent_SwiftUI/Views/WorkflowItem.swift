@@ -1,6 +1,6 @@
 //
 //  WorkflowItem.swift
-//  SwiftCurrent
+//  SwiftCurrent_SwiftUI
 //
 //  Created by Tyler Thompson on 7/20/21.
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
@@ -94,6 +94,15 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
                                                  flowPersistence: flowPersistenceClosure,
                                                  flowRepresentableFactory: factory)
         _metadata = State(initialValue: metadata)
+    }
+
+    init(_ item: F.Type, closure: () -> Wrapped) where Content == F, Content: FlowRepresentable & View {
+        let metadata = FlowRepresentableMetadata(Content.self,
+                                                 launchStyle: .new,
+                                                 flowPersistence: flowPersistenceClosure,
+                                                 flowRepresentableFactory: factory)
+        _metadata = State(initialValue: metadata)
+        _wrapped = State(initialValue: closure())
     }
 
     #if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)
