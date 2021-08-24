@@ -85,15 +85,15 @@ final class PersistenceTests: XCTestCase {
                     XCTAssertNoThrow(try fr2.find(FR2.self).actualView().proceedInWorkflow())
                     try fr2.actualView().inspectWrapped { fr3 in
                         XCTAssertNoThrow(try fr3.find(FR3.self).actualView().backUpInWorkflow())
-                    }
-                    try fr1.actualView().inspect { fr1 in
-                        XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
-                        try fr1.actualView().inspectWrapped { fr2 in
-                            XCTAssertNoThrow(try fr2.find(FR2.self).actualView().proceedInWorkflow())
-                            try fr2.actualView().inspectWrapped { fr3 in
-                                XCTAssertNoThrow(try fr3.find(FR3.self).actualView().proceedInWorkflow())
-                                try fr3.actualView().inspectWrapped { fr4 in
-                                    XCTAssertNoThrow(try fr4.find(FR4.self).actualView().proceedInWorkflow())
+                        try fr1.actualView().inspect { fr1 in
+                            XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
+                            try fr1.actualView().inspectWrapped { fr2 in
+                                XCTAssertNoThrow(try fr2.find(FR2.self).actualView().proceedInWorkflow())
+                                try fr2.actualView().inspectWrapped { fr3 in
+                                    XCTAssertNoThrow(try fr3.find(FR3.self).actualView().proceedInWorkflow())
+                                    try fr3.actualView().inspectWrapped { fr4 in
+                                        XCTAssertNoThrow(try fr4.find(FR4.self).actualView().proceedInWorkflow())
+                                    }
                                 }
                             }
                         }
