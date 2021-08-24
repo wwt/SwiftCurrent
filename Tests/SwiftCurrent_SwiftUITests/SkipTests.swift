@@ -210,9 +210,15 @@ final class SkipTests: XCTestCase {
                 .onFinish { _ in expectOnFinish.fulfill() })
             .inspection.inspect { viewUnderTest in
                 XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
-                XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
-                XCTAssertThrowsError(try viewUnderTest.find(FR3.self))
-                XCTAssertThrowsError(try viewUnderTest.find(FR4.self))
+                try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                    XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
+                    try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                        XCTAssertThrowsError(try viewUnderTest.find(FR3.self))
+                        try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                            XCTAssertThrowsError(try viewUnderTest.find(FR4.self))
+                        }
+                    }
+                }
             }
 
         wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
