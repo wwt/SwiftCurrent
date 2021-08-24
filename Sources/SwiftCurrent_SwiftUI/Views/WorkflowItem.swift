@@ -67,8 +67,6 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
     private init<A, W, C, A1, W1, C1>(previous: WorkflowItem<A, W, C>, _ closure: () -> Wrapped) where Wrapped == WorkflowItem<A1, W1, C1> {
         let wrapped = closure()
         _wrapped = State(initialValue: wrapped)
-        _model = previous._model
-        _launcher = previous._launcher
         _metadata = previous._metadata
         _modifierClosure = previous._modifierClosure
         _flowPersistenceClosure = previous._flowPersistenceClosure
@@ -80,8 +78,6 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
                     modifierClosure: @escaping ((AnyFlowRepresentableView) -> Void),
                     flowPersistenceClosure: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) {
         _wrapped = previous._wrapped
-        _model = previous._model
-        _launcher = previous._launcher
         _modifierClosure = State(initialValue: modifierClosure)
         _flowPersistenceClosure = State(initialValue: flowPersistenceClosure)
         _launchStyle = State(initialValue: launchStyle)
