@@ -18,14 +18,14 @@ import SwiftCurrent_Testing
 final class WorkflowViewModelTests: XCTestCase, View {
     func testAnyWorkflowElementModelThrowsFatalError_WhenExtractCalledOnSomethingOtherThan_AnyFlowRepresentableView() throws {
         try XCTAssertThrowsFatalError {
-            _ = AnyWorkflow.Element.createForTests(FR.self).extractView()
+            _ = AnyWorkflow.Element.createForTests(FR.self).extractErasedView()
         }
     }
 
     func testAnyWorkflowElementReturnsNil_WhenExtractCalledOnNilValue() throws {
         let element = AnyWorkflow.Element.createForTests(FR.self)
         element.value.instance = nil
-        XCTAssertNil(element.extractView())
+        XCTAssertNil(element.extractErasedView())
     }
 
     func testWorkflowViewModelSetsBodyToNilWhenAbandoning() {
