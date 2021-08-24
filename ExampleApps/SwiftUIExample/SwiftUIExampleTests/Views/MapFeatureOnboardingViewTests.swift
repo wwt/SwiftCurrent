@@ -14,7 +14,7 @@ import ViewInspector
 @testable import SwiftCurrent_SwiftUI // 🤮 it sucks that this is necessary
 @testable import SwiftUIExample
 
-final class MapFeatureOnboardingViewTests: XCTestCase {
+final class MapFeatureOnboardingViewTests: XCTestCase, View {
     let defaultsKey = "OnboardedToMapFeature"
     override func setUpWithError() throws {
         Container.default.removeAll()
@@ -25,15 +25,15 @@ final class MapFeatureOnboardingViewTests: XCTestCase {
         defaults.set(false, forKey: defaultsKey)
         Container.default.register(UserDefaults.self) { _ in defaults }
         let workflowFinished = expectation(description: "View Proceeded")
-        let exp = ViewHosting.loadView(WorkflowLauncher(isLaunched: .constant(true))
-                                        .thenProceed(with: WorkflowItem(MapFeatureOnboardingView.self))
-                                        .onFinish { _ in
-                                            workflowFinished.fulfill()
-                                        }).inspection.inspect { view in
-                                            XCTAssertNoThrow(try view.find(ViewType.Text.self))
-                                            XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Learn about our awesome map feature!")
-                                            XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
-                                        }
+        let exp = ViewHosting.loadView(WorkflowLauncher(isLaunched: .constant(true)) {
+            thenProceed(with: MapFeatureOnboardingView.self)
+        }.onFinish { _ in
+            workflowFinished.fulfill()
+        }).inspection.inspect { view in
+            XCTAssertNoThrow(try view.find(ViewType.Text.self))
+            XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Learn about our awesome map feature!")
+            XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
+        }
         wait(for: [exp, workflowFinished], timeout: TestConstant.timeout)
     }
 

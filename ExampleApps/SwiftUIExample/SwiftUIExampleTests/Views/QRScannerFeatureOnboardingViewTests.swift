@@ -14,7 +14,7 @@ import ViewInspector
 @testable import SwiftCurrent_SwiftUI // 🤮 it sucks that this is necessary
 @testable import SwiftUIExample
 
-final class QRScannerFeatureOnboardingViewTests: XCTestCase {
+final class QRScannerFeatureOnboardingViewTests: XCTestCase, View {
     let defaultsKey = "OnboardedToQRScanningFeature"
     override func setUpWithError() throws {
         Container.default.removeAll()
@@ -25,15 +25,15 @@ final class QRScannerFeatureOnboardingViewTests: XCTestCase {
         defaults.set(false, forKey: defaultsKey)
         Container.default.register(UserDefaults.self) { _ in defaults }
         let workflowFinished = expectation(description: "View Proceeded")
-        let exp = ViewHosting.loadView(WorkflowLauncher(isLaunched: .constant(true))
-                                        .thenProceed(with: WorkflowItem(QRScannerFeatureOnboardingView.self))
-                                        .onFinish { _ in
-                                            workflowFinished.fulfill()
-                                        }).inspection.inspect { view in
-                                            XCTAssertNoThrow(try view.find(ViewType.Text.self))
-                                            XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Learn about our awesome QR scanning feature!")
-                                            XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
-                                        }
+        let exp = ViewHosting.loadView(WorkflowLauncher(isLaunched: .constant(true)) {
+            thenProceed(with: QRScannerFeatureOnboardingView.self)
+        }.onFinish { _ in
+            workflowFinished.fulfill()
+        }).inspection.inspect { view in
+            XCTAssertNoThrow(try view.find(ViewType.Text.self))
+            XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Learn about our awesome QR scanning feature!")
+            XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
+        }
         wait(for: [exp, workflowFinished], timeout: TestConstant.timeout)
     }
 

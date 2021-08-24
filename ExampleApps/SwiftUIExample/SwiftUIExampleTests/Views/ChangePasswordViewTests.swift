@@ -8,11 +8,12 @@
 
 import XCTest
 import ViewInspector
+import SwiftUI
 
 @testable import SwiftCurrent_SwiftUI
 @testable import SwiftUIExample
 
-final class ChangePasswordViewTests: XCTestCase {
+final class ChangePasswordViewTests: XCTestCase, View {
     func testChangePasswordView() throws {
         let currentPassword = UUID().uuidString
         let exp = ViewHosting.loadView(ChangePasswordView(with: currentPassword)).inspection.inspect { view in
@@ -27,8 +28,8 @@ final class ChangePasswordViewTests: XCTestCase {
     func testChangePasswordProceeds_IfAllInformationIsCorrect() throws {
         let currentPassword = UUID().uuidString
         let onFinish = expectation(description: "onFinish called")
-        let exp = ViewHosting.loadView(WorkflowLauncher(isLaunched: .constant(true), startingArgs: currentPassword)
-                                        .thenProceed(with: WorkflowItem(ChangePasswordView.self))
+        let exp = ViewHosting.loadView(WorkflowLauncher(isLaunched: .constant(true), startingArgs: currentPassword) {
+                                        thenProceed(with: ChangePasswordView.self) }
                                         .onFinish { _ in onFinish.fulfill() }).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(ViewType.TextField.self).setInput(currentPassword))
             XCTAssertNoThrow(try view.find(ViewType.TextField.self, skipFound: 1).setInput("asdfF1"))
