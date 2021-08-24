@@ -30,7 +30,7 @@ extension FlowRepresentable {
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-final class GenericConstraintTests: XCTestCase {
+final class GenericConstraintTests: XCTestCase, View {
     // MARK: Generic Initializer Tests
 
     // MARK: Input Type == Never
@@ -41,8 +41,9 @@ final class GenericConstraintTests: XCTestCase {
             var body: some View { Text(String(describing: Self.self)) }
         }
 
-        let workflowView = WorkflowLauncher(isLaunched: .constant(true))
-            .thenProceed(with: WorkflowItem(FR1.self).persistence(.persistWhenSkipped))
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true)) {
+            thenProceed(with: FR1.self).persistence(.persistWhenSkipped)
+        }
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)

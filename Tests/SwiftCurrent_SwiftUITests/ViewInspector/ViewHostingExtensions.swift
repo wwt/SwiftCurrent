@@ -21,7 +21,7 @@ extension ViewHosting {
         return view
     }
 
-    static func loadView<F, W, C>(_ view: WorkflowLauncherView<WorkflowItem<F, W, C>>) -> WorkflowItem<F, W, C> {
+    static func loadView<F, W, C>(_ view: WorkflowLauncher<WorkflowItem<F, W, C>>) -> WorkflowItem<F, W, C> {
         var workflowItem: WorkflowItem<F, W, C>!
         let exp = view.inspection.inspect {
             do {
