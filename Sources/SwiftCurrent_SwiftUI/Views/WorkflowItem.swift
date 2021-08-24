@@ -96,13 +96,13 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         _metadata = State(initialValue: metadata)
     }
 
-    init(_ item: F.Type, closure: () -> Wrapped) where Content == F, Content: FlowRepresentable & View {
+    init(_ item: F.Type, wrapped: () -> Wrapped) where Content == F, Content: FlowRepresentable & View {
         let metadata = FlowRepresentableMetadata(Content.self,
                                                  launchStyle: .new,
                                                  flowPersistence: flowPersistenceClosure,
                                                  flowRepresentableFactory: factory)
         _metadata = State(initialValue: metadata)
-        _wrapped = State(initialValue: closure())
+        _wrapped = State(initialValue: wrapped())
     }
 
     #if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)

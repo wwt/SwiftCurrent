@@ -43,6 +43,7 @@ final class GenericConstraintTests: XCTestCase, View {
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true)) {
             thenProceed(with: FR1.self).persistence(.persistWhenSkipped)
+        }
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)

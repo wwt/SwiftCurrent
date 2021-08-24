@@ -6,14 +6,13 @@
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
 
-import SwiftCurrent
-import SwiftCurrent_SwiftUI
 import SwiftUI
 import XCTest
+import SwiftCurrent
+import SwiftCurrent_SwiftUI
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class ViewExtensionsTests: XCTestCase, View {
-    var body: some View { EmptyView() }
 
     func testThenProceedReturnsWorkflowItemForProvidedType() throws {
         struct FR1 : View, FlowRepresentable {
@@ -41,6 +40,4 @@ final class ViewExtensionsTests: XCTestCase, View {
         }
         XCTAssert(item is WorkflowItem<FR1, WorkflowItem<FR2, Never, FR2>, FR1>)
     }
-
-    
 }
