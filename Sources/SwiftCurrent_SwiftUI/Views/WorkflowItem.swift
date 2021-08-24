@@ -21,7 +21,7 @@ import UIKit
 
  #### Example
  ```swift
- WorkflowItem(FirstView.self)
+ thenProceed(FirstView.self)
             .persistence(.removedAfterProceeding) // affects only FirstView
             .applyModifiers {
                 $0.background(Color.gray) // $0 is a FirstView instance
@@ -48,7 +48,7 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
     public var body: some View {
         ViewBuilder {
             if model.isLaunched == true {
-                if model.body?.extractView() is Content {
+                if model.body?.extractErasedView() is Content {
                     content
                 } else {
                     wrapped
@@ -56,7 +56,7 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
             }
         }
         .onReceive(model.$body) {
-            if let body = $0?.extractView() as? Content {
+            if let body = $0?.extractErasedView() as? Content {
                 content = body
             }
         }
