@@ -8,6 +8,7 @@
 
 import XCTest
 import SwiftCurrent
+import Algorithms
 
 @testable import SwiftCurrent_SwiftUI
 
@@ -19,8 +20,12 @@ final class LaunchStyleAdditionTests: XCTestCase {
     }
 
     func testKnownPresentationTypes_AreUnique() {
-        XCTAssertFalse(LaunchStyle.default === LaunchStyle._swiftUI_navigationLink)
-        XCTAssertFalse(LaunchStyle.SwiftUI.PresentationType.default.rawValue === LaunchStyle.SwiftUI.PresentationType.navigationLink.rawValue)
+        [LaunchStyle.default, LaunchStyle._swiftUI_modal, LaunchStyle._swiftUI_modal_fullscreen, LaunchStyle._swiftUI_navigationLink].permutations().forEach {
+            XCTAssertFalse($0[0] === $0[1])
+        }
+        LaunchStyle.SwiftUI.PresentationType.allCases.permutations().forEach {
+            XCTAssertNotEqual($0[0], $0[1])
+        }
     }
 
     func testPresentationTypes_AreCorrectlyEquatable() {

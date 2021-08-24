@@ -65,7 +65,8 @@ let package = Package(
                 "SwiftCurrent_SwiftUI",
                 "CwlPreconditionTesting",
                 "CwlCatchException",
-                "ViewInspector"
+                "ViewInspector",
+                .product(name: "Algorithms", package: "swift-algorithms")
             ],
             path: "Tests/SwiftCurrent_SwiftUITests"),
     ]

@@ -18,7 +18,7 @@ extension LaunchStyle {
     /// A namespace for the SwiftUI launch styles.
     public enum SwiftUI {
         /// A type indicating how a `FlowRepresentable` should be presented.
-        public enum PresentationType: RawRepresentable {
+        public enum PresentationType: RawRepresentable, CaseIterable {
             /**
             Indicates a `FlowRepresentable` can be launched contextually.
             - Important: This swaps out SwiftUI Views and does not animate by default; you can supply your own animations.
