@@ -21,155 +21,143 @@ import SwiftCurrent_UIKit
 
 final class UIKitInteropTests: XCTestCase, View {
     func testPuttingAUIKitViewInsideASwiftUIWorkflow() throws {
-        #warning("This one doesn't compile")
-        throw XCTSkip("This one doesn't compile")
+        let launchArgs = UUID().uuidString
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: launchArgs) {
+            thenProceed(with: UIKitInteropProgrammaticViewController.self)
+        }
+        var vc: UIKitInteropProgrammaticViewController!
 
-//        let launchArgs = UUID().uuidString
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: launchArgs) {
-//            thenProceed(with: UIKitInteropProgrammaticViewController.self)
-//        }
-//        var vc: UIKitInteropProgrammaticViewController!
-//
-//        let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
-//            let wrapper = try workflowLauncher.view(ViewControllerWrapper<UIKitInteropProgrammaticViewController>.self)
-//            let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<UIKitInteropProgrammaticViewController>>.self)
-//            vc = try wrapper.actualView().makeUIViewController(context: context)
-//        }
-//
-//        wait(for: [exp], timeout: TestConstant.timeout)
-//
-//        vc.loadOnDevice()
-//
-//        XCTAssertUIViewControllerDisplayed(isInstance: vc)
-//
-//        let proceedCalled = expectation(description: "proceedCalled")
-//        vc.proceedInWorkflowStorage = { args in
-//            XCTAssertEqual(args.extractArgs(defaultValue: nil) as? String, "Welcome \(launchArgs)!")
-//            proceedCalled.fulfill()
-//        }
-//
-//        XCTAssertEqual(vc.saveButton?.willRespondToUser, true)
-//        XCTAssertEqual(vc?.emailTextField?.willRespondToUser, true)
-//        vc.emailTextField?.simulateTouch()
-//        vc.emailTextField?.simulateTyping(vc?.welcomeLabel?.text)
-//        vc.saveButton?.simulateTouch()
-//
-//        wait(for: [proceedCalled], timeout: TestConstant.timeout)
+        let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
+            let wrapper = try workflowLauncher.view(ViewControllerWrapper<UIKitInteropProgrammaticViewController>.self)
+            let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<UIKitInteropProgrammaticViewController>>.self)
+            vc = try wrapper.actualView().makeUIViewController(context: context)
+        }
+
+        wait(for: [exp], timeout: TestConstant.timeout)
+
+        vc.loadOnDevice()
+
+        XCTAssertUIViewControllerDisplayed(isInstance: vc)
+
+        let proceedCalled = expectation(description: "proceedCalled")
+        vc.proceedInWorkflowStorage = { args in
+            XCTAssertEqual(args.extractArgs(defaultValue: nil) as? String, "Welcome \(launchArgs)!")
+            proceedCalled.fulfill()
+        }
+
+        XCTAssertEqual(vc.saveButton?.willRespondToUser, true)
+        XCTAssertEqual(vc?.emailTextField?.willRespondToUser, true)
+        vc.emailTextField?.simulateTouch()
+        vc.emailTextField?.simulateTyping(vc?.welcomeLabel?.text)
+        vc.saveButton?.simulateTouch()
+
+        wait(for: [proceedCalled], timeout: TestConstant.timeout)
     }
 
     func testPuttingAUIKitViewThatDoesNotTakeInDataInsideASwiftUIWorkflow() throws {
-        #warning("This one doesn't compile")
-        throw XCTSkip("This one doesn't compile")
+        final class FR1: UIWorkflowItem<Never, Never>, FlowRepresentable {
+            let nextButton = UIButton()
 
-//        final class FR1: UIWorkflowItem<Never, Never>, FlowRepresentable {
-//            let nextButton = UIButton()
-//
-//            @objc private func nextPressed() {
-//                proceedInWorkflow()
-//            }
-//
-//            override func viewDidLoad() {
-//                nextButton.setTitle("Next", for: .normal)
-//                nextButton.setTitleColor(.systemBlue, for: .normal)
-//                nextButton.addTarget(self, action: #selector(nextPressed), for: .touchUpInside)
-//
-//                view.addSubview(nextButton)
-//
-//                nextButton.translatesAutoresizingMaskIntoConstraints = false
-//                nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//                nextButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-//            }
-//        }
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true)) {
-//            thenProceed(with: FR1.self)
-//        }
-//        var vc: FR1!
-//
-//        let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
-//            let wrapper = try workflowLauncher.view(ViewControllerWrapper<FR1>.self)
-//
-//            let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<FR1>>.self)
-//            vc = try wrapper.actualView().makeUIViewController(context: context)
-//        }
-//
-//        wait(for: [exp], timeout: TestConstant.timeout)
-//
-//        vc.loadOnDevice()
-//
-//        XCTAssertUIViewControllerDisplayed(isInstance: vc)
-//
-//        let proceedCalled = expectation(description: "proceedCalled")
-//        vc.proceedInWorkflowStorage = { _ in
-//            proceedCalled.fulfill()
-//        }
-//
-//        XCTAssertEqual(vc.nextButton.willRespondToUser, true)
-//        vc.nextButton.simulateTouch()
-//
-//        wait(for: [proceedCalled], timeout: TestConstant.timeout)
+            @objc private func nextPressed() {
+                proceedInWorkflow()
+            }
+
+            override func viewDidLoad() {
+                nextButton.setTitle("Next", for: .normal)
+                nextButton.setTitleColor(.systemBlue, for: .normal)
+                nextButton.addTarget(self, action: #selector(nextPressed), for: .touchUpInside)
+
+                view.addSubview(nextButton)
+
+                nextButton.translatesAutoresizingMaskIntoConstraints = false
+                nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+                nextButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+            }
+        }
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true)) {
+            thenProceed(with: FR1.self)
+        }
+        var vc: FR1!
+
+        let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
+            let wrapper = try workflowLauncher.view(ViewControllerWrapper<FR1>.self)
+
+            let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<FR1>>.self)
+            vc = try wrapper.actualView().makeUIViewController(context: context)
+        }
+
+        wait(for: [exp], timeout: TestConstant.timeout)
+
+        vc.loadOnDevice()
+
+        XCTAssertUIViewControllerDisplayed(isInstance: vc)
+
+        let proceedCalled = expectation(description: "proceedCalled")
+        vc.proceedInWorkflowStorage = { _ in
+            proceedCalled.fulfill()
+        }
+
+        XCTAssertEqual(vc.nextButton.willRespondToUser, true)
+        vc.nextButton.simulateTouch()
+
+        wait(for: [proceedCalled], timeout: TestConstant.timeout)
     }
 
     func testPuttingAUIKitViewFromStoryboardInsideASwiftUIWorkflow() throws {
-        #warning("This one doesn't compile")
-        throw XCTSkip("This one doesn't compile")
+        let launchArgs = UUID().uuidString
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: launchArgs) {
+            thenProceed(with: TestInputViewController.self)
+        }
+        var vc: TestInputViewController!
 
-//        let launchArgs = UUID().uuidString
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: launchArgs) {
-//            thenProceed(with: TestInputViewController.self)
-//        }
-//        var vc: TestInputViewController!
-//
-//        let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
-//            let wrapper = try workflowLauncher.view(ViewControllerWrapper<TestInputViewController>.self)
-//            let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<TestInputViewController>>.self)
-//            vc = try wrapper.actualView().makeUIViewController(context: context)
-//        }
-//
-//        wait(for: [exp], timeout: TestConstant.timeout)
-//
-//        vc.loadOnDevice()
-//
-//        XCTAssertUIViewControllerDisplayed(isInstance: vc)
-//
-//        let proceedCalled = expectation(description: "proceedCalled")
-//        vc.proceedInWorkflowStorage = { _ in
-//            proceedCalled.fulfill()
-//        }
-//
-//        vc.proceedInWorkflow()
-//
-//        wait(for: [proceedCalled], timeout: TestConstant.timeout)
+        let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
+            let wrapper = try workflowLauncher.view(ViewControllerWrapper<TestInputViewController>.self)
+            let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<TestInputViewController>>.self)
+            vc = try wrapper.actualView().makeUIViewController(context: context)
+        }
+
+        wait(for: [exp], timeout: TestConstant.timeout)
+
+        vc.loadOnDevice()
+
+        XCTAssertUIViewControllerDisplayed(isInstance: vc)
+
+        let proceedCalled = expectation(description: "proceedCalled")
+        vc.proceedInWorkflowStorage = { _ in
+            proceedCalled.fulfill()
+        }
+
+        vc.proceedInWorkflow()
+
+        wait(for: [proceedCalled], timeout: TestConstant.timeout)
     }
 
     func testPuttingAUIKitViewFromStoryboardThatDoesNotTakeInDataInsideASwiftUIWorkflow() throws {
-        #warning("This one doesn't compile")
-        throw XCTSkip("This one doesn't compile")
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true)) {
+            thenProceed(with: TestNoInputViewController.self)
+        }
+        var vc: TestNoInputViewController!
 
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true)) {
-//            thenProceed(with: TestNoInputViewController.self)
-//        }
-//        var vc: TestNoInputViewController!
-//
-//        let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
-//            let wrapper = try workflowLauncher.view(ViewControllerWrapper<TestNoInputViewController>.self)
-//            let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<TestNoInputViewController>>.self)
-//            vc = try wrapper.actualView().makeUIViewController(context: context)
-//        }
-//
-//        wait(for: [exp], timeout: TestConstant.timeout)
-//
-//        vc.loadOnDevice()
-//
-//        XCTAssertUIViewControllerDisplayed(isInstance: vc)
-//
-//        let proceedCalled = expectation(description: "proceedCalled")
-//        vc.proceedInWorkflowStorage = { _ in
-//            proceedCalled.fulfill()
-//        }
-//
-//        vc.proceedInWorkflow()
-//
-//        wait(for: [proceedCalled], timeout: TestConstant.timeout)
+        let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
+            let wrapper = try workflowLauncher.view(ViewControllerWrapper<TestNoInputViewController>.self)
+            let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<TestNoInputViewController>>.self)
+            vc = try wrapper.actualView().makeUIViewController(context: context)
+        }
+
+        wait(for: [exp], timeout: TestConstant.timeout)
+
+        vc.loadOnDevice()
+
+        XCTAssertUIViewControllerDisplayed(isInstance: vc)
+
+        let proceedCalled = expectation(description: "proceedCalled")
+        vc.proceedInWorkflowStorage = { _ in
+            proceedCalled.fulfill()
+        }
+
+        vc.proceedInWorkflow()
+
+        wait(for: [proceedCalled], timeout: TestConstant.timeout)
     }
 }
 

@@ -19,4 +19,19 @@ extension View {
     public func thenProceed<FR: FlowRepresentable, F, W, C>(with: FR.Type, nextItem: () -> WorkflowItem<F, W, C>) -> WorkflowItem<FR, WorkflowItem<F, W, C>, FR> {
         WorkflowItem(FR.self) { nextItem() }
     }
+
+    #if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)
+    /// Creates a `WorkflowItem` from a `UIViewController`.
+    @available(iOS 14.0, macOS 11, tvOS 14.0, *)
+    public func thenProceed<VC: FlowRepresentable & UIViewController, F, W, C>(with: VC.Type, nextItem: () -> WorkflowItem<F, W, C>) -> WorkflowItem<ViewControllerWrapper<VC>, WorkflowItem<F, W, C>, ViewControllerWrapper<VC>> {
+        WorkflowItem(VC.self) { nextItem() }
+    }
+
+    /// Creates a `WorkflowItem` from a `UIViewController`.
+    @available(iOS 14.0, macOS 11, tvOS 14.0, *)
+    public func thenProceed<VC: FlowRepresentable & UIViewController>(with: VC.Type) -> WorkflowItem<ViewControllerWrapper<VC>, Never, ViewControllerWrapper<VC>> {
+        WorkflowItem(VC.self)
+    }
+    #endif
+
 }

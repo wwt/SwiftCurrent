@@ -108,7 +108,19 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
     #if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)
     /// Creates a `WorkflowItem` from a `UIViewController`.
     @available(iOS 14.0, macOS 11, tvOS 14.0, *)
-    public init<VC: FlowRepresentable & UIViewController>(_: VC.Type) where Content == ViewControllerWrapper<VC>, Wrapped == Never, F == ViewControllerWrapper<VC> {
+    init<VC: FlowRepresentable & UIViewController>(_: VC.Type) where Content == ViewControllerWrapper<VC>, Wrapped == Never, F == ViewControllerWrapper<VC> {
+        let metadata = FlowRepresentableMetadata(ViewControllerWrapper<VC>.self,
+                                                 launchStyle: .new,
+                                                 flowPersistence: flowPersistenceClosure,
+                                                 flowRepresentableFactory: factory)
+        _metadata = State(initialValue: metadata)
+    }
+
+    /// Creates a `WorkflowItem` from a `UIViewController`.
+    @available(iOS 14.0, macOS 11, tvOS 14.0, *)
+    init<VC: FlowRepresentable & UIViewController>(_: VC.Type, wrapped: () -> Wrapped) where Content == ViewControllerWrapper<VC>, F == ViewControllerWrapper<VC> {
+        let wrapped = wrapped()
+        _wrapped = State(initialValue: wrapped)
         let metadata = FlowRepresentableMetadata(ViewControllerWrapper<VC>.self,
                                                  launchStyle: .new,
                                                  flowPersistence: flowPersistenceClosure,
