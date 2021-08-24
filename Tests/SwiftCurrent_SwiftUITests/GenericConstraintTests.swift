@@ -754,11 +754,11 @@ final class GenericConstraintTests: XCTestCase, View {
         let expectedArgs = UUID().uuidString
 
         let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs) {
-            thenProceed(with: FR1.self).persistence { {
+            thenProceed(with: FR1.self) {
+                thenProceed(with: FR2.self)
+            }.persistence {
                 XCTAssertEqual($0, expectedArgs)
                 return .persistWhenSkipped
-            }
-            thenProceed(with: FR2.self)
             }
         }
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
