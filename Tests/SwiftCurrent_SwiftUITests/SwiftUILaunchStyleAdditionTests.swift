@@ -12,7 +12,7 @@ import Algorithms
 
 @testable import SwiftCurrent_SwiftUI
 
-final class LaunchStyleAdditionTests: XCTestCase {
+final class LaunchStyleAdditionTests: XCTestCase, View {
     func testPresentationTypeInitializer() {
         XCTAssertNil(LaunchStyle.SwiftUI.PresentationType(rawValue: .new))
         XCTAssertEqual(LaunchStyle.SwiftUI.PresentationType(rawValue: .default), .default)

@@ -13,7 +13,7 @@ import SwiftUI
 @testable import SwiftCurrent_SwiftUI
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-final class WorkflowItemTests: XCTestCase {
+final class WorkflowItemTests: XCTestCase, View {
     func testWorkflowItemThrowsFatalError_IfPersistenceCannotBeCast() throws {
         let item = WorkflowItem(FR.self).persistence { _ in
             .default

@@ -15,7 +15,7 @@ import SwiftCurrent_Testing
 @testable import SwiftCurrent_SwiftUI
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-final class WorkflowViewModelTests: XCTestCase {
+final class WorkflowViewModelTests: XCTestCase, View {
     func testAnyWorkflowElementModelThrowsFatalError_WhenExtractCalledOnSomethingOtherThan_AnyFlowRepresentableView() throws {
         try XCTAssertThrowsFatalError {
             _ = AnyWorkflow.Element.createForTests(FR.self).extractView()

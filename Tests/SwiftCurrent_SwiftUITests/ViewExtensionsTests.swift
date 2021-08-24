@@ -21,7 +21,7 @@ final class ViewExtensionsTests: XCTestCase, View {
             var body: some View { Text(String(describing: Self.self)) }
         }
 
-        let item: Any = thenProceed(with: FR1.self)
+        let item: Any = thenProceed(with: FR1.self) {
         XCTAssert(item is WorkflowItem<FR1, Never, FR1>)
     }
 
@@ -36,8 +36,8 @@ final class ViewExtensionsTests: XCTestCase, View {
             var body: some View { Text(String(describing: Self.self)) }
         }
 
-        let item: Any = thenProceed(with: FR1.self) {
-            thenProceed(with: FR2.self)
+        let item: Any = thenProceed(with: FR1.self) { {
+            thenProceed(with: FR2.self) {
         }
         XCTAssert(item is WorkflowItem<FR1, WorkflowItem<FR2, Never, FR2>, FR1>)
     }
