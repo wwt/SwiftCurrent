@@ -6,21 +6,41 @@
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
 
-import Foundation
 import SwiftCurrent
 import SwiftCurrent_SwiftUI
 import SwiftUI
 import XCTest
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-class ViewExtensionsTests: XCTestCase {
+final class ViewExtensionsTests: XCTestCase, View {
+    var body: some View { EmptyView() }
+
     func testThenProceedReturnsWorkflowItemForProvidedType() throws {
-        struct TestView : View, FlowRepresentable {
+        struct FR1 : View, FlowRepresentable {
             weak var _workflowPointer: AnyFlowRepresentable?
-            var body: some View { Text("test") }
+            var body: some View { Text(String(describing: Self.self)) }
         }
 
-        let item: Any = TestView().thenProceed(with: TestView.self)
-        XCTAssert(item is WorkflowItem<TestView, Never, TestView>)
+        let item: Any = thenProceed(with: FR1.self)
+        XCTAssert(item is WorkflowItem<FR1, Never, FR1>)
     }
+
+    func testThenProceedWithNextItemReturnsWorkflowItemForProvidedType() throws {
+        struct FR1 : View, FlowRepresentable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+
+        struct FR2 : View, FlowRepresentable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+
+        let item: Any = thenProceed(with: FR1.self) {
+            thenProceed(with: FR2.self)
+        }
+        XCTAssert(item is WorkflowItem<FR1, WorkflowItem<FR2, Never, FR2>, FR1>)
+    }
+
+    
 }
