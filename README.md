@@ -119,8 +119,8 @@ And just like that you're started!
 Check out this video of the SwiftUI Beta in action
 
 <figure class="video_container">
-  <video controls="true" allowfullscreen="true" poster="https://raw.githubusercontent.com/wwt/SwiftCurrent/readme-video/.github/wiki/swiftUI-video-poster.png">
-    <source src="https://raw.githubusercontent.com/wwt/SwiftCurrent/readme-video/.github/wiki/swiftUI-video.mp4" type="video/mp4">
+  <video controls="true" allowfullscreen="true" poster="https://github.com/wwt/SwiftCurrent/raw/readme-video/.github/wiki/SwiftUI-video-poster.png">
+    <source src="https://github.com/wwt/SwiftCurrent/raw/readme-video/.github/wiki/SwiftUI-video.mp4" type="video/mp4">
   </video>
 </figure>
 
