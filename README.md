@@ -116,6 +116,16 @@ WorkflowLauncher(isLaunched: .constant(true), startingArgs: "Launched")
 
 And just like that you're started!
 
+Here is a short video of the SwiftUI Beta in action:
+
+![Preview image of app](https://raw.githubusercontent.com/wwt/SwiftCurrent/main/.github/wiki/swiftUI.gif)
+
+<figure class="video_container">
+  <video controls="true" allowfullscreen="true">
+    <source src="https://raw.githubusercontent.com/wwt/SwiftCurrent/main/.github/wiki/swiftUI.mp4" type="video/mp4">
+  </video>
+</figure>
+
 # Deep Dive
 
 - [Why SwiftCurrent?](https://github.com/wwt/SwiftCurrent/wiki/Why-This-Library%3F)
