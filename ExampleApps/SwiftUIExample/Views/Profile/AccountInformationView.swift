@@ -30,28 +30,30 @@ struct AccountInformationView: View, FlowRepresentable {
                     }
                 }
             } else {
-                WorkflowLauncher(isLaunched: $usernameWorkflowLaunched, startingArgs: username)
-                    .thenProceed(with: WorkflowItem(MFAView.self))
-                    .thenProceed(with: WorkflowItem(ChangeUsernameView.self))
-                    .onFinish {
-                        guard case .args(let newUsername as String) = $0 else { return }
-                        username = newUsername
-                        usernameWorkflowLaunched = false
+                WorkflowLauncher(isLaunched: $usernameWorkflowLaunched, startingArgs: username) {
+                    thenProceed(with: MFAView.self) {
+                        thenProceed(with: ChangeUsernameView.self)
                     }
+                }.onFinish {
+                    guard case .args(let newUsername as String) = $0 else { return }
+                    username = newUsername
+                    usernameWorkflowLaunched = false
+                }
             }
             if !passwordWorkflowLaunched {
                 Button("Change Password") {
                     passwordWorkflowLaunched = true
                 }
             } else {
-                WorkflowLauncher(isLaunched: $passwordWorkflowLaunched, startingArgs: password)
-                    .thenProceed(with: WorkflowItem(MFAView.self))
-                    .thenProceed(with: WorkflowItem(ChangePasswordView.self))
-                    .onFinish {
-                        guard case .args(let newPassword as String) = $0 else { return }
-                        password = newPassword
-                        passwordWorkflowLaunched = false
+                WorkflowLauncher(isLaunched: $passwordWorkflowLaunched, startingArgs: password) {
+                    thenProceed(with: MFAView.self) {
+                        thenProceed(with: ChangePasswordView.self)
                     }
+                }.onFinish {
+                    guard case .args(let newPassword as String) = $0 else { return }
+                    password = newPassword
+                    passwordWorkflowLaunched = false
+                }
             }
         }.onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
