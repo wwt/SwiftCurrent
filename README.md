@@ -119,7 +119,7 @@ And just like that you're started!
 Check out this video of the SwiftUI Beta in action
 
 <figure class="video_container">
-  <video controls="true" allowfullscreen="true">
+  <video controls="true" allowfullscreen="true" poster="https://raw.githubusercontent.com/wwt/SwiftCurrent/readme-video/.github/wiki/swiftUI-video-poster.png">
     <source src="https://raw.githubusercontent.com/wwt/SwiftCurrent/readme-video/.github/wiki/swiftUI-video.mp4" type="video/mp4">
   </video>
 </figure>
