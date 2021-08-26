@@ -47,12 +47,10 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
 
     public var body: some View {
         ViewBuilder {
-            if model.isLaunched == true {
-                if model.body?.extractErasedView() is Content {
-                    content
-                } else {
-                    wrapped
-                }
+            if model.body?.extractErasedView() is Content {
+                content
+            } else {
+                wrapped
             }
         }
         .onReceive(model.$body) {

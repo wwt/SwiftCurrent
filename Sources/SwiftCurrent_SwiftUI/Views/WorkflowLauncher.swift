@@ -47,10 +47,17 @@ public struct WorkflowLauncher<Content: View>: View {
     @StateObject private var launcher: Launcher
     @State private var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
     @State private var onAbandon = [() -> Void]()
+    @Binding private var isLaunched: Bool
 
     let inspection = Inspection<Self>()
 
     public var body: some View {
+        if isLaunched {
+            workflowContent
+        }
+    }
+
+    var workflowContent: some View {
         content
             .environmentObject(model)
             .environmentObject(launcher)
@@ -112,11 +119,13 @@ public struct WorkflowLauncher<Content: View>: View {
         _model = current._model
         _launcher = current._launcher
         _content = current._content
+        _isLaunched = current._isLaunched
         _onFinish = State(initialValue: onFinish)
         _onAbandon = State(initialValue: onAbandon)
     }
 
     private init<F, W, C>(isLaunched: Binding<Bool>, startingArgs: AnyWorkflow.PassedArgs, content: Content) where Content == WorkflowItem<F, W, C> {
+        _isLaunched = isLaunched
         let wf = AnyWorkflow.empty
         content.modify(workflow: wf)
         let model = WorkflowViewModel(isLaunched: isLaunched, launchArgs: startingArgs)

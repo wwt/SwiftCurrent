@@ -693,6 +693,43 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, View {
             XCTAssert($0.value is StateIdentifiable, "Property named: \(label) was note @State")
         }
     }
+
+    func testWorkflowCanHaveADelayedLaunch() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+
+            var body: some View {
+                Button("Proceed") { proceedInWorkflow() }
+            }
+        }
+
+        struct Wrapper: View, Inspectable {
+            @State var showingWorkflow = false
+            let inspection = Inspection<Self>()
+            var body: some View {
+                VStack {
+                    Button("") { showingWorkflow = true }
+                    WorkflowLauncher(isLaunched: $showingWorkflow) {
+                        thenProceed(with: FR1.self)
+                    }
+                }
+                .onReceive(inspection.notice) { inspection.visit(self, $0) }
+            }
+        }
+
+        let exp = ViewHosting.loadView(Wrapper()).inspection.inspect { view in
+            let stack = try view.vStack()
+            let launcher = try stack.view(WorkflowLauncher<WorkflowItem<FR1, Never, FR1>>.self, 1)
+            XCTAssertThrowsError(try launcher.view(WorkflowItem<FR1, Never, FR1>.self))
+            XCTAssertNoThrow(try stack.button(0).tap())
+            let fr1 = try launcher.view(WorkflowItem<FR1, Never, FR1>.self)
+            try fr1.actualView().inspect { fr1 in
+                XCTAssertNoThrow(try fr1.find(FR1.self))
+            }
+        }
+
+        wait(for: [exp], timeout: TestConstant.timeout)
+    }
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
