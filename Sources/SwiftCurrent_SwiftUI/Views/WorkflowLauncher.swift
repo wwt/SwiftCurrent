@@ -52,9 +52,12 @@ public struct WorkflowLauncher<Content: View>: View {
     let inspection = Inspection<Self>()
 
     public var body: some View {
-        if isLaunched {
-            workflowContent
+        ViewBuilder {
+            if isLaunched {
+                workflowContent
+            }
         }
+        .onChange(of: isLaunched) { if $0 == false { resetWorkflow() } }
     }
 
     private var workflowContent: some View {
@@ -64,7 +67,6 @@ public struct WorkflowLauncher<Content: View>: View {
             .onReceive(model.onFinishPublisher, perform: _onFinish)
             .onReceive(model.onAbandonPublisher) { onAbandon.forEach { $0() } }
             .onReceive(inspection.notice) { inspection.visit(self, $0) }
-            .onChange(of: isLaunched) { if $0 == false { resetWorkflow() } }
     }
 
     /**
@@ -140,6 +142,8 @@ public struct WorkflowLauncher<Content: View>: View {
     private func resetWorkflow() {
         launcher.workflow.launch(withOrchestrationResponder: model, passedArgs: launcher.launchArgs)
     }
+
+    private func ViewBuilder<V: View>(@ViewBuilder builder: () -> V) -> some View { builder() }
 
     private func _onFinish(_ args: AnyWorkflow.PassedArgs?) {
         guard let args = args else { return }
