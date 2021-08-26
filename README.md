@@ -118,7 +118,8 @@ And just like that you're started!
 
 Check out this video of the SwiftUI Beta in action
 
-![SwiftUI Beta Video](https://user-images.githubusercontent.com/4916530/131019474-f0819b86-c4d0-4b98-93b0-ad754b55efaf.mp4)
+https://user-images.githubusercontent.com/4916530/131019474-f0819b86-c4d0-4b98-93b0-ad754b55efaf.mp4
+
 
 # Deep Dive
 
