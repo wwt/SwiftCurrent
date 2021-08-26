@@ -57,7 +57,7 @@ public struct WorkflowLauncher<Content: View>: View {
         }
     }
 
-    var workflowContent: some View {
+    private var workflowContent: some View {
         content
             .environmentObject(model)
             .environmentObject(launcher)
