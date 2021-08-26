@@ -113,13 +113,12 @@ struct ContentView: View {
     var body: some View {
         if !workflowIsPresented {
             Button("Present") { workflowIsPresented = true }
-        }
-        WorkflowLauncher(isLaunched: $workflowIsPresented, startingArgs: "SwiftCurrent") // SwiftCurrent
-            .thenProceed(with: WorkflowItem(FirstView.self) // SwiftCurrent
-                            .applyModifiers { firstView in firstView.padding().border(Color.gray) })
-            .thenProceed(with: WorkflowItem(SecondView.self) // SwiftCurrent
-                            .applyModifiers { $0.padding().border(Color.gray) })
-            .onFinish { passedArgs in // SwiftCurrent
+        } else {
+            WorkflowLauncher(isLaunched: $workflowIsPresented, startingArgs: "SwiftCurrent") { // SwiftCurrent
+                thenProceed(with: FirstView.self) { // SwiftCurrent
+                    thenProceed(with: SecondView.self).applyModifiers { $0.padding().border(Color.gray) } // SwiftCurrent
+                }.applyModifiers { firstView in firstView.padding().border(Color.gray) }
+            }.onFinish { passedArgs in // SwiftCurrent
                 workflowIsPresented = false
                 guard case .args(let emailAddress as String) = passedArgs else {
                     print("No email address supplied")
@@ -127,6 +126,7 @@ struct ContentView: View {
                 }
                 print(emailAddress)
             }
+        }
     }
 }
 
@@ -196,7 +196,9 @@ final class FirstViewController: UIWorkflowItem<Never, Never>, FlowRepresentable
 Now in SwiftUI simply reference that controller.
 
 ```swift
-WorkflowLauncher(isLaunched: $workflowIsPresented) // SwiftCurrent
-    .thenProceed(with: WorkflowItem(FirstViewController.self)) // SwiftCurrent
-    .thenProceed(with: WorkflowItem(SecondView.self)) // SwiftCurrent
+WorkflowLauncher(isLaunched: $workflowIsPresented) { // SwiftCurrent
+    thenProceed(with: FirstViewController.self) { // SwiftCurrent
+        thenProceed(with: SecondView.self) // SwiftCurrent
+    }
+}
 ```

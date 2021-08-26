@@ -110,8 +110,9 @@ Then from your ContentView body, add:
 ```swift
 import SwiftCurrent_SwiftUI
 ...
-WorkflowLauncher(isLaunched: .constant(true), startingArgs: "Launched")
-    .thenProceed(with: WorkflowItem(ExampleView.self))
+WorkflowLauncher(isLaunched: .constant(true), startingArgs: "Launched") {
+    thenProceed(with: ExampleView.self)
+}
 ```
 
 And just like that you're started!

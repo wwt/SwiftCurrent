@@ -18,7 +18,8 @@ extension ProfileFeatureOnboardingView: Inspectable { }
 extension QRScannerFeatureOnboardingView: Inspectable { }
 extension MapFeatureOnboardingView: Inspectable { }
 extension MapFeatureView: Inspectable { }
-extension ModifiedWorkflowView: Inspectable { }
+extension WorkflowItem: Inspectable { }
+extension WorkflowLauncher: Inspectable { }
 extension ChangeUsernameView: Inspectable { }
 extension ChangePasswordView: Inspectable { }
 extension QRScannerFeatureView: Inspectable { }

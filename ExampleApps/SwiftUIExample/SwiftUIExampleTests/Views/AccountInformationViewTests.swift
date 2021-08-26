@@ -17,9 +17,9 @@ import SwiftCurrent
 @testable import SwiftUIExample
 
 final class AccountInformationViewTests: XCTestCase {
-    private typealias MFAViewWorkflowView = ModifiedWorkflowView<AnyWorkflow.PassedArgs, Never, MFAView>
-    private typealias UsernameWorkflow = ModifiedWorkflowView<String, MFAViewWorkflowView, ChangeUsernameView>
-    private typealias PasswordWorkflow = ModifiedWorkflowView<String, MFAViewWorkflowView, ChangePasswordView>
+    private typealias MFAViewWorkflowView = WorkflowLauncher<WorkflowItem<MFAView, Never, MFAView>>
+    private typealias UsernameWorkflow = WorkflowLauncher<WorkflowItem<MFAView, WorkflowItem<ChangeUsernameView, Never, ChangeUsernameView>, MFAView>>
+    private typealias PasswordWorkflow = WorkflowLauncher<WorkflowItem<MFAView, WorkflowItem<ChangePasswordView, Never, ChangePasswordView>, MFAView>>
 
     func testAccountInformationView() throws {
         let exp = ViewHosting.loadView(AccountInformationView()).inspection.inspect { view in
@@ -43,9 +43,11 @@ final class AccountInformationViewTests: XCTestCase {
         XCTAssertNotNil(usernameWorkflow)
 
         wait(for: [
-            ViewHosting.loadView(usernameWorkflow)?.inspection.inspect { view in
+            ViewHosting.loadView(usernameWorkflow).inspection.inspect { view in
                 XCTAssertNoThrow(try view.find(MFAView.self).actualView().proceedInWorkflow(.args("changeme")))
-                XCTAssertNoThrow(try view.find(ChangeUsernameView.self).actualView().proceedInWorkflow("newName"))
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(ChangeUsernameView.self).actualView().proceedInWorkflow("newName"))
+                }
             }
         ].compactMap { $0 }, timeout: TestConstant.timeout)
 
@@ -69,9 +71,11 @@ final class AccountInformationViewTests: XCTestCase {
         XCTAssertNotNil(usernameWorkflow)
 
         wait(for: [
-            ViewHosting.loadView(usernameWorkflow)?.inspection.inspect { view in
+            ViewHosting.loadView(usernameWorkflow).inspection.inspect { view in
                 XCTAssertNoThrow(try view.find(MFAView.self).actualView().proceedInWorkflow(.args("changeme")))
-                XCTAssertNotNil(try view.find(ChangeUsernameView.self).actualView().proceedInWorkflowStorage?(.args(CustomObj())))
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNotNil(try view.find(ChangeUsernameView.self).actualView().proceedInWorkflowStorage?(.args(CustomObj())))
+                }
             }
         ].compactMap { $0 }, timeout: TestConstant.timeout)
     }
@@ -89,9 +93,11 @@ final class AccountInformationViewTests: XCTestCase {
         XCTAssertNotNil(passwordWorkflow)
 
         wait(for: [
-            ViewHosting.loadView(passwordWorkflow)?.inspection.inspect { view in
+            ViewHosting.loadView(passwordWorkflow).inspection.inspect { view in
                 XCTAssertNoThrow(try view.find(MFAView.self).actualView().proceedInWorkflow(.args("changeme")))
-                XCTAssertNoThrow(try view.find(ChangePasswordView.self).actualView().proceedInWorkflow("newPassword"))
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNoThrow(try view.find(ChangePasswordView.self).actualView().proceedInWorkflow("newPassword"))
+                }
             }
         ].compactMap { $0 }, timeout: TestConstant.timeout)
 
@@ -115,9 +121,11 @@ final class AccountInformationViewTests: XCTestCase {
         XCTAssertNotNil(passwordWorkflow)
 
         wait(for: [
-            ViewHosting.loadView(passwordWorkflow)?.inspection.inspect { view in
+            ViewHosting.loadView(passwordWorkflow).inspection.inspect { view in
                 XCTAssertNoThrow(try view.find(MFAView.self).actualView().proceedInWorkflow(.args("changeme")))
-                XCTAssertNotNil(try view.find(ChangePasswordView.self).actualView().proceedInWorkflowStorage?(.args(CustomObj())))
+                try view.actualView().inspectWrapped { view in
+                    XCTAssertNotNil(try view.find(ChangePasswordView.self).actualView().proceedInWorkflowStorage?(.args(CustomObj())))
+                }
             }
         ].compactMap { $0 }, timeout: TestConstant.timeout)
     }

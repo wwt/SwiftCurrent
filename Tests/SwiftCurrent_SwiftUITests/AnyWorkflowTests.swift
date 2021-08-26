@@ -13,7 +13,7 @@ import SwiftCurrent
 import SwiftCurrent_SwiftUI
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-final class AnyWorkflowTests: XCTestCase {
+final class AnyWorkflowTests: XCTestCase, View {
     func testAbandonDoesNotBLOWUP() {
         let wf = Workflow(FR.self)
         AnyWorkflow(wf).abandon()
