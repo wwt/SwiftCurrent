@@ -59,7 +59,6 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
             }
         }
         .onReceive(inspection.notice) { inspection.visit(self, $0) }
-        .onChange(of: model.isLaunched) { if $0 == false { resetWorkflow() } }
     }
 
     private init<A, W, C, A1, W1, C1>(previous: WorkflowItem<A, W, C>, _ closure: () -> Wrapped) where Wrapped == WorkflowItem<A1, W1, C1> {
@@ -142,10 +141,6 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
                                         $0.changeUnderlyingView(to: closure(instance))
                                     },
                                     flowPersistenceClosure: flowPersistenceClosure)
-    }
-
-    private func resetWorkflow() {
-        launcher.workflow.launch(withOrchestrationResponder: model, passedArgs: launcher.launchArgs)
     }
 
     private func ViewBuilder<V: View>(@ViewBuilder builder: () -> V) -> some View { builder() }

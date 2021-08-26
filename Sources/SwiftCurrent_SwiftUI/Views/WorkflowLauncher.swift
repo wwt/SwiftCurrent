@@ -64,6 +64,7 @@ public struct WorkflowLauncher<Content: View>: View {
             .onReceive(model.onFinishPublisher, perform: _onFinish)
             .onReceive(model.onAbandonPublisher) { onAbandon.forEach { $0() } }
             .onReceive(inspection.notice) { inspection.visit(self, $0) }
+            .onChange(of: isLaunched) { if $0 == false { resetWorkflow() } }
     }
 
     /**
@@ -134,6 +135,10 @@ public struct WorkflowLauncher<Content: View>: View {
                                                        responder: model,
                                                        launchArgs: startingArgs))
         _content = State(wrappedValue: content)
+    }
+
+    private func resetWorkflow() {
+        launcher.workflow.launch(withOrchestrationResponder: model, passedArgs: launcher.launchArgs)
     }
 
     private func _onFinish(_ args: AnyWorkflow.PassedArgs?) {
