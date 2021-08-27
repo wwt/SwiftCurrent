@@ -39,6 +39,7 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
     @State private var modifierClosure: ((AnyFlowRepresentableView) -> Void)?
     @State private var flowPersistenceClosure: (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default }
     @State private var launchStyle: LaunchStyle.SwiftUI.PresentationType = .default
+    @State private var persistence: FlowPersistence = .default
 
     @EnvironmentObject private var model: WorkflowViewModel
     @EnvironmentObject private var launcher: Launcher
@@ -47,21 +48,21 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
 
     public var body: some View {
         ViewBuilder {
-            if model.isLaunched == true {
-                if model.body?.extractErasedView() is Content {
-                    content
-                } else {
-                    wrapped
-                }
+            if let body = model.body?.extractErasedView() as? Content {
+                content ?? body
+            } else {
+                wrapped
             }
         }
         .onReceive(model.$body) {
             if let body = $0?.extractErasedView() as? Content {
                 content = body
+                persistence = $0?.value.metadata.persistence ?? .default
+            } else if persistence == .removedAfterProceeding {
+                content = nil
             }
         }
         .onReceive(inspection.notice) { inspection.visit(self, $0) }
-        .onChange(of: model.isLaunched) { if $0 == false { resetWorkflow() } }
     }
 
     private init<A, W, C, A1, W1, C1>(previous: WorkflowItem<A, W, C>, _ closure: () -> Wrapped) where Wrapped == WorkflowItem<A1, W1, C1> {
@@ -144,10 +145,6 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
                                         $0.changeUnderlyingView(to: closure(instance))
                                     },
                                     flowPersistenceClosure: flowPersistenceClosure)
-    }
-
-    private func resetWorkflow() {
-        launcher.workflow.launch(withOrchestrationResponder: model, passedArgs: launcher.launchArgs)
     }
 
     private func ViewBuilder<V: View>(@ViewBuilder builder: () -> V) -> some View { builder() }
