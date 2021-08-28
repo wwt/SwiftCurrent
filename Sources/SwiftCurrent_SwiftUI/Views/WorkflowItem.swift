@@ -56,7 +56,7 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
             if let body = model.body?.extractErasedView() as? Content, model.body === workflowElement {
                 content ?? body
             } else {
-                wrapped
+                wrapped.environmentObject(model).environmentObject(launcher)
             }
         }
         .onReceive(model.$body) {
