@@ -57,9 +57,6 @@
                   Identifier = "GenericConstraintTests/testProceedingWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToNeverItem()">
                </Test>
                <Test
-                  Identifier = "SkipTests/testSkippingLastItemInAWorkflow()">
-               </Test>
-               <Test
                   Identifier = "SwiftCurrent_NavigationLinkTests/testMovingBiDirectionallyInAWorkflow()">
                </Test>
                <Test

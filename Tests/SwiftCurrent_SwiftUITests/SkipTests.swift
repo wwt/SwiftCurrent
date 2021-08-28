@@ -147,12 +147,8 @@ final class SkipTests: XCTestCase, View {
                     XCTAssertNoThrow(try fr2.find(FR2.self).actualView().proceedInWorkflow())
                     try fr2.actualView().inspectWrapped { fr3 in
                         XCTAssertNoThrow(try fr3.find(FR3.self).actualView().proceedInWorkflow())
-                        try fr3.actualView().inspectWrapped { fr4 in
-                            XCTAssertThrowsError(try fr4.find(FR4.self))
-                            try fr3.actualView().inspect { fr3 in
-                                XCTAssertNoThrow(try fr3.find(FR3.self))
-                            }
-                        }
+                        XCTAssertThrowsError(try fr3.find(FR4.self))
+                        XCTAssertNoThrow(try fr3.find(FR3.self))
                     }
                 }
             }
