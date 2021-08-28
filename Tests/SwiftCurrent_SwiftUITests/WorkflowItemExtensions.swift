@@ -26,13 +26,10 @@ extension WorkflowItem {
     @discardableResult func inspect(function: String = #function, file: StaticString = #file, line: UInt = #line, inspection: @escaping (InspectableView<ViewType.View<Self>>) throws -> Void) throws -> XCTestExpectation {
         // Waiting for 0.0 seems insane but think about it like "We are waiting for this command to get off the stack"
         // Then quit thinking about it, know it was deliberate, and move on.
-        let exp = XCTestExpectation(description: "\(UUID())")
         let expectation = self.inspection.inspect(after: 0, function: function, file: file, line: line) {
             try inspection($0)
-            exp.fulfill()
         }
         XCTestCase.queuedExpectations.append(expectation)
-//        XCTWaiter().wait(for: [expectation], timeout: 0.5)
         return expectation
     }
 }

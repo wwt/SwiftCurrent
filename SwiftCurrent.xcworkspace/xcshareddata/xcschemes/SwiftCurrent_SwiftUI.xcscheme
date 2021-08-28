@@ -113,12 +113,6 @@
                <Test
                   Identifier = "SwiftCurrent_NavigationLinkTests/testWorkflowSetsBindingBooleanToFalseWhenAbandoned()">
                </Test>
-               <Test
-                  Identifier = "SwiftCurrent_SwiftUIConsumerTests/testWorkflowCanHaveADelayedLaunch()">
-               </Test>
-               <Test
-                  Identifier = "SwiftCurrent_SwiftUIConsumerTests/testWorkflowOnlyShowsOneViewAtATime()">
-               </Test>
             </SkippedTests>
          </TestableReference>
       </Testables>
