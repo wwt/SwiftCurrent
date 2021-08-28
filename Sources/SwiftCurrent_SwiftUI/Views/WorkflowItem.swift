@@ -40,6 +40,7 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
     @State private var flowPersistenceClosure: (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default }
     @State private var launchStyle: LaunchStyle.SwiftUI.PresentationType = .default
     @State private var persistence: FlowPersistence = .default
+    @State private var isActive = false
 
     @EnvironmentObject private var model: WorkflowViewModel
     @EnvironmentObject private var launcher: Launcher
@@ -48,6 +49,9 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
 
     public var body: some View {
         ViewBuilder {
+            if launchStyle == .navigationLink {
+                content?.navLink(to: ViewBuilder { wrapped?.environmentObject(model).environmentObject(launcher) }, isActive: $isActive)
+            }
             if let body = model.body?.extractErasedView() as? Content {
                 content ?? body
             } else {
@@ -55,6 +59,9 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
             }
         }
         .onReceive(model.$body) {
+            if $0?.previous?.extractErasedView() is Content {
+                isActive = true
+            }
             if let body = $0?.extractErasedView() as? Content {
                 content = body
                 persistence = $0?.value.metadata.persistence ?? .default

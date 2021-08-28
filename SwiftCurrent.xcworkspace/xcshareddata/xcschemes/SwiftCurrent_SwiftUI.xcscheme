@@ -54,7 +54,10 @@
             </BuildableReference>
             <SkippedTests>
                <Test
-                  Identifier = "SwiftCurrent_NavigationLinkTests/testLargeWorkflowCanBeFollowed()">
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToNeverItem()">
+               </Test>
+               <Test
+                  Identifier = "SkipTests/testSkippingLastItemInAWorkflow()">
                </Test>
                <Test
                   Identifier = "SwiftCurrent_NavigationLinkTests/testMovingBiDirectionallyInAWorkflow()">
@@ -109,6 +112,12 @@
                </Test>
                <Test
                   Identifier = "SwiftCurrent_NavigationLinkTests/testWorkflowSetsBindingBooleanToFalseWhenAbandoned()">
+               </Test>
+               <Test
+                  Identifier = "SwiftCurrent_SwiftUIConsumerTests/testWorkflowCanHaveADelayedLaunch()">
+               </Test>
+               <Test
+                  Identifier = "SwiftCurrent_SwiftUIConsumerTests/testWorkflowOnlyShowsOneViewAtATime()">
                </Test>
             </SkippedTests>
          </TestableReference>
