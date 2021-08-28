@@ -36,9 +36,9 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
             }).inspection.inspect { viewUnderTest in
                 XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
                 XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
-                try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
-                    XCTAssertEqual(try viewUnderTest.find(FR2.self).text().string(), "FR2 type")
-                    XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                try viewUnderTest.actualView().inspectNavLink { fr2 in
+                    XCTAssertEqual(try fr2.find(FR2.self).text().string(), "FR2 type")
+                    XCTAssertNoThrow(try fr2.find(FR2.self).actualView().proceedInWorkflow())
                 }
             }
 
