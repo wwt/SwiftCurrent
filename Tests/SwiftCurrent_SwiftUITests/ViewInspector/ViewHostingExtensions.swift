@@ -33,7 +33,7 @@ extension ViewHosting {
 
         Self.host(view: view)
 
-        XCTWaiter().wait(for: [exp], timeout: 0.3)
+        XCTWaiter().wait(for: [exp], timeout: TestConstant.timeout)
         XCTAssertNotNil(workflowItem)
         let model = Mirror(reflecting: view).descendant("_model") as? StateObject<WorkflowViewModel>
         let launcher = Mirror(reflecting: view).descendant("_launcher") as? StateObject<Launcher>
