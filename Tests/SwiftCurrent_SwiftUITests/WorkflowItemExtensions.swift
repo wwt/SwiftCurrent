@@ -32,4 +32,9 @@ extension WorkflowItem {
         XCTestCase.queuedExpectations.append(expectation)
         return expectation
     }
+
+    @discardableResult func inspect(model: WorkflowViewModel, launcher: Launcher, function: String = #function, file: StaticString = #file, line: UInt = #line, inspection: @escaping (InspectableView<ViewType.View<Self>>) throws -> Void) throws -> XCTestExpectation {
+        try ViewHosting.loadView(self, model: model, launcher: launcher).inspect(function: function, file: file, line: line, inspection: inspection)
+    }
+
 }
