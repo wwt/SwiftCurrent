@@ -56,60 +56,6 @@
                <Test
                   Identifier = "GenericConstraintTests/testProceedingWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToNeverItem()">
                </Test>
-               <Test
-                  Identifier = "SwiftCurrent_NavigationLinkTests/testMovingBiDirectionallyInAWorkflow()">
-               </Test>
-               <Test
-                  Identifier = "SwiftCurrent_NavigationLinkTests/testWorkflowCanConvertAnyArgsToCorrectTypeForFirstItem()">
-               </Test>
-               <Test
-                  Identifier = "SwiftCurrent_NavigationLinkTests/testWorkflowCanFinishMultipleTimes()">
-               </Test>
-               <Test
-                  Identifier = "SwiftCurrent_NavigationLinkTests/testWorkflowCanHaveADelayedLaunch()">
-               </Test>
-               <Test
-                  Identifier = "SwiftCurrent_NavigationLinkTests/testWorkflowCanHaveAPassthroughRepresentable()">
-               </Test>
-               <Test
-                  Identifier = "SwiftCurrent_NavigationLinkTests/testWorkflowCanHaveAPassthroughRepresentableInTheMiddle()">
-               </Test>
-               <Test
-                  Identifier = "SwiftCurrent_NavigationLinkTests/testWorkflowCanHaveModifiers()">
-               </Test>
-               <Test
-                  Identifier = "SwiftCurrent_NavigationLinkTests/testWorkflowCanHaveMultipleOnAbandonCallbacks()">
-               </Test>
-               <Test
-                  Identifier = "SwiftCurrent_NavigationLinkTests/testWorkflowCanHaveMultipleOnFinishClosures()">
-               </Test>
-               <Test
-                  Identifier = "SwiftCurrent_NavigationLinkTests/testWorkflowCorrectlyHandlesState()">
-               </Test>
-               <Test
-                  Identifier = "SwiftCurrent_NavigationLinkTests/testWorkflowOnlyShowsOneViewAtATime()">
-               </Test>
-               <Test
-                  Identifier = "SwiftCurrent_NavigationLinkTests/testWorkflowPassesArgumentsToAllItems()">
-               </Test>
-               <Test
-                  Identifier = "SwiftCurrent_NavigationLinkTests/testWorkflowPassesArgumentsToTheFirstItem()">
-               </Test>
-               <Test
-                  Identifier = "SwiftCurrent_NavigationLinkTests/testWorkflowPassesArgumentsToTheFirstItem_WhenThatFirstItemTakesInAnyWorkflowPassedArgs()">
-               </Test>
-               <Test
-                  Identifier = "SwiftCurrent_NavigationLinkTests/testWorkflowPassesArgumentsToTheFirstItem_WhenThatFirstItemTakesInAnyWorkflowPassedArgs_AndTheLaunchArgsAreAnyWorkflowPassedArgs()">
-               </Test>
-               <Test
-                  Identifier = "SwiftCurrent_NavigationLinkTests/testWorkflowRelaunchesWhenAbandoned_WithAConstantOfTrue()">
-               </Test>
-               <Test
-                  Identifier = "SwiftCurrent_NavigationLinkTests/testWorkflowRelaunchesWhenSubsequentlyLaunched()">
-               </Test>
-               <Test
-                  Identifier = "SwiftCurrent_NavigationLinkTests/testWorkflowSetsBindingBooleanToFalseWhenAbandoned()">
-               </Test>
             </SkippedTests>
          </TestableReference>
       </Testables>
