@@ -178,6 +178,45 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
+    func testNavLinkWorkflowsCanSkipTheFirstItem() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+            func shouldLoad() -> Bool { false }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR3 type") }
+        }
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowLauncher(isLaunched: .constant(true)) {
+                thenProceed(with: FR1.self) {
+                    thenProceed(with: FR2.self) {
+                        thenProceed(with: FR3.self)
+                    }.presentationType(.navigationLink)
+                }.presentationType(.navigationLink)
+            }
+        ).inspection.inspect { fr1 in
+            let model = (Mirror(reflecting: try fr1.actualView()).descendant("_model") as! EnvironmentObject<WorkflowViewModel>).wrappedValue
+            let launcher = (Mirror(reflecting: try fr1.actualView()).descendant("_launcher") as! EnvironmentObject<Launcher>).wrappedValue
+            XCTAssertThrowsError(try fr1.find(FR1.self).actualView())
+            try fr1.view(WorkflowItem<FR2, WorkflowItem<FR3, Never, FR3>, FR2>.self).actualView().inspect(model: model, launcher: launcher) { fr2 in
+                XCTAssertFalse(try fr2.find(ViewType.NavigationLink.self).isActive())
+                XCTAssertNoThrow(try fr2.find(FR2.self).actualView().proceedInWorkflow())
+                try fr2.find(ViewType.NavigationLink.self).view(WorkflowItem<FR3, Never, FR3>.self).actualView().inspect(model: model, launcher: launcher) { fr3 in
+                    XCTAssert(try fr2.find(ViewType.NavigationLink.self).isActive())
+                    XCTAssertNoThrow(try fr3.find(FR3.self).actualView())
+                }
+            }
+        }
+
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
+
     func testNavLinkWorkflowsCanSkipOneItemInTheMiddle() throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
@@ -217,7 +256,7 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
 
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
-    
+
 //    func testMovingBiDirectionallyInAWorkflow() throws {
 //        struct FR1: View, FlowRepresentable, Inspectable {
 //            var _workflowPointer: AnyFlowRepresentable?
