@@ -16,10 +16,7 @@ import SwiftCurrent
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
     override func tearDownWithError() throws {
-        while let e = Self.queuedExpectations.first {
-            wait(for: [e], timeout: TestConstant.timeout)
-            Self.queuedExpectations.removeFirst()
-        }
+        removeQueuedExpectations()
     }
     
     func testWorkflowCanBeFollowed() throws {
@@ -56,6 +53,49 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
             }
 
         wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
+    }
+
+    func testWorkflowItemsOfTheSameTypeCanBeFollowed() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowLauncher(isLaunched: .constant(true)) {
+                thenProceed(with: FR1.self) {
+                    thenProceed(with: FR1.self) {
+                        thenProceed(with: FR1.self)
+                    }.presentationType(.navigationLink)
+                }.presentationType(.navigationLink)
+            }
+        ).inspection.inspect { fr1 in
+            let model = (Mirror(reflecting: try fr1.actualView()).descendant("_model") as! EnvironmentObject<WorkflowViewModel>).wrappedValue
+            let launcher = (Mirror(reflecting: try fr1.actualView()).descendant("_launcher") as! EnvironmentObject<Launcher>).wrappedValue
+            XCTAssertFalse(try fr1.find(ViewType.NavigationLink.self).isActive())
+            XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
+            try fr1.actualView().inspect { first in
+                XCTAssert(try first.find(ViewType.NavigationLink.self).isActive())
+                try first.find(ViewType.NavigationLink.self).view(WorkflowItem<FR1, WorkflowItem<FR1, Never, FR1>, FR1>.self).actualView().inspect(model: model, launcher: launcher) { second in
+                    XCTAssert(try first.find(ViewType.NavigationLink.self).isActive())
+                    XCTAssertFalse(try second.find(ViewType.NavigationLink.self).isActive())
+                    XCTAssertNoThrow(try second.find(FR1.self).actualView().proceedInWorkflow())
+                    try second.actualView().inspect { second in
+                        XCTAssert(try first.find(ViewType.NavigationLink.self).isActive())
+                        XCTAssert(try second.find(ViewType.NavigationLink.self).isActive())
+                        try second.find(ViewType.NavigationLink.self).view(WorkflowItem<FR1, Never, FR1>.self).actualView().inspect(model: model, launcher: launcher) { third in
+                            XCTAssertNoThrow(try third.find(FR1.self).actualView().proceedInWorkflow())
+                            try third.actualView().inspect { third in
+                                XCTAssert(try first.find(ViewType.NavigationLink.self).isActive())
+                                XCTAssert(try second.find(ViewType.NavigationLink.self).isActive())
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testLargeWorkflowCanBeFollowed() throws {

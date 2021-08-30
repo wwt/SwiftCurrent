@@ -11,5 +11,13 @@ import XCTest
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension XCTestCase {
+    static var queuedExpectations: [XCTestExpectation] = []
     public var body: some View { EmptyView() }
+
+    func removeQueuedExpectations() {
+        while let e = Self.queuedExpectations.first {
+            wait(for: [e], timeout: TestConstant.timeout)
+            Self.queuedExpectations.removeFirst()
+        }
+    }
 }

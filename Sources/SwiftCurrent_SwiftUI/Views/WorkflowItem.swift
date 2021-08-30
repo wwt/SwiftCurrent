@@ -155,7 +155,7 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
     }
 
     private func activateIfNeeded(element: AnyWorkflow.Element?) {
-        if element?.previouslyLoadedElement?.extractErasedView() is Content {
+        if elementRef === element?.previouslyLoadedElement {
             isActive = true
         }
     }
