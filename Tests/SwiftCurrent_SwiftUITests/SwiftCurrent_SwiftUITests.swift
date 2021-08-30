@@ -726,7 +726,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, View {
             let launcher = try stack.view(WorkflowLauncher<WorkflowItem<FR1, Never, FR1>>.self, 1)
             XCTAssertThrowsError(try launcher.view(WorkflowItem<FR1, Never, FR1>.self))
             XCTAssertNoThrow(try stack.button(0).tap())
-            try launcher.view(WorkflowItem<FR1, Never, FR1>.self)
+            XCTAssertNoThrow(try launcher.view(WorkflowItem<FR1, Never, FR1>.self))
         }
 
         wait(for: [exp], timeout: TestConstant.timeout)
