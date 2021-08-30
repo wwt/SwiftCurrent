@@ -12,17 +12,6 @@ import ViewInspector
 
 @testable import SwiftCurrent_SwiftUI
 
-extension XCTestCase {
-    func removeQueuedExpectations() {
-        while let e = Self.queuedExpectations.first {
-            wait(for: [e], timeout: TestConstant.timeout)
-            Self.queuedExpectations.removeFirst()
-        }
-    }
-    
-    static var queuedExpectations: [XCTestExpectation] = []
-}
-
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension WorkflowItem {
     @discardableResult func inspectWrapped<F, W, C>(function: String = #function, file: StaticString = #file, line: UInt = #line, inspection: @escaping (InspectableView<ViewType.View<Wrapped>>) throws -> Void) throws -> XCTestExpectation where Wrapped == WorkflowItem<F, W, C> {
