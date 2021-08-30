@@ -38,21 +38,31 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
     @State private var launchStyle: LaunchStyle.SwiftUI.PresentationType = .default
     @State private var persistence: FlowPersistence = .default
     @State private var elementRef: AnyWorkflow.Element?
+    @State private var isActive = false
     @EnvironmentObject private var model: WorkflowViewModel
     @EnvironmentObject private var launcher: Launcher
 
     let inspection = Inspection<Self>()
-    
+
     public var body: some View {
         ViewBuilder {
-            if let body = model.body?.extractErasedView() as? Content,
+            if launchStyle == .navigationLink {
+                if let content = content {
+                    content.navLink(to: ViewBuilder { wrapped?.environmentObject(model).environmentObject(launcher) }, isActive: $isActive)
+                } else {
+                    wrapped?.environmentObject(model).environmentObject(launcher)
+                }
+            } else if let body = model.body?.extractErasedView() as? Content,
                elementRef === model.body {
                 content ?? body
             } else {
-                wrapped
+                wrapped?.environmentObject(model).environmentObject(launcher)
             }
         }
         .onReceive(model.$body) {
+            if $0?.previouslyLoadedElement?.extractErasedView() is Content {
+                isActive = true
+            }
             if let body = $0?.extractErasedView() as? Content,
                elementRef === $0 || elementRef == nil {
                 elementRef = $0
@@ -64,7 +74,7 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         }
         .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
-    
+
     private init<A, W, C, A1, W1, C1>(previous: WorkflowItem<A, W, C>, _ closure: () -> Wrapped) where Wrapped == WorkflowItem<A1, W1, C1> {
         let wrapped = closure()
         _wrapped = State(initialValue: wrapped)
