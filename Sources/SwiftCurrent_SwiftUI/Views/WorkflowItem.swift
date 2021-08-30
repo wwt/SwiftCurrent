@@ -59,10 +59,8 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
                 wrapped?.environmentObject(model).environmentObject(launcher)
             }
         }
+        .onReceive(model.$body, perform: activateIfNeeded)
         .onReceive(model.$body) {
-            if $0?.previouslyLoadedElement?.extractErasedView() is Content {
-                isActive = true
-            }
             if let body = $0?.extractErasedView() as? Content,
                elementRef === $0 || elementRef == nil {
                 elementRef = $0
@@ -167,6 +165,12 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         let afrv = AnyFlowRepresentableView(type: F.self, args: args)
         modifierClosure?(afrv)
         return afrv
+    }
+
+    private func activateIfNeeded(element: AnyWorkflow.Element?) {
+        if element?.previouslyLoadedElement?.extractErasedView() is Content {
+            isActive = true
+        }
     }
 }
 
