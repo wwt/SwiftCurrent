@@ -348,4 +348,23 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
 
         wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
     }
+
+    func testConvenienceEmbedInNavViewFunction() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+
+        let launcherView = WorkflowLauncher(isLaunched: .constant(true)) {
+            thenProceed(with: FR1.self).presentationType(.navigationLink)
+        }.embedInNavigationView()
+
+        let expectViewLoaded = launcherView.inspection.inspect { launcher in
+            let navView = try launcher.navigationView()
+            XCTAssert(try navView.navigationViewStyle() is StackNavigationViewStyle)
+            XCTAssertNoThrow(try navView.view(WorkflowItem<FR1, Never, FR1>.self, 0))
+        }
+        ViewHosting.host(view: launcherView)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
 }
