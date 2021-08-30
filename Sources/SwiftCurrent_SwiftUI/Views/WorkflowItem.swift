@@ -73,6 +73,11 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
             }
         }
         .onReceive(inspection.notice) { inspection.visit(self, $0) }
+        .onReceive(model.onBackUpPublisher) {
+            if elementRef === $0 {
+                isActive = false
+            }
+        }
     }
 
     private init<A, W, C, A1, W1, C1>(previous: WorkflowItem<A, W, C>, _ closure: () -> Wrapped) where Wrapped == WorkflowItem<A1, W1, C1> {
