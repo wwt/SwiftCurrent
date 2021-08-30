@@ -13,6 +13,13 @@ import ViewInspector
 @testable import SwiftCurrent_SwiftUI
 
 extension XCTestCase {
+    func removeQueuedExpectations() {
+        while let e = Self.queuedExpectations.first {
+            wait(for: [e], timeout: TestConstant.timeout)
+            Self.queuedExpectations.removeFirst()
+        }
+    }
+    
     static var queuedExpectations: [XCTestExpectation] = []
 }
 

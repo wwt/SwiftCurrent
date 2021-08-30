@@ -17,10 +17,7 @@ import SwiftCurrent_Testing
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class WorkflowViewModelTests: XCTestCase, View {
     override func tearDownWithError() throws {
-        while let e = Self.queuedExpectations.first {
-            wait(for: [e], timeout: TestConstant.timeout)
-            Self.queuedExpectations.removeFirst()
-        }
+        removeQueuedExpectations()
     }
 
     func testAnyWorkflowElementModelThrowsFatalError_WhenExtractCalledOnSomethingOtherThan_AnyFlowRepresentableView() throws {
