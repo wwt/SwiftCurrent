@@ -689,7 +689,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, View {
         let content = try XCTUnwrap(Mirror(reflecting: workflowView).descendant("_content") as? WorkflowViewContent)
 
         // Note: Only add to these exceptions if you are *certain* the property should not be @State. Err on the side of the property being @State
-        let exceptions = ["_model", "_launcher", "_location", "_value", "inspection"]
+        let exceptions = ["_model", "_launcher", "_location", "_value", "inspection", "_presentation"]
 
         let mirror = Mirror(reflecting: content.wrappedValue)
 

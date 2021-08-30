@@ -56,16 +56,8 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
             }
         }
         .onReceive(model.$body, perform: activateIfNeeded)
+        .onReceive(model.$body, perform: proceedInWorkflow)
         .onReceive(model.onBackUpPublisher, perform: backUpInWorkflow)
-        .onReceive(model.$body) {
-            if let body = $0?.extractErasedView() as? Content, elementRef === $0 || elementRef == nil {
-                elementRef = $0
-                content = body
-                persistence = $0?.value.metadata.persistence ?? .default
-            } else if persistence == .removedAfterProceeding {
-                content = nil
-            }
-        }
         .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 
@@ -173,6 +165,16 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         // See: https://github.com/nalexn/ViewInspector/issues/131
         if elementRef === element {
             presentation.wrappedValue.dismiss()
+        }
+    }
+
+    private func proceedInWorkflow(element: AnyWorkflow.Element?) {
+        if let body = element?.extractErasedView() as? Content, elementRef === element || elementRef == nil {
+            elementRef = element
+            content = body
+            persistence = element?.value.metadata.persistence ?? .default
+        } else if persistence == .removedAfterProceeding {
+            content = nil
         }
     }
 }
