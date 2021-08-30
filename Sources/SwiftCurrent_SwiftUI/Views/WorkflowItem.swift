@@ -46,17 +46,13 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
 
     public var body: some View {
         ViewBuilder {
-            if launchStyle == .navigationLink {
-                if let content = content {
-                    content.navLink(to: ViewBuilder { wrapped?.environmentObject(model).environmentObject(launcher) }, isActive: $isActive)
-                } else {
-                    wrapped?.environmentObject(model).environmentObject(launcher)
-                }
+            if launchStyle == .navigationLink, let content = content {
+                content.navLink(to: nextView, isActive: $isActive)
             } else if let body = model.body?.extractErasedView() as? Content,
-               elementRef === model.body {
+                      elementRef === model.body, launchStyle == .default {
                 content ?? body
             } else {
-                wrapped?.environmentObject(model).environmentObject(launcher)
+                nextView
             }
         }
         .onReceive(model.$body, perform: activateIfNeeded)
@@ -76,6 +72,10 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
                 isActive = false
             }
         }
+    }
+
+    @ViewBuilder private var nextView: some View {
+        wrapped?.environmentObject(model).environmentObject(launcher)
     }
 
     private init<A, W, C, A1, W1, C1>(previous: WorkflowItem<A, W, C>, _ closure: () -> Wrapped) where Wrapped == WorkflowItem<A1, W1, C1> {
