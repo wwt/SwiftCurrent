@@ -59,7 +59,7 @@ public struct WorkflowLauncher<Content: View>: View {
                 if shouldEmbedInNavView {
                     NavigationView {
                         workflowContent
-                    }.navigationViewStyle(StackNavigationViewStyle())
+                    }.preferredNavigationStyle()
                 } else {
                     workflowContent
                 }
@@ -176,5 +176,16 @@ public struct WorkflowLauncher<Content: View>: View {
     /// Wraps content in a NavigationView.
     public func embedInNavigationView() -> Self {
         Self(current: self, shouldEmbedInNavView: true, onFinish: onFinish, onAbandon: onAbandon)
+    }
+}
+
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension View {
+    func preferredNavigationStyle() -> some View {
+        #if (os(iOS) || os(tvOS) || os(watchOS) || targetEnvironment(macCatalyst))
+        return navigationViewStyle(StackNavigationViewStyle())
+        #else
+        return navigationViewStyle(DefaultNavigationViewStyle())
+        #endif
     }
 }
