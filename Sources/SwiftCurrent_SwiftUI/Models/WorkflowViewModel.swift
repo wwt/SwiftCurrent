@@ -38,7 +38,7 @@ extension WorkflowViewModel: OrchestrationResponder {
 
     func backUp(from source: AnyWorkflow.Element, to destination: AnyWorkflow.Element) {
         body = destination
-        onBackUpPublisher.send(destination)
+        onBackUpPublisher.send(source)
     }
 
     func abandon(_ workflow: AnyWorkflow, onFinish: (() -> Void)?) {

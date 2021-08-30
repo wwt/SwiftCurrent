@@ -41,6 +41,7 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
     @State private var isActive = false
     @EnvironmentObject private var model: WorkflowViewModel
     @EnvironmentObject private var launcher: Launcher
+    @Environment(\.presentationMode) var presentation
 
     let inspection = Inspection<Self>()
 
@@ -48,17 +49,16 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         ViewBuilder {
             if launchStyle == .navigationLink, let content = content {
                 content.navLink(to: nextView, isActive: $isActive)
-            } else if let body = model.body?.extractErasedView() as? Content,
-                      elementRef === model.body, launchStyle == .default {
+            } else if let body = model.body?.extractErasedView() as? Content, elementRef === model.body, launchStyle == .default {
                 content ?? body
             } else {
                 nextView
             }
         }
         .onReceive(model.$body, perform: activateIfNeeded)
+        .onReceive(model.onBackUpPublisher, perform: backUpInWorkflow)
         .onReceive(model.$body) {
-            if let body = $0?.extractErasedView() as? Content,
-               elementRef === $0 || elementRef == nil {
+            if let body = $0?.extractErasedView() as? Content, elementRef === $0 || elementRef == nil {
                 elementRef = $0
                 content = body
                 persistence = $0?.value.metadata.persistence ?? .default
@@ -67,11 +67,6 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
             }
         }
         .onReceive(inspection.notice) { inspection.visit(self, $0) }
-        .onReceive(model.onBackUpPublisher) {
-            if elementRef === $0 {
-                isActive = false
-            }
-        }
     }
 
     @ViewBuilder private var nextView: some View {
@@ -170,6 +165,14 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
     private func activateIfNeeded(element: AnyWorkflow.Element?) {
         if element?.previouslyLoadedElement?.extractErasedView() is Content {
             isActive = true
+        }
+    }
+
+    private func backUpInWorkflow(element: AnyWorkflow.Element?) {
+        // We have found no satisfactory way to test this...we haven't even really found unsatisfactory ways to test it.
+        // See: https://github.com/nalexn/ViewInspector/issues/131
+        if elementRef === element {
+            presentation.wrappedValue.dismiss()
         }
     }
 }
