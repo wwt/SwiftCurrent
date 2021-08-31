@@ -31,6 +31,12 @@ extension LaunchStyle {
             */
             case navigationLink
 
+            /**
+            Indicates a `FlowRepresentable` should be presented modally.
+            - Important: Will not effect the first item in a Workflow.
+            */
+            case modal
+
             /// Creates a `PresentationType` from a `LaunchStyle`, or returns nil if no mapping exists.
             public init?(rawValue: LaunchStyle) {
                 switch rawValue {
@@ -44,6 +50,7 @@ extension LaunchStyle {
             public var rawValue: LaunchStyle {
                 switch self {
                     case .navigationLink: return ._swiftUI_navigationLink
+                    case .modal: return ._swiftUI_modal
                     case .default: return .default
                 }
             }
