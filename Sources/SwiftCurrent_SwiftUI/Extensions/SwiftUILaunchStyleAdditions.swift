@@ -42,6 +42,7 @@ extension LaunchStyle {
                 switch rawValue {
                     case .default: self = .default
                     case ._swiftUI_navigationLink: self = .navigationLink
+                    case ._swiftUI_modal: self = .modal
                     default: return nil
                 }
             }

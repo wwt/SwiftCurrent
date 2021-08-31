@@ -23,6 +23,7 @@ final class LaunchStyleAdditionTests: XCTestCase, View {
         XCTAssertNil(LaunchStyle.SwiftUI.PresentationType(rawValue: .new))
         XCTAssertEqual(LaunchStyle.SwiftUI.PresentationType(rawValue: .default), .default)
         XCTAssertEqual(LaunchStyle.SwiftUI.PresentationType(rawValue: ._swiftUI_navigationLink), .navigationLink)
+        XCTAssertEqual(LaunchStyle.SwiftUI.PresentationType(rawValue: ._swiftUI_modal), .modal)
     }
 
     func testKnownPresentationTypes_AreUnique() {
