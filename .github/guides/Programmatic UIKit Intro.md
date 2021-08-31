@@ -4,11 +4,11 @@ This guide will walk you through getting a `Workflow` up and running in a new iO
 
 The app in this guide is going to be very simple.  It consists of a screen that will launch the `Workflow`, a screen to enter an email address, and an optional screen for when the user enters an email with `@wwt.com` in it.  Here is a preview of what the app will look like:
 
-![Preview image of app](https://raw.githubusercontent.com/wwt/SwiftCurrent/main/.github/wiki/programmatic.gif)
+![Preview image of app](https://raw.githubusercontent.com/wwt/SwiftCurrent/main/.github/resources/programmatic.gif)
 
 ## Adding the dependency
 
-For instructions on SPM and CocoaPods, [check out our installation page.](https://github.com/wwt/SwiftCurrent/wiki/Installation#swift-package-manager)
+For instructions on SPM and CocoaPods, [check out our installation page.](https://wwt.github.io/SwiftCurrent/installation.html#swift-package-manager)
 
 ## IMPORTANT NOTE
 
