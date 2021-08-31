@@ -1,9 +1,9 @@
- ![SwiftCurrent](https://raw.githubusercontent.com/wwt/SwiftCurrent/main/.github/wiki/swiftcurrent-logo.png)
+ ![SwiftCurrent](https://raw.githubusercontent.com/wwt/SwiftCurrent/main/.github/resources/swiftcurrent-logo.png)
 
 <!-- Library Information -->
 [![Supported Platforms](https://img.shields.io/cocoapods/p/SwiftCurrent)](https://github.com/wwt/SwiftCurrent/security/policy)
-[![Swift Package Manager](https://img.shields.io/badge/Swift_Package_Manager-supported-brightgreen)](https://github.com/wwt/SwiftCurrent/wiki/Installation#swift-package-manager)
-[![Pod Version](https://img.shields.io/cocoapods/v/SwiftCurrent.svg?style=popout)](https://github.com/wwt/SwiftCurrent/wiki/Installation#cocoapods)
+[![Swift Package Manager](https://img.shields.io/badge/Swift_Package_Manager-supported-brightgreen)](https://wwt.github.io/SwiftCurrent/installation.html#swift-package-manager)
+[![Pod Version](https://img.shields.io/cocoapods/v/SwiftCurrent.svg?style=popout)](https://wwt.github.io/SwiftCurrent/installation.html#cocoapods)
 [![License](https://img.shields.io/github/license/wwt/SwiftCurrent)](https://github.com/wwt/SwiftCurrent/blob/main/LICENSE)
 [![Build Status](https://github.com/wwt/SwiftCurrent/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/wwt/SwiftCurrent/actions?query=branch%3Amain)
 [![Code Coverage](https://codecov.io/gh/wwt/SwiftCurrent/branch/main/graph/badge.svg?token=04Q5KSHict)](https://codecov.io/gh/wwt/SwiftCurrent)
@@ -40,7 +40,7 @@ The [example app has a README](https://github.com/wwt/SwiftCurrent/blob/main/Exa
 
 [We're working on it now!](https://github.com/wwt/SwiftCurrent/milestone/2)
 
-If you would like to try the beta release, please install the `BETA_SwiftCurrent_SwiftUI` product in SPM or the `BETA_SwiftUI` sub spec in CocoaPods.  For more detailed steps, [see our installation instructions](https://github.com/wwt/SwiftCurrent/wiki/Installation).  See [Getting Started with SwiftUI](https://github.com/wwt/SwiftCurrent/wiki/Getting-Started-with-SwiftUI) for a quick tutorial.  To see the example app for SwiftUI, clone our repo, open `SwiftCurrent.xcworkspace`, target the `SwiftUIExample` scheme, and run. The [example app has a README](https://github.com/wwt/SwiftCurrent/blob/main/ExampleApps/SwiftUIExample/README.md) that details interesting usages.
+If you would like to try the beta release, please install the `BETA_SwiftCurrent_SwiftUI` product in SPM or the `BETA_SwiftUI` sub spec in CocoaPods.  For more detailed steps, [see our installation instructions](https://wwt.github.io/SwiftCurrent/installation.html).  See [Getting Started with SwiftUI](https://wwt.github.io/SwiftCurrent/getting-started-with-swiftui.html) for a quick tutorial.  To see the example app for SwiftUI, clone our repo, open `SwiftCurrent.xcworkspace`, target the `SwiftUIExample` scheme, and run. The [example app has a README](https://github.com/wwt/SwiftCurrent/blob/main/ExampleApps/SwiftUIExample/README.md) that details interesting usages.
 
 In order to use the library with SwiftUI, your minimum targeted versions must meet: iOS 14.0, macOS 11, tvOS 14.0, or watchOS 7.0.
 
@@ -48,7 +48,7 @@ For us, beta means that the API may change without warning until the full releas
 
 # Quick Start
 
-This quick start uses SPM, but for other approaches, [see our installation instructions](https://github.com/wwt/SwiftCurrent/wiki/Installation).
+This quick start uses SPM, but for other approaches, [see our installation instructions](https://wwt.github.io/SwiftCurrent/installation.html).
 
 ## UIKit
 
@@ -124,13 +124,13 @@ https://user-images.githubusercontent.com/4916530/131019474-f0819b86-c4d0-4b98-9
 
 # Deep Dive
 
-- [Why SwiftCurrent?](https://github.com/wwt/SwiftCurrent/wiki/Why-This-Library%3F)
-- [Installation](https://github.com/wwt/SwiftCurrent/wiki/Installation)
-- [Getting Started with Storyboards](https://github.com/wwt/SwiftCurrent/wiki/Getting-Started-with-Storyboards)
-- [Getting Started with Programmatic UIKit Views](https://github.com/wwt/SwiftCurrent/wiki/Getting-Started-with-Programmatic-UIKit-Views)
-- [[BETA] Getting Started with SwiftUI](https://github.com/wwt/SwiftCurrent/wiki/Getting-Started-with-SwiftUI)
+- [Why SwiftCurrent?](https://wwt.github.io/SwiftCurrent/why-this-library.html)
+- [Installation](https://wwt.github.io/SwiftCurrent/installation.html)
+- [Getting Started with Storyboards](https://wwt.github.io/SwiftCurrent/storyboards-intro.html)
+- [Getting Started with Programmatic UIKit Views](https://wwt.github.io/SwiftCurrent/programmatic-uikit-intro.html)
+- [[BETA] Getting Started with SwiftUI](https://wwt.github.io/SwiftCurrent/getting-started-with-swiftui.html)
 - [Developer Documentation](https://wwt.github.io/SwiftCurrent/index.html)
-- [Upgrade Path](https://github.com/wwt/SwiftCurrent/blob/main/wiki/UPGRADE_PATH.md)
+- [Upgrade Path](https://wwt.github.io/SwiftCurrent/upgrade-paths.html)
 - [Contributing to SwiftCurrent](https://github.com/wwt/SwiftCurrent/blob/main/.github/CONTRIBUTING.md)
 
 # Feedback
