@@ -1,17 +1,18 @@
 //
 //  InspectableSheet.swift
-//  InspectableSheet
+//  SwiftCurrent_SwiftUI
 //
 //  Created by Morgan Zellers on 8/31/21.
+//  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
-
+// swiftlint:disable file_types_order
 import SwiftUI
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension View {
     func testableSheet<Sheet>(isPresented: Binding<Bool>, onDismiss: (() -> Void)? = nil, @ViewBuilder content: @escaping () -> Sheet
     ) -> some View where Sheet: View {
-        return self.modifier(InspectableSheet(isPresented: isPresented, onDismiss: onDismiss, content: content))
+        modifier(InspectableSheet(isPresented: isPresented, onDismiss: onDismiss, content: content))
     }
 }
 
