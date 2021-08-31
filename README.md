@@ -1,4 +1,4 @@
- ![SwiftCurrent](https://raw.githubusercontent.com/wwt/SwiftCurrent/main/.github/resources/swiftcurrent-logo.png)
+![SwiftCurrent](https://raw.githubusercontent.com/wwt/SwiftCurrent/main/.github/resources/swiftcurrent-logo.png)
 
 <!-- Library Information -->
 [![Supported Platforms](https://img.shields.io/cocoapods/p/SwiftCurrent)](https://github.com/wwt/SwiftCurrent/security/policy)
@@ -121,7 +121,7 @@ And just like that you're started!
 
 Here's an example of an app written with SwiftCurrent running wherever SwiftUI runs.  Check it out:
 
-![Example universal SwiftUI app demo](https://user-images.githubusercontent.com/4916530/131019474-f0819b86-c4d0-4b98-93b0-ad754b55efaf.mp4)
+https://user-images.githubusercontent.com/79471462/131555558-9e01e753-cafd-4ae2-af1b-b71a1aabb71f.mp4
 
 
 # Deep Dive
