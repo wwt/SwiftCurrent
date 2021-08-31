@@ -8,7 +8,7 @@ The app in this guide is going to be very simple.  It consists of a screen that 
 
 ## Adding the dependency
 
-For instructions on SPM and CocoaPods, [check out our installation page.](https://wwt.github.io/SwiftCurrent/installation.html#swift-package-manager)
+For instructions on SPM and CocoaPods, [check out our installation page.](installation.html#swift-package-manager)
 
 ## IMPORTANT NOTE
 
