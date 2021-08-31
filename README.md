@@ -1,4 +1,4 @@
-![SwiftCurrent](https://raw.githubusercontent.com/wwt/SwiftCurrent/main/.github/resources/swiftcurrent-logo.png)
+![SwiftCurrent](https://user-images.githubusercontent.com/79471462/131564417-6f4976f4-270c-41b3-bbe1-428528e2cc2c.png)
 
 <!-- Library Information -->
 [![Supported Platforms](https://img.shields.io/cocoapods/p/SwiftCurrent)](https://github.com/wwt/SwiftCurrent/security/policy)
