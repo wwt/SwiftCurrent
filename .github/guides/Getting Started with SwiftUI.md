@@ -38,7 +38,7 @@ struct FirstView: View, FlowRepresentable { // SwiftCurrent
             Text("Welcome \(name)!")
             TextField("Enter email...", text: $email)
                 .textContentType(.emailAddress)
-            Button("Save") { proceedInWorkflow(email) }
+            Button("Save") { proceedInWorkflow(email) } // SwiftCurrent
         }
     }
 }
@@ -61,7 +61,7 @@ struct SecondView: View, FlowRepresentable { // SwiftCurrent
 
     var body: some View {
         VStack {
-            Button("Finish") { proceedInWorkflow(email) }
+            Button("Finish") { proceedInWorkflow(email) } // SwiftCurrent
         }
     }
 
@@ -117,7 +117,7 @@ struct ContentView: View {
             WorkflowLauncher(isLaunched: $workflowIsPresented, startingArgs: "SwiftCurrent") { // SwiftCurrent
                 thenProceed(with: FirstView.self) { // SwiftCurrent
                     thenProceed(with: SecondView.self).applyModifiers { $0.padding().border(Color.gray) } // SwiftCurrent
-                }.applyModifiers { firstView in firstView.padding().border(Color.gray) }
+                }.applyModifiers { firstView in firstView.padding().border(Color.gray) } // SwiftCurrent
             }.onFinish { passedArgs in // SwiftCurrent
                 workflowIsPresented = false
                 guard case .args(let emailAddress as String) = passedArgs else {
