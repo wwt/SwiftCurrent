@@ -15,6 +15,10 @@ import SwiftCurrent
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class SkipTests: XCTestCase, View {
+    override func tearDownWithError() throws {
+        removeQueuedExpectations()
+    }
+
     func testSkippingFirstItemInAWorkflow() throws {
         // NOTE: Workflows in the past had issues with 4+ items, so this is to cover our bases. SwiftUI also has a nasty habit of behaving a little differently as number of views increase.
         struct FR1: View, FlowRepresentable, Inspectable {
@@ -140,12 +144,8 @@ final class SkipTests: XCTestCase, View {
                     XCTAssertNoThrow(try fr2.find(FR2.self).actualView().proceedInWorkflow())
                     try fr2.actualView().inspectWrapped { fr3 in
                         XCTAssertNoThrow(try fr3.find(FR3.self).actualView().proceedInWorkflow())
-                        try fr3.actualView().inspectWrapped { fr4 in
-                            XCTAssertThrowsError(try fr4.find(FR4.self))
-                            try fr3.actualView().inspect { fr3 in
-                                XCTAssertNoThrow(try fr3.find(FR3.self))
-                            }
-                        }
+                        XCTAssertThrowsError(try fr3.find(FR4.self))
+                        XCTAssertNoThrow(try fr3.find(FR3.self))
                     }
                 }
             }

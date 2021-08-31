@@ -44,4 +44,11 @@ extension ViewHosting {
         }
         return workflowItem
     }
+
+    static func loadView<F, W, C>(_ view: WorkflowItem<F, W, C>, model: WorkflowViewModel, launcher: Launcher) -> WorkflowItem<F, W, C> {
+        defer {
+            Self.host(view: view.environmentObject(model).environmentObject(launcher))
+        }
+        return view
+    }
 }

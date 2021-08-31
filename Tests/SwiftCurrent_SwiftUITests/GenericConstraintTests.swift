@@ -31,6 +31,10 @@ extension FlowRepresentable {
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class GenericConstraintTests: XCTestCase, View {
+    override func tearDownWithError() throws {
+        removeQueuedExpectations()
+    }
+
     // MARK: Generic Initializer Tests
 
     // MARK: Input Type == Never
@@ -1580,9 +1584,11 @@ final class GenericConstraintTests: XCTestCase, View {
             XCTAssertNoThrow(try view.find(FR0.self).actualView().proceedInWorkflow())
             try view.actualView().inspectWrapped { view in
                 XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .persistWhenSkipped)
-                try view.actualView().inspectWrapped { view in
+                try view.actualView().inspect { view in
                     XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-                    XCTAssertNoThrow(try view.find(FR2.self))
+                    try view.actualView().inspectWrapped { view in
+                        XCTAssertNoThrow(try view.find(FR2.self))
+                    }
                 }
             }
         }

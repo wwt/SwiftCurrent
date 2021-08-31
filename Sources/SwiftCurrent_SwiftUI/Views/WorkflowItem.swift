@@ -5,7 +5,6 @@
 //  Created by Tyler Thompson on 7/20/21.
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
-
 import SwiftUI
 import SwiftCurrent
 
@@ -15,10 +14,8 @@ import UIKit
 
 /**
  A concrete type used to modify a `FlowRepresentable` in a workflow.
-
  ### Discussion
  `WorkflowItem` gives you the ability to specify changes you'd like to apply to a specific `FlowRepresentable` when it is time to present it in a `Workflow`. You should create `WorkflowItem`s inside a `thenProceed(with:)` call on `WorkflowLauncher`.
-
  #### Example
  ```swift
  thenProceed(FirstView.self)
@@ -40,29 +37,32 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
     @State private var flowPersistenceClosure: (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default }
     @State private var launchStyle: LaunchStyle.SwiftUI.PresentationType = .default
     @State private var persistence: FlowPersistence = .default
-
+    @State private var elementRef: AnyWorkflow.Element?
+    @State private var isActive = false
     @EnvironmentObject private var model: WorkflowViewModel
     @EnvironmentObject private var launcher: Launcher
+    @Environment(\.presentationMode) var presentation
 
     let inspection = Inspection<Self>()
 
     public var body: some View {
         ViewBuilder {
-            if let body = model.body?.extractErasedView() as? Content {
+            if launchStyle == .navigationLink, let content = content {
+                content.navLink(to: nextView, isActive: $isActive)
+            } else if let body = model.body?.extractErasedView() as? Content, elementRef == nil || elementRef === model.body, launchStyle == .default {
                 content ?? body
             } else {
-                wrapped
+                nextView
             }
         }
-        .onReceive(model.$body) {
-            if let body = $0?.extractErasedView() as? Content {
-                content = body
-                persistence = $0?.value.metadata.persistence ?? .default
-            } else if persistence == .removedAfterProceeding {
-                content = nil
-            }
-        }
+        .onReceive(model.$body, perform: activateIfNeeded)
+        .onReceive(model.$body, perform: proceedInWorkflow)
+        .onReceive(model.onBackUpPublisher, perform: backUpInWorkflow)
         .onReceive(inspection.notice) { inspection.visit(self, $0) }
+    }
+
+    @ViewBuilder private var nextView: some View {
+        wrapped?.environmentObject(model).environmentObject(launcher)
     }
 
     private init<A, W, C, A1, W1, C1>(previous: WorkflowItem<A, W, C>, _ closure: () -> Wrapped) where Wrapped == WorkflowItem<A1, W1, C1> {
@@ -132,7 +132,6 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
 
     /**
      Provides a way to apply modifiers to your `FlowRepresentable` view.
-
      ### Important: The most recently defined (or last) use of this, is the only one that applies modifiers, unlike onAbandon or onFinish.
      */
     public func applyModifiers<V: View>(@ViewBuilder _ closure: @escaping (F) -> V) -> WorkflowItem<F, Wrapped, V> {
@@ -153,6 +152,31 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         let afrv = AnyFlowRepresentableView(type: F.self, args: args)
         modifierClosure?(afrv)
         return afrv
+    }
+
+    private func activateIfNeeded(element: AnyWorkflow.Element?) {
+        if elementRef != nil, elementRef === element?.previouslyLoadedElement {
+            isActive = true
+        }
+    }
+
+    private func backUpInWorkflow(element: AnyWorkflow.Element?) {
+        // We have found no satisfactory way to test this...we haven't even really found unsatisfactory ways to test it.
+        // See: https://github.com/nalexn/ViewInspector/issues/131
+        if elementRef === element {
+            presentation.wrappedValue.dismiss()
+        }
+    }
+
+    private func proceedInWorkflow(element: AnyWorkflow.Element?) {
+        if let body = element?.extractErasedView() as? Content, elementRef === element || elementRef == nil {
+            elementRef = element
+            content = body
+            persistence = element?.value.metadata.persistence ?? .default
+        } else if persistence == .removedAfterProceeding {
+            content = nil
+            elementRef = nil
+        }
     }
 }
 

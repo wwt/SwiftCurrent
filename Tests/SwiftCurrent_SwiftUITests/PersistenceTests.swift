@@ -15,6 +15,10 @@ import SwiftCurrent
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class PersistenceTests: XCTestCase, View {
+    override func tearDownWithError() throws {
+        removeQueuedExpectations()
+    }
+
     // MARK: RemovedAfterProceedingTests
     func testRemovedAfterProceeding_OnFirstItemInAWorkflow() throws {
         struct FR1: View, FlowRepresentable, Inspectable {

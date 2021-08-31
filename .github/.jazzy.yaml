@@ -8,3 +8,46 @@ author_url: https://github.com/wwt/SwiftCurrent
 github_url: https://github.com/wwt/SwiftCurrent
 sourcekitten_sourcefile: swiftcurrent-docs.json,swiftcurrentuikit-docs.json,swiftcurrent-swiftui-docs.json
 author: WWT and Tyler Thompson
+documentation: .github/guides/*.md
+abstract: .github/abstract/*.md
+custom_categories:
+- name: How to use SwiftCurrent with SwiftUI
+  children:
+    - Getting Started with SwiftUI
+    - Working with NavigationView
+- name: How to use SwiftCurrent with UIKit
+  children:
+    - Storyboards Intro
+    - Programmatic UIKit Intro
+- name: Creating Workflows
+  children:
+    - FlowRepresentable
+    - PassthroughFlowRepresentable
+    - Workflow
+- name: Creating Workflows in SwiftUI
+  children:
+    - View
+    - ViewControllerWrapper
+    - WorkflowItem
+    - WorkflowLauncher
+- name: Creating Workflows in UIKit
+  children:
+    - HostedWorkflowItem
+    - StoryboardLoadable
+    - UIViewController
+    - UIWorkflowItem
+- name: Controlling Presentation
+  children:
+    - LaunchStyle
+    - FlowPersistence
+    - UIKitPresenter
+- name: Type Erasure
+  children:
+    - AnyWorkflow
+    - AnyFlowRepresentable
+- name: Underlying Types
+  children:
+    - LinkedList
+    - WorkflowError
+    - OrchestrationResponder
+    - FlowRepresentableMetadata

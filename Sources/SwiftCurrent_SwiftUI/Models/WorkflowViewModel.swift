@@ -15,6 +15,7 @@ final class WorkflowViewModel: ObservableObject {
     @Published var body: AnyWorkflow.Element?
     let onAbandonPublisher = PassthroughSubject<Void, Never>()
     let onFinishPublisher = CurrentValueSubject<AnyWorkflow.PassedArgs?, Never>(nil)
+    let onBackUpPublisher = PassthroughSubject<AnyWorkflow.Element, Never>()
 
     @Binding var isLaunched: Bool
     private let launchArgs: AnyWorkflow.PassedArgs
@@ -37,6 +38,7 @@ extension WorkflowViewModel: OrchestrationResponder {
 
     func backUp(from source: AnyWorkflow.Element, to destination: AnyWorkflow.Element) {
         body = destination
+        onBackUpPublisher.send(source)
     }
 
     func abandon(_ workflow: AnyWorkflow, onFinish: (() -> Void)?) {
