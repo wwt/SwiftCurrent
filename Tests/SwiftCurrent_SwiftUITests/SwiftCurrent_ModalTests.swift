@@ -8,10 +8,19 @@
 
 import XCTest
 import SwiftUI
-import ViewInspector
 
 import SwiftCurrent
+
+@testable import ViewInspector
 @testable import SwiftCurrent_SwiftUI // testable sadly needed for inspection.inspect to work
+
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension InspectableView where View == ViewType.Sheet {
+    func isPresented() throws -> Bool {
+        try Inspector.attribute(label: "_isPresented", value: content.view,
+                                type: Binding<Bool>.self).wrappedValue
+    }
+}
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class SwiftCurrent_ModalTests: XCTestCase, View {
