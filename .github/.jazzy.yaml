@@ -9,6 +9,7 @@ github_url: https://github.com/wwt/SwiftCurrent
 sourcekitten_sourcefile: swiftcurrent-docs.json,swiftcurrentuikit-docs.json,swiftcurrent-swiftui-docs.json
 author: WWT and Tyler Thompson
 documentation: .github/guides/*.md
+abstract: .github/abstract/*.md
 custom_categories:
 - name: How to use SwiftCurrent with SwiftUI
   children:

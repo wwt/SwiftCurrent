@@ -1,0 +1,1 @@
+SwiftCurrent has first-class SwiftUI support. It’s designed to naturally feel like using any other SwiftUI tool. It is optimized to avoid common pitfalls. For example, SwiftCurrent does not use `AnyView` in its implementation. This means all of the animation and performance benefits you get when using SwiftUI normally you get when using SwiftCurrent.
