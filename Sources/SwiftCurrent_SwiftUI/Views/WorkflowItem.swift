@@ -10,7 +10,6 @@ import SwiftCurrent
 
 #if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)
 import UIKit
-import ViewInspector
 #endif
 
 /**
@@ -52,7 +51,7 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
                 content.navLink(to: nextView, isActive: $isActive)
             } else if (wrapped as? WorkflowItemPresentable)?.workflowLaunchStyle == .modal, let content = content {
                 content.testableSheet(isPresented: $isActive) { nextView }
-            } else if let body = model.body?.extractErasedView() as? Content, elementRef == nil || elementRef === model.body, launchStyle == .default {
+            } else if let body = model.body?.extractErasedView() as? Content, elementRef == nil || elementRef === model.body, launchStyle != .navigationLink {
                 content ?? body
             } else {
                 nextView
