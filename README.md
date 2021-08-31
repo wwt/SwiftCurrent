@@ -117,9 +117,11 @@ WorkflowLauncher(isLaunched: .constant(true), startingArgs: "Launched") {
 
 And just like that you're started!
 
-Check out this video of the SwiftUI Beta in action
+![SwiftUI quick start app demo](https://raw.githubusercontent.com/wwt/SwiftCurrent/jazzy-restructure/.github/resources/swiftUI.gif)
 
-https://user-images.githubusercontent.com/4916530/131019474-f0819b86-c4d0-4b98-93b0-ad754b55efaf.mp4
+Here's an example of an app written with SwiftCurrent running wherever SwiftUI runs.  Check it out:
+
+![Example universal SwiftUI app demo](https://user-images.githubusercontent.com/4916530/131019474-f0819b86-c4d0-4b98-93b0-ad754b55efaf.mp4)
 
 
 # Deep Dive
