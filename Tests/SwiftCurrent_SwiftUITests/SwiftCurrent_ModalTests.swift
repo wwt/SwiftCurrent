@@ -190,7 +190,6 @@ final class SwiftCurrent_ModalTests: XCTestCase, View {
                                                         XCTAssert(try fr3.find(ViewType.Sheet.self).isPresented())
                                                         XCTAssert(try fr4.find(ViewType.Sheet.self).isPresented())
                                                         XCTAssert(try fr5.find(ViewType.Sheet.self).isPresented())
-                                                        XCTAssert(try fr6.find(ViewType.Sheet.self).isPresented())
                                                         try fr6.find(ViewType.Sheet.self).view(WorkflowItem<FR7, Never, FR7>.self).actualView().inspect(model: model, launcher: launcher) { fr7 in
                                                             XCTAssertNoThrow(try fr7.find(FR7.self).actualView().proceedInWorkflow())
                                                             try fr7.actualView().inspect { fr7 in
