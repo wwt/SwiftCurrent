@@ -1,6 +1,0 @@
-- [Why This Library?](https://github.com/wwt/SwiftCurrent/wiki/Why-This-Library%3F)
-- [Installation](https://github.com/wwt/SwiftCurrent/wiki/Installation)
-- [Getting Started with Storyboards](https://github.com/wwt/SwiftCurrent/wiki/Getting-Started-with-Storyboards)
-- [Getting Started with Programmatic UIKit Views](https://github.com/wwt/SwiftCurrent/wiki/Getting-Started-with-Programmatic-UIKit-Views)
-- [[BETA] Getting Started with SwiftUI](https://github.com/wwt/SwiftCurrent/wiki/Getting-Started-with-SwiftUI)
-- [Developer Documentation](https://wwt.github.io/SwiftCurrent/index.html)

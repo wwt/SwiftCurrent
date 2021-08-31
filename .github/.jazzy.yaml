@@ -11,6 +11,10 @@ author: WWT and Tyler Thompson
 documentation: .github/guides/*.md
 abstract: .github/abstract/*.md
 custom_categories:
+- name: Overview
+  children:
+    - Why this Library
+    - Installation
 - name: How to use SwiftCurrent with SwiftUI
   children:
     - Getting Started with SwiftUI
