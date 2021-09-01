@@ -18,17 +18,11 @@ struct SwiftUIExampleApp: App {
 
     var body: some Scene {
         WindowGroup {
-            if let testing = ProcessInfo.processInfo.environment["XCUITest"] {
-                TestingView()
+            if ProcessInfo.processInfo.environment[EnvironmentKey.xcuiTest.rawValue] != nil {
+                TestView()
             } else {
                 ContentView()
             }
         }
-    }
-}
-
-struct TestingView: View {
-    var body: some View {
-        Text("\(ProcessInfo.processInfo.environment["someOtherKey"]!)")
     }
 }

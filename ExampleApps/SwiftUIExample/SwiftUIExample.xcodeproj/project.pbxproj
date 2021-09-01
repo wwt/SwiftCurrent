@@ -58,6 +58,9 @@
 		CAD026AF26A0C8680075B818 /* InspectableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD026AE26A0C8680075B818 /* InspectableExtensions.swift */; };
 		D74A4D5C26A7315F00010617 /* TestConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74A4D5B26A7315F00010617 /* TestConstant.swift */; };
 		D7A6CE7526E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7426E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift */; };
+		D7A6CE7E26E039C300599824 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7D26E039C300599824 /* TestView.swift */; };
+		D7A6CE8026E039EE00599824 /* TestEnumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7F26E039EE00599824 /* TestEnumerations.swift */; };
+		D7A6CE8126E03ADD00599824 /* TestEnumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7F26E039EE00599824 /* TestEnumerations.swift */; };
 		D7DBD1FB26CD920700F1E39B /* MockOrchestrationResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD1F526CD920700F1E39B /* MockOrchestrationResponder.swift */; };
 		D7DBD1FC26CD920700F1E39B /* ViewControllerAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD1F626CD920700F1E39B /* ViewControllerAdditions.swift */; };
 		D7DBD1FD26CD920700F1E39B /* AnyWorkflowAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD1F726CD920700F1E39B /* AnyWorkflowAdditions.swift */; };
@@ -136,6 +139,8 @@
 		D7A6CE7226E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftCurrent_SwiftUI_UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7A6CE7426E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftCurrent_SwiftUI_UITests.swift; sourceTree = "<group>"; };
 		D7A6CE7626E0316C00599824 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D7A6CE7D26E039C300599824 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		D7A6CE7F26E039EE00599824 /* TestEnumerations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestEnumerations.swift; sourceTree = "<group>"; };
 		D7DBD1F526CD920700F1E39B /* MockOrchestrationResponder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockOrchestrationResponder.swift; sourceTree = "<group>"; };
 		D7DBD1F626CD920700F1E39B /* ViewControllerAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerAdditions.swift; sourceTree = "<group>"; };
 		D7DBD1F726CD920700F1E39B /* AnyWorkflowAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyWorkflowAdditions.swift; sourceTree = "<group>"; };
@@ -237,6 +242,7 @@
 		CAC34B4126A07F830039A373 /* SwiftUIExample */ = {
 			isa = PBXGroup;
 			children = (
+				D7A6CE7C26E039B400599824 /* TestViews */,
 				CA6FB0DC26C6AD5200FB3285 /* UIKitInterop */,
 				CAD026AA26A0C7F80075B818 /* ViewInspector */,
 				CAD0269D26A0BE610075B818 /* DependencyInjection */,
@@ -348,6 +354,15 @@
 				D7A6CE7626E0316C00599824 /* Info.plist */,
 			);
 			path = SwiftCurrent_SwiftUI_UITests;
+			sourceTree = "<group>";
+		};
+		D7A6CE7C26E039B400599824 /* TestViews */ = {
+			isa = PBXGroup;
+			children = (
+				D7A6CE7D26E039C300599824 /* TestView.swift */,
+				D7A6CE7F26E039EE00599824 /* TestEnumerations.swift */,
+			);
+			path = TestViews;
 			sourceTree = "<group>";
 		};
 		D7DBD1F326CD920700F1E39B /* SwiftCurrent_Testing */ = {
@@ -543,10 +558,12 @@
 				CAD026AC26A0C83B0075B818 /* Inspection.swift in Sources */,
 				CAD0269F26A0BE810075B818 /* ContainerExtensions.swift in Sources */,
 				CA0536FB26A0919900BF8FC5 /* AccountInformationView.swift in Sources */,
+				D7A6CE8026E039EE00599824 /* TestEnumerations.swift in Sources */,
 				CAD026A126A0BE9A0075B818 /* DependencyInjected.swift in Sources */,
 				CAC34B7626A07FE90039A373 /* ContentView.swift in Sources */,
 				CAC34B7726A07FE90039A373 /* MapFeatureView.swift in Sources */,
 				CAC34B7526A07FE90039A373 /* MapFeatureOnboardingView.swift in Sources */,
+				D7A6CE7E26E039C300599824 /* TestView.swift in Sources */,
 				CA7B82A526A2061B005AA87D /* MFAView.swift in Sources */,
 				CAC34B7326A07FE90039A373 /* QRScannerFeatureView.swift in Sources */,
 				CAC34B7426A07FE90039A373 /* QRScannerFeatureOnboardingView.swift in Sources */,
@@ -594,6 +611,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7A6CE7526E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift in Sources */,
+				D7A6CE8126E03ADD00599824 /* TestEnumerations.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

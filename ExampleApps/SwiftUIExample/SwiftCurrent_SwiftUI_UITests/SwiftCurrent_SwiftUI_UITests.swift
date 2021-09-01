@@ -32,21 +32,20 @@ class SwiftCurrent_SwiftUI_UITests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
 
-    func testCustomView() throws {
+    func testCustomLaunch() throws {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
         app.launchEnvironment = [
-            "XCUITest": "true",
-            "someOtherKey": "Important variable"
+            EnvironmentKey.xcuiTest.rawValue: "true",
+            EnvironmentKey.stringData.rawValue: "Important variable"
         ]
         app.launch()
 
-        let foo = app.staticTexts["Important variable"]
+        let foo = app.staticTexts["Optional(\"Important variable\")"]
         XCTAssert(foo.exists)
 
         app.launchEnvironment = [
-            "XCUITest": "true",
-            "someOtherKey": ""
+            EnvironmentKey.xcuiTest.rawValue: "true",
         ]
         app.launch()
 
@@ -54,12 +53,15 @@ class SwiftCurrent_SwiftUI_UITests: XCTestCase {
         XCTAssertFalse(foo2.exists)
     }
 
-//    func testLaunchPerformance() throws {
-//        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
-//            // This measures how long it takes to launch your application.
-//            measure(metrics: [XCTApplicationLaunchMetric()]) {
-//                XCUIApplication().launch()
-//            }
-//        }
-//    }
+    func testCustomView() throws {
+        let app = XCUIApplication()
+        app.launchEnvironment = [
+            EnvironmentKey.xcuiTest.rawValue: "true",
+            EnvironmentKey.testingView.rawValue: TestingView.FR1.rawValue
+        ]
+        app.launch()
+
+        let foo = app.staticTexts["This is FR1"]
+        XCTAssert(foo.exists)
+    }
 }
