@@ -19,7 +19,13 @@ extension LaunchStyle {
     public enum SwiftUI {
         /// A type indicating how a `FlowRepresentable` should be presented.
         public enum PresentationType: RawRepresentable, CaseIterable {
-            public static let allCases: [LaunchStyle.SwiftUI.PresentationType] = [.default, .navigationLink, .modal(.sheet), .modal(.fullScreenCover)]
+            public static var allCases: [LaunchStyle.SwiftUI.PresentationType] {
+                if #available(iOS 14.0, tvOS 14.0, watchOS 7.0, *) {
+                    return [.default, .navigationLink, .modal(.sheet), .modal(.fullScreenCover)]
+                } else {
+                    return [.default, .navigationLink, .modal(.sheet)]
+                }
+            }
 
             /**
              Indicates a `FlowRepresentable` can be launched contextually.
@@ -45,7 +51,12 @@ extension LaunchStyle {
                     case .default: self = .default
                     case ._swiftUI_navigationLink: self = .navigationLink
                     case ._swiftUI_modal: self = .modal()
-                    case ._swiftUI_modal_fullscreen: self = .modal(.fullScreenCover)
+                    case ._swiftUI_modal_fullscreen:
+                        if #available(iOS 14.0, tvOS 14.0, watchOS 7.0, *) {
+                            self = .modal(.fullScreenCover)
+                        } else {
+                            return nil
+                        }
                     default: return nil
                 }
             }
@@ -81,7 +92,10 @@ extension LaunchStyle.SwiftUI {
     public enum ModalPresentationStyle {
         /// Presents a sheet
         case sheet
+
         /// Presents a modal view that covers as much of the screen as possible
+        @available(iOS 14.0, tvOS 14.0, watchOS 7.0, *)
+        @available(macOS, unavailable)
         case fullScreenCover
     }
 }
