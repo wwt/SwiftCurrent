@@ -49,7 +49,9 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         ViewBuilder {
             if launchStyle == .navigationLink, let content = content {
                 content.navLink(to: nextView, isActive: $isActive)
-            } else if let body = model.body?.extractErasedView() as? Content, elementRef == nil || elementRef === model.body, launchStyle == .default {
+            } else if (wrapped as? WorkflowItemPresentable)?.workflowLaunchStyle == .modal, let content = content {
+                content.testableSheet(isPresented: $isActive) { nextView }
+            } else if let body = model.body?.extractErasedView() as? Content, elementRef == nil || elementRef === model.body, launchStyle != .navigationLink {
                 content ?? body
             } else {
                 nextView
@@ -177,6 +179,13 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
             content = nil
             elementRef = nil
         }
+    }
+}
+
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension WorkflowItem: WorkflowItemPresentable {
+    var workflowLaunchStyle: LaunchStyle.SwiftUI.PresentationType {
+        launchStyle
     }
 }
 

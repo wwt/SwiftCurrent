@@ -24,6 +24,7 @@ custom_categories:
   children:
     - Getting Started with SwiftUI
     - Working with NavigationView
+    - Working with Modals
 - name: Creating Workflows in SwiftUI
   children:
     - WorkflowLauncher
