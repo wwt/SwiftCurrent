@@ -134,6 +134,15 @@ final class SwiftCurrent_ModalTests: XCTestCase, View {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR7 type") }
         }
+        var model: WorkflowViewModel!
+        var launcher: Launcher!
+        var fr1: InspectableView<ViewType.View<WorkflowItem<FR1, WorkflowItem<FR2, WorkflowItem<FR3, WorkflowItem<FR4, WorkflowItem<FR5, WorkflowItem<FR6, WorkflowItem<FR7, Never, FR7>, FR6>, FR5>, FR4>, FR3>, FR2>, FR1>>>!
+        var fr2: InspectableView<ViewType.View<WorkflowItem<FR2, WorkflowItem<FR3, WorkflowItem<FR4, WorkflowItem<FR5, WorkflowItem<FR6, WorkflowItem<FR7, Never, FR7>, FR6>, FR5>, FR4>, FR3>, FR2>>>!
+        var fr3: InspectableView<ViewType.View<WorkflowItem<FR3, WorkflowItem<FR4, WorkflowItem<FR5, WorkflowItem<FR6, WorkflowItem<FR7, Never, FR7>, FR6>, FR5>, FR4>, FR3>>>!
+        var fr4: InspectableView<ViewType.View<WorkflowItem<FR4, WorkflowItem<FR5, WorkflowItem<FR6, WorkflowItem<FR7, Never, FR7>, FR6>, FR5>, FR4>>>!
+        var fr5: InspectableView<ViewType.View<WorkflowItem<FR5, WorkflowItem<FR6, WorkflowItem<FR7, Never, FR7>, FR6>, FR5>>>!
+        var fr6: InspectableView<ViewType.View<WorkflowItem<FR6, WorkflowItem<FR7, Never, FR7>, FR6>>>!
+
         let expectViewLoaded = ViewHosting.loadView(
             WorkflowLauncher(isLaunched: .constant(true)) {
                 thenProceed(with: FR1.self) {
@@ -150,71 +159,97 @@ final class SwiftCurrent_ModalTests: XCTestCase, View {
                     }.presentationType(.modal)
                 }
             }
-        ).inspection.inspect { fr1 in
-            let model = (Mirror(reflecting: try fr1.actualView()).descendant("_model") as! EnvironmentObject<WorkflowViewModel>).wrappedValue
-            let launcher = (Mirror(reflecting: try fr1.actualView()).descendant("_launcher") as! EnvironmentObject<Launcher>).wrappedValue
-            XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
-            try fr1.actualView().inspect { fr1 in
-                XCTAssert(try fr1.find(ViewType.Sheet.self).isPresented())
-                try fr1.find(ViewType.Sheet.self).view(WorkflowItem<FR2, WorkflowItem<FR3, WorkflowItem<FR4, WorkflowItem<FR5, WorkflowItem<FR6, WorkflowItem<FR7, Never, FR7>, FR6>, FR5>, FR4>, FR3>, FR2>.self).actualView().inspect(model: model, launcher: launcher) { fr2 in
-                    XCTAssert(try fr1.find(ViewType.Sheet.self).isPresented())
-                    XCTAssertNoThrow(try fr2.find(FR2.self).actualView().proceedInWorkflow())
-                    try fr2.actualView().inspect { fr2 in
-                        XCTAssert(try fr1.find(ViewType.Sheet.self).isPresented())
-                        XCTAssert(try fr2.find(ViewType.Sheet.self).isPresented())
-                        try fr2.find(ViewType.Sheet.self).view(WorkflowItem<FR3, WorkflowItem<FR4, WorkflowItem<FR5, WorkflowItem<FR6, WorkflowItem<FR7, Never, FR7>, FR6>, FR5>, FR4>, FR3>.self).actualView().inspect(model: model, launcher: launcher) { fr3 in
-                            XCTAssertNoThrow(try fr3.find(FR3.self).actualView().proceedInWorkflow())
-                            try fr3.actualView().inspect { fr3 in
-                                XCTAssert(try fr1.find(ViewType.Sheet.self).isPresented())
-                                XCTAssert(try fr2.find(ViewType.Sheet.self).isPresented())
-                                XCTAssert(try fr3.find(ViewType.Sheet.self).isPresented())
-                                try fr3.find(ViewType.Sheet.self).view(WorkflowItem<FR4, WorkflowItem<FR5, WorkflowItem<FR6, WorkflowItem<FR7, Never, FR7>, FR6>, FR5>, FR4>.self).actualView().inspect(model: model, launcher: launcher) { fr4 in
-                                    XCTAssertNoThrow(try fr4.find(FR4.self).actualView().proceedInWorkflow())
-                                    try fr4.actualView().inspect { fr4 in
-                                        XCTAssert(try fr1.find(ViewType.Sheet.self).isPresented())
-                                        XCTAssert(try fr2.find(ViewType.Sheet.self).isPresented())
-                                        XCTAssert(try fr3.find(ViewType.Sheet.self).isPresented())
-                                        XCTAssert(try fr4.find(ViewType.Sheet.self).isPresented())
-                                        try fr4.find(ViewType.Sheet.self).view(WorkflowItem<FR5, WorkflowItem<FR6, WorkflowItem<FR7, Never, FR7>, FR6>, FR5>.self).actualView().inspect(model: model, launcher: launcher) { fr5 in
-                                            XCTAssertNoThrow(try fr5.find(FR5.self).actualView().proceedInWorkflow())
-                                            try fr5.actualView().inspect { fr5 in
-                                                XCTAssert(try fr1.find(ViewType.Sheet.self).isPresented())
-                                                XCTAssert(try fr2.find(ViewType.Sheet.self).isPresented())
-                                                XCTAssert(try fr3.find(ViewType.Sheet.self).isPresented())
-                                                XCTAssert(try fr4.find(ViewType.Sheet.self).isPresented())
-                                                try fr5.find(ViewType.Sheet.self).view(WorkflowItem<FR6, WorkflowItem<FR7, Never, FR7>, FR6>.self).actualView().inspect(model: model, launcher: launcher) { fr6 in
-                                                    XCTAssertNoThrow(try fr6.find(FR6.self).actualView().proceedInWorkflow())
-                                                    try fr6.actualView().inspect { fr6 in
-                                                        XCTAssert(try fr1.find(ViewType.Sheet.self).isPresented())
-                                                        XCTAssert(try fr2.find(ViewType.Sheet.self).isPresented())
-                                                        XCTAssert(try fr3.find(ViewType.Sheet.self).isPresented())
-                                                        XCTAssert(try fr4.find(ViewType.Sheet.self).isPresented())
-                                                        XCTAssert(try fr5.find(ViewType.Sheet.self).isPresented())
-                                                        try fr6.find(ViewType.Sheet.self).view(WorkflowItem<FR7, Never, FR7>.self).actualView().inspect(model: model, launcher: launcher) { fr7 in
-                                                            XCTAssertNoThrow(try fr7.find(FR7.self).actualView().proceedInWorkflow())
-                                                            try fr7.actualView().inspect { fr7 in
-                                                                XCTAssert(try fr1.find(ViewType.Sheet.self).isPresented())
-                                                                XCTAssert(try fr2.find(ViewType.Sheet.self).isPresented())
-                                                                XCTAssert(try fr3.find(ViewType.Sheet.self).isPresented())
-                                                                XCTAssert(try fr4.find(ViewType.Sheet.self).isPresented())
-                                                                XCTAssert(try fr5.find(ViewType.Sheet.self).isPresented())
-                                                                XCTAssert(try fr6.find(ViewType.Sheet.self).isPresented())
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+        ).inspection.inspect { fr_1 in
+            model = (Mirror(reflecting: try fr_1.actualView()).descendant("_model") as! EnvironmentObject<WorkflowViewModel>).wrappedValue
+            launcher = (Mirror(reflecting: try fr_1.actualView()).descendant("_launcher") as! EnvironmentObject<Launcher>).wrappedValue
+            XCTAssertNoThrow(try fr_1.find(FR1.self).actualView().proceedInWorkflow())
+            try fr_1.actualView().inspect { fr_1 in
+                XCTAssert(try fr_1.find(ViewType.Sheet.self).isPresented())
+                fr1 = fr_1
             }
         }
 
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+
+        removeQueuedExpectations()
+
+        try fr1.find(ViewType.Sheet.self).view(WorkflowItem<FR2, WorkflowItem<FR3, WorkflowItem<FR4, WorkflowItem<FR5, WorkflowItem<FR6, WorkflowItem<FR7, Never, FR7>, FR6>, FR5>, FR4>, FR3>, FR2>.self).actualView().inspect(model: model, launcher: launcher) { fr_2 in
+            XCTAssert(try fr1.find(ViewType.Sheet.self).isPresented())
+            XCTAssertNoThrow(try fr_2.find(FR2.self).actualView().proceedInWorkflow())
+            try fr_2.actualView().inspect { fr_2 in
+                XCTAssert(try fr1.find(ViewType.Sheet.self).isPresented())
+                XCTAssert(try fr_2.find(ViewType.Sheet.self).isPresented())
+                fr2 = fr_2
+            }
+        }
+
+        removeQueuedExpectations()
+
+        try fr2.find(ViewType.Sheet.self).view(WorkflowItem<FR3, WorkflowItem<FR4, WorkflowItem<FR5, WorkflowItem<FR6, WorkflowItem<FR7, Never, FR7>, FR6>, FR5>, FR4>, FR3>.self).actualView().inspect(model: model, launcher: launcher) { fr_3 in
+            XCTAssertNoThrow(try fr_3.find(FR3.self).actualView().proceedInWorkflow())
+            try fr_3.actualView().inspect { fr_3 in
+                XCTAssert(try fr1.find(ViewType.Sheet.self).isPresented())
+                XCTAssert(try fr2.find(ViewType.Sheet.self).isPresented())
+                XCTAssert(try fr_3.find(ViewType.Sheet.self).isPresented())
+                fr3 = fr_3
+            }
+        }
+
+        removeQueuedExpectations()
+
+        try fr3.find(ViewType.Sheet.self).view(WorkflowItem<FR4, WorkflowItem<FR5, WorkflowItem<FR6, WorkflowItem<FR7, Never, FR7>, FR6>, FR5>, FR4>.self).actualView().inspect(model: model, launcher: launcher) { fr_4 in
+            XCTAssertNoThrow(try fr_4.find(FR4.self).actualView().proceedInWorkflow())
+            try fr_4.actualView().inspect { fr_4 in
+                XCTAssert(try fr1.find(ViewType.Sheet.self).isPresented())
+                XCTAssert(try fr2.find(ViewType.Sheet.self).isPresented())
+                XCTAssert(try fr3.find(ViewType.Sheet.self).isPresented())
+                XCTAssert(try fr_4.find(ViewType.Sheet.self).isPresented())
+                fr4 = fr_4
+            }
+        }
+
+        removeQueuedExpectations()
+
+        try fr4.find(ViewType.Sheet.self).view(WorkflowItem<FR5, WorkflowItem<FR6, WorkflowItem<FR7, Never, FR7>, FR6>, FR5>.self).actualView().inspect(model: model, launcher: launcher) { fr_5 in
+            XCTAssertNoThrow(try fr_5.find(FR5.self).actualView().proceedInWorkflow())
+            try fr_5.actualView().inspect { fr_5 in
+                XCTAssert(try fr1.find(ViewType.Sheet.self).isPresented())
+                XCTAssert(try fr2.find(ViewType.Sheet.self).isPresented())
+                XCTAssert(try fr3.find(ViewType.Sheet.self).isPresented())
+                XCTAssert(try fr4.find(ViewType.Sheet.self).isPresented())
+                XCTAssert(try fr_5.find(ViewType.Sheet.self).isPresented())
+                fr5 = fr_5
+            }
+        }
+
+        removeQueuedExpectations()
+
+        try fr5.find(ViewType.Sheet.self).view(WorkflowItem<FR6, WorkflowItem<FR7, Never, FR7>, FR6>.self).actualView().inspect(model: model, launcher: launcher) { fr_6 in
+            XCTAssertNoThrow(try fr_6.find(FR6.self).actualView().proceedInWorkflow())
+            try fr_6.actualView().inspect { fr_6 in
+                XCTAssert(try fr1.find(ViewType.Sheet.self).isPresented())
+                XCTAssert(try fr2.find(ViewType.Sheet.self).isPresented())
+                XCTAssert(try fr3.find(ViewType.Sheet.self).isPresented())
+                XCTAssert(try fr4.find(ViewType.Sheet.self).isPresented())
+                XCTAssert(try fr5.find(ViewType.Sheet.self).isPresented())
+                XCTAssert(try fr_6.find(ViewType.Sheet.self).isPresented())
+                fr6 = fr_6
+            }
+        }
+
+        removeQueuedExpectations()
+
+        try fr6.find(ViewType.Sheet.self).view(WorkflowItem<FR7, Never, FR7>.self).actualView().inspect(model: model, launcher: launcher) { fr7 in
+            XCTAssertNoThrow(try fr7.find(FR7.self).actualView().proceedInWorkflow())
+            try fr7.actualView().inspect { fr7 in
+                XCTAssert(try fr1.find(ViewType.Sheet.self).isPresented())
+                XCTAssert(try fr2.find(ViewType.Sheet.self).isPresented())
+                XCTAssert(try fr3.find(ViewType.Sheet.self).isPresented())
+                XCTAssert(try fr4.find(ViewType.Sheet.self).isPresented())
+                XCTAssert(try fr5.find(ViewType.Sheet.self).isPresented())
+                XCTAssert(try fr6.find(ViewType.Sheet.self).isPresented())
+            }
+        }
     }
 
     func testNavLinkWorkflowsCanSkipTheFirstItem() throws {
