@@ -11,7 +11,7 @@ author: WWT and Tyler Thompson
 documentation: .github/guides/*.md
 abstract: .github/abstract/*.md
 custom_categories:
-- name: Documentation
+- name: Overview
   children:
     - Why This Library
     - Installation
