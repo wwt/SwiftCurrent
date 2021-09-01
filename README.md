@@ -98,26 +98,30 @@ And just like that you're started!
 Then make your first FlowRepresentable view:
 ```swift
 import SwiftCurrent
-struct ExampleView: View, FlowRepresentable {
+struct OptionalView: View, FlowRepresentable {
     weak var _workflowPointer: AnyFlowRepresentable?
     let input: String
     init(with args: String) { input = args }
-    var body: some View { Text("Passed in: \(input)") }
-    func shouldLoad() -> Bool { !input.isEmpty }
+    var body: some View { Text("Only shows up if no input") }
+    func shouldLoad() -> Bool { input.isEmpty }
+}
+struct ExampleView: View, FlowRepresentable {
+    weak var _workflowPointer: AnyFlowRepresentable?
+    var body: some View { Text("This is ExampleView!") }
 }
 ```
 Then from your ContentView body, add: 
 ```swift
 import SwiftCurrent_SwiftUI
 ...
-WorkflowLauncher(isLaunched: .constant(true), startingArgs: "Launched") {
-    thenProceed(with: ExampleView.self)
+WorkflowLauncher(isLaunched: .constant(true), startingArgs: "Skip optional screen") {
+    thenProceed(with: OptionalView.self) {
+        thenProceed(with: ExampleView.self)
+    }
 }
 ```
 
 And just like that you're started!
-
-![SwiftUI quick start app demo](https://raw.githubusercontent.com/wwt/SwiftCurrent/jazzy-restructure/.github/resources/swiftUI.gif)
 
 Here's an example of an app written with SwiftCurrent running wherever SwiftUI runs.  Check it out:
 

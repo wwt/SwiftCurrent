@@ -18,6 +18,8 @@ SwiftCurrent is so convenient that you may miss the couple lines that are calls 
 
 Create two views that implement `FlowRepresentable`.
 
+First view:
+
 ```swift
 import SwiftUI
 import SwiftCurrent
@@ -48,6 +50,13 @@ struct FirstView_Previews: PreviewProvider {
         FirstView(with: "Example Name")
     }
 }
+```
+
+Second view:
+
+```swift
+import SwiftUI
+import SwiftCurrent
 
 struct SecondView: View, FlowRepresentable { // SwiftCurrent
     typealias WorkflowOutput = String // SwiftCurrent

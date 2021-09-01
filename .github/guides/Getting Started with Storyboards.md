@@ -39,6 +39,8 @@ extension MainStoryboardLoadable {
 
 Create two view controllers that both conform to `MainStoryboardLoadable` and inherit from `UIWorkflowItem`.
 
+First view controller:
+
 ```swift
 import UIKit
 import SwiftCurrent_UIKit
@@ -64,6 +66,13 @@ class FirstViewController: UIWorkflowItem<String, String>, MainStoryboardLoadabl
         proceedInWorkflow(emailTextField.text ?? "") // SwiftCurrent
     }
 }
+```
+
+Second view controller:
+
+```swift
+import UIKit
+import SwiftCurrent_UIKit
 
 // This screen shows an employee only screen
 class SecondViewController: UIWorkflowItem<String, String>, MainStoryboardLoadable { // SwiftCurrent

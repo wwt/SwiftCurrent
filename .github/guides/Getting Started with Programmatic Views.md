@@ -18,6 +18,8 @@ SwiftCurrent is so convenient that you may miss the couple lines that are calls 
 
 Create two view controllers that inherit from `UIWorkflowItem` and implement `FlowRepresentable`.
 
+First view controller:
+
 ```swift
 import UIKit
 import SwiftCurrent
@@ -72,6 +74,14 @@ class FirstViewController: UIWorkflowItem<String, String>, FlowRepresentable { /
         saveButton.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 24).isActive = true
     }
 }
+```
+
+Second view controller:
+
+```swift
+import UIKit
+import SwiftCurrent
+import SwiftCurrent_UIKit
 
 // This screen shows an employee only screen
 class SecondViewController: UIWorkflowItem<String, String>, FlowRepresentable { // SwiftCurrent
