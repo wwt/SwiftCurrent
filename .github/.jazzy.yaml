@@ -31,8 +31,8 @@ custom_categories:
     - WorkflowItem
 - name: How to use SwiftCurrent with UIKit
   children:
-    - Getting Started with Programmatic Views
-    - Getting Started with Storyboards
+    - Using Programmatic Views
+    - Using Storyboards
 - name: Creating Workflows in UIKit
   children:
     - UIViewController
