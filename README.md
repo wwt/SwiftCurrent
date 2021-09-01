@@ -132,7 +132,7 @@ https://user-images.githubusercontent.com/79471462/131555558-9e01e753-cafd-4ae2-
 - [Getting Started with Programmatic UIKit Views](https://wwt.github.io/SwiftCurrent/programmatic-uikit-intro.html)
 - [[BETA] Getting Started with SwiftUI](https://wwt.github.io/SwiftCurrent/getting-started-with-swiftui.html)
 - [Developer Documentation](https://wwt.github.io/SwiftCurrent/index.html)
-- [Upgrade Path](https://wwt.github.io/SwiftCurrent/upgrade-paths.html)
+- [Upgrade Path](https://github.com/wwt/SwiftCurrent/blob/main/.github/UPGRADE_PATH.md)
 - [Contributing to SwiftCurrent](https://github.com/wwt/SwiftCurrent/blob/main/.github/CONTRIBUTING.md)
 
 # Feedback
