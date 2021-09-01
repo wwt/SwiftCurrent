@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Swinject
+import Foundation
 
 @main
 struct SwiftUIExampleApp: App {
@@ -17,7 +18,17 @@ struct SwiftUIExampleApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if let testing = ProcessInfo.processInfo.environment["XCUITest"] {
+                TestingView()
+            } else {
+                ContentView()
+            }
         }
+    }
+}
+
+struct TestingView: View {
+    var body: some View {
+        Text("\(ProcessInfo.processInfo.environment["someOtherKey"]!)")
     }
 }
