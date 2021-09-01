@@ -15,6 +15,7 @@ custom_categories:
   children:
     - Getting Started with SwiftUI
     - Working with NavigationView
+    - Working with Modals
 - name: How to use SwiftCurrent with UIKit
   children:
     - Storyboards Intro
