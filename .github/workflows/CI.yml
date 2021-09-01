@@ -25,7 +25,6 @@ jobs:
           retention-days: 90
 
   build_for_package_managers:
-    needs: test
     runs-on: macos-latest
     env:
         working-directory: .github
