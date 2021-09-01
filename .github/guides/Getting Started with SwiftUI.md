@@ -4,11 +4,11 @@ This guide will walk you through getting a `Workflow` up and running in a new iO
 
 The app in this guide is going to be very simple.  It consists of a view that will host the `WorkflowLauncher`, a view to enter an email address, and an optional view for when the user enters an email with `@wwt.com` in it.  Here is a preview of what the app will look like:
 
-![Preview image of app](https://raw.githubusercontent.com/wwt/SwiftCurrent/main/.github/wiki/swiftUI.gif)
+![Preview image of app](https://user-images.githubusercontent.com/79471462/131556533-f2ad1e6c-9acd-4d62-94ac-9140c9718f95.gif)
 
 ## Adding the dependency
 
-For instructions on SPM and CocoaPods, [check out our installation page.](https://github.com/wwt/SwiftCurrent/wiki/Installation#swift-package-manager)
+For instructions on SPM and CocoaPods, [check out our installation page.](installation.html#swift-package-manager)
 
 ## IMPORTANT NOTE
 
@@ -17,6 +17,8 @@ SwiftCurrent is so convenient that you may miss the couple lines that are calls 
 ## Create your views
 
 Create two views that implement `FlowRepresentable`.
+
+First view:
 
 ```swift
 import SwiftUI
@@ -48,6 +50,13 @@ struct FirstView_Previews: PreviewProvider {
         FirstView(with: "Example Name")
     }
 }
+```
+
+Second view:
+
+```swift
+import SwiftUI
+import SwiftCurrent
 
 struct SecondView: View, FlowRepresentable { // SwiftCurrent
     typealias WorkflowOutput = String // SwiftCurrent

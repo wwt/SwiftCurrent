@@ -11,31 +11,34 @@ author: WWT and Tyler Thompson
 documentation: .github/guides/*.md
 abstract: .github/abstract/*.md
 custom_categories:
+- name: Overview
+  children:
+    - Why This Library
+    - Installation
+- name: Creating Workflows
+  children:
+    - FlowRepresentable
+    - Workflow
+    - PassthroughFlowRepresentable
 - name: How to use SwiftCurrent with SwiftUI
   children:
     - Getting Started with SwiftUI
     - Working with NavigationView
-- name: How to use SwiftCurrent with UIKit
-  children:
-    - Storyboards Intro
-    - Programmatic UIKit Intro
-- name: Creating Workflows
-  children:
-    - FlowRepresentable
-    - PassthroughFlowRepresentable
-    - Workflow
 - name: Creating Workflows in SwiftUI
   children:
-    - View
-    - ViewControllerWrapper
-    - WorkflowItem
     - WorkflowLauncher
+    - View
+    - WorkflowItem
+- name: How to use SwiftCurrent with UIKit
+  children:
+    - Using Programmatic Views
+    - Using Storyboards
 - name: Creating Workflows in UIKit
   children:
-    - HostedWorkflowItem
-    - StoryboardLoadable
     - UIViewController
     - UIWorkflowItem
+    - HostedWorkflowItem
+    - StoryboardLoadable
 - name: Controlling Presentation
   children:
     - LaunchStyle
@@ -47,7 +50,8 @@ custom_categories:
     - AnyFlowRepresentable
 - name: Underlying Types
   children:
-    - LinkedList
-    - WorkflowError
-    - OrchestrationResponder
     - FlowRepresentableMetadata
+    - LinkedList
+    - OrchestrationResponder
+    - ViewControllerWrapper
+    - WorkflowError

@@ -1,14 +1,14 @@
 ## Overview
 
-This guide will walk you through getting a [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html) up and running in a new iOS project.  If you would like to see an existing project, clone the repo and view the `UIKitExample` scheme in `SwiftCurrent.xcworkspace`.
+This guide will walk you through getting a `Workflow` up and running in a new iOS project.  If you would like to see an existing project, clone the repo and view the `UIKitExample` scheme in `SwiftCurrent.xcworkspace`.
 
-The app in this guide is going to be very simple.  It consists of a screen that will launch the [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html), a screen to enter an email address, and an optional screen for when the user enters an email with `@wwt.com` in it.  Here is a preview of what the app will look like:
+The app in this guide is going to be very simple.  It consists of a screen that will launch the `Workflow`, a screen to enter an email address, and an optional screen for when the user enters an email with `@wwt.com` in it.  Here is a preview of what the app will look like:
 
-![Preview image of app](https://raw.githubusercontent.com/wwt/SwiftCurrent/main/.github/wiki/programmatic.gif)
+![Preview image of app](https://user-images.githubusercontent.com/79471462/131556322-56757c1d-e4ec-4581-a47c-969f536e3893.gif)
 
 ## Adding the dependency
 
-For instructions on SPM and CocoaPods, [check out our installation page.](https://github.com/wwt/SwiftCurrent/wiki/Installation#swift-package-manager)
+For instructions on SPM and CocoaPods, [check out our installation page.](installation.html#swift-package-manager)
 
 ## IMPORTANT NOTE
 
@@ -16,7 +16,9 @@ SwiftCurrent is so convenient that you may miss the couple lines that are calls 
 
 ## Create your view controllers
 
-Create two view controllers that inherit from [UIWorkflowItem<I, O>](https://wwt.github.io/SwiftCurrent/Classes/UIWorkflowItem.html) and implement [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html).
+Create two view controllers that inherit from `UIWorkflowItem` and implement `FlowRepresentable`.
+
+First view controller:
 
 ```swift
 import UIKit
@@ -72,6 +74,14 @@ class FirstViewController: UIWorkflowItem<String, String>, FlowRepresentable { /
         saveButton.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 24).isActive = true
     }
 }
+```
+
+Second view controller:
+
+```swift
+import UIKit
+import SwiftCurrent
+import SwiftCurrent_UIKit
 
 // This screen shows an employee only screen
 class SecondViewController: UIWorkflowItem<String, String>, FlowRepresentable { // SwiftCurrent
@@ -117,12 +127,12 @@ class SecondViewController: UIWorkflowItem<String, String>, FlowRepresentable { 
 
 <details>
 
-It is part of the [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) protocol. It has default implementations created for your convenience but is still implementable if you want to control when a [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) should load in the work flow.  It is called after `init` but before `viewDidLoad()`.
+It is part of the `FlowRepresentable` protocol. It has default implementations created for your convenience but is still implementable if you want to control when a `FlowRepresentable` should load in the work flow.  It is called after `init` but before `viewDidLoad()`.
 </details>
 
-## Launching the [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html)
+## Launching the `Workflow`
 
-Next, we create a [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html) that is initialized with our [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html)s and launch it from a view controller that is already loaded onto the screen (in our case, the 'ViewController' class provided by Xcode).
+Next, we create a `Workflow` that is initialized with our `FlowRepresentable`s and launch it from a view controller that is already loaded onto the screen (in our case, the 'ViewController' class provided by Xcode).
 
 ```swift
 import UIKit
@@ -167,21 +177,21 @@ class ViewController: UIViewController {
 
 <details>
 
-The [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html) has compile-time type safety on the Input/Output types of the supplied [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html)s. This means that you will get a build error if the output of `FirstViewController` does not match the input type of `SecondViewController`.
+The `Workflow` has compile-time type safety on the Input/Output types of the supplied `FlowRepresentable`s. This means that you will get a build error if the output of `FirstViewController` does not match the input type of `SecondViewController`.
 </details>
 
 #### **What's going on with this `passedArgs`?**
 
 <details>
 
-The `onFinish` closure for `launchInto(_:args:onFinish:)` provides the last passed [AnyWorkflow.PassedArgs](https://wwt.github.io/SwiftCurrent/Classes/AnyWorkflow/PassedArgs.html) in the work flow. For this Workflow, that could be the output of `FirstViewController` or `SecondViewController` depending on the email signature typed in `FirstViewController`. To extract the value, we unwrap the variable within the case of `.args()` as we expect this workflow to return some argument.
+The `onFinish` closure for `Workflow.launchInto(_:args:onFinish:)` provides the last passed `AnyWorkflow.PassedArgs` in the work flow. For this Workflow, that could be the output of `FirstViewController` or `SecondViewController` depending on the email signature typed in `FirstViewController`. To extract the value, we unwrap the variable within the case of `.args()` as we expect this workflow to return some argument.
 </details>
 
 #### **Why call `abandon()`?**
 
 <details>
 
-Calling `abandon()` closes all the views launched as part of the workflow, leaving you back on `ViewController`.
+Calling `Workflow.abandon()` closes all the views launched as part of the workflow, leaving you back on `ViewController`.
 </details>
 
 ## Testing
@@ -260,7 +270,7 @@ It's easy to forget to set the accessibility identifier on the button, please ch
 </details>
 
 ## BETA Interoperability With SwiftUI
-You can use your SwiftUI `View`s that are [FlowRepresentable](https://wwt.github.io/SwiftCurrent/Protocols/FlowRepresentable.html) in your UIKit workflows. Start with your `View`
+You can use your SwiftUI `View`s that are `FlowRepresentable` in your UIKit workflows. Start with your `View`
 
 ```swift
 import SwiftUI
@@ -276,7 +286,7 @@ struct SwiftUIView: View, FlowRepresentable { // SwiftCurrent
 
 ```
 
-Now in your UIKit workflow simply use a HostedWorkflowItem (While in BETA, `import SwiftCurrent_SwiftUI` is necessary)
+Now in your UIKit workflow simply use a `HostedWorkflowItem` (While in BETA, `import SwiftCurrent_SwiftUI` is necessary)
 
 ```swift
 launchInto(Workflow(HostedWorkflowItem<SwiftUIView>.self)) // SwiftCurrent
