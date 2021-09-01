@@ -3,12 +3,6 @@ Use this document to help you understand how to update between major versions of
 
 Our directions are written for only 1 major version upgrade at a time, as we have found that to be the best experience.
 
-Quick links:
-
-- [V3 -> V4](upgrade-paths.html#v3---v4)
-- [V2 -> V3](upgrade-paths.html#v2---v3)
-- [V1 -> V2](upgrade-paths.html#v1---v2)
-
 # V3 -> V4
 ## Name Change
 The library changed its name from "Workflow" to "SwiftCurrent". This change was an important step for us, because it helps with SEO and gives people a sense that the library isn't just some generic thing slapped together. 
@@ -62,10 +56,10 @@ There is now a protocol for those using Storyboards called `StoryboardLoadable`.
 
 ### FlowRepresentable has Changed
 Please review the `FlowRepresentable` documention to see the changes made there.
-The static `instance()` method is no longer required, instead a `FlowRepresentable` now has a dedicated initializer, if the `WorkflowInput` has a value, you need `init(with args: WorkflowInput)`. If `WorkflowInput` is `Never` you simply need `init()`
+The static `instance()` method is no longer required, instead a `FlowRepresentable` now has a dedicated initializer, if the `WorkflowInput` has a value, you need `FlowRepresentable.init(with:)`. If `WorkflowInput` is `Never` you simply need `init()`
 
 ### UIWorkflowItem has Changed
-If you were using `UIWorkflowItem<I>`, it has changed to `UIWorkflowItem<I, O>` where `I` is your input type and `O` is your output type.  See the documentation for `UIWorkflowItem` for more info.
+If you were using ` UIWorkflowItem<I>`, it has changed to `UIWorkflowItem<I, O>` where `I` is your input type and `O` is your output type.  See the documentation for `UIWorkflowItem` for more info.
 
 ### `shouldLoad` no Longer Takes Arguments
 Update shouldLoad methods as they are no longer mutating, nor do they take in parameters.  If you were doing any initializations during shouldLoad, that initialization should now happen in the initializer.  If you were requiring parameters to be passed into shouldLoad those should now be part of initialization and referenced on the object in shouldLoad.

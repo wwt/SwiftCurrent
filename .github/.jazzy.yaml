@@ -32,8 +32,8 @@ custom_categories:
     - ViewControllerWrapper
 - name: How to use SwiftCurrent with UIKit
   children:
-    - Programmatic UIKit Intro
-    - Storyboards Intro
+    - Getting Started with Programmatic Views
+    - Getting Started with Storyboards
 - name: Creating Workflows in UIKit
   children:
     - UIViewController
