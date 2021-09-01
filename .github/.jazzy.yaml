@@ -29,7 +29,6 @@ custom_categories:
     - WorkflowLauncher
     - View
     - WorkflowItem
-    - ViewControllerWrapper
 - name: How to use SwiftCurrent with UIKit
   children:
     - Getting Started with Programmatic Views
@@ -51,7 +50,8 @@ custom_categories:
     - AnyFlowRepresentable
 - name: Underlying Types
   children:
-    - LinkedList
-    - WorkflowError
-    - OrchestrationResponder
     - FlowRepresentableMetadata
+    - LinkedList
+    - OrchestrationResponder
+    - ViewControllerWrapper
+    - WorkflowError
