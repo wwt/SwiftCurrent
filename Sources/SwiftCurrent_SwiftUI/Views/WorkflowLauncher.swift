@@ -149,6 +149,7 @@ public struct WorkflowLauncher<Content: View>: View {
     }
 
     private func resetWorkflow() {
+        model.onFinishPublisher.send(nil)
         launcher.workflow.launch(withOrchestrationResponder: model, passedArgs: launcher.launchArgs)
     }
 
