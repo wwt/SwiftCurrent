@@ -15,7 +15,7 @@ class SwiftCurrent_SwiftUI_UITests: XCTestCase {
         continueAfterFailure = false
     }
 
-    func testBackingUpWithModals() throws {
+    func testBackingUpWithDefaultModals() throws {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
         app.launch {
@@ -43,6 +43,38 @@ class SwiftCurrent_SwiftUI_UITests: XCTestCase {
 
         XCTAssert(app.staticTexts["This is FR2"].exists)
         app.buttons.matching(identifier: "Navigate backward").lastMatch.tap()
+
+        XCTAssert(app.staticTexts["This is FR1"].exists)
+    }
+
+    func testBackingUpWithFullScreenCovers() throws {
+        // UI tests must launch the application that they test.
+        let app = XCUIApplication()
+        app.launch {
+            Environment.xcuiTest(true)
+            Environment.testingView(.fourItemWorkflow)
+            Environment.presentationType(.FR2, .modal(.fullScreenCover))
+            Environment.presentationType(.FR3, .modal(.fullScreenCover))
+            Environment.presentationType(.FR4, .modal(.fullScreenCover))
+        }
+
+        XCTAssert(app.staticTexts["This is FR1"].exists)
+        app.buttons.matching(identifier: "Navigate forward").firstMatch.tap()
+
+        XCTAssert(app.staticTexts["This is FR2"].exists)
+        app.buttons.matching(identifier: "Navigate forward").firstMatch.tap()
+
+        XCTAssert(app.staticTexts["This is FR3"].exists)
+        app.buttons.matching(identifier: "Navigate forward").element(boundBy: 1).tap()
+
+        XCTAssert(app.staticTexts["This is FR4"].exists)
+        app.buttons.matching(identifier: "Navigate backward").element(boundBy: 2).tap()
+
+        XCTAssert(app.staticTexts["This is FR3"].exists)
+        app.buttons.matching(identifier: "Navigate backward").element(boundBy: 1).tap()
+
+        XCTAssert(app.staticTexts["This is FR2"].exists)
+        app.buttons.matching(identifier: "Navigate backward").firstMatch.tap()
 
         XCTAssert(app.staticTexts["This is FR1"].exists)
     }
