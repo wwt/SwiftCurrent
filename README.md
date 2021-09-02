@@ -132,8 +132,8 @@ https://user-images.githubusercontent.com/79471462/131555558-9e01e753-cafd-4ae2-
 
 - [Why SwiftCurrent?](https://wwt.github.io/SwiftCurrent/why-this-library.html)
 - [Installation](https://wwt.github.io/SwiftCurrent/installation.html)
-- [Getting Started with Storyboards](https://wwt.github.io/SwiftCurrent/getting-started-with-storyboards.html)
-- [Getting Started with Programmatic UIKit Views](https://wwt.github.io/SwiftCurrent/getting-started-with-programmatic-views.html)
+- [Getting Started with Storyboards](https://wwt.github.io/SwiftCurrent/using-storyboards.html)
+- [Getting Started with Programmatic UIKit Views](https://wwt.github.io/SwiftCurrent/using-programmatic-views.html)
 - [[BETA] Getting Started with SwiftUI](https://wwt.github.io/SwiftCurrent/getting-started-with-swiftui.html)
 - [Developer Documentation](https://wwt.github.io/SwiftCurrent/index.html)
 - [Upgrade Path](https://github.com/wwt/SwiftCurrent/blob/main/.github/UPGRADE_PATH.md)
