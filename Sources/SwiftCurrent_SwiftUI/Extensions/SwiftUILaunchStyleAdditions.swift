@@ -16,16 +16,14 @@ extension LaunchStyle {
 
 extension LaunchStyle {
     /// A namespace for the SwiftUI launch styles.
+    @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
     public enum SwiftUI {
         /// A type indicating how a `FlowRepresentable` should be presented.
+        @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
         public enum PresentationType: RawRepresentable, CaseIterable {
             public static var allCases: [LaunchStyle.SwiftUI.PresentationType] {
                 #if (os(iOS) || os(tvOS) || os(watchOS) || targetEnvironment(macCatalyst))
-                if #available(iOS 14.0, tvOS 14.0, watchOS 7.0, *) {
                     return [.default, .navigationLink, .modal(.sheet), .modal(.fullScreenCover)]
-                } else {
-                    return [.default, .navigationLink, .modal(.sheet)]
-                }
                 #else
                     return [.default, .navigationLink, .modal(.sheet)]
                 #endif
@@ -56,12 +54,7 @@ extension LaunchStyle {
                     case ._swiftUI_navigationLink: self = .navigationLink
                     case ._swiftUI_modal: self = .modal()
                     #if (os(iOS) || os(tvOS) || os(watchOS) || targetEnvironment(macCatalyst))
-                    case ._swiftUI_modal_fullscreen:
-                        if #available(iOS 14.0, tvOS 14.0, watchOS 7.0, *) {
-                            self = .modal(.fullScreenCover)
-                        } else {
-                            return nil
-                        }
+                    case ._swiftUI_modal_fullscreen: self = .modal(.fullScreenCover)
                     #endif
                     default: return nil
                 }
@@ -86,6 +79,7 @@ extension LaunchStyle {
     }
 }
 
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension LaunchStyle.SwiftUI.PresentationType: Equatable {
     /// :nodoc: Equatable protocol requirement.
     public static func == (lhs: LaunchStyle.SwiftUI.PresentationType, rhs: LaunchStyle.SwiftUI.PresentationType) -> Bool {
@@ -93,8 +87,10 @@ extension LaunchStyle.SwiftUI.PresentationType: Equatable {
     }
 }
 
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension LaunchStyle.SwiftUI {
     /// Modal presentation styles available when presenting sheets
+    @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
     public enum ModalPresentationStyle {
         /// Presents a sheet
         case sheet
