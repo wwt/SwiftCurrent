@@ -109,7 +109,8 @@ struct FR1: View, FlowRepresentable {
     }
 
     func shouldLoad() -> Bool {
-        ProcessInfo.processInfo.environment["shouldLoad-\(String(describing: Self.self))"] != "false"
+        guard case .shouldLoad(_, let shouldLoad) = Environment.shouldLoad(for: Self.self) else { return true }
+        return shouldLoad
     }
 }
 
@@ -124,7 +125,8 @@ struct FR2: View, FlowRepresentable {
     }
 
     func shouldLoad() -> Bool {
-        ProcessInfo.processInfo.environment["shouldLoad-\(String(describing: Self.self))"] != "false"
+        guard case .shouldLoad(_, let shouldLoad) = Environment.shouldLoad(for: Self.self) else { return true }
+        return shouldLoad
     }
 }
 
@@ -139,7 +141,8 @@ struct FR3: View, FlowRepresentable {
     }
 
     func shouldLoad() -> Bool {
-        ProcessInfo.processInfo.environment["shouldLoad-\(String(describing: Self.self))"] != "false"
+        guard case .shouldLoad(_, let shouldLoad) = Environment.shouldLoad(for: Self.self) else { return true }
+        return shouldLoad
     }
 }
 
@@ -154,6 +157,7 @@ struct FR4: View, FlowRepresentable {
     }
 
     func shouldLoad() -> Bool {
-        ProcessInfo.processInfo.environment["shouldLoad-\(String(describing: Self.self))"] != "false"
+        guard case .shouldLoad(_, let shouldLoad) = Environment.shouldLoad(for: Self.self) else { return true }
+        return shouldLoad
     }
 }
