@@ -15,14 +15,36 @@ class SwiftCurrent_SwiftUI_UITests: XCTestCase {
         continueAfterFailure = false
     }
 
-    func testCustomLaunch() throws {
+    func testBackingUpWithModals() throws {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
-        app.launch(environment: .xcuiTest(true),
-                   .testingView(.oneItemWorkflow))
+        app.launch {
+            Environment.xcuiTest(true)
+            Environment.testingView(.fourItemWorkflow)
+            Environment.presentationType(.FR2, .modal)
+            Environment.presentationType(.FR3, .modal)
+            Environment.presentationType(.FR4, .modal)
+        }
 
-        let foo2 = app.staticTexts["Important variable"]
-        XCTAssertFalse(foo2.exists)
+        XCTAssert(app.staticTexts["This is FR1"].exists)
+        app.buttons.matching(identifier: "Navigate forward").lastMatch.tap()
+
+        XCTAssert(app.staticTexts["This is FR2"].exists)
+        app.buttons.matching(identifier: "Navigate forward").lastMatch.tap()
+
+        XCTAssert(app.staticTexts["This is FR3"].exists)
+        app.buttons.matching(identifier: "Navigate forward").lastMatch.tap()
+
+        XCTAssert(app.staticTexts["This is FR4"].exists)
+        app.buttons.matching(identifier: "Navigate backward").lastMatch.tap()
+
+        XCTAssert(app.staticTexts["This is FR3"].exists)
+        app.buttons.matching(identifier: "Navigate backward").lastMatch.tap()
+
+        XCTAssert(app.staticTexts["This is FR2"].exists)
+        app.buttons.matching(identifier: "Navigate backward").lastMatch.tap()
+
+        XCTAssert(app.staticTexts["This is FR1"].exists)
     }
 }
 
@@ -33,10 +55,28 @@ extension XCUIApplication {
         self.launchEnvironment = launchEnvironment
         launch()
     }
+
+    func launch(@EnvironmentBuilder environment: () -> [Environment]) {
+        var launchEnvironment = [String: String]()
+        environment().forEach { launchEnvironment = launchEnvironment + $0.dictionaryValue }
+        self.launchEnvironment = launchEnvironment
+        launch()
+    }
 }
 
 public extension Dictionary {
     static func + (lhs: [Key: Value], rhs: [Key: Value]) -> [Key: Value] {
         return lhs.merging(rhs, uniquingKeysWith: { $1 })
     }
+}
+
+@resultBuilder
+struct EnvironmentBuilder {
+     static func buildBlock(_ components: Environment...) -> [Environment] {
+         return components
+     }
+}
+
+extension XCUIElementQuery {
+    var lastMatch: XCUIElement { return self.element(boundBy: self.count - 1) }
 }

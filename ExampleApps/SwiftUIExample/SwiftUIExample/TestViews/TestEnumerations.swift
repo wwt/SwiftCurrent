@@ -56,7 +56,7 @@ enum Environment {
 
     static func persistence<F>(for: F.Type) -> Environment? {
         if let fr = FR(rawValue: String(describing: F.self)), let persistenceString = ProcessInfo.processInfo.environment["\(Keys.persistence)-\(String(describing: F.self))"] {
-            switch persistenceString.lowercased() {
+            switch persistenceString {
                 case "\(FlowPersistence.persistWhenSkipped)": return .persistence(fr, .persistWhenSkipped)
                 case "\(FlowPersistence.removedAfterProceeding)": return .persistence(fr, .removedAfterProceeding)
                 default: return .persistence(fr, .default)
@@ -67,7 +67,7 @@ enum Environment {
 
     static func presentationType<F>(for: F.Type) -> Environment? {
         if let fr = FR(rawValue: String(describing: F.self)), let presentationTypeString = ProcessInfo.processInfo.environment["\(Keys.presentationType)-\(String(describing: F.self))"] {
-            switch presentationTypeString.lowercased() {
+            switch presentationTypeString {
                 case "\(LaunchStyle.SwiftUI.PresentationType.navigationLink)": return .presentationType(fr, .navigationLink)
                 case "\(LaunchStyle.SwiftUI.PresentationType.modal())": return .presentationType(fr, .modal)
                 case "\(LaunchStyle.SwiftUI.PresentationType.modal(.sheet))": return .presentationType(fr, .modal(.sheet))
