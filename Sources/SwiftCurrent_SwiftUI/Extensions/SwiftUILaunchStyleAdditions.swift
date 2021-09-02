@@ -20,11 +20,15 @@ extension LaunchStyle {
         /// A type indicating how a `FlowRepresentable` should be presented.
         public enum PresentationType: RawRepresentable, CaseIterable {
             public static var allCases: [LaunchStyle.SwiftUI.PresentationType] {
+                #if (os(iOS) || os(tvOS) || os(watchOS) || targetEnvironment(macCatalyst))
                 if #available(iOS 14.0, tvOS 14.0, watchOS 7.0, *) {
                     return [.default, .navigationLink, .modal(.sheet), .modal(.fullScreenCover)]
                 } else {
                     return [.default, .navigationLink, .modal(.sheet)]
                 }
+                #else
+                    return [.default, .navigationLink, .modal(.sheet)]
+                #endif
             }
 
             /**
@@ -51,12 +55,14 @@ extension LaunchStyle {
                     case .default: self = .default
                     case ._swiftUI_navigationLink: self = .navigationLink
                     case ._swiftUI_modal: self = .modal()
+                    #if (os(iOS) || os(tvOS) || os(watchOS) || targetEnvironment(macCatalyst))
                     case ._swiftUI_modal_fullscreen:
                         if #available(iOS 14.0, tvOS 14.0, watchOS 7.0, *) {
                             self = .modal(.fullScreenCover)
                         } else {
                             return nil
                         }
+                    #endif
                     default: return nil
                 }
             }
