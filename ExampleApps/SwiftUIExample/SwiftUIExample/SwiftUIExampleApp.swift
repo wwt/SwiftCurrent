@@ -18,7 +18,7 @@ struct SwiftUIExampleApp: App {
 
     var body: some Scene {
         WindowGroup {
-            if ProcessInfo.processInfo.environment[EnvironmentKey.xcuiTest.rawValue] != nil {
+            if Environment.shouldTest {
                 TestView()
             } else {
                 ContentView()

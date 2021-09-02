@@ -36,6 +36,9 @@
 		CA84D8E726A0E72A006CF964 /* MapFeatureViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA84D8E626A0E72A006CF964 /* MapFeatureViewTests.swift */; };
 		CA84D8E926A0ED66006CF964 /* ChangePasswordViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA84D8E826A0ED66006CF964 /* ChangePasswordViewTests.swift */; };
 		CA971D2226D593150083821A /* XCTestCaseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA971D2126D593150083821A /* XCTestCaseExtensions.swift */; };
+		CABEC41726E13BC900F1BF53 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7D26E039C300599824 /* TestView.swift */; };
+		CABEC41926E1899000F1BF53 /* BETA_SwiftCurrent_SwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = CABEC41826E1899000F1BF53 /* BETA_SwiftCurrent_SwiftUI */; };
+		CABEC41B26E1899000F1BF53 /* SwiftCurrent in Frameworks */ = {isa = PBXBuildFile; productRef = CABEC41A26E1899000F1BF53 /* SwiftCurrent */; };
 		CAC34B4326A07F830039A373 /* SwiftUIExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC34B4226A07F830039A373 /* SwiftUIExampleApp.swift */; };
 		CAC34B4726A07F830039A373 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAC34B4626A07F830039A373 /* Assets.xcassets */; };
 		CAC34B4A26A07F830039A373 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAC34B4926A07F830039A373 /* Preview Assets.xcassets */; };
@@ -178,6 +181,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CABEC41B26E1899000F1BF53 /* SwiftCurrent in Frameworks */,
+				CABEC41926E1899000F1BF53 /* BETA_SwiftCurrent_SwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,6 +467,10 @@
 				D7A6CE7826E0316C00599824 /* PBXTargetDependency */,
 			);
 			name = SwiftCurrent_SwiftUI_UITests;
+			packageProductDependencies = (
+				CABEC41826E1899000F1BF53 /* BETA_SwiftCurrent_SwiftUI */,
+				CABEC41A26E1899000F1BF53 /* SwiftCurrent */,
+			);
 			productName = SwiftCurrent_SwiftUI_UITests;
 			productReference = D7A6CE7226E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -610,6 +619,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CABEC41726E13BC900F1BF53 /* TestView.swift in Sources */,
 				D7A6CE7526E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift in Sources */,
 				D7A6CE8126E03ADD00599824 /* TestEnumerations.swift in Sources */,
 			);
@@ -958,6 +968,14 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CA6FB0E526C6ADCD00FB3285 /* XCRemoteSwiftPackageReference "UIUTest" */;
 			productName = UIUTest;
+		};
+		CABEC41826E1899000F1BF53 /* BETA_SwiftCurrent_SwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BETA_SwiftCurrent_SwiftUI;
+		};
+		CABEC41A26E1899000F1BF53 /* SwiftCurrent */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftCurrent;
 		};
 		CAC34B7926A0801E0039A373 /* ViewInspector */ = {
 			isa = XCSwiftPackageProductDependency;

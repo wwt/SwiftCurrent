@@ -11,13 +11,12 @@ import SwiftCurrent_SwiftUI
 
 struct TestView: View {
     var body: some View {
-        if let testingView = ProcessInfo.processInfo.environment[EnvironmentKey.testingView.rawValue] {
-            switch TestingView(rawValue: testingView) {
-                case .FR1: FR1()
-                default: Text("\(String(describing: ProcessInfo.processInfo.environment[EnvironmentKey.stringData.rawValue]))")
-            }
-        } else {
-            Text("\(String(describing: ProcessInfo.processInfo.environment[EnvironmentKey.stringData.rawValue]))")
+        switch Environment.viewToTest {
+            case .oneItemWorkflow: oneItemWorkflow
+            case .twoItemWorkflow: twoItemWorkflow
+            case .threeItemWorkflow: threeItemWorkflow
+            case .fourItemWorkflow: fourItemWorkflow
+            default: EmptyView()
         }
     }
 
@@ -77,26 +76,16 @@ struct TestView: View {
         }
     }
 
-    func persistence<F>(for: F.Type) -> FlowPersistence {
-        if let persistenceString = ProcessInfo.processInfo.environment["persistence-\(String(describing: F.self))"] {
-            switch persistenceString.lowercased() {
-                case "persistWhenSkipped": return .persistWhenSkipped
-                case "removedAfterProceeding": return .removedAfterProceeding
-                default: return .default
-            }
+    func persistence<F>(for type: F.Type) -> FlowPersistence {
+        if case .persistence(_, let persistence) = Environment.persistence(for: type) {
+            return persistence
         }
         return .default
     }
 
-    func presentationType<F>(for: F.Type) -> LaunchStyle.SwiftUI.PresentationType {
-        if let presentationTypeString = ProcessInfo.processInfo.environment["presentationType-\(String(describing: F.self))"] {
-            switch presentationTypeString.lowercased() {
-                case "navigationLink": return .navigationLink
-                case "modal": return .modal
-                case "modal-sheet": return .modal(.sheet)
-                case "modal-fullScreenCover": return .modal(.fullScreenCover)
-                default: return .default
-            }
+    func presentationType<F>(for type: F.Type) -> LaunchStyle.SwiftUI.PresentationType {
+        if case .presentationType(_, let presentationType) = Environment.presentationType(for: type) {
+            return presentationType
         }
         return .default
     }

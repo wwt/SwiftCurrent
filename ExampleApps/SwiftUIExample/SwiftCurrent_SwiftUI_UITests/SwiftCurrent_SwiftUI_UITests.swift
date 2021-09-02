@@ -11,57 +11,32 @@ import XCTest
 class SwiftCurrent_SwiftUI_UITests: XCTestCase {
 
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
         // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
-
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
 
     func testCustomLaunch() throws {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
-        app.launchEnvironment = [
-            EnvironmentKey.xcuiTest.rawValue: "true",
-            EnvironmentKey.stringData.rawValue: "Important variable"
-        ]
-        app.launch()
-
-        let foo = app.staticTexts["Optional(\"Important variable\")"]
-        XCTAssert(foo.exists)
-
-        app.launchEnvironment = [
-            EnvironmentKey.xcuiTest.rawValue: "true",
-        ]
-        app.launch()
+        app.launch(environment: .xcuiTest(true),
+                   .testingView(.oneItemWorkflow))
 
         let foo2 = app.staticTexts["Important variable"]
         XCTAssertFalse(foo2.exists)
     }
+}
 
-    func testCustomView() throws {
-        let app = XCUIApplication()
-        app.launchEnvironment = [
-            EnvironmentKey.xcuiTest.rawValue: "true",
-            EnvironmentKey.testingView.rawValue: TestingView.FR1.rawValue
-        ]
-        app.launch()
+extension XCUIApplication {
+    func launch(environment: Environment...) {
+        var launchEnvironment = [String: String]()
+        environment.forEach { launchEnvironment = launchEnvironment + $0.dictionaryValue }
+        self.launchEnvironment = launchEnvironment
+        launch()
+    }
+}
 
-        let foo = app.staticTexts["This is FR1"]
-        XCTAssert(foo.exists)
+public extension Dictionary {
+    static func + (lhs: [Key: Value], rhs: [Key: Value]) -> [Key: Value] {
+        return lhs.merging(rhs, uniquingKeysWith: { $1 })
     }
 }
