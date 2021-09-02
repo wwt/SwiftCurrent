@@ -11,12 +11,24 @@ import SwiftCurrent_SwiftUI
 
 struct TestView: View {
     var body: some View {
-        switch Environment.viewToTest {
-            case .oneItemWorkflow: oneItemWorkflow
-            case .twoItemWorkflow: twoItemWorkflow
-            case .threeItemWorkflow: threeItemWorkflow
-            case .fourItemWorkflow: fourItemWorkflow
-            default: EmptyView()
+        if Environment.shouldEmbedInNavStack {
+            NavigationView {
+                switch Environment.viewToTest {
+                    case .oneItemWorkflow: oneItemWorkflow
+                    case .twoItemWorkflow: twoItemWorkflow
+                    case .threeItemWorkflow: threeItemWorkflow
+                    case .fourItemWorkflow: fourItemWorkflow
+                    default: EmptyView()
+                }
+            }
+        } else {
+            switch Environment.viewToTest {
+                case .oneItemWorkflow: oneItemWorkflow
+                case .twoItemWorkflow: twoItemWorkflow
+                case .threeItemWorkflow: threeItemWorkflow
+                case .fourItemWorkflow: fourItemWorkflow
+                default: EmptyView()
+            }
         }
     }
 

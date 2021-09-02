@@ -17,8 +17,10 @@ enum Environment {
         static let shouldLoad = "shouldLoad"
         static let persistence = "persistence"
         static let presentationType = "presentationType"
+        static let embedInNavStack = "embedInNavStack"
     }
     case xcuiTest(Bool = true)
+    case embedInNavStack(Bool = false)
     case testingView(TestingView)
     case shouldLoad(FR, Bool)
     case persistence(FR, FlowPersistence = .default)
@@ -27,6 +29,7 @@ enum Environment {
     var dictionaryValue: [String: String] {
         switch self {
             case .xcuiTest(let shouldTest): return [Keys.xcuiTest: "\(shouldTest)"]
+            case .embedInNavStack(let shouldEmbedInNavStack): return [Keys.embedInNavStack: "\(shouldEmbedInNavStack)"]
             case .testingView(let testingView): return [Keys.testingView: testingView.rawValue]
             case .shouldLoad(let fr, let shouldLoad): return ["\(Keys.shouldLoad)-\(fr.rawValue)": "\(shouldLoad)"]
             case .persistence(let fr, let persistence): return ["\(Keys.persistence)-\(fr.rawValue)": "\(persistence)"]
@@ -37,6 +40,12 @@ enum Environment {
     static var shouldTest: Bool {
         ProcessInfo.processInfo.environment.contains { key, value in
             Self.xcuiTest(true).dictionaryValue[key] == value
+        }
+    }
+
+    static var shouldEmbedInNavStack: Bool {
+        ProcessInfo.processInfo.environment.contains { key, value in
+            Self.embedInNavStack(true).dictionaryValue[key] == value
         }
     }
 

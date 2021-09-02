@@ -46,6 +46,39 @@ class SwiftCurrent_SwiftUI_UITests: XCTestCase {
 
         XCTAssert(app.staticTexts["This is FR1"].exists)
     }
+
+    func testBackingUpWithNavigationLinks() throws {
+        // UI tests must launch the application that they test.
+        let app = XCUIApplication()
+        app.launch {
+            Environment.xcuiTest(true)
+            Environment.embedInNavStack(true)
+            Environment.testingView(.fourItemWorkflow)
+            Environment.presentationType(.FR1, .navigationLink)
+            Environment.presentationType(.FR2, .navigationLink)
+            Environment.presentationType(.FR3, .navigationLink)
+        }
+
+        XCTAssert(app.staticTexts["This is FR1"].exists)
+        app.buttons["Navigate forward"].tap()
+
+        XCTAssert(app.staticTexts["This is FR2"].exists)
+        app.buttons["Navigate forward"].tap()
+
+        XCTAssert(app.staticTexts["This is FR3"].exists)
+        app.buttons["Navigate forward"].tap()
+
+        XCTAssert(app.staticTexts["This is FR4"].exists)
+        app.buttons["Navigate backward"].tap()
+
+        XCTAssert(app.staticTexts["This is FR3"].exists)
+        app.buttons["Navigate backward"].tap()
+
+        XCTAssert(app.staticTexts["This is FR2"].exists)
+        app.buttons["Navigate backward"].tap()
+
+        XCTAssert(app.staticTexts["This is FR1"].exists)
+    }
 }
 
 extension XCUIApplication {
