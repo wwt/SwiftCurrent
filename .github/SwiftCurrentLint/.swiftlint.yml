@@ -129,6 +129,7 @@ included: # paths to include during linting. `--path` is ignored if present.
   # - ../../Tests
 excluded: # paths to ignore during linting. Takes precedence over `included`.
   - ../../ExampleApps/SwiftUIExample/SwiftCurrent_SwiftUI_UITests
+  - ../../ExampleApps/SwiftUIExample/SwiftUIExample/TestViews
 #   - Workflow/.swiftpm/
 #   - Workflow/Package.swift
 
