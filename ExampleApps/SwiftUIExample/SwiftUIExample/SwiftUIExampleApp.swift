@@ -8,7 +8,6 @@
 
 import SwiftUI
 import Swinject
-import Foundation
 
 @main
 struct SwiftUIExampleApp: App {

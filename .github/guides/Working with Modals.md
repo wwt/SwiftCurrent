@@ -17,4 +17,16 @@ With that you've described that `FirstView` should be presented normally. When i
 > NOTE: Unlike `LaunchStyle.SwiftUI.PresentationType.navigationLink` you apply `LaunchStyle.SwiftUI.PresentationType.modal` to a view that should be launched modally.
 
 ### Different Modal Styles
-As of right now presenting modals with sheets is the only supported modal style by SwiftCurrent. If you need a workaround you'll have to split your workflow into 2 sub-workflows and use `fullScreenCover` yourself. [Issue: #119](https://github.com/wwt/SwiftCurrent/issues/119) is tracking a feature request to add support for `fullScreenCover`. 
+When you use a presentation type of `LaunchStyle.SwiftUI.PresentationType.modal` you can optionally pass it a `LaunchStyle.SwiftUI.ModalPresentationStyle`.
+
+#### Example:
+The following will use a full screen cover:
+```swift
+NavigationView {
+    WorkflowLauncher(isLaunched: .constant(true)) {
+        thenProceed(with: FirstView.self) {
+            thenProceed(with: SecondView.self).presentationType(.modal(.fullScreenCover))
+        }
+    }
+}
+```
