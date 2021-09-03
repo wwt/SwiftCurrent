@@ -69,7 +69,6 @@ platform :ios do
     pod_lib_lint(
       podspec: '../SwiftCurrent.podspec', 
       allow_warnings: true,
-      quick: true,
       no_clean: true
     )
   end
