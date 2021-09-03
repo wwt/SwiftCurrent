@@ -40,7 +40,18 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES"
+      onlyGenerateCoverageForSpecifiedTargets = "YES">
+      <CodeCoverageTargets>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "BETA_SwiftCurrent_SwiftUI"
+            BuildableName = "BETA_SwiftCurrent_SwiftUI"
+            BlueprintName = "BETA_SwiftCurrent_SwiftUI"
+            ReferencedContainer = "container:../..">
+         </BuildableReference>
+      </CodeCoverageTargets>
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -49,6 +60,16 @@
                BlueprintIdentifier = "CAC34B4F26A07F840039A373"
                BuildableName = "SwiftUIExampleTests.xctest"
                BlueprintName = "SwiftUIExampleTests"
+               ReferencedContainer = "container:SwiftUIExample.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D7A6CE7126E0316C00599824"
+               BuildableName = "SwiftCurrent_SwiftUI_UITests.xctest"
+               BlueprintName = "SwiftCurrent_SwiftUI_UITests"
                ReferencedContainer = "container:SwiftUIExample.xcodeproj">
             </BuildableReference>
          </TestableReference>

@@ -17,7 +17,11 @@ struct SwiftUIExampleApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if Environment.shouldTest {
+                TestView()
+            } else {
+                ContentView()
+            }
         }
     }
 }

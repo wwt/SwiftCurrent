@@ -49,8 +49,13 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         ViewBuilder {
             if launchStyle == .navigationLink, let content = content {
                 content.navLink(to: nextView, isActive: $isActive)
-            } else if (wrapped as? WorkflowItemPresentable)?.workflowLaunchStyle == .modal, let content = content {
-                content.testableSheet(isPresented: $isActive) { nextView }
+            } else if case .modal(let modalStyle) = (wrapped as? WorkflowItemPresentable)?.workflowLaunchStyle, let content = content {
+                switch modalStyle {
+                    case .sheet: content.testableSheet(isPresented: $isActive) { nextView }
+                    #if (os(iOS) || os(tvOS) || os(watchOS) || targetEnvironment(macCatalyst))
+                    case .fullScreenCover: content.fullScreenCover(isPresented: $isActive) { nextView }
+                    #endif
+                }
             } else if let body = model.body?.extractErasedView() as? Content, elementRef == nil || elementRef === model.body, launchStyle != .navigationLink {
                 content ?? body
             } else {

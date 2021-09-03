@@ -24,6 +24,9 @@ final class LaunchStyleAdditionTests: XCTestCase, View {
         XCTAssertEqual(LaunchStyle.SwiftUI.PresentationType(rawValue: .default), .default)
         XCTAssertEqual(LaunchStyle.SwiftUI.PresentationType(rawValue: ._swiftUI_navigationLink), .navigationLink)
         XCTAssertEqual(LaunchStyle.SwiftUI.PresentationType(rawValue: ._swiftUI_modal), .modal)
+        XCTAssertEqual(LaunchStyle.SwiftUI.PresentationType(rawValue: ._swiftUI_modal), .modal())
+        XCTAssertEqual(LaunchStyle.SwiftUI.PresentationType(rawValue: ._swiftUI_modal), .modal(.sheet))
+        XCTAssertEqual(LaunchStyle.SwiftUI.PresentationType(rawValue: ._swiftUI_modal_fullscreen), .modal(.fullScreenCover))
     }
 
     func testKnownPresentationTypes_AreUnique() {
@@ -38,6 +41,8 @@ final class LaunchStyleAdditionTests: XCTestCase, View {
     func testPresentationTypes_AreCorrectlyEquatable() {
         XCTAssertEqual(LaunchStyle.SwiftUI.PresentationType.default, .default)
         XCTAssertEqual(LaunchStyle.SwiftUI.PresentationType.navigationLink, .navigationLink)
+        XCTAssertEqual(LaunchStyle.SwiftUI.PresentationType.modal, .modal(.sheet))
         XCTAssertNotEqual(LaunchStyle.SwiftUI.PresentationType.default, .navigationLink)
+        XCTAssertNotEqual(LaunchStyle.SwiftUI.PresentationType.modal(.sheet), .modal(.fullScreenCover))
     }
 }
