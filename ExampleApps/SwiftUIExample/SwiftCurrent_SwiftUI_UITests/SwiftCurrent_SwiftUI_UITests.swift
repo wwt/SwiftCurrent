@@ -18,13 +18,13 @@ class SwiftCurrent_SwiftUI_UITests: XCTestCase {
     func testBackingUpWithDefaultModals() throws {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
-        app.launch {
-            Environment.xcuiTest(true)
-            Environment.testingView(.fourItemWorkflow)
-            Environment.presentationType(.FR2, .modal)
-            Environment.presentationType(.FR3, .modal)
-            Environment.presentationType(.FR4, .modal)
-        }
+        app.launch (
+            .xcuiTest(true),
+            .testingView(.fourItemWorkflow),
+            .presentationType(.FR2, .modal),
+            .presentationType(.FR3, .modal),
+            .presentationType(.FR4, .modal)
+        )
 
         XCTAssert(app.staticTexts["This is FR1"].exists)
         app.buttons.matching(identifier: "Navigate forward").lastMatch.tap()
@@ -50,13 +50,13 @@ class SwiftCurrent_SwiftUI_UITests: XCTestCase {
     func testBackingUpWithFullScreenCovers() throws {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
-        app.launch {
-            Environment.xcuiTest(true)
-            Environment.testingView(.fourItemWorkflow)
-            Environment.presentationType(.FR2, .modal(.fullScreenCover))
-            Environment.presentationType(.FR3, .modal(.fullScreenCover))
-            Environment.presentationType(.FR4, .modal(.fullScreenCover))
-        }
+        app.launch (
+            .xcuiTest(true),
+            .testingView(.fourItemWorkflow),
+            .presentationType(.FR2, .modal(.fullScreenCover)),
+            .presentationType(.FR3, .modal(.fullScreenCover)),
+            .presentationType(.FR4, .modal(.fullScreenCover))
+        )
 
         XCTAssert(app.staticTexts["This is FR1"].exists)
         app.buttons.matching(identifier: "Navigate forward").firstMatch.tap()
@@ -82,14 +82,14 @@ class SwiftCurrent_SwiftUI_UITests: XCTestCase {
     func testBackingUpWithNavigationLinks() throws {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
-        app.launch {
-            Environment.xcuiTest(true)
-            Environment.embedInNavStack(true)
-            Environment.testingView(.fourItemWorkflow)
-            Environment.presentationType(.FR1, .navigationLink)
-            Environment.presentationType(.FR2, .navigationLink)
-            Environment.presentationType(.FR3, .navigationLink)
-        }
+        app.launch(
+            .xcuiTest(true),
+            .embedInNavStack(true),
+            .testingView(.fourItemWorkflow),
+            .presentationType(.FR1, .navigationLink),
+            .presentationType(.FR2, .navigationLink),
+            .presentationType(.FR3, .navigationLink)
+        )
 
         XCTAssert(app.staticTexts["This is FR1"].exists)
         app.buttons["Navigate forward"].tap()
@@ -114,16 +114,9 @@ class SwiftCurrent_SwiftUI_UITests: XCTestCase {
 }
 
 extension XCUIApplication {
-    func launch(environment: Environment...) {
+    func launch(_ environment: Environment...) {
         var launchEnvironment = [String: String]()
         environment.forEach { launchEnvironment = launchEnvironment + $0.dictionaryValue }
-        self.launchEnvironment = launchEnvironment
-        launch()
-    }
-
-    func launch(@EnvironmentBuilder environment: () -> [Environment]) {
-        var launchEnvironment = [String: String]()
-        environment().forEach { launchEnvironment = launchEnvironment + $0.dictionaryValue }
         self.launchEnvironment = launchEnvironment
         launch()
     }
@@ -133,13 +126,6 @@ public extension Dictionary {
     static func + (lhs: [Key: Value], rhs: [Key: Value]) -> [Key: Value] {
         return lhs.merging(rhs, uniquingKeysWith: { $1 })
     }
-}
-
-@resultBuilder
-struct EnvironmentBuilder {
-     static func buildBlock(_ components: Environment...) -> [Environment] {
-         return components
-     }
 }
 
 extension XCUIElementQuery {
