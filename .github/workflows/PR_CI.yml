@@ -24,7 +24,7 @@ jobs:
           path: ~/Library/Logs/scan
           retention-days: 90
 
-  build_for_package_managers:
+  build_for_swift_package_manager:
     runs-on: macos-latest
     env:
         working-directory: .github
@@ -33,6 +33,13 @@ jobs:
       - name: Validate SwiftPM BUILDs
         run: bundle exec fastlane build_swiftpm
         working-directory: ${{ env.working-directory }}
+
+  build_for_cocoapods:
+    runs-on: macos-latest
+    env:
+        working-directory: .github
+    steps:
+      - uses: actions/checkout@v2
       - name: Validate Cocoapods Can Deploy (lib lint)
         run: bundle exec fastlane cocoapods_liblint
         working-directory: ${{ env.working-directory }}
