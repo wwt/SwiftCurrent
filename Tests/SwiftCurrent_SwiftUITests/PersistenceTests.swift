@@ -734,4 +734,126 @@ final class PersistenceTests: XCTestCase, View {
             }
         wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
     }
+
+    func testPersistWhenSkipped_WhenShouldLoadIsFalse() {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            typealias WorkflowInput = Bool
+            typealias WorkflowOutput = Never
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+            var input: Bool = false
+            init(with args: Bool) {  self.input = args }
+            func shouldLoad() -> Bool { return input }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            typealias WorkflowInput = Never
+            typealias WorkflowOutput = Never
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowLauncher(isLaunched: .constant(true), startingArgs: false) {
+                thenProceed(with: FR1.self) {
+                    thenProceed(with: FR2.self)
+                }
+                .presentationType(.navigationLink)
+                .persistence(.persistWhenSkipped)
+            }
+        )
+        .inspection.inspect { fr1 in
+            XCTAssertThrowsError(try fr1.find(FR1.self))
+            XCTAssertTrue(try fr1.find(ViewType.NavigationLink.self).isActive())
+            try fr1.actualView().inspectWrapped { fr2 in
+                XCTAssertNoThrow(try fr2.find(FR2.self).actualView().backUpInWorkflow())
+                XCTAssertNoThrow(try fr2.find(FR1.self).actualView().proceedInWorkflow())
+            }
+        }
+
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
+
+    func testPersistWhenSkipped_WhenShouldLoadIsTrue() {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            typealias WorkflowInput = Bool
+            typealias WorkflowOutput = Never
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+            var input: Bool = true
+            init(with args: Bool) {  self.input = args }
+            func shouldLoad() -> Bool { return input }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            typealias WorkflowInput = Never
+            typealias WorkflowOutput = Never
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowLauncher(isLaunched: .constant(true), startingArgs: true) {
+                thenProceed(with: FR1.self) {
+                    thenProceed(with: FR2.self)
+                }
+                .presentationType(.navigationLink)
+                .persistence(.persistWhenSkipped)
+            }
+        )
+        .inspection.inspect { fr1 in
+            let model = (Mirror(reflecting: try fr1.actualView()).descendant("_model") as! EnvironmentObject<WorkflowViewModel>).wrappedValue
+            let launcher = (Mirror(reflecting: try fr1.actualView()).descendant("_launcher") as! EnvironmentObject<Launcher>).wrappedValue
+            XCTAssertFalse(try fr1.find(ViewType.NavigationLink.self).isActive())
+            XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
+
+            try fr1.find(ViewType.NavigationLink.self)
+                   .find(WorkflowItem<FR2, Never, FR2>.self).actualView()
+                   .inspect(model: model, launcher: launcher) { fr2 in
+
+                XCTAssertTrue(try fr2.find(ViewType.NavigationLink.self).isActive())
+                XCTAssertNoThrow(try fr2.find(FR2.self).actualView().backUpInWorkflow())
+                XCTAssertNoThrow(try fr2.find(FR1.self).actualView().proceedInWorkflow())
+            }
+        }
+
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
+
+    func testPersistWhenSkippedNavView_OnMiddleItemInAWorkflow() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+            func shouldLoad() -> Bool { false }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR3 type") }
+        }
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowLauncher(isLaunched: .constant(true)) {
+                thenProceed(with: FR1.self) {
+                    thenProceed(with: FR2.self) {
+                        thenProceed(with: FR3.self).presentationType(.navigationLink)
+                    }
+                    .persistence(.persistWhenSkipped)
+                    .presentationType(.navigationLink)
+                }
+                .presentationType(.navigationLink)
+            }
+        ).inspection.inspect { fr1 in
+            XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
+
+            try fr1.actualView().inspectWrapped { fr2 in
+                XCTAssertThrowsError(try fr2.find(FR2.self))
+
+                try fr2.actualView().inspectWrapped { fr3 in
+                    XCTAssertNoThrow(try fr3.find(FR3.self))
+                }
+            }
+        }
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
 }

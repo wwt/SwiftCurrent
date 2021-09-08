@@ -176,13 +176,34 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
     }
 
     private func proceedInWorkflow(element: AnyWorkflow.Element?) {
+        persistence = element?.value.metadata.persistence ?? .default
+
+        print("Element is: \(element?.value.instance?.underlyingInstance ?? "Nil")")
+        print("elementRef is: \(_elementRef.wrappedValue?.value.instance?.underlyingInstance ?? "Nil")")
+
         if let body = element?.extractErasedView() as? Content, elementRef === element || elementRef == nil {
             elementRef = element
             content = body
-            persistence = element?.value.metadata.persistence ?? .default
         } else if persistence == .removedAfterProceeding {
             content = nil
             elementRef = nil
+        } else if persistence == .persistWhenSkipped {
+            elementRef = element?.next
+            content = element?.extractErasedView() as? Content
+        }
+
+        if content == nil {
+            print("!!! Content nil")
+            _ = element?.traverse(direction: .backward) {
+                if $0.value.metadata.persistence == .persistWhenSkipped,
+                   let body = $0.extractErasedView() as? Content {
+                    elementRef = $0
+                    content = body
+                    isActive = true
+                    persistence = .persistWhenSkipped
+                }
+                return true
+            }
         }
     }
 }
