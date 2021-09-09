@@ -15,10 +15,11 @@ SwiftCurrent is a library that lets you easily manage journeys through your Swif
 
 It comes with built-in support for UIKit and SwiftUI app-routing. In SwiftCurrent workflows are a sequence of operations. Those operations are normally showing views in an application. The workflow describes the sequence of views and manages what view should come next. Your views are responsible for performing necessary tasks before proceeding forward in the workflow, like processing user input.
 
-<video width="320" height="240" controls>
-  <source src="https://player.vimeo.com/external/600610695.hd.mp4?s=59a30b91235948f25f220b27b1f59c7e6376de08&profile_id=175">
-Your browser does not support the video tag.
-</video>
+
+
+https://user-images.githubusercontent.com/33705774/132767762-7447753c-feba-4ef4-b54c-38bfe9d1ee82.mp4
+
+
 
 The above code is all that is needed from the screen starting this flow. Each screen determines if it needs to show based on data passed in and what that screen knows about the system (such as GPS availability), and all of it is type safe. If you ever want to re-order these, simply move their position in the chain.
 
