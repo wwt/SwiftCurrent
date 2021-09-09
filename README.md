@@ -71,16 +71,16 @@ var body: some View {
 
 And just like that you've got a workflow! You can now add more items to it, or re-order the items that are there. To understand more of how this works and what is there [check out our developer docs](https://wwt.github.io/SwiftCurrent/How%20to%20use%20SwiftCurrent%20with%20SwiftUI.html)
 
-# [Check out our example apps](https://github.com/wwt/SwiftCurrent/tree/main/ExampleApps)
-We have example apps for both SwiftUI and UIKit that show SwiftCurrent in action. They're even tested so you can see what it's like to test SwiftCurrent code. To run it locally, start by cloning the repo, open `SwiftCurrent.xcworkspace` and then run the `SwiftUIExample` scheme or the `UIKitExample` scheme. 
+# Check out our example apps
+We have [example apps](https://github.com/wwt/SwiftCurrent/tree/main/ExampleApps) for both SwiftUI and UIKit that show SwiftCurrent in action. They're even tested so you can see what it's like to test SwiftCurrent code. To run it locally, start by cloning the repo, open `SwiftCurrent.xcworkspace` and then run the `SwiftUIExample` scheme or the `UIKitExample` scheme. 
 
-# Deep Dive
-
+# [See this to learn more](https://wwt.github.io/SwiftCurrent/index.html)
+For specific documentation check out:
 - [Why SwiftCurrent?](https://wwt.github.io/SwiftCurrent/why-this-library.html)
 - [Installation](https://wwt.github.io/SwiftCurrent/installation.html)
+- [Getting Started with SwiftUI](https://wwt.github.io/SwiftCurrent/getting-started-with-swiftui.html)
 - [Getting Started with Storyboards](https://wwt.github.io/SwiftCurrent/using-storyboards.html)
 - [Getting Started with Programmatic UIKit Views](https://wwt.github.io/SwiftCurrent/using-programmatic-views.html)
-- [[BETA] Getting Started with SwiftUI](https://wwt.github.io/SwiftCurrent/getting-started-with-swiftui.html)
 - [Developer Documentation](https://wwt.github.io/SwiftCurrent/index.html)
 - [Upgrade Path](https://github.com/wwt/SwiftCurrent/blob/main/.github/UPGRADE_PATH.md)
 - [Contributing to SwiftCurrent](https://github.com/wwt/SwiftCurrent/blob/main/.github/CONTRIBUTING.md)
