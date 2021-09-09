@@ -13,19 +13,10 @@
 
 SwiftCurrent is a library that lets you easily manage journeys through your Swift application.
 
-When Developing in UIKit, each view controller has to know about the one following it in order to share data.  Now imagine a flow where the first 3 screens are optional.  What would it look like if you could decouple all of that?
+It comes with built-in support for UIKit and SwiftUI app-routing. In SwiftCurrent workflows are a sequence of operations. Those operations are normally showing views in an application. The workflow describes the sequence of views and manages what view should come next. Your views are responsible for performing necessary tasks before proceeding forward in the workflow, like processing user input.
 
-```swift
-let workflow = Workflow(LocationsViewController.self) // Skip this if you have GPS
-                .thenProceed(with: PickupOrDeliveryViewController.self) // Skip this if you only have 1 choice
-                .thenProceed(with: MenuSelectionViewController.self) // Skip this for new stores
-                .thenProceed(with: FoodSelectionViewController.self)
-                .thenProceed(with: ReviewOrderViewController.self) // This lets you edit anything you've already picked
-                .thenProceed(with: SubmitPaymentViewController.self)
+<iframe src="https://player.vimeo.com/video/600610695?h=fd3976b77a" width="640" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
 
-// from wherever this flow is launched
-launchInto(workflow)
-```
 The above code is all that is needed from the screen starting this flow. Each screen determines if it needs to show based on data passed in and what that screen knows about the system (such as GPS availability), and all of it is type safe. If you ever want to re-order these, simply move their position in the chain.
 
 As you continue to develop your applications, each view controller will become more decoupled from the rest of the app.  That means, if you want a completely different order of screens, just define a new [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html).
