@@ -212,11 +212,7 @@ public final class Workflow<F: FlowRepresentable>: LinkedList<_WorkflowItem> {
 
     private func setupBackUpCallbacks(_ node: Element, _ onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
         node.value.instance?.backUpInWorkflowStorage = { [self] in
-            let previousLoadedNode = node.traverse(direction: .backward) { previousNode in
-                previousNode.value.instance != nil
-            }
-
-            guard let previousNode = previousLoadedNode else { throw WorkflowError.failedToBackUp }
+            guard let previousNode = node.previouslyLoadedElement else { throw WorkflowError.failedToBackUp }
 
             orchestrationResponder?.backUp(from: node, to: previousNode)
         }
