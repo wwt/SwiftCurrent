@@ -20,15 +20,20 @@ public struct ViewControllerWrapper<F: FlowRepresentable & UIViewController>: Vi
 
     public weak var _workflowPointer: AnyFlowRepresentable?
 
+    private let vc: F
     private let args: WorkflowInput?
     public init(with args: F.WorkflowInput) {
         self.args = args
+        vc = F._factory(F.self, with: args)
     }
 
-    public init() { args = nil }
+    public init() {
+        args = nil
+        vc = F._factory(F.self)
+    }
 
     public func makeUIViewController(context: Context) -> F {
-        var vc: F = {
+        var vc: F = { // unfortunately, needs to be recreated because of some bizarro thing with SwiftUI lifecycles
             if let args = args {
                 return F._factory(F.self, with: args)
             }
@@ -39,5 +44,7 @@ public struct ViewControllerWrapper<F: FlowRepresentable & UIViewController>: Vi
     }
 
     public func updateUIViewController(_ uiViewController: F, context: Context) { }
+
+    public func shouldLoad() -> Bool { vc.shouldLoad() }
 }
 #endif
