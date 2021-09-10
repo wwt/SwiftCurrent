@@ -1,0 +1,8 @@
+### What is a workflow?
+A `workflow` is a description for a sequence of `FlowRepresentable`. Those operations are normally displaying screens or views. There are different ways of [creating workflows in SwiftUI](Creating%20Workflows%20in%20SwiftUI.html) and [creating workflows in UIKit](Creating%20Workflows%20in%20UIKit.html). 
+
+### What is a `FlowRepresentable`?
+A `FlowRepresentable` is a protocol that describes a type that can appear in a `workflow`. It optionally declares `FlowRepresentable.WorkflowInput` and `FlowRepresentable.WorkflowOutput` indicating whether it requires data or whether it passes data forward. It also provides an initializer so that it can be created by the `workflow`. Once an item conforms to `FlowRepresentable` it is capable of being injected into any `workflow`. 
+
+### Valid workflow sequences
+Workflows enforce (either at compile-time or run-time) that the sequence of `FlowRepresentables` are well-formed. For example if a particular `FlowRepresentable` has a `FlowRepresentable.WorkflowInput` of `String` but the previous item passes an `Int` forward, that workflow is malformed. It's possible for a `FlowRepresentable` to declare a `FlowRepresentable.WorkflowInput` of `Never` if it does not take in data, `Any` if it can intake multiple types, or `AnyWorkflow.PassedArgs` if it can handle being passed no data, or data of any kind.
