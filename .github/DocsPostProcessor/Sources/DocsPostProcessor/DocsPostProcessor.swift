@@ -20,7 +20,7 @@ struct DocsPostProcessor: ParsableCommand {
         let url = URL(fileURLWithPath: FileManager.default.currentDirectoryPath).appendingPathComponent(path)
         var files: [URL] = (url.pathExtension == "html") ? [url] : []
         if url.pathExtension != "html", let enumerator = FileManager.default.enumerator(at: url, includingPropertiesForKeys: [.isRegularFileKey], options: [.skipsHiddenFiles]) {
-            for case let fileURL as URL in enumerator {
+            for case let fileURL as URL in enumerator /*where fileURL.pathComponents.contains("SwiftCurrent.docset")*/ {
                 let fileAttributes = try fileURL.resourceValues(forKeys:[.isRegularFileKey])
                 if fileAttributes.isRegularFile == true, fileURL.pathExtension == "html" {
                     files.append(fileURL)
@@ -45,9 +45,9 @@ struct DocsPostProcessor: ParsableCommand {
     func replaceOverviewWithReadme(document: Document) throws {
         if let nav = try? document.select("nav").first() {
             if let firstNavLink = try nav.getElementsByClass("nav-group-name-link").first(),
-               URL(fileURLWithPath: try firstNavLink.attr("href")).lastPathComponent == "Overview.html" {
-                let oldURL = URL(fileURLWithPath: try firstNavLink.attr("href"))
-                try firstNavLink.attr("href", oldURL.deletingLastPathComponent().appendingPathComponent("index.html"))
+               let oldUrl = URL(string: try firstNavLink.attr("href")),
+               oldUrl.lastPathComponent == "Overview.html" {
+                try firstNavLink.attr("href", oldUrl.deletingLastPathComponent().appendingPathComponent("index.html").absoluteString)
             } else {
                 throw Err.noOverviewFound
             }
