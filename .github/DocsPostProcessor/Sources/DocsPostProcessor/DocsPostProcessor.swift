@@ -20,7 +20,7 @@ struct DocsPostProcessor: ParsableCommand {
         let url = URL(fileURLWithPath: FileManager.default.currentDirectoryPath).appendingPathComponent(path)
         var files: [URL] = (url.pathExtension == "html") ? [url] : []
         if url.pathExtension != "html", let enumerator = FileManager.default.enumerator(at: url, includingPropertiesForKeys: [.isRegularFileKey], options: [.skipsHiddenFiles]) {
-            for case let fileURL as URL in enumerator /*where fileURL.pathComponents.contains("SwiftCurrent.docset")*/ {
+            for case let fileURL as URL in enumerator {
                 let fileAttributes = try fileURL.resourceValues(forKeys:[.isRegularFileKey])
                 if fileAttributes.isRegularFile == true, fileURL.pathExtension == "html" {
                     files.append(fileURL)
