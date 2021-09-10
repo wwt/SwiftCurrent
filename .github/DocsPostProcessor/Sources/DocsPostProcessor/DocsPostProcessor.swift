@@ -57,7 +57,7 @@ struct DocsPostProcessor: ParsableCommand {
         if let article = try? document.select("article").first() {
             let link = try article.getElementsByAttributeValue("href", "https://user-images.githubusercontent.com/33705774/132767762-7447753c-feba-4ef4-b54c-38bfe9d1ee82.mp4")
             try link.wrap("""
-            <iframe src="https://player.vimeo.com/video/600610695?h=fd3976b77a" width="640" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+            <div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/600610695?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;h=fd3976b77a" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Introducing SwiftCurrent.mp4"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
             """)
         }
     }
