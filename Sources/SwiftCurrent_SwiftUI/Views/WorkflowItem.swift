@@ -96,7 +96,7 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         _metadata = State(initialValue: metadata)
     }
 
-    public init(_ item: F.Type) where Wrapped == Never, Content == F, Content: FlowRepresentable & View {
+    init(_ item: F.Type) where Wrapped == Never, Content == F, Content: FlowRepresentable & View {
         let metadata = FlowRepresentableMetadata(Content.self,
                                                  launchStyle: .new,
                                                  flowPersistence: flowPersistenceClosure,
