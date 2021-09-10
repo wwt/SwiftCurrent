@@ -33,7 +33,10 @@ extension WorkflowViewModel: OrchestrationResponder {
     }
 
     func proceed(to destination: AnyWorkflow.Element, from source: AnyWorkflow.Element) {
-        body = destination
+        DispatchQueue.main.asyncAfter(deadline: .now().advanced(by: .seconds(1))) {
+            self.body = destination
+        }
+        self.proceedCount += 1
     }
 
     func backUp(from source: AnyWorkflow.Element, to destination: AnyWorkflow.Element) {

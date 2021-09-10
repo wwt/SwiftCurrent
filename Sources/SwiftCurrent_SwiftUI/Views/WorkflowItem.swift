@@ -176,30 +176,24 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
     }
 
     private func proceedInWorkflow(element: AnyWorkflow.Element?) {
-        persistence = element?.value.metadata.persistence ?? .default
+//
+//        print("Element is: \(element?.value.instance?.underlyingInstance ?? "Nil")")
+//        print("Element.next is: \(element?.next?.value.instance?.underlyingInstance ?? "Nil")")
+//        print("Element.previous is: \(element?.previous?.value.instance?.underlyingInstance ?? "Nil")")
+//        print("Content is: \(Content.self)")
+//        print("elementRef is: \(_elementRef.wrappedValue?.value.instance?.underlyingInstance ?? "Nil")")
+//        print("elementRef.next is: \(elementRef?.next?.value.instance?.underlyingInstance ?? "Nil")")
+//        print("elementRef.previous is: \(elementRef?.previous?.value.instance?.underlyingInstance ?? "Nil")")
+//        print("Wrapped is: \(Wrapped.self)")
+        print("====================")
 
         if let body = element?.extractErasedView() as? Content, elementRef === element || elementRef == nil {
             elementRef = element
             content = body
+            persistence = element?.value.metadata.persistence ?? .default
         } else if persistence == .removedAfterProceeding {
             content = nil
             elementRef = nil
-        } else if persistence == .persistWhenSkipped {
-            elementRef = element?.next
-            content = element?.next?.extractErasedView() as? Content
-        }
-
-        if content == nil {
-            _ = element?.traverse(direction: .backward) {
-                if $0.value.metadata.persistence == .persistWhenSkipped,
-                   let body = $0.extractErasedView() as? Content {
-                    elementRef = $0
-                    content = body
-                    isActive = true
-                    persistence = .persistWhenSkipped
-                }
-                return true
-            }
         }
     }
 }
