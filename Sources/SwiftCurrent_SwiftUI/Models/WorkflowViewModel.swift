@@ -16,6 +16,8 @@ final class WorkflowViewModel: ObservableObject {
     let onAbandonPublisher = PassthroughSubject<Void, Never>()
     let onFinishPublisher = CurrentValueSubject<AnyWorkflow.PassedArgs?, Never>(nil)
     let onBackUpPublisher = PassthroughSubject<AnyWorkflow.Element, Never>()
+    let proceedPublisher = CurrentValueSubject<AnyWorkflow.Element?, Never>(nil)
+    let launchPublisher = CurrentValueSubject<AnyWorkflow.Element?, Never>(nil)
 
     @Binding var isLaunched: Bool
     private let launchArgs: AnyWorkflow.PassedArgs
@@ -30,18 +32,20 @@ final class WorkflowViewModel: ObservableObject {
 extension WorkflowViewModel: OrchestrationResponder {
     func launch(to destination: AnyWorkflow.Element) {
         body = destination
+        launchPublisher.send(destination)
     }
 
     func proceed(to destination: AnyWorkflow.Element, from source: AnyWorkflow.Element) {
-        DispatchQueue.main.asyncAfter(deadline: .now().advanced(by: .seconds(1))) {
-            self.body = destination
-        }
-        self.proceedCount += 1
+//        DispatchQueue.main.asyncAfter(deadline: .now().advanced(by: .seconds(1))) {
+        body = destination
+//        }
+        proceedPublisher.send(destination)
     }
 
     func backUp(from source: AnyWorkflow.Element, to destination: AnyWorkflow.Element) {
         body = destination
         onBackUpPublisher.send(source)
+//        onBackUpPublisher.send(destination)
     }
 
     func abandon(_ workflow: AnyWorkflow, onFinish: (() -> Void)?) {

@@ -63,7 +63,9 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
             }
         }
         .onReceive(model.$body, perform: activateIfNeeded)
-        .onReceive(model.$body, perform: proceedInWorkflow)
+//        .onReceive(model.$body, perform: proceedInWorkflow)
+        .onReceive(model.proceedPublisher, perform: registeredProceedInWorkflow)
+        .onReceive(model.launchPublisher, perform: proceedInWorkflow)
         .onReceive(model.onBackUpPublisher, perform: backUpInWorkflow)
         .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
@@ -167,6 +169,12 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         }
     }
 
+    private func registeredProceedInWorkflow(element: AnyWorkflow.Element?) {
+//        if element?.value.metadata.persistence == .persistWhenSkipped, elementRef == nil {
+            proceedInWorkflow(element: element)
+//        }
+    }
+
     private func backUpInWorkflow(element: AnyWorkflow.Element?) {
         // We have found no satisfactory way to test this...we haven't even really found unsatisfactory ways to test it.
         // See: https://github.com/nalexn/ViewInspector/issues/131
@@ -194,6 +202,10 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         } else if persistence == .removedAfterProceeding {
             content = nil
             elementRef = nil
+        }
+
+        if persistence == .persistWhenSkipped {
+            isActive = true
         }
     }
 }
