@@ -1,5 +1,5 @@
 //  swiftlint:disable:this file_name
-//  ViewExtensions.swift
+//  ThenProceedExtensions.swift
 //  SwiftCurrent_SwiftUI
 //
 //  Created by Brian Lombardo on 8/24/21.
