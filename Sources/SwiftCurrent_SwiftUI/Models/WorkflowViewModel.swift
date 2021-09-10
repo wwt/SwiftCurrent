@@ -51,6 +51,7 @@ extension WorkflowViewModel: OrchestrationResponder {
     }
 
     func complete(_ workflow: AnyWorkflow, passedArgs: AnyWorkflow.PassedArgs, onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
+        defer { onFinishPublisher.send(nil) }
         if workflow.lastLoadedItem?.value.metadata.persistence == .removedAfterProceeding {
             if let lastPresentableItem = workflow.lastPresentableItem {
                 body = lastPresentableItem
