@@ -46,7 +46,8 @@ struct DocsPostProcessor: ParsableCommand {
         if let nav = try? document.select("nav").first() {
             if let firstNavLink = try nav.getElementsByClass("nav-group-name-link").first(),
                URL(fileURLWithPath: try firstNavLink.attr("href")).lastPathComponent == "Overview.html" {
-                try firstNavLink.attr("href", "index.html")
+                let oldURL = URL(fileURLWithPath: try firstNavLink.attr("href"))
+                try firstNavLink.attr("href", oldURL.deletingLastPathComponent().appendingPathComponent("index.html"))
             } else {
                 throw Err.noOverviewFound
             }
