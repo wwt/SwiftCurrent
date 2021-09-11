@@ -6,4 +6,6 @@ jazzy --config .github/.jazzy.yaml --podspec SwiftCurrent.podspec --sourcekitten
 rm swiftcurrent-docs.json
 rm swiftcurrentuikit-docs.json
 rm swiftcurrent-swiftui-docs.json
-open docs/index.html
+cd .github/DocsPostProcessor
+swift run DocsPostProcessor ../../Docs --replace-overview-with-readme --replace-readme-video-with-vimeo-embed
+open ../../docs/index.html

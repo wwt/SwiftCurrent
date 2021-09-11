@@ -13,81 +13,25 @@
 
 SwiftCurrent is a library that lets you easily manage journeys through your Swift application.
 
-When Developing in UIKit, each view controller has to know about the one following it in order to share data.  Now imagine a flow where the first 3 screens are optional.  What would it look like if you could decouple all of that?
+It comes with built-in support for UIKit and SwiftUI app-routing. In SwiftCurrent workflows are a sequence of operations. Those operations are normally showing views in an application. The workflow describes the sequence of views and manages what view should come next. Your views are responsible for performing necessary tasks before proceeding forward in the workflow, like processing user input.
 
-```swift
-let workflow = Workflow(LocationsViewController.self) // Skip this if you have GPS
-                .thenProceed(with: PickupOrDeliveryViewController.self) // Skip this if you only have 1 choice
-                .thenProceed(with: MenuSelectionViewController.self) // Skip this for new stores
-                .thenProceed(with: FoodSelectionViewController.self)
-                .thenProceed(with: ReviewOrderViewController.self) // This lets you edit anything you've already picked
-                .thenProceed(with: SubmitPaymentViewController.self)
+https://user-images.githubusercontent.com/33705774/132767762-7447753c-feba-4ef4-b54c-38bfe9d1ee82.mp4
 
-// from wherever this flow is launched
-launchInto(workflow)
-```
-The above code is all that is needed from the screen starting this flow. Each screen determines if it needs to show based on data passed in and what that screen knows about the system (such as GPS availability), and all of it is type safe. If you ever want to re-order these, simply move their position in the chain.
+### Why should I use SwiftCurrent?
+Architectural patterns and libraries that attempt to create a separation between views and workflows already exist. However, SwiftCurrent is different. We took a new design approach that focuses on
 
-As you continue to develop your applications, each view controller will become more decoupled from the rest of the app.  That means, if you want a completely different order of screens, just define a new [Workflow](https://wwt.github.io/SwiftCurrent/Classes/Workflow.html).
+- **A Developer Friendly API**: The library was built with developers in mind. It started with a group of developers talking about the code experience they desired. Then the library team took on whatever complexities were necessary to bring them that experience.
+- **Compile-time safety**: We tell you at compile time everything we can so you know things will work.
+- **Minimal Boilerplate**: We have hidden this as much as possible. We hate it as much as you do and are constantly working on cutting the cruft.
 
-## See it in action with our example app
-
-Clone our repo, open `SwiftCurrent.xcworkspace`, target the `UIKitExample` scheme, and run to see our example app in action.
-
-The [example app has a README](https://github.com/wwt/SwiftCurrent/blob/main/ExampleApps/UIKitExample/README.md) that details interesting usages.
-
-## Interested but you need SwiftUI support?
-
-[We're working on it now!](https://github.com/wwt/SwiftCurrent/milestone/2)
-
-If you would like to try the beta release, please install the `BETA_SwiftCurrent_SwiftUI` product in SPM or the `BETA_SwiftUI` sub spec in CocoaPods.  For more detailed steps, [see our installation instructions](https://wwt.github.io/SwiftCurrent/installation.html).  See [Getting Started with SwiftUI](https://wwt.github.io/SwiftCurrent/getting-started-with-swiftui.html) for a quick tutorial.  To see the example app for SwiftUI, clone our repo, open `SwiftCurrent.xcworkspace`, target the `SwiftUIExample` scheme, and run. The [example app has a README](https://github.com/wwt/SwiftCurrent/blob/main/ExampleApps/SwiftUIExample/README.md) that details interesting usages.
-
-In order to use the library with SwiftUI, your minimum targeted versions must meet: iOS 14.0, macOS 11, tvOS 14.0, or watchOS 7.0.
-
-For us, beta means that the API may change without warning until the full release.  However, we expect bugs to be at a minimum and documentation to be true and accurate.
+#### From there, we created a library that:
+- **Isolates your views**:  You can design your views so that they are unaware of the view that will come next.
+- **Easily reorders views**: Changing view order is as easy as ⌘+⌥+\[ (moving the line up or down)
+- **Composes workflows together**: Create branching flows easily by joining workflows together.
+- **Creates conditional flows**: Make your flows robust and handle ever-changing designs. Need a screen only to show up sometimes? Need a flow for person A and another for person B? We've got you covered.
 
 # Quick Start
-
-This quick start uses SPM, but for other approaches, [see our installation instructions](https://wwt.github.io/SwiftCurrent/installation.html).
-
-## UIKit
-
-```swift
-.package(url: "https://github.com/wwt/SwiftCurrent.git", .upToNextMajor(from: "4.0.0")),
-...
-.product(name: "SwiftCurrent", package: "SwiftCurrent"),
-.product(name: "SwiftCurrent_UIKit", package: "SwiftCurrent")
-```
-Then make your first FlowRepresentable view controllers:
-```swift
-import SwiftCurrent
-import SwiftCurrent_UIKit
-class OptionalViewController: UIWorkflowItem<String, Never>, FlowRepresentable {
-    let input: String
-    required init(with args: String) {
-        input = args
-        super.init(nibName: nil, bundle: nil)
-    }
-    required init?(coder: NSCoder) { nil }
-    override func viewDidLoad() { view.backgroundColor = .blue }
-    func shouldLoad() -> Bool { input.isEmpty }
-}
-class ExampleViewController: UIWorkflowItem<Never, Never>, FlowRepresentable {
-    override func viewDidLoad() { view.backgroundColor = .green }
-}
-```
-Then from your root view controller, call:
-```swift
-import SwiftCurrent
-...
-let workflow = Workflow(OptionalViewController.self)
-    .thenProceed(with: ExampleViewController.self)
-launchInto(workflow, args: "Skip optional screen")
-```
-
-And just like that you're started!
-
-## [BETA] SwiftUI
+Why show a quick start when we have an example app? Because it's so easy to get started, we can just drop in 2 code snippets and you're ready to go! This quick start uses Swift Package Manager and SwiftUI, but for other approaches, [see our installation instructions](https://wwt.github.io/SwiftCurrent/installation.html).
 
 ```swift
 .package(url: "https://github.com/wwt/SwiftCurrent.git", .upToNextMajor(from: "4.1.0")),
@@ -98,6 +42,7 @@ And just like that you're started!
 Then make your first FlowRepresentable view:
 ```swift
 import SwiftCurrent
+import SwiftUI
 struct OptionalView: View, FlowRepresentable {
     weak var _workflowPointer: AnyFlowRepresentable?
     let input: String
@@ -105,36 +50,37 @@ struct OptionalView: View, FlowRepresentable {
     var body: some View { Text("Only shows up if no input") }
     func shouldLoad() -> Bool { input.isEmpty }
 }
-struct ExampleView: View, FlowRepresentable {
+struct ExampleView: View, PassthroughFlowRepresentable {
     weak var _workflowPointer: AnyFlowRepresentable?
     var body: some View { Text("This is ExampleView!") }
 }
 ```
-Then from your ContentView body, add: 
+Then from your `ContentView` or whatever view (or app) you'd like to contain the workflow, add the following view to the body: 
 ```swift
 import SwiftCurrent_SwiftUI
-...
-WorkflowLauncher(isLaunched: .constant(true), startingArgs: "Skip optional screen") {
-    thenProceed(with: OptionalView.self) {
-        thenProceed(with: ExampleView.self)
+// ...
+var body: some View { 
+    // ... other view code (if any)
+    WorkflowLauncher(isLaunched: .constant(true), startingArgs: "Skip optional screen") {
+        thenProceed(with: OptionalView.self) {
+            thenProceed(with: ExampleView.self)
+        }
     }
 }
 ```
 
-And just like that you're started!
+And just like that you've got a workflow! You can now add more items to it, or re-order the items that are there. To understand more of how this works and what is there [check out our developer docs](https://wwt.github.io/SwiftCurrent/How%20to%20use%20SwiftCurrent%20with%20SwiftUI.html)
 
-Here's an example of an app written with SwiftCurrent running wherever SwiftUI runs.  Check it out:
+# Check out our example apps
+We have [example apps](https://github.com/wwt/SwiftCurrent/tree/main/ExampleApps) for both SwiftUI and UIKit that show SwiftCurrent in action. They're even tested so you can see what it's like to test SwiftCurrent code. To run it locally, start by cloning the repo, open `SwiftCurrent.xcworkspace` and then run the `SwiftUIExample` scheme or the `UIKitExample` scheme. 
 
-https://user-images.githubusercontent.com/79471462/131555558-9e01e753-cafd-4ae2-af1b-b71a1aabb71f.mp4
-
-
-# Deep Dive
-
+# [See this to learn more](https://wwt.github.io/SwiftCurrent/index.html)
+For specific documentation check out:
 - [Why SwiftCurrent?](https://wwt.github.io/SwiftCurrent/why-this-library.html)
 - [Installation](https://wwt.github.io/SwiftCurrent/installation.html)
+- [Getting Started with SwiftUI](https://wwt.github.io/SwiftCurrent/getting-started-with-swiftui.html)
 - [Getting Started with Storyboards](https://wwt.github.io/SwiftCurrent/using-storyboards.html)
 - [Getting Started with Programmatic UIKit Views](https://wwt.github.io/SwiftCurrent/using-programmatic-views.html)
-- [[BETA] Getting Started with SwiftUI](https://wwt.github.io/SwiftCurrent/getting-started-with-swiftui.html)
 - [Developer Documentation](https://wwt.github.io/SwiftCurrent/index.html)
 - [Upgrade Path](https://github.com/wwt/SwiftCurrent/blob/main/.github/UPGRADE_PATH.md)
 - [Contributing to SwiftCurrent](https://github.com/wwt/SwiftCurrent/blob/main/.github/CONTRIBUTING.md)
