@@ -1828,6 +1828,27 @@ final class GenericConstraintTests: XCTestCase, View {
     }
 
     // MARK: Input Type == Concrete Type
+    func testCreatingMalformedWorkflowWithMismatchingConcreteTypes() throws {
+        struct FR0: FlowRepresentable, View, Inspectable {
+            typealias WorkflowOutput = Int
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        struct FR1: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: String) { }
+        }
+
+        try XCTAssertThrowsFatalError {
+            _ = WorkflowLauncher(isLaunched: .constant(true)) {
+                self.thenProceed(with: FR0.self) {
+                    self.thenProceed(with: FR1.self).persistence(.persistWhenSkipped)
+                }
+            }
+        }
+    }
+
     func testProceedingWhenInputIsConcreteType_FlowPersistenceCanBeSetWithAutoclosure() throws {
         struct FR0: PassthroughFlowRepresentable, View, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
