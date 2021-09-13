@@ -153,8 +153,6 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
                                     flowPersistenceClosure: flowPersistenceClosure)
     }
 
-    private func ViewBuilder<V: View>(@ViewBuilder builder: () -> V) -> some View { builder() }
-
     private func factory(args: AnyWorkflow.PassedArgs) -> AnyFlowRepresentable {
         let afrv = AnyFlowRepresentableView(type: F.self, args: args)
         modifierClosure?(afrv)

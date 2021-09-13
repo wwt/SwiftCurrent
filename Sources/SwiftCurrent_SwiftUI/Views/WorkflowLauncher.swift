@@ -152,8 +152,6 @@ public struct WorkflowLauncher<Content: View>: View {
         launcher.workflow.launch(withOrchestrationResponder: model, passedArgs: launcher.launchArgs)
     }
 
-    private func ViewBuilder<V: View>(@ViewBuilder builder: () -> V) -> some View { builder() }
-
     private func _onFinish(_ args: AnyWorkflow.PassedArgs?) {
         guard let args = args else { return }
         onFinish.forEach { $0(args) }
