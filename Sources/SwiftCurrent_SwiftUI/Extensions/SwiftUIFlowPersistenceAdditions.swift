@@ -1,5 +1,5 @@
 //  swiftlint:disable:this file_name
-//  FlowPersistenceAdditions.swift
+//  SwiftUIFlowPersistenceAdditions.swift
 //  SwiftCurrent_SwiftUI
 //
 //  Created by Morgan Zellers on 9/13/21.
