@@ -202,6 +202,32 @@ final class UIKitInteropTests: XCTestCase, View {
 
         wait(for: [proceedCalled], timeout: TestConstant.timeout)
     }
+
+    func testPuttingAUIKitViewThatDoesNotLoadInsideASwiftUIWorkflow() throws {
+        final class FR1: UIWorkflowItem<Never, Never>, FlowRepresentable {
+            func shouldLoad() -> Bool { false }
+        }
+
+        struct FR2: View, FlowRepresentable, Inspectable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+
+            var body: some View {
+                Text("FR2")
+            }
+        }
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true)) {
+            thenProceed(with: FR1.self) {
+                thenProceed(with: FR2.self)
+            }
+        }
+
+        let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
+            XCTAssertThrowsError(try workflowLauncher.view(ViewControllerWrapper<FR1>.self))
+            XCTAssertEqual(try workflowLauncher.find(FR2.self).text().string(), "FR2")
+        }
+
+        wait(for: [exp], timeout: TestConstant.timeout)
+    }
 }
 
 extension UIViewController {

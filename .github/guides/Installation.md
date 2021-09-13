@@ -19,7 +19,7 @@ Add the following products to your target dependencies.
 ```swift
 .product(name: "SwiftCurrent", package: "SwiftCurrent"),
 .product(name: "SwiftCurrent_UIKit", package: "SwiftCurrent")
-.product(name: "BETA_SwiftCurrent_SwiftUI", package: "SwiftCurrent")
+.product(name: "SwiftCurrent_SwiftUI", package: "SwiftCurrent")
 ```
 
 ### Your import statements for these products will be
@@ -27,12 +27,12 @@ Add the following products to your target dependencies.
 ```swift
 import SwiftCurrent
 import SwiftCurrent_UIKit
-import SwiftCurrent_SwiftUI // BETA
+import SwiftCurrent_SwiftUI
 ```
 
 `SwiftCurrent_UIKit` will need to target a platform that supports UIKit, such as iOS or macOS with Catalyst.
 
-[BETA] `SwiftCurrent_SwiftUI` requires the minimum versions of iOS 14.0, macOS 11, tvOS 14.0, or watchOS 7.0.
+`SwiftCurrent_SwiftUI` requires the minimum versions of iOS 14.0, macOS 11, tvOS 14.0, or watchOS 7.0.
 
 # CocoaPods
 
@@ -44,9 +44,9 @@ Set up [CocoaPods](https://cocoapods.org/) for your project, then include SwiftC
 pod 'SwiftCurrent/UIKit'
 ```
 
-### [BETA] To use SwiftCurrent with SwiftUI
+### To use SwiftCurrent with SwiftUI
 ```ruby
-pod 'SwiftCurrent/BETA_SwiftUI'
+pod 'SwiftCurrent/SwiftUI'
 ```
 
 ### Your import statement will be

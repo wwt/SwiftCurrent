@@ -29,6 +29,7 @@ final class WorkflowViewModel: ObservableObject {
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension WorkflowViewModel: OrchestrationResponder {
     func launch(to destination: AnyWorkflow.Element) {
+        onFinishPublisher.send(nil) // We launched, so make sure nobody thinks we finished yet.
         body = destination
     }
 
