@@ -1,6 +1,6 @@
 //  swiftlint:disable:this file_name
 //  FlowPersistenceAdditions.swift
-//  FlowPersistenceAdditions
+//  SwiftCurrent_SwiftUI
 //
 //  Created by Morgan Zellers on 9/13/21.
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
@@ -10,6 +10,7 @@ import SwiftCurrent
 extension FlowPersistence {
     /// A namespace for the SwiftUI persistence types.
     public enum SwiftUI {
+        /// A type indicating how a `FlowRepresentable` should be persisted.
         public enum Persistence: RawRepresentable, CaseIterable {
             /// Indicates a `FlowRepresentable` in a `Workflow` should persist based on its `shouldLoad` function.
             case `default`
