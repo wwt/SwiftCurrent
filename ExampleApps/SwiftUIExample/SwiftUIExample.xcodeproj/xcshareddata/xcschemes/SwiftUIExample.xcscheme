@@ -46,9 +46,9 @@
       <CodeCoverageTargets>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "BETA_SwiftCurrent_SwiftUI"
-            BuildableName = "BETA_SwiftCurrent_SwiftUI"
-            BlueprintName = "BETA_SwiftCurrent_SwiftUI"
+            BlueprintIdentifier = "SwiftCurrent_SwiftUI"
+            BuildableName = "SwiftCurrent_SwiftUI"
+            BlueprintName = "SwiftCurrent_SwiftUI"
             ReferencedContainer = "container:../..">
          </BuildableReference>
       </CodeCoverageTargets>
