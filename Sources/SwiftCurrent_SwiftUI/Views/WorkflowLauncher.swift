@@ -16,30 +16,30 @@ import SwiftCurrent
  The preferred method for creating a `Workflow` with SwiftUI is a combination of `WorkflowLauncher` and `WorkflowItem`. Initialize with arguments if your first `FlowRepresentable` has an input type.
 
  #### Example
+ ```swift
+ WorkflowLauncher(isLaunched: $isLaunched.animation(), args: "String in") {
+     thenProceed(with: FirstView.self) {
+         thenProceed(with: SecondView.self)
+             .persistence(.removedAfterProceeding)
+             .applyModifiers {
+                 $0.SecondViewSpecificModifier()
+                     .padding(10)
+                     .background(Color.purple)
+                     .transition(.opacity)
+                     .animation(.easeInOut)
+             }
+     }.applyModifiers {
+         $0.background(Color.gray)
+             .transition(.slide)
+             .animation(.spring())
+     }
+ }
+ .onAbandon { print("isLaunched is now false") }
+ .onFinish { args in print("Finished 1: \(args)") }
+ .onFinish { print("Finished 2: \($0)") }
+ .background(Color.green)
+ ```
  */
-/// ```swift
-/// WorkflowLauncher(isLaunched: $isLaunched.animation(), args: "String in") {
-///     thenProceed(with: FirstView.self) {
-///         thenProceed(with: SecondView.self)
-///             .persistence(.removedAfterProceeding)
-///             .applyModifiers {
-///                 $0.SecondViewSpecificModifier()
-///                     .padding(10)
-///                     .background(Color.purple)
-///                     .transition(.opacity)
-///                     .animation(.easeInOut)
-///             }
-///     }.applyModifiers {
-///         $0.background(Color.gray)
-///             .transition(.slide)
-///             .animation(.spring())
-///     }
-/// }
-/// .onAbandon { print("isLaunched is now false") }
-/// .onFinish { args in print("Finished 1: \(args)") }
-/// .onFinish { print("Finished 2: \($0)") }
-/// .background(Color.green)
-/// ```
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowLauncher<Content: View>: View {
     @State private var content: Content

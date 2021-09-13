@@ -16,6 +16,8 @@ import SwiftUI
 extension WorkflowItem: Inspectable { }
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension WorkflowLauncher: Inspectable { }
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension ViewControllerWrapper: Inspectable { }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension Inspection: InspectionEmissary where V: View { }
