@@ -132,9 +132,10 @@ struct TestView: View {
         }
     }
 
-    func persistence<F>(for type: F.Type) -> FlowPersistence {
-        if case .persistence(_, let persistence) = Environment.persistence(for: type) {
-            return persistence
+    func persistence<F>(for type: F.Type) -> FlowPersistence.SwiftUI.Persistence {
+        if case .persistence(_, let persistence) = Environment.persistence(for: type),
+           let enumValue = FlowPersistence.SwiftUI.Persistence(rawValue: persistence) {
+            return enumValue
         }
         return .default
     }

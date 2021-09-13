@@ -204,15 +204,15 @@ extension WorkflowItem: WorkflowModifier {
 extension WorkflowItem {
     // swiftlint:disable trailing_closure
     /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.
-    public func persistence(_ persistence: @escaping @autoclosure () -> FlowPersistence) -> Self {
+    public func persistence(_ persistence: @escaping @autoclosure () -> FlowPersistence.SwiftUI.Persistence) -> Self {
         Self(previous: self,
              launchStyle: launchStyle,
              modifierClosure: modifierClosure ?? { _ in },
-             flowPersistenceClosure: { _ in persistence() })
+             flowPersistenceClosure: { _ in persistence().rawValue })
     }
 
     /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.
-    public func persistence(_ persistence: @escaping (F.WorkflowInput) -> FlowPersistence) -> Self {
+    public func persistence(_ persistence: @escaping (F.WorkflowInput) -> FlowPersistence.SwiftUI.Persistence) -> Self {
         Self(previous: self,
              launchStyle: launchStyle,
              modifierClosure: modifierClosure ?? { _ in },
@@ -220,24 +220,24 @@ extension WorkflowItem {
                 guard case .args(let arg as F.WorkflowInput) = $0 else {
                     fatalError("Could not cast \(String(describing: $0)) to expected type: \(F.WorkflowInput.self)")
                 }
-                return persistence(arg)
+            return persistence(arg).rawValue
              })
     }
 
     /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.
-    public func persistence(_ persistence: @escaping (F.WorkflowInput) -> FlowPersistence) -> Self where F.WorkflowInput == AnyWorkflow.PassedArgs {
+    public func persistence(_ persistence: @escaping (F.WorkflowInput) -> FlowPersistence.SwiftUI.Persistence) -> Self where F.WorkflowInput == AnyWorkflow.PassedArgs {
         Self(previous: self,
              launchStyle: launchStyle,
              modifierClosure: modifierClosure ?? { _ in },
-             flowPersistenceClosure: persistence)
+             flowPersistenceClosure: { persistence($0).rawValue })
     }
 
     /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.
-    public func persistence(_ persistence: @escaping () -> FlowPersistence) -> Self where F.WorkflowInput == Never {
+    public func persistence(_ persistence: @escaping () -> FlowPersistence.SwiftUI.Persistence) -> Self where F.WorkflowInput == Never {
         Self(previous: self,
              launchStyle: launchStyle,
              modifierClosure: modifierClosure ?? { _ in },
-             flowPersistenceClosure: { _ in persistence() })
+             flowPersistenceClosure: { _ in persistence().rawValue })
     }
     // swiftlint:enable trailing_closure
 }
