@@ -22,7 +22,7 @@ extension InspectableView where View == ViewType.Sheet {
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-final class SwiftCurrent_ModalTests: XCTestCase, View {
+final class SwiftCurrent_ModalTests: XCTestCase, Scene {
     override func tearDownWithError() throws {
         removeQueuedExpectations()
     }

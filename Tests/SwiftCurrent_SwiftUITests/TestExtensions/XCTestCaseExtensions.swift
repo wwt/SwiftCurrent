@@ -12,7 +12,6 @@ import XCTest
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension XCTestCase {
     static var queuedExpectations: [XCTestExpectation] = []
-    public var body: some View { EmptyView() }
 
     func removeQueuedExpectations() {
         while let e = Self.queuedExpectations.first {
@@ -20,4 +19,19 @@ extension XCTestCase {
             Self.queuedExpectations.removeFirst()
         }
     }
+}
+
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension View where Self: XCTestCase {
+    public var body: some View { EmptyView() }
+}
+
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension Scene where Self: XCTestCase {
+    public var body: some Scene { WindowGroup { EmptyView() } }
+}
+
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension App where Self: XCTestCase {
+    public var body: some Scene { WindowGroup { EmptyView() } }
 }

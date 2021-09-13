@@ -14,7 +14,7 @@ import SwiftCurrent
 @testable import SwiftCurrent_SwiftUI // testable sadly needed for inspection.inspect to work
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, View {
+final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
     override func tearDownWithError() throws {
         removeQueuedExpectations()
     }
