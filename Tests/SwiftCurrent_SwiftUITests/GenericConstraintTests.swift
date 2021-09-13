@@ -2430,7 +2430,7 @@ final class GenericConstraintTests: XCTestCase, View {
 //        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
 //    }
 
-    func testThenProceedFunctions_WithUIViewControllers_AsExpectedOnView() {
+func testThenProceedFunctions_WithUIViewControllers_AsExpectedOnView() {
         final class FR0: UIViewController, FlowRepresentable {
             weak var _workflowPointer: AnyFlowRepresentable?
         }
@@ -2465,10 +2465,6 @@ final class GenericConstraintTests: XCTestCase, View {
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class ThenProceedOnAppTests: XCTestCase, App {
-    override func tearDownWithError() throws {
-        removeQueuedExpectations()
-    }
-
     func testThenProceedFunctionsAsExpectedOnApp() {
         struct FR0: PassthroughFlowRepresentable, View, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
@@ -2500,7 +2496,7 @@ final class ThenProceedOnAppTests: XCTestCase, App {
                 XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow(""))
                 try view.actualView().inspectWrapped { view in
                     XCTAssertNoThrow(try view.find(FR2.self))
-                    XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .removedAfterProceeding)
+                    XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .persistWhenSkipped)
                 }
             }
         }
@@ -2542,10 +2538,6 @@ final class ThenProceedOnAppTests: XCTestCase, App {
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class ThenProceedOnSceneTests: XCTestCase, Scene {
-    override func tearDownWithError() throws {
-        removeQueuedExpectations()
-    }
-
     func testThenProceedFunctionsAsExpectedOnScene() {
         struct FR0: PassthroughFlowRepresentable, View, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?

@@ -36,7 +36,7 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
     @State private var modifierClosure: ((AnyFlowRepresentableView) -> Void)?
     @State private var flowPersistenceClosure: (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default }
     @State private var launchStyle: LaunchStyle.SwiftUI.PresentationType = .default
-    @State private var persistence: FlowPersistence = .default
+    @State private var persistence: FlowPersistence.SwiftUI.Persistence = .default
     @State private var elementRef: AnyWorkflow.Element?
     @State private var isActive = false
     @EnvironmentObject private var model: WorkflowViewModel
@@ -177,7 +177,7 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         if let body = element?.extractErasedView() as? Content, elementRef === element || elementRef == nil {
             elementRef = element
             content = body
-            persistence = element?.value.metadata.persistence ?? .default
+            persistence = FlowPersistence.SwiftUI.Persistence(rawValue: element?.value.metadata.persistence ?? .default) ?? .default
         } else if persistence == .removedAfterProceeding {
             content = nil
             elementRef = nil
