@@ -269,7 +269,7 @@ At a high level we are loading the view controller for testing (similar to befor
 It's easy to forget to set the accessibility identifier on the button, please check that first. Second, if you don't call `loadForTesting()` your view controller doesn't make it to the window and the hit testing of `simulateTouch()` will also fail. Finally, make sure the button is visible and tappable on the simulator you are using.
 </details>
 
-## BETA Interoperability With SwiftUI
+## Interoperability With SwiftUI
 You can use your SwiftUI `View`s that are `FlowRepresentable` in your UIKit workflows. Start with your `View`
 
 ```swift
@@ -286,7 +286,7 @@ struct SwiftUIView: View, FlowRepresentable { // SwiftCurrent
 
 ```
 
-Now in your UIKit workflow simply use a `HostedWorkflowItem` (While in BETA, `import SwiftCurrent_SwiftUI` is necessary)
+Now in your UIKit workflow simply use a `HostedWorkflowItem`
 
 ```swift
 launchInto(Workflow(HostedWorkflowItem<SwiftUIView>.self)) // SwiftCurrent

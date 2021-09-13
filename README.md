@@ -37,7 +37,7 @@ Why show a quick start when we have an example app? Because it's so easy to get 
 .package(url: "https://github.com/wwt/SwiftCurrent.git", .upToNextMajor(from: "4.1.0")),
 ...
 .product(name: "SwiftCurrent", package: "SwiftCurrent"),
-.product(name: "BETA_SwiftCurrent_SwiftUI", package: "SwiftCurrent")
+.product(name: "SwiftCurrent_SwiftUI", package: "SwiftCurrent")
 ```
 Then make your first FlowRepresentable view:
 ```swift

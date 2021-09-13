@@ -44,7 +44,7 @@
 		CA9226F326406F2000BD0366 /* TestStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA9226F226406F2000BD0366 /* TestStoryboard.storyboard */; };
 		CA9226F92640724D00BD0366 /* ExceptionCatcher in Frameworks */ = {isa = PBXBuildFile; productRef = CA9226F82640724D00BD0366 /* ExceptionCatcher */; };
 		CA9F44B926ACA3220055020A /* GenericConstraintTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9F44B826ACA3220055020A /* GenericConstraintTests.swift */; };
-		CAA32F1826BF3F6000DB271E /* BETA_SwiftCurrent_SwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = CAA32F1726BF3F6000DB271E /* BETA_SwiftCurrent_SwiftUI */; };
+		CAA32F1826BF3F6000DB271E /* SwiftCurrent_SwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = CAA32F1726BF3F6000DB271E /* SwiftCurrent_SwiftUI */; };
 		CAC1C235256D8DA300DBD0D4 /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1C232256D8DA300DBD0D4 /* TopViewController.swift */; };
 		CAC1C23D256D8DB100DBD0D4 /* WaitUntil.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1C23C256D8DB100DBD0D4 /* WaitUntil.swift */; };
 		CAC1C24F256D8F0400DBD0D4 /* ModalStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC1C24E256D8F0400DBD0D4 /* ModalStyleTests.swift */; };
@@ -181,7 +181,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7226A5C267820070066E9E6 /* SwiftCurrent in Frameworks */,
-				CAA32F1826BF3F6000DB271E /* BETA_SwiftCurrent_SwiftUI in Frameworks */,
+				CAA32F1826BF3F6000DB271E /* SwiftCurrent_SwiftUI in Frameworks */,
 				D7226A602678238F0066E9E6 /* SwiftCurrent_UIKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -442,7 +442,7 @@
 			packageProductDependencies = (
 				D7226A5B267820070066E9E6 /* SwiftCurrent */,
 				D7226A5F2678238F0066E9E6 /* SwiftCurrent_UIKit */,
-				CAA32F1726BF3F6000DB271E /* BETA_SwiftCurrent_SwiftUI */,
+				CAA32F1726BF3F6000DB271E /* SwiftCurrent_SwiftUI */,
 			);
 			productName = SwiftCurrentExample;
 			productReference = CAF5852A256CEE990044C864 /* UIKitExample.app */;
@@ -1011,9 +1011,9 @@
 			package = CA9226F72640724D00BD0366 /* XCRemoteSwiftPackageReference "ExceptionCatcher" */;
 			productName = ExceptionCatcher;
 		};
-		CAA32F1726BF3F6000DB271E /* BETA_SwiftCurrent_SwiftUI */ = {
+		CAA32F1726BF3F6000DB271E /* SwiftCurrent_SwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = BETA_SwiftCurrent_SwiftUI;
+			productName = SwiftCurrent_SwiftUI;
 		};
 		CAC1C26C256D8FA500DBD0D4 /* CwlPosixPreconditionTesting */ = {
 			isa = XCSwiftPackageProductDependency;
