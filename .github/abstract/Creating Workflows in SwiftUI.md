@@ -19,7 +19,7 @@ struct FirstView: View, FlowRepresentable {
 
 > Note: The `_workflowPointer` is needed as an anchor point for your `Workflow`. You do not have to worry about setting it, you merely need space for it on your structs. SwiftUI actually does the exact same thing with a `_location` variable, it's just that Apple has secret compiler magic to hide that. Unfortunately, that compiler magic is not shared.
 
-> Note: `Workflow.proceedInWorkflow()` is what you call to have your view move forward to the next item in the `Workflow` it is part of. 
+> Note: `FlowRepresentable.proceedInWorkflow()` is what you call to have your view move forward to the next item in the `Workflow` it is part of. 
 
 ### Step 2:
 Define your `WorkflowLauncher`. This indicates whether the workflow is shown and describes what items are in it.

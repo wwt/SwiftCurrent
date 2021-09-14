@@ -18,3 +18,12 @@ public class _WorkflowItem {
         self.instance = instance
     }
 }
+
+// This extension is on LinkedList nodes that wrap _WorkflowItem but has locally important context
+extension AnyWorkflow.Element {
+    public var previouslyLoadedElement: AnyWorkflow.Element? {
+        traverse(direction: .backward) {
+            $0.value.instance != nil
+        }
+    }
+}

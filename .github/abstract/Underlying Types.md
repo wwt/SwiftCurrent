@@ -1,0 +1,1 @@
+These types are required to make SwiftCurrent function. Most of these are public symbols because of the modular design of SwiftCurrent. Some of them are public in case you want to extend SwiftCurrent to do even more. Generally speaking, these types are not something you need to worry about.

@@ -41,7 +41,7 @@ platform :ios do
         ]
       )
       xcodebuild(
-        scheme: 'BETA_SwiftCurrent_SwiftUI',
+        scheme: 'SwiftCurrent_SwiftUI',
         destination: [
           'platform=iOS Simulator,name=iPhone 8',
           'platform=tvOS Simulator,name=Apple TV',

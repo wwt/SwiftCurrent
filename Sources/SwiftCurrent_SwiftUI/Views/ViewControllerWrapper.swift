@@ -18,26 +18,28 @@ public struct ViewControllerWrapper<F: FlowRepresentable & UIViewController>: Vi
     public typealias WorkflowInput = F.WorkflowInput
     public typealias WorkflowOutput = F.WorkflowOutput
 
-    public weak var _workflowPointer: AnyFlowRepresentable?
+    public weak var _workflowPointer: AnyFlowRepresentable? {
+        didSet {
+            vc._workflowPointer = _workflowPointer
+        }
+    }
 
+    private var vc: F
     private let args: WorkflowInput?
     public init(with args: F.WorkflowInput) {
         self.args = args
+        vc = F._factory(F.self, with: args)
     }
 
-    public init() { args = nil }
-
-    public func makeUIViewController(context: Context) -> F {
-        var vc: F = {
-            if let args = args {
-                return F._factory(F.self, with: args)
-            }
-            return F._factory(F.self)
-        }()
-        vc._workflowPointer = _workflowPointer
-        return vc
+    public init() {
+        args = nil
+        vc = F._factory(F.self)
     }
+
+    public func makeUIViewController(context: Context) -> F { vc }
 
     public func updateUIViewController(_ uiViewController: F, context: Context) { }
+
+    public func shouldLoad() -> Bool { vc.shouldLoad() }
 }
 #endif

@@ -32,6 +32,7 @@ final class UIKitInteropTests: XCTestCase, View {
             let wrapper = try workflowLauncher.view(ViewControllerWrapper<UIKitInteropProgrammaticViewController>.self)
             let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<UIKitInteropProgrammaticViewController>>.self)
             vc = try wrapper.actualView().makeUIViewController(context: context)
+            vc.removeFromParent()
             vc.loadOnDevice()
 
             XCTAssertUIViewControllerDisplayed(isInstance: vc)
@@ -71,6 +72,7 @@ final class UIKitInteropTests: XCTestCase, View {
             let wrapper = try workflowLauncher.view(ViewControllerWrapper<UIKitInteropProgrammaticViewController>.self)
             let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<UIKitInteropProgrammaticViewController>>.self)
             vc = try wrapper.actualView().makeUIViewController(context: context)
+            vc.removeFromParent()
             vc.loadOnDevice()
 
             XCTAssertUIViewControllerDisplayed(isInstance: vc)
@@ -131,6 +133,7 @@ final class UIKitInteropTests: XCTestCase, View {
 
         wait(for: [exp], timeout: TestConstant.timeout)
 
+        vc.removeFromParent()
         vc.loadOnDevice()
 
         XCTAssertUIViewControllerDisplayed(isInstance: vc)
@@ -144,6 +147,42 @@ final class UIKitInteropTests: XCTestCase, View {
         vc.nextButton.simulateTouch()
 
         wait(for: [proceedCalled], timeout: TestConstant.timeout)
+    }
+
+    func testWorkflowPointerIsSetBeforeShouldLoadIsCalled() throws {
+        final class FR1: UIWorkflowItem<Never, String>, FlowRepresentable {
+            func shouldLoad() -> Bool {
+                proceedInWorkflow("FR1")
+                return false
+            }
+        }
+        final class FR2: UIWorkflowItem<String, Never>, FlowRepresentable {
+            init(with args: String) {
+                XCTAssertEqual(args, "FR1")
+                super.init(nibName: nil, bundle: nil)
+            }
+            required init?(coder: NSCoder) { nil }
+        }
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true)) {
+            thenProceed(with: FR1.self) {
+                thenProceed(with: FR2.self)
+            }
+        }
+        var vc: FR2!
+
+        let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
+            let wrapper = try workflowLauncher.find(ViewControllerWrapper<FR2>.self)
+
+            let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<FR2>>.self)
+            vc = try wrapper.actualView().makeUIViewController(context: context)
+        }
+
+        wait(for: [exp], timeout: TestConstant.timeout)
+
+        vc.removeFromParent()
+        vc.loadOnDevice()
+
+        XCTAssertUIViewControllerDisplayed(isInstance: vc)
     }
 
     func testPuttingAUIKitViewFromStoryboardInsideASwiftUIWorkflow() throws {
@@ -161,6 +200,7 @@ final class UIKitInteropTests: XCTestCase, View {
 
         wait(for: [exp], timeout: TestConstant.timeout)
 
+        vc.removeFromParent()
         vc.loadOnDevice()
 
         XCTAssertUIViewControllerDisplayed(isInstance: vc)
@@ -189,6 +229,7 @@ final class UIKitInteropTests: XCTestCase, View {
 
         wait(for: [exp], timeout: TestConstant.timeout)
 
+        vc.removeFromParent()
         vc.loadOnDevice()
 
         XCTAssertUIViewControllerDisplayed(isInstance: vc)
@@ -201,6 +242,32 @@ final class UIKitInteropTests: XCTestCase, View {
         vc.proceedInWorkflow()
 
         wait(for: [proceedCalled], timeout: TestConstant.timeout)
+    }
+
+    func testPuttingAUIKitViewThatDoesNotLoadInsideASwiftUIWorkflow() throws {
+        final class FR1: UIWorkflowItem<Never, Never>, FlowRepresentable {
+            func shouldLoad() -> Bool { false }
+        }
+
+        struct FR2: View, FlowRepresentable, Inspectable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+
+            var body: some View {
+                Text("FR2")
+            }
+        }
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true)) {
+            thenProceed(with: FR1.self) {
+                thenProceed(with: FR2.self)
+            }
+        }
+
+        let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
+            XCTAssertThrowsError(try workflowLauncher.view(ViewControllerWrapper<FR1>.self))
+            XCTAssertEqual(try workflowLauncher.find(FR2.self).text().string(), "FR2")
+        }
+
+        wait(for: [exp], timeout: TestConstant.timeout)
     }
 }
 

@@ -14,14 +14,15 @@ import Foundation
 
  ### Discussion
  In a sufficiently complex application it may make sense to create a structure to hold onto all the workflows in an application.
+
+ #### Example
+ ```swift
+ struct Workflows {
+     static let schedulingFlow = Workflow(SomeFlowRepresentable.self)
+         .thenProceed(with: SomeOtherFlowRepresentable.self)
+ }
+ ```
  */
-/// #### Example
-/// ```swift
-/// struct Workflows {
-///     static let schedulingFlow = Workflow(SomeFlowRepresentable.self)
-///         .thenProceed(with: SomeOtherFlowRepresentable.self)
-/// }
-/// ```
 public final class Workflow<F: FlowRepresentable>: LinkedList<_WorkflowItem> {
     public required init(_ node: Element?) {
         super.init(node)
@@ -212,11 +213,7 @@ public final class Workflow<F: FlowRepresentable>: LinkedList<_WorkflowItem> {
 
     private func setupBackUpCallbacks(_ node: Element, _ onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
         node.value.instance?.backUpInWorkflowStorage = { [self] in
-            let previousLoadedNode = node.traverse(direction: .backward) { previousNode in
-                previousNode.value.instance != nil
-            }
-
-            guard let previousNode = previousLoadedNode else { throw WorkflowError.failedToBackUp }
+            guard let previousNode = node.previouslyLoadedElement else { throw WorkflowError.failedToBackUp }
 
             orchestrationResponder?.backUp(from: node, to: previousNode)
         }

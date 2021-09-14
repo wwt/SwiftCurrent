@@ -28,8 +28,10 @@ custom_categories:
 - name: Creating Workflows in SwiftUI
   children:
     - WorkflowLauncher
-    - View
     - WorkflowItem
+    - View
+    - App
+    - Scene
 - name: How to use SwiftCurrent with UIKit
   children:
     - Using Programmatic Views
