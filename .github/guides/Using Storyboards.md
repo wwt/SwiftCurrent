@@ -108,9 +108,10 @@ You could declare these view controllers with <code>class FirstViewController: U
 <details>
 
 These view controllers adhere to <code>FlowRepresentable</code> by the combination of <code>UIWorkflowItem</code> and <code>StoryboardLoadable</code>.
-
-1. The <code>UIWorkflowItem</code> class implements a subset of the requirements for <code>FlowRepresentable</code>.
-1. <code>StoryboardLoadable</code> implements the remaining subset and requires that it is only applied to a <code>FlowRepresentable</code>.
+<ol>
+<li> The <code>UIWorkflowItem</code> class implements a subset of the requirements for <code>FlowRepresentable</code>.</li>
+<li> <code>StoryboardLoadable</code> implements the remaining subset and requires that it is only applied to a <code>FlowRepresentable</code>.</li>
+</ol>
 
 </details>
 
@@ -167,7 +168,7 @@ The <code>Workflow</code> has compile-time type safety on the Input/Output types
 
 <details>
 
-The <code>onFinish</code> closure for <code>Workflow.launchInto(_:args:onFinish:)</code> provides the last passed <code>AnyWorkflow.PassedArgs</code> in the work flow. For this Workflow, that could be the output of <code>FirstViewController</code> or <code>SecondViewController</code> depending on the email signature typed in <code>FirstViewController</code>. To extract the value, we unwrap the variable within the case of <code>.args()</code> as we expect this workflow to return some argument.
+The <code>onFinish</code> closure for <code>UIViewController.launchInto(_:args:withLaunchStyle:onFinish:)</code> provides the last passed <code>AnyWorkflow.PassedArgs</code> in the work flow. For this Workflow, that could be the output of <code>FirstViewController</code> or <code>SecondViewController</code> depending on the email signature typed in <code>FirstViewController</code>. To extract the value, we unwrap the variable within the case of <code>.args()</code> as we expect this workflow to return some argument.
 </details>
 
 #### **Why call `abandon()`?**

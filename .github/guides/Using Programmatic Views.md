@@ -184,7 +184,7 @@ The </code>Workflow</code> has compile-time type safety on the Input/Output type
 
 <details>
 
-The <code>onFinish</code> closure for <code>Workflow.launchInto(_:args:onFinish:)</code> provides the last passed <code>AnyWorkflow.PassedArgs</code> in the work flow. For this <code>Workflow</code>, that could be the output of <code>FirstViewController</code> or <code>SecondViewController</code> depending on the email signature typed in <code>FirstViewController</code>. To extract the value, we unwrap the variable within the case of <code>.args()</code> as we expect this workflow to return some argument.
+The <code>onFinish</code> closure for <code>UIViewController.launchInto(_:args:withLaunchStyle:onFinish:)</code> provides the last passed <code>AnyWorkflow.PassedArgs</code> in the work flow. For this <code>Workflow</code>, that could be the output of <code>FirstViewController</code> or <code>SecondViewController</code> depending on the email signature typed in <code>FirstViewController</code>. To extract the value, we unwrap the variable within the case of <code>.args()</code> as we expect this workflow to return some argument.
 </details>
 
 #### **Why call `abandon()`?**
