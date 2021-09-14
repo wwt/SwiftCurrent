@@ -32,6 +32,7 @@ final class UIKitInteropTests: XCTestCase, View {
             let wrapper = try workflowLauncher.view(ViewControllerWrapper<UIKitInteropProgrammaticViewController>.self)
             let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<UIKitInteropProgrammaticViewController>>.self)
             vc = try wrapper.actualView().makeUIViewController(context: context)
+            vc.removeFromParent()
             vc.loadOnDevice()
 
             XCTAssertUIViewControllerDisplayed(isInstance: vc)
@@ -71,6 +72,7 @@ final class UIKitInteropTests: XCTestCase, View {
             let wrapper = try workflowLauncher.view(ViewControllerWrapper<UIKitInteropProgrammaticViewController>.self)
             let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<UIKitInteropProgrammaticViewController>>.self)
             vc = try wrapper.actualView().makeUIViewController(context: context)
+            vc.removeFromParent()
             vc.loadOnDevice()
 
             XCTAssertUIViewControllerDisplayed(isInstance: vc)
@@ -131,6 +133,7 @@ final class UIKitInteropTests: XCTestCase, View {
 
         wait(for: [exp], timeout: TestConstant.timeout)
 
+        vc.removeFromParent()
         vc.loadOnDevice()
 
         XCTAssertUIViewControllerDisplayed(isInstance: vc)
@@ -161,6 +164,7 @@ final class UIKitInteropTests: XCTestCase, View {
 
         wait(for: [exp], timeout: TestConstant.timeout)
 
+        vc.removeFromParent()
         vc.loadOnDevice()
 
         XCTAssertUIViewControllerDisplayed(isInstance: vc)
@@ -189,6 +193,7 @@ final class UIKitInteropTests: XCTestCase, View {
 
         wait(for: [exp], timeout: TestConstant.timeout)
 
+        vc.removeFromParent()
         vc.loadOnDevice()
 
         XCTAssertUIViewControllerDisplayed(isInstance: vc)
