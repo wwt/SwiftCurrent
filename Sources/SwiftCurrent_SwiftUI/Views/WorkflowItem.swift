@@ -15,7 +15,7 @@ import UIKit
 /**
  A concrete type used to modify a `FlowRepresentable` in a workflow.
  ### Discussion
- `WorkflowItem` gives you the ability to specify changes you'd like to apply to a specific `FlowRepresentable` when it is time to present it in a `Workflow`. You should create `WorkflowItem`s inside a `thenProceed(with:)` call on `WorkflowLauncher`.
+ `WorkflowItem` gives you the ability to specify changes you'd like to apply to a specific `FlowRepresentable` when it is time to present it in a `Workflow`. You create `WorkflowItem`s by calling a `thenProceed` method, e.g. `View.thenProceed(with:)`, inside of a `WorkflowLauncher`.
  #### Example
  ```swift
  thenProceed(FirstView.self)

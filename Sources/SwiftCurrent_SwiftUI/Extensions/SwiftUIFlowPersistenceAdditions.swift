@@ -11,7 +11,7 @@ extension FlowPersistence {
     /// A namespace for the SwiftUI persistence types.
     public enum SwiftUI {
         /// A type indicating how a `FlowRepresentable` should be persisted.
-        public enum Persistence: RawRepresentable, CaseIterable {
+        public enum Persistence: RawRepresentable {
             /// Indicates a `FlowRepresentable` in a `Workflow` should persist based on its `shouldLoad` function.
             case `default`
             /// Indicates a `FlowRepresentable` in a `Workflow` whose `shouldLoad` function returns true, should be removed from the workflow after proceeding forward.
