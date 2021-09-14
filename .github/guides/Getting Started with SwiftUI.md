@@ -88,18 +88,18 @@ struct SecondView_Previews: PreviewProvider {
 
 ### Let's talk about what is going on with these views
 
-#### **Why is `FlowRepresentable._workflowPointer` weak?**
+#### **Why is `_workflowPointer` weak?**
 
 <details>
 
-The <code>FlowRepresentable</code> protocol requires there to be a <code>_workflowPointer</code> on your object, but protocols cannot enforce you to use <code>weak</code>. If you do not put <code>weak var _workflowPointer</code>, the <code>FlowRepresentable</code> will end up with a strong circular reference when placed in a <code>Workflow</code>.
+<code>FlowRepresentable._workflowPointer</code> is required to conform to the <code>FlowRepresentable</code> protocol, but protocols cannot enforce you to use <code>weak</code>. If you do not put <code>weak var _workflowPointer</code>, the <code>FlowRepresentable</code> will end up with a strong circular reference when placed in a <code>Workflow</code>.
 </details>
 
-#### **What's this `FlowRepresentable.shouldLoad()`?**
+#### **What's this `shouldLoad()`?**
 
 <details>
 
-It is part of the <code>FlowRepresentable</code> protocol. It has default implementations created for your convenience but is still implementable if you want to control when a <code>FlowRepresentable</code> should load in the workflow.  It is called after <code>init</code> but before <code>body</code> in SwiftUI.
+<code>FlowRepresentable.shouldLoad()</code> is part of the <code>FlowRepresentable</code> protocol. It has default implementations created for your convenience but is still implementable if you want to control when a <code>FlowRepresentable</code> should load in the workflow.  It is called after <code>init</code> but before <code>body</code> in SwiftUI.
 </details>
 
 #### **Why is there a `WorkflowOutput` but no `WorkflowInput`?**
@@ -159,7 +159,7 @@ In SwiftUI, the <code>Workflow</code> type is handled by the library when you st
 
 <details>
 
-<code>WorkflowLauncher</code> is specialized with your <code>startingArgs</code> type.  In <code>FlowRepresentable</code>, these types are supplied by the <code>WorkflowInput</code> and <code>WorkflowOutput</code> associated types.  These all work together to create compile-time type safety when creating your flow. This means that you will get a build error if the output of <code>FirstView</code> does not match the input type of <code>SecondView</code>.
+<code>WorkflowLauncher</code> is specialized with your <code>startingArgs</code> type. <code>FlowRepresentable</code> is specialized with the <code>FlowRepresentable.WorkflowInput</code> and <code>FlowRepresentable.WorkflowOutput</code> associated types.  These all work together when creating your flow at run-time to ensure the validity of your <code>Workflow</code>.  If the output of <code>FirstView</code> does not match the input of <code>SecondView</code>, the library will send out an error when creating the <code>Workflow</code>.
 </details>
 
 #### **What's going on with this `startingArgs` and `passedArgs`?**
@@ -172,7 +172,7 @@ In SwiftUI, the <code>Workflow</code> type is handled by the library when you st
 </details>
 
 ## Interoperability With UIKit
-You can use your `UIViewController`s that are `FlowRepresentable` in your SwiftUI workflows. This is as seamless as it normally is to add to a workflow in SwiftUI. Start with your `UIViewController`
+You can use your `UIViewController`s that are `FlowRepresentable` in your SwiftUI workflows. This is as seamless as it normally is to add to a workflow in SwiftUI. Start with your `UIViewController`.
 
 ```swift
 import UIKit
