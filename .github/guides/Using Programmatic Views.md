@@ -127,7 +127,7 @@ class SecondViewController: UIWorkflowItem<String, String>, FlowRepresentable { 
 
 <details>
 
-It is part of the `FlowRepresentable` protocol. It has default implementations created for your convenience but is still implementable if you want to control when a `FlowRepresentable` should load in the work flow.  It is called after `init` but before `viewDidLoad()`.
+<code>FlowRepresentable.shouldLoad()</code> is part of the <code>FlowRepresentable</code> protocol. It has default implementations created for your convenience but is still implementable if you want to control when a <code>FlowRepresentable</code> should load in the work flow.  It is called after <code>init</code> but before <code>viewDidLoad()</code>.
 </details>
 
 ## Launching the `Workflow`
@@ -177,21 +177,21 @@ class ViewController: UIViewController {
 
 <details>
 
-The `Workflow` has compile-time type safety on the Input/Output types of the supplied `FlowRepresentable`s. This means that you will get a build error if the output of `FirstViewController` does not match the input type of `SecondViewController`.
+The </code>Workflow</code> has compile-time type safety on the Input/Output types of the supplied <code>FlowRepresentable</code>s. This means that you will get a build error if the output of <code>FirstViewController</code> does not match the input type of <code>SecondViewController</code>.
 </details>
 
 #### **What's going on with this `passedArgs`?**
 
 <details>
 
-The `onFinish` closure for `Workflow.launchInto(_:args:onFinish:)` provides the last passed `AnyWorkflow.PassedArgs` in the work flow. For this Workflow, that could be the output of `FirstViewController` or `SecondViewController` depending on the email signature typed in `FirstViewController`. To extract the value, we unwrap the variable within the case of `.args()` as we expect this workflow to return some argument.
+The <code>onFinish</code> closure for <code>Workflow.launchInto(_:args:onFinish:)</code> provides the last passed <code>AnyWorkflow.PassedArgs</code> in the work flow. For this <code>Workflow</code>, that could be the output of <code>FirstViewController</code> or <code>SecondViewController</code> depending on the email signature typed in <code>FirstViewController</code>. To extract the value, we unwrap the variable within the case of <code>.args()</code> as we expect this workflow to return some argument.
 </details>
 
 #### **Why call `abandon()`?**
 
 <details>
 
-Calling `Workflow.abandon()` closes all the views launched as part of the workflow, leaving you back on `ViewController`.
+Calling <code>Workflow.abandon()</code> closes all the views launched as part of the workflow, leaving you back on <code>ViewController</code>.
 </details>
 
 ## Testing
@@ -254,19 +254,19 @@ While this team finds that testing our view controllers with [UIUTest](https://g
 #### **What is going on with: `testSecondViewControllerDoesNotLoadWhenInputIsEmpty`?**
 
 <details>
-This test is super simple. We create the view controller in a way that will go through the correct init, with expected arguments. Then we call `shouldLoad` to validate if the provided Input gets us the results we want.
+This test is super simple. We create the view controller in a way that will go through the correct init, with expected arguments. Then we call <code>shouldLoad</code> to validate if the provided Input gets us the results we want.
 </details>
 
 #### **What is going on with: `testProceedPassesThroughInput`?**
 
 <details>
-At a high level we are loading the view controller for testing (similar to before but now with an added step of triggering lifecycle events). We update the `proceedInWorkflow` closure so that we can confirm it was called. Finally we invoke the method that will call proceed. The assert is verifying that the Output is the same as the input, as this view controller is passing it through.
+At a high level we are loading the view controller for testing (similar to before but now with an added step of triggering lifecycle events). We update the <code>proceedInWorkflow</code> closure so that we can confirm it was called. Finally we invoke the method that will call proceed. The assert is verifying that the Output is the same as the input, as this view controller is passing it through.
 </details>
 
 #### **I added UIUTest, why isn't it hitting the finish button?**
 
 <details>
-It's easy to forget to set the accessibility identifier on the button, please check that first. Second, if you don't call `loadForTesting()` your view controller doesn't make it to the window and the hit testing of `simulateTouch()` will also fail. Finally, make sure the button is visible and tappable on the simulator you are using.
+It's easy to forget to set the accessibility identifier on the button, please check that first. Second, if you don't call <code>loadForTesting()</code> your view controller doesn't make it to the window and the hit testing of <code>simulateTouch()</code> will also fail. Finally, make sure the button is visible and tappable on the simulator you are using.
 </details>
 
 ## Interoperability With SwiftUI
