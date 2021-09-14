@@ -34,7 +34,7 @@ Architectural patterns and libraries that attempt to create a separation between
 Why show a quick start when we have an example app? Because it's so easy to get started, we can just drop in 2 code snippets and you're ready to go! This quick start uses Swift Package Manager and SwiftUI, but for other approaches, [see our installation instructions](https://wwt.github.io/SwiftCurrent/installation.html).
 
 ```swift
-.package(url: "https://github.com/wwt/SwiftCurrent.git", .upToNextMajor(from: "4.1.0")),
+.package(url: "https://github.com/wwt/SwiftCurrent.git", .upToNextMajor(from: "4.5.0")),
 ...
 .product(name: "SwiftCurrent", package: "SwiftCurrent"),
 .product(name: "SwiftCurrent_SwiftUI", package: "SwiftCurrent")
@@ -69,7 +69,7 @@ var body: some View {
 }
 ```
 
-And just like that you've got a workflow! You can now add more items to it, or re-order the items that are there. To understand more of how this works and what is there [check out our developer docs](https://wwt.github.io/SwiftCurrent/How%20to%20use%20SwiftCurrent%20with%20SwiftUI.html)
+And just like that you've got a workflow! You can now add more items to it, or re-order the items that are there. To understand more of how this works and what is there [check out our developer docs.](https://wwt.github.io/SwiftCurrent/How%20to%20use%20SwiftCurrent%20with%20SwiftUI.html)
 
 # Check out our example apps
 We have [example apps](https://github.com/wwt/SwiftCurrent/tree/main/ExampleApps) for both SwiftUI and UIKit that show SwiftCurrent in action. They're even tested so you can see what it's like to test SwiftCurrent code. To run it locally, start by cloning the repo, open `SwiftCurrent.xcworkspace` and then run the `SwiftUIExample` scheme or the `UIKitExample` scheme. 
