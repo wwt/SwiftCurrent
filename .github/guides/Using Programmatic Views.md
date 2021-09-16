@@ -1,12 +1,12 @@
 ## Overview
 
-This guide will walk you through getting a `Workflow` up and running in a new iOS project.  If you would like to see an existing project, clone the repo and view the `UIKitExample` scheme in `SwiftCurrent.xcworkspace`.
+This guide will walk you through getting a `Workflow` up and running in a new iOS project. If you would like to see an existing project, clone the repo and view the `UIKitExample` scheme in `SwiftCurrent.xcworkspace`.
 
-The app in this guide is going to be very simple.  It consists of a screen that will launch the `Workflow`, a screen to enter an email address, and an optional screen for when the user enters an email with `@wwt.com` in it.  Here is a preview of what the app will look like:
+The app in this guide is going to be very simple. It consists of a screen that will launch the `Workflow`, a screen to enter an email address, and an optional screen for when the user enters an email with `@wwt.com` in it.  Here is a preview of what the app will look like:
 
 ![Preview image of app](https://user-images.githubusercontent.com/79471462/131556322-56757c1d-e4ec-4581-a47c-969f536e3893.gif)
 
-## Adding the dependency
+## Adding the Dependency
 
 For instructions on SPM and CocoaPods, [check out our installation page.](installation.html#swift-package-manager)
 
@@ -14,7 +14,7 @@ For instructions on SPM and CocoaPods, [check out our installation page.](instal
 
 SwiftCurrent is so convenient that you may miss the couple lines that are calls to the library.  To make it easier, we've marked our code snippets with `// SwiftCurrent` to highlight items that are coming from the library.
 
-## Create your view controllers
+## Create Your View Controllers
 
 Create two view controllers that inherit from `UIWorkflowItem` and implement `FlowRepresentable`.
 
@@ -121,13 +121,13 @@ class SecondViewController: UIWorkflowItem<String, String>, FlowRepresentable { 
 }
 ```
 
-### Let's talk about what is going on with these view controllers
+### What Is Going on With These View Controllers?
 
 #### **What's this `shouldLoad()`?**
 
 <details>
 
-<code>FlowRepresentable.shouldLoad()</code> is part of the <code>FlowRepresentable</code> protocol. It has default implementations created for your convenience but is still implementable if you want to control when a <code>FlowRepresentable</code> should load in the work flow.  It is called after <code>init</code> but before <code>viewDidLoad()</code>.
+<code>FlowRepresentable.shouldLoad()</code> is part of the <code>FlowRepresentable</code> protocol. It has default implementations created for your convenience but is still implementable if you want to control when a <code>FlowRepresentable</code> should load in the workflow. It is called after <code>init</code> but before <code>viewDidLoad()</code>.
 </details>
 
 ## Launching the `Workflow`
@@ -171,9 +171,9 @@ class ViewController: UIViewController {
 }
 ```
 
-### Let's discuss what's going on here
+### What Is Going on Here?
 
-#### **Where is the type safety, I heard about?**
+#### **Where is the type safety I heard about?**
 
 <details>
 
@@ -184,7 +184,7 @@ The </code>Workflow</code> has compile-time type safety on the Input/Output type
 
 <details>
 
-The <code>onFinish</code> closure for <code>UIViewController.launchInto(_:args:withLaunchStyle:onFinish:)</code> provides the last passed <code>AnyWorkflow.PassedArgs</code> in the work flow. For this <code>Workflow</code>, that could be the output of <code>FirstViewController</code> or <code>SecondViewController</code> depending on the email signature typed in <code>FirstViewController</code>. To extract the value, we unwrap the variable within the case of <code>.args()</code> as we expect this workflow to return some argument.
+The <code>onFinish</code> closure for <code>UIViewController.launchInto(_:args:withLaunchStyle:onFinish:)</code> provides the last passed <code>AnyWorkflow.PassedArgs</code> in the workflow. For this <code>Workflow</code>, that could be the output of <code>FirstViewController</code> or <code>SecondViewController</code> depending on the email signature typed in <code>FirstViewController</code>. To extract the value, we unwrap the variable within the case of <code>.args()</code> as we expect this workflow to return some argument.
 </details>
 
 #### **Why call `abandon()`?**
@@ -196,12 +196,11 @@ Calling <code>Workflow.abandon()</code> closes all the views launched as part of
 
 ## Testing
 
-### Installing test dependencies
+### Installing Test Dependencies
 
-For our test example, we will be using a library called [UIUTest](https://github.com/nallick/UIUTest). It is optional for testing SwiftCurrent, but in order for the example to be copyable, you will need to add the UIUTest Swift Package
-to your test target.
+For our test example, we are using a library called [UIUTest](https://github.com/nallick/UIUTest). It is optional for testing SwiftCurrent, but in order for the example to be copyable, you will need to add the UIUTest Swift Package to your test target.
 
-### Creating tests
+### Creating Tests
 
 ```swift
 import XCTest
@@ -251,26 +250,26 @@ class SecondViewControllerTests: XCTestCase {
 
 While this team finds that testing our view controllers with [UIUTest](https://github.com/nallick/UIUTest) allows us to decrease the visibility of our properties and provide better coverage, [UIUTest](https://github.com/nallick/UIUTest) is not needed for testing SwiftCurrent. If you do not want to take the dependency, you will have to elevate visibility or find a way to invoke the `finishPressed` method.
 
-#### **What is going on with: `testSecondViewControllerDoesNotLoadWhenInputIsEmpty`?**
+#### **What is going on with `testSecondViewControllerDoesNotLoadWhenInputIsEmpty`?**
 
 <details>
-This test is super simple. We create the view controller in a way that will go through the correct init, with expected arguments. Then we call <code>shouldLoad</code> to validate if the provided Input gets us the results we want.
+This test is super simple. We create the view controller in a way that will go through the correct init, with expected arguments. Then we call <code>shouldLoad</code> to validate if the provided input gets us the results we want.
 </details>
 
-#### **What is going on with: `testProceedPassesThroughInput`?**
+#### **What is going on with `testProceedPassesThroughInput`?**
 
 <details>
-At a high level we are loading the view controller for testing (similar to before but now with an added step of triggering lifecycle events). We update the <code>proceedInWorkflow</code> closure so that we can confirm it was called. Finally we invoke the method that will call proceed. The assert is verifying that the Output is the same as the input, as this view controller is passing it through.
+At a high level, we are loading the view controller for testing (similar to before but now with an added step of triggering lifecycle events). We update the <code>proceedInWorkflow</code> closure so that we can confirm it was called. Finally, we invoke the method that will call proceed. The assert is verifying that the output is the same as the input, as this view controller is passing it through.
 </details>
 
 #### **I added UIUTest, why isn't it hitting the finish button?**
 
 <details>
-It's easy to forget to set the accessibility identifier on the button, please check that first. Second, if you don't call <code>loadForTesting()</code> your view controller doesn't make it to the window and the hit testing of <code>simulateTouch()</code> will also fail. Finally, make sure the button is visible and tappable on the simulator you are using.
+It's easy to forget to set the accessibility identifier on the button, please check that first. Second, if you don't call <code>loadForTesting()</code>, your view controller doesn't make it to the window and the hit testing of <code>simulateTouch()</code> will also fail. Finally, make sure the button is visible and tappable on the simulator you are using.
 </details>
 
 ## Interoperability With SwiftUI
-You can use your SwiftUI `View`s that are `FlowRepresentable` in your UIKit workflows. Start with your `View`
+You can use your SwiftUI `View`s that are `FlowRepresentable` in your UIKit workflows. Start with your `View`.
 
 ```swift
 import SwiftUI
@@ -286,7 +285,7 @@ struct SwiftUIView: View, FlowRepresentable { // SwiftCurrent
 
 ```
 
-Now in your UIKit workflow simply use a `HostedWorkflowItem`
+Now in your UIKit workflow, simply use a `HostedWorkflowItem`.
 
 ```swift
 launchInto(Workflow(HostedWorkflowItem<SwiftUIView>.self)) // SwiftCurrent
