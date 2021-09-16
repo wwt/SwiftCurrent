@@ -1,7 +1,7 @@
-### Step 1:
-To create workflows in UIKit you should start with a `UIViewController` that should be part of a `Workflow` and modify it to be `FlowRepresentable`
+### Step 1
+To create workflows in UIKit, start with a `UIViewController` that should be part of a `Workflow`, then modify it to be `FlowRepresentable`.
 
-#### Example:
+#### Example
 ```swift
 import UIKit
 import SwiftCurrent
@@ -26,12 +26,12 @@ class FirstViewController: UIWorkflowItem<String, String>, FlowRepresentable { /
 }
 ```
 
-> Note: `FlowRepresentable.proceedInWorkflow()` is what you call to have your view move forward to the next item in the `Workflow` it is part of. 
+> **Note:** Call `FlowRepresentable.proceedInWorkflow()` to have your view move forward to the next item in the `Workflow` it is part of. 
 
-### Step 2:
-Define your `Workflow` and launch it. This is what allows you to configure or re-order your workflow.
+### Step 2
+Define your `Workflow` and launch it. This is what allows you to configure or reorder your workflow.
 
-#### Example:
+#### Example
 ```swift
 // From the ViewController you'd like to launch the workflow
 @objc private func didTapLaunchWorkflow() {
