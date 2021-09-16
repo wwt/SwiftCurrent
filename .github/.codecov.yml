@@ -19,6 +19,7 @@ ignore:
   - "SwiftCurrentLint"
   - "Sources/SwiftCurrent/Deprecations"
   - "ExampleApps/**/*Tests"
+  - "ExampleApps/SwiftUIExample/SwiftUIExample/TestViews"
   - "fastlane"
   
 comment:
