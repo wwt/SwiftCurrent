@@ -6,15 +6,15 @@ The app in this guide is going to be very simple.  It consists of a view that wi
 
 ![Preview image of app](https://user-images.githubusercontent.com/79471462/131556533-f2ad1e6c-9acd-4d62-94ac-9140c9718f95.gif)
 
-## Adding the dependency
+## Adding the Dependency
 
-For instructions using Swift Package Manager (SPM) and CocoaPods, [check out our installation page.](installation.html#swift-package-manager) This guide assumes you used SPM.
+For instructions using Swift Package Manager (SPM) and CocoaPods, [check out our installation page.](installation.html#swift-package-manager) This guide assumes you use SPM.
 
 ## IMPORTANT NOTE
 
-SwiftCurrent is so convenient that you may miss the couple lines that are calls to the library.  To make it easier, we've marked our code snippets with `// SwiftCurrent` to highlight items that are coming from the library.
+SwiftCurrent is so convenient that you may miss the couple of lines that are calls to the library. To make it easier, we've marked our code snippets with `// SwiftCurrent` to highlight items that are coming from the library.
 
-## Create your views
+## Create Your Views
 
 Create two views that implement `FlowRepresentable`.
 
@@ -86,7 +86,7 @@ struct SecondView_Previews: PreviewProvider {
 }
 ```
 
-### Let's talk about what is going on with these views
+### What Is Going on With These Views?
 
 #### **Why is `_workflowPointer` weak?**
 
@@ -99,14 +99,14 @@ struct SecondView_Previews: PreviewProvider {
 
 <details>
 
-<code>FlowRepresentable.shouldLoad()</code> is part of the <code>FlowRepresentable</code> protocol. It has default implementations created for your convenience but is still implementable if you want to control when a <code>FlowRepresentable</code> should load in the workflow.  It is called after <code>init</code> but before <code>body</code> in SwiftUI.
+<code>FlowRepresentable.shouldLoad()</code> is part of the <code>FlowRepresentable</code> protocol. It has default implementations created for your convenience but is still implementable if you want to control when a <code>FlowRepresentable</code> should load in the workflow. It is called after <code>init</code> but before <code>body</code> in SwiftUI.
 </details>
 
 #### **Why is there a `WorkflowOutput` but no `WorkflowInput`?**
 
 <details>
 
-<code>FlowRepresentable.WorkflowInput</code> is inferred from the initializer that you create. If you do not include an initializer, <code>WorkflowInput</code> will be <code>Never</code>; otherwise <code>WorkflowInput</code> will be the type supplied in the initializer.  <code>FlowRepresentable.WorkflowOutput</code> cannot be inferred to be anything other than `Never`. This means you must manually provide <code>WorkflowOutput</code> a type when you want to pass data forward.
+<code>FlowRepresentable.WorkflowInput</code> is inferred from the initializer that you create. If you do not include an initializer, <code>WorkflowInput</code> will be <code>Never</code>; otherwise <code>WorkflowInput</code> will be the type supplied in the initializer. <code>FlowRepresentable.WorkflowOutput</code> cannot be inferred to be anything other than `Never`. This means you must manually provide <code>WorkflowOutput</code> a type when you want to pass data forward.
 </details>
 
 ## Launching the `Workflow`
@@ -146,7 +146,7 @@ struct Content_Previews: PreviewProvider {
 }
 ```
 
-### Let's discuss what's going on here
+### What's Going on Here?
 
 #### **Wait, where is the `Workflow`?**
 
@@ -155,20 +155,20 @@ struct Content_Previews: PreviewProvider {
 In SwiftUI, the <code>Workflow</code> type is handled by the library when you start with a <code>WorkflowLauncher</code>.
 </details>
 
-#### **Where is the type safety, I heard about?**
+#### **Where is the type safety I heard about?**
 
 <details>
 
-<code>WorkflowLauncher</code> is specialized with your <code>startingArgs</code> type. <code>FlowRepresentable</code> is specialized with the <code>FlowRepresentable.WorkflowInput</code> and <code>FlowRepresentable.WorkflowOutput</code> associated types.  These all work together when creating your flow at run-time to ensure the validity of your <code>Workflow</code>.  If the output of <code>FirstView</code> does not match the input of <code>SecondView</code>, the library will send out an error when creating the <code>Workflow</code>.
+<code>WorkflowLauncher</code> is specialized with your <code>startingArgs</code> type. <code>FlowRepresentable</code> is specialized with the <code>FlowRepresentable.WorkflowInput</code> and <code>FlowRepresentable.WorkflowOutput</code> associated types. These all work together when creating your flow at run-time to ensure the validity of your <code>Workflow</code>. If the output of <code>FirstView</code> does not match the input of <code>SecondView</code>, the library will send an error when creating the <code>Workflow</code>.
 </details>
 
 #### **What's going on with this `startingArgs` and `passedArgs`?**
 
 <details>
 
-<code>startingArgs</code> are the <code>AnyWorkflow.PassedArgs</code> handed to the first <code>FlowRepresentable</code> in the workflow.  These arguments are used to pass data and determine if the view should load.
+<code>startingArgs</code> are the <code>AnyWorkflow.PassedArgs</code> handed to the first <code>FlowRepresentable</code> in the workflow. These arguments are used to pass data and determine if the view should load.
 
-<code>passedArgs</code> are the <code>AnyWorkflow.PassedArgs</code> coming from the last view in the workflow.  <code>onFinish</code> is only called when the user has gone through all the screens in the <code>Workflow</code> by navigation or skipping.  For this workflow, <code>passedArgs</code> is going to be the output of <code>FirstView</code> or <code>SecondView</code> depending on the email signature typed in <code>FirstView</code>.  To extract the value, we unwrap the variable within the case of <code>.args()</code> as we expect this workflow to return some argument.
+<code>passedArgs</code> are the <code>AnyWorkflow.PassedArgs</code> coming from the last view in the workflow. <code>onFinish</code> is only called when the user has gone through all the screens in the <code>Workflow</code> by navigation or skipping. For this workflow, <code>passedArgs</code> is going to be the output of <code>FirstView</code> or <code>SecondView</code>, depending on the email signature typed in <code>FirstView</code>. To extract the value, we unwrap the variable within the case of <code>.args()</code> as we expect this workflow to return some argument.
 </details>
 
 ## Interoperability With UIKit
