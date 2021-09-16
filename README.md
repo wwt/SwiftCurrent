@@ -1,7 +1,7 @@
 ![SwiftCurrent](https://user-images.githubusercontent.com/79471462/131564417-6f4976f4-270c-41b3-bbe1-428528e2cc2c.png)
 
 <!-- Library Information -->
-[![Supported Platforms](https://img.shields.io/cocoapods/p/SwiftCurrent)](https://github.com/wwt/SwiftCurrent/security/policy)
+[![Supported Platforms](https://img.shields.io/badge/platform-iOS%20%7C%20macOS%20%7C%20watchOS%20%7C%20tvOS-lightgrey)](https://github.com/wwt/SwiftCurrent/security/policy)
 [![Swift Package Manager](https://img.shields.io/badge/Swift_Package_Manager-supported-brightgreen)](https://wwt.github.io/SwiftCurrent/installation.html#swift-package-manager)
 [![Pod Version](https://img.shields.io/cocoapods/v/SwiftCurrent.svg?style=popout)](https://wwt.github.io/SwiftCurrent/installation.html#cocoapods)
 [![License](https://img.shields.io/github/license/wwt/SwiftCurrent)](https://github.com/wwt/SwiftCurrent/blob/main/LICENSE)
