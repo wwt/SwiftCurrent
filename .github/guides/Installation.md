@@ -4,17 +4,17 @@ If you want more information about installing Swift packages through Xcode, [fol
 
 If you're a framework author and want to use SwiftCurrent as a dependency, these changes will be in your `Package.swift` file.
 
-## Get the package
+## Get the Package
 
-Add the following line to the package dependencies
+Add the following line to the package dependencies:
 
 ```swift
 .package(url: "https://github.com/wwt/SwiftCurrent.git", .upToNextMajor(from: "4.5.0")),
 ```
 
-## Get the products
+## Get the Products
 
-Add the following products to your target dependencies.
+Add the following products to your target dependencies:
 
 ```swift
 .product(name: "SwiftCurrent", package: "SwiftCurrent"),
@@ -22,7 +22,7 @@ Add the following products to your target dependencies.
 .product(name: "SwiftCurrent_SwiftUI", package: "SwiftCurrent")
 ```
 
-### Your import statements for these products will be
+### Your Import Statements for These Products
 
 ```swift
 import SwiftCurrent
@@ -38,18 +38,18 @@ import SwiftCurrent_SwiftUI
 
 Set up [CocoaPods](https://cocoapods.org/) for your project, then include SwiftCurrent in your dependencies by adding the following line to your `Podfile`:
 
-### To use SwiftCurrent with UIKit
+### To Use SwiftCurrent With UIKit
 
 ```ruby
 pod 'SwiftCurrent/UIKit'
 ```
 
-### To use SwiftCurrent with SwiftUI
+### To Use SwiftCurrent With SwiftUI
 ```ruby
 pod 'SwiftCurrent/SwiftUI'
 ```
 
-### Your import statement will be
+### Your Import Statement
 
 ```swift
 import SwiftCurrent
