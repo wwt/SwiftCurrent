@@ -159,7 +159,7 @@ In SwiftUI, the <code>Workflow</code> type is handled by the library when you st
 
 <details>
 
-<code>WorkflowLauncher</code> is specialized with your <code>startingArgs</code> type. <code>FlowRepresentable</code> is specialized with the <code>FlowRepresentable.WorkflowInput</code> and <code>FlowRepresentable.WorkflowOutput</code> associated types. These all work together when creating your flow at run time to ensure the validity of your <code>Workflow</code>. If the output of <code>FirstView</code> does not match the input of <code>SecondView</code>, the library will send an error when creating the <code>Workflow</code>.
+<code>WorkflowLauncher</code> is specialized with your <code>startingArgs</code> type. <code>FlowRepresentable</code> is specialized with the <code>FlowRepresentable.WorkflowInput</code> and <code>FlowRepresentable.WorkflowOutput</code> associated types. These all work together when creating your flow at run-time to ensure the validity of your <code>Workflow</code>. If the output of <code>FirstView</code> does not match the input of <code>SecondView</code>, the library will send an error when creating the <code>Workflow</code>.
 </details>
 
 #### **What's going on with this `startingArgs` and `passedArgs`?**
