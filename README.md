@@ -21,7 +21,7 @@ https://user-images.githubusercontent.com/33705774/132767762-7447753c-feba-4ef4-
 Architectural patterns and libraries that attempt to create a separation between views and workflows already exist. However, SwiftCurrent is different. We took a new design approach that focuses on:
 
 - **A Developer-Friendly API**. The library was built with developers in mind. It started with a group of developers talking about the code experience they desired. Then the library team took on whatever complexities were necessary to bring them that experience.
-- **Compile-Time Safety**. At compile time, we tell you everything we can so you know things will work.
+- **Compile-Time Safety**. At compile-time, we tell you everything we can so you know things will work.
 - **Minimal Boilerplate**. We have hidden this as much as possible. We hate it as much as you do and are constantly working on cutting the cruft.
 
 #### From There, We Created a Library
