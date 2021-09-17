@@ -72,7 +72,7 @@ var body: some View {
 
 And just like that, you've got a workflow! You can now add more items to it or reorder the items that are there. To understand more of how this works, [check out our developer docs.](https://wwt.github.io/SwiftCurrent/How%20to%20use%20SwiftCurrent%20with%20SwiftUI.html)
 
-# Try Our Example Apps
+# Look at Our Example Apps
 We have [example apps](https://github.com/wwt/SwiftCurrent/tree/main/ExampleApps) for both SwiftUI and UIKit that show SwiftCurrent in action. They've already been tested, so you can see what it's like to test SwiftCurrent code. To run it locally, start by cloning the repo, open `SwiftCurrent.xcworkspace` and then run the `SwiftUIExample` scheme or the `UIKitExample` scheme. 
 
 # [See These to Learn More](https://wwt.github.io/SwiftCurrent/Creating%20Workflows.html)
