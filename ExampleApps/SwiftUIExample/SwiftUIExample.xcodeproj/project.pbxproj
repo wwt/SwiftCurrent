@@ -70,6 +70,7 @@
 		D72B764A26FBCFB200E0405F /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B764726FBCFB200E0405F /* SignUp.swift */; };
 		D72B764B26FBCFB200E0405F /* TermsAndConditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B764826FBCFB200E0405F /* TermsAndConditions.swift */; };
 		D72B764D26FBDC3C00E0405F /* SwiftCurrentOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B764C26FBDC3C00E0405F /* SwiftCurrentOnboarding.swift */; };
+		D72B764F26FBEDB900E0405F /* GenericOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B764E26FBEDB900E0405F /* GenericOnboardingView.swift */; };
 		D74A4D5C26A7315F00010617 /* TestConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74A4D5B26A7315F00010617 /* TestConstant.swift */; };
 		D7A6CE7526E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7426E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift */; };
 		D7A6CE7E26E039C300599824 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7D26E039C300599824 /* TestView.swift */; };
@@ -159,6 +160,7 @@
 		D72B764726FBCFB200E0405F /* SignUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
 		D72B764826FBCFB200E0405F /* TermsAndConditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsAndConditions.swift; sourceTree = "<group>"; };
 		D72B764C26FBDC3C00E0405F /* SwiftCurrentOnboarding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftCurrentOnboarding.swift; sourceTree = "<group>"; };
+		D72B764E26FBEDB900E0405F /* GenericOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericOnboardingView.swift; sourceTree = "<group>"; };
 		D74A4D5B26A7315F00010617 /* TestConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestConstant.swift; sourceTree = "<group>"; };
 		D74A4D5D26A7471700010617 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D7A6CE7226E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftCurrent_SwiftUI_UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -320,6 +322,7 @@
 				CAC34B7226A07FE90039A373 /* MapFeatureView.swift */,
 				CA7B82A426A2061B005AA87D /* MFAView.swift */,
 				D72B764C26FBDC3C00E0405F /* SwiftCurrentOnboarding.swift */,
+				D72B764E26FBEDB900E0405F /* GenericOnboardingView.swift */,
 			);
 			path = Views;
 			sourceTree = SOURCE_ROOT;
@@ -622,6 +625,7 @@
 				D72B763E26FBCF7000E0405F /* PrimaryButton.swift in Sources */,
 				D72B764226FBCF7000E0405F /* Styles.swift in Sources */,
 				D7A6CE8026E039EE00599824 /* TestEnumerations.swift in Sources */,
+				D72B764F26FBEDB900E0405F /* GenericOnboardingView.swift in Sources */,
 				CAD026A126A0BE9A0075B818 /* DependencyInjected.swift in Sources */,
 				D72B764D26FBDC3C00E0405F /* SwiftCurrentOnboarding.swift in Sources */,
 				D72B763F26FBCF7000E0405F /* Images.swift in Sources */,

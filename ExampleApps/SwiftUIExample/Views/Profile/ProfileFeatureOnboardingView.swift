@@ -11,7 +11,7 @@ import SwiftCurrent
 import Swinject
 
 struct ProfileFeatureOnboardingView: View, FlowRepresentable {
-    private var userDefaults: UserDefaults! { Container.default.resolve(UserDefaults.self) }
+    @AppStorage("OnboardedToProfileFeature", store: .fromDI) private var onboardedToProfileFeature = false
 
     let inspection = Inspection<Self>() // ViewInspector
     weak var _workflowPointer: AnyFlowRepresentable?
@@ -20,13 +20,13 @@ struct ProfileFeatureOnboardingView: View, FlowRepresentable {
         VStack {
             Text("Learn about our awesome profile feature!")
             Button("Continue") {
-                userDefaults.set(true, forKey: "OnboardedToProfileFeature")
+                onboardedToProfileFeature = true
                 proceedInWorkflow()
             }
         }.onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 
     func shouldLoad() -> Bool {
-        !userDefaults.bool(forKey: "OnboardedToProfileFeature")
+        !onboardedToProfileFeature
     }
 }
