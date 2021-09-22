@@ -78,8 +78,8 @@
         "repositoryURL": "https://github.com/nalexn/ViewInspector.git",
         "state": {
           "branch": null,
-          "revision": "a9b0d2af51b8afbbcb6a3e1005aabf8726852a77",
-          "version": "0.8.1"
+          "revision": "0d546878902bdde8c4682141f848a9dc44e04ba6",
+          "version": "0.9.0"
         }
       }
     ]

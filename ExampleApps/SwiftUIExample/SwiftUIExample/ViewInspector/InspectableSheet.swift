@@ -13,24 +13,16 @@ extension View {
     func testableSheet<Item, Sheet>(item: Binding<Item?>,
                                     onDismiss: (() -> Void)? = nil,
                                     content: @escaping (Item) -> Sheet) -> some View where Item: Identifiable, Sheet: View {
-        modifier(InspectableSheetWithItem(item: item, onDismiss: onDismiss, content: content))
+        modifier(InspectableSheetWithItem(item: item, onDismiss: onDismiss, popupBuilder: content))
     }
 }
 
 struct InspectableSheetWithItem<Item, Sheet>: ViewModifier where Item: Identifiable, Sheet: View {
     let item: Binding<Item?>
     let onDismiss: (() -> Void)?
-    let content: (Item) -> Sheet
-    let sheetBuilder: (Item) -> Any
-
-    init(item: Binding<Item?>, onDismiss: (() -> Void)?, content: @escaping (Item) -> Sheet) {
-        self.item = item
-        self.onDismiss = onDismiss
-        self.content = content
-        self.sheetBuilder = { content($0) as Any }
-    }
+    let popupBuilder: (Item) -> Sheet
 
     func body(content: Self.Content) -> some View {
-        content.sheet(item: item, onDismiss: onDismiss, content: self.content)
+        content.sheet(item: item, onDismiss: onDismiss, content: popupBuilder)
     }
 }

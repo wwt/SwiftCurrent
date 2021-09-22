@@ -32,5 +32,5 @@ extension ViewControllerWrapper: Inspectable { }
 
 extension SwiftUIExample.Inspection: InspectionEmissary where V: View { }
 extension SwiftCurrent_SwiftUI.Inspection: InspectionEmissary where V: View { }
-extension InspectableSheetWithItem: SheetItemProvider { }
-extension InspectableAlertWithItem: AlertItemProvider { }
+extension InspectableSheetWithItem: ItemPopupPresenter { }
+extension InspectableAlertWithItem: ItemPopupPresenter { }
