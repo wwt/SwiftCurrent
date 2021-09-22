@@ -17,7 +17,7 @@ import SwiftCurrent
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension InspectableView where View == ViewType.Sheet {
     func isPresented() throws -> Bool {
-        return (Mirror(reflecting: content.view).descendant("builder", "isPresented") as? Binding<Bool>)?.wrappedValue ?? false
+        return (Mirror(reflecting: content.view).descendant("presenter", "isPresented") as? Binding<Bool>)?.wrappedValue ?? false
     }
 }
 
