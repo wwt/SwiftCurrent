@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/mattgallagher/CwlPreconditionTesting.git",
         "state": {
           "branch": null,
-          "revision": "02b7a39a99c4da27abe03cab2053a9034379639f",
-          "version": "2.0.0"
+          "revision": "0630439888c94657a235ffcd5977d6047ef3c87b",
+          "version": "2.0.1"
         }
       },
       {
@@ -60,8 +60,8 @@
         "repositoryURL": "https://github.com/Swinject/Swinject",
         "state": {
           "branch": null,
-          "revision": "8a76d2c74bafbb455763487cc6a08e91bad1f78b",
-          "version": "2.7.1"
+          "revision": "b1d92a53159fe45e162c307183aec9be15e4e7ae",
+          "version": "2.8.0"
         }
       },
       {
