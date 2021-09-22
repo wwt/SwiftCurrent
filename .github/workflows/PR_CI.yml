@@ -2,13 +2,12 @@ name: PR_CI
 
 on: [ pull_request ]
 
-runs-on: macos-11
-env:
-    working-directory: .github
-    DEVELOPER_DIR: /Applications/Xcode_13.0.app/Contents/Developer
-
 jobs:
   test:
+    runs-on: macos-11
+    env:
+      working-directory: .github
+      DEVELOPER_DIR: /Applications/Xcode_13.0.app/Contents/Developer
     steps:
       - uses: actions/checkout@v2
       - name: Run TESTS
@@ -27,6 +26,10 @@ jobs:
           retention-days: 90
 
   build_for_swift_package_manager:
+    runs-on: macos-11
+    env:
+      working-directory: .github
+      DEVELOPER_DIR: /Applications/Xcode_13.0.app/Contents/Developer
     steps:
       - uses: actions/checkout@v2
       - name: Validate SwiftPM BUILDs
@@ -34,6 +37,10 @@ jobs:
         working-directory: ${{ env.working-directory }}
 
   build_for_cocoapods:
+    runs-on: macos-11
+    env:
+      working-directory: .github
+      DEVELOPER_DIR: /Applications/Xcode_13.0.app/Contents/Developer
     steps:
       - uses: actions/checkout@v2
       - name: Validate Cocoapods Can Deploy (lib lint)
@@ -41,6 +48,10 @@ jobs:
         working-directory: ${{ env.working-directory }}
 
   lint: 
+    runs-on: macos-11
+    env:
+      working-directory: .github
+      DEVELOPER_DIR: /Applications/Xcode_13.0.app/Contents/Developer
     steps:
       - uses: actions/checkout@v2
       - name: Swiftlint
