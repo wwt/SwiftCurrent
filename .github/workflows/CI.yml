@@ -7,7 +7,7 @@ on:
 
 jobs:
   test:
-    runs-on: macos-latest
+    runs-on: macos-11
     env:
         working-directory: .github
     steps:
@@ -48,7 +48,7 @@ jobs:
         working-directory: ${{ env.working-directory }}
 
   lint: 
-    runs-on: macos-latest
+    runs-on: macos-11
     env:
         working-directory: .github
     steps:
