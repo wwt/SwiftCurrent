@@ -9,10 +9,11 @@ on:
 
 jobs:
   version_bump:
-    runs-on: macos-latest
+    runs-on: macos-11
     if: ${{ github.event.workflow_run.conclusion == 'success' && github.repository == 'wwt/SwiftCurrent' }}
     env:
-        working-directory: .github
+      DEVELOPER_DIR: /Applications/Xcode_13.0.app/Contents/Developer
+      working-directory: .github
     steps:
       - uses: actions/checkout@v2
         with:
@@ -56,7 +57,10 @@ jobs:
           tag: ${{ steps.bump_version.outputs.version }}
           name: Release ${{ steps.bump_version.outputs.version }}
   deploy_documentation:
-    runs-on: macos-latest
+    runs-on: macos-11
+    env:
+      working-directory: .github
+      DEVELOPER_DIR: /Applications/Xcode_13.0.app/Contents/Developer
     needs: version_bump
     steps:
       - uses: actions/checkout@v2
