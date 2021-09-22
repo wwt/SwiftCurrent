@@ -6,7 +6,9 @@ on:
 
 jobs:
   release:
-    runs-on: macos-latest
+    runs-on: macos-11
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_13.0.app/Contents/Developer
     if: ${{ github.repository == 'wwt/SwiftCurrent' }}
     steps:
       - uses: actions/checkout@v2
