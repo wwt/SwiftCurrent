@@ -59,6 +59,17 @@
 		CAD026A626A0C1EF0075B818 /* ProfileFeatureOnboardingViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD026A526A0C1EF0075B818 /* ProfileFeatureOnboardingViewTests.swift */; };
 		CAD026AC26A0C83B0075B818 /* Inspection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD026AB26A0C83B0075B818 /* Inspection.swift */; };
 		CAD026AF26A0C8680075B818 /* InspectableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD026AE26A0C8680075B818 /* InspectableExtensions.swift */; };
+		D72B763D26FBCF7000E0405F /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B763626FBCF6F00E0405F /* Colors.swift */; };
+		D72B763E26FBCF7000E0405F /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B763726FBCF6F00E0405F /* PrimaryButton.swift */; };
+		D72B763F26FBCF7000E0405F /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B763826FBCF6F00E0405F /* Images.swift */; };
+		D72B764026FBCF7000E0405F /* SecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B763926FBCF6F00E0405F /* SecondaryButton.swift */; };
+		D72B764126FBCF7000E0405F /* PrimaryTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B763A26FBCF6F00E0405F /* PrimaryTextField.swift */; };
+		D72B764226FBCF7000E0405F /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B763B26FBCF6F00E0405F /* Styles.swift */; };
+		D72B764326FBCF7000E0405F /* PasswordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B763C26FBCF7000E0405F /* PasswordField.swift */; };
+		D72B764926FBCFB200E0405F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B764626FBCFB200E0405F /* LoginView.swift */; };
+		D72B764A26FBCFB200E0405F /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B764726FBCFB200E0405F /* SignUp.swift */; };
+		D72B764B26FBCFB200E0405F /* TermsAndConditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B764826FBCFB200E0405F /* TermsAndConditions.swift */; };
+		D72B764D26FBDC3C00E0405F /* SwiftCurrentOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B764C26FBDC3C00E0405F /* SwiftCurrentOnboarding.swift */; };
 		D74A4D5C26A7315F00010617 /* TestConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74A4D5B26A7315F00010617 /* TestConstant.swift */; };
 		D7A6CE7526E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7426E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift */; };
 		D7A6CE7E26E039C300599824 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7D26E039C300599824 /* TestView.swift */; };
@@ -137,6 +148,17 @@
 		CAD026A526A0C1EF0075B818 /* ProfileFeatureOnboardingViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFeatureOnboardingViewTests.swift; sourceTree = "<group>"; };
 		CAD026AB26A0C83B0075B818 /* Inspection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Inspection.swift; sourceTree = "<group>"; };
 		CAD026AE26A0C8680075B818 /* InspectableExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectableExtensions.swift; sourceTree = "<group>"; };
+		D72B763626FBCF6F00E0405F /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		D72B763726FBCF6F00E0405F /* PrimaryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
+		D72B763826FBCF6F00E0405F /* Images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
+		D72B763926FBCF6F00E0405F /* SecondaryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
+		D72B763A26FBCF6F00E0405F /* PrimaryTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryTextField.swift; sourceTree = "<group>"; };
+		D72B763B26FBCF6F00E0405F /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
+		D72B763C26FBCF7000E0405F /* PasswordField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordField.swift; sourceTree = "<group>"; };
+		D72B764626FBCFB200E0405F /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		D72B764726FBCFB200E0405F /* SignUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
+		D72B764826FBCFB200E0405F /* TermsAndConditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsAndConditions.swift; sourceTree = "<group>"; };
+		D72B764C26FBDC3C00E0405F /* SwiftCurrentOnboarding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftCurrentOnboarding.swift; sourceTree = "<group>"; };
 		D74A4D5B26A7315F00010617 /* TestConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestConstant.swift; sourceTree = "<group>"; };
 		D74A4D5D26A7471700010617 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D7A6CE7226E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftCurrent_SwiftUI_UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -288,6 +310,8 @@
 		CAC34B6D26A07FE90039A373 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D72B763526FBCF5A00E0405F /* Design */,
+				D72B764526FBCFB200E0405F /* SignUp */,
 				CA0536F926A0917A00BF8FC5 /* Profile */,
 				CAC34B6E26A07FE90039A373 /* QRScannerFeatureView.swift */,
 				CAC34B6F26A07FE90039A373 /* QRScannerFeatureOnboardingView.swift */,
@@ -295,6 +319,7 @@
 				CAC34B7126A07FE90039A373 /* ContentView.swift */,
 				CAC34B7226A07FE90039A373 /* MapFeatureView.swift */,
 				CA7B82A426A2061B005AA87D /* MFAView.swift */,
+				D72B764C26FBDC3C00E0405F /* SwiftCurrentOnboarding.swift */,
 			);
 			path = Views;
 			sourceTree = SOURCE_ROOT;
@@ -350,6 +375,30 @@
 				CAD026AE26A0C8680075B818 /* InspectableExtensions.swift */,
 			);
 			path = ViewInspector;
+			sourceTree = "<group>";
+		};
+		D72B763526FBCF5A00E0405F /* Design */ = {
+			isa = PBXGroup;
+			children = (
+				D72B763626FBCF6F00E0405F /* Colors.swift */,
+				D72B763826FBCF6F00E0405F /* Images.swift */,
+				D72B763C26FBCF7000E0405F /* PasswordField.swift */,
+				D72B763726FBCF6F00E0405F /* PrimaryButton.swift */,
+				D72B763A26FBCF6F00E0405F /* PrimaryTextField.swift */,
+				D72B763926FBCF6F00E0405F /* SecondaryButton.swift */,
+				D72B763B26FBCF6F00E0405F /* Styles.swift */,
+			);
+			path = Design;
+			sourceTree = "<group>";
+		};
+		D72B764526FBCFB200E0405F /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				D72B764626FBCFB200E0405F /* LoginView.swift */,
+				D72B764726FBCFB200E0405F /* SignUp.swift */,
+				D72B764826FBCFB200E0405F /* TermsAndConditions.swift */,
+			);
+			path = SignUp;
 			sourceTree = "<group>";
 		};
 		D7A6CE7326E0316C00599824 /* SwiftCurrent_SwiftUI_UITests */ = {
@@ -566,14 +615,25 @@
 				CAD0269726A0AEE00075B818 /* ChangePasswordView.swift in Sources */,
 				CAD026AC26A0C83B0075B818 /* Inspection.swift in Sources */,
 				CAD0269F26A0BE810075B818 /* ContainerExtensions.swift in Sources */,
+				D72B764126FBCF7000E0405F /* PrimaryTextField.swift in Sources */,
+				D72B763D26FBCF7000E0405F /* Colors.swift in Sources */,
 				CA0536FB26A0919900BF8FC5 /* AccountInformationView.swift in Sources */,
+				D72B764026FBCF7000E0405F /* SecondaryButton.swift in Sources */,
+				D72B763E26FBCF7000E0405F /* PrimaryButton.swift in Sources */,
+				D72B764226FBCF7000E0405F /* Styles.swift in Sources */,
 				D7A6CE8026E039EE00599824 /* TestEnumerations.swift in Sources */,
 				CAD026A126A0BE9A0075B818 /* DependencyInjected.swift in Sources */,
+				D72B764D26FBDC3C00E0405F /* SwiftCurrentOnboarding.swift in Sources */,
+				D72B763F26FBCF7000E0405F /* Images.swift in Sources */,
 				CAC34B7626A07FE90039A373 /* ContentView.swift in Sources */,
 				CAC34B7726A07FE90039A373 /* MapFeatureView.swift in Sources */,
+				D72B764B26FBCFB200E0405F /* TermsAndConditions.swift in Sources */,
 				CAC34B7526A07FE90039A373 /* MapFeatureOnboardingView.swift in Sources */,
+				D72B764926FBCFB200E0405F /* LoginView.swift in Sources */,
+				D72B764326FBCF7000E0405F /* PasswordField.swift in Sources */,
 				D7A6CE7E26E039C300599824 /* TestView.swift in Sources */,
 				CA7B82A526A2061B005AA87D /* MFAView.swift in Sources */,
+				D72B764A26FBCFB200E0405F /* SignUp.swift in Sources */,
 				CAC34B7326A07FE90039A373 /* QRScannerFeatureView.swift in Sources */,
 				CAC34B7426A07FE90039A373 /* QRScannerFeatureOnboardingView.swift in Sources */,
 			);
@@ -692,7 +752,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -747,7 +807,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -767,7 +827,7 @@
 				DEVELOPMENT_TEAM = KRX3M99K22;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = SwiftUIExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -789,7 +849,7 @@
 				DEVELOPMENT_TEAM = KRX3M99K22;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = SwiftUIExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -809,7 +869,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KRX3M99K22;
 				INFOPLIST_FILE = SwiftUIExampleTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -832,7 +892,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KRX3M99K22;
 				INFOPLIST_FILE = SwiftUIExampleTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
