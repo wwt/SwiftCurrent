@@ -21,31 +21,29 @@ struct UpdatedAccountInformationView: View, FlowRepresentable {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 25) { // swiftlint:disable:this closure_body_length
-            HStack(spacing: 15) {
-                if !emailWorkflowLaunched {
-                    HStack(spacing: 15) {
-                        Image.account
+            if !emailWorkflowLaunched {
+                HStack(spacing: 15) {
+                    Image.account
+                        .iconStyle()
+                        .foregroundColor(.icon)
+                    Text("Email: ")
+                    Text(email)
+                    Spacer()
+                    Button {
+                        withAnimation {
+                            emailWorkflowLaunched = true
+                        }
+                    } label: {
+                        Image(systemName: "pencil")
                             .iconStyle()
                             .foregroundColor(.icon)
-                        Text("Email: ")
-                        Text(email)
-                        Spacer()
-                        Button {
-                            withAnimation {
-                                emailWorkflowLaunched = true
-                            }
-                        } label: {
-                            Image(systemName: "pencil")
-                                .iconStyle()
-                                .foregroundColor(.icon)
-                        }
                     }
-                    .textEntryStyle()
                 }
-
-                WorkflowLauncher(isLaunched: $emailWorkflowLaunched, startingArgs: email) {
+                .textEntryStyle()
+            } else {
+                WorkflowLauncher(isLaunched: $emailWorkflowLaunched.animation(), startingArgs: email) {
                     thenProceed(with: MFAView.self) {
-                        thenProceed(with: UpdatedChangeEmailView.self)
+                        thenProceed(with: ChangeEmailView.self)
                     }
                 }.onFinish {
                     guard case .args(let newEmail as String) = $0 else { return }

@@ -32,7 +32,7 @@ struct AccountInformationView: View, FlowRepresentable {
             } else {
                 WorkflowLauncher(isLaunched: $usernameWorkflowLaunched, startingArgs: username) {
                     thenProceed(with: MFAView.self) {
-                        thenProceed(with: ChangeUsernameView.self)
+                        thenProceed(with: ChangeEmailView.self)
                     }
                 }.onFinish {
                     guard case .args(let newUsername as String) = $0 else { return }

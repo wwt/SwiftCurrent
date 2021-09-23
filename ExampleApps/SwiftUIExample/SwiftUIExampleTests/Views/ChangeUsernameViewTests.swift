@@ -15,8 +15,8 @@ import ViewInspector
 final class ChangeUsernameViewTests: XCTestCase {
     func testChangeUsernameView() throws {
         let currentUsername = UUID().uuidString
-        let exp = ViewHosting.loadView(ChangeUsernameView(with: currentUsername)).inspection.inspect { view in
-            XCTAssertEqual(try view.find(ViewType.Text.self, traversal: .depthFirst).string(), "Enter new username: ")
+        let exp = ViewHosting.loadView(ChangeEmailView(with: currentUsername)).inspection.inspect { view in
+            XCTAssertEqual(try view.find(ViewType.Text.self, traversal: .depthFirst).string(), "New email: ")
             XCTAssertEqual(try view.find(ViewType.TextField.self).labelView().text().string(), "\(currentUsername)")
             XCTAssertNoThrow(try view.find(ViewType.Button.self))
         }
@@ -26,16 +26,16 @@ final class ChangeUsernameViewTests: XCTestCase {
     func testChangeUsernameViewProceedsWithCorrectDataWhenNameChanged() {
         let newUsername = UUID().uuidString
         let proceedCalled = expectation(description: "Proceed called")
-        let erased = AnyFlowRepresentableView(type: ChangeUsernameView.self, args: .args(""))
+        let erased = AnyFlowRepresentableView(type: ChangeEmailView.self, args: .args(""))
         // swiftlint:disable:next force_cast
-        var changeUsernameView = erased.underlyingInstance as! ChangeUsernameView
+        var changeUsernameView = erased.underlyingInstance as! ChangeEmailView
         changeUsernameView.proceedInWorkflowStorage = {
             XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, newUsername)
             proceedCalled.fulfill()
         }
         changeUsernameView._workflowPointer = erased
         let exp = ViewHosting.loadView(changeUsernameView).inspection.inspect { view in
-            XCTAssertEqual(try view.find(ViewType.Text.self, traversal: .depthFirst).string(), "Enter new username: ")
+            XCTAssertEqual(try view.find(ViewType.Text.self, traversal: .depthFirst).string(), "New email: ")
             XCTAssertNoThrow(try view.find(ViewType.TextField.self).setInput(newUsername))
             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
         }

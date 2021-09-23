@@ -1,5 +1,5 @@
 //
-//  UpdatedChangeEmailView.swift
+//  ChangeEmailView.swift
 //  SwiftUIExample
 //
 //  Created by Tyler Thompson on 7/15/21.
@@ -9,7 +9,7 @@
 import SwiftUI
 import SwiftCurrent
 
-struct UpdatedChangeEmailView: View, FlowRepresentable {
+struct ChangeEmailView: View, FlowRepresentable {
     typealias WorkflowOutput = String
 
     @State private var currentEmail: String
@@ -38,7 +38,7 @@ struct UpdatedChangeEmailView: View, FlowRepresentable {
 
 struct UpdatedChangeEmailView_Previews: PreviewProvider {
     static var previews: some View {
-        UpdatedChangeEmailView(with: "Email input")
+        ChangeEmailView(with: "Email input")
             .preferredColorScheme(.dark)
             .background(Color.primaryBackground)
     }
