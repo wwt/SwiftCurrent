@@ -71,6 +71,11 @@
 		D72B764B26FBCFB200E0405F /* TermsAndConditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B764826FBCFB200E0405F /* TermsAndConditions.swift */; };
 		D72B764D26FBDC3C00E0405F /* SwiftCurrentOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B764C26FBDC3C00E0405F /* SwiftCurrentOnboarding.swift */; };
 		D72B764F26FBEDB900E0405F /* GenericOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B764E26FBEDB900E0405F /* GenericOnboardingView.swift */; };
+		D72B765126FC024500E0405F /* UpdatedProfileFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765026FC024500E0405F /* UpdatedProfileFeatureView.swift */; };
+		D72B765326FC02B200E0405F /* UpdatedChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765226FC02B200E0405F /* UpdatedChangePasswordView.swift */; };
+		D72B765526FC032B00E0405F /* UpdatedChangeEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765426FC032B00E0405F /* UpdatedChangeEmailView.swift */; };
+		D72B765726FC036A00E0405F /* UpdatedAccountInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765626FC036A00E0405F /* UpdatedAccountInformationView.swift */; };
+		D72B765A26FC048100E0405F /* UpdatedMFAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765926FC048100E0405F /* UpdatedMFAView.swift */; };
 		D74A4D5C26A7315F00010617 /* TestConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74A4D5B26A7315F00010617 /* TestConstant.swift */; };
 		D7A6CE7526E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7426E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift */; };
 		D7A6CE7E26E039C300599824 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7D26E039C300599824 /* TestView.swift */; };
@@ -161,6 +166,11 @@
 		D72B764826FBCFB200E0405F /* TermsAndConditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsAndConditions.swift; sourceTree = "<group>"; };
 		D72B764C26FBDC3C00E0405F /* SwiftCurrentOnboarding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftCurrentOnboarding.swift; sourceTree = "<group>"; };
 		D72B764E26FBEDB900E0405F /* GenericOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericOnboardingView.swift; sourceTree = "<group>"; };
+		D72B765026FC024500E0405F /* UpdatedProfileFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatedProfileFeatureView.swift; sourceTree = "<group>"; };
+		D72B765226FC02B200E0405F /* UpdatedChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatedChangePasswordView.swift; sourceTree = "<group>"; };
+		D72B765426FC032B00E0405F /* UpdatedChangeEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatedChangeEmailView.swift; sourceTree = "<group>"; };
+		D72B765626FC036A00E0405F /* UpdatedAccountInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatedAccountInformationView.swift; sourceTree = "<group>"; };
+		D72B765926FC048100E0405F /* UpdatedMFAView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatedMFAView.swift; sourceTree = "<group>"; };
 		D74A4D5B26A7315F00010617 /* TestConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestConstant.swift; sourceTree = "<group>"; };
 		D74A4D5D26A7471700010617 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D7A6CE7226E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftCurrent_SwiftUI_UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -312,6 +322,7 @@
 		CAC34B6D26A07FE90039A373 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D72B765826FC046900E0405F /* UpdatedViews */,
 				D72B763526FBCF5A00E0405F /* Design */,
 				D72B764526FBCFB200E0405F /* SignUp */,
 				CA0536F926A0917A00BF8FC5 /* Profile */,
@@ -402,6 +413,18 @@
 				D72B764826FBCFB200E0405F /* TermsAndConditions.swift */,
 			);
 			path = SignUp;
+			sourceTree = "<group>";
+		};
+		D72B765826FC046900E0405F /* UpdatedViews */ = {
+			isa = PBXGroup;
+			children = (
+				D72B765026FC024500E0405F /* UpdatedProfileFeatureView.swift */,
+				D72B765226FC02B200E0405F /* UpdatedChangePasswordView.swift */,
+				D72B765426FC032B00E0405F /* UpdatedChangeEmailView.swift */,
+				D72B765626FC036A00E0405F /* UpdatedAccountInformationView.swift */,
+				D72B765926FC048100E0405F /* UpdatedMFAView.swift */,
+			);
+			path = UpdatedViews;
 			sourceTree = "<group>";
 		};
 		D7A6CE7326E0316C00599824 /* SwiftCurrent_SwiftUI_UITests */ = {
@@ -608,11 +631,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D72B765126FC024500E0405F /* UpdatedProfileFeatureView.swift in Sources */,
 				CA7B829F26A1FAAC005AA87D /* InspectableAlert.swift in Sources */,
 				CA0536F626A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift in Sources */,
 				CAC34B4326A07F830039A373 /* SwiftUIExampleApp.swift in Sources */,
 				CA0536F426A0887800BF8FC5 /* ProfileFeatureView.swift in Sources */,
 				CA4B40B926A09E5800B18626 /* ChangeUsernameView.swift in Sources */,
+				D72B765526FC032B00E0405F /* UpdatedChangeEmailView.swift in Sources */,
 				CA6FB0DE26C6AD5200FB3285 /* UIKitInteropProgrammaticViewController.swift in Sources */,
 				CA7B821026A123F6005AA87D /* InspectableSheet.swift in Sources */,
 				CAD0269726A0AEE00075B818 /* ChangePasswordView.swift in Sources */,
@@ -626,12 +651,15 @@
 				D72B764226FBCF7000E0405F /* Styles.swift in Sources */,
 				D7A6CE8026E039EE00599824 /* TestEnumerations.swift in Sources */,
 				D72B764F26FBEDB900E0405F /* GenericOnboardingView.swift in Sources */,
+				D72B765326FC02B200E0405F /* UpdatedChangePasswordView.swift in Sources */,
 				CAD026A126A0BE9A0075B818 /* DependencyInjected.swift in Sources */,
 				D72B764D26FBDC3C00E0405F /* SwiftCurrentOnboarding.swift in Sources */,
 				D72B763F26FBCF7000E0405F /* Images.swift in Sources */,
 				CAC34B7626A07FE90039A373 /* ContentView.swift in Sources */,
 				CAC34B7726A07FE90039A373 /* MapFeatureView.swift in Sources */,
 				D72B764B26FBCFB200E0405F /* TermsAndConditions.swift in Sources */,
+				D72B765A26FC048100E0405F /* UpdatedMFAView.swift in Sources */,
+				D72B765726FC036A00E0405F /* UpdatedAccountInformationView.swift in Sources */,
 				CAC34B7526A07FE90039A373 /* MapFeatureOnboardingView.swift in Sources */,
 				D72B764926FBCFB200E0405F /* LoginView.swift in Sources */,
 				D72B764326FBCF7000E0405F /* PasswordField.swift in Sources */,

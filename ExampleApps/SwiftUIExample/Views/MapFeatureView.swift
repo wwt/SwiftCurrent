@@ -22,6 +22,7 @@ struct MapFeatureView: View, FlowRepresentable {
 
     var body: some View {
         Map(coordinateRegion: $region)
+            .edgesIgnoringSafeArea([.top, .leading, .trailing])
             .onAppear {
                 region = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.002, longitudeDelta: 0.002))
             }
