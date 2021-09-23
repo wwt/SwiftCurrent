@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct PrimaryTextField: View {
+    let inspection = Inspection<Self>() // ViewInspector
+
     @State var label: String?
     @State var placeholder = "Password"
 
@@ -27,6 +29,7 @@ struct PrimaryTextField: View {
             Spacer()
         }
         .textEntryStyle()
+        .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 }
 

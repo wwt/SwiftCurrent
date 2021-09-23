@@ -25,7 +25,7 @@ final class MFAViewTests: XCTestCase {
     func testMFAViewAllowsCodeInput() throws {
         let exp = ViewHosting.loadView(MFAView(with: .none)).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
-            XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Code (enter 1234 to proceed): ")
+            XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Code (enter 1234 to proceed)")
             XCTAssertNoThrow(try view.find(ViewType.TextField.self).setInput("1111"))
         }
         wait(for: [exp], timeout: TestConstant.timeout)
@@ -34,9 +34,9 @@ final class MFAViewTests: XCTestCase {
     func testMFAViewShowsAlertWhenCodeIsWrong() throws {
         let exp = ViewHosting.loadView(MFAView(with: .none)).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
-            XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Code (enter 1234 to proceed): ")
-            XCTAssertNoThrow(try view.vStack().textField(1).setInput("1111"))
-            XCTAssertNoThrow(try view.vStack().button(2).tap())
+            XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Code (enter 1234 to proceed)")
+            XCTAssertNoThrow(try view.find(ViewType.TextField.self).setInput("1111"))
+            XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
             XCTAssertEqual(try view.find(ViewType.Alert.self).title().string(), "Invalid code entered, abandoning workflow.")
         }
         wait(for: [exp], timeout: TestConstant.timeout)
@@ -56,9 +56,9 @@ final class MFAViewTests: XCTestCase {
         mfaView._workflowPointer = erased
         let exp = ViewHosting.loadView(mfaView).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
-            XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Code (enter 1234 to proceed): ")
-            XCTAssertNoThrow(try view.vStack().textField(1).setInput("1234"))
-            XCTAssertNoThrow(try view.vStack().button(2).tap())
+            XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Code (enter 1234 to proceed)")
+            XCTAssertNoThrow(try view.find(ViewType.TextField.self).setInput("1234"))
+            XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
         }
         wait(for: [exp, proceedCalled], timeout: TestConstant.timeout)
     }

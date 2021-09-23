@@ -30,6 +30,9 @@ extension CodeScannerView: Inspectable { }
 extension MFAView: Inspectable { }
 extension ViewControllerWrapper: Inspectable { }
 
+extension PrimaryButton: Inspectable { }
+extension PrimaryTextField: Inspectable { }
+
 extension SwiftUIExample.Inspection: InspectionEmissary where V: View { }
 extension SwiftCurrent_SwiftUI.Inspection: InspectionEmissary where V: View { }
 extension InspectableSheetWithItem: ItemPopupPresenter { }

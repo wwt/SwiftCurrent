@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct PrimaryButton: View {
+    let inspection = Inspection<Self>() // ViewInspector
+
     let title: String
     let action: () -> Void
     var body: some View {
@@ -16,6 +18,7 @@ struct PrimaryButton: View {
             Text(title)
                 .primaryButtonStyle()
         }
+        .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 }
 

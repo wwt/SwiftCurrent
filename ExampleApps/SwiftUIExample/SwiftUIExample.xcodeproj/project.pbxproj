@@ -28,7 +28,6 @@
 		CA7B829D26A1E1D6005AA87D /* ChangeUsernameViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7B829C26A1E1D6005AA87D /* ChangeUsernameViewTests.swift */; };
 		CA7B829F26A1FAAC005AA87D /* InspectableAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7B829E26A1FAAC005AA87D /* InspectableAlert.swift */; };
 		CA7B82A126A1FB97005AA87D /* MFAViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7B82A026A1FB97005AA87D /* MFAViewTests.swift */; };
-		CA7B82A526A2061B005AA87D /* MFAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7B82A426A2061B005AA87D /* MFAView.swift */; };
 		CA7F7F7E26D4531C00DB1903 /* WorkflowItemExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7F7F7D26D4531C00DB1903 /* WorkflowItemExtensions.swift */; };
 		CA7F7F8026D453C100DB1903 /* ViewHostingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7F7F7F26D453C100DB1903 /* ViewHostingExtensions.swift */; };
 		CA84D8E326A0E3F5006CF964 /* QRScannerFeatureOnboardingViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA84D8E226A0E3F5006CF964 /* QRScannerFeatureOnboardingViewTests.swift */; };
@@ -75,7 +74,7 @@
 		D72B765326FC02B200E0405F /* UpdatedChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765226FC02B200E0405F /* UpdatedChangePasswordView.swift */; };
 		D72B765526FC032B00E0405F /* UpdatedChangeEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765426FC032B00E0405F /* UpdatedChangeEmailView.swift */; };
 		D72B765726FC036A00E0405F /* UpdatedAccountInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765626FC036A00E0405F /* UpdatedAccountInformationView.swift */; };
-		D72B765A26FC048100E0405F /* UpdatedMFAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765926FC048100E0405F /* UpdatedMFAView.swift */; };
+		D72B765A26FC048100E0405F /* MFAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765926FC048100E0405F /* MFAView.swift */; };
 		D74A4D5C26A7315F00010617 /* TestConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74A4D5B26A7315F00010617 /* TestConstant.swift */; };
 		D7A6CE7526E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7426E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift */; };
 		D7A6CE7E26E039C300599824 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7D26E039C300599824 /* TestView.swift */; };
@@ -127,7 +126,6 @@
 		CA7B829C26A1E1D6005AA87D /* ChangeUsernameViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeUsernameViewTests.swift; sourceTree = "<group>"; };
 		CA7B829E26A1FAAC005AA87D /* InspectableAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectableAlert.swift; sourceTree = "<group>"; };
 		CA7B82A026A1FB97005AA87D /* MFAViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFAViewTests.swift; sourceTree = "<group>"; };
-		CA7B82A426A2061B005AA87D /* MFAView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MFAView.swift; sourceTree = "<group>"; };
 		CA7F7F7D26D4531C00DB1903 /* WorkflowItemExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkflowItemExtensions.swift; path = ../../../../Tests/SwiftCurrent_SwiftUITests/WorkflowItemExtensions.swift; sourceTree = "<group>"; };
 		CA7F7F7F26D453C100DB1903 /* ViewHostingExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewHostingExtensions.swift; path = ../../../../Tests/SwiftCurrent_SwiftUITests/ViewInspector/ViewHostingExtensions.swift; sourceTree = "<group>"; };
 		CA84D8E226A0E3F5006CF964 /* QRScannerFeatureOnboardingViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerFeatureOnboardingViewTests.swift; sourceTree = "<group>"; };
@@ -170,7 +168,7 @@
 		D72B765226FC02B200E0405F /* UpdatedChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatedChangePasswordView.swift; sourceTree = "<group>"; };
 		D72B765426FC032B00E0405F /* UpdatedChangeEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatedChangeEmailView.swift; sourceTree = "<group>"; };
 		D72B765626FC036A00E0405F /* UpdatedAccountInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatedAccountInformationView.swift; sourceTree = "<group>"; };
-		D72B765926FC048100E0405F /* UpdatedMFAView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatedMFAView.swift; sourceTree = "<group>"; };
+		D72B765926FC048100E0405F /* MFAView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFAView.swift; sourceTree = "<group>"; };
 		D74A4D5B26A7315F00010617 /* TestConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestConstant.swift; sourceTree = "<group>"; };
 		D74A4D5D26A7471700010617 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D7A6CE7226E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftCurrent_SwiftUI_UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -331,7 +329,6 @@
 				CAC34B7026A07FE90039A373 /* MapFeatureOnboardingView.swift */,
 				CAC34B7126A07FE90039A373 /* ContentView.swift */,
 				CAC34B7226A07FE90039A373 /* MapFeatureView.swift */,
-				CA7B82A426A2061B005AA87D /* MFAView.swift */,
 				D72B764C26FBDC3C00E0405F /* SwiftCurrentOnboarding.swift */,
 				D72B764E26FBEDB900E0405F /* GenericOnboardingView.swift */,
 			);
@@ -422,7 +419,7 @@
 				D72B765226FC02B200E0405F /* UpdatedChangePasswordView.swift */,
 				D72B765426FC032B00E0405F /* UpdatedChangeEmailView.swift */,
 				D72B765626FC036A00E0405F /* UpdatedAccountInformationView.swift */,
-				D72B765926FC048100E0405F /* UpdatedMFAView.swift */,
+				D72B765926FC048100E0405F /* MFAView.swift */,
 			);
 			path = UpdatedViews;
 			sourceTree = "<group>";
@@ -658,13 +655,12 @@
 				CAC34B7626A07FE90039A373 /* ContentView.swift in Sources */,
 				CAC34B7726A07FE90039A373 /* MapFeatureView.swift in Sources */,
 				D72B764B26FBCFB200E0405F /* TermsAndConditions.swift in Sources */,
-				D72B765A26FC048100E0405F /* UpdatedMFAView.swift in Sources */,
+				D72B765A26FC048100E0405F /* MFAView.swift in Sources */,
 				D72B765726FC036A00E0405F /* UpdatedAccountInformationView.swift in Sources */,
 				CAC34B7526A07FE90039A373 /* MapFeatureOnboardingView.swift in Sources */,
 				D72B764926FBCFB200E0405F /* LoginView.swift in Sources */,
 				D72B764326FBCF7000E0405F /* PasswordField.swift in Sources */,
 				D7A6CE7E26E039C300599824 /* TestView.swift in Sources */,
-				CA7B82A526A2061B005AA87D /* MFAView.swift in Sources */,
 				D72B764A26FBCFB200E0405F /* SignUp.swift in Sources */,
 				CAC34B7326A07FE90039A373 /* QRScannerFeatureView.swift in Sources */,
 				CAC34B7426A07FE90039A373 /* QRScannerFeatureOnboardingView.swift in Sources */,
