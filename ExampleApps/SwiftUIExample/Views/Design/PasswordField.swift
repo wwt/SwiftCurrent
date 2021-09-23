@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct PasswordField: View {
+    let inspection = Inspection<Self>() // ViewInspector
+
     @State var placeholder = "Password"
 
     @Binding var showPassword: Bool
@@ -32,6 +34,7 @@ struct PasswordField: View {
             }
         }
         .textEntryStyle()
+        .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 }
 

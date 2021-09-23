@@ -32,6 +32,7 @@ extension ViewControllerWrapper: Inspectable { }
 
 extension PrimaryButton: Inspectable { }
 extension PrimaryTextField: Inspectable { }
+extension PasswordField: Inspectable { }
 
 extension SwiftUIExample.Inspection: InspectionEmissary where V: View { }
 extension SwiftCurrent_SwiftUI.Inspection: InspectionEmissary where V: View { }

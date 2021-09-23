@@ -1,5 +1,5 @@
 //
-//  UpdatedChangePasswordView.swift
+//  ChangePasswordView.swift
 //  SwiftUIExample
 //
 //  Created by Tyler Thompson on 7/15/21.
@@ -9,7 +9,7 @@
 import SwiftUI
 import SwiftCurrent
 
-struct UpdatedChangePasswordView: View, FlowRepresentable {
+struct ChangePasswordView: View, FlowRepresentable {
     typealias WorkflowOutput = String
     @State private var oldPassword = ""
     @State private var showOldPassword = false
@@ -91,7 +91,7 @@ struct UpdatedChangePasswordView: View, FlowRepresentable {
 
 struct UpdatedChangePasswordView_Previews: PreviewProvider {
     static var previews: some View {
-        UpdatedChangePasswordView(with: "Username input")
+        ChangePasswordView(with: "Username input")
             .preferredColorScheme(.dark)
             .background(Color.primaryBackground)
     }

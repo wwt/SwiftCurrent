@@ -50,7 +50,6 @@
 		CAC34B7D26A0803C0039A373 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = CAC34B7C26A0803C0039A373 /* CodeScanner */; };
 		CAC34B8226A080910039A373 /* SwiftCurrent_SwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = CAC34B8126A080910039A373 /* SwiftCurrent_SwiftUI */; };
 		CAC34B8426A080910039A373 /* SwiftCurrent in Frameworks */ = {isa = PBXBuildFile; productRef = CAC34B8326A080910039A373 /* SwiftCurrent */; };
-		CAD0269726A0AEE00075B818 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD0269626A0AEE00075B818 /* ChangePasswordView.swift */; };
 		CAD0269A26A0BE390075B818 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = CAD0269926A0BE390075B818 /* Swinject */; };
 		CAD0269F26A0BE810075B818 /* ContainerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD0269E26A0BE810075B818 /* ContainerExtensions.swift */; };
 		CAD026A126A0BE9A0075B818 /* DependencyInjected.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD026A026A0BE9A0075B818 /* DependencyInjected.swift */; };
@@ -71,7 +70,7 @@
 		D72B764D26FBDC3C00E0405F /* SwiftCurrentOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B764C26FBDC3C00E0405F /* SwiftCurrentOnboarding.swift */; };
 		D72B764F26FBEDB900E0405F /* GenericOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B764E26FBEDB900E0405F /* GenericOnboardingView.swift */; };
 		D72B765126FC024500E0405F /* UpdatedProfileFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765026FC024500E0405F /* UpdatedProfileFeatureView.swift */; };
-		D72B765326FC02B200E0405F /* UpdatedChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765226FC02B200E0405F /* UpdatedChangePasswordView.swift */; };
+		D72B765326FC02B200E0405F /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765226FC02B200E0405F /* ChangePasswordView.swift */; };
 		D72B765526FC032B00E0405F /* UpdatedChangeEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765426FC032B00E0405F /* UpdatedChangeEmailView.swift */; };
 		D72B765726FC036A00E0405F /* UpdatedAccountInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765626FC036A00E0405F /* UpdatedAccountInformationView.swift */; };
 		D72B765A26FC048100E0405F /* MFAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765926FC048100E0405F /* MFAView.swift */; };
@@ -145,7 +144,6 @@
 		CAC34B7026A07FE90039A373 /* MapFeatureOnboardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapFeatureOnboardingView.swift; sourceTree = "<group>"; };
 		CAC34B7126A07FE90039A373 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		CAC34B7226A07FE90039A373 /* MapFeatureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapFeatureView.swift; sourceTree = "<group>"; };
-		CAD0269626A0AEE00075B818 /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 		CAD0269E26A0BE810075B818 /* ContainerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerExtensions.swift; sourceTree = "<group>"; };
 		CAD026A026A0BE9A0075B818 /* DependencyInjected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjected.swift; sourceTree = "<group>"; };
 		CAD026A226A0BEB50075B818 /* DependencyInjectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjectionTests.swift; sourceTree = "<group>"; };
@@ -165,7 +163,7 @@
 		D72B764C26FBDC3C00E0405F /* SwiftCurrentOnboarding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftCurrentOnboarding.swift; sourceTree = "<group>"; };
 		D72B764E26FBEDB900E0405F /* GenericOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericOnboardingView.swift; sourceTree = "<group>"; };
 		D72B765026FC024500E0405F /* UpdatedProfileFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatedProfileFeatureView.swift; sourceTree = "<group>"; };
-		D72B765226FC02B200E0405F /* UpdatedChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatedChangePasswordView.swift; sourceTree = "<group>"; };
+		D72B765226FC02B200E0405F /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 		D72B765426FC032B00E0405F /* UpdatedChangeEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatedChangeEmailView.swift; sourceTree = "<group>"; };
 		D72B765626FC036A00E0405F /* UpdatedAccountInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatedAccountInformationView.swift; sourceTree = "<group>"; };
 		D72B765926FC048100E0405F /* MFAView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFAView.swift; sourceTree = "<group>"; };
@@ -228,7 +226,6 @@
 				CA0536F526A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift */,
 				CA0536FA26A0919900BF8FC5 /* AccountInformationView.swift */,
 				CA4B40B826A09E5800B18626 /* ChangeUsernameView.swift */,
-				CAD0269626A0AEE00075B818 /* ChangePasswordView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -416,7 +413,7 @@
 			isa = PBXGroup;
 			children = (
 				D72B765026FC024500E0405F /* UpdatedProfileFeatureView.swift */,
-				D72B765226FC02B200E0405F /* UpdatedChangePasswordView.swift */,
+				D72B765226FC02B200E0405F /* ChangePasswordView.swift */,
 				D72B765426FC032B00E0405F /* UpdatedChangeEmailView.swift */,
 				D72B765626FC036A00E0405F /* UpdatedAccountInformationView.swift */,
 				D72B765926FC048100E0405F /* MFAView.swift */,
@@ -637,7 +634,6 @@
 				D72B765526FC032B00E0405F /* UpdatedChangeEmailView.swift in Sources */,
 				CA6FB0DE26C6AD5200FB3285 /* UIKitInteropProgrammaticViewController.swift in Sources */,
 				CA7B821026A123F6005AA87D /* InspectableSheet.swift in Sources */,
-				CAD0269726A0AEE00075B818 /* ChangePasswordView.swift in Sources */,
 				CAD026AC26A0C83B0075B818 /* Inspection.swift in Sources */,
 				CAD0269F26A0BE810075B818 /* ContainerExtensions.swift in Sources */,
 				D72B764126FBCF7000E0405F /* PrimaryTextField.swift in Sources */,
@@ -648,7 +644,7 @@
 				D72B764226FBCF7000E0405F /* Styles.swift in Sources */,
 				D7A6CE8026E039EE00599824 /* TestEnumerations.swift in Sources */,
 				D72B764F26FBEDB900E0405F /* GenericOnboardingView.swift in Sources */,
-				D72B765326FC02B200E0405F /* UpdatedChangePasswordView.swift in Sources */,
+				D72B765326FC02B200E0405F /* ChangePasswordView.swift in Sources */,
 				CAD026A126A0BE9A0075B818 /* DependencyInjected.swift in Sources */,
 				D72B764D26FBDC3C00E0405F /* SwiftCurrentOnboarding.swift in Sources */,
 				D72B763F26FBCF7000E0405F /* Images.swift in Sources */,

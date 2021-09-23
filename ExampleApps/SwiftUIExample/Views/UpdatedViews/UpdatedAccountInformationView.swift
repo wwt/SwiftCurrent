@@ -78,7 +78,7 @@ struct UpdatedAccountInformationView: View, FlowRepresentable {
             } else {
                 WorkflowLauncher(isLaunched: $passwordWorkflowLaunched.animation(), startingArgs: password) {
                     thenProceed(with: MFAView.self) {
-                        thenProceed(with: UpdatedChangePasswordView.self)
+                        thenProceed(with: ChangePasswordView.self)
                             .presentationType(.modal)
                             .applyModifiers { cpv in
                                 NavigationView {
