@@ -43,6 +43,7 @@ struct ProfileFeatureView: View, FlowRepresentable {
 
     private func clearUserDefaults() {
         Self.userDefaults.dictionaryRepresentation().keys.forEach(Self.userDefaults.removeObject(forKey:))
+        print("Defaults cleared")
     }
 }
 

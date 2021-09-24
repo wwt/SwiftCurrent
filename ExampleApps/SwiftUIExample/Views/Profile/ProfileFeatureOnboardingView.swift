@@ -18,9 +18,7 @@ struct ProfileFeatureOnboardingView: View, PassthroughFlowRepresentable {
     weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
-        WorkflowLauncher(isLaunched: .constant(true), startingArgs: .profileFeature) {
-            thenProceed(with: GenericOnboardingView.self)
-        } .onFinish { _ in
+        GenericOnboardingView(model: .profileFeature) {
             proceedInWorkflow()
         }
         .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector

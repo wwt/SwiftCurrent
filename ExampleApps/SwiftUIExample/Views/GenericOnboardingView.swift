@@ -36,9 +36,16 @@ struct GenericOnboardingView: View, FlowRepresentable {
     let inspection = Inspection<Self>() // ViewInspector
     weak var _workflowPointer: AnyFlowRepresentable?
     private let onboardingModel: OnboardingModel
+    private let continueAction: (() -> Void)?
 
     init(with model: OnboardingModel) {
         onboardingModel = model
+        continueAction = { print("This worked as I expected?") }
+    }
+
+    init(model: OnboardingModel, continueAction: @escaping () -> Void) {
+        onboardingModel = model
+        self.continueAction = continueAction
     }
 
     var body: some View {
@@ -61,6 +68,7 @@ struct GenericOnboardingView: View, FlowRepresentable {
             }
             PrimaryButton(title: "Continue") {
                 Self.userDefaults.set(true, forKey: onboardingModel.appStorageKey)
+                continueAction?()
                 proceedInWorkflow()
             }
         }
