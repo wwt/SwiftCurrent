@@ -21,7 +21,7 @@ struct OnboardingModel {
                                                 previewAccent: .icon,
                                                 featureTitle: "Welcome to our new profile management feature!",
                                                 featureSummary: "You can update your username and password here.",
-                                                appStorageKey: "GenericOnboardingView")
+                                                appStorageKey: "OnboardedToProfileFeature")
 
     static let mapFeature = OnboardingModel(previewImage: .logo,
                                             previewAccent: .icon,
@@ -30,11 +30,16 @@ struct OnboardingModel {
                                             appStorageKey: "MapOnboardingFeature")
 }
 
-struct GenericOnboardingView: View, PassthroughFlowRepresentable {
+struct GenericOnboardingView: View, FlowRepresentable {
     @DependencyInjected private static var userDefaults: UserDefaults!
 
+    let inspection = Inspection<Self>() // ViewInspector
     weak var _workflowPointer: AnyFlowRepresentable?
-    @State var onboardingModel: OnboardingModel = .profileFeature
+    private let onboardingModel: OnboardingModel
+
+    init(with model: OnboardingModel) {
+        onboardingModel = model
+    }
 
     var body: some View {
         VStack {
@@ -59,6 +64,7 @@ struct GenericOnboardingView: View, PassthroughFlowRepresentable {
                 proceedInWorkflow()
             }
         }
+        .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 
     func shouldLoad() -> Bool {

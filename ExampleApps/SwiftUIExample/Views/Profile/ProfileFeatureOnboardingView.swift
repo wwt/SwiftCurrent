@@ -9,21 +9,21 @@
 import SwiftUI
 import SwiftCurrent
 import Swinject
+import SwiftCurrent_SwiftUI
 
-struct ProfileFeatureOnboardingView: View, FlowRepresentable {
-    @AppStorage("OnboardedToProfileFeature", store: .fromDI) private var onboardedToProfileFeature = false
+struct ProfileFeatureOnboardingView: View, PassthroughFlowRepresentable {
+    @AppStorage(OnboardingModel.profileFeature.appStorageKey, store: .fromDI) private var onboardedToProfileFeature = false
 
     let inspection = Inspection<Self>() // ViewInspector
     weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
-        VStack {
-            Text("Learn about our awesome profile feature!")
-            Button("Continue") {
-                onboardedToProfileFeature = true
-                proceedInWorkflow()
-            }
-        }.onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
+        WorkflowLauncher(isLaunched: .constant(true), startingArgs: .profileFeature) {
+            thenProceed(with: GenericOnboardingView.self)
+        } .onFinish { _ in
+            proceedInWorkflow()
+        }
+        .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 
     func shouldLoad() -> Bool {

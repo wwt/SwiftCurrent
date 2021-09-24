@@ -31,7 +31,7 @@ final class ProfileFeatureOnboardingViewTests: XCTestCase, View {
             workflowFinished.fulfill()
         }).inspection.inspect { view in
             XCTAssertNoThrow(try view.find(ViewType.Text.self))
-            XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Learn about our awesome profile feature!")
+            XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Welcome to our new profile management feature!")
             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
         }
         wait(for: [exp, workflowFinished], timeout: TestConstant.timeout)
