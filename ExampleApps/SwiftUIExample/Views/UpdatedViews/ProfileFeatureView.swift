@@ -1,5 +1,5 @@
 //
-//  UpdatedProfileFeatureView.swift
+//  ProfileFeatureView.swift
 //  SwiftUIExample
 //
 //  Created by Tyler Thompson on 7/15/21.
@@ -9,7 +9,8 @@
 import SwiftUI
 import SwiftCurrent
 
-struct UpdatedProfileFeatureView: View, FlowRepresentable {
+struct ProfileFeatureView: View, FlowRepresentable {
+    let inspection = Inspection<Self>() // ViewInspector
     @DependencyInjected private static var userDefaults: UserDefaults!
     weak var _workflowPointer: AnyFlowRepresentable?
 
@@ -26,22 +27,27 @@ struct UpdatedProfileFeatureView: View, FlowRepresentable {
                 )
                 .padding()
                 .frame(width: 300, height: 300)
+                .onTapGesture(count: 5, perform: clearUserDefaults)
             ScrollView {
                     Divider()
-
                     Section(header: Text("Account Information").font(.title)) {
-                        UpdatedAccountInformationView().padding()
+                        AccountInformationView().padding()
                     }
                     Spacer()
             }
             .background(Color.card)
         }
         .background(Color.primaryBackground)
+        .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
+    }
+
+    private func clearUserDefaults() {
+        Self.userDefaults.dictionaryRepresentation().keys.forEach(Self.userDefaults.removeObject(forKey:))
     }
 }
 
 struct UpdatedProfileFeature_Previews: PreviewProvider {
     static var previews: some View {
-        UpdatedProfileFeatureView().preferredColorScheme(.dark)
+        ProfileFeatureView().preferredColorScheme(.dark)
     }
 }

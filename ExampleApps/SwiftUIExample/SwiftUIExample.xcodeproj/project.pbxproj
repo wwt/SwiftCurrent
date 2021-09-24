@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CA0536F426A0887800BF8FC5 /* ProfileFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536F326A0887800BF8FC5 /* ProfileFeatureView.swift */; };
 		CA0536F626A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536F526A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift */; };
 		CA0536FB26A0919900BF8FC5 /* AccountInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536FA26A0919900BF8FC5 /* AccountInformationView.swift */; };
 		CA238D1426A1153B000A36EC /* ContentViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA238D1326A1153B000A36EC /* ContentViewTests.swift */; };
@@ -68,7 +67,7 @@
 		D72B764B26FBCFB200E0405F /* TermsAndConditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B764826FBCFB200E0405F /* TermsAndConditions.swift */; };
 		D72B764D26FBDC3C00E0405F /* SwiftCurrentOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B764C26FBDC3C00E0405F /* SwiftCurrentOnboarding.swift */; };
 		D72B764F26FBEDB900E0405F /* GenericOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B764E26FBEDB900E0405F /* GenericOnboardingView.swift */; };
-		D72B765126FC024500E0405F /* UpdatedProfileFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765026FC024500E0405F /* UpdatedProfileFeatureView.swift */; };
+		D72B765126FC024500E0405F /* ProfileFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765026FC024500E0405F /* ProfileFeatureView.swift */; };
 		D72B765326FC02B200E0405F /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765226FC02B200E0405F /* ChangePasswordView.swift */; };
 		D72B765526FC032B00E0405F /* ChangeEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765426FC032B00E0405F /* ChangeEmailView.swift */; };
 		D72B765726FC036A00E0405F /* UpdatedAccountInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765626FC036A00E0405F /* UpdatedAccountInformationView.swift */; };
@@ -105,7 +104,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		CA0536F326A0887800BF8FC5 /* ProfileFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFeatureView.swift; sourceTree = "<group>"; };
 		CA0536F526A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFeatureOnboardingView.swift; sourceTree = "<group>"; };
 		CA0536FA26A0919900BF8FC5 /* AccountInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInformationView.swift; sourceTree = "<group>"; };
 		CA238D1326A1153B000A36EC /* ContentViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewTests.swift; sourceTree = "<group>"; };
@@ -160,7 +158,7 @@
 		D72B764826FBCFB200E0405F /* TermsAndConditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsAndConditions.swift; sourceTree = "<group>"; };
 		D72B764C26FBDC3C00E0405F /* SwiftCurrentOnboarding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftCurrentOnboarding.swift; sourceTree = "<group>"; };
 		D72B764E26FBEDB900E0405F /* GenericOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericOnboardingView.swift; sourceTree = "<group>"; };
-		D72B765026FC024500E0405F /* UpdatedProfileFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatedProfileFeatureView.swift; sourceTree = "<group>"; };
+		D72B765026FC024500E0405F /* ProfileFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFeatureView.swift; sourceTree = "<group>"; };
 		D72B765226FC02B200E0405F /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 		D72B765426FC032B00E0405F /* ChangeEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEmailView.swift; sourceTree = "<group>"; };
 		D72B765626FC036A00E0405F /* UpdatedAccountInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatedAccountInformationView.swift; sourceTree = "<group>"; };
@@ -220,7 +218,6 @@
 		CA0536F926A0917A00BF8FC5 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				CA0536F326A0887800BF8FC5 /* ProfileFeatureView.swift */,
 				CA0536F526A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift */,
 				CA0536FA26A0919900BF8FC5 /* AccountInformationView.swift */,
 			);
@@ -409,7 +406,7 @@
 		D72B765826FC046900E0405F /* UpdatedViews */ = {
 			isa = PBXGroup;
 			children = (
-				D72B765026FC024500E0405F /* UpdatedProfileFeatureView.swift */,
+				D72B765026FC024500E0405F /* ProfileFeatureView.swift */,
 				D72B765226FC02B200E0405F /* ChangePasswordView.swift */,
 				D72B765426FC032B00E0405F /* ChangeEmailView.swift */,
 				D72B765626FC036A00E0405F /* UpdatedAccountInformationView.swift */,
@@ -622,11 +619,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D72B765126FC024500E0405F /* UpdatedProfileFeatureView.swift in Sources */,
+				D72B765126FC024500E0405F /* ProfileFeatureView.swift in Sources */,
 				CA7B829F26A1FAAC005AA87D /* InspectableAlert.swift in Sources */,
 				CA0536F626A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift in Sources */,
 				CAC34B4326A07F830039A373 /* SwiftUIExampleApp.swift in Sources */,
-				CA0536F426A0887800BF8FC5 /* ProfileFeatureView.swift in Sources */,
 				D72B765526FC032B00E0405F /* ChangeEmailView.swift in Sources */,
 				CA6FB0DE26C6AD5200FB3285 /* UIKitInteropProgrammaticViewController.swift in Sources */,
 				CA7B821026A123F6005AA87D /* InspectableSheet.swift in Sources */,
