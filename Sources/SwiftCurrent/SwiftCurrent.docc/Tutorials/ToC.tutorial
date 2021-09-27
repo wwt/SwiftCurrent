@@ -1,0 +1,13 @@
+@Tutorials(name: "All") {
+    @Intro(title: "Contributor's Guide to SwiftCurrent") {
+        This will walk you through all the things you gotta know to contribute.
+    }
+    
+    @Chapter(name: "Understanding SwiftCurrent - Core") {
+        text
+        
+        @Image(source: <#file#>, alt: "<#accessible description#>")
+        
+        @TutorialReference(tutorial: "doc:Core")
+    }
+}
