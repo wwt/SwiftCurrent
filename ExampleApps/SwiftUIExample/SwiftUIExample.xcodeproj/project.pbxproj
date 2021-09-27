@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		CA0536F626A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536F526A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift */; };
-		CA0536FB26A0919900BF8FC5 /* AccountInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536FA26A0919900BF8FC5 /* AccountInformationView.swift */; };
 		CA238D1426A1153B000A36EC /* ContentViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA238D1326A1153B000A36EC /* ContentViewTests.swift */; };
 		CA4A6F2026CDAEE600BE3E74 /* TestEventReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4A6F1F26CDAEE600BE3E74 /* TestEventReceiver.swift */; };
 		CA6FB0DE26C6AD5200FB3285 /* UIKitInteropProgrammaticViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6FB0DD26C6AD5200FB3285 /* UIKitInteropProgrammaticViewController.swift */; };
@@ -70,7 +69,7 @@
 		D72B765126FC024500E0405F /* ProfileFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765026FC024500E0405F /* ProfileFeatureView.swift */; };
 		D72B765326FC02B200E0405F /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765226FC02B200E0405F /* ChangePasswordView.swift */; };
 		D72B765526FC032B00E0405F /* ChangeEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765426FC032B00E0405F /* ChangeEmailView.swift */; };
-		D72B765726FC036A00E0405F /* UpdatedAccountInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765626FC036A00E0405F /* UpdatedAccountInformationView.swift */; };
+		D72B765726FC036A00E0405F /* AccountInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765626FC036A00E0405F /* AccountInformationView.swift */; };
 		D72B765A26FC048100E0405F /* MFAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765926FC048100E0405F /* MFAView.swift */; };
 		D74A4D5C26A7315F00010617 /* TestConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74A4D5B26A7315F00010617 /* TestConstant.swift */; };
 		D7A6CE7526E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7426E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift */; };
@@ -105,7 +104,6 @@
 
 /* Begin PBXFileReference section */
 		CA0536F526A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFeatureOnboardingView.swift; sourceTree = "<group>"; };
-		CA0536FA26A0919900BF8FC5 /* AccountInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInformationView.swift; sourceTree = "<group>"; };
 		CA238D1326A1153B000A36EC /* ContentViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewTests.swift; sourceTree = "<group>"; };
 		CA4A6F1F26CDAEE600BE3E74 /* TestEventReceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestEventReceiver.swift; sourceTree = "<group>"; };
 		CA6FB0DD26C6AD5200FB3285 /* UIKitInteropProgrammaticViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitInteropProgrammaticViewController.swift; sourceTree = "<group>"; };
@@ -161,7 +159,7 @@
 		D72B765026FC024500E0405F /* ProfileFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFeatureView.swift; sourceTree = "<group>"; };
 		D72B765226FC02B200E0405F /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 		D72B765426FC032B00E0405F /* ChangeEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEmailView.swift; sourceTree = "<group>"; };
-		D72B765626FC036A00E0405F /* UpdatedAccountInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatedAccountInformationView.swift; sourceTree = "<group>"; };
+		D72B765626FC036A00E0405F /* AccountInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInformationView.swift; sourceTree = "<group>"; };
 		D72B765926FC048100E0405F /* MFAView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFAView.swift; sourceTree = "<group>"; };
 		D74A4D5B26A7315F00010617 /* TestConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestConstant.swift; sourceTree = "<group>"; };
 		D74A4D5D26A7471700010617 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -219,7 +217,6 @@
 			isa = PBXGroup;
 			children = (
 				CA0536F526A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift */,
-				CA0536FA26A0919900BF8FC5 /* AccountInformationView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -409,7 +406,7 @@
 				D72B765026FC024500E0405F /* ProfileFeatureView.swift */,
 				D72B765226FC02B200E0405F /* ChangePasswordView.swift */,
 				D72B765426FC032B00E0405F /* ChangeEmailView.swift */,
-				D72B765626FC036A00E0405F /* UpdatedAccountInformationView.swift */,
+				D72B765626FC036A00E0405F /* AccountInformationView.swift */,
 				D72B765926FC048100E0405F /* MFAView.swift */,
 			);
 			path = UpdatedViews;
@@ -630,7 +627,6 @@
 				CAD0269F26A0BE810075B818 /* ContainerExtensions.swift in Sources */,
 				D72B764126FBCF7000E0405F /* PrimaryTextField.swift in Sources */,
 				D72B763D26FBCF7000E0405F /* Colors.swift in Sources */,
-				CA0536FB26A0919900BF8FC5 /* AccountInformationView.swift in Sources */,
 				D72B764026FBCF7000E0405F /* SecondaryButton.swift in Sources */,
 				D72B763E26FBCF7000E0405F /* PrimaryButton.swift in Sources */,
 				D72B764226FBCF7000E0405F /* Styles.swift in Sources */,
@@ -644,7 +640,7 @@
 				CAC34B7726A07FE90039A373 /* MapFeatureView.swift in Sources */,
 				D72B764B26FBCFB200E0405F /* TermsAndConditions.swift in Sources */,
 				D72B765A26FC048100E0405F /* MFAView.swift in Sources */,
-				D72B765726FC036A00E0405F /* UpdatedAccountInformationView.swift in Sources */,
+				D72B765726FC036A00E0405F /* AccountInformationView.swift in Sources */,
 				CAC34B7526A07FE90039A373 /* MapFeatureOnboardingView.swift in Sources */,
 				D72B764926FBCFB200E0405F /* LoginView.swift in Sources */,
 				D72B764326FBCF7000E0405F /* PasswordField.swift in Sources */,

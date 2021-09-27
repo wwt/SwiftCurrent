@@ -27,7 +27,6 @@ extension QRScannerFeatureView: Inspectable { }
 extension ProfileFeatureView: Inspectable { }
 extension ContentView: Inspectable { }
 extension AccountInformationView: Inspectable { }
-extension UpdatedAccountInformationView: Inspectable { }
 extension CodeScannerView: Inspectable { }
 extension MFAView: Inspectable { }
 extension ViewControllerWrapper: Inspectable { }

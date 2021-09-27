@@ -10,17 +10,18 @@ import SwiftUI
 import SwiftCurrent
 import SwiftCurrent_SwiftUI
 
-struct UpdatedAccountInformationView: View, FlowRepresentable {
+struct AccountInformationView: View, FlowRepresentable {
     @State var password = "supersecure"
-    @State private var email = "SwiftCurrent@wwt.com"
-    @State private var emailWorkflowLaunched = false
-    @State private var passwordWorkflowLaunched = false
+    @State var email = "SwiftCurrent@wwt.com"
+    @State var emailWorkflowLaunched = false
+    @State var passwordWorkflowLaunched = false
 
     let inspection = Inspection<Self>() // ViewInspector
     weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 25) { // swiftlint:disable:this closure_body_length
+            // IMPORTANT THAT THIS ONLY SHOWS WHEN NOT UPDATING
             if !emailWorkflowLaunched {
                 HStack(spacing: 15) {
                     Image.account
@@ -105,7 +106,7 @@ struct UpdatedAccountInformationView: View, FlowRepresentable {
 
 struct UpdatedAccountInformationView_Previews: PreviewProvider {
     static var previews: some View {
-        UpdatedAccountInformationView()
+        AccountInformationView()
             .preferredColorScheme(.dark)
             .background(Color.primaryBackground)
     }

@@ -49,6 +49,7 @@ struct ProfileFeatureView: View, FlowRepresentable {
 
 struct UpdatedProfileFeature_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileFeatureView().preferredColorScheme(.dark)
+        ProfileFeatureView()
+            .preferredColorScheme(.dark)
     }
 }
