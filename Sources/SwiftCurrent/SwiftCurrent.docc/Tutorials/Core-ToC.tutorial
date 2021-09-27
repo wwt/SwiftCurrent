@@ -1,12 +1,12 @@
-@Tutorials(name: "<#text#>") {
-    @Intro(title: "<#text#>") {
-        <#text#>
+@Tutorials(name: "Core") {
+    @Intro(title: "Intro title") {
+        text
         
         @Image(source: <#file#>, alt: "<#accessible description#>")
     }
     
-    @Chapter(name: "<#text#>") {
-        <#text#>
+    @Chapter(name: "Chapter name") {
+        text
         
         @Image(source: <#file#>, alt: "<#accessible description#>")
         

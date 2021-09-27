@@ -1,13 +1,18 @@
-# This is bites
+# SwiftCurrent
 
 really bad
 
 ## Overview
 
-<!--@START_MENU_TOKEN@-->Text<!--@END_MENU_TOKEN@-->
+Cool Text
 
 ## Topics
 
-### <!--@START_MENU_TOKEN@-->Group<!--@END_MENU_TOKEN@-->
+### References
 
-- <!--@START_MENU_TOKEN@-->``Symbol``<!--@END_MENU_TOKEN@-->
+- ``Workflow``
+
+### Tutorials
+
+- <doc:tutorials/Core-ToC>
+- <doc:Article>

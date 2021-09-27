@@ -1,26 +1,26 @@
-@Tutorial(time: 100) {
-    @Intro(title: "<#text#>") {
-        <#text#>
+@Tutorial(time: 30) {
+    @Intro(title: "Core") {
+        Core text
         
         @Image(source: <#file#>, alt: "<#accessible description#>")
     }
     
-    @Section(title: "<#text#>") {
+    @Section(title: "Section title") {
         @ContentAndMedia {
-            <#text#>
+            Content and media thing
             
             @Image(source: <#file#>, alt: "<#accessible description#>")
         }
         
         @Steps {
             @Step {
-                <#text#>
+                Step 1 text
                 
                 @Image(source: <#file#>, alt: "<#accessible description#>")
             }
             
             @Step {
-                <#text#>
+                Step 2 text
                 
                 @Code(name: "<#display name#>", file: <#filename.swift#>)
             }
