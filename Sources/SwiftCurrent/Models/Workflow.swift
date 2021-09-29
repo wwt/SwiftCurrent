@@ -49,7 +49,7 @@ public final class Workflow<F: FlowRepresentable>: LinkedList<_WorkflowItem> {
      Launches the `Workflow`.
      - Parameter orchestrationResponder: the `OrchestrationResponder` to notify when the `Workflow` proceeds or backs up.
      - Parameter launchStyle: the launch style to use.
-     - Parameter onFinish: the closure to call when the last element in the workflow proceeds; called with the `AnyWorkflow.PassedArgs` of the last node in the workflow.
+     - Parameter onFinish: the closure to call when the last element in the workflow proceeds; called with the `AnyWorkflow.PassedArgs` the workflow finished with.
      - Returns: the first loaded instance or nil, if none was loaded.
      */
     @discardableResult public func launch(withOrchestrationResponder orchestrationResponder: OrchestrationResponder,
@@ -71,7 +71,7 @@ public final class Workflow<F: FlowRepresentable>: LinkedList<_WorkflowItem> {
      - Parameter orchestrationResponder: the `OrchestrationResponder` to notify when the `Workflow` proceeds or backs up.
      - Parameter args: the arguments to pass to the first instance(s).
      - Parameter launchStyle: the launch style to use.
-     - Parameter onFinish: the closure to call when the last element in the workflow proceeds; called with the `AnyWorkflow.PassedArgs` of the last node in the workflow.
+     - Parameter onFinish: the closure to call when the last element in the workflow proceeds; called with the `AnyWorkflow.PassedArgs` the workflow finished with.
      - Returns: the first loaded instance or nil, if none was loaded.
      */
     @discardableResult public func launch(withOrchestrationResponder orchestrationResponder: OrchestrationResponder,
@@ -94,7 +94,7 @@ public final class Workflow<F: FlowRepresentable>: LinkedList<_WorkflowItem> {
      - Parameter orchestrationResponder: the `OrchestrationResponder` to notify when the `Workflow` proceeds or backs up.
      - Parameter passedArgs: the arguments to pass to the first instance(s).
      - Parameter launchStyle: the launch style to use.
-     - Parameter onFinish: the closure to call when the last element in the workflow proceeds; called with the `AnyWorkflow.PassedArgs` of the last node in the workflow.
+     - Parameter onFinish: the closure to call when the last element in the workflow proceeds; called with the `AnyWorkflow.PassedArgs` the workflow finished with.
      - Returns: the first loaded instance or nil, if none was loaded.
      */
     @discardableResult public func launch(withOrchestrationResponder orchestrationResponder: OrchestrationResponder,
@@ -285,7 +285,7 @@ extension Workflow {
 
 extension Workflow where F.WorkflowOutput == Never {
     /**
-     Adds an item to the workflow, and enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
      - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
      - Parameter launchStyle: the `LaunchStyle` the `FlowRepresentable` should use while it's part of this workflow.
      - Parameter flowPersistence: a `FlowPersistence` representing how this item in the workflow should persist.
@@ -301,7 +301,7 @@ extension Workflow where F.WorkflowOutput == Never {
     }
 
     /**
-     Adds an item to the workflow, and enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
      - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
      - Parameter launchStyle: the `LaunchStyle` the `FlowRepresentable` should use while it's part of this workflow.
      - Parameter flowPersistence: a `FlowPersistence` representing how this item in the workflow should persist.
@@ -317,7 +317,7 @@ extension Workflow where F.WorkflowOutput == Never {
     }
 
     /**
-     Adds an item to the workflow, and enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
      - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
      - Parameter launchStyle: the `LaunchStyle` the `FlowRepresentable` should use while it's part of this workflow.
      - Parameter flowPersistence: a `FlowPersistence` representing how this item in the workflow should persist.
@@ -335,7 +335,7 @@ extension Workflow where F.WorkflowOutput == Never {
 
 extension Workflow where F.WorkflowOutput == AnyWorkflow.PassedArgs {
     /**
-     Adds an item to the workflow, and enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
      - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
      - Parameter launchStyle: the `LaunchStyle` the `FlowRepresentable` should use while it's part of this workflow.
      - Parameter flowPersistence: a `FlowPersistence` representing how this item in the workflow should persist.
@@ -351,7 +351,7 @@ extension Workflow where F.WorkflowOutput == AnyWorkflow.PassedArgs {
     }
 
     /**
-     Adds an item to the workflow, and enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
      - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
      - Parameter launchStyle: the `LaunchStyle` the `FlowRepresentable` should use while it's part of this workflow.
      - Parameter flowPersistence: a closure taking in the generic type from the `FlowRepresentable.WorkflowInput` and returning a `FlowPersistence` representing how this item in the workflow should persist.
@@ -371,7 +371,7 @@ extension Workflow where F.WorkflowOutput == AnyWorkflow.PassedArgs {
     }
 
     /**
-     Adds an item to the workflow, and enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
      - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
      - Parameter launchStyle: the `LaunchStyle` the `FlowRepresentable` should use while it's part of this workflow.
      - Parameter flowPersistence: a closure taking in the generic type from the `FlowRepresentable.WorkflowInput` and returning a `FlowPersistence` representing how this item in the workflow should persist.
@@ -387,7 +387,7 @@ extension Workflow where F.WorkflowOutput == AnyWorkflow.PassedArgs {
     }
 
     /**
-     Adds an item to the workflow, and enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
      - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
      - Parameter launchStyle: the `LaunchStyle` the `FlowRepresentable` should use while it's part of this workflow.
      - Parameter flowPersistence: a closure taking in the generic type from the `FlowRepresentable.WorkflowInput` and returning a `FlowPersistence` representing how this item in the workflow should persist.
@@ -403,7 +403,7 @@ extension Workflow where F.WorkflowOutput == AnyWorkflow.PassedArgs {
     }
 
     /**
-     Adds an item to the workflow, and enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
      - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
      - Parameter launchStyle: the `LaunchStyle` the `FlowRepresentable` should use while it's part of this workflow.
      - Parameter flowPersistence: a closure returning a `FlowPersistence` representing how this item in the workflow should persist.
@@ -419,7 +419,7 @@ extension Workflow where F.WorkflowOutput == AnyWorkflow.PassedArgs {
     }
 
     /**
-     Adds an item to the workflow, and enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
      - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
      - Parameter launchStyle: the `LaunchStyle` the `FlowRepresentable` should use while it's part of this workflow.
      - Parameter flowPersistence: a closure returning a `FlowPersistence` representing how this item in the workflow should persist.
@@ -437,7 +437,7 @@ extension Workflow where F.WorkflowOutput == AnyWorkflow.PassedArgs {
 
 extension Workflow {
     /**
-     Adds an item to the workflow, and enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
      - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
      - Parameter launchStyle: the `LaunchStyle` the `FlowRepresentable` should use while it's part of this workflow.
      - Parameter flowPersistence: a `FlowPersistence` representing how this item in the workflow should persist.
@@ -453,7 +453,7 @@ extension Workflow {
     }
 
     /**
-     Adds an item to the workflow, and enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
      - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
      - Parameter launchStyle: the `LaunchStyle` the `FlowRepresentable` should use while it's part of this workflow.
      - Parameter flowPersistence: a closure taking in the generic type from the `FlowRepresentable.WorkflowInput` and returning a `FlowPersistence` representing how this item in the workflow should persist.
@@ -473,7 +473,7 @@ extension Workflow {
     }
 
     /**
-     Adds an item to the workflow, and enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
      - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
      - Parameter launchStyle: the `LaunchStyle` the `FlowRepresentable` should use while it's part of this workflow.
      - Parameter flowPersistence: a closure returning a `FlowPersistence` representing how this item in the workflow should persist.
@@ -489,7 +489,7 @@ extension Workflow {
     }
 
     /**
-     Adds an item to the workflow, and enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
      - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
      - Parameter launchStyle: the `LaunchStyle` the `FlowRepresentable` should use while it's part of this workflow.
      - Parameter flowPersistence: a closure returning a `FlowPersistence` representing how this item in the workflow should persist.
@@ -505,7 +505,7 @@ extension Workflow {
     }
 
     /**
-     Adds an item to the workflow, and enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
      - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
      - Parameter launchStyle: the `LaunchStyle` the `FlowRepresentable` should use while it's part of this workflow.
      - Parameter flowPersistence: a closure returning a `FlowPersistence` representing how this item in the workflow should persist.
