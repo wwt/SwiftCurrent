@@ -1,28 +1,30 @@
 @Tutorial(time: 30) {
     @Intro(title: "Core") {
         Core text
-        
-        @Image(source: <#file#>, alt: "<#accessible description#>")
     }
     
     @Section(title: "Section title") {
         @ContentAndMedia {
             Content and media thing
-            
-            @Image(source: <#file#>, alt: "<#accessible description#>")
         }
         
         @Steps {
             @Step {
-                Step 1 text
+                Start with LinkedList, all workflows end up being doubly linked lists so this data type is a great starting point. You'll notice that it partially mimics Swift sequence types, but is not a struct. This is somewhat deliberate, we rely on inheritance logic and did not design this type so that anyone could use LinkedList outside of SwiftCurrent.
                 
-                @Image(source: <#file#>, alt: "<#accessible description#>")
+                @Code(name: "LinkedList.swift", file: "LinkedList.swift")
             }
             
             @Step {
-                Step 2 text
+                LinkedList has nodes, they are value types that hold onto references for the previous and next items. They also have methods for traversing the list, starting at the current node.
                 
-                @Code(name: "<#display name#>", file: <#filename.swift#>)
+                @Code(name: "LinkedListNode.swift", file: "LinkedListNode.swift")
+            }
+            
+            @Step {
+                As mentioned already, a Workflow is a doubly linked list. Each node in a workflow is a ``_WorkflowItem``.
+                
+                @Code(name: "_WorkflowItem.swift", file: "_WorkflowItem.swift")
             }
         }
     }
