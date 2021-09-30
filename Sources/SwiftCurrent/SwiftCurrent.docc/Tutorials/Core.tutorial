@@ -40,4 +40,34 @@
             }
         }
     }
+    
+    @Assessments {
+        @MultipleChoice {
+            What is the difference between a `FlowRepresentable` that has a `WorkflowInput` of `Any?` and a `FlowRepresentable` that has a `WorkflowInput` of `AnyWorkflow.PassedArgs`.
+
+            @Choice(isCorrect: false) {
+                `Any?` means any kind of data, including no data can be passed. `AnyWorkflow.PassedArgs` is equivalent, it's just not an optional.
+
+                @Justification(reaction: "Try again!") {
+                    Remember, `AnyWorkflow.PassedArgs` was deliberately built because an Optional wasn't enough to differentiate between "No data" and "Data, but it's nil".
+                }
+            }
+
+            @Choice(isCorrect: true) {
+                `Any?` means any kind of data, including nil can be passed to this `FlowRepresentable`. However, *something* must be passed forward. `AnyWorkflow.PassedArgs` means that some data (which can be nil) or no data at all (`AnyWorkflow.PassedArgs.none`) can be passed.
+
+                @Justification(reaction: "That's right!") {
+                    `AnyWorkflow.PassedArgs` is the only way to have a `FlowRepresentable` truly be able to interpret any situation, data being passed or no data being passed.
+                }
+            }
+
+            @Choice(isCorrect: false) {
+                `Any?` is broad enough to also include `AnyWorkflow.PassedArgs`. It's just a Swift way of saying "it doesn't matter what gets passed". `AnyWorkflow.PassedArgs` is more narrow, it means only certain `FlowRepresentable` types can pass data to this `FlowRepresentable.`
+                
+                @Justification(reaction: "Try again!") {
+                    Remember, `AnyWorkflow.PassedArgs` was deliberately built because an Optional wasn't enough to differentiate between "No data" and "Data, but it's nil". While convention may lead you to believe that `Any?` is more broad than `AnyWorkflow.PassedArgs` that's not true in this context.
+                }
+            }
+        }  
+    }
 }
