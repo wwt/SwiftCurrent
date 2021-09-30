@@ -3,9 +3,9 @@
         Core text
     }
     
-    @Section(title: "Section title") {
+    @Section(title: "What is a Workflow?") {
         @ContentAndMedia {
-            Content and media thing
+            In this section you'll learn what a workflow is under the covers. You'll be walked through LinkedList, _WorkflowItem, FlowRepresentableMetadata, AnyWorkflow.PassedArgs, and Workflow.
         }
         
         @Steps {
@@ -31,6 +31,12 @@
                 This metadata is the primary means by which items in a workflow are created. It holds onto a factory to create `AnyFlowRepresentable` references from passed in arguments. It also holds onto peripheral items like the persistence and launch style of a given `FlowRepresentable`.
                 
                 @Code(name: "FlowRepresentableMetadata.swift", file: "FlowRepresentableMetadata.swift", reset: true)
+            }
+            
+            @Step {
+                In the previous example it's noticeable that the factory and persistence require an `AnyWorkflow.PassedArgs` type. This type is almost identical to `Optional` but was specifically created to remove ambiguity. If we had used `Optional` it would've been unclear to consumers if an item in a workflow as passing `nil` as an argument, or if there were no arguments passed.
+                
+                @Code(name: "PassedArgs.swift", file: "PassedArgs.swift", reset: true)
             }
         }
     }
