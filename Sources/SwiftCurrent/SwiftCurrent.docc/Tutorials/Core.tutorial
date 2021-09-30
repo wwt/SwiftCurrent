@@ -38,6 +38,14 @@
                 
                 @Code(name: "PassedArgs.swift", file: "PassedArgs.swift", reset: true)
             }
+            
+            @Step {
+                Let's finally take a look at Workflow. In particular, notice that there are "actions" that Workflow handles. Launching, which involves loading the first `FlowRepresentable` that should load given the launch arguments. Proceeding, which is similar, but not identical to launching. Finally, backing up, which is a matter of finding the last loaded `FlowRepresentable`.
+                
+                Workflow knows how to handle persistence and can allow a `FlowRepresentable` that has a `shouldLoad` returning false to still mutate data.
+                
+                @Code(name: "Workflow.swift", file: "Workflow.swift", reset: true)
+            }
         }
     }
     
