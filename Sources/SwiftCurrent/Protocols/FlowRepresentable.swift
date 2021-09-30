@@ -21,7 +21,7 @@ import Foundation
  - Important: If you create a superclass that is a `FlowRepresentable` and expect subclasses to be able to define their own methods, such as `shouldLoad`, the superclass should declare those methods, and the subclasses should override them. Otherwise you will find the subclasses do not behave as expected.
 
  #### Example
- A `FlowRepresentable` with a `WorkflowInput` of `String` and a `WorkflowOutput` of `Never`:
+ A `FlowRepresentable` with a `WorkflowInput` of `String` and a `WorkflowOutput` of `Never`
  ```swift
  class FR1: FlowRepresentable { // Mark this class as `final` to avoid the required keyword on init
     weak var _workflowPointer: AnyFlowRepresentable?
@@ -29,7 +29,7 @@ import Foundation
  }
  ```
 
- A `FlowRepresentable` with a `WorkflowInput` of `Never` and a `WorkflowOutput` of `Never`:
+ A `FlowRepresentable` with a `WorkflowInput` of `Never` and a `WorkflowOutput` of `Never`
  ```swift
  final class FR1: FlowRepresentable { // Classes synthesize an empty initializer already, you are good!
     weak var _workflowPointer: AnyFlowRepresentable?
