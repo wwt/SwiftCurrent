@@ -11,6 +11,8 @@ import SwiftCurrent
 
 struct SwiftCurrentOnboarding: View, PassthroughFlowRepresentable {
     @AppStorage("OnboardedToSwiftCurrent", store: .fromDI) private var onboardedToSwiftCurrent = false
+
+    let inspection = Inspection<Self>() // ViewInspector
     weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
@@ -111,7 +113,7 @@ struct SwiftCurrentOnboarding: View, PassthroughFlowRepresentable {
                     proceedInWorkflow()
                 }
             }
-        }
+        }.onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 
     func shouldLoad() -> Bool {

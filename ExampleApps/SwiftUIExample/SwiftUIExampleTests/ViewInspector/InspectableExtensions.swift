@@ -14,6 +14,7 @@ import CodeScanner
 @testable import SwiftCurrent_SwiftUI
 
 // Don't forget you need to make every view you want to test with ViewInspector Inspectable
+extension SwiftCurrentOnboarding: Inspectable { }
 extension GenericOnboardingView: Inspectable { }
 extension ProfileFeatureOnboardingView: Inspectable { }
 extension QRScannerFeatureOnboardingView: Inspectable { }
