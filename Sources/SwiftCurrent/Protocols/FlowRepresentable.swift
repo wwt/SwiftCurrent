@@ -37,7 +37,7 @@ import Foundation
  ```
 
  #### Note
- Declaring your own custom initializer can result in a compiler error with an unfriendly message
+ Declaring your own custom initializer can result in a compiler error with an unfriendly message.
  ```swift
  class FR1: FlowRepresentable { // Results in compiler error for 'init()' being unavailable
     weak var _workflowPointer: AnyFlowRepresentable?
@@ -56,11 +56,11 @@ public protocol FlowRepresentable {
      A pointer to the `AnyFlowRepresentable` that erases this `FlowRepresentable`; will automatically be set.
 
      ### Discussion
-     This property is automatically set by a `Workflow`, it simply needs to be declared on a `FlowRepresentable`.
-     In order for a `FlowRepresentable` to have access to the `Workflow` that launched it, store the closures for proceeding forward and backward, and provide type safety, it needs this property available for writing.
+     This property is automatically set by a `Workflow`; it simply needs to be declared on a `FlowRepresentable`.
+     In order for a `FlowRepresentable` to have access to the `Workflow` that launched it, store the closures for proceeding forward and backward, and provide type safety. It needs this property available for writing.
 
      #### Note
-     While not strictly necessary it would be wise to declare this property as `weak`.
+     While not strictly necessary, it would be wise to declare this property as `weak`.
      */
     var _workflowPointer: AnyFlowRepresentable? { get set }
 
@@ -68,7 +68,7 @@ public protocol FlowRepresentable {
      Creates a `FlowRepresentable`.
 
      #### Note
-     This is auto synthesized by FlowRepresentable, and is only called when `WorkflowInput` is `Never`.
+     This is auto-synthesized by FlowRepresentable, and is only called when `WorkflowInput` is `Never`.
      */
     init()
     /// Creates a `FlowRepresentable` with the specified `WorkflowInput`.
@@ -87,7 +87,7 @@ public protocol FlowRepresentable {
      ### Discussion
      This method is called *after* `init` but *before* any other lifecycle events. It is non-mutating and should not change the `FlowRepresentable`.
 
-     - Important: If you create a superclass that is a `FlowRepresentable` and expect subclasses to define their own `shouldLoad` the superclass should declare `shouldLoad`, and the subclasses should override it. Otherwise you will find the subclasses do not behave as expected.
+     - Important: If you create a superclass that is a `FlowRepresentable` and expect subclasses to define their own `shouldLoad`, the superclass should declare `shouldLoad`, and the subclasses should override it. Otherwise you will find the subclasses do not behave as expected.
 
      #### Note
      Returning `false` can have different behaviors depending on the `FlowPersistence`.
