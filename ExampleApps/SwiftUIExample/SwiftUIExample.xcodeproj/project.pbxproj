@@ -73,6 +73,8 @@
 		D72B765A26FC048100E0405F /* MFAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72B765926FC048100E0405F /* MFAView.swift */; };
 		D73D39D7270648EF002AB005 /* SwiftCurrentOnboardingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73D39D6270648EF002AB005 /* SwiftCurrentOnboardingTests.swift */; };
 		D74A4D5C26A7315F00010617 /* TestConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74A4D5B26A7315F00010617 /* TestConstant.swift */; };
+		D78139C027075EFF004A4721 /* NotificationReceiverLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78139BF27075EFF004A4721 /* NotificationReceiverLocal.swift */; };
+		D78139C227075F67004A4721 /* WorkflowTestingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78139C127075F67004A4721 /* WorkflowTestingData.swift */; };
 		D7A6CE7526E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7426E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift */; };
 		D7A6CE7E26E039C300599824 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7D26E039C300599824 /* TestView.swift */; };
 		D7A6CE8026E039EE00599824 /* TestEnumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7F26E039EE00599824 /* TestEnumerations.swift */; };
@@ -165,6 +167,8 @@
 		D73D39D6270648EF002AB005 /* SwiftCurrentOnboardingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftCurrentOnboardingTests.swift; sourceTree = "<group>"; };
 		D74A4D5B26A7315F00010617 /* TestConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestConstant.swift; sourceTree = "<group>"; };
 		D74A4D5D26A7471700010617 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		D78139BF27075EFF004A4721 /* NotificationReceiverLocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationReceiverLocal.swift; sourceTree = "<group>"; };
+		D78139C127075F67004A4721 /* WorkflowTestingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowTestingData.swift; sourceTree = "<group>"; };
 		D7A6CE7226E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftCurrent_SwiftUI_UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7A6CE7426E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftCurrent_SwiftUI_UITests.swift; sourceTree = "<group>"; };
 		D7A6CE7626E0316C00599824 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -234,11 +238,13 @@
 		CA6FB0E826C6AE3600FB3285 /* TestUtilities */ = {
 			isa = PBXGroup;
 			children = (
-				CA971D2126D593150083821A /* XCTestCaseExtensions.swift */,
-				CA7F7F7D26D4531C00DB1903 /* WorkflowItemExtensions.swift */,
+				D78139BF27075EFF004A4721 /* NotificationReceiverLocal.swift */,
 				CA6FB0E926C6AE3600FB3285 /* TopViewController.swift */,
-				CA6FB0EA26C6AE3600FB3285 /* WaitUntil.swift */,
 				CA6FB0EB26C6AE3600FB3285 /* UIKitAssertions.swift */,
+				CA6FB0EA26C6AE3600FB3285 /* WaitUntil.swift */,
+				CA7F7F7D26D4531C00DB1903 /* WorkflowItemExtensions.swift */,
+				D78139C127075F67004A4721 /* WorkflowTestingData.swift */,
+				CA971D2126D593150083821A /* XCTestCaseExtensions.swift */,
 			);
 			name = TestUtilities;
 			path = ../../UIKitExample/SwiftCurrent_UIKitTests/TestUtilities;
@@ -665,6 +671,7 @@
 				CA7B821226A12642005AA87D /* QRScanningViewTests.swift in Sources */,
 				D7DBD1FB26CD920700F1E39B /* MockOrchestrationResponder.swift in Sources */,
 				CA6FB0EE26C6AE3600FB3285 /* WaitUntil.swift in Sources */,
+				D78139C227075F67004A4721 /* WorkflowTestingData.swift in Sources */,
 				D7DBD1FE26CD920700F1E39B /* FlowRepresentableMetadataAdditions.swift in Sources */,
 				CA971D2226D593150083821A /* XCTestCaseExtensions.swift in Sources */,
 				D7DBD1FF26CD920700F1E39B /* CustomAssertions.swift in Sources */,
@@ -674,6 +681,7 @@
 				CAD026A326A0BEB50075B818 /* DependencyInjectionTests.swift in Sources */,
 				CA7B82A126A1FB97005AA87D /* MFAViewTests.swift in Sources */,
 				CA84D8E926A0ED66006CF964 /* ChangePasswordViewTests.swift in Sources */,
+				D78139C027075EFF004A4721 /* NotificationReceiverLocal.swift in Sources */,
 				CAD026A626A0C1EF0075B818 /* ProfileFeatureOnboardingViewTests.swift in Sources */,
 				D74A4D5C26A7315F00010617 /* TestConstant.swift in Sources */,
 				CA7F7F7E26D4531C00DB1903 /* WorkflowItemExtensions.swift in Sources */,

@@ -2,6 +2,10 @@
 build/
 DerivedData/
 
+## Bundle install
+.github/.bundle
+.github/vendor
+
 ## Various settings
 *.pbxuser
 !default.pbxuser

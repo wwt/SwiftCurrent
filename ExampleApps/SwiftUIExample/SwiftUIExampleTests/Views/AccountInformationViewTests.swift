@@ -1,5 +1,5 @@
 //
-//  UpdatedAccountInformationViewTests.swift
+//  AccountInformationViewTests.swift
 //  SwiftUIExampleTests
 //
 //  Created by Tyler Thompson on 7/15/21.
@@ -16,53 +16,16 @@ import SwiftCurrent
 @testable import SwiftCurrent_SwiftUI // 🤮 it sucks that this is necessary
 @testable import SwiftUIExample
 
-// MARK: WORST TESTING WORKAROUND EVA!!!
-class NotificationReceiverLocal: NSObject {
-    @objc static func workflowLaunched(notification: Notification) {
-        guard let dict = notification.object as? [String: Any?],
-              let workflow = dict["workflow"] as? AnyWorkflow,
-              let style = dict["style"] as? LaunchStyle,
-              let responder = dict["responder"] as? OrchestrationResponder,
-              let args = dict["args"] as? AnyWorkflow.PassedArgs,
-              let onFinish = dict["onFinish"] as? ((AnyWorkflow.PassedArgs) -> Void)? else {
-            fatalError("WorkflowLaunched notification has incorrect format, this may be because you need to update SwiftCurrent_Testing")
-        }
-
-        NotificationReceiverLocal.workflowLaunched(workflow: workflow,
-                                                   responder: responder,
-                                                   args: args,
-                                                   style: style,
-                                                   onFinish: onFinish)
-    }
-
-    static func workflowLaunched(workflow: AnyWorkflow,
-                                 responder: OrchestrationResponder,
-                                 args: AnyWorkflow.PassedArgs,
-                                 style: LaunchStyle,
-                                 onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
-        UpdatedAccountInformationViewTests.workflowTestingData = WorkflowTestingData(workflow: workflow, orchestrationResponder: responder, args: args, style: style, onFinish: onFinish)
-    }
-}
-
-struct WorkflowTestingData {
-    var workflow: AnyWorkflow
-    var orchestrationResponder: OrchestrationResponder
-    var args: AnyWorkflow.PassedArgs
-    var style: LaunchStyle
-    var onFinish: ((AnyWorkflow.PassedArgs) -> Void)?
-}
-
-final class UpdatedAccountInformationViewTests: XCTestCase {
+final class AccountInformationViewTests: XCTestCase, WorkflowTestingReceiver {
     override class func setUp() {
-        NotificationCenter.default.addObserver(NotificationReceiverLocal.self,
-                                               selector: #selector(NotificationReceiverLocal.workflowLaunched(notification:)),
-                                               name: .workflowLaunched,
-                                               object: nil)
+        NotificationReceiverLocal.register(on: NotificationCenter.default, for: Self.self)
     }
+
     override class func tearDown() {
-        NotificationCenter.default.removeObserver(NotificationReceiverLocal.self)
+        NotificationReceiverLocal.unregister(on: NotificationCenter.default, for: Self.self)
     }
-    override func tearDown() {
+
+    override func tearDown() { // swiftlint:disable:this empty_xctest_method
         Self.workflowTestingData = nil
     }
 
@@ -113,7 +76,7 @@ final class UpdatedAccountInformationViewTests: XCTestCase {
         XCTAssertEqual(first?.next?.value.metadata.flowRepresentableTypeDescriptor, "\(ChangeEmailView.self)")
 
         // Complete workflow
-        (UpdatedAccountInformationViewTests.workflowTestingData?.orchestrationResponder as? WorkflowViewModel)?.onFinishPublisher.send(.args("new email"))
+        (Self.workflowTestingData?.orchestrationResponder as? WorkflowViewModel)?.onFinishPublisher.send(.args("new email"))
 
         wait(for: [
             ViewHosting.loadView(try accountInformation.actualView()).inspection.inspect { view in
@@ -136,7 +99,7 @@ final class UpdatedAccountInformationViewTests: XCTestCase {
         wait(for: [exp], timeout: TestConstant.timeout)
 
         if Self.workflowTestingData == nil { throw XCTSkip("test data was not created") }
-        (UpdatedAccountInformationViewTests.workflowTestingData?.orchestrationResponder as? WorkflowViewModel)?.onFinishPublisher.send(.args(CustomObj()))
+        (Self.workflowTestingData?.orchestrationResponder as? WorkflowViewModel)?.onFinishPublisher.send(.args(CustomObj()))
 
         wait(for: [
             ViewHosting.loadView(try accountInformation.actualView()).inspection.inspect { view in
@@ -176,7 +139,7 @@ final class UpdatedAccountInformationViewTests: XCTestCase {
         XCTAssertEqual(first?.next?.value.metadata.flowRepresentableTypeDescriptor, "\(ChangePasswordView.self)")
 
         // Complete workflow
-        (UpdatedAccountInformationViewTests.workflowTestingData?.orchestrationResponder as? WorkflowViewModel)?.onFinishPublisher.send(.args("newPassword"))
+        (Self.workflowTestingData?.orchestrationResponder as? WorkflowViewModel)?.onFinishPublisher.send(.args("newPassword"))
 
         wait(for: [
             ViewHosting.loadView(try accountInformation.actualView()).inspection.inspect { view in
@@ -199,7 +162,7 @@ final class UpdatedAccountInformationViewTests: XCTestCase {
         wait(for: [exp], timeout: TestConstant.timeout)
 
         if Self.workflowTestingData == nil { throw XCTSkip("test data was not created") }
-        (UpdatedAccountInformationViewTests.workflowTestingData?.orchestrationResponder as? WorkflowViewModel)?.onFinishPublisher.send(.args(CustomObj()))
+        (Self.workflowTestingData?.orchestrationResponder as? WorkflowViewModel)?.onFinishPublisher.send(.args(CustomObj()))
 
         wait(for: [
             ViewHosting.loadView(try accountInformation.actualView()).inspection.inspect { view in
