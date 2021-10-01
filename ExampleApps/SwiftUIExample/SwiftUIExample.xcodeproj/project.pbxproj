@@ -76,6 +76,7 @@
 		D78139C027075EFF004A4721 /* NotificationReceiverLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78139BF27075EFF004A4721 /* NotificationReceiverLocal.swift */; };
 		D78139C227075F67004A4721 /* WorkflowTestingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78139C127075F67004A4721 /* WorkflowTestingData.swift */; };
 		D78139C427076FC9004A4721 /* TermsAndConditionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78139C327076FC9004A4721 /* TermsAndConditionsTests.swift */; };
+		D78139C6270794BA004A4721 /* SignUpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78139C5270794BA004A4721 /* SignUpTests.swift */; };
 		D7A6CE7526E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7426E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift */; };
 		D7A6CE7E26E039C300599824 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7D26E039C300599824 /* TestView.swift */; };
 		D7A6CE8026E039EE00599824 /* TestEnumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7F26E039EE00599824 /* TestEnumerations.swift */; };
@@ -171,6 +172,7 @@
 		D78139BF27075EFF004A4721 /* NotificationReceiverLocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationReceiverLocal.swift; sourceTree = "<group>"; };
 		D78139C127075F67004A4721 /* WorkflowTestingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowTestingData.swift; sourceTree = "<group>"; };
 		D78139C327076FC9004A4721 /* TermsAndConditionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndConditionsTests.swift; sourceTree = "<group>"; };
+		D78139C5270794BA004A4721 /* SignUpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTests.swift; sourceTree = "<group>"; };
 		D7A6CE7226E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftCurrent_SwiftUI_UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7A6CE7426E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftCurrent_SwiftUI_UITests.swift; sourceTree = "<group>"; };
 		D7A6CE7626E0316C00599824 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -365,6 +367,7 @@
 				CA7B821126A12642005AA87D /* QRScanningViewTests.swift */,
 				D73D39D6270648EF002AB005 /* SwiftCurrentOnboardingTests.swift */,
 				D78139C327076FC9004A4721 /* TermsAndConditionsTests.swift */,
+				D78139C5270794BA004A4721 /* SignUpTests.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -672,6 +675,7 @@
 				CA7B820D26A11C53005AA87D /* ProfileFeatureViewTests.swift in Sources */,
 				CA7B821426A12DEC005AA87D /* AccountInformationViewTests.swift in Sources */,
 				CA7B821226A12642005AA87D /* QRScanningViewTests.swift in Sources */,
+				D78139C6270794BA004A4721 /* SignUpTests.swift in Sources */,
 				D7DBD1FB26CD920700F1E39B /* MockOrchestrationResponder.swift in Sources */,
 				CA6FB0EE26C6AE3600FB3285 /* WaitUntil.swift in Sources */,
 				D78139C227075F67004A4721 /* WorkflowTestingData.swift in Sources */,

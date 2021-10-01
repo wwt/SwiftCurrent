@@ -32,6 +32,7 @@ extension CodeScannerView: Inspectable { }
 extension MFAView: Inspectable { }
 extension ViewControllerWrapper: Inspectable { }
 extension TermsAndConditions: Inspectable { }
+extension SignUp: Inspectable { }
 
 extension PrimaryButton: Inspectable { }
 extension SecondaryButton: Inspectable { }

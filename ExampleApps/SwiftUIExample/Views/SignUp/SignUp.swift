@@ -10,6 +10,7 @@ import SwiftUI
 import SwiftCurrent
 
 struct SignUp: View, FlowRepresentable {
+    let inspection = Inspection<Self>() // ViewInspector
     weak var _workflowPointer: AnyFlowRepresentable?
     @State private var email = ""
     @State private var password = ""
@@ -47,6 +48,7 @@ struct SignUp: View, FlowRepresentable {
         }
         .background(Color.primaryBackground.edgesIgnoringSafeArea(.all))
         .navigationTitle("Sign Up!")
+        .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 }
 
