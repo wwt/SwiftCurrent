@@ -75,6 +75,7 @@
 		D74A4D5C26A7315F00010617 /* TestConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74A4D5B26A7315F00010617 /* TestConstant.swift */; };
 		D78139C027075EFF004A4721 /* NotificationReceiverLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78139BF27075EFF004A4721 /* NotificationReceiverLocal.swift */; };
 		D78139C227075F67004A4721 /* WorkflowTestingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78139C127075F67004A4721 /* WorkflowTestingData.swift */; };
+		D78139C427076FC9004A4721 /* TermsAndConditionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78139C327076FC9004A4721 /* TermsAndConditionsTests.swift */; };
 		D7A6CE7526E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7426E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift */; };
 		D7A6CE7E26E039C300599824 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7D26E039C300599824 /* TestView.swift */; };
 		D7A6CE8026E039EE00599824 /* TestEnumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7F26E039EE00599824 /* TestEnumerations.swift */; };
@@ -169,6 +170,7 @@
 		D74A4D5D26A7471700010617 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D78139BF27075EFF004A4721 /* NotificationReceiverLocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationReceiverLocal.swift; sourceTree = "<group>"; };
 		D78139C127075F67004A4721 /* WorkflowTestingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowTestingData.swift; sourceTree = "<group>"; };
+		D78139C327076FC9004A4721 /* TermsAndConditionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndConditionsTests.swift; sourceTree = "<group>"; };
 		D7A6CE7226E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftCurrent_SwiftUI_UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7A6CE7426E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftCurrent_SwiftUI_UITests.swift; sourceTree = "<group>"; };
 		D7A6CE7626E0316C00599824 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -350,18 +352,19 @@
 		CAD026A426A0C1E30075B818 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				CAD026A526A0C1EF0075B818 /* ProfileFeatureOnboardingViewTests.swift */,
-				CA84D8E226A0E3F5006CF964 /* QRScannerFeatureOnboardingViewTests.swift */,
+				CA7B821326A12DEC005AA87D /* AccountInformationViewTests.swift */,
+				CA84D8E826A0ED66006CF964 /* ChangePasswordViewTests.swift */,
+				CA7B829C26A1E1D6005AA87D /* ChangeUsernameViewTests.swift */,
+				CA238D1326A1153B000A36EC /* ContentViewTests.swift */,
 				CA84D8E426A0E5A8006CF964 /* MapFeatureOnboardingViewTests.swift */,
 				CA84D8E626A0E72A006CF964 /* MapFeatureViewTests.swift */,
-				CA84D8E826A0ED66006CF964 /* ChangePasswordViewTests.swift */,
-				CA238D1326A1153B000A36EC /* ContentViewTests.swift */,
-				CA7B820C26A11C53005AA87D /* ProfileFeatureViewTests.swift */,
-				CA7B821126A12642005AA87D /* QRScanningViewTests.swift */,
-				CA7B821326A12DEC005AA87D /* AccountInformationViewTests.swift */,
-				CA7B829C26A1E1D6005AA87D /* ChangeUsernameViewTests.swift */,
 				CA7B82A026A1FB97005AA87D /* MFAViewTests.swift */,
+				CAD026A526A0C1EF0075B818 /* ProfileFeatureOnboardingViewTests.swift */,
+				CA7B820C26A11C53005AA87D /* ProfileFeatureViewTests.swift */,
+				CA84D8E226A0E3F5006CF964 /* QRScannerFeatureOnboardingViewTests.swift */,
+				CA7B821126A12642005AA87D /* QRScanningViewTests.swift */,
 				D73D39D6270648EF002AB005 /* SwiftCurrentOnboardingTests.swift */,
+				D78139C327076FC9004A4721 /* TermsAndConditionsTests.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -687,6 +690,7 @@
 				CA7F7F7E26D4531C00DB1903 /* WorkflowItemExtensions.swift in Sources */,
 				CA84D8E726A0E72A006CF964 /* MapFeatureViewTests.swift in Sources */,
 				D73D39D7270648EF002AB005 /* SwiftCurrentOnboardingTests.swift in Sources */,
+				D78139C427076FC9004A4721 /* TermsAndConditionsTests.swift in Sources */,
 				D7DBD1FC26CD920700F1E39B /* ViewControllerAdditions.swift in Sources */,
 				CA6FB0ED26C6AE3600FB3285 /* TopViewController.swift in Sources */,
 				CA4A6F2026CDAEE600BE3E74 /* TestEventReceiver.swift in Sources */,

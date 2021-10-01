@@ -31,8 +31,10 @@ extension AccountInformationView: Inspectable { }
 extension CodeScannerView: Inspectable { }
 extension MFAView: Inspectable { }
 extension ViewControllerWrapper: Inspectable { }
+extension TermsAndConditions: Inspectable { }
 
 extension PrimaryButton: Inspectable { }
+extension SecondaryButton: Inspectable { }
 extension PrimaryTextField: Inspectable { }
 extension PasswordField: Inspectable { }
 

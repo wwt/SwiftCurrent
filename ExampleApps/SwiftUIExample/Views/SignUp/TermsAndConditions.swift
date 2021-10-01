@@ -10,6 +10,7 @@ import SwiftUI
 import SwiftCurrent
 
 struct TermsAndConditions: View, PassthroughFlowRepresentable {
+    let inspection = Inspection<Self>() // ViewInspector
     weak var _workflowPointer: AnyFlowRepresentable?
     var body: some View {
         VStack {
@@ -52,6 +53,7 @@ struct TermsAndConditions: View, PassthroughFlowRepresentable {
             }
         }
         .navigationTitle("Terms of Service")
+        .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 }
 
