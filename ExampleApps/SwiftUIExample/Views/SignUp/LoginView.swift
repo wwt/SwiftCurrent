@@ -11,6 +11,7 @@ import SwiftCurrent
 import SwiftCurrent_SwiftUI
 
 struct LoginView: View, FlowRepresentable {
+    let inspection = Inspection<Self>() // ViewInspector
     weak var _workflowPointer: AnyFlowRepresentable?
     @State var email = ""
     @State var password = ""
@@ -86,6 +87,7 @@ struct LoginView: View, FlowRepresentable {
                 proceedInWorkflow()
             }
         }
+        .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 }
 

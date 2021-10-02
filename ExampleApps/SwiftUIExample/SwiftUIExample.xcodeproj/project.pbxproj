@@ -77,6 +77,7 @@
 		D78139C227075F67004A4721 /* WorkflowTestingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78139C127075F67004A4721 /* WorkflowTestingData.swift */; };
 		D78139C427076FC9004A4721 /* TermsAndConditionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78139C327076FC9004A4721 /* TermsAndConditionsTests.swift */; };
 		D78139C6270794BA004A4721 /* SignUpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78139C5270794BA004A4721 /* SignUpTests.swift */; };
+		D78139C82707A40A004A4721 /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78139C72707A40A004A4721 /* LoginTests.swift */; };
 		D7A6CE7526E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7426E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift */; };
 		D7A6CE7E26E039C300599824 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7D26E039C300599824 /* TestView.swift */; };
 		D7A6CE8026E039EE00599824 /* TestEnumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7F26E039EE00599824 /* TestEnumerations.swift */; };
@@ -173,6 +174,7 @@
 		D78139C127075F67004A4721 /* WorkflowTestingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowTestingData.swift; sourceTree = "<group>"; };
 		D78139C327076FC9004A4721 /* TermsAndConditionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndConditionsTests.swift; sourceTree = "<group>"; };
 		D78139C5270794BA004A4721 /* SignUpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTests.swift; sourceTree = "<group>"; };
+		D78139C72707A40A004A4721 /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
 		D7A6CE7226E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftCurrent_SwiftUI_UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7A6CE7426E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftCurrent_SwiftUI_UITests.swift; sourceTree = "<group>"; };
 		D7A6CE7626E0316C00599824 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -320,17 +322,17 @@
 		CAC34B6D26A07FE90039A373 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D72B765826FC046900E0405F /* UpdatedViews */,
 				D72B763526FBCF5A00E0405F /* Design */,
-				D72B764526FBCFB200E0405F /* SignUp */,
 				CA0536F926A0917A00BF8FC5 /* Profile */,
-				CAC34B6E26A07FE90039A373 /* QRScannerFeatureView.swift */,
-				CAC34B6F26A07FE90039A373 /* QRScannerFeatureOnboardingView.swift */,
-				CAC34B7026A07FE90039A373 /* MapFeatureOnboardingView.swift */,
+				D72B764526FBCFB200E0405F /* SignUp */,
+				D72B765826FC046900E0405F /* UpdatedViews */,
 				CAC34B7126A07FE90039A373 /* ContentView.swift */,
-				CAC34B7226A07FE90039A373 /* MapFeatureView.swift */,
-				D72B764C26FBDC3C00E0405F /* SwiftCurrentOnboarding.swift */,
 				D72B764E26FBEDB900E0405F /* GenericOnboardingView.swift */,
+				CAC34B7026A07FE90039A373 /* MapFeatureOnboardingView.swift */,
+				CAC34B7226A07FE90039A373 /* MapFeatureView.swift */,
+				CAC34B6F26A07FE90039A373 /* QRScannerFeatureOnboardingView.swift */,
+				CAC34B6E26A07FE90039A373 /* QRScannerFeatureView.swift */,
+				D72B764C26FBDC3C00E0405F /* SwiftCurrentOnboarding.swift */,
 			);
 			path = Views;
 			sourceTree = SOURCE_ROOT;
@@ -358,6 +360,7 @@
 				CA84D8E826A0ED66006CF964 /* ChangePasswordViewTests.swift */,
 				CA7B829C26A1E1D6005AA87D /* ChangeUsernameViewTests.swift */,
 				CA238D1326A1153B000A36EC /* ContentViewTests.swift */,
+				D78139C72707A40A004A4721 /* LoginTests.swift */,
 				CA84D8E426A0E5A8006CF964 /* MapFeatureOnboardingViewTests.swift */,
 				CA84D8E626A0E72A006CF964 /* MapFeatureViewTests.swift */,
 				CA7B82A026A1FB97005AA87D /* MFAViewTests.swift */,
@@ -365,9 +368,9 @@
 				CA7B820C26A11C53005AA87D /* ProfileFeatureViewTests.swift */,
 				CA84D8E226A0E3F5006CF964 /* QRScannerFeatureOnboardingViewTests.swift */,
 				CA7B821126A12642005AA87D /* QRScanningViewTests.swift */,
+				D78139C5270794BA004A4721 /* SignUpTests.swift */,
 				D73D39D6270648EF002AB005 /* SwiftCurrentOnboardingTests.swift */,
 				D78139C327076FC9004A4721 /* TermsAndConditionsTests.swift */,
-				D78139C5270794BA004A4721 /* SignUpTests.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -703,6 +706,7 @@
 				CA84D8E326A0E3F5006CF964 /* QRScannerFeatureOnboardingViewTests.swift in Sources */,
 				D7DBD20726CD923600F1E39B /* NSObjectLoadable.m in Sources */,
 				CA238D1426A1153B000A36EC /* ContentViewTests.swift in Sources */,
+				D78139C82707A40A004A4721 /* LoginTests.swift in Sources */,
 				CA84D8E526A0E5A8006CF964 /* MapFeatureOnboardingViewTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
