@@ -71,6 +71,18 @@
                 
                 @Code(name: "OrchestrationResponder.swift", file: "OrchestrationResponder.swift", reset: true)
             }
+            
+            @Step {
+                Workflow is highly dependent on type erasure. It's the only way to have a sequence of `FlowRepresentable`s. `AnyFlowRepresentable` not only erases the `FlowRepresentable` type, but it can also appropriately cast passed arguments and create a `FlowRepresentable` using it's `_factory` methods.
+                
+                @Code(name: "AnyFlowRepresentable.swift", file: "AnyFlowRepresentable.swift", reset: true)
+            }
+            
+            @Step {
+                AnyWorkflow is just an erased version of Workflow. Workflow really only has type information so that it can enforce compiler safety on calls to `thenProceed`. This erased version allows consumers to easily store workflows, or pass them around between parts of an application.
+                
+                @Code(name: "AnyWorkflow.swift", file: "AnyWorkflow.swift", reset: true)
+            }
         }
     }
     
