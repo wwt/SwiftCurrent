@@ -2,8 +2,8 @@
     @Intro(title: "Core") {
         Core text
     }
-    
     @Section(title: "What is a Workflow?") {
+    
         @ContentAndMedia {
             In this section you'll learn what a workflow is under the covers. You'll be walked through LinkedList, _WorkflowItem, FlowRepresentableMetadata, AnyWorkflow.PassedArgs, and Workflow.
         }
@@ -45,6 +45,31 @@
                 Workflow knows how to handle persistence and can allow a `FlowRepresentable` that has a `shouldLoad` returning false to still mutate data.
                 
                 @Code(name: "Workflow.swift", file: "Workflow.swift", reset: true)
+            }
+        }
+    }
+    
+    @Section(title: "FlowRepresentables, Orchestration Responder, and Type Erasure") {
+        
+        @ContentAndMedia {
+            In this section you'll learn about FlowRepresentable, OrchestrationResponder, and our erased types.
+        }
+        
+        @Steps {
+            @Step {
+                A `FlowRepresentable` is user-supplied. It's got an input, output, and shouldLoad method that Workflow depends on. In practice these end up being views most of the time. The `shouldLoad` method indicates whether the workflow should create and retain a new instance of this `FlowRepresentable`. 
+                
+                The Input and Output are strong types indicating what kind of data can be passed forward to the next `FlowRepresentable`. Since all args `Workflow` knows about are `AnyWorkflow.PassedArgs` there is a runtime check when an item proceeds using `proceedInWorkflow`.
+                
+                @Code(name: "FlowRepresentable.swift", file: "FlowRepresentable.swift", reset: true)
+            }
+            
+            @Step {
+                Workflow can be thought of as an orchestration engine. This is fairly typical for workflow systems. Workflows have several actions, launching, proceeding, backing up, etc... Those actions are all delegated to an OrchestrationResponder.
+                
+                You'll notice that the OrchestrationResponder is little more than something capable of receiving those events. We've built OrchestrationResponders for UIKit and SwiftUI.
+                
+                @Code(name: "OrchestrationResponder.swift", file: "OrchestrationResponder.swift", reset: true)
             }
         }
     }
