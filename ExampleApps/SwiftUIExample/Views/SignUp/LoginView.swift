@@ -78,13 +78,14 @@ struct LoginView: View, FlowRepresentable {
         .sheet(isPresented: $showSignUp) {
             WorkflowLauncher(isLaunched: $showSignUp) {
                 thenProceed(with: SignUp.self) {
-                    thenProceed(with: TermsAndConditions.self).presentationType(.navigationLink)
+                    thenProceed(with: TermsAndConditions.self)
+                        .presentationType(.navigationLink)
                 }.presentationType(.navigationLink)
             }
             .embedInNavigationView()
             .onFinish { _ in
                 showSignUp = false
-                proceedInWorkflow()
+                proceedInWorkflow() // untested
             }
         }
         .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
