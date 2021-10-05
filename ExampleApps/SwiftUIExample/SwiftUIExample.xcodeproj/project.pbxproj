@@ -78,6 +78,7 @@
 		D78139C427076FC9004A4721 /* TermsAndConditionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78139C327076FC9004A4721 /* TermsAndConditionsTests.swift */; };
 		D78139C6270794BA004A4721 /* SignUpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78139C5270794BA004A4721 /* SignUpTests.swift */; };
 		D78139C82707A40A004A4721 /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78139C72707A40A004A4721 /* LoginTests.swift */; };
+		D78139CA270CF794004A4721 /* PasswordFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78139C9270CF794004A4721 /* PasswordFieldTests.swift */; };
 		D7A6CE7526E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7426E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift */; };
 		D7A6CE7E26E039C300599824 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7D26E039C300599824 /* TestView.swift */; };
 		D7A6CE8026E039EE00599824 /* TestEnumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7F26E039EE00599824 /* TestEnumerations.swift */; };
@@ -175,6 +176,7 @@
 		D78139C327076FC9004A4721 /* TermsAndConditionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndConditionsTests.swift; sourceTree = "<group>"; };
 		D78139C5270794BA004A4721 /* SignUpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTests.swift; sourceTree = "<group>"; };
 		D78139C72707A40A004A4721 /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
+		D78139C9270CF794004A4721 /* PasswordFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordFieldTests.swift; sourceTree = "<group>"; };
 		D7A6CE7226E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftCurrent_SwiftUI_UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7A6CE7426E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftCurrent_SwiftUI_UITests.swift; sourceTree = "<group>"; };
 		D7A6CE7626E0316C00599824 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -364,6 +366,7 @@
 				CA84D8E426A0E5A8006CF964 /* MapFeatureOnboardingViewTests.swift */,
 				CA84D8E626A0E72A006CF964 /* MapFeatureViewTests.swift */,
 				CA7B82A026A1FB97005AA87D /* MFAViewTests.swift */,
+				D78139C9270CF794004A4721 /* PasswordFieldTests.swift */,
 				CAD026A526A0C1EF0075B818 /* ProfileFeatureOnboardingViewTests.swift */,
 				CA7B820C26A11C53005AA87D /* ProfileFeatureViewTests.swift */,
 				CA84D8E226A0E3F5006CF964 /* QRScannerFeatureOnboardingViewTests.swift */,
@@ -674,6 +677,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA7B829D26A1E1D6005AA87D /* ChangeUsernameViewTests.swift in Sources */,
+				D78139CA270CF794004A4721 /* PasswordFieldTests.swift in Sources */,
 				CAD026AF26A0C8680075B818 /* InspectableExtensions.swift in Sources */,
 				CA7B820D26A11C53005AA87D /* ProfileFeatureViewTests.swift in Sources */,
 				CA7B821426A12DEC005AA87D /* AccountInformationViewTests.swift in Sources */,
