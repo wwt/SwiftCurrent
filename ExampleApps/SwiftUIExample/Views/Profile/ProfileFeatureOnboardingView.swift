@@ -12,7 +12,7 @@ import Swinject
 import SwiftCurrent_SwiftUI
 
 struct ProfileFeatureOnboardingView: View, PassthroughFlowRepresentable {
-    @AppStorage(OnboardingModel.profileFeature.appStorageKey, store: .fromDI) private var onboardedToProfileFeature = false
+    @AppStorage(OnboardingData.profileFeature.appStorageKey, store: .fromDI) private var onboardedToProfileFeature = false
 
     let inspection = Inspection<Self>() // ViewInspector
     weak var _workflowPointer: AnyFlowRepresentable?

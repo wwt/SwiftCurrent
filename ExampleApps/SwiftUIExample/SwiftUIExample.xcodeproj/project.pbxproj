@@ -79,6 +79,7 @@
 		D78139C6270794BA004A4721 /* SignUpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78139C5270794BA004A4721 /* SignUpTests.swift */; };
 		D78139C82707A40A004A4721 /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78139C72707A40A004A4721 /* LoginTests.swift */; };
 		D78139CA270CF794004A4721 /* PasswordFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78139C9270CF794004A4721 /* PasswordFieldTests.swift */; };
+		D78139D0270DE5F4004A4721 /* OnboardingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78139CF270DE5F4004A4721 /* OnboardingData.swift */; };
 		D7A6CE7526E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7426E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift */; };
 		D7A6CE7E26E039C300599824 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7D26E039C300599824 /* TestView.swift */; };
 		D7A6CE8026E039EE00599824 /* TestEnumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7F26E039EE00599824 /* TestEnumerations.swift */; };
@@ -177,6 +178,7 @@
 		D78139C5270794BA004A4721 /* SignUpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTests.swift; sourceTree = "<group>"; };
 		D78139C72707A40A004A4721 /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
 		D78139C9270CF794004A4721 /* PasswordFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordFieldTests.swift; sourceTree = "<group>"; };
+		D78139CF270DE5F4004A4721 /* OnboardingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingData.swift; sourceTree = "<group>"; };
 		D7A6CE7226E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftCurrent_SwiftUI_UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7A6CE7426E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftCurrent_SwiftUI_UITests.swift; sourceTree = "<group>"; };
 		D7A6CE7626E0316C00599824 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -230,7 +232,12 @@
 		CA0536F926A0917A00BF8FC5 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				D72B765626FC036A00E0405F /* AccountInformationView.swift */,
+				D72B765426FC032B00E0405F /* ChangeEmailView.swift */,
+				D72B765226FC02B200E0405F /* ChangePasswordView.swift */,
+				D72B765926FC048100E0405F /* MFAView.swift */,
 				CA0536F526A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift */,
+				D72B765026FC024500E0405F /* ProfileFeatureView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -283,15 +290,16 @@
 		CAC34B4126A07F830039A373 /* SwiftUIExample */ = {
 			isa = PBXGroup;
 			children = (
+				CAD0269D26A0BE610075B818 /* DependencyInjection */,
+				D78139CE270DE504004A4721 /* Models */,
+				CAC34B4826A07F830039A373 /* Preview Content */,
 				D7A6CE7C26E039B400599824 /* TestViews */,
 				CA6FB0DC26C6AD5200FB3285 /* UIKitInterop */,
 				CAD026AA26A0C7F80075B818 /* ViewInspector */,
-				CAD0269D26A0BE610075B818 /* DependencyInjection */,
 				CAC34B6D26A07FE90039A373 /* Views */,
+				CAC34B4B26A07F830039A373 /* Info.plist */,
 				CAC34B4226A07F830039A373 /* SwiftUIExampleApp.swift */,
 				CAC34B4626A07F830039A373 /* Assets.xcassets */,
-				CAC34B4B26A07F830039A373 /* Info.plist */,
-				CAC34B4826A07F830039A373 /* Preview Content */,
 			);
 			path = SwiftUIExample;
 			sourceTree = "<group>";
@@ -325,15 +333,13 @@
 			isa = PBXGroup;
 			children = (
 				D72B763526FBCF5A00E0405F /* Design */,
+				D78139CB270DE3AD004A4721 /* Map */,
 				CA0536F926A0917A00BF8FC5 /* Profile */,
+				D78139CC270DE3C2004A4721 /* QRScanner */,
 				D72B764526FBCFB200E0405F /* SignUp */,
-				D72B765826FC046900E0405F /* UpdatedViews */,
 				CAC34B7126A07FE90039A373 /* ContentView.swift */,
 				D72B764E26FBEDB900E0405F /* GenericOnboardingView.swift */,
-				CAC34B7026A07FE90039A373 /* MapFeatureOnboardingView.swift */,
-				CAC34B7226A07FE90039A373 /* MapFeatureView.swift */,
-				CAC34B6F26A07FE90039A373 /* QRScannerFeatureOnboardingView.swift */,
-				CAC34B6E26A07FE90039A373 /* QRScannerFeatureView.swift */,
+				D72B764626FBCFB200E0405F /* LoginView.swift */,
 				D72B764C26FBDC3C00E0405F /* SwiftCurrentOnboarding.swift */,
 			);
 			path = Views;
@@ -414,23 +420,36 @@
 		D72B764526FBCFB200E0405F /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
-				D72B764626FBCFB200E0405F /* LoginView.swift */,
 				D72B764726FBCFB200E0405F /* SignUp.swift */,
 				D72B764826FBCFB200E0405F /* TermsAndConditions.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
 		};
-		D72B765826FC046900E0405F /* UpdatedViews */ = {
+		D78139CB270DE3AD004A4721 /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				D72B765026FC024500E0405F /* ProfileFeatureView.swift */,
-				D72B765226FC02B200E0405F /* ChangePasswordView.swift */,
-				D72B765426FC032B00E0405F /* ChangeEmailView.swift */,
-				D72B765626FC036A00E0405F /* AccountInformationView.swift */,
-				D72B765926FC048100E0405F /* MFAView.swift */,
+				CAC34B7026A07FE90039A373 /* MapFeatureOnboardingView.swift */,
+				CAC34B7226A07FE90039A373 /* MapFeatureView.swift */,
 			);
-			path = UpdatedViews;
+			path = Map;
+			sourceTree = "<group>";
+		};
+		D78139CC270DE3C2004A4721 /* QRScanner */ = {
+			isa = PBXGroup;
+			children = (
+				CAC34B6F26A07FE90039A373 /* QRScannerFeatureOnboardingView.swift */,
+				CAC34B6E26A07FE90039A373 /* QRScannerFeatureView.swift */,
+			);
+			path = QRScanner;
+			sourceTree = "<group>";
+		};
+		D78139CE270DE504004A4721 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D78139CF270DE5F4004A4721 /* OnboardingData.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		D7A6CE7326E0316C00599824 /* SwiftCurrent_SwiftUI_UITests */ = {
@@ -649,6 +668,7 @@
 				D72B764126FBCF7000E0405F /* PrimaryTextField.swift in Sources */,
 				D72B763D26FBCF7000E0405F /* Colors.swift in Sources */,
 				D72B764026FBCF7000E0405F /* SecondaryButton.swift in Sources */,
+				D78139D0270DE5F4004A4721 /* OnboardingData.swift in Sources */,
 				D72B763E26FBCF7000E0405F /* PrimaryButton.swift in Sources */,
 				D72B764226FBCF7000E0405F /* Styles.swift in Sources */,
 				D7A6CE8026E039EE00599824 /* TestEnumerations.swift in Sources */,

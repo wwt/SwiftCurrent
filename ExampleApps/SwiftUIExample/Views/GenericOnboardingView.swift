@@ -10,40 +10,20 @@ import SwiftUI
 import SwiftCurrent
 import Swinject
 
-struct OnboardingModel {
-    let previewImage: Image
-    let previewAccent: Color
-    let featureTitle: String
-    let featureSummary: String
-    let appStorageKey: String
-
-    static let profileFeature = OnboardingModel(previewImage: .profileOnboarding,
-                                                previewAccent: .icon,
-                                                featureTitle: "Welcome to our new profile management feature!",
-                                                featureSummary: "You can update your username and password here.",
-                                                appStorageKey: "OnboardedToProfileFeature")
-
-    static let mapFeature = OnboardingModel(previewImage: .logo,
-                                            previewAccent: .icon,
-                                            featureTitle: "Maps!",
-                                            featureSummary: "We've got all kinds of maps like this one.",
-                                            appStorageKey: "MapOnboardingFeature")
-}
-
 struct GenericOnboardingView: View, FlowRepresentable {
     @DependencyInjected private static var userDefaults: UserDefaults!
 
     let inspection = Inspection<Self>() // ViewInspector
     weak var _workflowPointer: AnyFlowRepresentable?
-    private let onboardingModel: OnboardingModel
+    private let onboardingModel: OnboardingData
     private let continueAction: (() -> Void)?
 
-    init(with model: OnboardingModel) {
+    init(with model: OnboardingData) {
         onboardingModel = model
         continueAction = { print("This worked as I expected?") }
     }
 
-    init(model: OnboardingModel, continueAction: @escaping () -> Void) {
+    init(model: OnboardingData, continueAction: @escaping () -> Void) {
         onboardingModel = model
         self.continueAction = continueAction
     }
