@@ -15,15 +15,17 @@ import SwiftCurrent
 @testable import SwiftUIExample
 
 final class LoginTests: XCTestCase, View, WorkflowTestingReceiver {
-    static var workflowTestingData: WorkflowTestingData?
+    static var workflowLaunchedData = [WorkflowTestingData]()
+    static var workflowTestingData: WorkflowTestingData? { workflowLaunchedData.last }
+
     override class func setUp() {
         NotificationReceiverLocal.register(on: .default, for: Self.self)
     }
     override class func tearDown() {
         NotificationReceiverLocal.unregister(on: .default, for: Self.self)
     }
-    override func tearDown() { // swiftlint:disable:this empty_xctest_method
-        Self.workflowTestingData = nil
+    override func tearDown() {
+        Self.workflowLaunchedData.removeAll()
     }
 
     func testBasicLayout() {
@@ -49,7 +51,7 @@ final class LoginTests: XCTestCase, View, WorkflowTestingReceiver {
     }
 
     func testSignupCorrectlyLaunchesSignupWorkflow() throws {
-        Self.workflowTestingData = nil
+        Self.workflowLaunchedData.removeAll()
         var loginView: InspectableView<ViewType.View<LoginView>>!
         let exp = ViewHosting.loadView(LoginView()).inspection.inspect { view in
             loginView = view

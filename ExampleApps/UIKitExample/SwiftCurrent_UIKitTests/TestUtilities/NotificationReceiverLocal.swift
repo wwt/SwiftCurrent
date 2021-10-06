@@ -9,10 +9,9 @@
 import SwiftCurrent
 
 protocol WorkflowTestingReceiver {
-    static var workflowTestingData: WorkflowTestingData? { get set }
+    static var workflowLaunchedData: [WorkflowTestingData] { get set }
 }
 
-// MARK: Getting better but still doesn't feel ideal
 class NotificationReceiverLocal: NSObject {
     private static var receivers = [WorkflowTestingReceiver.Type]()
 
@@ -22,19 +21,20 @@ class NotificationReceiverLocal: NSObject {
             fatalError("WorkflowLaunched notification has incorrect format, this may be because you need to update SwiftCurrent_Testing")
         }
 
-        receivers.forEach { $0.workflowTestingData = testData }
+        receivers.forEach { $0.workflowLaunchedData.append(testData) }
     }
 
 
     static func register(on notificationCenter: NotificationCenter, for receiver: WorkflowTestingReceiver.Type) {
-        notificationCenter.addObserver(NotificationReceiverLocal.self,
-                                       selector: #selector(NotificationReceiverLocal.workflowLaunched(notification:)),
+        notificationCenter.addObserver(Self.self,
+                                       selector: #selector(Self.workflowLaunched(notification:)),
                                        name: .workflowLaunched,
                                        object: nil)
         receivers.append(receiver)
     }
 
     static func unregister(on notificationCenter: NotificationCenter, for receiver: WorkflowTestingReceiver.Type) {
-        notificationCenter.removeObserver(receiver.self)
+        notificationCenter.removeObserver(Self.self)
+        receivers.removeAll { $0 == receiver.self }
     }
 }

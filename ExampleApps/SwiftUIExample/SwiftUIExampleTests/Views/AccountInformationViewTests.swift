@@ -17,6 +17,9 @@ import SwiftCurrent
 @testable import SwiftUIExample
 
 final class AccountInformationViewTests: XCTestCase, WorkflowTestingReceiver {
+    static var workflowLaunchedData = [WorkflowTestingData]()
+    static var workflowTestingData: WorkflowTestingData? { workflowLaunchedData.last }
+
     override class func setUp() {
         NotificationReceiverLocal.register(on: NotificationCenter.default, for: Self.self)
     }
@@ -25,13 +28,11 @@ final class AccountInformationViewTests: XCTestCase, WorkflowTestingReceiver {
         NotificationReceiverLocal.unregister(on: NotificationCenter.default, for: Self.self)
     }
 
-    override func tearDown() { // swiftlint:disable:this empty_xctest_method
-        Self.workflowTestingData = nil
+    override func tearDown() {
+        Self.workflowLaunchedData.removeAll()
     }
 
     private typealias MFAViewWorkflowView = WorkflowLauncher<WorkflowItem<MFAView, Never, MFAView>>
-
-    static var workflowTestingData: WorkflowTestingData?
 
     func testUpdatedAccountInformationView() throws {
         let exp = ViewHosting.loadView(AccountInformationView()).inspection.inspect { view in
@@ -47,7 +48,7 @@ final class AccountInformationViewTests: XCTestCase, WorkflowTestingReceiver {
     }
 
     func testAccountInformationCanLaunchUsernameWorkflowAgnostic() throws {
-        Self.workflowTestingData = nil
+        Self.workflowLaunchedData.removeAll()
         var accountInformation: InspectableView<ViewType.View<AccountInformationView>>!
         let exp = ViewHosting.loadView(AccountInformationView()).inspection.inspect { view in
             accountInformation = view
@@ -88,7 +89,7 @@ final class AccountInformationViewTests: XCTestCase, WorkflowTestingReceiver {
 
     func testAccountInformationDoesNotBlowUp_IfUsernameWorkflowReturnsSomethingWEIRD() throws {
         class CustomObj { }
-        Self.workflowTestingData = nil
+        Self.workflowLaunchedData.removeAll()
         var accountInformation: InspectableView<ViewType.View<AccountInformationView>>!
         var expectedEmail = "starting value"
         let exp = ViewHosting.loadView(AccountInformationView()).inspection.inspect { view in
@@ -110,7 +111,7 @@ final class AccountInformationViewTests: XCTestCase, WorkflowTestingReceiver {
     }
 
     func testAccountInformationCanLaunchPasswordWorkflowAgnostic() throws {
-        Self.workflowTestingData = nil
+        Self.workflowLaunchedData.removeAll()
         var accountInformation: InspectableView<ViewType.View<AccountInformationView>>!
         let exp = ViewHosting.loadView(AccountInformationView()).inspection.inspect { view in
             accountInformation = view
@@ -151,7 +152,7 @@ final class AccountInformationViewTests: XCTestCase, WorkflowTestingReceiver {
 
     func testAccountInformationDoesNotBlowUp_IfPasswordWorkflowReturnsSomethingWEIRD() throws {
         class CustomObj { }
-        Self.workflowTestingData = nil
+        Self.workflowLaunchedData.removeAll()
         var accountInformation: InspectableView<ViewType.View<AccountInformationView>>!
         var expectedPassword = "starting value"
         let exp = ViewHosting.loadView(AccountInformationView()).inspection.inspect { view in
