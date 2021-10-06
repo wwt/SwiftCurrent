@@ -12,34 +12,19 @@ protocol WorkflowTestingReceiver {
     static var workflowTestingData: WorkflowTestingData? { get set }
 }
 
-// MARK: WORST TESTING WORKAROUND EVA!!!
+// MARK: Getting better but still doesn't feel ideal
 class NotificationReceiverLocal: NSObject {
+    private static var receivers = [WorkflowTestingReceiver.Type]()
+
     @objc static func workflowLaunched(notification: Notification) {
         guard let dict = notification.object as? [String: Any?],
-              let workflow = dict["workflow"] as? AnyWorkflow,
-              let style = dict["style"] as? LaunchStyle,
-              let responder = dict["responder"] as? OrchestrationResponder,
-              let args = dict["args"] as? AnyWorkflow.PassedArgs,
-              let onFinish = dict["onFinish"] as? ((AnyWorkflow.PassedArgs) -> Void)? else {
+              let testData = WorkflowTestingData(from: dict) else {
             fatalError("WorkflowLaunched notification has incorrect format, this may be because you need to update SwiftCurrent_Testing")
         }
 
-        NotificationReceiverLocal.workflowLaunched(workflow: workflow,
-                                                   responder: responder,
-                                                   args: args,
-                                                   style: style,
-                                                   onFinish: onFinish)
+        receivers.forEach { $0.workflowTestingData = testData }
     }
 
-    static func workflowLaunched(workflow: AnyWorkflow,
-                                 responder: OrchestrationResponder,
-                                 args: AnyWorkflow.PassedArgs,
-                                 style: LaunchStyle,
-                                 onFinish: ((AnyWorkflow.PassedArgs) -> Void)?) {
-        receivers.forEach { $0.workflowTestingData = WorkflowTestingData(workflow: workflow, orchestrationResponder: responder, args: args, style: style, onFinish: onFinish) }
-    }
-
-    private static var receivers = [WorkflowTestingReceiver.Type]()
 
     static func register(on notificationCenter: NotificationCenter, for receiver: WorkflowTestingReceiver.Type) {
         notificationCenter.addObserver(NotificationReceiverLocal.self,
@@ -50,6 +35,6 @@ class NotificationReceiverLocal: NSObject {
     }
 
     static func unregister(on notificationCenter: NotificationCenter, for receiver: WorkflowTestingReceiver.Type) {
-        notificationCenter.removeObserver(NotificationReceiverLocal.self)
+        notificationCenter.removeObserver(receiver.self)
     }
 }

@@ -8,10 +8,26 @@
 
 import SwiftCurrent
 
-struct WorkflowTestingData {
-    var workflow: AnyWorkflow
-    var orchestrationResponder: OrchestrationResponder
-    var args: AnyWorkflow.PassedArgs
-    var style: LaunchStyle
-    var onFinish: ((AnyWorkflow.PassedArgs) -> Void)?
+public struct WorkflowTestingData {
+    public var workflow: AnyWorkflow
+    public var orchestrationResponder: OrchestrationResponder
+    public var args: AnyWorkflow.PassedArgs
+    public var style: LaunchStyle
+    public var onFinish: ((AnyWorkflow.PassedArgs) -> Void)?
+
+    public init?(from dict: [String: Any?]) {
+        guard let workflow = dict["workflow"] as? AnyWorkflow,
+              let style = dict["style"] as? LaunchStyle,
+              let responder = dict["responder"] as? OrchestrationResponder,
+              let args = dict["args"] as? AnyWorkflow.PassedArgs,
+              let onFinish = dict["onFinish"] as? ((AnyWorkflow.PassedArgs) -> Void)? else {
+            return nil
+        }
+
+        self.workflow = workflow
+        self.orchestrationResponder = responder
+        self.args = args
+        self.style = style
+        self.onFinish = onFinish
+    }
 }
