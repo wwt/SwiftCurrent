@@ -19,7 +19,7 @@ extension Color {
     }
 
     static var card: Color {
-        Color(red: 86 / 255, green: 86 / 255, blue: 118 / 255)
+        Color(rgbRed: 86, rgbGreen: 86, rgbBlue: 255)
             .opacity(0.8)
     }
 
@@ -32,10 +32,15 @@ extension Color {
     }
 
     private static var primaryColor: Color {
-        Color(red: 0 / 255, green: 134 / 255, blue: 234 / 255)
+        Color(rgbRed: 0, rgbGreen: 134, rgbBlue: 234)
     }
 
     static var divider: Color {
         white.opacity(0.5)
+    }
+
+    /// Creates a `Color` using RGB values.
+    init(rgbRed: UInt8, rgbGreen: UInt8, rgbBlue: UInt8) {
+        self.init(red: Double(rgbRed) / 255, green: Double(rgbGreen) / 255, blue: Double(rgbBlue) / 255)
     }
 }
