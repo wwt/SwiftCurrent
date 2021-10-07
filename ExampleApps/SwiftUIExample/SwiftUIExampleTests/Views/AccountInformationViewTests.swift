@@ -71,7 +71,7 @@ final class AccountInformationViewTests: XCTestCase, WorkflowTestingReceiver {
 
         // Test Workflow arrangement
         XCTAssertEqual(data?.workflow.count, 2)
-        let first = data?.workflow.first { _ in true }
+        let first = data?.workflow.first
         XCTAssertEqual(first?.position, 0)
         XCTAssertEqual(first?.value.metadata.flowRepresentableTypeDescriptor, "\(MFAView.self)")
         XCTAssertEqual(first?.next?.value.metadata.flowRepresentableTypeDescriptor, "\(ChangeEmailView.self)")
@@ -134,7 +134,7 @@ final class AccountInformationViewTests: XCTestCase, WorkflowTestingReceiver {
 
         // Test Workflow arrangement
         XCTAssertEqual(data?.workflow.count, 2)
-        let first = data?.workflow.first { _ in true }
+        let first = data?.workflow.first
         XCTAssertEqual(first?.position, 0)
         XCTAssertEqual(first?.value.metadata.flowRepresentableTypeDescriptor, "\(MFAView.self)")
         XCTAssertEqual(first?.next?.value.metadata.flowRepresentableTypeDescriptor, "\(ChangePasswordView.self)")

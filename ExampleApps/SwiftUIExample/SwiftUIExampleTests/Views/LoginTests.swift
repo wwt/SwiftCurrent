@@ -68,7 +68,7 @@ final class LoginTests: XCTestCase, View, WorkflowTestingReceiver {
 
         // Test Workflow arrangement
         XCTAssertEqual(data?.workflow.count, 2)
-        let first = data?.workflow.first { _ in true }
+        let first = data?.workflow.first
         XCTAssertEqual(first?.position, 0)
         XCTAssertEqual(first?.value.metadata.flowRepresentableTypeDescriptor, "\(SignUp.self)")
         XCTAssertEqual(first?.next?.value.metadata.flowRepresentableTypeDescriptor, "\(TermsAndConditions.self)")
