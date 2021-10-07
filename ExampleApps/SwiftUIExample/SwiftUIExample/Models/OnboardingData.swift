@@ -14,16 +14,12 @@ struct OnboardingData {
     let featureTitle: String
     let featureSummary: String
     let appStorageKey: String
-
-    static let profileFeature = OnboardingData(previewImage: .profileOnboarding,
-                                               previewAccent: .icon,
-                                               featureTitle: "Welcome to our new profile management feature!",
-                                               featureSummary: "You can update your username and password here.",
-                                               appStorageKey: "OnboardedToProfileFeature")
+    let appStorageStore: UserDefaults?
 
     static let mapFeature = OnboardingData(previewImage: .logo,
                                            previewAccent: .icon,
                                            featureTitle: "Maps!",
                                            featureSummary: "We've got all kinds of maps like this one.",
-                                           appStorageKey: "MapOnboardingFeature")
+                                           appStorageKey: "MapOnboardingFeature",
+                                           appStorageStore: .fromDI)
 }

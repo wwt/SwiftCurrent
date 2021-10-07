@@ -11,20 +11,24 @@ import SwiftCurrent
 import Swinject
 
 struct GenericOnboardingView: View, FlowRepresentable {
-    @DependencyInjected private static var userDefaults: UserDefaults!
+    private var onboardedToProfileFeature: AppStorage<Bool>
+    weak var _workflowPointer: AnyFlowRepresentable?
 
     let inspection = Inspection<Self>() // ViewInspector
-    weak var _workflowPointer: AnyFlowRepresentable?
     private let onboardingModel: OnboardingData
     private let continueAction: (() -> Void)?
 
+    /// Called by SwiftCurrent to create a GenericOnboardingView in a Workflow
     init(with model: OnboardingData) {
         onboardingModel = model
-        continueAction = { print("This worked as I expected?") }
+        onboardedToProfileFeature = AppStorage(wrappedValue: false, model.appStorageKey, store: .fromDI)
+        continueAction = nil
     }
 
+    /// Creates a GenericOnboardingView outside of the context of a Workflow
     init(model: OnboardingData, continueAction: @escaping () -> Void) {
         onboardingModel = model
+        onboardedToProfileFeature = AppStorage(wrappedValue: false, model.appStorageKey, store: .fromDI)
         self.continueAction = continueAction
     }
 
@@ -47,22 +51,31 @@ struct GenericOnboardingView: View, FlowRepresentable {
                 Spacer()
             }
             PrimaryButton(title: "Continue") {
-                Self.userDefaults.set(true, forKey: onboardingModel.appStorageKey)
-                continueAction?()
-                proceedInWorkflow()
+                onboardedToProfileFeature.wrappedValue = true
+                if _workflowPointer != nil { // Running in Workflow
+                    proceedInWorkflow()
+                } else { // Running as a generic view
+                    continueAction?()
+                }
             }
         }
         .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 
     func shouldLoad() -> Bool {
-        !Self.userDefaults.bool(forKey: onboardingModel.appStorageKey)
+        !onboardedToProfileFeature.wrappedValue
     }
 }
 
 struct FeatureValue_Previews: PreviewProvider {
     static var previews: some View {
-        GenericOnboardingView()
-            .preferredColorScheme(.dark)
+        GenericOnboardingView(model: OnboardingData(previewImage: .wwtLogo,
+                                                    previewAccent: .clear,
+                                                    featureTitle: "Feature title",
+                                                    featureSummary: "Feature summary",
+                                                    appStorageKey: "FeatureValue_Previews",
+                                                    appStorageStore: nil)) {
+            print("Continued")
+        }.preferredColorScheme(.dark)
     }
 }

@@ -84,6 +84,7 @@
 		D7A6CE7E26E039C300599824 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7D26E039C300599824 /* TestView.swift */; };
 		D7A6CE8026E039EE00599824 /* TestEnumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7F26E039EE00599824 /* TestEnumerations.swift */; };
 		D7A6CE8126E03ADD00599824 /* TestEnumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7F26E039EE00599824 /* TestEnumerations.swift */; };
+		D7B2E7A2270F6EDD00262519 /* GenericOnboardingViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B2E7A1270F6EDD00262519 /* GenericOnboardingViewTests.swift */; };
 		D7DBD1FB26CD920700F1E39B /* MockOrchestrationResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD1F526CD920700F1E39B /* MockOrchestrationResponder.swift */; };
 		D7DBD1FC26CD920700F1E39B /* ViewControllerAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD1F626CD920700F1E39B /* ViewControllerAdditions.swift */; };
 		D7DBD1FD26CD920700F1E39B /* AnyWorkflowAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DBD1F726CD920700F1E39B /* AnyWorkflowAdditions.swift */; };
@@ -184,6 +185,7 @@
 		D7A6CE7626E0316C00599824 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D7A6CE7D26E039C300599824 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		D7A6CE7F26E039EE00599824 /* TestEnumerations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestEnumerations.swift; sourceTree = "<group>"; };
+		D7B2E7A1270F6EDD00262519 /* GenericOnboardingViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericOnboardingViewTests.swift; sourceTree = "<group>"; };
 		D7DBD1F526CD920700F1E39B /* MockOrchestrationResponder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockOrchestrationResponder.swift; sourceTree = "<group>"; };
 		D7DBD1F626CD920700F1E39B /* ViewControllerAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerAdditions.swift; sourceTree = "<group>"; };
 		D7DBD1F726CD920700F1E39B /* AnyWorkflowAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyWorkflowAdditions.swift; sourceTree = "<group>"; };
@@ -368,6 +370,7 @@
 				CA84D8E826A0ED66006CF964 /* ChangePasswordViewTests.swift */,
 				CA7B829C26A1E1D6005AA87D /* ChangeUsernameViewTests.swift */,
 				CA238D1326A1153B000A36EC /* ContentViewTests.swift */,
+				D7B2E7A1270F6EDD00262519 /* GenericOnboardingViewTests.swift */,
 				D78139C72707A40A004A4721 /* LoginTests.swift */,
 				CA84D8E426A0E5A8006CF964 /* MapFeatureOnboardingViewTests.swift */,
 				CA84D8E626A0E72A006CF964 /* MapFeatureViewTests.swift */,
@@ -700,6 +703,7 @@
 				D78139CA270CF794004A4721 /* PasswordFieldTests.swift in Sources */,
 				CAD026AF26A0C8680075B818 /* InspectableExtensions.swift in Sources */,
 				CA7B820D26A11C53005AA87D /* ProfileFeatureViewTests.swift in Sources */,
+				D7B2E7A2270F6EDD00262519 /* GenericOnboardingViewTests.swift in Sources */,
 				CA7B821426A12DEC005AA87D /* AccountInformationViewTests.swift in Sources */,
 				CA7B821226A12642005AA87D /* QRScanningViewTests.swift in Sources */,
 				D78139C6270794BA004A4721 /* SignUpTests.swift in Sources */,
