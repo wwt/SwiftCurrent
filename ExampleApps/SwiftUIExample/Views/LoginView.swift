@@ -38,10 +38,7 @@ struct LoginView: View, FlowRepresentable {
 
                             PasswordField(password: $password)
                         }
-
-                        HStack {
-                            Spacer(minLength: 0)
-                        }
+                        .padding(.bottom, 8)
                     }
                     .padding()
                     .padding(.bottom, 25)
