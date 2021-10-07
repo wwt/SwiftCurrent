@@ -16,7 +16,6 @@ struct LoginView: View, FlowRepresentable {
     @State var email = ""
     @State var password = ""
     @State var showSignUp = false
-    @State var showPassword = false
     @State var isLoggedIn = false
 
     var body: some View {
@@ -37,7 +36,7 @@ struct LoginView: View, FlowRepresentable {
                             PrimaryTextField(placeholder: "Email Address", image: Image.account, text: $email)
                                 .keyboardType(.emailAddress)
 
-                            PasswordField(showPassword: $showPassword, password: $password)
+                            PasswordField(password: $password)
                         }
 
                         HStack {

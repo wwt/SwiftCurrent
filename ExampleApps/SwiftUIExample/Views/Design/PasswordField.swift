@@ -9,12 +9,17 @@
 import SwiftUI
 
 struct PasswordField: View {
-    let inspection = Inspection<Self>() // ViewInspector
-
-    @State var placeholder = "Password"
-
-    @Binding var showPassword: Bool
     @Binding var password: String
+    @State private var showPassword: Bool
+
+    let inspection = Inspection<Self>() // ViewInspector
+    private let placeholder: String
+
+    init(placeholder: String = "Password", showPassword: Bool = false, password: Binding<String>) {
+        self.placeholder = placeholder
+        self.showPassword = showPassword
+        self._password = password
+    }
 
     var body: some View {
         HStack(spacing: 15) {
@@ -40,7 +45,7 @@ struct PasswordField: View {
 
 struct PasswordField_Previews: PreviewProvider {
     static var previews: some View {
-        PasswordField(showPassword: .constant(false), password: .constant("TEST"))
+        PasswordField(showPassword: false, password: .constant("TEST"))
             .preferredColorScheme(.dark)
     }
 }

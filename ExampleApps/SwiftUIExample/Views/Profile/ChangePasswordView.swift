@@ -12,11 +12,8 @@ import SwiftCurrent
 struct ChangePasswordView: View, FlowRepresentable {
     typealias WorkflowOutput = String
     @State private var oldPassword = ""
-    @State private var showOldPassword = false
     @State private var newPassword = ""
-    @State private var showNewPassword = false
     @State private var confirmNewPassword = ""
-    @State private var showConfirmNewPassword = false
     @State private var submitted = false
     @State private var errors = [String]()
 
@@ -37,11 +34,11 @@ struct ChangePasswordView: View, FlowRepresentable {
                     .transition(.scale)
             }
 
-            PasswordField(placeholder: "Old Password", showPassword: $showOldPassword, password: $oldPassword)
+            PasswordField(placeholder: "Old Password", password: $oldPassword)
 
-            PasswordField(placeholder: "New Password", showPassword: $showNewPassword, password: $newPassword)
+            PasswordField(placeholder: "New Password", password: $newPassword)
 
-            PasswordField(placeholder: "Confirm New Password", showPassword: $showConfirmNewPassword, password: $confirmNewPassword)
+            PasswordField(placeholder: "Confirm New Password", password: $confirmNewPassword)
                 .padding(.bottom)
 
             PrimaryButton(title: "SAVE") {

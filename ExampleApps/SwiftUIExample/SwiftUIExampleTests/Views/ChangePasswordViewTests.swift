@@ -17,7 +17,7 @@ final class ChangePasswordViewTests: XCTestCase, View {
     func testChangePasswordView() throws {
         let currentPassword = UUID().uuidString
         let exp = ViewHosting.loadView(ChangePasswordView(with: currentPassword)).inspection.inspect { view in
-            XCTAssertEqual(view.findAll(ViewType.SecureField.self).count, 3)
+            XCTAssertEqual(view.findAll(PasswordField.self).count, 3)
             XCTAssertNoThrow(try view.find(ViewType.Button.self))
         }
         wait(for: [exp], timeout: TestConstant.timeout)

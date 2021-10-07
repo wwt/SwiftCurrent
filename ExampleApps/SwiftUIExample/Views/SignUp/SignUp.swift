@@ -15,8 +15,6 @@ struct SignUp: View, FlowRepresentable {
     @State private var email = ""
     @State private var password = ""
     @State private var confirmPassword = ""
-    @State private var showPassword = false
-    @State private var showConfirmPassword = false
 
     var body: some View {
         GeometryReader { _ in
@@ -28,9 +26,9 @@ struct SignUp: View, FlowRepresentable {
                     PrimaryTextField(placeholder: "Email Address", image: Image.account, text: $email)
                         .keyboardType(.emailAddress)
 
-                    PasswordField(showPassword: $showPassword, password: $password)
+                    PasswordField(password: $password)
 
-                    PasswordField(placeholder: "Confirm Password", showPassword: $showConfirmPassword, password: $confirmPassword)
+                    PasswordField(placeholder: "Confirm Password", password: $confirmPassword)
                 }
 
                 HStack {

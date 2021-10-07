@@ -16,22 +16,9 @@ import ViewInspector
 final class SignUpTests: XCTestCase, View {
     func testBasicLayout() {
         let exp = ViewHosting.loadView(SignUp()).inspection.inspect { view in
-            XCTAssertEqual(view.findAll(ViewType.SecureField.self).count, 2, "2 password fields needed")
+            XCTAssertEqual(view.findAll(PasswordField.self).count, 2, "2 password fields needed")
             XCTAssertEqual(view.findAll(ViewType.TextField.self).count, 1, "1 username field needed")
             XCTAssertNoThrow(try view.findProceedButton(), "proceed button needed")
-        }
-        wait(for: [exp], timeout: TestConstant.timeout)
-    }
-
-    func testPasswordFieldsWereUsedAndConfigured() {
-        let exp = ViewHosting.loadView(SignUp()).inspection.inspect { view in
-            XCTAssertEqual(view.findAll(PasswordField.self).count, 2, "If the 2 SecureFields are PasswordFields we can skip testing visible scenarios")
-
-            try view.findAll(PasswordField.self).first?.find(ViewType.Button.self).tap()
-            XCTAssertNoThrow(try view.findAll(PasswordField.self).first?.find(ViewType.TextField.self), "Should have started with secure field and properly tied to state")
-
-            try view.findAll(PasswordField.self).last?.find(ViewType.Button.self).tap()
-            XCTAssertNoThrow(try view.findAll(PasswordField.self).last?.find(ViewType.TextField.self), "Should have started with secure field and properly tied to state")
         }
         wait(for: [exp], timeout: TestConstant.timeout)
     }
