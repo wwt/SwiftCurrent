@@ -1,10 +1,10 @@
 //
-//  ProfileFeatureOnboardingViewTests.swift
-//  SwiftUIExampleTests
+//  SwiftCurrentOnboardingTests.swift
+//  SwiftCurrent
 //
-//  Created by Tyler Thompson on 7/15/21.
-//
+//  Created by Richard Gist on 9/30/21.
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
+//  
 
 import XCTest
 import SwiftUI
@@ -14,8 +14,8 @@ import ViewInspector
 @testable import SwiftCurrent_SwiftUI // 🤮 it sucks that this is necessary
 @testable import SwiftUIExample
 
-final class ProfileFeatureOnboardingViewTests: XCTestCase, View {
-    let defaultsKey = "OnboardedToProfileFeature"
+final class SwiftCurrentOnboardingTests: XCTestCase, View {
+    let defaultsKey = "OnboardedToSwiftCurrent"
     override func setUpWithError() throws {
         Container.default.removeAll()
     }
@@ -26,35 +26,35 @@ final class ProfileFeatureOnboardingViewTests: XCTestCase, View {
         Container.default.register(UserDefaults.self) { _ in defaults }
         let workflowFinished = expectation(description: "View Proceeded")
         let exp = ViewHosting.loadView(WorkflowLauncher(isLaunched: .constant(true)) {
-            thenProceed(with: ProfileFeatureOnboardingView.self)
+            thenProceed(with: SwiftCurrentOnboarding.self)
         }.onFinish { _ in
             workflowFinished.fulfill()
         }).inspection.inspect { view in
-            XCTAssertNoThrow(try view.find(ViewType.Text.self))
-            XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Welcome to our new profile management feature!")
             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
         }
         wait(for: [exp, workflowFinished], timeout: TestConstant.timeout)
+
+        XCTAssert(defaults.bool(forKey: defaultsKey))
     }
 
     func testOnboardingViewLoads_WhenNoValueIsInUserDefaults() throws {
         let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
         defaults.removeObject(forKey: defaultsKey)
         Container.default.register(UserDefaults.self) { _ in defaults }
-        XCTAssert(ProfileFeatureOnboardingView().shouldLoad(), "Profile onboarding should show if defaults do not exist")
+        XCTAssert(SwiftCurrentOnboarding().shouldLoad(), "SwiftCurrent onboarding should show if defaults do not exist")
     }
 
     func testOnboardingViewLoads_WhenValueInUserDefaultsIsFalse() throws {
         let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
         defaults.set(false, forKey: defaultsKey)
         Container.default.register(UserDefaults.self) { _ in defaults }
-        XCTAssert(ProfileFeatureOnboardingView().shouldLoad(), "Profile onboarding should show if default is false")
+        XCTAssert(SwiftCurrentOnboarding().shouldLoad(), "SwiftCurrent onboarding should show if default is false")
     }
 
     func testOnboardingViewDoesNotLoad_WhenValueInUserDefaultsIsTrue() throws {
         let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
         defaults.set(true, forKey: defaultsKey)
         Container.default.register(UserDefaults.self) { _ in defaults }
-        XCTAssertFalse(ProfileFeatureOnboardingView().shouldLoad(), "Profile onboarding should not show if default is true")
+        XCTAssertFalse(SwiftCurrentOnboarding().shouldLoad(), "SwiftCurrent onboarding should not show if default is true")
     }
 }

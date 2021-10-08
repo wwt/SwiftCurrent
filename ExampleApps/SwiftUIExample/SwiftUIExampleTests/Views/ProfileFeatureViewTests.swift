@@ -17,11 +17,9 @@ import ViewInspector
 final class ProfileFeatureViewTests: XCTestCase {
     func testProfileFeatureView() throws {
         let viewUnderTest = try ProfileFeatureView().inspect()
-        XCTAssertEqual(try viewUnderTest.find(ViewType.Image.self).actualImage(), Image(systemName: "person.fill.questionmark").renderingMode(.template).resizable())
-        XCTAssertEqual(try viewUnderTest.find(ViewType.Text.self).string(), "Your name here")
-        XCTAssertEqual(try viewUnderTest.find(ViewType.Section.self).header().text().string(), "Account Information:")
+        XCTAssertEqual(try viewUnderTest.find(ViewType.Image.self).actualImage(), Image.wwtLogo.resizable())
+        XCTAssertEqual(try viewUnderTest.find(ViewType.Section.self).header().text().string(), "Account Information")
         XCTAssertNoThrow(try viewUnderTest.find(ViewType.Section.self).find(AccountInformationView.self))
-        XCTAssertNoThrow(try viewUnderTest.find(ViewType.Button.self))
     }
 
     func testClearUserDefaultsButton() throws {
@@ -31,7 +29,7 @@ final class ProfileFeatureViewTests: XCTestCase {
         defaults.set(true, forKey: key)
         Container.default.register(UserDefaults.self) { _ in defaults }
         let viewUnderTest = try ProfileFeatureView().inspect()
-        XCTAssertNoThrow(try viewUnderTest.find(ViewType.Button.self).tap())
+        XCTAssertNoThrow(try viewUnderTest.find(ViewType.Image.self).callOnTapGesture())
         XCTAssertFalse(defaults.bool(forKey: key))
     }
 }

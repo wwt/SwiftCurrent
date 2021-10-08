@@ -9,24 +9,33 @@
 import SwiftUI
 import SwiftCurrent
 import Swinject
+import SwiftCurrent_SwiftUI
 
-struct ProfileFeatureOnboardingView: View, FlowRepresentable {
-    private var userDefaults: UserDefaults! { Container.default.resolve(UserDefaults.self) }
-
+struct ProfileFeatureOnboardingView: View, PassthroughFlowRepresentable {
     let inspection = Inspection<Self>() // ViewInspector
     weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
-        VStack {
-            Text("Learn about our awesome profile feature!")
-            Button("Continue") {
-                userDefaults.set(true, forKey: "OnboardedToProfileFeature")
-                proceedInWorkflow()
-            }
-        }.onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
+        onboardingView
+            .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
+    }
+
+    private var onboardingView: GenericOnboardingView {
+        GenericOnboardingView(model: .profileFeature) {
+            proceedInWorkflow()
+        }
     }
 
     func shouldLoad() -> Bool {
-        !userDefaults.bool(forKey: "OnboardedToProfileFeature")
+        onboardingView.shouldLoad()
     }
+}
+
+extension OnboardingData {
+    fileprivate static let profileFeature = OnboardingData(previewImage: .profileOnboarding,
+                                                           previewAccent: .icon,
+                                                           featureTitle: "Welcome to our new profile management feature!",
+                                                           featureSummary: "You can update your username and password here.",
+                                                           appStorageKey: "OnboardedToProfileFeature",
+                                                           appStorageStore: .fromDI)
 }

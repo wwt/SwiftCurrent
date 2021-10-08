@@ -31,6 +31,9 @@ public class AnyWorkflow {
     /// The count of the wrapped `Workflow`.
     public var count: Int { storageBase.count }
 
+    /// The first `LinkedList.Node` of the wrapped `Workflow`.
+    public var first: Element? { storageBase.first }
+
     fileprivate var storageBase: AnyWorkflowStorageBase
 
     /// Creates a type erased `Workflow`.
@@ -106,7 +109,8 @@ extension AnyWorkflow {
 
 fileprivate class AnyWorkflowStorageBase {
     var orchestrationResponder: OrchestrationResponder?
-    var count: Int { fatalError("Count not overridden by AnyWorkflowStorage") }
+    var count: Int { fatalError("count not overridden by AnyWorkflowStorage") }
+    var first: LinkedList<_WorkflowItem>.Element? { fatalError("first not overridden by AnyWorkflowStorage") }
 
     // https://github.com/wwt/SwiftCurrent/blob/main/.github/STYLEGUIDE.md#type-erasure
     // swiftlint:disable:next unavailable_function
@@ -151,6 +155,8 @@ fileprivate final class AnyWorkflowStorage<F: FlowRepresentable>: AnyWorkflowSto
     }
 
     override var count: Int { workflow.count }
+
+    override var first: LinkedList<_WorkflowItem>.Element? { workflow.first }
 
     init(_ workflow: Workflow<F>) {
         self.workflow = workflow

@@ -10,44 +10,46 @@ import SwiftUI
 import SwiftCurrent
 
 struct ProfileFeatureView: View, FlowRepresentable {
+    let inspection = Inspection<Self>() // ViewInspector
     @DependencyInjected private static var userDefaults: UserDefaults!
     weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
-        ScrollView {
-            VStack {
-                VStack {
-                    Image(systemName: "person.fill.questionmark")
-                        .renderingMode(.template)
-                        .resizable()
-                        .frame(width: 150, height: 150)
-                        .padding(35)
-                        .background(
-                            Circle().stroke(Color.white, lineWidth: 4)
-                                .shadow(radius: 7)
-                        )
-                    Text("Your name here").font(.title)
+        VStack {
+            Image.wwtLogo
+                .resizable()
+                .scaledToFit()
+                .frame(width: 150, height: 150)
+                .padding(35)
+                .background(
+                    Circle().stroke(Color.icon, lineWidth: 4)
+                        .shadow(color: .icon, radius: 7)
+                )
+                .padding()
+                .frame(width: 300, height: 300)
+                .onTapGesture(count: 5, perform: clearUserDefaults)
+            ScrollView {
                     Divider()
-                }
-                VStack {
-                    Section(header: Text("Account Information:").font(.title)) {
+                    Section(header: Text("Account Information").font(.title)) {
                         AccountInformationView().padding()
                     }
-                    Divider()
-                }
-                VStack {
-                    Button("Clear User Defaults") {
-                        Self.userDefaults.dictionaryRepresentation().keys.forEach(Self.userDefaults.removeObject(forKey:))
-                    }
-                }
-                Spacer()
+                    Spacer()
             }
+            .background(Color.card)
         }
+        .background(Color.primaryBackground)
+        .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
+    }
+
+    private func clearUserDefaults() {
+        Self.userDefaults.dictionaryRepresentation().keys.forEach(Self.userDefaults.removeObject(forKey:))
+        print("Defaults cleared")
     }
 }
 
-struct ProfileFeature_Previews: PreviewProvider {
+struct UpdatedProfileFeature_Previews: PreviewProvider {
     static var previews: some View {
         ProfileFeatureView()
+            .preferredColorScheme(.dark)
     }
 }
