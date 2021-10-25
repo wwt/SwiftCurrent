@@ -42,16 +42,19 @@ jobs:
           .github/build-xcframework.sh SwiftCurrent "iOS" "iOS Simulator" "WatchOS" "WatchOS Simulator" "TvOS" "TvOS Simulator" "macOS"
           .github/build-xcframework.sh SwiftCurrent_UIKit "iOS" "iOS Simulator" "TvOS" "TvOS Simulator"
           .github/build-xcframework.sh SwiftCurrent_SwiftUI "iOS" "iOS Simulator" "WatchOS" "WatchOS Simulator" "TvOS" "TvOS Simulator" "macOS"
+          .github/build-xcframework.sh SwiftCurrent_Testing "iOS" "iOS Simulator" "WatchOS" "WatchOS Simulator" "TvOS" "TvOS Simulator" "macOS"
           echo "Zipping SwiftCurrent.xcframework"
           zip -r SwiftCurrent-framework.zip SwiftCurrent.xcframework
           echo "Zipping SwiftCurrent_UIKit.xcframework"
           zip -r SwiftCurrent_UIKit-framework.zip SwiftCurrent_UIKit.xcframework
           echo "Zipping SwiftCurrent_SwiftUI.xcframework"
           zip -r SwiftCurrent_SwiftUI-framework.zip SwiftCurrent_SwiftUI.xcframework
+          echo "Zipping SwiftCurrent_Testing.xcframework"
+          zip -r SwiftCurrent_Testing-framework.zip SwiftCurrent_Testing.xcframework
       - name: Create a GitHub release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "SwiftCurrent-framework.zip,SwiftCurrent_UIKit-framework.zip,SwiftCurrent_SwiftUI-framework.zip"
+          artifacts: "SwiftCurrent-framework.zip,SwiftCurrent_UIKit-framework.zip,SwiftCurrent_SwiftUI-framework.zip,SwiftCurrent_Testing-framework.zip"
           body: ${{steps.build_changelog.outputs.changelog}}
           token: ${{ secrets.RELEASE_PAT }}
           tag: ${{ steps.bump_version.outputs.version }}
