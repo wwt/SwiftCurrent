@@ -1,0 +1,26 @@
+@Tutorial(time: 25) {
+    @Intro(title: "SwiftCurrent with SwiftUI") {
+        SwiftUI text        
+    }
+    
+    @Section(title: "SwiftUI") {
+        @ContentAndMedia {
+            In this section you'll see the components that SwiftCurrent utilizes to support SwiftUI applications.
+        }
+        
+        @Steps {
+            @Step {
+                Start with Launcher.
+                
+                @Code(name: "Launcher.swift", file: "Launcher.swift", reset: true)
+            }
+            
+            @Step {
+                Next WorkflowViewModel.
+                
+                @Code(name: "WorkflowViewModel.swift", file: "WorkflowViewModel.swift", reset: true)
+            }
+        }
+    }
+    
+}

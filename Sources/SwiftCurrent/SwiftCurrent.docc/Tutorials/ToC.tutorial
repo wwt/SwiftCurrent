@@ -10,4 +10,12 @@
         
         @TutorialReference(tutorial: "doc:Core")
     }
+    
+    @Chapter(name: "Understanding SwiftCurrent - SwiftUI") {
+        text
+        
+        @Image(source: <#file#>, alt: "<#accessible description#>")
+        
+        @TutorialReference(tutorial: "doc:SwiftCurrent_SwiftUI")
+    }
 }
