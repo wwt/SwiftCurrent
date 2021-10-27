@@ -13,7 +13,7 @@ import Swinject
 import SwiftCurrent
 
 struct MapFeatureOnboardingView: View, FlowRepresentable {
-    private var userDefaults: UserDefaults! { Container.default.resolve(UserDefaults.self) }
+    @AppStorage("OnboardedToMapFeature", store: .fromDI) private var onboardedToMapFeature = false
 
     let inspection = Inspection<Self>() // ViewInspector
     weak var _workflowPointer: AnyFlowRepresentable?
@@ -22,13 +22,13 @@ struct MapFeatureOnboardingView: View, FlowRepresentable {
         VStack {
             Text("Learn about our awesome map feature!")
             Button("Continue") {
-                userDefaults.set(true, forKey: "OnboardedToMapFeature")
+                onboardedToMapFeature = true
                 proceedInWorkflow()
             }
         }.onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 
     func shouldLoad() -> Bool {
-        !userDefaults.bool(forKey: "OnboardedToMapFeature")
+        !onboardedToMapFeature
     }
 }

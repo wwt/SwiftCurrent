@@ -7,9 +7,10 @@
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 
 import SwiftUI
+import SwiftCurrent
 import SwiftCurrent_SwiftUI
 
-struct ContentView: View {
+struct ContentView: View, FlowRepresentable {
     let inspection = Inspection<Self>() // ViewInspector
     enum Tab {
         case map
@@ -17,6 +18,7 @@ struct ContentView: View {
         case profile
     }
     @State var selectedTab: Tab = .map
+    weak var _workflowPointer: AnyFlowRepresentable?
     var body: some View {
         TabView(selection: $selectedTab) {
             // NOTE: Using constant here guarantees the workflow cannot abandon, it stays launched forever.

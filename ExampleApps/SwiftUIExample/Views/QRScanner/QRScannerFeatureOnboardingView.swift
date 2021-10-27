@@ -11,7 +11,7 @@ import SwiftCurrent
 import Swinject
 
 struct QRScannerFeatureOnboardingView: View, FlowRepresentable {
-    private var userDefaults: UserDefaults! { Container.default.resolve(UserDefaults.self) }
+    @AppStorage("OnboardedToQRScanningFeature", store: .fromDI) private var onboardedToQRScanningFeature = false
 
     let inspection = Inspection<Self>() // ViewInspector
     weak var _workflowPointer: AnyFlowRepresentable?
@@ -20,7 +20,7 @@ struct QRScannerFeatureOnboardingView: View, FlowRepresentable {
         VStack {
             Text("Learn about our awesome QR scanning feature!")
             Button("Continue") {
-                userDefaults.set(true, forKey: "OnboardedToQRScanningFeature")
+                onboardedToQRScanningFeature = true
                 proceedInWorkflow()
             }
         }
@@ -28,6 +28,6 @@ struct QRScannerFeatureOnboardingView: View, FlowRepresentable {
     }
 
     func shouldLoad() -> Bool {
-        !userDefaults.bool(forKey: "OnboardedToQRScanningFeature")
+        !onboardedToQRScanningFeature
     }
 }

@@ -10,7 +10,7 @@
  A doubly linked list of `FlowRepresentableMetadata`s; used to define a process.
 
  ### Discussion
- In a sufficiently complex application it may make sense to create a structure to hold onto all the workflows in an application.
+ In a sufficiently complex application, it may make sense to create a structure to hold onto all the workflows in an application.
 
  #### Example
  ```swift

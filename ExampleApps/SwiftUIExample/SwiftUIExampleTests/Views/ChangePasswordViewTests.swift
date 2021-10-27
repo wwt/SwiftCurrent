@@ -17,9 +17,7 @@ final class ChangePasswordViewTests: XCTestCase, View {
     func testChangePasswordView() throws {
         let currentPassword = UUID().uuidString
         let exp = ViewHosting.loadView(ChangePasswordView(with: currentPassword)).inspection.inspect { view in
-            XCTAssertNoThrow(try view.vStack().textField(1))
-            XCTAssertNoThrow(try view.vStack().textField(2))
-            XCTAssertNoThrow(try view.vStack().textField(3))
+            XCTAssertEqual(view.findAll(PasswordField.self).count, 3)
             XCTAssertNoThrow(try view.find(ViewType.Button.self))
         }
         wait(for: [exp], timeout: TestConstant.timeout)
@@ -32,9 +30,9 @@ final class ChangePasswordViewTests: XCTestCase, View {
             thenProceed(with: ChangePasswordView.self)
         }
         .onFinish { _ in onFinish.fulfill() }).inspection.inspect { view in
-            XCTAssertNoThrow(try view.find(ViewType.TextField.self).setInput(currentPassword))
-            XCTAssertNoThrow(try view.find(ViewType.TextField.self, skipFound: 1).setInput("asdfF1"))
-            XCTAssertNoThrow(try view.find(ViewType.TextField.self, skipFound: 2).setInput("asdfF1"))
+            XCTAssertNoThrow(try view.find(ViewType.SecureField.self).setInput(currentPassword))
+            XCTAssertNoThrow(try view.find(ViewType.SecureField.self, skipFound: 1).setInput("asdfF1"))
+            XCTAssertNoThrow(try view.find(ViewType.SecureField.self, skipFound: 2).setInput("asdfF1"))
             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
         }
         wait(for: [exp, onFinish], timeout: TestConstant.timeout)
@@ -43,9 +41,9 @@ final class ChangePasswordViewTests: XCTestCase, View {
     func testErrorsDoNotShowUp_IfFormWasNotSubmitted() throws {
         let currentPassword = UUID().uuidString
         let exp = ViewHosting.loadView(ChangePasswordView(with: currentPassword)).inspection.inspect { view in
-            XCTAssertNoThrow(try view.vStack().textField(1).setInput(currentPassword))
-            XCTAssertNoThrow(try view.vStack().textField(2).setInput("asdfF1"))
-            XCTAssertNoThrow(try view.vStack().textField(3).setInput("asdfF1"))
+            XCTAssertNoThrow(try view.find(ViewType.SecureField.self).setInput(currentPassword))
+            XCTAssertNoThrow(try view.find(ViewType.SecureField.self, skipFound: 1).setInput("asdfF1"))
+            XCTAssertNoThrow(try view.find(ViewType.SecureField.self, skipFound: 2).setInput("asdfF1"))
             XCTAssertNoThrow(try view.find(ViewType.Button.self))
         }
         wait(for: [exp], timeout: TestConstant.timeout)
@@ -54,7 +52,7 @@ final class ChangePasswordViewTests: XCTestCase, View {
     func testIncorrectOldPassword_PrintsError() throws {
         let currentPassword = UUID().uuidString
         let exp = ViewHosting.loadView(ChangePasswordView(with: currentPassword)).inspection.inspect { view in
-            XCTAssertNoThrow(try view.vStack().textField(1).setInput("WRONG"))
+            XCTAssertNoThrow(try view.find(ViewType.SecureField.self).setInput("WRONG"))
             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
             XCTAssert(try view.vStack().text(0).string().contains("Old password does not match records"))
         }
@@ -64,9 +62,9 @@ final class ChangePasswordViewTests: XCTestCase, View {
     func testPasswordsNotMatching_PrintsError() throws {
         let currentPassword = UUID().uuidString
         let exp = ViewHosting.loadView(ChangePasswordView(with: currentPassword)).inspection.inspect { view in
-            XCTAssertNoThrow(try view.vStack().textField(1).setInput(currentPassword))
-            XCTAssertNoThrow(try view.vStack().textField(2).setInput(UUID().uuidString))
-            XCTAssertNoThrow(try view.vStack().textField(3).setInput(UUID().uuidString))
+            XCTAssertNoThrow(try view.find(ViewType.SecureField.self).setInput(currentPassword))
+            XCTAssertNoThrow(try view.find(ViewType.SecureField.self, skipFound: 1).setInput(UUID().uuidString))
+            XCTAssertNoThrow(try view.find(ViewType.SecureField.self, skipFound: 2).setInput(UUID().uuidString))
             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
             XCTAssert(try view.vStack().text(0).string().contains("New password and confirmation password do not match"))
         }
@@ -76,7 +74,7 @@ final class ChangePasswordViewTests: XCTestCase, View {
     func testPasswordsNotHavingUppercase_PrintsError() throws {
         let currentPassword = UUID().uuidString
         let exp = ViewHosting.loadView(ChangePasswordView(with: currentPassword)).inspection.inspect { view in
-            XCTAssertNoThrow(try view.vStack().textField(2).setInput("asdf1"))
+            XCTAssertNoThrow(try view.find(ViewType.SecureField.self, skipFound: 1).setInput("asdf1"))
             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
             XCTAssert(try view.vStack().text(0).string().contains("Password must contain at least one uppercase character"))
         }
@@ -86,7 +84,7 @@ final class ChangePasswordViewTests: XCTestCase, View {
     func testPasswordsNotHavingNumber_PrintsError() throws {
         let currentPassword = UUID().uuidString
         let exp = ViewHosting.loadView(ChangePasswordView(with: currentPassword)).inspection.inspect { view in
-            XCTAssertNoThrow(try view.vStack().textField(2).setInput("asdfF"))
+            XCTAssertNoThrow(try view.find(ViewType.SecureField.self, skipFound: 1).setInput("asdfF"))
             XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
             XCTAssert(try view.vStack().text(0).string().contains("Password must contain at least one number"))
         }

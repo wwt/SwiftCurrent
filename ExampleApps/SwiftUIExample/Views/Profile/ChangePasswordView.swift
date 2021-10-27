@@ -11,9 +11,9 @@ import SwiftCurrent
 
 struct ChangePasswordView: View, FlowRepresentable {
     typealias WorkflowOutput = String
-    @State private var oldPassword: String = ""
-    @State private var newPassword: String = ""
-    @State private var confirmNewPassword: String = ""
+    @State private var oldPassword = ""
+    @State private var newPassword = ""
+    @State private var confirmNewPassword = ""
     @State private var submitted = false
     @State private var errors = [String]()
 
@@ -31,21 +31,23 @@ struct ChangePasswordView: View, FlowRepresentable {
         VStack {
             if !errors.isEmpty {
                 Text(errors.joined(separator: "\n")).foregroundColor(Color.red)
+                    .transition(.scale)
             }
-            TextField("Old Password", text: $oldPassword)
-                .autocapitalization(.none)
-                .disableAutocorrection(true)
-            TextField("New Password", text: $newPassword)
-                .autocapitalization(.none)
-                .disableAutocorrection(true)
-            TextField("Confirm New Password", text: $confirmNewPassword)
-                .autocapitalization(.none)
-                .disableAutocorrection(true)
-            Button("Save") {
+
+            PasswordField(placeholder: "Old Password", password: $oldPassword)
+
+            PasswordField(placeholder: "New Password", password: $newPassword)
+
+            PasswordField(placeholder: "Confirm New Password", password: $confirmNewPassword)
+                .padding(.bottom)
+
+            PrimaryButton(title: "SAVE") {
                 submitted = true
                 validatePassword(newPassword)
                 if errors.isEmpty {
-                    proceedInWorkflow(newPassword)
+                    withAnimation {
+                        proceedInWorkflow(newPassword)
+                    }
                 }
             }
         }
@@ -56,25 +58,38 @@ struct ChangePasswordView: View, FlowRepresentable {
     }
 
     private func validateOldPassword(_ password: String) {
-        errors.removeAll()
-        guard submitted else { return }
-        if password != currentPassword {
-            errors.append("Old password does not match records")
+        withAnimation {
+            errors.removeAll()
+            guard submitted else { return }
+            if password != currentPassword {
+                errors.append("Old password does not match records")
+            }
         }
     }
 
     private func validatePassword(_ password: String) {
         guard submitted else { return }
-        validateOldPassword(oldPassword)
-        switch password {
-            case _ where !password.contains { $0.isUppercase }:
-                errors.append("Password must contain at least one uppercase character")
-            case _ where !password.contains { $0.isNumber }:
-                errors.append("Password must contain at least one number")
-            default: break
+        withAnimation {
+            validateOldPassword(oldPassword)
+            switch password {
+                case _ where !password.contains { $0.isUppercase }:
+                    errors.append("Password must contain at least one uppercase character")
+                case _ where !password.contains { $0.isNumber }:
+                    errors.append("Password must contain at least one number")
+                default: break
+            }
+
+            if newPassword != confirmNewPassword {
+                errors.append("New password and confirmation password do not match")
+            }
         }
-        if newPassword != confirmNewPassword {
-            errors.append("New password and confirmation password do not match")
-        }
+    }
+}
+
+struct UpdatedChangePasswordView_Previews: PreviewProvider {
+    static var previews: some View {
+        ChangePasswordView(with: "Username input")
+            .preferredColorScheme(.dark)
+            .background(Color.primaryBackground)
     }
 }

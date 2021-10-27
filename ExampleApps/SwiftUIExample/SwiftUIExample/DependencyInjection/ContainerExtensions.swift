@@ -7,7 +7,12 @@
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 
 import Swinject
+import Foundation
 
 extension Container {
     static let `default` = Container()
+}
+
+extension UserDefaults {
+    static var fromDI: UserDefaults? { Container.default.resolve(Self.self) }
 }
