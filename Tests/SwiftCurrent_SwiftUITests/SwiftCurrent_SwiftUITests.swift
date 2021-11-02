@@ -682,6 +682,25 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         XCTAssertNoThrow(try stack.button(0).tap())
         XCTAssertNoThrow(try launcher.view(WorkflowItem<FR1, Never, FR1>.self))
     }
+
+    func testLaunchingAWorkflowFromAnAnyWorkflow() {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+
+            var body: some View {
+                Button("Proceed") { proceedInWorkflow() }
+            }
+        }
+
+        let wf = Workflow(FR1.self)
+        let launcher = WorkflowLauncher(isLaunched: .constant(true), workflow: wf)
+
+        let exp = ViewHosting.loadView(launcher).inspection.inspect { view in
+            XCTAssertNoThrow(try view.find(FR1.self))
+        }
+
+        wait(for: [exp], timeout: TestConstant.timeout)
+    }
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)

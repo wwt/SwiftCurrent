@@ -80,6 +80,38 @@ public struct WorkflowLauncher<Content: View>: View {
     /**
      Creates a base for proceeding with a `WorkflowItem`.
      - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
+     - Parameter workflow: workflow that holds the `WorkflowItem`
+     */
+    public init<F: FlowRepresentable & View>(isLaunched: Binding<Bool>, workflow: Workflow<F>) where Content == AnyWorkflowItem {
+        self.init(isLaunched: isLaunched, workflow: AnyWorkflow(workflow))
+    }
+
+    /**
+     Creates a base for proceeding with a `WorkflowItem`.
+     - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
+     - Parameter workflow: workflow that holds the `WorkflowItem`
+     */
+    private init(isLaunched: Binding<Bool>, workflow: AnyWorkflow) where Content == AnyWorkflowItem {
+        workflow.forEach {
+            assert($0.value.metadata is ExtendedFlowRepresentableMetadata)
+        }
+        _isLaunched = isLaunched
+        let model = WorkflowViewModel(isLaunched: isLaunched, launchArgs: .none)
+        _model = StateObject(wrappedValue: model)
+        _launcher = StateObject(wrappedValue: Launcher(workflow: workflow,
+                                                       responder: model,
+                                                       launchArgs: .none))
+
+        guard let workflowItem = (workflow.first?.value.metadata as? ExtendedFlowRepresentableMetadata)?.workflowItemFactory(nil) else {
+            fatalError("WorkflowItem was nil")
+        }
+
+        _content = State(wrappedValue: workflowItem)
+    }
+
+    /**
+     Creates a base for proceeding with a `WorkflowItem`.
+     - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
      - Parameter content: closure that holds the `WorkflowItem`
      */
     public init<F, W, C>(isLaunched: Binding<Bool>, content: () -> Content) where Content == WorkflowItem<F, W, C>, F.WorkflowInput == Never {

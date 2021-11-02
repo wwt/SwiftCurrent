@@ -36,7 +36,7 @@ class FlowRepresentableMetadataConsumerTests: XCTestCase {
             var _workflowPointer: AnyFlowRepresentable?
         }
 
-        let foo = NewMetadata(flowRepresentableType: FR1.self,
+        let _ = NewMetadata(flowRepresentableType: FR1.self,
                               flowPersistence: { _ in .default }) { _ in
             AnyFlowRepresentable(FR1.self, args: .none)
         }
