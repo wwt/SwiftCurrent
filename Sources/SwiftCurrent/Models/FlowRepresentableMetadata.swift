@@ -14,7 +14,7 @@ import Foundation
  ### Discussion
  Every time a `Workflow` is created, the defining characteristics about a `FlowRepresentable` are stored in the `FlowRepresentableMetadata` to be used later.
  */
-public class FlowRepresentableMetadata {
+open class FlowRepresentableMetadata {
     /// Preferred `LaunchStyle` of the associated `FlowRepresentable`.
     public private(set) var launchStyle: LaunchStyle
     /// Preferred `FlowPersistence` of  the associated `FlowRepresentable`; set when `FlowRepresentableMetadata` instantiates an instance.
