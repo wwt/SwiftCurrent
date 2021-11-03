@@ -742,30 +742,11 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         }
 
         let wf = Workflow(FR1.self)
-        let launcher = WorkflowLauncher(isLaunched: .constant(true), workflow: wf)
-
-        let exp = ViewHosting.loadView(launcher).inspection.inspect { view in
-            XCTAssertNoThrow(try view.find(FR1.self))
-        }
-
-        wait(for: [exp], timeout: TestConstant.timeout)
-    }
-
-    func testLaunchingLongerWorkflowFromAnyWorkflow() {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            weak var _workflowPointer: AnyFlowRepresentable?
-
-            var body: some View {
-                Button("Proceed") { proceedInWorkflow() }
-            }
-        }
-
-        let wf = Workflow(FR1.self)
             .thenProceed(with: FR1.self) { .default }
             .thenProceed(with: FR1.self) { .default }
             .thenProceed(with: FR1.self) { .default }
             .thenProceed(with: FR1.self) { .default }
-        
+
         let launcher = WorkflowLauncher(isLaunched: .constant(true), workflow: wf)
 
         let exp = ViewHosting.loadView(launcher).inspection.inspect { view in
