@@ -89,26 +89,26 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         _modifierClosure = State(initialValue: modifierClosure)
         _flowPersistenceClosure = State(initialValue: flowPersistenceClosure)
         _launchStyle = State(initialValue: launchStyle)
-        let metadata = FlowRepresentableMetadata(F.self,
-                                                 launchStyle: launchStyle.rawValue,
-                                                 flowPersistence: flowPersistenceClosure,
-                                                 flowRepresentableFactory: factory)
+        let metadata = ExtendedFlowRepresentableMetadata(flowRepresentableType: F.self,
+                                                         launchStyle: launchStyle.rawValue,
+                                                         flowPersistence: flowPersistenceClosure,
+                                                         flowRepresentableFactory: factory)
         _metadata = State(initialValue: metadata)
     }
 
     init(_ item: F.Type) where Wrapped == Never, Content == F {
-        let metadata = FlowRepresentableMetadata(Content.self,
-                                                 launchStyle: .new,
-                                                 flowPersistence: flowPersistenceClosure,
-                                                 flowRepresentableFactory: factory)
+        let metadata = ExtendedFlowRepresentableMetadata(flowRepresentableType: Content.self,
+                                                         launchStyle: .new,
+                                                         flowPersistence: flowPersistenceClosure,
+                                                         flowRepresentableFactory: factory)
         _metadata = State(initialValue: metadata)
     }
 
     init(_ item: F.Type, wrapped: () -> Wrapped) where Content == F {
-        let metadata = FlowRepresentableMetadata(Content.self,
-                                                 launchStyle: .new,
-                                                 flowPersistence: flowPersistenceClosure,
-                                                 flowRepresentableFactory: factory)
+        let metadata = ExtendedFlowRepresentableMetadata(flowRepresentableType: Content.self,
+                                                         launchStyle: .new,
+                                                         flowPersistence: flowPersistenceClosure,
+                                                         flowRepresentableFactory: factory)
         _metadata = State(initialValue: metadata)
         _wrapped = State(initialValue: wrapped())
     }

@@ -28,4 +28,36 @@ extension Workflow where F: FlowRepresentable & View {
     public func abandon() {
         AnyWorkflow(self).abandon()
     }
+
+    /**
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
+     - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
+     - Parameter launchStyle: the `LaunchStyle` the `FlowRepresentable` should use while it's part of this workflow.
+     - Parameter flowPersistence: a closure returning a `FlowPersistence` representing how this item in the workflow should persist.
+     - Returns: a new workflow with the additional `FlowRepresentable` item.
+     */
+    public func thenProceed<F: FlowRepresentable & View>(with type: F.Type,
+                                                         launchStyle: LaunchStyle = .default,
+                                                         flowPersistence: @escaping (F.WorkflowInput) -> FlowPersistence) -> Workflow<F> where F.WorkflowInput == AnyWorkflow.PassedArgs {
+        let workflow = Workflow<F>(first)
+        workflow.append(ExtendedFlowRepresentableMetadata(flowRepresentableType: type,
+                                                          launchStyle: launchStyle) { flowPersistence($0) })
+        return workflow
+    }
+
+    /**
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
+     - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
+     - Parameter launchStyle: the `LaunchStyle` the `FlowRepresentable` should use while it's part of this workflow.
+     - Parameter flowPersistence: a closure returning a `FlowPersistence` representing how this item in the workflow should persist.
+     - Returns: a new workflow with the additional `FlowRepresentable` item.
+     */
+    public func thenProceed<F: FlowRepresentable & View>(with type: F.Type,
+                                                         launchStyle: LaunchStyle = .default,
+                                                         flowPersistence: @escaping () -> FlowPersistence) -> Workflow<F> where F.WorkflowInput == Never {
+        let workflow = Workflow<F>(first)
+        workflow.append(ExtendedFlowRepresentableMetadata(flowRepresentableType: type,
+                                                          launchStyle: launchStyle) { _ in flowPersistence() })
+        return workflow
+    }
 }

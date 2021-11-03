@@ -102,11 +102,24 @@ public struct WorkflowLauncher<Content: View>: View {
                                                        responder: model,
                                                        launchArgs: .none))
 
-        guard let workflowItem = (workflow.first?.value.metadata as? ExtendedFlowRepresentableMetadata)?.workflowItemFactory(nil) else {
-            fatalError("WorkflowItem was nil")
-        }
+        /* Maybe pull the below into its own function? */
+        let lastMetadata = workflow.last?.value.metadata as? ExtendedFlowRepresentableMetadata
+        let lastItem = lastMetadata?.workflowItemFactory(nil)
 
-        _content = State(wrappedValue: workflowItem)
+        if let headItem = WorkflowLauncher.findHeadItem(element: workflow.last, item: lastItem) {
+            _content = State(wrappedValue: headItem)
+        } else if let lastItem = lastItem {
+            _content = State(wrappedValue: lastItem)
+        } else {
+            fatalError("Workflow has no items to launch")
+        }
+    }
+
+    static func findHeadItem(element: AnyWorkflow.Element?, item: AnyWorkflowItem?) -> AnyWorkflowItem? {
+        guard let previous = element?.previous,
+              let previousItem = (previous.value.metadata as? ExtendedFlowRepresentableMetadata)?.workflowItemFactory(item) else { return item }
+
+        return findHeadItem(element: previous, item: previousItem)
     }
 
     /**
