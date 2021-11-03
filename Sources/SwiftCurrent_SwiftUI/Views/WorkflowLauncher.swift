@@ -102,24 +102,7 @@ public struct WorkflowLauncher<Content: View>: View {
                                                        responder: model,
                                                        launchArgs: .none))
 
-        /* Maybe pull the below into its own function? */
-        let lastMetadata = workflow.last?.value.metadata as? ExtendedFlowRepresentableMetadata
-        let lastItem = lastMetadata?.workflowItemFactory(nil)
-
-        if let headItem = WorkflowLauncher.findHeadItem(element: workflow.last, item: lastItem) {
-            _content = State(wrappedValue: headItem)
-        } else if let lastItem = lastItem {
-            _content = State(wrappedValue: lastItem)
-        } else {
-            fatalError("Workflow has no items to launch")
-        }
-    }
-
-    static func findHeadItem(element: AnyWorkflow.Element?, item: AnyWorkflowItem?) -> AnyWorkflowItem? {
-        guard let previous = element?.previous,
-              let previousItem = (previous.value.metadata as? ExtendedFlowRepresentableMetadata)?.workflowItemFactory(item) else { return item }
-
-        return findHeadItem(element: previous, item: previousItem)
+        _content = State(wrappedValue: WorkflowLauncher.itemToLaunch(from: workflow))
     }
 
     /**
@@ -210,6 +193,26 @@ public struct WorkflowLauncher<Content: View>: View {
     private func _onFinish(_ args: AnyWorkflow.PassedArgs?) {
         guard let args = args else { return }
         onFinish.forEach { $0(args) }
+    }
+
+    private static func itemToLaunch(from workflow: AnyWorkflow) -> AnyWorkflowItem {
+        let lastMetadata = workflow.last?.value.metadata as? ExtendedFlowRepresentableMetadata
+        let lastItem = lastMetadata?.workflowItemFactory(nil)
+
+        if let headItem = WorkflowLauncher.findHeadItem(element: workflow.last, item: lastItem) {
+            return headItem
+        } else if let lastItem = lastItem {
+            return lastItem
+        }
+
+        fatalError("Workflow has no items to launch")
+    }
+
+    private static func findHeadItem(element: AnyWorkflow.Element?, item: AnyWorkflowItem?) -> AnyWorkflowItem? {
+        guard let previous = element?.previous,
+              let previousItem = (previous.value.metadata as? ExtendedFlowRepresentableMetadata)?.workflowItemFactory(item) else { return item }
+
+        return findHeadItem(element: previous, item: previousItem)
     }
 
     /// Adds an action to perform when this `Workflow` has finished.
