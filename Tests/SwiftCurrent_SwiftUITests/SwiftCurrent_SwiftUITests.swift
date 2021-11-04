@@ -732,7 +732,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         wait(for: [exp], timeout: TestConstant.timeout)
     }
 
-    func testLaunchingAWorkflowFromAnAnyWorkflow() {
+    func testLaunchingAWorkflowWithOneItemFromAnAnyWorkflow() {
         struct FR1: View, FlowRepresentable, Inspectable {
             weak var _workflowPointer: AnyFlowRepresentable?
 
@@ -742,10 +742,6 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         }
 
         let wf = Workflow(FR1.self)
-            .thenProceed(with: FR1.self) { .default }
-            .thenProceed(with: FR1.self) { .default }
-            .thenProceed(with: FR1.self) { .default }
-            .thenProceed(with: FR1.self) { .default }
 
         let launcher = WorkflowLauncher(isLaunched: .constant(true), workflow: wf)
 
@@ -754,6 +750,97 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         }
 
         wait(for: [exp], timeout: TestConstant.timeout)
+    }
+
+    func testLaunchingAMultiTypeLongWorkflowFromAnAnyWorkflow() {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable { // Passthrough
+            typealias WorkflowOutput = AnyWorkflow.PassedArgs
+            var _workflowPointer: AnyFlowRepresentable?
+            private let data: AnyWorkflow.PassedArgs
+            var body: some View { Text("FR2 type") }
+
+            init(with data: AnyWorkflow.PassedArgs) {
+                self.data = data
+            }
+        }
+//        struct FR3: View, FlowRepresentable, Inspectable {
+//            let str: String
+//            init(with str: String) {
+//                self.str = str
+//            }
+//            var _workflowPointer: AnyFlowRepresentable?
+//            var body: some View { Text("FR3 type, \(str)") }
+//        }
+//        struct FR4: View, FlowRepresentable, Inspectable {
+//            var _workflowPointer: AnyFlowRepresentable?
+//            var body: some View { Text("FR4 type") }
+//        }
+
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let expectedArgs = UUID().uuidString
+
+        let wf = Workflow(FR1.self)
+            .thenProceed(with: FR2.self) { .default }
+
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowLauncher(isLaunched: .constant(true), workflow: wf)
+            .onFinish { _ in
+                expectOnFinish.fulfill()
+            }).inspection.inspect { viewUnderTest in
+                XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
+                XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+                try viewUnderTest.actualView().inspect { viewUnderTest in
+                    XCTAssertEqual(try viewUnderTest.find(FR2.self).text().string(), "FR2 type")
+                    XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow(.args(expectedArgs)))
+                }
+            }
+
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
+    }
+
+    func testLaunchingAWorkflowFromAnAnyWorkflow() {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, PassthroughFlowRepresentable, Inspectable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR3 type") }
+        }
+
+        let wf = Workflow(FR1.self)
+            .thenProceed(with: FR2.self, flowPersistence: { .default })
+            .thenProceed(with: FR3.self, flowPersistence: { .default })
+
+        let launcher = WorkflowLauncher(isLaunched: .constant(true), workflow: wf)
+        let expectOnFinish = expectation(description: "OnFinish called")
+
+        let expectViewLoaded = ViewHosting.loadView(
+                launcher
+            .onFinish { _ in
+                expectOnFinish.fulfill()
+            }).inspection.inspect { viewUnderTest in
+                XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
+                XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+                try viewUnderTest.actualView().inspect { viewUnderTest in
+                    XCTAssertEqual(try viewUnderTest.find(FR2.self).text().string(), "FR2 type")
+                    XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                    try viewUnderTest.actualView().inspect { viewUnderTest in
+                        XCTAssertEqual(try viewUnderTest.find(FR3.self).text().string(), "FR3 type")
+                        XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
+                    }
+                }
+            }
+
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testIfNoWorkflowItemsThenFatalError() throws {

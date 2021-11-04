@@ -38,13 +38,16 @@ extension Workflow where F: FlowRepresentable & View {
      */
     public func thenProceed<F: FlowRepresentable & View>(with type: F.Type,
                                                          launchStyle: LaunchStyle = .default,
-                                                         flowPersistence: @escaping (F.WorkflowInput) -> FlowPersistence) -> Workflow<F> where F.WorkflowInput == AnyWorkflow.PassedArgs {
+                                                         flowPersistence: @escaping () -> FlowPersistence) -> Workflow<F> where F.WorkflowInput == Never {
         let workflow = Workflow<F>(first)
         workflow.append(ExtendedFlowRepresentableMetadata(flowRepresentableType: type,
-                                                          launchStyle: launchStyle) { flowPersistence($0) })
+                                                          launchStyle: launchStyle) { _ in flowPersistence() })
         return workflow
     }
+}
 
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension Workflow where F: FlowRepresentable & View, F.WorkflowOutput == Never {
     /**
      Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
      - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
@@ -54,7 +57,26 @@ extension Workflow where F: FlowRepresentable & View {
      */
     public func thenProceed<F: FlowRepresentable & View>(with type: F.Type,
                                                          launchStyle: LaunchStyle = .default,
-                                                         flowPersistence: @escaping () -> FlowPersistence) -> Workflow<F> where F.WorkflowInput == Never {
+                                                         flowPersistence: @escaping () -> FlowPersistence) -> Workflow<F> where F.WorkflowInput == AnyWorkflow.PassedArgs {
+        let workflow = Workflow<F>(first)
+        workflow.append(ExtendedFlowRepresentableMetadata(flowRepresentableType: type,
+                                                          launchStyle: launchStyle) { _ in flowPersistence() })
+        return workflow
+    }
+}
+
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension Workflow where F: FlowRepresentable & View, F.WorkflowOutput == AnyWorkflow.PassedArgs {
+    /**
+     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the `FlowRepresentable.WorkflowInput` of this item.
+     - Parameter type: a reference to the next `FlowRepresentable`'s concrete type in the workflow.
+     - Parameter launchStyle: the `LaunchStyle` the `FlowRepresentable` should use while it's part of this workflow.
+     - Parameter flowPersistence: a closure returning a `FlowPersistence` representing how this item in the workflow should persist.
+     - Returns: a new workflow with the additional `FlowRepresentable` item.
+     */
+    public func thenProceed<F: FlowRepresentable & View>(with type: F.Type,
+                                                         launchStyle: LaunchStyle = .default,
+                                                         flowPersistence: @escaping () -> FlowPersistence) -> Workflow<F> where F.WorkflowInput == AnyWorkflow.PassedArgs {
         let workflow = Workflow<F>(first)
         workflow.append(ExtendedFlowRepresentableMetadata(flowRepresentableType: type,
                                                           launchStyle: launchStyle) { _ in flowPersistence() })
