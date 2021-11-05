@@ -757,7 +757,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable { // Passthrough
+        struct FR2: View, FlowRepresentable, Inspectable {
             typealias WorkflowOutput = AnyWorkflow.PassedArgs
             var _workflowPointer: AnyFlowRepresentable?
             private let data: AnyWorkflow.PassedArgs
@@ -836,6 +836,68 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
                     try viewUnderTest.actualView().inspect { viewUnderTest in
                         XCTAssertEqual(try viewUnderTest.find(FR3.self).text().string(), "FR3 type")
                         XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
+                    }
+                }
+            }
+
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
+    }
+
+    func testWorkflowLaunchedFromAnAnyWorkflowCanHavePassthroughFlowRepresentableInTheMiddle() {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            typealias WorkflowOutput = String
+            var _workflowPointer: AnyFlowRepresentable?
+            private let data: AnyWorkflow.PassedArgs
+            var body: some View { Text("FR2 type") }
+
+            init(with args: AnyWorkflow.PassedArgs) {
+                self.data = args
+            }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable {
+            typealias WorkflowInput = String
+            let str: String
+            init(with str: String) {
+                self.str = str
+            }
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR3 type, \(str)") }
+        }
+        struct FR4: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR4 type") }
+        }
+
+        let wf = Workflow(FR1.self)
+            .thenProceed(with: FR2.self, flowPersistence: { .default })
+            .thenProceed(with: FR3.self, flowPersistence: { _ in .default })
+            .thenProceed(with: FR4.self, flowPersistence: { .default })
+
+        let launcher = WorkflowLauncher(isLaunched: .constant(true), workflow: wf)
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let expectedArgs = UUID().uuidString
+
+        let expectViewLoaded = ViewHosting.loadView(
+                launcher
+            .onFinish { _ in
+                expectOnFinish.fulfill()
+            }).inspection.inspect { viewUnderTest in
+                XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
+                XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+                try viewUnderTest.actualView().inspect { viewUnderTest in
+                    XCTAssertEqual(try viewUnderTest.find(FR2.self).text().string(), "FR2 type")
+                    XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow(expectedArgs))
+                    try viewUnderTest.actualView().inspect { viewUnderTest in
+                        XCTAssertEqual(try viewUnderTest.find(FR3.self).text().string(), "FR3 type, \(expectedArgs)")
+                        XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
+                        try viewUnderTest.actualView().inspect { viewUnderTest in
+                            XCTAssertEqual(try viewUnderTest.find(FR4.self).text().string(), "FR4 type")
+                            XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
+                        }
                     }
                 }
             }
