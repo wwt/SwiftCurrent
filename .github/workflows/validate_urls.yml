@@ -9,7 +9,7 @@ on:
         required: true
   schedule:
     - cron: '00 14,23 * * *'
-  workflow_run:
+  push:
     branches: [ gh-pages ]
     types: [ completed ]
 
