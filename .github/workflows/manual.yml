@@ -20,4 +20,4 @@ jobs:
         git_path: https://github.com/Richard-Gist/SwiftCurrent
         branch: ${{ github.event.inputs.branch }}
         file_types: .md,.swift
-        print_all: true
+        exclude_urls: https://github.com/wwt/SwiftCurrent/discussions/new
