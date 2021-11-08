@@ -1,17 +1,15 @@
 name: Validate URLs
 
 on:
+  page_build:
+  schedule:
+    - cron: '00 14,23 * * *'
   workflow_dispatch:
     inputs:
       branch:
         description: 'Branch to validate'
         default: 'main'
         required: true
-  schedule:
-    - cron: '00 14,23 * * *'
-  push:
-    branches: [ gh-pages ]
-    types: [ completed ]
 
 jobs:
   validate_documentation_links_on_branch:
