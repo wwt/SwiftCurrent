@@ -7,17 +7,23 @@ on:
         description: 'Branch to validate'
         default: 'main'
         required: true
+  schedule:
+    - cron: '05 22 * * *'
 
 jobs:
-  validate_documentation_links:
+  validate_documentation_links_on_branch:
     runs-on: ubuntu-latest
+    env:
+      DEFAULT_BRANCH: main
 
     steps:
-    - name: Send greeting
-      run: echo "Branch - ${{ github.event.inputs.branch }}"
+    - name: Configure variables
+      run: |
+        echo "GIT_BRANCH=${{ github.event.inputs.branch || env.DEFAULT_BRANCH }}" >> $GITHUB_ENV
+        echo "GIT_BRANCH=${{ env.GIT_BRANCH }}"
     - uses: urlstechie/urlchecker-action@master
       with:
         git_path: https://github.com/Richard-Gist/SwiftCurrent
-        branch: ${{ github.event.inputs.branch }}
+        branch: ${{ env.GIT_BRANCH }}
         file_types: .md,.swift
         exclude_urls: https://github.com/wwt/SwiftCurrent/discussions/new
