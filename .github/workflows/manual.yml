@@ -1,0 +1,23 @@
+name: Validate URLs
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to validate'
+        default: 'main'
+        required: true
+
+jobs:
+  validate_documentation_links:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Send greeting
+      run: echo "Branch - ${{ github.event.inputs.branch }}"
+    - uses: urlstechie/urlchecker-action@master
+      with:
+        git_path: https://github.com/Richard-Gist/SwiftCurrent
+        branch: ${{ github.event.inputs.branch }}
+        file_types: .md,.swift
+        print_all: true
