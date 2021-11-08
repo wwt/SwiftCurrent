@@ -68,8 +68,6 @@ jobs:
           ref: main
       - name: Install sourcekitten
         run: brew install sourcekitten
-      - name: Install jazzy
-        run: gem install jazzy
       - name: Generate documentation
         run: ./.github/document.sh
       - uses: JamesIves/github-pages-deploy-action@4.1.3
