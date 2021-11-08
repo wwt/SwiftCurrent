@@ -1,0 +1,41 @@
+name: Validate URLs
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to validate'
+        default: 'main'
+        required: true
+  schedule:
+    - cron: '00 14,23 * * *'
+  workflow_run:
+    branches: [ gh-pages ]
+    types: [ completed ]
+
+jobs:
+  validate_documentation_links_on_branch:
+    name: Validate links on branch
+    runs-on: ubuntu-latest
+    env:
+      DEFAULT_BRANCH: main
+    steps:
+    - name: Configure variables
+      run: echo "GIT_BRANCH=${{ github.event.inputs.branch || env.DEFAULT_BRANCH }}" >> $GITHUB_ENV
+    - uses: urlstechie/urlchecker-action@master
+      with:
+        git_path: https://github.com/Richard-Gist/SwiftCurrent
+        branch: ${{ env.GIT_BRANCH }}
+        file_types: .md,.swift
+        exclude_urls: https://github.com/wwt/SwiftCurrent/discussions/new
+        
+  validate_documentation_links_on_website:
+    name: Validate links on Github Pages
+    runs-on: ubuntu-latest
+    steps:
+    - uses: urlstechie/urlchecker-action@master
+      with:
+        git_path: https://github.com/Richard-Gist/SwiftCurrent
+        branch: gh-pages
+        file_types: .html
+        exclude_urls: https://github.com/wwt/SwiftCurrent/discussions/new
