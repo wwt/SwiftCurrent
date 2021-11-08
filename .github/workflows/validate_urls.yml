@@ -22,7 +22,7 @@ jobs:
       run: echo "GIT_BRANCH=${{ github.event.inputs.branch || env.DEFAULT_BRANCH }}" >> $GITHUB_ENV
     - uses: urlstechie/urlchecker-action@master
       with:
-        git_path: https://github.com/Richard-Gist/SwiftCurrent
+        git_path: https://github.com/wwt/SwiftCurrent
         branch: ${{ env.GIT_BRANCH }}
         file_types: .md,.swift
         exclude_urls: https://github.com/wwt/SwiftCurrent/discussions/new
@@ -33,7 +33,7 @@ jobs:
     steps:
     - uses: urlstechie/urlchecker-action@master
       with:
-        git_path: https://github.com/Richard-Gist/SwiftCurrent
+        git_path: https://github.com/wwt/SwiftCurrent
         branch: gh-pages
         file_types: .html
         exclude_urls: https://github.com/wwt/SwiftCurrent/discussions/new,https://github.com/realm/jazzy,https://realm.io,https://github.com/wwt/SwiftCurrent
