@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        description: 'Branch to validate'
+        description: 'Branch to crawl for broken links in .md and .swift files'
         default: 'main'
         required: true
 
