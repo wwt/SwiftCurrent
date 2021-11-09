@@ -24,6 +24,24 @@ extension Workflow where F: FlowRepresentable & View {
                                                     launchStyle: launchStyle) { _ in flowPersistence() })
     }
 
+    /**
+     Creates a `Workflow` with a `FlowRepresentable`.
+     - Parameter type: a reference to the first `FlowRepresentable`'s concrete type in the workflow.
+     - Parameter launchStyle: the `LaunchStyle` the `FlowRepresentable` should use while it's part of this workflow.
+     - Parameter flowPersistence: a `FlowPersistence` representing how this item in the workflow should persist.
+     */
+    public convenience init(_ type: F.Type,
+                            launchStyle: LaunchStyle = .default,
+                            flowPersistence: @escaping (F.WorkflowInput) -> FlowPersistence) {
+        self.init(ExtendedFlowRepresentableMetadata(flowRepresentableType: type,
+                                                    launchStyle: launchStyle) { data in
+            guard case.args(let extracted) = data,
+                  let cast = extracted as? F.WorkflowInput else { return .default }
+
+            return flowPersistence(cast)
+        })
+    }
+
     /// Called when the workflow should be terminated, and the app should return to the point before the workflow was launched.
     public func abandon() {
         AnyWorkflow(self).abandon()
