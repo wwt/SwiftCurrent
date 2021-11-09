@@ -83,7 +83,17 @@ public struct WorkflowLauncher<Content: View>: View {
      - Parameter workflow: workflow that holds the `WorkflowItem`
      */
     public init<F: FlowRepresentable & View>(isLaunched: Binding<Bool>, workflow: Workflow<F>) where Content == AnyWorkflowItem {
-        self.init(isLaunched: isLaunched, workflow: AnyWorkflow(workflow))
+        self.init(isLaunched: isLaunched, startingArgs: .none, workflow: AnyWorkflow(workflow))
+    }
+
+    /**
+     Creates a base for proceeding with a `WorkflowItem`.
+     - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
+     - Parameter startingArgs: arguments passed to the first `FlowRepresentable` in the underlying `Workflow`.
+     - Parameter workflow: workflow that holds the `WorkflowItem`
+     */
+    public init<F: FlowRepresentable & View>(isLaunched: Binding<Bool>, startingArgs: AnyWorkflow.PassedArgs, workflow: Workflow<F>) where Content == AnyWorkflowItem {
+        self.init(isLaunched: isLaunched, startingArgs: startingArgs, workflow: AnyWorkflow(workflow))
     }
 
     /**
@@ -91,16 +101,16 @@ public struct WorkflowLauncher<Content: View>: View {
      - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
      - Parameter workflow: workflow that holds the `WorkflowItem`
      */
-    private init(isLaunched: Binding<Bool>, workflow: AnyWorkflow) where Content == AnyWorkflowItem {
+    private init(isLaunched: Binding<Bool>, startingArgs: AnyWorkflow.PassedArgs, workflow: AnyWorkflow) where Content == AnyWorkflowItem {
         workflow.forEach {
             assert($0.value.metadata is ExtendedFlowRepresentableMetadata)
         }
         _isLaunched = isLaunched
-        let model = WorkflowViewModel(isLaunched: isLaunched, launchArgs: .none)
+        let model = WorkflowViewModel(isLaunched: isLaunched, launchArgs: startingArgs)
         _model = StateObject(wrappedValue: model)
         _launcher = StateObject(wrappedValue: Launcher(workflow: workflow,
                                                        responder: model,
-                                                       launchArgs: .none))
+                                                       launchArgs: startingArgs))
 
         _content = State(wrappedValue: WorkflowLauncher.itemToLaunch(from: workflow))
     }
