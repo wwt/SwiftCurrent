@@ -37,5 +37,5 @@ jobs:
       with:
         git_path: https://github.com/wwt/SwiftCurrent
         branch: gh-pages
-        file_types: .html
+        file_types: .html,.css,.scss
         exclude_urls: https://github.com/wwt/SwiftCurrent/discussions/new,https://github.com/realm/jazzy,https://realm.io,https://github.com/wwt/SwiftCurrent
