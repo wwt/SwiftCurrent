@@ -3,6 +3,8 @@ name: Validate URLs
 on:
   page_build:
   schedule:
+  # Runs at 14:00 and 23:00 UTC every day.
+  # Read more here: https://docs.github.com/en/actions/learn-github-actions/events-that-trigger-workflows#schedule
     - cron: '00 14,23 * * *'
   workflow_dispatch:
     inputs:
