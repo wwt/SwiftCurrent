@@ -47,9 +47,8 @@ final class ExtendedFlowRepresentableMetadataTests: XCTestCase, View {
             var body: some View { Text(String(describing: Self.self)) }
         }
 
-        let workflowView = WorkflowLauncher(isLaunched: .constant(true)) {
-            thenProceed(with: FR1.self).persistence(.removedAfterProceeding)
-        }
+        let wf = Workflow(FR1.self, launchStyle: .default, flowPersistence: .removedAfterProceeding)
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), workflow: wf)
 
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .removedAfterProceeding)
@@ -63,9 +62,9 @@ final class ExtendedFlowRepresentableMetadataTests: XCTestCase, View {
             var body: some View { Text(String(describing: Self.self)) }
         }
 
-        let workflowView = WorkflowLauncher(isLaunched: .constant(true)) {
-            thenProceed(with: FR1.self).presentationType(.navigationLink)
-        }
+        let wf = Workflow(FR1.self, launchStyle: ._swiftUI_navigationLink)
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), workflow: wf)
+
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertEqual(try view.find(FR1.self).actualView().presentationType, .navigationLink)
         }
@@ -78,12 +77,14 @@ final class ExtendedFlowRepresentableMetadataTests: XCTestCase, View {
             var body: some View { Text(String(describing: Self.self)) }
         }
         let expectation = self.expectation(description: "FlowPersistence closure called")
-        let workflowView = WorkflowLauncher(isLaunched: .constant(true)) {
-            thenProceed(with: FR1.self).persistence {
-                defer { expectation.fulfill() }
-                return .removedAfterProceeding
-            }
+
+        let wf = Workflow(FR1.self, launchStyle: ._swiftUI_navigationLink) {
+            defer { expectation.fulfill() }
+            return .removedAfterProceeding
         }
+
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), workflow: wf)
+
         let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
             XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .removedAfterProceeding)
         }
