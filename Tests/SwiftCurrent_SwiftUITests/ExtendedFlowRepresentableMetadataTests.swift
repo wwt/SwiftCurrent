@@ -100,15 +100,14 @@ final class ExtendedFlowRepresentableMetadataTests: XCTestCase, View {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text(String(describing: Self.self)) }
         }
-        let workflowView = WorkflowLauncher(isLaunched: .constant(true)) {
-            thenProceed(with: FR1.self) {
-                thenProceed(with: FR2.self)
-            }
-        }
-        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            try view.actualView().inspectWrapped { view in
-                XCTAssertNoThrow(try view.find(FR2.self))
+        let workflow = Workflow(FR1.self)
+            .thenProceed(with: FR2.self)
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), workflow: workflow)
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { viewUnderTest in
+            XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+            try viewUnderTest.actualView().inspect { viewUnderTest in
+                XCTAssertNoThrow(try viewUnderTest.find(FR2.self))
             }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
@@ -123,16 +122,15 @@ final class ExtendedFlowRepresentableMetadataTests: XCTestCase, View {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text(String(describing: Self.self)) }
         }
-        let workflowView = WorkflowLauncher(isLaunched: .constant(true)) {
-            thenProceed(with: FR1.self) {
-                thenProceed(with: FR2.self)
-            }.persistence(.removedAfterProceeding)
-        }
-        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .removedAfterProceeding)
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            try view.actualView().inspectWrapped { view in
-                XCTAssertNoThrow(try view.find(FR2.self))
+        let workflow = Workflow(FR1.self, flowPersistence: .removedAfterProceeding)
+            .thenProceed(with: FR2.self)
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), workflow: workflow)
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { viewUnderTest in
+            XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().persistence, .removedAfterProceeding)
+            XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+            try viewUnderTest.actualView().inspect { viewUnderTest in
+                XCTAssertNoThrow(try viewUnderTest.find(FR2.self))
             }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
@@ -147,17 +145,15 @@ final class ExtendedFlowRepresentableMetadataTests: XCTestCase, View {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text(String(describing: Self.self)) }
         }
-        let workflowView = WorkflowLauncher(isLaunched: .constant(true)) {
-            thenProceed(with: FR1.self) {
-                thenProceed(with: FR2.self)
-            }.persistence { .removedAfterProceeding }
-        }
+        let workflow = Workflow(FR1.self, flowPersistence: { .removedAfterProceeding })
+            .thenProceed(with: FR2.self)
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), workflow: workflow)
 
-        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .removedAfterProceeding)
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            try view.actualView().inspectWrapped { view in
-                XCTAssertNoThrow(try view.find(FR2.self))
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { viewUnderTest in
+            XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().persistence, .removedAfterProceeding)
+            XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+            try viewUnderTest.actualView().inspect { viewUnderTest in
+                XCTAssertNoThrow(try viewUnderTest.find(FR2.self))
             }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
@@ -173,15 +169,13 @@ final class ExtendedFlowRepresentableMetadataTests: XCTestCase, View {
             var body: some View { Text(String(describing: Self.self)) }
             init(with args: AnyWorkflow.PassedArgs) { }
         }
-        let workflowView = WorkflowLauncher(isLaunched: .constant(true)) {
-            thenProceed(with: FR1.self) {
-                thenProceed(with: FR2.self)
-            }
-        }
-        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-            try view.actualView().inspectWrapped { view in
-                XCTAssertNoThrow(try view.find(FR2.self))
+        let workflow = Workflow(FR1.self)
+            .thenProceed(with: FR2.self)
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), workflow: workflow)
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { viewUnderTest in
+            XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+            try viewUnderTest.actualView().inspect { viewUnderTest in
+                XCTAssertNoThrow(try viewUnderTest.find(FR2.self))
             }
         }
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
