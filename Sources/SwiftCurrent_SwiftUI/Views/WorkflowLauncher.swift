@@ -111,7 +111,6 @@ public struct WorkflowLauncher<Content: View>: View {
         _launcher = StateObject(wrappedValue: Launcher(workflow: workflow,
                                                        responder: model,
                                                        launchArgs: startingArgs))
-        
         _content = State(wrappedValue: WorkflowLauncher.itemToLaunch(from: workflow))
     }
 
