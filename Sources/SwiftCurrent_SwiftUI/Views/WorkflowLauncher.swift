@@ -80,7 +80,7 @@ public struct WorkflowLauncher<Content: View>: View {
     /**
      Creates a base for proceeding with a `WorkflowItem`.
      - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
-     - Parameter workflow: workflow that holds the `WorkflowItem`
+     - Parameter workflow: workflow to be launched; must contain `FlowRepresentable`s of type `View`
      */
     public init<F: FlowRepresentable & View>(isLaunched: Binding<Bool>, workflow: Workflow<F>) where Content == AnyWorkflowItem {
         self.init(isLaunched: isLaunched, startingArgs: .none, workflow: AnyWorkflow(workflow))
@@ -89,18 +89,13 @@ public struct WorkflowLauncher<Content: View>: View {
     /**
      Creates a base for proceeding with a `WorkflowItem`.
      - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
-     - Parameter startingArgs: arguments passed to the first `FlowRepresentable` in the underlying `Workflow`.
-     - Parameter workflow: workflow that holds the `WorkflowItem`
+     - Parameter startingArgs: arguments passed to the first loaded `FlowRepresentable` in the underlying `Workflow`.
+     - Parameter workflow: workflow to be launched; must contain `FlowRepresentable`s of type `View`
      */
     public init<F: FlowRepresentable & View>(isLaunched: Binding<Bool>, startingArgs: AnyWorkflow.PassedArgs, workflow: Workflow<F>) where Content == AnyWorkflowItem {
         self.init(isLaunched: isLaunched, startingArgs: startingArgs, workflow: AnyWorkflow(workflow))
     }
 
-    /**
-     Creates a base for proceeding with a `WorkflowItem`.
-     - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
-     - Parameter workflow: workflow that holds the `WorkflowItem`
-     */
     private init(isLaunched: Binding<Bool>, startingArgs: AnyWorkflow.PassedArgs, workflow: AnyWorkflow) where Content == AnyWorkflowItem {
         workflow.forEach {
             assert($0.value.metadata is ExtendedFlowRepresentableMetadata)
