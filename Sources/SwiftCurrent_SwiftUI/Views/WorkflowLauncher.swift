@@ -80,6 +80,38 @@ public struct WorkflowLauncher<Content: View>: View {
     /**
      Creates a base for proceeding with a `WorkflowItem`.
      - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
+     - Parameter workflow: workflow to be launched; must contain `FlowRepresentable`s of type `View`
+     */
+    public init<F: FlowRepresentable & View>(isLaunched: Binding<Bool>, workflow: Workflow<F>) where Content == AnyWorkflowItem {
+        self.init(isLaunched: isLaunched, startingArgs: .none, workflow: AnyWorkflow(workflow))
+    }
+
+    /**
+     Creates a base for proceeding with a `WorkflowItem`.
+     - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
+     - Parameter startingArgs: arguments passed to the first loaded `FlowRepresentable` in the underlying `Workflow`.
+     - Parameter workflow: workflow to be launched; must contain `FlowRepresentable`s of type `View`
+     */
+    public init<F: FlowRepresentable & View>(isLaunched: Binding<Bool>, startingArgs: AnyWorkflow.PassedArgs, workflow: Workflow<F>) where Content == AnyWorkflowItem {
+        self.init(isLaunched: isLaunched, startingArgs: startingArgs, workflow: AnyWorkflow(workflow))
+    }
+
+    private init(isLaunched: Binding<Bool>, startingArgs: AnyWorkflow.PassedArgs, workflow: AnyWorkflow) where Content == AnyWorkflowItem {
+        workflow.forEach {
+            assert($0.value.metadata is ExtendedFlowRepresentableMetadata)
+        }
+        _isLaunched = isLaunched
+        let model = WorkflowViewModel(isLaunched: isLaunched, launchArgs: startingArgs)
+        _model = StateObject(wrappedValue: model)
+        _launcher = StateObject(wrappedValue: Launcher(workflow: workflow,
+                                                       responder: model,
+                                                       launchArgs: startingArgs))
+        _content = State(wrappedValue: WorkflowLauncher.itemToLaunch(from: workflow))
+    }
+
+    /**
+     Creates a base for proceeding with a `WorkflowItem`.
+     - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
      - Parameter content: closure that holds the `WorkflowItem`
      */
     public init<F, W, C>(isLaunched: Binding<Bool>, content: () -> Content) where Content == WorkflowItem<F, W, C>, F.WorkflowInput == Never {
@@ -165,6 +197,26 @@ public struct WorkflowLauncher<Content: View>: View {
     private func _onFinish(_ args: AnyWorkflow.PassedArgs?) {
         guard let args = args else { return }
         onFinish.forEach { $0(args) }
+    }
+
+    private static func itemToLaunch(from workflow: AnyWorkflow) -> AnyWorkflowItem {
+        let lastMetadata = workflow.last?.value.metadata as? ExtendedFlowRepresentableMetadata
+        let lastItem = lastMetadata?.workflowItemFactory(nil)
+
+        if let headItem = WorkflowLauncher.findHeadItem(element: workflow.last, item: lastItem) {
+            return headItem
+        } else if let lastItem = lastItem {
+            return lastItem
+        }
+
+        fatalError("Workflow has no items to launch")
+    }
+
+    private static func findHeadItem(element: AnyWorkflow.Element?, item: AnyWorkflowItem?) -> AnyWorkflowItem? {
+        guard let previous = element?.previous,
+              let previousItem = (previous.value.metadata as? ExtendedFlowRepresentableMetadata)?.workflowItemFactory(item) else { return item }
+
+        return findHeadItem(element: previous, item: previousItem)
     }
 
     /// Adds an action to perform when this `Workflow` has finished.

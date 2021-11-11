@@ -34,6 +34,9 @@ public class AnyWorkflow {
     /// The first `LinkedList.Node` of the wrapped `Workflow`.
     public var first: Element? { storageBase.first }
 
+    /// The last `LinkedList.Node` of the wrapped `Workflow`.
+    public var last: Element? { storageBase.last }
+
     fileprivate var storageBase: AnyWorkflowStorageBase
 
     /// Creates a type erased `Workflow`.
@@ -111,6 +114,7 @@ fileprivate class AnyWorkflowStorageBase {
     var orchestrationResponder: OrchestrationResponder?
     var count: Int { fatalError("count not overridden by AnyWorkflowStorage") }
     var first: LinkedList<_WorkflowItem>.Element? { fatalError("first not overridden by AnyWorkflowStorage") }
+    var last: LinkedList<_WorkflowItem>.Element? { fatalError("last not overridden by AnyWorkflowStorage") }
 
     // https://github.com/wwt/SwiftCurrent/blob/main/.github/STYLEGUIDE.md#type-erasure
     // swiftlint:disable:next unavailable_function
@@ -157,6 +161,7 @@ fileprivate final class AnyWorkflowStorage<F: FlowRepresentable>: AnyWorkflowSto
     override var count: Int { workflow.count }
 
     override var first: LinkedList<_WorkflowItem>.Element? { workflow.first }
+    override var last: LinkedList<_WorkflowItem>.Element? { workflow.last }
 
     init(_ workflow: Workflow<F>) {
         self.workflow = workflow
