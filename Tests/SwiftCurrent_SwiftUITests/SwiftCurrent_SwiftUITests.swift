@@ -767,18 +767,6 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
                 self.data = data
             }
         }
-//        struct FR3: View, FlowRepresentable, Inspectable {
-//            let str: String
-//            init(with str: String) {
-//                self.str = str
-//            }
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR3 type, \(str)") }
-//        }
-//        struct FR4: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR4 type") }
-//        }
 
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectedArgs = UUID().uuidString
@@ -965,6 +953,25 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             }
 
         wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
+    }
+
+    func testLaunchingAWorkflowUsingNonPassedArgsStartingArgs() {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+            public var data: String
+            init(with data: String) { self.data = data }
+        }
+
+        let wf = Workflow(FR1.self)
+        let expectedData = UUID().uuidString
+        let launcher = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedData, workflow: wf)
+
+        let expectViewLoaded = ViewHosting.loadView(launcher).inspection.inspect { viewUnderTest in
+                XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().data, expectedData)
+        }
+
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
     func testIfNoWorkflowItemsThenFatalError() throws {
