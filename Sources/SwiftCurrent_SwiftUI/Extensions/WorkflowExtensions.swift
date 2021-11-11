@@ -11,6 +11,11 @@ import SwiftUI
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension Workflow where F: FlowRepresentable & View {
+    /*
+     TODO: The below initializers are left public to facilitate testing data-driven workflows.
+     They should be made private when data driven progress allows.
+     */
+
     /**
      Creates a `Workflow` with a `FlowRepresentable`.
      - Parameter type: a reference to the first `FlowRepresentable`'s concrete type in the workflow.
