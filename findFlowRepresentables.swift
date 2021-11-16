@@ -9,14 +9,14 @@ import Foundation
 @main
 struct FindFlowRepresentables {
     static func main() throws {
-        // for argument in CommandLine.arguments {
-        //     print("\(argument)")
-        // }
+        guard let json = readSTDIN() else { print("Error: Invalid JSON"); return }
 
-        let json = readSTDIN() as! String
-
+        let directoryPath = CommandLine.arguments[1]
         var frFiles: [String] = []
-        guard let file = try? JSONDecoder().decode(File.self, from: json.data(using: .utf8)!) else { print("Oops"); throw fatalError() }
+
+        getSwiftFiles(from: directoryPath)
+
+        guard let file = try? JSONDecoder().decode(File.self, from: json.data(using: .utf8)!) else { print("Error: Could not parse JSON"); return }
 
         if let substructure = file.keySubstructure.first,
            let containsFlowRep = substructure.keyInheritedtypes?.contains(where: { $0.keyName == "FlowRepresentable" }),
@@ -25,6 +25,23 @@ struct FindFlowRepresentables {
         }
 
         frFiles.forEach { print($0) }
+    }
+}
+
+func getSwiftFiles(from directory: String) {
+    let url = URL(fileURLWithPath: directory)
+    var files = [URL]()
+    if let enumerator = FileManager.default.enumerator(at: url, includingPropertiesForKeys: [.isRegularFileKey], options: [.skipsHiddenFiles, .skipsPackageDescendants]) {
+        for case let fileURL as URL in enumerator {
+            do {
+                let fileAttributes = try fileURL.resourceValues(forKeys:[.isRegularFileKey])
+                if fileAttributes.isRegularFile! && fileURL.absoluteString.contains(".swift") {
+                    files.append(fileURL)
+                }
+            } catch { print(error, fileURL) }
+        }
+        print("All Swift files in \(directory): ")
+        files.forEach { print($0) }
     }
 }
 
