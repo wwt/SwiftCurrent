@@ -9,14 +9,25 @@ import Foundation
 @main
 struct FindFlowRepresentables {
     static func main() throws {
-        guard let json = readSTDIN() else { print("Error: Invalid JSON"); return }
+        guard let json = readSTDIN()?.data(using: .utf8) else { print("Error: Invalid JSON passed"); return }
 
         let directoryPath = CommandLine.arguments[1]
         var frFiles: [String] = []
 
-        getSwiftFiles(from: directoryPath)
+        print("foooo \(FileManager().currentDirectoryPath)")
 
-        guard let file = try? JSONDecoder().decode(File.self, from: json.data(using: .utf8)!) else { print("Error: Could not parse JSON"); return }
+        let filepaths = getSwiftFiles(from: directoryPath)
+        var structureArray: [String] = []
+
+        for path in filepaths {
+            do {
+                structureArray.append(try shell("sourcekitten structure --file \(path)"))
+            } catch {
+                print("\(error)")
+            }
+        }
+        print(structureArray.count)
+        guard let file = try? JSONDecoder().decode(File.self, from: json) else { print("Error: Could not parse JSON"); return }
 
         if let substructure = file.keySubstructure.first,
            let containsFlowRep = substructure.keyInheritedtypes?.contains(where: { $0.keyName == "FlowRepresentable" }),
@@ -28,9 +39,29 @@ struct FindFlowRepresentables {
     }
 }
 
-func getSwiftFiles(from directory: String) {
+func shell(_ command: String) throws -> String {
+    let task = Process()
+    let pipe = Pipe()
+
+    task.standardOutput = pipe
+    task.standardError = pipe
+    task.arguments = ["-c", command]
+    task.executableURL = URL(fileURLWithPath: "/bin/zsh")
+
+    do {
+        try task.run()
+    } catch { throw error }
+
+    let data = pipe.fileHandleForReading.readDataToEndOfFile()
+    let output = String(data: data, encoding: .utf8)!
+
+    return output
+}
+
+func getSwiftFiles(from directory: String) -> [String] {
     let url = URL(fileURLWithPath: directory)
     var files = [URL]()
+
     if let enumerator = FileManager.default.enumerator(at: url, includingPropertiesForKeys: [.isRegularFileKey], options: [.skipsHiddenFiles, .skipsPackageDescendants]) {
         for case let fileURL as URL in enumerator {
             do {
@@ -41,8 +72,14 @@ func getSwiftFiles(from directory: String) {
             } catch { print(error, fileURL) }
         }
         print("All Swift files in \(directory): ")
-        files.forEach { print($0) }
+        return files.map {
+            var str = $0.absoluteString
+            str = String(str.suffix(from: str.range(of: directory)!.lowerBound))
+            print(str)
+            return str
+        }
     }
+    return []
 }
 
 // MARK: - File
