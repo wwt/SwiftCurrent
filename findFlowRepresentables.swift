@@ -3,13 +3,13 @@
         xcrun --sdk macosx swiftc -parse-as-library findFlowRepresentables.swift -o FindFlowRepresentables 
         sourcekitten structure --file FR1.swift | ./FindFlowRepresentables
 */
-
+            // swiftlint:disable line_length
 import Foundation
 
 @main
 struct FindFlowRepresentables {
     static func main() throws {
-        guard let json = readSTDIN()?.data(using: .utf8) else { print("Error: Invalid JSON passed"); return }
+        // guard let json = readSTDIN()?.data(using: .utf8) else { print("Error: Invalid JSON passed"); return }
 
         let directoryPath = CommandLine.arguments[1]
         var frFiles: [String] = []
@@ -26,13 +26,16 @@ struct FindFlowRepresentables {
                 print("\(error)")
             }
         }
-        print(structureArray.count)
-        guard let file = try? JSONDecoder().decode(File.self, from: json) else { print("Error: Could not parse JSON"); return }
+        // print(structureArray[0])
 
-        if let substructure = file.keySubstructure.first,
-           let containsFlowRep = substructure.keyInheritedtypes?.contains(where: { $0.keyName == "FlowRepresentable" }),
-           containsFlowRep == true {
-            frFiles.append(substructure.keyName)
+        for structure in structureArray {
+            guard let json = structure.data(using: .utf8) else { print("Error: Invalid JSON from SourceKitten"); return }
+            // guard let file = try? JSONDecoder().decode(File.self, from: json) else { print("Error: Could not parse JSON"); return }
+            guard let file = try JSONSerialization.jsonObject(with: json, options: JSONSerialization.ReadingOptions.allowFragments) as? [String: Any] else { print("Error: Could not parse JSON"); return }
+
+            let substructure = file!["key.substructure"] as? [[String: Any]]
+            let typesDict = substructure!.first { $0.keys.contains("key.substructure") } as? [String: Any]
+            let inheritedtypes = typesDict!["key.inheritedtypes"] as? [[String: Any]]
         }
 
         frFiles.forEach { print($0) }
@@ -86,7 +89,7 @@ func getSwiftFiles(from directory: String) -> [String] {
 struct File: Codable {
     let keyDiagnosticStage: String
     let keyLength, keyOffset: Int
-    let keySubstructure: [KeySubstructure]
+    let keySubstructure: [FileKeySubstructure]
 
     enum CodingKeys: String, CodingKey {
         case keyDiagnosticStage = "key.diagnostic_stage"
@@ -96,21 +99,22 @@ struct File: Codable {
     }
 }
 
-// MARK: - KeySubstructure
-struct KeySubstructure: Codable {
+// MARK: - FileKeySubstructure
+struct FileKeySubstructure: Codable {
     let keyAccessibility: String?
-    let keyBodylength, keyBodyoffset: Int?
+    let keyAttributes: [KeyAttribute]?
+    let keyBodylength, keyBodyoffset: Int
     let keyElements: [KeyElement]?
     let keyInheritedtypes: [KeyInheritedtype]?
     let keyKind: String
     let keyLength: Int
     let keyName: String
     let keyNamelength, keyNameoffset, keyOffset: Int
-    let keySubstructure: [KeySubstructure]?
-    let keySetterAccessibility, keyTypename: String?
+    let keySubstructure: [PurpleKeySubstructure]
 
     enum CodingKeys: String, CodingKey {
         case keyAccessibility = "key.accessibility"
+        case keyAttributes = "key.attributes"
         case keyBodylength = "key.bodylength"
         case keyBodyoffset = "key.bodyoffset"
         case keyElements = "key.elements"
@@ -122,8 +126,18 @@ struct KeySubstructure: Codable {
         case keyNameoffset = "key.nameoffset"
         case keyOffset = "key.offset"
         case keySubstructure = "key.substructure"
-        case keySetterAccessibility = "key.setter_accessibility"
-        case keyTypename = "key.typename"
+    }
+}
+
+// MARK: - KeyAttribute
+struct KeyAttribute: Codable {
+    let keyAttribute: String
+    let keyLength, keyOffset: Int
+
+    enum CodingKeys: String, CodingKey {
+        case keyAttribute = "key.attribute"
+        case keyLength = "key.length"
+        case keyOffset = "key.offset"
     }
 }
 
@@ -145,6 +159,117 @@ struct KeyInheritedtype: Codable {
 
     enum CodingKeys: String, CodingKey {
         case keyName = "key.name"
+    }
+}
+
+// MARK: - PurpleKeySubstructure
+struct PurpleKeySubstructure: Codable {
+    let keyAccessibility: String?
+    let keyAttributes: [KeyAttribute]?
+    let keyKind: PurpleKeyKind
+    let keyLength: Int
+    let keyName: String
+    let keyNamelength, keyNameoffset, keyOffset: Int
+    let keySetterAccessibility, keyTypename: String?
+    let keyBodylength, keyBodyoffset: Int?
+    let keySubstructure: [FluffyKeySubstructure]?
+
+    enum CodingKeys: String, CodingKey {
+        case keyAccessibility = "key.accessibility"
+        case keyAttributes = "key.attributes"
+        case keyKind = "key.kind"
+        case keyLength = "key.length"
+        case keyName = "key.name"
+        case keyNamelength = "key.namelength"
+        case keyNameoffset = "key.nameoffset"
+        case keyOffset = "key.offset"
+        case keySetterAccessibility = "key.setter_accessibility"
+        case keyTypename = "key.typename"
+        case keyBodylength = "key.bodylength"
+        case keyBodyoffset = "key.bodyoffset"
+        case keySubstructure = "key.substructure"
+    }
+}
+
+enum PurpleKeyKind: String, Codable {
+    case sourceLangSwiftDeclFunctionMethodInstance = "source.lang.swift.decl.function.method.instance"
+    case sourceLangSwiftDeclVarInstance = "source.lang.swift.decl.var.instance"
+    case sourceLangSwiftExprCall = "source.lang.swift.expr.call"
+}
+
+// MARK: - FluffyKeySubstructure
+struct FluffyKeySubstructure: Codable {
+    let keyKind: FluffyKeyKind
+    let keyLength: Int
+    let keyName: String?
+    let keyNamelength, keyNameoffset, keyOffset: Int
+    let keyTypename: String?
+    let keyBodylength, keyBodyoffset: Int?
+    let keyElements: [KeyElement]?
+    let keySubstructure: [TentacledKeySubstructure]?
+
+    enum CodingKeys: String, CodingKey {
+        case keyKind = "key.kind"
+        case keyLength = "key.length"
+        case keyName = "key.name"
+        case keyNamelength = "key.namelength"
+        case keyNameoffset = "key.nameoffset"
+        case keyOffset = "key.offset"
+        case keyTypename = "key.typename"
+        case keyBodylength = "key.bodylength"
+        case keyBodyoffset = "key.bodyoffset"
+        case keyElements = "key.elements"
+        case keySubstructure = "key.substructure"
+    }
+}
+
+enum FluffyKeyKind: String, Codable {
+    case sourceLangSwiftDeclVarParameter = "source.lang.swift.decl.var.parameter"
+    case sourceLangSwiftExprCall = "source.lang.swift.expr.call"
+    case sourceLangSwiftExprClosure = "source.lang.swift.expr.closure"
+    case sourceLangSwiftStmtIf = "source.lang.swift.stmt.if"
+}
+
+// MARK: - TentacledKeySubstructure
+struct TentacledKeySubstructure: Codable {
+    let keyBodylength, keyBodyoffset: Int
+    let keyKind: String
+    let keyLength, keyNamelength, keyNameoffset, keyOffset: Int
+    let keySubstructure: [StickyKeySubstructure]?
+
+    enum CodingKeys: String, CodingKey {
+        case keyBodylength = "key.bodylength"
+        case keyBodyoffset = "key.bodyoffset"
+        case keyKind = "key.kind"
+        case keyLength = "key.length"
+        case keyNamelength = "key.namelength"
+        case keyNameoffset = "key.nameoffset"
+        case keyOffset = "key.offset"
+        case keySubstructure = "key.substructure"
+    }
+}
+
+// MARK: - StickyKeySubstructure
+struct StickyKeySubstructure: Codable {
+    let keyBodylength, keyBodyoffset: Int?
+    let keyKind: String
+    let keyLength: Int
+    let keyName: String?
+    let keyNamelength, keyNameoffset, keyOffset: Int
+    let keySubstructure: [StickyKeySubstructure]?
+    let keyElements: [KeyElement]?
+
+    enum CodingKeys: String, CodingKey {
+        case keyBodylength = "key.bodylength"
+        case keyBodyoffset = "key.bodyoffset"
+        case keyKind = "key.kind"
+        case keyLength = "key.length"
+        case keyName = "key.name"
+        case keyNamelength = "key.namelength"
+        case keyNameoffset = "key.nameoffset"
+        case keyOffset = "key.offset"
+        case keySubstructure = "key.substructure"
+        case keyElements = "key.elements"
     }
 }
 
