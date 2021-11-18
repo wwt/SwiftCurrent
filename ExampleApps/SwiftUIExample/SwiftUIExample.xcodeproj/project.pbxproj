@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B643605F2746E65F00007579 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B643605E2746E65F00007579 /* main.swift */; };
+		B64360652746EC4F00007579 /* SwiftSyntax in Frameworks */ = {isa = PBXBuildFile; productRef = B64360642746EC4F00007579 /* SwiftSyntax */; };
+		B64360672746EC4F00007579 /* SwiftSyntaxBuilder in Frameworks */ = {isa = PBXBuildFile; productRef = B64360662746EC4F00007579 /* SwiftSyntaxBuilder */; };
+		B643606F2746F2C400007579 /* SwiftSyntax in Frameworks */ = {isa = PBXBuildFile; productRef = B643606E2746F2C400007579 /* SwiftSyntax */; };
 		CA0536F626A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536F526A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift */; };
 		CA238D1426A1153B000A36EC /* ContentViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA238D1326A1153B000A36EC /* ContentViewTests.swift */; };
 		CA4A6F2026CDAEE600BE3E74 /* TestEventReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4A6F1F26CDAEE600BE3E74 /* TestEventReceiver.swift */; };
@@ -111,7 +115,21 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		B643605A2746E65F00007579 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		B643605C2746E65F00007579 /* DataDriven */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DataDriven; sourceTree = BUILT_PRODUCTS_DIR; };
+		B643605E2746E65F00007579 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		CA0536F526A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFeatureOnboardingView.swift; sourceTree = "<group>"; };
 		CA238D1326A1153B000A36EC /* ContentViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewTests.swift; sourceTree = "<group>"; };
 		CA4A6F1F26CDAEE600BE3E74 /* TestEventReceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestEventReceiver.swift; sourceTree = "<group>"; };
@@ -198,13 +216,23 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B64360592746E65F00007579 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B643606F2746F2C400007579 /* SwiftSyntax in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CAC34B3C26A07F830039A373 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				CAC34B8226A080910039A373 /* SwiftCurrent_SwiftUI in Frameworks */,
+				B64360652746EC4F00007579 /* SwiftSyntax in Frameworks */,
 				CA6FB0E026C6AD7900FB3285 /* SwiftCurrent_UIKit in Frameworks */,
 				CAC34B8426A080910039A373 /* SwiftCurrent in Frameworks */,
+				B64360672746EC4F00007579 /* SwiftSyntaxBuilder in Frameworks */,
 				CAC34B7D26A0803C0039A373 /* CodeScanner in Frameworks */,
 				CAD0269A26A0BE390075B818 /* Swinject in Frameworks */,
 			);
@@ -231,6 +259,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B643605D2746E65F00007579 /* DataDriven */ = {
+			isa = PBXGroup;
+			children = (
+				B643605E2746E65F00007579 /* main.swift */,
+			);
+			path = DataDriven;
+			sourceTree = "<group>";
+		};
 		CA0536F926A0917A00BF8FC5 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -274,6 +310,7 @@
 				CAC34B4126A07F830039A373 /* SwiftUIExample */,
 				CAC34B5326A07F840039A373 /* SwiftUIExampleTests */,
 				D7A6CE7326E0316C00599824 /* SwiftCurrent_SwiftUI_UITests */,
+				B643605D2746E65F00007579 /* DataDriven */,
 				CAC34B4026A07F830039A373 /* Products */,
 				CAC34B8026A080910039A373 /* Frameworks */,
 			);
@@ -285,6 +322,7 @@
 				CAC34B3F26A07F830039A373 /* SwiftUIExample.app */,
 				CAC34B5026A07F840039A373 /* SwiftUIExampleTests.xctest */,
 				D7A6CE7226E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.xctest */,
+				B643605C2746E65F00007579 /* DataDriven */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -510,6 +548,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B643605B2746E65F00007579 /* DataDriven */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B64360622746E65F00007579 /* Build configuration list for PBXNativeTarget "DataDriven" */;
+			buildPhases = (
+				B64360582746E65F00007579 /* Sources */,
+				B64360592746E65F00007579 /* Frameworks */,
+				B643605A2746E65F00007579 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DataDriven;
+			packageProductDependencies = (
+				B643606E2746F2C400007579 /* SwiftSyntax */,
+			);
+			productName = DataDriven;
+			productReference = B643605C2746E65F00007579 /* DataDriven */;
+			productType = "com.apple.product-type.tool";
+		};
 		CAC34B3E26A07F830039A373 /* SwiftUIExample */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CAC34B6426A07F840039A373 /* Build configuration list for PBXNativeTarget "SwiftUIExample" */;
@@ -529,6 +587,8 @@
 				CAC34B8326A080910039A373 /* SwiftCurrent */,
 				CAD0269926A0BE390075B818 /* Swinject */,
 				CA6FB0DF26C6AD7900FB3285 /* SwiftCurrent_UIKit */,
+				B64360642746EC4F00007579 /* SwiftSyntax */,
+				B64360662746EC4F00007579 /* SwiftSyntaxBuilder */,
 			);
 			productName = SwiftUIExample;
 			productReference = CAC34B3F26A07F830039A373 /* SwiftUIExample.app */;
@@ -584,10 +644,13 @@
 		CAC34B3726A07F830039A373 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1250;
+				LastSwiftUpdateCheck = 1310;
 				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = "WWT and Tyler Thompson";
 				TargetAttributes = {
+					B643605B2746E65F00007579 = {
+						CreatedOnToolsVersion = 13.1;
+					};
 					CAC34B3E26A07F830039A373 = {
 						CreatedOnToolsVersion = 12.5.1;
 					};
@@ -615,6 +678,7 @@
 				CAC34B7B26A0803C0039A373 /* XCRemoteSwiftPackageReference "CodeScanner" */,
 				CAD0269826A0BE390075B818 /* XCRemoteSwiftPackageReference "Swinject" */,
 				CA6FB0E526C6ADCD00FB3285 /* XCRemoteSwiftPackageReference "UIUTest" */,
+				B64360632746EC4F00007579 /* XCRemoteSwiftPackageReference "swift-syntax" */,
 			);
 			productRefGroup = CAC34B4026A07F830039A373 /* Products */;
 			projectDirPath = "";
@@ -623,6 +687,7 @@
 				CAC34B3E26A07F830039A373 /* SwiftUIExample */,
 				CAC34B4F26A07F840039A373 /* SwiftUIExampleTests */,
 				D7A6CE7126E0316C00599824 /* SwiftCurrent_SwiftUI_UITests */,
+				B643605B2746E65F00007579 /* DataDriven */,
 			);
 		};
 /* End PBXProject section */
@@ -655,6 +720,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B64360582746E65F00007579 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B643605F2746E65F00007579 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CAC34B3B26A07F830039A373 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -765,6 +838,30 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		B64360602746E65F00007579 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				MACOSX_DEPLOYMENT_TARGET = 11.6;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B64360612746E65F00007579 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				MACOSX_DEPLOYMENT_TARGET = 11.6;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		CAC34B6226A07F840039A373 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1012,6 +1109,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B64360622746E65F00007579 /* Build configuration list for PBXNativeTarget "DataDriven" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B64360602746E65F00007579 /* Debug */,
+				B64360612746E65F00007579 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		CAC34B3A26A07F830039A373 /* Build configuration list for PBXProject "SwiftUIExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1051,6 +1157,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		B64360632746EC4F00007579 /* XCRemoteSwiftPackageReference "swift-syntax" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-syntax.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.0.0;
+			};
+		};
 		CA6FB0E526C6ADCD00FB3285 /* XCRemoteSwiftPackageReference "UIUTest" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/nallick/UIUTest.git";
@@ -1086,6 +1200,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B64360642746EC4F00007579 /* SwiftSyntax */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B64360632746EC4F00007579 /* XCRemoteSwiftPackageReference "swift-syntax" */;
+			productName = SwiftSyntax;
+		};
+		B64360662746EC4F00007579 /* SwiftSyntaxBuilder */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B64360632746EC4F00007579 /* XCRemoteSwiftPackageReference "swift-syntax" */;
+			productName = SwiftSyntaxBuilder;
+		};
+		B643606E2746F2C400007579 /* SwiftSyntax */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B64360632746EC4F00007579 /* XCRemoteSwiftPackageReference "swift-syntax" */;
+			productName = SwiftSyntax;
+		};
 		CA6FB0DF26C6AD7900FB3285 /* SwiftCurrent_UIKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftCurrent_UIKit;

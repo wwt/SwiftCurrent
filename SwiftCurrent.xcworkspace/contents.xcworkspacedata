@@ -14,6 +14,9 @@
       location = "group:.github/SwiftCurrentLint/SwiftCurrentLint.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:FindTypeInheritence.swift">
+   </FileRef>
+   <FileRef
       location = "group:SwiftCurrent.podspec">
    </FileRef>
 </Workspace>

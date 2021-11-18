@@ -1,13 +1,15 @@
-/*
-    usage:
-        xcrun --sdk macosx swiftc -parse-as-library findFlowRepresentables.swift -o FindTypeInheritence 
-        ./FindTypeInheritence [directory] [inheritedType]
-*/
+//
+//  main.swift
+//  SwiftCurrent
+//
+//  Created by Morgan Zellers on 11/18/21.
+//  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
+//
 // swiftlint:disable line_length
+
 import Foundation
 import SwiftSyntax
 
-@main
 struct FindTypeInheritence {
     static let SUBSTRUCTURE_KEY = "key.substructure"
     static let NAME_KEY = "key.name"
