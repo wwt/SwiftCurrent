@@ -16,6 +16,7 @@ struct FindTypeInheritence {
     static let INHERITEDTYPES_KEY = "key.inheritedtypes"
 
     static func main() throws {
+        print("WOWEEEEE")
         let directoryPath = CommandLine.arguments[1]
         let seekingInheritedType = CommandLine.arguments[2]
         var frFiles: [String] = []
