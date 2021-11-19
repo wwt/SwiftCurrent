@@ -17,7 +17,6 @@ let INHERITEDTYPES_KEY = "key.inheritedtypes"
 try main()
 
 func main() throws {
-    print("WOWEEEEE")
     let directoryPath = CommandLine.arguments[1]
     let seekingInheritedType = CommandLine.arguments[2]
     var frFiles: [String] = []
@@ -115,14 +114,12 @@ func getSwiftFiles(from directory: String) -> [String] {
                 if fileAttributes.isRegularFile! && fileURL.absoluteString.contains(".swift") {
                     files.append(fileURL)
                 }
-            } catch { print(error, fileURL) }
+            } catch { print("oops"); print(error, fileURL) }
         }
         // FileManager().currentDirectoryPath
         return files.map {
-            var str = $0.absoluteString
-            str = String(str.suffix(from: str.range(of: directory)!.lowerBound))
-            // print(str)
-            return str
+            guard let rangeOfFilePrefix = $0.relativeString.range(of: "file://") else { return $0.relativeString }
+            return String($0.relativeString.suffix(from: rangeOfFilePrefix.upperBound))
         }
     }
     return []
