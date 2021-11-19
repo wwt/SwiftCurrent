@@ -553,6 +553,7 @@
 				B64360582746E65F00007579 /* Sources */,
 				B64360592746E65F00007579 /* Frameworks */,
 				B643605A2746E65F00007579 /* CopyFiles */,
+				B613A93F274805BD00214E2C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -717,6 +718,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B613A93F274805BD00214E2C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cp ${BUILT_PRODUCTS_DIR}/DataDriven ${PROJECT_DIR}/bin/\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B64360582746E65F00007579 /* Sources */ = {

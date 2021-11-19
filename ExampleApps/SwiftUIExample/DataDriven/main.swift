@@ -10,52 +10,52 @@
 import Foundation
 import SwiftSyntax
 
-struct FindTypeInheritence {
-    static let SUBSTRUCTURE_KEY = "key.substructure"
-    static let NAME_KEY = "key.name"
-    static let INHERITEDTYPES_KEY = "key.inheritedtypes"
+let SUBSTRUCTURE_KEY = "key.substructure"
+let NAME_KEY = "key.name"
+let INHERITEDTYPES_KEY = "key.inheritedtypes"
 
-    static func main() throws {
-        print("WOWEEEEE")
-        let directoryPath = CommandLine.arguments[1]
-        let seekingInheritedType = CommandLine.arguments[2]
-        var frFiles: [String] = []
-        let filepaths = getSwiftFiles(from: directoryPath)
-        var astJsonArray: [String] = []
+try main()
 
-        for path in filepaths {
-//            do {
-//                astJsonArray.append(try shell("sourcekitten structure --file \(path)"))
-//            } catch { print("\(error)") }
-//            let file = CommandLine.arguments[1]
-            let url = URL(fileURLWithPath: path)
-            let sourceFile = try SyntaxParser.parse(url)
-            let incremented = AddOneToIntegerLiterals().visit(sourceFile)
-            print(incremented)
-        }
+func main() throws {
+    print("WOWEEEEE")
+    let directoryPath = CommandLine.arguments[1]
+    let seekingInheritedType = CommandLine.arguments[2]
+    var frFiles: [String] = []
+    let filepaths = getSwiftFiles(from: directoryPath)
+    var astJsonArray: [String] = []
 
-//        var counter = 0
-//        for structure in astJsonArray {
-//            guard let json = structure.data(using: .utf8) else { print("Error: Invalid JSON from SourceKitten"); continue }
-//            guard let file = try JSONSerialization.jsonObject(with: json, options: JSONSerialization.ReadingOptions.allowFragments) as? [String: Any] else { print("Error: Could not serialize JSON"); continue }
-//
-//            if let substructure = file[FindTypeInheritence.SUBSTRUCTURE_KEY] as? [[String: Any]],
-//                let typeName = substructure.first?[FindTypeInheritence.NAME_KEY] as? String,
-//                let inheritedTypes = substructure.first?[FindTypeInheritence.INHERITEDTYPES_KEY] as? [[String: String]],
-//                inheritedTypes.compactMap({ $0[FindTypeInheritence.NAME_KEY] }).contains(seekingInheritedType) {
-//                print("Appending \(typeName)")
-//                frFiles.append(typeName)
-//                counter += 1
-//            } else {
-//                astJsonArray.remove(at: counter)
-//            }
-//        }
-//
-//        frFiles.forEach { print($0) }
-//
-//        print("astJsonArray count: \(astJsonArray.count)")
-//        print("frFiles count: \(frFiles.count)")
+    for path in filepaths {
+        //            do {
+        //                astJsonArray.append(try shell("sourcekitten structure --file \(path)"))
+        //            } catch { print("\(error)") }
+        //            let file = CommandLine.arguments[1]
+        let url = URL(fileURLWithPath: path)
+        let sourceFile = try SyntaxParser.parse(url)
+        let incremented = AddOneToIntegerLiterals().visit(sourceFile)
+        print(incremented)
     }
+
+    //        var counter = 0
+    //        for structure in astJsonArray {
+    //            guard let json = structure.data(using: .utf8) else { print("Error: Invalid JSON from SourceKitten"); continue }
+    //            guard let file = try JSONSerialization.jsonObject(with: json, options: JSONSerialization.ReadingOptions.allowFragments) as? [String: Any] else { print("Error: Could not serialize JSON"); continue }
+    //
+    //            if let substructure = file[FindTypeInheritence.SUBSTRUCTURE_KEY] as? [[String: Any]],
+    //                let typeName = substructure.first?[FindTypeInheritence.NAME_KEY] as? String,
+    //                let inheritedTypes = substructure.first?[FindTypeInheritence.INHERITEDTYPES_KEY] as? [[String: String]],
+    //                inheritedTypes.compactMap({ $0[FindTypeInheritence.NAME_KEY] }).contains(seekingInheritedType) {
+    //                print("Appending \(typeName)")
+    //                frFiles.append(typeName)
+    //                counter += 1
+    //            } else {
+    //                astJsonArray.remove(at: counter)
+    //            }
+    //        }
+    //
+    //        frFiles.forEach { print($0) }
+    //
+    //        print("astJsonArray count: \(astJsonArray.count)")
+    //        print("frFiles count: \(frFiles.count)")
 }
 
 class AddOneToIntegerLiterals: SyntaxRewriter {
