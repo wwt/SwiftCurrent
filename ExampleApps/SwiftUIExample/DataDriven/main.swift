@@ -30,7 +30,7 @@ func main() throws {
         //            let file = CommandLine.arguments[1]
         let url = URL(fileURLWithPath: path)
         let sourceFile = try SyntaxParser.parse(url)
-        let incremented = AddOneToIntegerLiterals().visit(sourceFile)
+        let incremented = FindListOfFlowRepresentables().visit(sourceFile)
         print(incremented)
     }
 
@@ -78,11 +78,14 @@ class AddOneToIntegerLiterals: SyntaxRewriter {
   }
 }
 
-//class FindListOfFlowRepresentables: SyntaxRewriter {
-//    override func visit(_ token: TokenSyntax) -> Syntax {
-//
-//    }
-//}
+class FindListOfFlowRepresentables: SyntaxRewriter {
+    override func visit(_ token: TokenSyntax) -> Syntax {
+        if token.text == "FlowRepresentable" {
+            print(token.leadingTrivia)
+        }
+        return Syntax(token)
+    }
+}
 
 //func shell(_ command: String) throws -> String {
 //    let process = Process()
