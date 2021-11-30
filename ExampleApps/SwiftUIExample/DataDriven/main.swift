@@ -23,6 +23,7 @@ func main() throws {
     let filepaths = getSwiftFiles(from: directoryPath)
     var astJsonArray: [String] = []
 
+    let finder = FindListOfFlowRepresentables()
     for path in filepaths {
         //            do {
         //                astJsonArray.append(try shell("sourcekitten structure --file \(path)"))
@@ -30,9 +31,11 @@ func main() throws {
         //            let file = CommandLine.arguments[1]
         let url = URL(fileURLWithPath: path)
         let sourceFile = try SyntaxParser.parse(url)
-        let incremented = FindListOfFlowRepresentables().visit(sourceFile)
-        print(incremented)
+        print("Checking \(path)...")
+        let incremented = finder.visit(sourceFile)
     }
+    print("Found the following FlowRepresentables...")
+    finder.frStructNames.forEach { print($0) }
 
     //        var counter = 0
     //        for structure in astJsonArray {
@@ -79,10 +82,19 @@ class AddOneToIntegerLiterals: SyntaxRewriter {
 }
 
 class FindListOfFlowRepresentables: SyntaxRewriter {
+    var frStructNames: [String] = []
     override func visit(_ token: TokenSyntax) -> Syntax {
-        if token.text == "FlowRepresentable" {
-            print(token.leadingTrivia)
+        let currentTokenIsStruct: Bool = token.parent?.previousToken?.previousToken?.previousToken?.tokenKind == .structKeyword
+
+        if currentTokenIsStruct && token.text == "FlowRepresentable" {
+            if let expectedStructNameToken = token.parent?.previousToken?.previousToken {
+                print("Adding \(expectedStructNameToken.text) to list of FlowRepresentables...")
+                frStructNames.append(expectedStructNameToken.text)
+            }
         }
+
+        
+
         return Syntax(token)
     }
 }
