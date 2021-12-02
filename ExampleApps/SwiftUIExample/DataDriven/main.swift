@@ -29,6 +29,7 @@ func main() throws {
         //                astJsonArray.append(try shell("sourcekitten structure --file \(path)"))
         //            } catch { print("\(error)") }
         //            let file = CommandLine.arguments[1]
+        if path.lowercased().contains("test") { continue }
         let url = URL(fileURLWithPath: path)
         let sourceFile = try SyntaxParser.parse(url)
         print("Checking \(path)...")
@@ -84,16 +85,21 @@ class AddOneToIntegerLiterals: SyntaxRewriter {
 class FindListOfFlowRepresentables: SyntaxRewriter {
     var frStructNames: [String] = []
     override func visit(_ token: TokenSyntax) -> Syntax {
-        let currentTokenIsStruct: Bool = token.parent?.previousToken?.previousToken?.previousToken?.tokenKind == .structKeyword
+//        let currentTokenIsStruct: Bool = token.parent?.previousToken?.previousToken?.previousToken?.tokenKind == .structKeyword
 
-        if currentTokenIsStruct && token.text == "FlowRepresentable" {
-            if let expectedStructNameToken = token.parent?.previousToken?.previousToken {
-                print("Adding \(expectedStructNameToken.text) to list of FlowRepresentables...")
-                frStructNames.append(expectedStructNameToken.text)
-            }
+//        if currentTokenIsStruct && token.text == "FlowRepresentable" {
+//            if let expectedStructNameToken = token.parent?.previousToken?.previousToken {
+//                print("Adding \(expectedStructNameToken.text) to list of FlowRepresentables...")
+//                frStructNames.append(expectedStructNameToken.text)
+//            }
+//        }
+
+        let currentTokenIsStruct: Bool = token.previousToken?.tokenKind == .structKeyword
+        let currentTokenIsFR: Bool = token.nextToken?.nextToken?.nextToken?.nextToken?.text == "FlowRepresentable"
+        if currentTokenIsStruct && currentTokenIsFR {
+            print("Adding \(token.text) to list of FlowRepresentables...")
+            frStructNames.append(token.text)
         }
-
-        
 
         return Syntax(token)
     }
