@@ -59,11 +59,11 @@ func getSwiftFiles(from directory: String) -> [String] {
                 if fileAttributes.isRegularFile! && fileURL.absoluteString.contains(".swift") {
                     files.append(fileURL)
                 }
-            } catch { print("oops"); print(error, fileURL) }
+            } catch { print(error, fileURL) }
         }
-        return files.map {
-            guard let rangeOfFilePrefix = $0.relativeString.range(of: "file://") else { return $0.relativeString }
-            return String($0.relativeString.suffix(from: rangeOfFilePrefix.upperBound))
+        return files.map { filename in
+            guard let rangeOfFilePrefix = filename.relativeString.range(of: "file://") else { return filename.relativeString }
+            return String(filename.relativeString.suffix(from: rangeOfFilePrefix.upperBound))
         }
     }
     return []
