@@ -18,81 +18,24 @@ try main()
 
 func main() throws {
     let directoryPath = CommandLine.arguments[1]
-    let seekingInheritedType = CommandLine.arguments[2]
-    var frFiles: [String] = []
     let filepaths = getSwiftFiles(from: directoryPath)
-    var astJsonArray: [String] = []
 
-    let finder = FindListOfFlowRepresentables()
+    let finder = FlowRepresentableFinder()
     for path in filepaths {
-        //            do {
-        //                astJsonArray.append(try shell("sourcekitten structure --file \(path)"))
-        //            } catch { print("\(error)") }
-        //            let file = CommandLine.arguments[1]
         if path.lowercased().contains("test") { continue }
         let url = URL(fileURLWithPath: path)
         let sourceFile = try SyntaxParser.parse(url)
         print("Checking \(path)...")
-        let incremented = finder.visit(sourceFile)
+        _ = finder.visit(sourceFile)
     }
+
     print("Found the following FlowRepresentables...")
     finder.frStructNames.forEach { print($0) }
-
-    //        var counter = 0
-    //        for structure in astJsonArray {
-    //            guard let json = structure.data(using: .utf8) else { print("Error: Invalid JSON from SourceKitten"); continue }
-    //            guard let file = try JSONSerialization.jsonObject(with: json, options: JSONSerialization.ReadingOptions.allowFragments) as? [String: Any] else { print("Error: Could not serialize JSON"); continue }
-    //
-    //            if let substructure = file[FindTypeInheritence.SUBSTRUCTURE_KEY] as? [[String: Any]],
-    //                let typeName = substructure.first?[FindTypeInheritence.NAME_KEY] as? String,
-    //                let inheritedTypes = substructure.first?[FindTypeInheritence.INHERITEDTYPES_KEY] as? [[String: String]],
-    //                inheritedTypes.compactMap({ $0[FindTypeInheritence.NAME_KEY] }).contains(seekingInheritedType) {
-    //                print("Appending \(typeName)")
-    //                frFiles.append(typeName)
-    //                counter += 1
-    //            } else {
-    //                astJsonArray.remove(at: counter)
-    //            }
-    //        }
-    //
-    //        frFiles.forEach { print($0) }
-    //
-    //        print("astJsonArray count: \(astJsonArray.count)")
-    //        print("frFiles count: \(frFiles.count)")
 }
 
-class AddOneToIntegerLiterals: SyntaxRewriter {
-  override func visit(_ token: TokenSyntax) -> Syntax {
-    // Only transform integer literals.
-    guard case .integerLiteral(let text) = token.tokenKind else {
-      return Syntax(token)
-    }
-
-    // Remove underscores from the original text.
-    let integerText = String(text.filter { ("0"..."9").contains($0) })
-
-    // Parse out the integer.
-    let int = Int(integerText)!
-
-    // Create a new integer literal token with `int + 1` as its text.
-    let newIntegerLiteralToken = token.withKind(.integerLiteral("\(int + 1)"))
-
-    // Return the new integer literal.
-    return Syntax(newIntegerLiteralToken)
-  }
-}
-
-class FindListOfFlowRepresentables: SyntaxRewriter {
+class FlowRepresentableFinder: SyntaxRewriter {
     var frStructNames: [String] = []
     override func visit(_ token: TokenSyntax) -> Syntax {
-//        let currentTokenIsStruct: Bool = token.parent?.previousToken?.previousToken?.previousToken?.tokenKind == .structKeyword
-
-//        if currentTokenIsStruct && token.text == "FlowRepresentable" {
-//            if let expectedStructNameToken = token.parent?.previousToken?.previousToken {
-//                print("Adding \(expectedStructNameToken.text) to list of FlowRepresentables...")
-//                frStructNames.append(expectedStructNameToken.text)
-//            }
-//        }
 
         let currentTokenIsStruct: Bool = token.previousToken?.tokenKind == .structKeyword
         let currentTokenIsFR: Bool = token.nextToken?.nextToken?.nextToken?.nextToken?.text == "FlowRepresentable"
@@ -104,25 +47,6 @@ class FindListOfFlowRepresentables: SyntaxRewriter {
         return Syntax(token)
     }
 }
-
-//func shell(_ command: String) throws -> String {
-//    let process = Process()
-//    let pipe = Pipe()
-//
-//    process.standardOutput = pipe
-//    process.standardError = pipe
-//    process.arguments = ["-c", command]
-//    process.executableURL = URL(fileURLWithPath: "/bin/zsh")
-//
-//    do {
-//        try process.run()
-//    } catch { throw error }
-//
-//    let data = pipe.fileHandleForReading.readDataToEndOfFile()
-//    let output = String(data: data, encoding: .utf8) ?? ""
-//
-//    return output
-//}
 
 func getSwiftFiles(from directory: String) -> [String] {
     let url = URL(fileURLWithPath: directory)
@@ -137,7 +61,6 @@ func getSwiftFiles(from directory: String) -> [String] {
                 }
             } catch { print("oops"); print(error, fileURL) }
         }
-        // FileManager().currentDirectoryPath
         return files.map {
             guard let rangeOfFilePrefix = $0.relativeString.range(of: "file://") else { return $0.relativeString }
             return String($0.relativeString.suffix(from: rangeOfFilePrefix.upperBound))
