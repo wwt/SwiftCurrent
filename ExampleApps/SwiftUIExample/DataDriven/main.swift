@@ -19,8 +19,8 @@ try main()
 func main() throws {
     let directoryPath = CommandLine.arguments[1]
     let filepaths = getSwiftFiles(from: directoryPath)
-
     let finder = FlowRepresentableFinder()
+
     for path in filepaths {
         if path.lowercased().contains("test") { continue }
         let url = URL(fileURLWithPath: path)
@@ -37,10 +37,18 @@ class FlowRepresentableFinder: SyntaxRewriter {
     var frStructNames: [String] = []
     override func visit(_ token: TokenSyntax) -> Syntax {
         let currentTokenIsStruct: Bool = token.previousToken?.tokenKind == .structKeyword
-        let currentTokenIsFR: Bool = token.nextToken?.nextToken?.nextToken?.nextToken?.text == "FlowRepresentable" || token.nextToken?.nextToken?.nextToken?.text == "FlowRepresentable¸"
-        if currentTokenIsStruct && currentTokenIsFR {
-            print("Adding \(token.text) to list of FlowRepresentables...")
-            frStructNames.append(token.text)
+
+        if currentTokenIsStruct {
+            var fileToken: TokenSyntax? = token
+            while fileToken?.text != "{" {
+                guard let currentToken = fileToken else { break }
+                if currentToken.text == "FlowRepresentable" {
+                    print("Adding \(token.text) to list of FlowRepresentables...")
+                    frStructNames.append(token.text)
+                    break
+                }
+                fileToken = currentToken.nextToken
+            }
         }
 
         return Syntax(token)
