@@ -10,7 +10,7 @@ import XCTest
 import SwiftCurrent
 
 class FlowRepresentableMetadataConsumerTests: XCTestCase {
-    func testOverridingFlowRepresentbleMetadata() {
+    func testOverridingFlowRepresentableMetadata() {
         class SpecialConformanceClass { }
 
         class NewMetadata: FlowRepresentableMetadata {
