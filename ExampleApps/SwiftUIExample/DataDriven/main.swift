@@ -28,7 +28,7 @@ func main() throws {
         print("Checking \(path)...")
         _ = finder.visit(sourceFile)
     }
-
+   
     print("Found the following FlowRepresentables...")
     finder.frStructNames.forEach { print($0) }
 }
@@ -36,9 +36,8 @@ func main() throws {
 class FlowRepresentableFinder: SyntaxRewriter {
     var frStructNames: [String] = []
     override func visit(_ token: TokenSyntax) -> Syntax {
-
         let currentTokenIsStruct: Bool = token.previousToken?.tokenKind == .structKeyword
-        let currentTokenIsFR: Bool = token.nextToken?.nextToken?.nextToken?.nextToken?.text == "FlowRepresentable"
+        let currentTokenIsFR: Bool = token.nextToken?.nextToken?.nextToken?.nextToken?.text == "FlowRepresentable" || token.nextToken?.nextToken?.nextToken?.text == "FlowRepresentable¸"
         if currentTokenIsStruct && currentTokenIsFR {
             print("Adding \(token.text) to list of FlowRepresentables...")
             frStructNames.append(token.text)
