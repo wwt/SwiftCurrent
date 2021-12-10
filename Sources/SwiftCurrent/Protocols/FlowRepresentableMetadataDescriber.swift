@@ -12,7 +12,7 @@ public protocol FlowRepresentableMetadataDescriber {
     static var flowRepresentableName: String { get }
 
     /// Creates a new instance of ``FlowRepresentableMetadata``
-    static func createMetadata() -> FlowRepresentableMetadata
+    static func metadataFactory() -> FlowRepresentableMetadata
 }
 
 // Provides the implementation for the protocol without immediately conforming FlowRepresentable
@@ -22,7 +22,7 @@ extension FlowRepresentable {
     public static var flowRepresentableName: String { String(describing: Self.self) }
 
     /// Creates a new instance of ``FlowRepresentableMetadata``
-    public static func createMetadata() -> FlowRepresentableMetadata {
+    public static func metadataFactory() -> FlowRepresentableMetadata {
         FlowRepresentableMetadata(Self.self) { _ in .default }
     }
 }
