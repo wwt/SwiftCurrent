@@ -46,7 +46,7 @@ import Foundation
  }
  ```
  */
-public protocol FlowRepresentable: FlowRepresentableMetadataDescriber {
+public protocol FlowRepresentable {
     /// The type of data coming into the `FlowRepresentable`; defaulted to `Never`; `Never`means the `FlowRepresentable` will ignore data passed in from the `Workflow`.
     associatedtype WorkflowInput = Never
     /// The type of data passed forward from the `FlowRepresentable`; defaulted to `Never`; `Never` means data will not be passed forward.
@@ -99,16 +99,6 @@ extension FlowRepresentable {
     // No public docs necessary, as this should not be used by consumers.
     // swiftlint:disable:next missing_docs
     public var _workflowUnderlyingInstance: Any { self }
-
-    // False positive: Inherited docs
-    // swiftlint:disable:next missing_docs
-    public static var flowRepresentableName: String { String(describing: Self.self) }
-
-    // False positive: Inherited docs
-    // swiftlint:disable:next missing_docs
-    public static func createMetadata() -> FlowRepresentableMetadata {
-        FlowRepresentableMetadata(Self.self) { _ in .default }
-    }
 
     /// :nodoc: **WARNING: This will throw a fatal error.** Just a default implementation of the required `FlowRepresentable` initializer meant to satisfy the protocol requirements.
     public init() { // swiftlint:disable:this unavailable_function

@@ -14,3 +14,15 @@ public protocol FlowRepresentableMetadataDescriber {
     /// Creates a new instance of ``FlowRepresentableMetadata``
     static func createMetadata() -> FlowRepresentableMetadata
 }
+
+// Provides the implementation for the protocol without immediately conforming FlowRepresentable
+// See FlowRepresentableMetadataDescriberConsumerTests for reasons.
+extension FlowRepresentable {
+    /// The name of the FlowRepresentable as used in the Workflow Data Scheme
+    public static var flowRepresentableName: String { String(describing: Self.self) }
+
+    /// Creates a new instance of ``FlowRepresentableMetadata``
+    public static func createMetadata() -> FlowRepresentableMetadata {
+        FlowRepresentableMetadata(Self.self) { _ in .default }
+    }
+}
