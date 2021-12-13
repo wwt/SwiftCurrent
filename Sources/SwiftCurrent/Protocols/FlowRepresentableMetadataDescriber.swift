@@ -17,7 +17,7 @@ public protocol FlowRepresentableMetadataDescriber {
 
 // Provides the implementation for the protocol without immediately conforming FlowRepresentable
 // See FlowRepresentableMetadataDescriberConsumerTests for reasons.
-extension FlowRepresentable {
+extension FlowRepresentable where Self: FlowRepresentableMetadataDescriber {
     /// The name of the FlowRepresentable as used in the Workflow Data Scheme
     public static var flowRepresentableName: String { String(describing: Self.self) }
 
