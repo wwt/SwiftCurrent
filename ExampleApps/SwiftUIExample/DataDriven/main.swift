@@ -13,13 +13,13 @@ import SwiftSyntax
 let SUBSTRUCTURE_KEY = "key.substructure"
 let NAME_KEY = "key.name"
 let INHERITEDTYPES_KEY = "key.inheritedtypes"
-
+var conformance = "FlowRepresentable"
 try main()
 
 func main() throws {
     let directoryPath = CommandLine.arguments[1]
     let filepaths = getSwiftFiles(from: directoryPath)
-    let finder = FlowRepresentableFinder()
+    let finder = ConformanceFinder()
 
     for path in filepaths {
         if path.lowercased().contains("test") { continue }
@@ -28,31 +28,67 @@ func main() throws {
         print("Checking \(path)...")
         _ = finder.visit(sourceFile)
     }
-   
-    print("Found the following \(finder.frStructNames.count) FlowRepresentables...")
-    finder.frStructNames.forEach { print($0) }
+
+    printFindings(finder)
+
+    // Checking for conformed to members of the protocol names array...
+    conformance = finder.protocolNames.first!
+    finder.classAndStructNames = []
+    finder.extensionNames = []
+    finder.protocolNames = []
+
+    for path in filepaths {
+        if path.lowercased().contains("test") { continue }
+        let url = URL(fileURLWithPath: path)
+        let sourceFile = try SyntaxParser.parse(url)
+        print("Checking \(path)...")
+        _ = finder.visit(sourceFile)
+    }
+
+    printFindings(finder)
 }
 
-class FlowRepresentableFinder: SyntaxRewriter {
-    var frStructNames: [String] = []
+func printFindings(_ finder: ConformanceFinder) {
+    print("Found the following \(finder.classAndStructNames.count) \(conformance) conforming classes and structs...")
+    finder.classAndStructNames.forEach { print($0) }
+    print("Found the following \(finder.extensionNames.count) \(conformance) extensions...")
+    finder.extensionNames.forEach { print($0) }
+    print("Found the following \(finder.protocolNames.count) \(conformance) protocols...")
+    finder.protocolNames.forEach { print($0) }
+}
+
+class ConformanceFinder: SyntaxRewriter {
+    var classAndStructNames: [String] = []
+    var extensionNames: [String] = []
+    var protocolNames: [String] = []
 
     override func visit(_ token: TokenSyntax) -> Syntax {
-        let currentTokenIsStructOrClass: Bool = token.previousToken?.tokenKind == .structKeyword || token.previousToken?.tokenKind == .classKeyword
+        let tokenIsStructOrClass: Bool = token.previousToken?.tokenKind == .structKeyword || token.previousToken?.tokenKind == .classKeyword
+        let tokenIsExtension: Bool = token.previousToken?.tokenKind == .extensionKeyword
+        let tokenIsProtocol: Bool = token.previousToken?.tokenKind == .protocolKeyword
 
-        if currentTokenIsStructOrClass {
-            var fileToken: TokenSyntax? = token
-            while fileToken?.text != "{" {
-                guard let currentToken = fileToken, !currentToken.tokenKind.isKeyword else { break }
-                if currentToken.text == "FlowRepresentable" {
-                    print("Adding \(token.text) to list of FlowRepresentables...")
-                    frStructNames.append(token.text)
-                    break
-                }
-                fileToken = currentToken.nextToken
-            }
+        if tokenIsExtension {
+            if let name = scanForConformance(token) { extensionNames.append(name) }
+        } else if tokenIsProtocol {
+            if let name = scanForConformance(token) { protocolNames.append(name) }
+        } else if tokenIsStructOrClass {
+            if let name = scanForConformance(token) { classAndStructNames.append(name) }
         }
 
         return Syntax(token)
+    }
+
+    private func scanForConformance(_ token: TokenSyntax) -> String? {
+        var fileToken: TokenSyntax? = token
+
+        while fileToken?.text != "{" {
+            guard let currentToken = fileToken, !currentToken.tokenKind.isKeyword else { break }
+            if currentToken.text == conformance {
+                return token.text
+            }
+            fileToken = currentToken.nextToken
+        }
+        return nil
     }
 }
 
