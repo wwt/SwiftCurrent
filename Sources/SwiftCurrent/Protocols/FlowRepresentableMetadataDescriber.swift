@@ -23,6 +23,6 @@ extension FlowRepresentable where Self: FlowRepresentableMetadataDescriber {
 
     /// Creates a new instance of ``FlowRepresentableMetadata``
     public static func metadataFactory() -> FlowRepresentableMetadata {
-        FlowRepresentableMetadata(Self.self) { _ in .default }
+        FlowRepresentableMetadata(Self.self)
     }
 }

@@ -13,7 +13,7 @@ class FlowRepresentableMetadataDescriberConsumerTests: XCTestCase {
     func testProtocolIsCorrectlyExposed() {
         struct FR1: FlowRepresentable, FlowRepresentableMetadataDescriber {
             static var flowRepresentableName: String { "Foo" }
-            static func metadataFactory() -> FlowRepresentableMetadata { FlowRepresentableMetadata(Self.self) { _ in .default } }
+            static func metadataFactory() -> FlowRepresentableMetadata { FlowRepresentableMetadata(Self.self) }
 
             var _workflowPointer: AnyFlowRepresentable?
         }
