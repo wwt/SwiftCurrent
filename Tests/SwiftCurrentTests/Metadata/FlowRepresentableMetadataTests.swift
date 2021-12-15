@@ -24,9 +24,9 @@ class FlowRepresentableMetadataTests : XCTestCase {
         final class FR2: FlowRepresentable { var _workflowPointer: AnyFlowRepresentable? }
         final class FR1: FlowRepresentable { var _workflowPointer: AnyFlowRepresentable? }
 
-        let actual = FlowRepresentableMetadata(FR1.self, flowRepresentableFactory: { _ in
-            return AnyFlowRepresentable(FR2.self, args: .none)
-        })
+        let actual = FlowRepresentableMetadata(FR1.self) { _ in
+            AnyFlowRepresentable(FR2.self, args: .none)
+        }
         _ = actual.setPersistence(.none)
 
         XCTAssertEqual(actual.launchStyle, .default)
