@@ -12,18 +12,20 @@ import SwiftCurrent
 class FlowRepresentableMetadataConsumerTests: XCTestCase {
     func testOverridingFlowRepresentableMetadata() {
         class SpecialConformanceClass { }
-
         class NewMetadata: FlowRepresentableMetadata {
             var wf: String? // AnyWFItem
 
-            private override init<FR>(_ flowRepresentableType: FR.Type, launchStyle: LaunchStyle = .default, flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence, flowRepresentableFactory: @escaping (AnyWorkflow.PassedArgs) -> AnyFlowRepresentable) where FR : FlowRepresentable {
-
-
+            private override init<FR>(_ flowRepresentableType: FR.Type,
+                                      launchStyle: LaunchStyle = .default,
+                                      flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence,
+                                      flowRepresentableFactory: @escaping (AnyWorkflow.PassedArgs) -> AnyFlowRepresentable) where FR : FlowRepresentable {
                 super.init(flowRepresentableType, launchStyle: launchStyle, flowPersistence: flowPersistence, flowRepresentableFactory: flowRepresentableFactory)
             }
 
-            convenience init<FR: FlowRepresentable & SpecialConformanceClass>(flowRepresentableType: FR.Type, launchStyle: LaunchStyle = .default, flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence, flowRepresentableFactory: @escaping (AnyWorkflow.PassedArgs) -> AnyFlowRepresentable) {
-
+            convenience init<FR: FlowRepresentable & SpecialConformanceClass>(flowRepresentableType: FR.Type,
+                                                                              launchStyle: LaunchStyle = .default,
+                                                                              flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence,
+                                                                              flowRepresentableFactory: @escaping (AnyWorkflow.PassedArgs) -> AnyFlowRepresentable) {
                 self.init(flowRepresentableType, launchStyle: launchStyle, flowPersistence: flowPersistence, flowRepresentableFactory: flowRepresentableFactory)
 
                 wf = String(describing: flowRepresentableType)

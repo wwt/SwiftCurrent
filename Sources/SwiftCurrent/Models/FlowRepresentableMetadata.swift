@@ -31,7 +31,7 @@ open class FlowRepresentableMetadata {
      */
     public convenience init<FR: FlowRepresentable>(_ flowRepresentableType: FR.Type,
                                                    launchStyle: LaunchStyle = .default,
-                                                   flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) {
+                                                   flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default }) {
         self.init(flowRepresentableType,
                   launchStyle: launchStyle,
                   flowPersistence: flowPersistence) { args in
@@ -49,7 +49,7 @@ open class FlowRepresentableMetadata {
      */
     public init<FR: FlowRepresentable>(_ flowRepresentableType: FR.Type,
                                        launchStyle: LaunchStyle = .default,
-                                       flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence,
+                                       flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default },
                                        flowRepresentableFactory: @escaping (AnyWorkflow.PassedArgs) -> AnyFlowRepresentable) {
         self.launchStyle = launchStyle
         self.flowPersistence = flowPersistence
