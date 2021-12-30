@@ -5,7 +5,14 @@
     @Section(title: "What is a Workflow?") {
     
         @ContentAndMedia {
-            In this section you'll learn what a workflow is under the covers. You'll be walked through ``SwiftCurrent/LinkedList``, `_WorkflowItem`, ``SwiftCurrent/FlowRepresentableMetadata``, ``SwiftCurrent/AnyWorkflow/PassedArgs``, and ``SwiftCurrent/Workflow``.
+            In this section you'll learn what a workflow is under the covers. You'll be walked through the types:
+            
+            - ``SwiftCurrent/LinkedList``
+            - ``SwiftCurrent/LinkedList/Node``
+            - `_WorkflowItem`
+            - ``SwiftCurrent/FlowRepresentableMetadata``
+            - ``SwiftCurrent/AnyWorkflow/PassedArgs``
+            - ``SwiftCurrent/Workflow``
         }
         
         @Steps {
@@ -34,23 +41,35 @@
             }
             
             @Step {
-                This metadata is the primary means by which items in a workflow are created. It holds onto a factory to create `AnyFlowRepresentable` references from passed in arguments. It also holds onto peripheral items like the persistence and launch style of a given `FlowRepresentable`.
+                ``SwiftCurrent/FlowRepresentableMetadata`` generates the instances used in a ``SwiftCurrent/Workflow``.
+                
+                Because an element in the workflow may or may not exist based on state conditions, a type is needed to hold onto the factory and metadata for the element. ``SwiftCurrent/FlowRepresentableMetadata`` holds onto that factory to create ``SwiftCurrent/AnyFlowRepresentable`` references from passed in arguments, and it also holds onto the peripheral metadata like the persistence and launch style of a given ``SwiftCurrent/FlowRepresentable``.
                 
                 @Code(name: "FlowRepresentableMetadata.swift", file: "FlowRepresentableMetadata.swift", reset: true)
             }
             
             @Step {
-                In the previous example it's noticeable that the factory and persistence require an `AnyWorkflow.PassedArgs` type. This type is almost identical to `Optional` but was specifically created to remove ambiguity. If we had used `Optional` it would've been unclear to consumers if an item in a workflow as passing `nil` as an argument, or if there were no arguments passed.
+                ``SwiftCurrent/AnyWorkflow/PassedArgs`` is the data type used when generating instances in a ``SwiftCurrent/Workflow``.
+                
+                The factory and persistence on ``SwiftCurrent/FlowRepresentableMetadata`` require an ``SwiftCurrent/AnyWorkflow/PassedArgs`` type. This type is almost identical to `Optional` but was specifically created to remove ambiguity. If we had used `Optional`, it would've been unclear to consumers if an item in a workflow was passing `nil` as an argument, or if there were no arguments passed.
                 
                 @Code(name: "PassedArgs.swift", file: "PassedArgs.swift", reset: true)
             }
             
             @Step {
-                Let's finally take a look at Workflow. In particular, notice that there are "actions" that Workflow handles. Launching, which involves loading the first `FlowRepresentable` that should load given the launch arguments. Proceeding, which is similar, but not identical to launching. Finally, backing up, which is a matter of finding the last loaded `FlowRepresentable`.
+                Finally, ``SwiftCurrent/Workflow`` controls the high-level traversal through the linked list.
                 
-                Workflow knows how to handle persistence and can allow a `FlowRepresentable` that has a `shouldLoad` returning false to still mutate data.
-                
+                The actions that ``SwiftCurrent/Workflow`` handles are: Launching, Proceeding, and Backing Up.  **Launching** involves loading the first ``SwiftCurrent/FlowRepresentable`` that should load given the launch arguments. **Proceeding** loads the next ``SwiftCurrent/FlowRepresentable`` that should load based on input from the previous item or launch arguments. If no screen should load then the workflow is completed. **Backing Up** finds the last loaded ``SwiftCurrent/FlowRepresentable`` or throws if there is none.
+                                
                 @Code(name: "Workflow.swift", file: "Workflow.swift", reset: true)
+            }
+            
+            @Step {
+                Additionally, ``SwiftCurrent/Workflow`` uses metadata to modify what happens after traversing. 
+                
+                ``SwiftCurrent/FlowPersistence`` metadata allows a ``SwiftCurrent/FlowRepresentable`` that has a ``SwiftCurrent/FlowRepresentable/shouldLoad()-cmx5`` returning `false` to still mutate data.
+
+                @Code(name: "Workflow.swift", file: "Workflow.swift", reset: false)                
             }
         }
     }
@@ -94,13 +113,13 @@
     
     @Assessments {
         @MultipleChoice {
-            What is the difference between a `FlowRepresentable` that has a `WorkflowInput` of `Any?` and a `FlowRepresentable` that has a `WorkflowInput` of `AnyWorkflow.PassedArgs`.
+            What is the difference between a `FlowRepresentable` that has a `WorkflowInput` of `Any?` and a `FlowRepresentable` that has a `WorkflowInput` of `AnyWorkflow.PassedArgs`?
 
             @Choice(isCorrect: false) {
                 `Any?` means any kind of data, including no data can be passed. `AnyWorkflow.PassedArgs` is equivalent, it's just not an optional.
 
                 @Justification(reaction: "Try again!") {
-                    Remember, `AnyWorkflow.PassedArgs` was deliberately built because an Optional wasn't enough to differentiate between "No data" and "Data, but it's nil".
+                    `AnyWorkflow.PassedArgs` was deliberately built because an Optional wasn't enough to differentiate between "No data" and "Data, but it's nil".
                 }
             }
 
@@ -116,9 +135,29 @@
                 `Any?` is broad enough to also include `AnyWorkflow.PassedArgs`. It's just a Swift way of saying "it doesn't matter what gets passed". `AnyWorkflow.PassedArgs` is more narrow, it means only certain `FlowRepresentable` types can pass data to this `FlowRepresentable.`
                 
                 @Justification(reaction: "Try again!") {
-                    Remember, `AnyWorkflow.PassedArgs` was deliberately built because an Optional wasn't enough to differentiate between "No data" and "Data, but it's nil". While convention may lead you to believe that `Any?` is more broad than `AnyWorkflow.PassedArgs` that's not true in this context.
+                    `AnyWorkflow.PassedArgs` was deliberately built because an Optional wasn't enough to differentiate between "No data" and "Data, but it's nil". While convention may lead you to believe that `Any?` is more broad than `AnyWorkflow.PassedArgs` that's not true in this context.
                 }
             }
-        }  
+        }
+        
+        @MultipleChoice {
+            What is the ultimate value used in a Workflow?
+
+            @Choice(isCorrect: false) {
+                could be correct answer (common Richard miss-statement)
+
+                @Justification(reaction: "Try again!") {
+                    Why Richard is wrong when he speaks.
+                }
+            }
+
+            @Choice(isCorrect: true) {
+                correct answer
+
+                @Justification(reaction: "That's right!") {
+                    correct answer reasoning
+                }
+            }
+        }
     }
 }
