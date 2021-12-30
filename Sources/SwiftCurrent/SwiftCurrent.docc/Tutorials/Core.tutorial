@@ -116,7 +116,7 @@
             What is the difference between a `FlowRepresentable` that has a `WorkflowInput` of `Any?` and a `FlowRepresentable` that has a `WorkflowInput` of `AnyWorkflow.PassedArgs`?
 
             @Choice(isCorrect: false) {
-                `Any?` means any kind of data, including no data can be passed. `AnyWorkflow.PassedArgs` is equivalent, it's just not an optional.
+                `Any?` means any kind of data, including no data, can be passed. `AnyWorkflow.PassedArgs` is equivalent, it's just not an optional.
 
                 @Justification(reaction: "Try again!") {
                     `AnyWorkflow.PassedArgs` was deliberately built because an Optional wasn't enough to differentiate between "No data" and "Data, but it's nil".
@@ -124,7 +124,7 @@
             }
 
             @Choice(isCorrect: true) {
-                `Any?` means any kind of data, including nil can be passed to this `FlowRepresentable`. However, *something* must be passed forward. `AnyWorkflow.PassedArgs` means that some data (which can be nil) or no data at all (`AnyWorkflow.PassedArgs.none`) can be passed.
+                `Any?` means any kind of data, including nil, can be passed to this `FlowRepresentable`. However, *something* must be passed forward. `AnyWorkflow.PassedArgs` means that some data (which can be nil) or no data at all (`AnyWorkflow.PassedArgs.none`) can be passed.
 
                 @Justification(reaction: "That's right!") {
                     `AnyWorkflow.PassedArgs` is the only way to have a `FlowRepresentable` truly be able to interpret any situation, data being passed or no data being passed.
@@ -141,21 +141,37 @@
         }
         
         @MultipleChoice {
-            What is the ultimate value used in a Workflow?
-
+            What is the node's value type in the linked list?
+            
             @Choice(isCorrect: false) {
-                could be correct answer (common Richard miss-statement)
+                ``SwiftCurrent/LinkedList/Node``
 
-                @Justification(reaction: "Try again!") {
-                    Why Richard is wrong when he speaks.
+                @Justification(reaction: "Sorry, try again.") {
+                    ``SwiftCurrent/LinkedList/Node`` is the type for the linked list node. What is the value type that the ``SwiftCurrent/LinkedList/Node`` holds on to?
+                }
+            }
+            
+            @Choice(isCorrect: true) {
+                `_WorkflowItem`
+
+                @Justification(reaction: "Correct!") {
+                    `_WorkflowItem` is the node's value type in the linked list.
+                }
+            }
+            
+            @Choice(isCorrect: false) {
+                ``SwiftCurrent/FlowRepresentableMetadata``
+
+                @Justification(reaction: "Sorry, try again.") {
+                    ``SwiftCurrent/FlowRepresentableMetadata`` holds the factory to generate ``SwiftCurrent/FlowRepresentable`` and metadata that modifies effects of traversing the linked list.  What holds on to the ``SwiftCurrent/FlowRepresentableMetadata``?
                 }
             }
 
-            @Choice(isCorrect: true) {
-                correct answer
+            @Choice(isCorrect: false) {
+                ``SwiftCurrent/FlowRepresentable``
 
-                @Justification(reaction: "That's right!") {
-                    correct answer reasoning
+                @Justification(reaction: "Sorry, try again.") {
+                    The types that implement ``SwiftCurrent/FlowRepresentable`` are used to define a Workflow. This type is used in a ``SwiftCurrent/FlowRepresentableMetadata`` to generate instances.
                 }
             }
         }
