@@ -5,24 +5,30 @@
     @Section(title: "What is a Workflow?") {
     
         @ContentAndMedia {
-            In this section you'll learn what a workflow is under the covers. You'll be walked through LinkedList, _WorkflowItem, FlowRepresentableMetadata, AnyWorkflow.PassedArgs, and Workflow.
+            In this section you'll learn what a workflow is under the covers. You'll be walked through ``SwiftCurrent/LinkedList``, `_WorkflowItem`, ``SwiftCurrent/FlowRepresentableMetadata``, ``SwiftCurrent/AnyWorkflow/PassedArgs``, and ``SwiftCurrent/Workflow``.
         }
         
         @Steps {
             @Step {
-                Start with LinkedList, all workflows end up being doubly linked lists so this data type is a great starting point. You'll notice that it partially mimics Swift sequence types, but is not a struct. This is somewhat deliberate, we rely on inheritance logic and did not design this type so that anyone could use LinkedList outside of SwiftCurrent.
+                Start with ``SwiftCurrent/LinkedList``.
+                
+                All workflows are doubly linked lists, so this data type is a great starting point. You'll notice that it partially mimics Swift sequence types, but is not a `Struct`. This is deliberate. We rely on inheritance logic and did not design this type so that anyone could use LinkedList outside of SwiftCurrent.
                 
                 @Code(name: "LinkedList.swift", file: "LinkedList.swift", reset: true)
             }
             
             @Step {
-                LinkedList has nodes, they are value types that hold onto references for the previous and next items. They also have methods for traversing the list, starting at the current node.
+                ``SwiftCurrent/LinkedList/Node`` is the type used for the nodes in the linked list.
+                
+                Like any node in a linked list, ``SwiftCurrent/LinkedList/Node`` holds a reference to the value and the previous and next nodes in the linked list. It also has methods for traversing the list, starting at the current node.
                 
                 @Code(name: "LinkedListNode.swift", file: "LinkedListNode.swift", reset: true)
             }
             
             @Step {
-                As mentioned already, a Workflow is a doubly linked list. Each node in a workflow is a `_WorkflowItem`. These nodes hold onto 2 important things. The first is the `FlowRepresentableMetadata` for the node. We will explore that in the next step. The next is just an instance of the `AnyFlowRepresentable` if one was loaded.
+                `_WorkflowItem` is the value type for each node.
+                
+                Because ``SwiftCurrent/Workflow`` is a doubly linked list, each node in a workflow needs a value type. This value type is `_WorkflowItem`. This type holds onto 2 important things. **First,** ``SwiftCurrent/FlowRepresentableMetadata`` for this node. We will explore this type in the next step. **Second,** an instance of the ``SwiftCurrent/AnyFlowRepresentable`` if one was loaded.
                 
                 @Code(name: "_WorkflowItem.swift", file: "_WorkflowItem.swift", reset: true)
             }
