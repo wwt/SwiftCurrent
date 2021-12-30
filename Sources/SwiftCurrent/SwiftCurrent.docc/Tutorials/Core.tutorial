@@ -1,6 +1,13 @@
 @Tutorial(time: 30) {
     @Intro(title: "Core") {
-        Core text
+        This tutorial will cover essentials concepts and types needed to understand the Core product for SwiftCurrent.  Importantly, Core is devoid of any dependencies and is written in pure Swift without taking dependencies on 3rd party frameworks or on Apple provided libraries that are restricted to certain platforms (UIKit as an example).
+        
+        We have divided this into 2 sections.
+        
+        1) "What is a Workflow?"
+        1) "FlowRepresentables, Orchestration Responder, and Type Erasure"
+        
+        We recommend reading each step in its entirety, then exploring the code provided on the side before moving on to the next step.  At the end, there is an assessment to help reinforce some tricky aspects of Core.
     }
     @Section(title: "What is a Workflow?") {
     
