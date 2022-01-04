@@ -30,7 +30,6 @@ jobs:
         exclude_urls: https://github.com/wwt/SwiftCurrent/discussions/new,https://img.shields.io/cocoapods/v/SwiftCurrent.svg?style=popout,https://img.shields.io/github/license/wwt/SwiftCurrent,https://img.shields.io/github/stars/wwt/SwiftCurrent?style=social
     - name: slack-send
       if: failure()
-      id: slack-send
       uses: slackapi/slack-github-action@v1.16.0
       with:
         payload: "{\"text\":{\"type\":\"mrkdwn\",\"text\":\"\ :alert: [URL Checker has failed](https://github.com/wwt/SwiftCurrent/actions) :alert: \"}}"
@@ -50,10 +49,10 @@ jobs:
         exclude_urls: https://github.com/wwt/SwiftCurrent/discussions/new,https://github.com/realm/jazzy,https://realm.io,https://github.com/wwt/SwiftCurrent,https://img.shields.io/cocoapods/v/SwiftCurrent.svg?style=popout,https://img.shields.io/github/license/wwt/SwiftCurrent,https://img.shields.io/github/stars/wwt/SwiftCurrent?style=social
     - name: slack-send
       if: failure()
-      id: slack-send
       uses: slackapi/slack-github-action@v1.16.0
       with:
         payload: "{\"text\":{\"type\":\"mrkdwn\",\"text\":\"\ :alert: [URL Checker has failed](https://github.com/wwt/SwiftCurrent/actions) :alert: \"}}"
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+        
