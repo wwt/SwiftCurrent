@@ -41,6 +41,49 @@ final class GenericConstraintTests: XCTestCase, View {
 
     // MARK: Input Type == Never
 
+    func testWhenInputIsNever_WorkflowCanLaunchWithArguments() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: Optional("Discarded arguments")) {
+            thenProceed(with: FR1.self)
+        }
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+            XCTAssertNoThrow(try view.find(FR1.self))
+        }
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
+
+    func testWhenInputIsNeverAndViewDoesNotLoad_WorkflowCanLaunchWithArgumentsAndArgumentsArePassedToTheNextFR() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            typealias WorkflowOutput = String
+            weak var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            func shouldLoad() -> Bool { false }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            var input: String
+            init(with input: String) { self.input = input }
+        }
+        let expectedArgument = UUID().uuidString
+
+        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgument) {
+            thenProceed(with: FR1.self) {
+                thenProceed(with: FR2.self)
+            }
+        }
+
+        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
+            XCTAssertEqual(try view.find(FR2.self).actualView().input, expectedArgument)
+        }
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
+
     func testWhenInputIsNever_FlowPersistenceCanBeSetWithAutoclosure() {
         struct FR1: FlowRepresentable, View, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
