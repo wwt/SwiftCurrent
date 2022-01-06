@@ -32,20 +32,28 @@ func main() throws {
     printFindings(finder)
 
     // Checking for conformed to members of the protocol names array...
-    conformance = finder.protocolNames.first!
-    finder.classAndStructNames = []
-    finder.extensionNames = []
-    finder.protocolNames = []
+    // EXTRACT TO FUNC
+    var protocolConformance: [String: [String]] = [:]
+    finder.protocolNames.forEach { protocolConformance["\($0)"] = [] }
 
-    for path in filepaths {
-        if path.lowercased().contains("test") { continue }
-        let url = URL(fileURLWithPath: path)
-        let sourceFile = try SyntaxParser.parse(url)
-        print("Checking \(path)...")
-        _ = finder.visit(sourceFile)
+    for name in protocolConformance.keys {
+        conformance = name
+        finder.classAndStructNames = []
+        finder.extensionNames = []
+        finder.protocolNames = []
+
+        for path in filepaths {
+            if path.lowercased().contains("test") { continue }
+            let url = URL(fileURLWithPath: path)
+            let sourceFile = try SyntaxParser.parse(url)
+            print("Checking \(path)...")
+            _ = finder.visit(sourceFile)
+        }
+
+        printFindings(finder)
+        protocolConformance["\(name)"] = finder.classAndStructNames
     }
-
-    printFindings(finder)
+    // END EXTRACTED FUNC
 }
 
 func printFindings(_ finder: ConformanceFinder) {
