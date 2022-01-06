@@ -1,6 +1,6 @@
 @Tutorial(time: 30) {
     @Intro(title: "Core") {
-        This tutorial will cover essentials concepts and types needed to understand the Core product for SwiftCurrent.  Importantly, Core is devoid of any dependencies and is written in pure Swift without taking dependencies on 3rd party frameworks or on Apple provided libraries that are restricted to certain platforms (UIKit as an example).
+        This tutorial will cover essential concepts and types needed to understand the Core product for SwiftCurrent.  Importantly, Core is devoid of any dependencies and is written in pure Swift without taking dependencies on 3rd party frameworks or on Apple provided libraries that are restricted to certain platforms (UIKit as an example).
         
         We have divided this into 2 sections.
         
