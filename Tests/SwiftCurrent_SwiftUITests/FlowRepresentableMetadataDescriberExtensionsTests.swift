@@ -10,7 +10,7 @@ import XCTest
 import SwiftUI
 
 import SwiftCurrent
-@testable import SwiftCurrent_SwiftUI
+import SwiftCurrent_SwiftUI
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 class FlowRepresentableMetadataDescriberExtensionsTests: XCTestCase {
@@ -23,7 +23,8 @@ class FlowRepresentableMetadataDescriberExtensionsTests: XCTestCase {
         let metadata = FR1.metadataFactory()
         let genericMetadata = (FR1.self as FlowRepresentableMetadataDescriber.Type).metadataFactory()
 
-        XCTAssertNotNil(metadata as? ExtendedFlowRepresentableMetadata, "\(metadata) should be of type ExtendedFlowRepresentableMetadata")
-        XCTAssertNotNil(genericMetadata as? ExtendedFlowRepresentableMetadata, "\(metadata) should be of type ExtendedFlowRepresentableMetadata")
+        // ExtendedFlowRepresentableMetadata should be internal, but we must also test if the override is public.
+        XCTAssert(type(of: metadata) != FlowRepresentableMetadata.self, "\(type(of: metadata)) should be overridden from type FlowRepresentableMetadata")
+        XCTAssert(type(of: genericMetadata) != FlowRepresentableMetadata.self, "\(type(of: genericMetadata)) should be overridden from type FlowRepresentableMetadata")
     }
 }
