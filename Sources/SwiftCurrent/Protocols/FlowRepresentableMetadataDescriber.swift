@@ -6,9 +6,9 @@
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //  
 
-/// Describes aspects of the FlowRepresentable needed to map to Workflow Data Scheme and to dynamically generate metadata.
+/// Aspects of the described ``FlowRepresentable`` needed to dynamically generate metadata from the Workflow Data Scheme.
 public protocol FlowRepresentableMetadataDescriber {
-    /// The name of the FlowRepresentable as used in the Workflow Data Scheme
+    /// The name of the ``FlowRepresentable`` as used in the Workflow Data Scheme
     static var flowRepresentableName: String { get }
 
     /// Creates a new instance of ``FlowRepresentableMetadata``
@@ -18,7 +18,7 @@ public protocol FlowRepresentableMetadataDescriber {
 // Provides the implementation for the protocol without immediately conforming FlowRepresentable
 // See FlowRepresentableMetadataDescriberConsumerTests for reasons.
 extension FlowRepresentable where Self: FlowRepresentableMetadataDescriber {
-    /// The name of the FlowRepresentable as used in the Workflow Data Scheme
+    /// The name of the ``FlowRepresentable`` as used in the Workflow Data Scheme
     public static var flowRepresentableName: String { String(describing: Self.self) }
 
     /// Creates a new instance of ``FlowRepresentableMetadata``
