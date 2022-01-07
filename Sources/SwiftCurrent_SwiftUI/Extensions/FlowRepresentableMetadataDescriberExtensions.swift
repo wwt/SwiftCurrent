@@ -1,6 +1,6 @@
 //  swiftlint:disable:this file_name
 //  FlowRepresentableMetadataDescriberExtensions.swift
-//  SwiftCurrent
+//  SwiftCurrent_SwiftUI
 //
 //  Created by Richard Gist on 12/15/21.
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
