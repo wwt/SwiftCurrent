@@ -148,7 +148,7 @@
         }
         
         @MultipleChoice {
-            What is the node's value type in the linked list?
+            A ``Workflow`` is a ``LinkedList``. What is the generic type of ``LinkedList.Node`` in a ``Workflow``?
             
             @Choice(isCorrect: false) {
                 ``SwiftCurrent/LinkedList/Node``
