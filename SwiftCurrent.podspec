@@ -23,6 +23,7 @@ Pod::Spec.new do |s|
     ss.tvos.deployment_target = '14.0'
     ss.watchos.deployment_target = '7.0'
     ss.source_files = 'Sources/SwiftCurrent/**/*.{swift,h,m}'
+    ss.exclude_files = 'Sources/SwiftCurrent/SwiftCurrent.docc'
   end
   
   s.subspec 'UIKit' do |ss|
