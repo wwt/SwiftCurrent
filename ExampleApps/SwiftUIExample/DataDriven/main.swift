@@ -18,51 +18,26 @@ try main()
 
 func main() throws {
     let directoryPath = CommandLine.arguments[1]
-    let filepaths = getSwiftFiles(from: directoryPath)
-    let finder = ConformanceFinder()
+    let fileURLs = getSwiftFileURLs(from: directoryPath)
 
-    for path in filepaths {
-        if path.lowercased().contains("test") { continue }
-        let url = URL(fileURLWithPath: path)
-        let sourceFile = try SyntaxParser.parse(url)
-        print("Checking \(path)...")
-        _ = finder.visit(sourceFile)
-    }
+    let files: [File] = fileURLs.compactMap { try? File(url: $0) }
 
-    printFindings(finder)
-
-    // Checking for conformed to members of the protocol names array...
-    // EXTRACT TO FUNC
-    var protocolConformance: [String: [String]] = [:]
-    finder.protocolNames.forEach { protocolConformance["\($0)"] = [] }
-
-    for name in protocolConformance.keys {
-        conformance = name
-        finder.classAndStructNames = []
-        finder.extensionNames = []
-        finder.protocolNames = []
-
-        for path in filepaths {
-            if path.lowercased().contains("test") { continue }
-            let url = URL(fileURLWithPath: path)
-            let sourceFile = try SyntaxParser.parse(url)
-            print("Checking \(path)...")
-            _ = finder.visit(sourceFile)
-        }
-
-        printFindings(finder)
-        protocolConformance["\(name)"] = finder.classAndStructNames
-    }
-    // END EXTRACTED FUNC
+    printFindings(files)
 }
 
-func printFindings(_ finder: ConformanceFinder) {
-    print("Found the following \(finder.classAndStructNames.count) \(conformance) conforming classes and structs...")
-    finder.classAndStructNames.forEach { print($0) }
-    print("Found the following \(finder.extensionNames.count) \(conformance) extensions...")
-    finder.extensionNames.forEach { print($0) }
-    print("Found the following \(finder.protocolNames.count) \(conformance) protocols...")
-    finder.protocolNames.forEach { print($0) }
+func printFindings(_ files: [File]) {
+    files.forEach {
+        print("\($0.results.rootNode.types.first?.name)")
+    }
+
+    let classes = files.filter { $0.results.rootNode.types.first?.type == .class }
+
+    classes.forEach {
+        guard let name = $0.results.rootNode.types.first?.name,
+              let inheritence = $0.results.rootNode.types.first?.inheritance else { return }
+
+        print("Inheritance for \(name): \(inheritence)")
+    }
 }
 
 class ConformanceFinder: SyntaxRewriter {
@@ -100,7 +75,7 @@ class ConformanceFinder: SyntaxRewriter {
     }
 }
 
-func getSwiftFiles(from directory: String) -> [String] {
+func getSwiftFileURLs(from directory: String) -> [URL] {
     let url = URL(fileURLWithPath: directory)
     var files = [URL]()
 
@@ -114,8 +89,8 @@ func getSwiftFiles(from directory: String) -> [String] {
             } catch { print(error, fileURL) }
         }
         return files.map { filename in
-            guard let rangeOfFilePrefix = filename.relativeString.range(of: "file://") else { return filename.relativeString }
-            return String(filename.relativeString.suffix(from: rangeOfFilePrefix.upperBound))
+            guard let rangeOfFilePrefix = filename.relativeString.range(of: "file://") else { return URL(fileURLWithPath: filename.relativeString) }
+            return URL(fileURLWithPath: String(filename.relativeString.suffix(from: rangeOfFilePrefix.upperBound)))
         }
     }
     return []
