@@ -731,6 +731,27 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
 
         wait(for: [exp], timeout: TestConstant.timeout)
     }
+
+    func testWorkflowCompilesWithPreviewProvider() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+
+        struct FR1_Previews: PreviewProvider {
+            static var previews: some View {
+                WorkflowLauncher(isLaunched: .constant(true)) {
+                    thenProceed(with: FR1.self) {
+                        thenProceed(with: FR2.self)
+                    }
+                }
+            }
+        }
+    }
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
