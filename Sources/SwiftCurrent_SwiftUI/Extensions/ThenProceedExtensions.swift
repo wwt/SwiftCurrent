@@ -24,6 +24,8 @@ private func verifyWorkflowIsWellFormed<LHS: FlowRepresentable, RHS: FlowReprese
  Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
  - Parameter with: a `FlowRepresentable` type that should be presented.
  - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
+ - NOTE: Should be called inside a `WorkflowLauncher` initializer.
+ - IMPORTANT: Not for use in UIKit, unless you're doing SwiftUI interop.
  */
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public func thenProceed<FR: FlowRepresentable & View>(with: FR.Type) -> WorkflowItem<FR, Never, FR> {
@@ -35,6 +37,8 @@ public func thenProceed<FR: FlowRepresentable & View>(with: FR.Type) -> Workflow
  - Parameter with: a `FlowRepresentable` type that should be presented.
  - Parameter nextItem: a closure returning the next item in the `Workflow`.
  - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
+ - NOTE: Should be called inside a `WorkflowLauncher` initializer.
+ - IMPORTANT: Not for use in UIKit, unless you're doing SwiftUI interop.
  */
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public func thenProceed<FR: FlowRepresentable & View, F, W, C>(with: FR.Type, nextItem: () -> WorkflowItem<F, W, C>) -> WorkflowItem<FR, WorkflowItem<F, W, C>, FR> {
@@ -47,6 +51,8 @@ public func thenProceed<FR: FlowRepresentable & View, F, W, C>(with: FR.Type, ne
  Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
  - Parameter with: a `FlowRepresentable` type that should be presented.
  - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
+ - NOTE: Should be called inside a `WorkflowLauncher` initializer.
+ - IMPORTANT: Not for use in UIKit, unless you're doing SwiftUI interop.
  */
 @available(iOS 14.0, macOS 11, tvOS 14.0, *)
 public func thenProceed<VC: FlowRepresentable & UIViewController>(with: VC.Type) -> WorkflowItem<ViewControllerWrapper<VC>, Never, ViewControllerWrapper<VC>> {
@@ -58,6 +64,8 @@ public func thenProceed<VC: FlowRepresentable & UIViewController>(with: VC.Type)
  - Parameter with: a `FlowRepresentable` type that should be presented.
  - Parameter nextItem: a closure returning the next item in the `Workflow`.
  - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
+ - NOTE: Should be called inside a `WorkflowLauncher` initializer.
+ - IMPORTANT: Not for use in UIKit, unless you're doing SwiftUI interop.
  */
 @available(iOS 14.0, macOS 11, tvOS 14.0, *)
 public func thenProceed<VC: FlowRepresentable & UIViewController, F, W, C>(with: VC.Type, nextItem: () -> WorkflowItem<F, W, C>) -> WorkflowItem<ViewControllerWrapper<VC>, WorkflowItem<F, W, C>, ViewControllerWrapper<VC>> {
