@@ -1886,8 +1886,8 @@ final class GenericConstraintTests: XCTestCase, View {
 
         try XCTAssertThrowsFatalError {
             _ = WorkflowLauncher(isLaunched: .constant(true)) {
-                self.thenProceed(with: FR0.self) {
-                    self.thenProceed(with: FR1.self).persistence(.removedAfterProceeding)
+                thenProceed(with: FR0.self) {
+                    thenProceed(with: FR1.self).persistence(.removedAfterProceeding)
                 }
             }
         }
