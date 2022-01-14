@@ -92,13 +92,9 @@ extension AnyWorkflow {
     public static var jsonSchemaVersion: JSONSchemaVersion = .v0_0_1
 
     /// Codified list of supported JSON schema versions by this library
-    public enum JSONSchemaVersion: CustomStringConvertible {
+    public enum JSONSchemaVersion: String {
         /// JSON Schema v0.0.1
-        case v0_0_1
-
-        public var description: String {
-            "\(self)".replacingOccurrences(of: "_", with: ".")
-        }
+        case v0_0_1 = "v0.0.1"
     }
 }
 
