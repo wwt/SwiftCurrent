@@ -7,7 +7,7 @@
 //  
 
 /// Aspects of the described ``FlowRepresentable`` needed to dynamically generate metadata from the Workflow Data Scheme.
-public protocol FlowRepresentableMetadataDescriber {
+public protocol WorkflowDecodable {
     /// The name of the ``FlowRepresentable`` as used in the Workflow Data Scheme
     static var flowRepresentableName: String { get }
 
@@ -16,8 +16,8 @@ public protocol FlowRepresentableMetadataDescriber {
 }
 
 // Provides the implementation for the protocol without immediately conforming FlowRepresentable
-// See FlowRepresentableMetadataDescriberConsumerTests for reasons.
-extension FlowRepresentable where Self: FlowRepresentableMetadataDescriber {
+// See WorkflowDecodableConsumerTests for reasons.
+extension FlowRepresentable where Self: WorkflowDecodable {
     /// The name of the ``FlowRepresentable`` as used in the Workflow Data Scheme
     public static var flowRepresentableName: String { String(describing: Self.self) }
 
