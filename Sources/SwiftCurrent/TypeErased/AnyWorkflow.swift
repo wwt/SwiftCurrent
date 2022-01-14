@@ -88,6 +88,21 @@ extension AnyWorkflow: Sequence {
 }
 
 extension AnyWorkflow {
+    /// Latest supported schema version
+    public static var jsonSchemaVersion: JSONSchemaVersion = .v0_0_1
+
+    /// Codified list of supported JSON schema versions by this library
+    public enum JSONSchemaVersion: CustomStringConvertible {
+        /// JSON Schema v0.0.1
+        case v0_0_1
+
+        public var description: String {
+            "\(self)".replacingOccurrences(of: "_", with: ".")
+        }
+    }
+}
+
+extension AnyWorkflow {
     /// A type that represents either a type erased value or no value.
     public enum PassedArgs {
         /// No arguments are passed forward.
