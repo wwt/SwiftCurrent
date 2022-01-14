@@ -23,14 +23,12 @@ extension JSONDecoder {
         let spec = try decode(WorkflowJSONSpec.self, from: data)
         let typeMap = aggregator.typeMap
 
-        let workflow = AnyWorkflow.empty
-        try spec.sequence.forEach {
-            if let type = typeMap[$0.flowRepresentableName] {
-                workflow.append(type.metadataFactory())
+        return try spec.sequence.reduce(into: AnyWorkflow.empty) {
+            if let type = typeMap[$1.flowRepresentableName] {
+                $0.append(type.metadataFactory())
             } else {
-                throw AnyWorkflow.DecodingError.invalidFlowRepresentable($0.flowRepresentableName)
+                throw AnyWorkflow.DecodingError.invalidFlowRepresentable($1.flowRepresentableName)
             }
         }
-        return workflow
     }
 }

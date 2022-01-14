@@ -31,6 +31,25 @@ final class JsonSpecificationTests: XCTestCase {
         XCTAssertNil(wf.first?.next?.next)
     }
 
+    func testWorkflowCanBeInstantiatedFromJSON_WithSubclasses() throws {
+        class FR1: FlowRepresentable, WorkflowDecodable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+            required init() { }
+        }
+
+        class FR2: FR1 { }
+
+        let registry = TestRegistry(types: [
+            FR1.self,
+            FR2.self
+        ])
+
+        let wf = try JSONDecoder().decodeWorkflow(withAggregator: registry, from: validWorkflowJSON)
+        XCTAssertEqual(wf.first?.value.metadata.flowRepresentableTypeDescriptor, FR1.flowRepresentableName)
+        XCTAssertEqual(wf.first?.next?.value.metadata.flowRepresentableTypeDescriptor, FR2.flowRepresentableName)
+        XCTAssertNil(wf.first?.next?.next)
+    }
+
     func testWorkflowThrowsAnErrorWhenGivenMalformedJSON() {
         XCTAssertThrowsError(try JSONDecoder().decodeWorkflow(withAggregator: TestRegistry(types: []), from: malformedWorkflowJSON))
     }
