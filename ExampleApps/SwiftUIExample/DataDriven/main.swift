@@ -22,12 +22,35 @@ func main() throws {
 }
 
 func printFindings(_ files: [File]) {
-    files.forEach {
-        guard let name = $0.results.rootNode.types.first?.name,
-              let inheritence = $0.results.rootNode.types.first?.inheritance else { return }
+    var protocolsConforming: [String] = []
 
-        if inheritence.contains(conformance) {
-            print("Inheritance for \(name): \(inheritence)")
+    files.forEach {
+        let root = $0.results.rootNode
+
+        for type in root.types {
+
+            if type.inheritance.contains(conformance) {
+                print("Inheritance for \(type.type.rawValue) \(type.name): \(type.inheritance)")
+            }
+
+            if type.type == .protocol && (type.inheritance.contains(conformance) == true) {
+                protocolsConforming.append(type.name)
+                print("Appending \(type.type.rawValue) \(type.name) to list of protocols conforming to \(conformance)")
+            }
+        }
+    }
+
+    files.forEach {
+        let root = $0.results.rootNode
+
+        protocolsConforming.forEach { proto in
+
+            for type in root.types {
+
+                if type.inheritance.contains(proto) {
+                    print("Inheritance for \(type.type.rawValue) \(type.name): \(type.inheritance)")
+                }
+            }
         }
     }
 }
