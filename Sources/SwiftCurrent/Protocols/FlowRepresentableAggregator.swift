@@ -11,5 +11,21 @@
  */
 public protocol FlowRepresentableAggregator {
     /// A list of ``WorkflowDecodable`` types to use when decoding a workflow
-    var typeMap: [WorkflowDecodable.Type] { get }
+    var types: [WorkflowDecodable.Type] { get }
+
+    /**
+     A dictionary representation of flowRepresentableName to ``WorkflowDecodable``
+     - NOTE: This is auto-generated unless you override the behavior
+     */
+    var typeMap: [String: WorkflowDecodable.Type] { get }
+}
+
+extension FlowRepresentableAggregator {
+    /**
+     A dictionary representation of flowRepresentableName to ``WorkflowDecodable``
+     - NOTE: This is auto-generated unless you override the behavior
+     */
+    public var typeMap: [String: WorkflowDecodable.Type] {
+        types.reduce(into: [:]) { $0[$1.flowRepresentableName] = $1 }
+    }
 }

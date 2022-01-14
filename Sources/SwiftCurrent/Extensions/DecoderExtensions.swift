@@ -9,8 +9,28 @@
 import Foundation
 
 extension JSONDecoder {
+    fileprivate struct WorkflowJSONSpec: Decodable {
+        let schemaVersion: AnyWorkflow.JSONSchemaVersion
+        let sequence: [Sequence]
+
+        fileprivate struct Sequence: Decodable {
+            let flowRepresentableName: String
+        }
+    }
+
     /// Convenience method to decode an ``AnyWorkflow`` from Data.
-    public func decodeWorkflow(withAggregator: FlowRepresentableAggregator, from data: Data) throws -> AnyWorkflow {
-        throw URLError(.badURL)
+    public func decodeWorkflow(withAggregator aggregator: FlowRepresentableAggregator, from data: Data) throws -> AnyWorkflow {
+        let spec = try decode(WorkflowJSONSpec.self, from: data)
+        let typeMap = aggregator.typeMap
+
+        let workflow = AnyWorkflow.empty
+        try spec.sequence.forEach {
+            if let type = typeMap[$0.flowRepresentableName] {
+                workflow.append(type.metadataFactory())
+            } else {
+                throw AnyWorkflow.DecodingError.invalidFlowRepresentable($0.flowRepresentableName)
+            }
+        }
+        return workflow
     }
 }
