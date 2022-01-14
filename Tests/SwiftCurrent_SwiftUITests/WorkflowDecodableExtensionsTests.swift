@@ -1,5 +1,5 @@
 //
-//  FlowRepresentableMetadataDescriberExtensionsTests.swift
+//  WorkflowDecodableExtensionsTests.swift
 //  SwiftCurrent_SwiftUI
 //
 //  Created by Richard Gist on 12/29/21.
@@ -13,15 +13,15 @@ import SwiftCurrent
 import SwiftCurrent_SwiftUI
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-class FlowRepresentableMetadataDescriberExtensionsTests: XCTestCase {
+class WorkflowDecodableExtensionsTests: XCTestCase {
     func testMetadataFactoryReturnsExtendedFlowRepresentableMetadataForViews() {
-        struct FR1: View, FlowRepresentable, FlowRepresentableMetadataDescriber {
+        struct FR1: View, FlowRepresentable, WorkflowDecodable {
             weak var _workflowPointer: AnyFlowRepresentable?
             var body: some View { EmptyView() }
         }
 
         let metadata = FR1.metadataFactory()
-        let genericMetadata = (FR1.self as FlowRepresentableMetadataDescriber.Type).metadataFactory()
+        let genericMetadata = (FR1.self as WorkflowDecodable.Type).metadataFactory()
 
         // ExtendedFlowRepresentableMetadata should be internal, but we must also test if the override is public.
         XCTAssert(type(of: metadata) != FlowRepresentableMetadata.self, "\(type(of: metadata)) should be overridden from type FlowRepresentableMetadata")
