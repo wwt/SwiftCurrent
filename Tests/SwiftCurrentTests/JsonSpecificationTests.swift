@@ -20,16 +20,25 @@ final class JsonSpecificationTests: XCTestCase {
             weak var _workflowPointer: AnyFlowRepresentable?
         }
 
-        let registry = TestRegistry(typeMap: [
+        let registry = TestRegistry(types: [
             FR1.self,
             FR2.self
         ])
 
         let wf = try JSONDecoder().decodeWorkflow(withAggregator: registry, from: validWorkflowJSON)
-
         XCTAssertEqual(wf.first?.value.metadata.flowRepresentableTypeDescriptor, FR1.flowRepresentableName)
         XCTAssertEqual(wf.first?.next?.value.metadata.flowRepresentableTypeDescriptor, FR2.flowRepresentableName)
         XCTAssertNil(wf.first?.next?.next)
+    }
+
+    func testWorkflowThrowsAnErrorWhenGivenMalformedJSON() {
+        XCTAssertThrowsError(try JSONDecoder().decodeWorkflow(withAggregator: TestRegistry(types: []), from: malformedWorkflowJSON))
+    }
+
+    func testWorkflowThrowsAnErrorWhenItCannotMatchTheCorrespondingSequenceType() {
+        XCTAssertThrowsError(try JSONDecoder().decodeWorkflow(withAggregator: TestRegistry(types: []), from: validWorkflowJSON)) { error in
+            XCTAssertEqual((error as? AnyWorkflow.DecodingError), .invalidFlowRepresentable("FR1"))
+        }
     }
 
     // TODO: Add tests for extending JSON with new fields
@@ -37,7 +46,7 @@ final class JsonSpecificationTests: XCTestCase {
 }
 
 struct TestRegistry: FlowRepresentableAggregator {
-    var typeMap: [WorkflowDecodable.Type]
+    var types: [WorkflowDecodable.Type]
 }
 
 extension JsonSpecificationTests {
@@ -45,7 +54,7 @@ extension JsonSpecificationTests {
         get throws {
             try XCTUnwrap("""
             {
-                "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion)",
+                "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
                 "sequence" : [
                     {
                         "flowRepresentableName" : "FR1",
@@ -56,6 +65,17 @@ extension JsonSpecificationTests {
                         "flowRepresentableName" : "FR2"
                     }
                 ]
+            }
+            """.data(using: .utf8))
+        }
+    }
+
+    fileprivate var malformedWorkflowJSON: Data {
+        get throws {
+            try XCTUnwrap("""
+            {
+                "iAmATeapot": true,
+                "thisIsValid": 0
             }
             """.data(using: .utf8))
         }
