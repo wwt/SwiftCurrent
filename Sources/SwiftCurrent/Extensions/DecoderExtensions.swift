@@ -4,7 +4,7 @@
 //
 //  Created by Tyler Thompson on 1/14/22.
 //  Copyright © 2022 WWT and Tyler Thompson. All rights reserved.
-//  
+//  swiftlint:disable file_types_order
 
 import Foundation
 
@@ -20,16 +20,7 @@ extension JSONDecoder {
 
     /// Convenience method to decode an ``AnyWorkflow`` from Data.
     public func decodeWorkflow(withAggregator aggregator: FlowRepresentableAggregator, from data: Data) throws -> AnyWorkflow {
-        let spec = try decode(WorkflowJSONSpec.self, from: data)
-        let typeMap = aggregator.typeMap
-
-        return try spec.sequence.reduce(into: AnyWorkflow.empty) {
-            if let type = typeMap[$1.flowRepresentableName] {
-                $0.append(type.metadataFactory())
-            } else {
-                throw AnyWorkflow.DecodingError.invalidFlowRepresentable($1.flowRepresentableName)
-            }
-        }
+        try AnyWorkflow(spec: decode(WorkflowJSONSpec.self, from: data), aggregator: aggregator)
     }
 }
 
@@ -44,14 +35,19 @@ public struct DecodeWorkflow<Aggregator: FlowRepresentableAggregator>: Decodable
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let spec = try container.decode(JSONDecoder.WorkflowJSONSpec.self)
-        let aggregator = Aggregator()
-        let typeMap = aggregator.typeMap
+        wrappedValue = try AnyWorkflow(spec: spec, aggregator: Aggregator())
+    }
+}
 
-        wrappedValue = try spec.sequence.reduce(into: AnyWorkflow.empty) {
-            if let type = typeMap[$1.flowRepresentableName] {
-                $0.append(type.metadataFactory())
+extension AnyWorkflow {
+    fileprivate convenience init(spec: JSONDecoder.WorkflowJSONSpec, aggregator: FlowRepresentableAggregator) throws {
+        let typeMap = aggregator.typeMap
+        self.init(Workflow<Never>())
+        try spec.sequence.forEach {
+            if let type = typeMap[$0.flowRepresentableName] {
+                append(type.metadataFactory())
             } else {
-                throw AnyWorkflow.DecodingError.invalidFlowRepresentable($1.flowRepresentableName)
+                throw AnyWorkflow.DecodingError.invalidFlowRepresentable($0.flowRepresentableName)
             }
         }
     }
