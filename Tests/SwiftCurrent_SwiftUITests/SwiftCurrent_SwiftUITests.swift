@@ -12,6 +12,7 @@ import ViewInspector
 
 import SwiftCurrent
 @testable import SwiftCurrent_SwiftUI // testable sadly needed for inspection.inspect to work
+import SwiftCurrent_Testing
 
 @available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
@@ -683,8 +684,8 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         XCTAssertNoThrow(try launcher.view(WorkflowItem<FR1, Never, FR1>.self))
     }
 
-    func testLaunchingAWorkflowWithOneItemFromAnAnyWorkflow() {
-        struct FR1: View, FlowRepresentable, Inspectable {
+    func testLaunchingAWorkflowWithOneItemFromAnAnyWorkflow() throws {
+        struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
             weak var _workflowPointer: AnyFlowRepresentable?
 
             var body: some View {
@@ -692,7 +693,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             }
         }
 
-        let wf = Workflow(FR1.self)
+        let wf = try decodeAnyWorkflow(with: FR1.self)
 
         let launcher = WorkflowLauncher(isLaunched: .constant(true), workflow: wf)
 
@@ -703,12 +704,12 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         wait(for: [exp], timeout: TestConstant.timeout)
     }
 
-    func testLaunchingAMultiTypeLongWorkflowFromAnAnyWorkflow() {
-        struct FR1: View, FlowRepresentable, Inspectable {
+    func testLaunchingAMultiTypeLongWorkflowFromAnAnyWorkflow() throws {
+        struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
+        struct FR2: View, FlowRepresentable, Inspectable, WorkflowDecodable {
             typealias WorkflowOutput = AnyWorkflow.PassedArgs
             var _workflowPointer: AnyFlowRepresentable?
             private let data: AnyWorkflow.PassedArgs
@@ -722,8 +723,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectedArgs = UUID().uuidString
 
-        let wf = Workflow(FR1.self)
-            .thenProceed(with: FR2.self) { .default }
+        let wf = try decodeAnyWorkflow(with: FR1.self, FR2.self)
 
         let expectViewLoaded = ViewHosting.loadView(
             WorkflowLauncher(isLaunched: .constant(true), workflow: wf)
@@ -741,23 +741,21 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    func testLaunchingAWorkflowFromAnAnyWorkflow() {
-        struct FR1: View, FlowRepresentable, Inspectable {
+    func testLaunchingAWorkflowFromAnAnyWorkflow() throws {
+        struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
             weak var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, PassthroughFlowRepresentable, Inspectable {
+        struct FR2: View, PassthroughFlowRepresentable, Inspectable, WorkflowDecodable {
             weak var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
+        struct FR3: View, FlowRepresentable, Inspectable, WorkflowDecodable {
             weak var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR3 type") }
         }
 
-        let wf = Workflow(FR1.self)
-            .thenProceed(with: FR2.self, flowPersistence: { .default })
-            .thenProceed(with: FR3.self, flowPersistence: { .default })
+        let wf = try decodeAnyWorkflow(with: FR1.self, FR2.self, FR3.self)
 
         let launcher = WorkflowLauncher(isLaunched: .constant(true), workflow: wf)
         let expectOnFinish = expectation(description: "OnFinish called")
@@ -782,12 +780,12 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    func testWorkflowLaunchedFromAnAnyWorkflowCanHavePassthroughFlowRepresentableInTheMiddle() {
-        struct FR1: View, FlowRepresentable, Inspectable {
+    func testWorkflowLaunchedFromAnAnyWorkflowCanHavePassthroughFlowRepresentableInTheMiddle() throws {
+        struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
+        struct FR2: View, FlowRepresentable, Inspectable, WorkflowDecodable {
             typealias WorkflowOutput = String
             var _workflowPointer: AnyFlowRepresentable?
             private let data: AnyWorkflow.PassedArgs
@@ -797,7 +795,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
                 self.data = args
             }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
+        struct FR3: View, FlowRepresentable, Inspectable, WorkflowDecodable {
             typealias WorkflowInput = String
             let str: String
             init(with str: String) {
@@ -806,15 +804,12 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR3 type, \(str)") }
         }
-        struct FR4: View, FlowRepresentable, Inspectable {
+        struct FR4: View, FlowRepresentable, Inspectable, WorkflowDecodable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR4 type") }
         }
 
-        let wf = Workflow(FR1.self)
-            .thenProceed(with: FR2.self, flowPersistence: { .default })
-            .thenProceed(with: FR3.self, flowPersistence: { _ in .default })
-            .thenProceed(with: FR4.self, flowPersistence: { .default })
+        let wf = try decodeAnyWorkflow(with: FR1.self, FR2.self, FR3.self, FR4.self)
 
         let launcher = WorkflowLauncher(isLaunched: .constant(true), workflow: wf)
         let expectOnFinish = expectation(description: "OnFinish called")
@@ -844,8 +839,8 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    func testWorkflowLaunchedFromAnAnyWorkflowCanHaveStartingArgs() {
-        struct FR1: View, FlowRepresentable, Inspectable {
+    func testWorkflowLaunchedFromAnAnyWorkflowCanHaveStartingArgs() throws {
+        struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
             typealias WorkflowOutput = AnyWorkflow.PassedArgs
             var _workflowPointer: AnyFlowRepresentable?
             var args: AnyWorkflow.PassedArgs
@@ -855,7 +850,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
                 self.args = args
             }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
+        struct FR2: View, FlowRepresentable, Inspectable, WorkflowDecodable {
             var _workflowPointer: AnyFlowRepresentable?
             var args: AnyWorkflow.PassedArgs
             var body: some View { Text("FR2 type, \(args.extractArgs(defaultValue: "") as! String)") }
@@ -864,19 +859,16 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
                 self.args = args
             }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
+        struct FR3: View, FlowRepresentable, Inspectable, WorkflowDecodable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR3 type") }
         }
-        struct FR4: View, FlowRepresentable, Inspectable {
+        struct FR4: View, FlowRepresentable, Inspectable, WorkflowDecodable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR4 type") }
         }
 
-        let wf = Workflow(FR1.self)
-            .thenProceed(with: FR2.self, flowPersistence: { _ in .default })
-            .thenProceed(with: FR3.self, flowPersistence: { _ in .default })
-            .thenProceed(with: FR4.self, flowPersistence: { .default })
+        let wf = try decodeAnyWorkflow(with: FR1.self, FR2.self, FR3.self, FR4.self)
 
         let expectedArgs = UUID().uuidString
         let launcher = WorkflowLauncher(isLaunched: .constant(true), startingArgs: .args(expectedArgs), workflow: wf)
@@ -906,20 +898,21 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-    func testLaunchingAWorkflowUsingNonPassedArgsStartingArgs() {
-        struct FR1: View, FlowRepresentable, Inspectable {
+    func testLaunchingAWorkflowUsingNonPassedArgsStartingArgs() throws {
+        struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
             weak var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
             public var data: String
             init(with data: String) { self.data = data }
         }
 
-        let wf = Workflow(FR1.self)
+        let wf = try decodeAnyWorkflow(with: FR1.self)
+
         let expectedData = UUID().uuidString
         let launcher = WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedData, workflow: wf)
 
         let expectViewLoaded = ViewHosting.loadView(launcher).inspection.inspect { viewUnderTest in
-                XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().data, expectedData)
+            XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().data, expectedData)
         }
 
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
@@ -938,7 +931,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         wf.removeLast()
 
         try XCTAssertThrowsFatalError {
-            _ = WorkflowLauncher(isLaunched: .constant(true), workflow: wf)
+            _ = WorkflowLauncher(isLaunched: .constant(true), workflow: AnyWorkflow(wf))
         }
     }
 }
@@ -949,4 +942,21 @@ protocol StateIdentifiable { }
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension State: StateIdentifiable {
 
+}
+
+fileprivate extension XCTestCase {
+    func decodeAnyWorkflow(with sequence: WorkflowDecodable.Type...) throws -> AnyWorkflow {
+        try JSONDecoder().decodeWorkflow(withAggregator: TestRegistry(types: sequence), from: generateValidWorkflowSpecification(with: sequence))
+    }
+
+    func generateValidWorkflowSpecification(with sequence: [WorkflowDecodable.Type]) throws -> Data {
+        return try XCTUnwrap("""
+        {
+            "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
+            "sequence" : [
+            \(sequence.map { "{\"flowRepresentableName\" : \"\($0.flowRepresentableName)\"}" }.joined(separator: ",\n"))
+            ]
+        }
+        """.data(using: .utf8))
+    }
 }

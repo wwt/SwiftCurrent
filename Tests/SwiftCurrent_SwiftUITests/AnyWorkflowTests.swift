@@ -18,10 +18,6 @@ final class AnyWorkflowTests: XCTestCase, View {
         let wf = Workflow(FR.self)
         AnyWorkflow(wf).abandon()
     }
-
-    func testAbandonDoesNotBLOWUPOnTypedWorkflow() {
-        Workflow(FR.self).abandon()
-    }
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)

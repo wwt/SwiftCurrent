@@ -60,12 +60,9 @@ final class JsonSpecificationTests: XCTestCase {
         }
     }
 
-    // TODO: Add tests for extending JSON with new fields
-    // TODO: Add tests for extending each FlowRepresentable in JSON with additional data
-}
-
-struct TestRegistry: FlowRepresentableAggregator {
-    var types: [WorkflowDecodable.Type]
+    #warning("TODO: Add tests for extending JSON with new fields")
+    #warning("TODO: Add tests for extending each FlowRepresentable in JSON with additional data")
+    #warning("TODO: Add tests for FlowPersistence and LaunchStyle")
 }
 
 extension JsonSpecificationTests {
