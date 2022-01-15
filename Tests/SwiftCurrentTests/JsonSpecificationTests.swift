@@ -60,7 +60,37 @@ final class JsonSpecificationTests: XCTestCase {
         }
     }
 
-    #warning("TODO: Add tests for extending JSON with new fields")
+    func testWorkflowCanBeDecodedAlongWithAnyOtherJSONBlob() throws {
+        struct FR1: FlowRepresentable, WorkflowDecodable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+        }
+
+        struct CustomRegistry: FlowRepresentableAggregator {
+            let types: [WorkflowDecodable.Type] = [ FR1.self ]
+        }
+
+        struct CustomDecodableObject: Decodable {
+            let someAdditionalThing: Int
+            @DecodeWorkflow(aggregator: CustomRegistry.self) var workflow: AnyWorkflow
+        }
+
+        let json = try XCTUnwrap("""
+            {
+                "someAdditionalThing" : 24,
+                "workflow" : {
+                    "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
+                    "sequence" : [ { "flowRepresentableName" : "FR1" } ]
+                }
+            }
+            """.data(using: .utf8))
+
+        let object = try JSONDecoder().decode(CustomDecodableObject.self, from: json)
+        let wf = object.workflow
+        XCTAssertEqual(object.someAdditionalThing, 24)
+        XCTAssertEqual(wf.first?.value.metadata.flowRepresentableTypeDescriptor, FR1.flowRepresentableName)
+        XCTAssertNil(wf.first?.next)
+    }
+
     #warning("TODO: Add tests for extending each FlowRepresentable in JSON with additional data")
     #warning("TODO: Add tests for FlowPersistence and LaunchStyle")
 }

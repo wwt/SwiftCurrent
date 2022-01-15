@@ -18,6 +18,9 @@ public protocol FlowRepresentableAggregator {
      - NOTE: This is auto-generated unless you override the behavior
      */
     var typeMap: [String: WorkflowDecodable.Type] { get }
+
+    /// Creates a FlowRepresentableAggregator.
+    init()
 }
 
 extension FlowRepresentableAggregator {
