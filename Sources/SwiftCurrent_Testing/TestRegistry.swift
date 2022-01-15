@@ -8,6 +8,8 @@
 
 import SwiftCurrent
 public struct TestRegistry: FlowRepresentableAggregator {
+    public init() { types = [] }
+
     public var types: [WorkflowDecodable.Type]
 
     public init(types: [WorkflowDecodable.Type]) {

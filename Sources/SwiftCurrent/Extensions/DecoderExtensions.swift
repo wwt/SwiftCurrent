@@ -32,3 +32,27 @@ extension JSONDecoder {
         }
     }
 }
+
+@propertyWrapper
+public struct DecodeWorkflow<Aggregator: FlowRepresentableAggregator>: Decodable {
+    public var wrappedValue: AnyWorkflow
+
+    public init(wrappedValue: AnyWorkflow = .empty, aggregator: Aggregator.Type) {
+        self.wrappedValue = wrappedValue
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let spec = try container.decode(JSONDecoder.WorkflowJSONSpec.self)
+        let aggregator = Aggregator()
+        let typeMap = aggregator.typeMap
+
+        wrappedValue = try spec.sequence.reduce(into: AnyWorkflow.empty) {
+            if let type = typeMap[$1.flowRepresentableName] {
+                $0.append(type.metadataFactory())
+            } else {
+                throw AnyWorkflow.DecodingError.invalidFlowRepresentable($1.flowRepresentableName)
+            }
+        }
+    }
+}
