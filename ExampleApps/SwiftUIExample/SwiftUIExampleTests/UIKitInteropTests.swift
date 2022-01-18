@@ -274,7 +274,7 @@ final class UIKitInteropTests: XCTestCase, View {
 extension UIViewController {
     func loadOnDevice() {
         // UIUTest's loadForTesting method does not work because it uses the deprecated `keyWindow` property.
-        let window = UIApplication.shared.windows.first
+        let window = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first?.windows.first
         window?.removeViewsFromRootViewController()
 
         window?.rootViewController = self
