@@ -4,16 +4,16 @@
 //
 //  Created by Tyler Thompson on 1/14/22.
 //  Copyright © 2022 WWT and Tyler Thompson. All rights reserved.
-//  swiftlint:disable file_types_order
+//
 
 import Foundation
 
 extension JSONDecoder {
-    fileprivate struct WorkflowJSONSpec: Decodable {
+    struct WorkflowJSONSpec: Decodable {
         let schemaVersion: AnyWorkflow.JSONSchemaVersion
         let sequence: [Sequence]
 
-        fileprivate struct Sequence: Decodable {
+        struct Sequence: Decodable {
             let flowRepresentableName: String
         }
     }
@@ -24,23 +24,8 @@ extension JSONDecoder {
     }
 }
 
-@propertyWrapper
-public struct DecodeWorkflow<Aggregator: FlowRepresentableAggregator>: Decodable {
-    public var wrappedValue: AnyWorkflow
-
-    public init(wrappedValue: AnyWorkflow = .empty, aggregator: Aggregator.Type) {
-        self.wrappedValue = wrappedValue
-    }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let spec = try container.decode(JSONDecoder.WorkflowJSONSpec.self)
-        wrappedValue = try AnyWorkflow(spec: spec, aggregator: Aggregator())
-    }
-}
-
 extension AnyWorkflow {
-    fileprivate convenience init(spec: JSONDecoder.WorkflowJSONSpec, aggregator: FlowRepresentableAggregator) throws {
+    convenience init(spec: JSONDecoder.WorkflowJSONSpec, aggregator: FlowRepresentableAggregator) throws {
         let typeMap = aggregator.typeMap
         self.init(Workflow<Never>())
         try spec.sequence.forEach {
