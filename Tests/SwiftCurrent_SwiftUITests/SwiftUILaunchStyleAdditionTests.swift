@@ -12,6 +12,7 @@ import Algorithms
 import SwiftUI
 
 @testable import SwiftCurrent_SwiftUI
+import SwiftCurrent_Testing
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class LaunchStyleAdditionTests: XCTestCase, View {
@@ -68,8 +69,14 @@ final class LaunchStyleAdditionTests: XCTestCase, View {
         let WD: WorkflowDecodable.Type = TestView.self
 
         let launchStyle = LaunchStyle.new
-        let metadata = WD.metadataFactory(launchStyle: launchStyle) { _ in .default }
+        let flowPersistence = FlowPersistence.new
+        let metadata = WD.metadataFactory(launchStyle: launchStyle) { _ in flowPersistence }
+        let wf = Workflow<Never>(metadata)
+        let orchestrationResponder = MockOrchestrationResponder()
+
+        wf.launch(withOrchestrationResponder: orchestrationResponder)
         XCTAssertIdentical(metadata.launchStyle, launchStyle)
+        XCTAssertIdentical(orchestrationResponder.lastTo?.value.metadata.persistence, flowPersistence)
     }
 
     func testPresentationTypes_AreCorrectlyEquatable() {
