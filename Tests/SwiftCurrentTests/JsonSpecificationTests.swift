@@ -91,8 +91,13 @@ final class JsonSpecificationTests: XCTestCase {
         XCTAssertNil(wf.first?.next)
     }
 
-    #warning("TODO: Add tests for extending each FlowRepresentable in JSON with additional data")
-    #warning("TODO: Add tests for FlowPersistence and LaunchStyle")
+    func testCreatingWorkflowWithLaunchStyle() {
+        XCTFail("TODO: Add test for this")
+    }
+
+    func testCreatingWorkflowWithFlowPersistence() {
+        XCTFail("TODO: Add test for this")
+    }
 }
 
 extension JsonSpecificationTests {
