@@ -18,6 +18,7 @@ extension WorkflowDecodable where Self: FlowRepresentable & View {
         ExtendedFlowRepresentableMetadata(flowRepresentableType: Self.self, launchStyle: launchStyle) { _ in .default }
     }
 
+    /// Decodes a ``LaunchStyle`` from a string.
     public static func decodeLaunchStyle(named name: String) throws -> LaunchStyle {
         switch name.lowercased() {
             case "viewswapping": return .default
