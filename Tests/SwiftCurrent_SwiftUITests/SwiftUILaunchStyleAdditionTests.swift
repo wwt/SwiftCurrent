@@ -31,10 +31,35 @@ final class LaunchStyleAdditionTests: XCTestCase, View {
 
     func testKnownPresentationTypes_AreUnique() {
         [LaunchStyle.default, LaunchStyle._swiftUI_modal, LaunchStyle._swiftUI_modal_fullscreen, LaunchStyle._swiftUI_navigationLink].permutations().forEach {
-            XCTAssertFalse($0[0] === $0[1])
+            XCTAssertNotIdentical($0[0], $0[1])
         }
         LaunchStyle.SwiftUI.PresentationType.allCases.permutations().forEach {
             XCTAssertNotEqual($0[0], $0[1])
+        }
+    }
+
+    func testKnownPresentationTypes_CanBeDecoded() throws {
+        struct TestView: View, FlowRepresentable, WorkflowDecodable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { EmptyView() }
+        }
+        let validLaunchStyles: [String: LaunchStyle] = [
+            "viewSwapping": .default,
+            "modal": ._swiftUI_modal,
+            "modal(.fullScreen)": ._swiftUI_modal_fullscreen,
+            "navigationLink": ._swiftUI_navigationLink
+        ]
+
+        let WD: WorkflowDecodable.Type = TestView.self
+
+        try validLaunchStyles.forEach { (key, value) in
+            XCTAssertIdentical(try TestView.decodeLaunchStyle(named: key), value)
+            XCTAssertIdentical(try WD.decodeLaunchStyle(named: key), value)
+        }
+
+        // Metatest, testing we covered all styles
+        LaunchStyle.SwiftUI.PresentationType.allCases.forEach { presentationType in
+            XCTAssert(validLaunchStyles.values.contains { $0 === presentationType.rawValue }, "dictionary of validLaunchStyles did not contain one for \(presentationType)")
         }
     }
 

@@ -25,7 +25,7 @@ public protocol WorkflowDecodable {
 extension WorkflowDecodable {
     #warning("You must remember when we add new ones, to make them available here...YUCK!")
     public static func decodeLaunchStyle(named name: String) throws -> LaunchStyle {
-        fatalError("ObVIOUSLY BAD")
+        throw AnyWorkflow.DecodingError.invalidLaunchStyle(name)
     }
 
     #warning("You must remember when we add new ones, to make them available here...YUCK!")
