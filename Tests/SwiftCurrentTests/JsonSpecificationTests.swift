@@ -96,7 +96,7 @@ final class JsonSpecificationTests: XCTestCase {
     }
 
     func testCreatingWorkflowWithLaunchStyle() throws {
-        struct FR1: FlowRepresentable, WorkflowDecodable, TestStyleLookup {
+        struct FR1: FlowRepresentable, WorkflowDecodable, TestLookup {
             weak var _workflowPointer: AnyFlowRepresentable?
         }
 
@@ -120,7 +120,7 @@ final class JsonSpecificationTests: XCTestCase {
     }
 
     func testCreatingWorkflowWithInvalidLaunchStyleOnExtendedType_Rethrows() throws {
-        struct FR1: FlowRepresentable, WorkflowDecodable, TestStyleLookup {
+        struct FR1: FlowRepresentable, WorkflowDecodable, TestLookup {
             weak var _workflowPointer: AnyFlowRepresentable?
         }
 
@@ -144,7 +144,31 @@ final class JsonSpecificationTests: XCTestCase {
     }
 
     func testCreatingWorkflowWithInvalidLaunchStyle_ThrowsError() throws {
-        class FR1: FlowRepresentable, WorkflowDecodable, TestStyleLookup {
+        struct FR1: FlowRepresentable, WorkflowDecodable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+        }
+
+        let registry = TestRegistry(types: [ FR1.self ])
+
+        let json = try XCTUnwrap("""
+            {
+                "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
+                "sequence": [
+                    {
+                        "flowRepresentableName": "FR1",
+                        "launchStyle": "testStyle"
+                    }
+                ]
+            }
+            """.data(using: .utf8))
+
+        XCTAssertThrowsError(try JSONDecoder().decodeWorkflow(withAggregator: registry, from: json)) { error in
+            XCTAssertEqual((error as? AnyWorkflow.DecodingError), .invalidLaunchStyle("testStyle"))
+        }
+    }
+
+    func testCreatingWorkflowWithClassesAndSubclasses_AndJSONLaunchStyles_Works() throws {
+        class FR1: FlowRepresentable, WorkflowDecodable, TestLookup {
             weak var _workflowPointer: AnyFlowRepresentable?
             required init() { }
         }
@@ -181,14 +205,131 @@ final class JsonSpecificationTests: XCTestCase {
         XCTAssertIdentical(wf.first?.next?.next?.value.metadata.launchStyle, LaunchStyle.default)
     }
 
-    func testCreatingWorkflowWithFlowPersistence() {
-        XCTFail("TODO: Add test for this")
+    func testCreatingWorkflowWithFlowPersistence() throws {
+        struct FR1: FlowRepresentable, WorkflowDecodable, TestLookup {
+            weak var _workflowPointer: AnyFlowRepresentable?
+        }
+
+        let json = try XCTUnwrap("""
+            {
+                "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
+                "sequence": [
+                    {
+                        "flowRepresentableName": "FR1",
+                        "flowPersistence": "testPersistence"
+                    }
+                ]
+            }
+            """.data(using: .utf8))
+
+        let registry = TestRegistry(types: [ FR1.self ])
+
+        let wf = try JSONDecoder().decodeWorkflow(withAggregator: registry, from: json)
+        let or = MockOrchestrationResponder()
+
+        XCTAssertEqual(wf.first?.value.metadata.flowRepresentableTypeDescriptor, FR1.flowRepresentableName)
+
+        wf.launch(withOrchestrationResponder: or, passedArgs: .none)
+        XCTAssertIdentical(or.lastTo?.value.metadata.persistence, FlowPersistence.testPersistence)
+    }
+
+    func testCreatingWorkflowWithInvalidFlowPersistenceOnExtendedType_Rethrows() throws {
+        struct FR1: FlowRepresentable, WorkflowDecodable, TestLookup {
+            weak var _workflowPointer: AnyFlowRepresentable?
+        }
+
+        let json = try XCTUnwrap("""
+            {
+                "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
+                "sequence": [
+                    {
+                        "flowRepresentableName": "FR1",
+                        "flowPersistence": "testPersistencez"
+                    }
+                ]
+            }
+            """.data(using: .utf8))
+
+        let registry = TestRegistry(types: [ FR1.self ])
+
+        XCTAssertThrowsError(try JSONDecoder().decodeWorkflow(withAggregator: registry, from: json)) { error in
+            XCTAssertEqual((error as? URLError), URLError(.badURL))
+        }
+    }
+
+    func testCreatingWorkflowWithClassesAndSubclasses_AndJSONFlowPersistences_Works() throws {
+        class FR1: FlowRepresentable, WorkflowDecodable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+            required init() { }
+        }
+
+        class FR2: FR1 { }
+
+        let registry = TestRegistry(types: [ FR1.self, FR2.self ])
+
+        let json = try XCTUnwrap("""
+            {
+                "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
+                "sequence": [
+                    {
+                        "flowRepresentableName": "FR1",
+                        "flowPersistence": "persistWhenSkipped"
+                    },
+                    {
+                        "flowRepresentableName": "FR2",
+                        "flowPersistence": "removedAfterProceeding"
+                    },
+                    {
+                        "flowRepresentableName": "FR2"
+                    }
+                ]
+            }
+            """.data(using: .utf8))
+        let wf = try JSONDecoder().decodeWorkflow(withAggregator: registry, from: json)
+        let orchestrationResponder = MockOrchestrationResponder()
+
+        XCTAssertEqual(wf.first?.value.metadata.flowRepresentableTypeDescriptor, FR1.flowRepresentableName)
+        XCTAssertEqual(wf.first?.next?.value.metadata.flowRepresentableTypeDescriptor, FR2.flowRepresentableName)
+        XCTAssertEqual(wf.first?.next?.next?.value.metadata.flowRepresentableTypeDescriptor, FR2.flowRepresentableName)
+
+        wf.launch(withOrchestrationResponder: orchestrationResponder, passedArgs: .none)
+        XCTAssertIdentical(orchestrationResponder.lastTo?.value.metadata.persistence, FlowPersistence.persistWhenSkipped)
+
+        (orchestrationResponder.lastTo?.value.instance?.underlyingInstance as? FR1)?.proceedInWorkflow()
+        XCTAssertIdentical(orchestrationResponder.lastTo?.value.metadata.persistence, FlowPersistence.removedAfterProceeding)
+
+        (orchestrationResponder.lastTo?.value.instance?.underlyingInstance as? FR2)?.proceedInWorkflow()
+        XCTAssertIdentical(orchestrationResponder.lastTo?.value.metadata.persistence, FlowPersistence.default)
+    }
+
+    func testCreatingWorkflowWithInvalidFlowPersistence_ThrowsError() throws {
+        struct FR1: FlowRepresentable, WorkflowDecodable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+        }
+
+        let registry = TestRegistry(types: [ FR1.self ])
+
+        let json = try XCTUnwrap("""
+            {
+                "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
+                "sequence": [
+                    {
+                        "flowRepresentableName": "FR1",
+                        "flowPersistence": "testPersistence"
+                    }
+                ]
+            }
+            """.data(using: .utf8))
+
+        XCTAssertThrowsError(try JSONDecoder().decodeWorkflow(withAggregator: registry, from: json)) { error in
+            XCTAssertEqual((error as? AnyWorkflow.DecodingError), .invalidFlowPersistence("testPersistence"))
+        }
     }
 }
 
-public protocol TestStyleLookup { } // For example: View
+public protocol TestLookup { } // For example: View
 
-extension WorkflowDecodable where Self: TestStyleLookup {
+extension WorkflowDecodable where Self: TestLookup {
     public static func decodeLaunchStyle(named name: String) throws -> LaunchStyle {
         switch name.lowercased() {
             case "teststyle": return LaunchStyle.testStyle
@@ -198,8 +339,22 @@ extension WorkflowDecodable where Self: TestStyleLookup {
     }
 }
 
+extension WorkflowDecodable where Self: TestLookup {
+    public static func decodeFlowPersistence(named name: String) throws -> FlowPersistence {
+        switch name.lowercased() {
+            case "testpersistence": return FlowPersistence.testPersistence
+            default:
+                throw URLError.init(.badURL)
+        }
+    }
+}
+
 extension LaunchStyle {
     static var testStyle = LaunchStyle.new
+}
+
+extension FlowPersistence {
+    static var testPersistence = FlowPersistence.new
 }
 
 extension JsonSpecificationTests {

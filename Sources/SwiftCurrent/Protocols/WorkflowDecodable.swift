@@ -23,14 +23,16 @@ public protocol WorkflowDecodable {
 }
 
 extension WorkflowDecodable {
-    #warning("You must remember when we add new ones, to make them available here...YUCK!")
     public static func decodeLaunchStyle(named name: String) throws -> LaunchStyle {
         throw AnyWorkflow.DecodingError.invalidLaunchStyle(name)
     }
 
-    #warning("You must remember when we add new ones, to make them available here...YUCK!")
     public static func decodeFlowPersistence(named name: String) throws -> FlowPersistence {
-        fatalError("ObVIOUSLY BAD")
+        switch name.lowercased() {
+            case "persistwhenskipped": return .persistWhenSkipped
+            case "removedafterproceeding": return .removedAfterProceeding
+            default: throw AnyWorkflow.DecodingError.invalidFlowPersistence(name)
+        }
     }
 }
 
@@ -43,6 +45,6 @@ extension FlowRepresentable where Self: WorkflowDecodable {
     /// Creates a new instance of ``FlowRepresentableMetadata``
     public static func metadataFactory(launchStyle: LaunchStyle,
                                        flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) -> FlowRepresentableMetadata {
-        FlowRepresentableMetadata(Self.self, launchStyle: launchStyle) { _ in .default }
+        FlowRepresentableMetadata(Self.self, launchStyle: launchStyle, flowPersistence: flowPersistence)
     }
 }
