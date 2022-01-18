@@ -19,7 +19,10 @@ public protocol FlowRepresentableAggregator {
      */
     var typeMap: [String: WorkflowDecodable.Type] { get }
 
-    /// Creates a FlowRepresentableAggregator.
+    /**
+     Creates a FlowRepresentableAggregator with default types.
+     - NOTE: Convenience methods use this empty initializer; alternative public methods exist for an already initialized aggregator.
+     */
     init()
 }
 
