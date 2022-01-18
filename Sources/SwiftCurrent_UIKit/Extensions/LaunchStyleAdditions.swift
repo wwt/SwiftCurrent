@@ -29,7 +29,22 @@ extension LaunchStyle {
 
 extension LaunchStyle {
     /// A type indicating how a `FlowRepresentable` should be presented.
-    public enum PresentationType: RawRepresentable {
+    public enum PresentationType: RawRepresentable, CaseIterable {
+        public static var allCases: [LaunchStyle.PresentationType] = [
+            .default,
+            .navigationStack,
+            .modal(.default),
+            .modal(.fullScreen),
+            .modal(.pageSheet),
+            .modal(.formSheet),
+            .modal(.currentContext),
+            .modal(.custom),
+            .modal(.overFullScreen),
+            .modal(.overCurrentContext),
+            .modal(.popover),
+            .modal(.automatic)
+        ]
+
         /**
         Indicates a `FlowRepresentable` can be launched contextually.
         - Important: If there's already a navigation stack, it will be used; otherwise views will present modally.

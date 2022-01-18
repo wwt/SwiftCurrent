@@ -371,6 +371,37 @@ class UIKitConsumerLaunchTests: XCTestCase {
         XCTAssertNil((UIApplication.topViewController() as? ExpectedModal)?.navigationController, "You didn't present modally")
     }
 
+    func testKnownPresentationTypes_CanBeDecoded() throws {
+        final class TestView: UIViewController, FlowRepresentable, WorkflowDecodable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+        }
+        let validLaunchStyles: [String: LaunchStyle] = [
+            "automatic": .default,
+            "navigationStack": .PresentationType.navigationStack.rawValue,
+            "modal": .PresentationType.modal.rawValue,
+            "modal(.automatic)": .PresentationType.modal(.automatic).rawValue,
+            "modal(.currentContext)": .PresentationType.modal(.currentContext).rawValue,
+            "modal(.custom)": .PresentationType.modal(.custom).rawValue,
+            "modal(.formSheet)": .PresentationType.modal(.formSheet).rawValue,
+            "modal(.fullScreen)": .PresentationType.modal(.fullScreen).rawValue,
+            "modal(.overCurrentContext)": .PresentationType.modal(.overCurrentContext).rawValue,
+            "modal(.overFullScreen)": .PresentationType.modal(.overFullScreen).rawValue,
+            "modal(.popover)": .PresentationType.modal(.popover).rawValue,
+            "modal(.pageSheet)": .PresentationType.modal(.pageSheet).rawValue,
+        ]
+
+        let WD: WorkflowDecodable.Type = TestView.self
+
+        try validLaunchStyles.forEach { (key, value) in
+            XCTAssertIdentical(try TestView.decodeLaunchStyle(named: key), value)
+            XCTAssertIdentical(try WD.decodeLaunchStyle(named: key), value)
+        }
+
+        // Metatest, testing we covered all styles
+        LaunchStyle.PresentationType.allCases.forEach { presentationType in
+            XCTAssert(validLaunchStyles.values.contains { $0 === presentationType.rawValue }, "dictionary of validLaunchStyles did not contain one for \(presentationType)")
+        }
+    }
 }
 
 extension UIKitConsumerLaunchTests {

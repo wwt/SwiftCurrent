@@ -59,6 +59,19 @@ final class LaunchStyleAdditionTests: XCTestCase, View {
         }
     }
 
+    func testLaunchStyleIsPassedThroughToExtendedFlowRepresentable() throws {
+        struct TestView: View, FlowRepresentable, WorkflowDecodable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { EmptyView() }
+        }
+
+        let WD: WorkflowDecodable.Type = TestView.self
+
+        let launchStyle = LaunchStyle.new
+        let metadata = WD.metadataFactory(launchStyle: launchStyle) { _ in .default }
+        XCTAssertIdentical(metadata.launchStyle, launchStyle)
+    }
+
     func testPresentationTypes_AreCorrectlyEquatable() {
         XCTAssertEqual(LaunchStyle.SwiftUI.PresentationType.default, .default)
         XCTAssertEqual(LaunchStyle.SwiftUI.PresentationType.navigationLink, .navigationLink)
