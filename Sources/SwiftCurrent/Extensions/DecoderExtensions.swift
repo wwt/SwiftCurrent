@@ -15,6 +15,8 @@ extension JSONDecoder {
 
         struct Sequence: Decodable {
             let flowRepresentableName: String
+            let launchStyle: String?
+            let flowPersistence: String?
         }
     }
 

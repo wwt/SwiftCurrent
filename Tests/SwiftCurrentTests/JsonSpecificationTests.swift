@@ -91,13 +91,50 @@ final class JsonSpecificationTests: XCTestCase {
         XCTAssertNil(wf.first?.next)
     }
 
-    func testCreatingWorkflowWithLaunchStyle() {
-        XCTFail("TODO: Add test for this")
+    func testCreatingWorkflowWithLaunchStyle() throws {
+        struct FR1: FlowRepresentable, WorkflowDecodable, TestStyleLookup {
+            weak var _workflowPointer: AnyFlowRepresentable?
+        }
+
+        let json = try XCTUnwrap("""
+            {
+                "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
+                "sequence": [
+                    {
+                        "flowRepresentableName": "FR1",
+                        "launchStyle": "testStyle"
+                    }
+                ]
+            }
+            """.data(using: .utf8))
+
+        let registry = TestRegistry(types: [ FR1.self ])
+
+        let wf = try JSONDecoder().decodeWorkflow(withAggregator: registry, from: json)
+        XCTAssertEqual(wf.first?.value.metadata.flowRepresentableTypeDescriptor, FR1.flowRepresentableName)
+        XCTAssertIdentical(wf.first?.value.metadata.launchStyle, LaunchStyle.testStyle)
     }
 
     func testCreatingWorkflowWithFlowPersistence() {
         XCTFail("TODO: Add test for this")
     }
+}
+
+public protocol TestStyleLookup { } // For example: View
+
+extension WorkflowDecodable where Self: TestStyleLookup {
+    public static func decodeLaunchStyle(named name: String) throws -> LaunchStyle {
+        switch name.lowercased() {
+            case "teststyle": return LaunchStyle.testStyle
+            default:
+                XCTFail("Incorrect launch style given to decode")
+                return .new
+        }
+    }
+}
+
+extension LaunchStyle {
+    static var testStyle = LaunchStyle.new
 }
 
 extension JsonSpecificationTests {
@@ -106,14 +143,14 @@ extension JsonSpecificationTests {
             try XCTUnwrap("""
             {
                 "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
-                "sequence" : [
+                "sequence": [
                     {
-                        "flowRepresentableName" : "FR1",
-                        "flowPersistence" : "default",
-                        "launchStyle" : "default"
+                        "flowRepresentableName": "FR1",
+                        "flowPersistence": "default",
+                        "launchStyle": "default"
                     },
                     {
-                        "flowRepresentableName" : "FR2"
+                        "flowRepresentableName": "FR2"
                     }
                 ]
             }
