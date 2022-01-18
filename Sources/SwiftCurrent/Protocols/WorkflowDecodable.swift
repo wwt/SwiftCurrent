@@ -12,7 +12,33 @@ public protocol WorkflowDecodable {
     static var flowRepresentableName: String { get }
 
     /// Creates a new instance of ``FlowRepresentableMetadata``
+//    static func metadataFactory(launchStyle: LaunchStyle,
+//                                flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) -> FlowRepresentableMetadata
+
+    /// Creates a new instance of ``FlowRepresentableMetadata``
     static func metadataFactory() -> FlowRepresentableMetadata
+
+    #warning("Worry about docs...not for public use really???")
+    static func decodeLaunchStyle(named name: String) throws -> LaunchStyle
+
+    #warning("Worry about docs...not for public use really???")
+    static func decodeFlowPersistence(named name: String) throws -> FlowPersistence
+}
+
+extension WorkflowDecodable {
+    #warning("You must remember when we add new ones, to make them available here...YUCK!")
+    public static func decodeLaunchStyle(named name: String) throws -> LaunchStyle {
+        fatalError("ObVIOUSLY BAD")
+    }
+
+    #warning("You must remember when we add new ones, to make them available here...YUCK!")
+    public static func decodeFlowPersistence(named name: String) throws -> FlowPersistence {
+        fatalError("ObVIOUSLY BAD")
+    }
+
+//    public static func metadataFactory() -> FlowRepresentableMetadata {
+//        metadataFactory(launchStyle: .default) { _ in .default }
+//    }
 }
 
 // Provides the implementation for the protocol without immediately conforming FlowRepresentable
@@ -25,4 +51,9 @@ extension FlowRepresentable where Self: WorkflowDecodable {
     public static func metadataFactory() -> FlowRepresentableMetadata {
         FlowRepresentableMetadata(Self.self)
     }
+//    /// Creates a new instance of ``FlowRepresentableMetadata``
+//    public static func metadataFactory(launchStyle: LaunchStyle,
+//                                       flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) -> FlowRepresentableMetadata {
+//        FlowRepresentableMetadata(Self.self)
+//    }
 }
