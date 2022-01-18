@@ -32,7 +32,7 @@ extension AnyWorkflow {
         self.init(Workflow<Never>())
         try spec.sequence.forEach {
             if let type = typeMap[$0.flowRepresentableName] {
-                append(type.metadataFactory())
+                append(type.metadataFactory(launchStyle: .default) { _ in .default })
             } else {
                 throw AnyWorkflow.DecodingError.invalidFlowRepresentable($0.flowRepresentableName)
             }

@@ -12,11 +12,8 @@ public protocol WorkflowDecodable {
     static var flowRepresentableName: String { get }
 
     /// Creates a new instance of ``FlowRepresentableMetadata``
-//    static func metadataFactory(launchStyle: LaunchStyle,
-//                                flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) -> FlowRepresentableMetadata
-
-    /// Creates a new instance of ``FlowRepresentableMetadata``
-    static func metadataFactory() -> FlowRepresentableMetadata
+    static func metadataFactory(launchStyle: LaunchStyle,
+                                flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) -> FlowRepresentableMetadata
 
     #warning("Worry about docs...not for public use really???")
     static func decodeLaunchStyle(named name: String) throws -> LaunchStyle
@@ -35,10 +32,6 @@ extension WorkflowDecodable {
     public static func decodeFlowPersistence(named name: String) throws -> FlowPersistence {
         fatalError("ObVIOUSLY BAD")
     }
-
-//    public static func metadataFactory() -> FlowRepresentableMetadata {
-//        metadataFactory(launchStyle: .default) { _ in .default }
-//    }
 }
 
 // Provides the implementation for the protocol without immediately conforming FlowRepresentable
@@ -48,12 +41,8 @@ extension FlowRepresentable where Self: WorkflowDecodable {
     public static var flowRepresentableName: String { String(describing: Self.self) }
 
     /// Creates a new instance of ``FlowRepresentableMetadata``
-    public static func metadataFactory() -> FlowRepresentableMetadata {
-        FlowRepresentableMetadata(Self.self)
+    public static func metadataFactory(launchStyle: LaunchStyle,
+                                       flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) -> FlowRepresentableMetadata {
+        FlowRepresentableMetadata(Self.self, launchStyle: launchStyle) { _ in .default }
     }
-//    /// Creates a new instance of ``FlowRepresentableMetadata``
-//    public static func metadataFactory(launchStyle: LaunchStyle,
-//                                       flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) -> FlowRepresentableMetadata {
-//        FlowRepresentableMetadata(Self.self)
-//    }
 }
