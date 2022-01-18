@@ -10,6 +10,7 @@ import SwiftCurrent
 import UIKit
 
 extension WorkflowDecodable where Self: UIViewController & FlowRepresentable {
+    /// Decodes a ``LaunchStyle`` from a string.
     public static func decodeLaunchStyle(named name: String) throws -> LaunchStyle {
         switch name.lowercased() {
             case "automatic": return .default
