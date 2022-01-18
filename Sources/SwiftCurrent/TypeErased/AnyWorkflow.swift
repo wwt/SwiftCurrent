@@ -93,11 +93,17 @@ extension AnyWorkflow {
         /// The ``WorkflowDecodable`` could not be found in supplied aggregator.
         /// AssociatedType: invalid FlowRepresentable name
         case invalidFlowRepresentable(String)
+        /// The ``LaunchStyle`` could not be found.
+        /// AssociatedType: invalid LaunchStyle
+        case invalidLaunchStyle(String)
 
         public static func == (lhs: DecodingError, rhs: DecodingError) -> Bool {
             switch (lhs, rhs) {
                 case (.invalidFlowRepresentable(let lhsName), .invalidFlowRepresentable(let rhsName)):
                     return lhsName == rhsName
+                case (.invalidLaunchStyle(let lhsName), .invalidLaunchStyle(let rhsName)):
+                    return lhsName == rhsName
+                default: return false
             }
         }
     }

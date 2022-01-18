@@ -27,7 +27,9 @@ final class JsonSpecificationTests: XCTestCase {
 
         let wf = try JSONDecoder().decodeWorkflow(withAggregator: registry, from: validWorkflowJSON)
         XCTAssertEqual(wf.first?.value.metadata.flowRepresentableTypeDescriptor, FR1.flowRepresentableName)
+        XCTAssertIdentical(wf.first?.value.metadata.launchStyle, LaunchStyle.default)
         XCTAssertEqual(wf.first?.next?.value.metadata.flowRepresentableTypeDescriptor, FR2.flowRepresentableName)
+        XCTAssertIdentical(wf.first?.next?.value.metadata.launchStyle, LaunchStyle.default)
         XCTAssertNil(wf.first?.next?.next)
     }
 
@@ -46,7 +48,9 @@ final class JsonSpecificationTests: XCTestCase {
 
         let wf = try JSONDecoder().decodeWorkflow(withAggregator: registry, from: validWorkflowJSON)
         XCTAssertEqual(wf.first?.value.metadata.flowRepresentableTypeDescriptor, FR1.flowRepresentableName)
+        XCTAssertIdentical(wf.first?.value.metadata.launchStyle, LaunchStyle.default)
         XCTAssertEqual(wf.first?.next?.value.metadata.flowRepresentableTypeDescriptor, FR2.flowRepresentableName)
+        XCTAssertIdentical(wf.first?.next?.value.metadata.launchStyle, LaunchStyle.default)
         XCTAssertNil(wf.first?.next?.next)
     }
 
@@ -115,6 +119,68 @@ final class JsonSpecificationTests: XCTestCase {
         XCTAssertIdentical(wf.first?.value.metadata.launchStyle, LaunchStyle.testStyle)
     }
 
+    func testCreatingWorkflowWithInvalidLaunchStyleOnExtendedType_Rethrows() throws {
+        struct FR1: FlowRepresentable, WorkflowDecodable, TestStyleLookup {
+            weak var _workflowPointer: AnyFlowRepresentable?
+        }
+
+        let json = try XCTUnwrap("""
+            {
+                "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
+                "sequence": [
+                    {
+                        "flowRepresentableName": "FR1",
+                        "launchStyle": "testStylez"
+                    }
+                ]
+            }
+            """.data(using: .utf8))
+
+        let registry = TestRegistry(types: [ FR1.self ])
+
+        XCTAssertThrowsError(try JSONDecoder().decodeWorkflow(withAggregator: registry, from: json)) { error in
+            XCTAssertEqual((error as? URLError), URLError(.badURL))
+        }
+    }
+
+    func testCreatingWorkflowWithInvalidLaunchStyle_ThrowsError() throws {
+        class FR1: FlowRepresentable, WorkflowDecodable, TestStyleLookup {
+            weak var _workflowPointer: AnyFlowRepresentable?
+            required init() { }
+        }
+
+        class FR2: FR1 { }
+
+        let registry = TestRegistry(types: [ FR1.self, FR2.self ])
+
+        let json = try XCTUnwrap("""
+            {
+                "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
+                "sequence": [
+                    {
+                        "flowRepresentableName": "FR1",
+                        "launchStyle": "testStyle"
+                    },
+                    {
+                        "flowRepresentableName": "FR2",
+                        "launchStyle": "testStyle"
+                    },
+                    {
+                        "flowRepresentableName": "FR2"
+                    }
+                ]
+            }
+            """.data(using: .utf8))
+
+        let wf = try JSONDecoder().decodeWorkflow(withAggregator: registry, from: json)
+        XCTAssertEqual(wf.first?.value.metadata.flowRepresentableTypeDescriptor, FR1.flowRepresentableName)
+        XCTAssertIdentical(wf.first?.value.metadata.launchStyle, LaunchStyle.testStyle)
+        XCTAssertEqual(wf.first?.next?.value.metadata.flowRepresentableTypeDescriptor, FR2.flowRepresentableName)
+        XCTAssertIdentical(wf.first?.next?.value.metadata.launchStyle, LaunchStyle.testStyle)
+        XCTAssertEqual(wf.first?.next?.next?.value.metadata.flowRepresentableTypeDescriptor, FR2.flowRepresentableName)
+        XCTAssertIdentical(wf.first?.next?.next?.value.metadata.launchStyle, LaunchStyle.default)
+    }
+
     func testCreatingWorkflowWithFlowPersistence() {
         XCTFail("TODO: Add test for this")
     }
@@ -127,8 +193,7 @@ extension WorkflowDecodable where Self: TestStyleLookup {
         switch name.lowercased() {
             case "teststyle": return LaunchStyle.testStyle
             default:
-                XCTFail("Incorrect launch style given to decode")
-                return .new
+                throw URLError.init(.badURL)
         }
     }
 }
@@ -145,9 +210,7 @@ extension JsonSpecificationTests {
                 "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
                 "sequence": [
                     {
-                        "flowRepresentableName": "FR1",
-                        "flowPersistence": "default",
-                        "launchStyle": "default"
+                        "flowRepresentableName": "FR1"
                     },
                     {
                         "flowRepresentableName": "FR2"
