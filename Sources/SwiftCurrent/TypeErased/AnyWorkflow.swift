@@ -96,12 +96,17 @@ extension AnyWorkflow {
         /// The ``LaunchStyle`` could not be found.
         /// AssociatedType: invalid LaunchStyle
         case invalidLaunchStyle(String)
+        /// The ``FlowPersistence`` could not be found.
+        /// AssociatedType: invalid LaunchStyle
+        case invalidFlowPersistence(String)
 
         public static func == (lhs: DecodingError, rhs: DecodingError) -> Bool {
             switch (lhs, rhs) {
                 case (.invalidFlowRepresentable(let lhsName), .invalidFlowRepresentable(let rhsName)):
                     return lhsName == rhsName
                 case (.invalidLaunchStyle(let lhsName), .invalidLaunchStyle(let rhsName)):
+                    return lhsName == rhsName
+                case (.invalidFlowPersistence(let lhsName), .invalidFlowPersistence(let rhsName)):
                     return lhsName == rhsName
                 default: return false
             }
