@@ -28,7 +28,7 @@ final class QRScanningViewTests: XCTestCase {
         let exp = ViewHosting.loadView(QRScannerFeatureView()).inspection.inspect { viewUnderTest in
             XCTAssertNoThrow(try viewUnderTest.view(CodeScannerView.self).actualView().completion(.success(code)))
             XCTAssertEqual(try viewUnderTest.view(CodeScannerView.self).sheet().find(ViewType.Text.self).string(), "SCANNED DATA: \(code)")
-            XCTAssertNoThrow(try viewUnderTest.view(CodeScannerView.self).sheet().callOnDismiss())
+            XCTAssertNoThrow(try viewUnderTest.view(CodeScannerView.self).sheet().dismiss())
             XCTAssertThrowsError(try viewUnderTest.view(CodeScannerView.self).sheet())
         }
         wait(for: [exp], timeout: TestConstant.timeout)

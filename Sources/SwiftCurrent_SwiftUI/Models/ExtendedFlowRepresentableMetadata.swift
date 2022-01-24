@@ -13,10 +13,10 @@ import SwiftCurrent
 public class ExtendedFlowRepresentableMetadata: FlowRepresentableMetadata {
     private(set) var workflowItemFactory: (AnyWorkflowItem?) -> AnyWorkflowItem
 
-    public init<FR: FlowRepresentable & View>(flowRepresentableType: FR.Type,
-                                              launchStyle: LaunchStyle = .default,
-                                              flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default },
-                                              flowRepresentableFactory: @escaping (AnyWorkflow.PassedArgs) -> AnyFlowRepresentable) {
+    init<FR: FlowRepresentable & View>(flowRepresentableType: FR.Type,
+                                       launchStyle: LaunchStyle = .default,
+                                       flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default },
+                                       flowRepresentableFactory: @escaping (AnyWorkflow.PassedArgs) -> AnyFlowRepresentable) {
         workflowItemFactory = {
             guard let wrappedWorkflowItem = $0 else { return AnyWorkflowItem(view: WorkflowItem(FR.self)) }
             return AnyWorkflowItem(view: WorkflowItem(FR.self) { wrappedWorkflowItem })
@@ -27,9 +27,9 @@ public class ExtendedFlowRepresentableMetadata: FlowRepresentableMetadata {
         super.init(flowRepresentableType, launchStyle: launchStyle, flowPersistence: flowPersistence, flowRepresentableFactory: flowRepresentableFactory)
     }
 
-    public init<FR: FlowRepresentable & View>(flowRepresentableType: FR.Type,
-                                              launchStyle: LaunchStyle = .default,
-                                              flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default }) {
+    init<FR: FlowRepresentable & View>(flowRepresentableType: FR.Type,
+                                       launchStyle: LaunchStyle = .default,
+                                       flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default }) {
         workflowItemFactory = {
             guard let wrappedWorkflowItem = $0 else { return AnyWorkflowItem(view: WorkflowItem(FR.self)) }
             return AnyWorkflowItem(view: WorkflowItem(FR.self) { wrappedWorkflowItem })

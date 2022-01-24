@@ -88,6 +88,44 @@ extension AnyWorkflow: Sequence {
 }
 
 extension AnyWorkflow {
+    /// Errors that can occur during decoding
+    public enum DecodingError: Error, Equatable {
+        /// The ``WorkflowDecodable`` could not be found in supplied aggregator.
+        /// AssociatedType: invalid FlowRepresentable name
+        case invalidFlowRepresentable(String)
+        /// The ``LaunchStyle`` could not be found.
+        /// AssociatedType: invalid LaunchStyle
+        case invalidLaunchStyle(String)
+        /// The ``FlowPersistence`` could not be found.
+        /// AssociatedType: invalid LaunchStyle
+        case invalidFlowPersistence(String)
+
+        public static func == (lhs: DecodingError, rhs: DecodingError) -> Bool {
+            switch (lhs, rhs) {
+                case (.invalidFlowRepresentable(let lhsName), .invalidFlowRepresentable(let rhsName)):
+                    return lhsName == rhsName
+                case (.invalidLaunchStyle(let lhsName), .invalidLaunchStyle(let rhsName)):
+                    return lhsName == rhsName
+                case (.invalidFlowPersistence(let lhsName), .invalidFlowPersistence(let rhsName)):
+                    return lhsName == rhsName
+                default: return false
+            }
+        }
+    }
+}
+
+extension AnyWorkflow {
+    /// Latest supported schema version
+    public static var jsonSchemaVersion: JSONSchemaVersion = .v0_0_1
+
+    /// Codified list of supported JSON schema versions by this library
+    public enum JSONSchemaVersion: String, Decodable {
+        /// JSON Schema v0.0.1
+        case v0_0_1 = "v0.0.1"
+    }
+}
+
+extension AnyWorkflow {
     /// A type that represents either a type erased value or no value.
     public enum PassedArgs {
         /// No arguments are passed forward.

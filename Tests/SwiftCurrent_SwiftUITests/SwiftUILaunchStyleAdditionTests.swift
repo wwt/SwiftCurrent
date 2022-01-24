@@ -12,6 +12,7 @@ import Algorithms
 import SwiftUI
 
 @testable import SwiftCurrent_SwiftUI
+import SwiftCurrent_Testing
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class LaunchStyleAdditionTests: XCTestCase, View {
@@ -31,11 +32,55 @@ final class LaunchStyleAdditionTests: XCTestCase, View {
 
     func testKnownPresentationTypes_AreUnique() {
         [LaunchStyle.default, LaunchStyle._swiftUI_modal, LaunchStyle._swiftUI_modal_fullscreen, LaunchStyle._swiftUI_navigationLink].permutations().forEach {
-            XCTAssertFalse($0[0] === $0[1])
+            XCTAssertNotIdentical($0[0], $0[1])
         }
         LaunchStyle.SwiftUI.PresentationType.allCases.permutations().forEach {
             XCTAssertNotEqual($0[0], $0[1])
         }
+    }
+
+    func testKnownPresentationTypes_CanBeDecoded() throws {
+        struct TestView: View, FlowRepresentable, WorkflowDecodable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { EmptyView() }
+        }
+        let validLaunchStyles: [String: LaunchStyle] = [
+            "viewSwapping": .default,
+            "modal": ._swiftUI_modal,
+            "modal(.fullScreen)": ._swiftUI_modal_fullscreen,
+            "navigationLink": ._swiftUI_navigationLink
+        ]
+
+        let WD: WorkflowDecodable.Type = TestView.self
+
+        try validLaunchStyles.forEach { (key, value) in
+            XCTAssertIdentical(try TestView.decodeLaunchStyle(named: key), value)
+            XCTAssertIdentical(try WD.decodeLaunchStyle(named: key), value)
+        }
+
+        // Metatest, testing we covered all styles
+        LaunchStyle.SwiftUI.PresentationType.allCases.forEach { presentationType in
+            XCTAssert(validLaunchStyles.values.contains { $0 === presentationType.rawValue }, "dictionary of validLaunchStyles did not contain one for \(presentationType)")
+        }
+    }
+
+    func testLaunchStyleIsPassedThroughToExtendedFlowRepresentable() throws {
+        struct TestView: View, FlowRepresentable, WorkflowDecodable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { EmptyView() }
+        }
+
+        let WD: WorkflowDecodable.Type = TestView.self
+
+        let launchStyle = LaunchStyle.new
+        let flowPersistence = FlowPersistence.new
+        let metadata = WD.metadataFactory(launchStyle: launchStyle) { _ in flowPersistence }
+        let wf = Workflow<Never>(metadata)
+        let orchestrationResponder = MockOrchestrationResponder()
+
+        wf.launch(withOrchestrationResponder: orchestrationResponder)
+        XCTAssertIdentical(metadata.launchStyle, launchStyle)
+        XCTAssertIdentical(orchestrationResponder.lastTo?.value.metadata.persistence, flowPersistence)
     }
 
     func testPresentationTypes_AreCorrectlyEquatable() {
