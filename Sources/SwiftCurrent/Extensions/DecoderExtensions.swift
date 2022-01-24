@@ -15,6 +15,8 @@ extension JSONDecoder {
 
         struct Sequence: Decodable {
             let flowRepresentableName: String
+            let launchStyle: String?
+            let flowPersistence: String?
         }
     }
 
@@ -30,10 +32,22 @@ extension AnyWorkflow {
         self.init(Workflow<Never>())
         try spec.sequence.forEach {
             if let type = typeMap[$0.flowRepresentableName] {
-                append(type.metadataFactory())
+                let launchStyle = try getLaunchStyle(decodable: type, from: $0)
+                let flowPersistence = try getFlowPersistence(decodable: type, from: $0)
+                append(type.metadataFactory(launchStyle: launchStyle) { _ in flowPersistence })
             } else {
                 throw AnyWorkflow.DecodingError.invalidFlowRepresentable($0.flowRepresentableName)
             }
         }
+    }
+
+    private func getLaunchStyle(decodable: WorkflowDecodable.Type, from sequence: JSONDecoder.WorkflowJSONSpec.Sequence) throws -> LaunchStyle {
+        guard let launchStyleName = sequence.launchStyle else { return .default }
+        return try decodable.decodeLaunchStyle(named: launchStyleName)
+    }
+
+    private func getFlowPersistence(decodable: WorkflowDecodable.Type, from sequence: JSONDecoder.WorkflowJSONSpec.Sequence) throws -> FlowPersistence {
+        guard let flowPersistenceName = sequence.flowPersistence else { return .default }
+        return try decodable.decodeFlowPersistence(named: flowPersistenceName)
     }
 }

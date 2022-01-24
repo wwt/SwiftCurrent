@@ -20,8 +20,8 @@ class WorkflowDecodableExtensionsTests: XCTestCase {
             var body: some View { EmptyView() }
         }
 
-        let metadata = FR1.metadataFactory()
-        let genericMetadata = (FR1.self as WorkflowDecodable.Type).metadataFactory()
+        let metadata = FR1.metadataFactory(launchStyle: .default) { _ in .default }
+        let genericMetadata = (FR1.self as WorkflowDecodable.Type).metadataFactory(launchStyle: .default) { _ in .default }
 
         // ExtendedFlowRepresentableMetadata should be internal, but we must also test if the override is public.
         XCTAssert(type(of: metadata) != FlowRepresentableMetadata.self, "\(type(of: metadata)) should be overridden from type FlowRepresentableMetadata")
