@@ -80,10 +80,11 @@ public struct WorkflowLauncher<Content: View>: View {
     /**
      Creates a base for proceeding with a `WorkflowItem`.
      - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
+     - Parameter startingArgs: arguments passed to the first loaded `FlowRepresentable` in the underlying `Workflow`.
      - Parameter workflow: workflow to be launched; must contain `FlowRepresentable`s of type `View`
      */
-    public init<F: FlowRepresentable & View>(isLaunched: Binding<Bool>, workflow: Workflow<F>) where Content == AnyWorkflowItem {
-        self.init(isLaunched: isLaunched, startingArgs: .none, workflow: AnyWorkflow(workflow))
+    public init<A>(isLaunched: Binding<Bool>, startingArgs: A, workflow: AnyWorkflow) where Content == AnyWorkflowItem {
+        self.init(isLaunched: isLaunched, startingArgs: .args(startingArgs), workflow: workflow)
     }
 
     /**
@@ -92,23 +93,9 @@ public struct WorkflowLauncher<Content: View>: View {
      - Parameter startingArgs: arguments passed to the first loaded `FlowRepresentable` in the underlying `Workflow`.
      - Parameter workflow: workflow to be launched; must contain `FlowRepresentable`s of type `View`
      */
-    public init<F: FlowRepresentable & View>(isLaunched: Binding<Bool>, startingArgs: AnyWorkflow.PassedArgs, workflow: Workflow<F>) where Content == AnyWorkflowItem {
-        self.init(isLaunched: isLaunched, startingArgs: startingArgs, workflow: AnyWorkflow(workflow))
-    }
-
-    /**
-     Creates a base for proceeding with a `WorkflowItem`.
-     - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
-     - Parameter startingArgs: arguments passed to the first loaded `FlowRepresentable` in the underlying `Workflow`.
-     - Parameter workflow: workflow to be launched; must contain `FlowRepresentable`s of type `View`
-     */
-    public init<A, F: FlowRepresentable & View>(isLaunched: Binding<Bool>, startingArgs: A, workflow: Workflow<F>) where Content == AnyWorkflowItem {
-        self.init(isLaunched: isLaunched, startingArgs: .args(startingArgs), workflow: AnyWorkflow(workflow))
-    }
-
-    private init(isLaunched: Binding<Bool>, startingArgs: AnyWorkflow.PassedArgs, workflow: AnyWorkflow) where Content == AnyWorkflowItem {
+    public init(isLaunched: Binding<Bool>, startingArgs: AnyWorkflow.PassedArgs = .none, workflow: AnyWorkflow) where Content == AnyWorkflowItem {
         workflow.forEach {
-            assert($0.value.metadata is ExtendedFlowRepresentableMetadata)
+            assert($0.value.metadata is ExtendedFlowRepresentableMetadata, "It is possible the workflow was constructed incorrectly. This represents an internal error, please file a bug at https://github.com/wwt/SwiftCurrent/issues") // swiftlint:disable:this line_length
         }
         _isLaunched = isLaunched
         let model = WorkflowViewModel(isLaunched: isLaunched, launchArgs: startingArgs)
