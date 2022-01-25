@@ -30,7 +30,8 @@ let package = Package(
     targets: [
         .target(
             name: "SwiftCurrent",
-            dependencies: []),
+            dependencies: [],
+            swiftSettings: [.unsafeFlags(["-enable-testing"])]),
         .target(
             name: "SwiftCurrent_UIKit",
             dependencies: ["SwiftCurrent"]),
