@@ -10,7 +10,32 @@ import SwiftUI
 import SwiftCurrent
 import SwiftCurrent_SwiftUI
 
-struct LoginView: View, FlowRepresentable {
+final class FooName: View {
+    var _workflowPointer: AnyFlowRepresentable?
+    var body: some View { Text("Foo") }
+}
+
+extension FooName: FlowRepresentable {
+
+}
+
+protocol FRToo: FlowRepresentable {
+
+}
+
+protocol FooToo: FlowRepresentable {
+
+}
+
+struct FooView: View, FooToo {
+    var _workflowPointer: AnyFlowRepresentable?
+
+    var body: some View {
+        Text("Woo")
+    }
+}
+
+struct LoginView: View, FRToo {
     let inspection = Inspection<Self>() // ViewInspector
     weak var _workflowPointer: AnyFlowRepresentable?
     @State var email = ""
