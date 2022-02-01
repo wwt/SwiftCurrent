@@ -520,3 +520,13 @@ extension Workflow {
         return wf
     }
 }
+
+extension Workflow {
+    /**
+     Wraps this workflow with a type eraser.
+     - Returns: an ``AnyWorkflow`` wrapping this ``Workflow``
+     */
+    public func eraseToAnyWorkflow() -> AnyWorkflow {
+        AnyWorkflow(self)
+    }
+}
