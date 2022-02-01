@@ -520,3 +520,9 @@ extension Workflow {
         return wf
     }
 }
+
+extension Workflow {
+    public func eraseToAnyWorkflow() -> AnyWorkflow {
+        AnyWorkflow(self)
+    }
+}
