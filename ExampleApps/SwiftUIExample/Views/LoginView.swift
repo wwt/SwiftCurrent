@@ -15,19 +15,31 @@ final class FooName: View {
     var body: some View { Text("Foo") }
 }
 
-extension FooName: FlowRepresentable {
+extension FooName: FlowRepresentable, WorkflowDecodable {
+    static var flowRepresentableName: String {
+        String(describing: Self.self)
+    }
 
+    static func metadataFactory(launchStyle: LaunchStyle, flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) -> FlowRepresentableMetadata {
+        FlowRepresentableMetadata(Self.self, launchStyle: launchStyle, flowPersistence: flowPersistence)
+    }
 }
 
-protocol FRToo: FlowRepresentable {
-
+protocol FRToo: FlowRepresentable, WorkflowDecodable {
 }
 
-protocol FooToo: FlowRepresentable {
-
+protocol FooToo: FlowRepresentable, WorkflowDecodable {
 }
 
 struct FooView: View, FooToo {
+    static var flowRepresentableName: String {
+        String(describing: Self.self)
+    }
+
+    static func metadataFactory(launchStyle: LaunchStyle, flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) -> FlowRepresentableMetadata {
+        FlowRepresentableMetadata(Self.self, launchStyle: launchStyle, flowPersistence: flowPersistence)
+    }
+
     var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
@@ -36,6 +48,14 @@ struct FooView: View, FooToo {
 }
 
 struct LoginView: View, FRToo {
+    static var flowRepresentableName: String {
+        String(describing: Self.self)
+    }
+
+    static func metadataFactory(launchStyle: LaunchStyle, flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) -> FlowRepresentableMetadata {
+        FlowRepresentableMetadata(Self.self, launchStyle: launchStyle, flowPersistence: flowPersistence)
+    }
+
     let inspection = Inspection<Self>() // ViewInspector
     weak var _workflowPointer: AnyFlowRepresentable?
     @State var email = ""

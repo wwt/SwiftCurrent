@@ -10,7 +10,7 @@
 import Foundation
 import SwiftSyntax
 
-var conformance = "FlowRepresentable"
+var conformance = "WorkflowDecodable"
 try main()
 
 func main() throws {
@@ -22,7 +22,7 @@ func main() throws {
 }
 
 func printFindings(_ files: [File]) {
-    var protocolsConforming: [String] = []
+    var protocolsConforming: [Type] = []
 
     files.forEach {
         let root = $0.results.rootNode
@@ -34,7 +34,7 @@ func printFindings(_ files: [File]) {
             }
 
             if type.type == .protocol && (type.inheritance.contains(conformance) == true) {
-                protocolsConforming.append(type.name)
+                protocolsConforming.append(type)
                 print("Appending \(type.type.rawValue) \(type.name) to list of protocols conforming to \(conformance)")
             }
         }
@@ -46,8 +46,7 @@ func printFindings(_ files: [File]) {
         protocolsConforming.forEach { proto in
 
             for type in root.types {
-
-                if type.inheritance.contains(proto) {
+                if type.inheritance.contains(proto.name) {
                     print("Inheritance for \(type.type.rawValue) \(type.name): \(type.inheritance)")
                 }
             }
