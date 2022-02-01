@@ -17,7 +17,7 @@ final class FooName: View {
 
 extension FooName: FlowRepresentable, WorkflowDecodable {
     static var flowRepresentableName: String {
-        String(describing: Self.self)
+        "FooName"
     }
 
     static func metadataFactory(launchStyle: LaunchStyle, flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) -> FlowRepresentableMetadata {
@@ -33,7 +33,7 @@ protocol FooToo: FlowRepresentable, WorkflowDecodable {
 
 struct FooView: View, FooToo {
     static var flowRepresentableName: String {
-        String(describing: Self.self)
+        "FooView"
     }
 
     static func metadataFactory(launchStyle: LaunchStyle, flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) -> FlowRepresentableMetadata {
@@ -49,7 +49,7 @@ struct FooView: View, FooToo {
 
 struct LoginView: View, FRToo {
     static var flowRepresentableName: String {
-        String(describing: Self.self)
+        "LoginView"
     }
 
     static func metadataFactory(launchStyle: LaunchStyle, flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) -> FlowRepresentableMetadata {

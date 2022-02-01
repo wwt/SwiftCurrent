@@ -34,6 +34,7 @@ func printFindings(_ files: [File]) {
             }
 
             if type.type == .protocol && (type.inheritance.contains(conformance) == true) {
+                _ = findFlowRepresentableName(type.name, files: files)
                 protocolsConforming.append(type)
                 print("Appending \(type.type.rawValue) \(type.name) to list of protocols conforming to \(conformance)")
             }
@@ -52,6 +53,18 @@ func printFindings(_ files: [File]) {
             }
         }
     }
+}
+
+func findFlowRepresentableName(_ filename: String, files: [File]) -> Type? {
+    var x: Type?
+    files.forEach { file in
+        file.results.rootNode.types.forEach { type in
+            if type.variables.contains("flowRepresentableName") {
+                x = type
+            }
+        }
+    }
+    return x
 }
 
 func getSwiftFileURLs(from directory: String) -> [URL] {
