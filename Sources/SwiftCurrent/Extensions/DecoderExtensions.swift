@@ -9,8 +9,6 @@
 import Foundation
 import UIKit
 
-
-
 extension JSONDecoder {
     struct WorkflowJSONSpec: Decodable {
         let schemaVersion: AnyWorkflow.JSONSchemaVersion
@@ -40,6 +38,7 @@ extension JSONDecoder.WorkflowJSONSpec {
             }
         }
     }
+
     struct Sequence: Decodable {
         let flowRepresentableName: String
         let launchStyle: String?
