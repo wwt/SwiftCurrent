@@ -24,6 +24,22 @@ extension JSONDecoder {
 }
 
 extension JSONDecoder.WorkflowJSONSpec {
+    fileprivate struct PlatformDecodable<T>: Decodable {
+        var value: String
+        init(from decoder: Decoder) throws {
+            let container = try decoder.singleValueContainer()
+
+            if let map = try? container.decode([String: String].self) {
+                if let mappedValue = map["*"] {
+                    value = mappedValue
+                } else {
+                    throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "No \(String(describing: T.self)) found for platform", underlyingError: nil))
+                }
+            } else {
+                value = try container.decode(String.self)
+            }
+        }
+    }
     struct Sequence: Decodable {
         let flowRepresentableName: String
         let launchStyle: String?
@@ -37,36 +53,14 @@ extension JSONDecoder.WorkflowJSONSpec {
 
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-
-            if let flowRepresentableNameMap = try? container.decode([String: String].self, forKey: .flowRepresentableName) {
-                if let value = flowRepresentableNameMap["*"] {
-                    self.flowRepresentableName = value
-                } else {
-                    throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "No FlowRepresentable name found for platform", underlyingError: nil))
-                }
-            } else {
-                self.flowRepresentableName = try container.decode(String.self, forKey: .flowRepresentableName)
+            do {
+                flowRepresentableName = try container.decode(PlatformDecodable<Never>.self, forKey: .flowRepresentableName).value
+            } catch {
+                throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "No FlowRepresentable name found for platform", underlyingError: nil))
             }
 
-            if let launchStyleMap = try? container.decodeIfPresent([String: String].self, forKey: .launchStyle) {
-                if let value = launchStyleMap["*"] {
-                    self.launchStyle = value
-                } else {
-                    throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "No \(String(describing: LaunchStyle.self)) found for platform", underlyingError: nil))
-                }
-            } else {
-                self.launchStyle = try container.decodeIfPresent(String.self, forKey: .launchStyle)
-            }
-
-            if let flowPersistenceMap = try? container.decodeIfPresent([String: String].self, forKey: .flowPersistence) {
-                if let value = flowPersistenceMap["*"] {
-                    self.flowPersistence = value
-                } else {
-                    throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "No \(String(describing: FlowPersistence.self)) found for platform", underlyingError: nil))
-                }
-            } else {
-                self.flowPersistence = try container.decodeIfPresent(String.self, forKey: .flowPersistence)
-            }
+            launchStyle = try container.decodeIfPresent(PlatformDecodable<LaunchStyle>.self, forKey: .launchStyle)?.value
+            flowPersistence = try container.decodeIfPresent(PlatformDecodable<FlowPersistence>.self, forKey: .flowPersistence)?.value
         }
     }
 }
