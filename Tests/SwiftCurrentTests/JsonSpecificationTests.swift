@@ -351,6 +351,38 @@ final class JsonSpecificationTests: XCTestCase {
         
         XCTAssertEqual(wf.first?.next?.value.metadata.flowRepresentableTypeDescriptor, FR3.flowRepresentableName)
     }
+
+    func testCreatingWorkflowWithObject_ThrowsError_IfFlowRepresentableNameDoesNotMatchPlatform() throws {
+        let registry = TestRegistry(types: [ ])
+
+        let json = try XCTUnwrap("""
+            {
+                "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
+                "sequence": [
+                    {
+                        "flowRepresentableName": {
+                            "notAValidName": "notAValidName"
+                        }
+                    }
+                ]
+            }
+            """.data(using: .utf8))
+
+        XCTAssertThrowsError(try JSONDecoder().decodeWorkflow(withAggregator: registry, from: json)) { error in
+            XCTAssertNotNil((error as? DecodingError))
+            if let decodingError = error as? DecodingError {
+                XCTAssertEqual("\(decodingError)", "\(DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "No flowRepresentableName found for platform", underlyingError: nil)))")
+            }
+        }
+    }
+
+    func testCreatingWorkflowWithObject_ThrowsError_IfLaunchStyleNameDoesNotMatchPlatform() {
+        XCTFail()
+    }
+
+    func testCreatingWorkflowWithObject_ThrowsError_IfFlowPersistenceNameDoesNotMatchPlatform() {
+        XCTFail()
+    }
 }
 
 public protocol TestLookup { } // For example: View
