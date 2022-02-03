@@ -43,7 +43,7 @@ extension JSONDecoder.WorkflowJSONSpec {
                     self.flowRepresentableName = value
                 } else {
 #warning("Need to test this")
-                    throw URLError(.badURL)
+                    throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "No flowRepresentableName found for platform", underlyingError: nil))
                 }
             } else {
                 self.flowRepresentableName = try container.decode(String.self, forKey: .flowRepresentableName)
