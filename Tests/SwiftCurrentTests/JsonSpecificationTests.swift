@@ -340,7 +340,7 @@ final class JsonSpecificationTests: XCTestCase {
             FR3.self,
         ])
         
-        let wf = try JSONDecoder().decodeWorkflow(withAggregator: registry, from: simpleComplexValidWorkflowJSON)
+        let wf = try JSONDecoder().decodeWorkflow(withAggregator: registry, from: platformAgnosticValidWorkflowJSON)
         let or = MockOrchestrationResponder()
         
         XCTAssertEqual(wf.first?.value.metadata.flowRepresentableTypeDescriptor, FR2.flowRepresentableName)
@@ -371,17 +371,71 @@ final class JsonSpecificationTests: XCTestCase {
         XCTAssertThrowsError(try JSONDecoder().decodeWorkflow(withAggregator: registry, from: json)) { error in
             XCTAssertNotNil((error as? DecodingError))
             if let decodingError = error as? DecodingError {
-                XCTAssertEqual("\(decodingError)", "\(DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "No flowRepresentableName found for platform", underlyingError: nil)))")
+                XCTAssertEqual("\(decodingError)", "\(DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "No FlowRepresentable name found for platform", underlyingError: nil)))")
             }
         }
     }
 
-    func testCreatingWorkflowWithObject_ThrowsError_IfLaunchStyleNameDoesNotMatchPlatform() {
-        XCTFail()
+    func testCreatingWorkflowWithObject_ThrowsError_IfLaunchStyleNameDoesNotMatchPlatform() throws {
+        struct FR1: FlowRepresentable, WorkflowDecodable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+        }
+
+        let registry = TestRegistry(types: [FR1.self])
+
+        let json = try XCTUnwrap("""
+            {
+                "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
+                "sequence": [
+                    {
+                        "flowRepresentableName": {
+                            "*": "FR1"
+                        },
+                        "launchStyle": {
+                            "notAValidLaunchStyle": "notAValidLaunchStyle"
+                        }
+                    }
+                ]
+            }
+            """.data(using: .utf8))
+
+        XCTAssertThrowsError(try JSONDecoder().decodeWorkflow(withAggregator: registry, from: json)) { error in
+            XCTAssertNotNil((error as? DecodingError))
+            if let decodingError = error as? DecodingError {
+                XCTAssertEqual("\(decodingError)", "\(DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "No \(String(describing: LaunchStyle.self)) found for platform", underlyingError: nil)))")
+            }
+        }
     }
 
-    func testCreatingWorkflowWithObject_ThrowsError_IfFlowPersistenceNameDoesNotMatchPlatform() {
-        XCTFail()
+    func testCreatingWorkflowWithObject_ThrowsError_IfFlowPersistenceNameDoesNotMatchPlatform() throws {
+        struct FR1: FlowRepresentable, WorkflowDecodable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+        }
+
+        let registry = TestRegistry(types: [FR1.self])
+
+        let json = try XCTUnwrap("""
+            {
+                "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
+                "sequence": [
+                    {
+                        "flowRepresentableName": {
+                            "*": "FR1"
+                        },
+                        "flowPersistence": {
+                            "notAValidFlowPersistence": "notAValidFlowPersistence"
+                        }
+                    }
+                ]
+            }
+            """.data(using: .utf8))
+
+        XCTAssertThrowsError(try JSONDecoder().decodeWorkflow(withAggregator: registry, from: json)) { error in
+            XCTAssertNotNil((error as? DecodingError))
+            if let decodingError = error as? DecodingError {
+                XCTAssertEqual("\(decodingError)", "\(DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "No \(String(describing: FlowPersistence.self)) found for platform", underlyingError: nil)))")
+            }
+        }
     }
 }
 
@@ -445,7 +499,7 @@ extension JsonSpecificationTests {
         }
     }
     
-    fileprivate var simpleComplexValidWorkflowJSON: Data {
+    fileprivate var platformAgnosticValidWorkflowJSON: Data {
         get throws {
             try XCTUnwrap("""
             {
@@ -472,7 +526,8 @@ extension JsonSpecificationTests {
 """.data(using: .utf8))
         }
     }
-    fileprivate var complexValidWorkflowJSON: Data {
+
+    fileprivate var platformSpecificValidWorkflowJSON: Data {
         get throws {
             try XCTUnwrap("""
             {
