@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import UIKit
 
 extension JSONDecoder {
     struct WorkflowJSONSpec: Decodable {
@@ -28,7 +27,18 @@ extension JSONDecoder.WorkflowJSONSpec {
             let container = try decoder.singleValueContainer()
 
             if let map = try? container.decode([String: String].self) {
-                if let mappedValue = map["*"] {
+#if os(iOS)
+                let platformValue = map["iOS"]
+#elseif os(macOS) && targetEnvironment(macCatalyst)
+                let platformValue = map["macCatalyst"]
+#elseif os(macOS)
+                let platformValue = map["macOS"]
+#elseif os(watchOS)
+                let platformValue = map["watchOS"]
+#elseif os(tvOS)
+                let platformValue = map["tvOS"]
+#endif
+                if let mappedValue = platformValue ?? map["*"] {
                     value = mappedValue
                 } else {
                     throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "No \(String(describing: T.self)) found for platform", underlyingError: nil))
