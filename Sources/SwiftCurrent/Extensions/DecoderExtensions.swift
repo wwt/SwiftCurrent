@@ -42,8 +42,7 @@ extension JSONDecoder.WorkflowJSONSpec {
                 if let value = flowRepresentableNameMap["*"] {
                     self.flowRepresentableName = value
                 } else {
-#warning("Need to test this")
-                    throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "No flowRepresentableName found for platform", underlyingError: nil))
+                    throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "No FlowRepresentable name found for platform", underlyingError: nil))
                 }
             } else {
                 self.flowRepresentableName = try container.decode(String.self, forKey: .flowRepresentableName)
@@ -53,8 +52,7 @@ extension JSONDecoder.WorkflowJSONSpec {
                 if let value = launchStyleMap["*"] {
                     self.launchStyle = value
                 } else {
-#warning("Need to test this")
-                    throw URLError(.badURL)
+                    throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "No \(String(describing: LaunchStyle.self)) found for platform", underlyingError: nil))
                 }
             } else {
                 self.launchStyle = try container.decodeIfPresent(String.self, forKey: .launchStyle)
@@ -64,8 +62,7 @@ extension JSONDecoder.WorkflowJSONSpec {
                 if let value = flowPersistenceMap["*"] {
                     self.flowPersistence = value
                 } else {
-#warning("Need to test this")
-                    throw URLError(.badURL)
+                    throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "No \(String(describing: FlowPersistence.self)) found for platform", underlyingError: nil))
                 }
             } else {
                 self.flowPersistence = try container.decodeIfPresent(String.self, forKey: .flowPersistence)
