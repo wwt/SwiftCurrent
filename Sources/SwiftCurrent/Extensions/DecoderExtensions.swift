@@ -27,17 +27,21 @@ extension JSONDecoder.WorkflowJSONSpec {
             let container = try decoder.singleValueContainer()
 
             if let map = try? container.decode([String: String].self) {
-#if os(iOS)
-                let platformValue = map["iOS"]
-#elseif os(macOS) && targetEnvironment(macCatalyst)
-                let platformValue = map["macCatalyst"]
-#elseif os(macOS)
-                let platformValue = map["macOS"]
-#elseif os(watchOS)
-                let platformValue = map["watchOS"]
-#elseif os(tvOS)
-                let platformValue = map["tvOS"]
-#endif
+                let platformValue: String? = {
+                    if #available(iOS 11.0, *) {
+                        return map["iOS"]
+                    } else if #available(macCatalyst 11.0, *) {
+                        return map["macCatalyst"]
+                    } else if #available(macOS 11.0, *) {
+                        return map["macOS"]
+                    } else if #available(watchOS 11.0, *) {
+                        return map["watchOS"]
+                    } else if #available(tvOS 11.0, *) {
+                        return map["tvOS"]
+                    } else {
+                        return map["*"]
+                    }
+                }()
                 if let mappedValue = platformValue ?? map["*"] {
                     value = mappedValue
                 } else {

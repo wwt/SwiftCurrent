@@ -48,6 +48,20 @@
                ReferencedContainer = "container:.github/SwiftCurrentLint/SwiftCurrentLint.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "SwiftCurrentMultiPlatformTests"
+               BuildableName = "SwiftCurrentMultiPlatformTests"
+               BlueprintName = "SwiftCurrentMultiPlatformTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -115,6 +129,16 @@
                BuildableName = "SwiftCurrent_SwiftUI_UITests.xctest"
                BlueprintName = "SwiftCurrent_SwiftUI_UITests"
                ReferencedContainer = "container:ExampleApps/SwiftUIExample/SwiftUIExample.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "SwiftCurrentMultiPlatformTests"
+               BuildableName = "SwiftCurrentMultiPlatformTests"
+               BlueprintName = "SwiftCurrentMultiPlatformTests"
+               ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
       </Testables>
