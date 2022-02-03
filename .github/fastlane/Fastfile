@@ -17,6 +17,24 @@ platform :ios do
     )
   end
 
+  lane :platform_test do
+    sh('rm -rf ../../SwiftCurrent.xcworkspace/')
+    Dir.chdir("..") do
+      xcodebuild(
+        test: true,
+        scheme: 'SwiftCurrentMultiPlatformTests',
+        destination: [
+          'platform=iOS Simulator,name=iPhone 8',
+          'platform=tvOS Simulator,name=Apple TV',
+          'platform=watchOS Simulator,name=Apple Watch Series 5 - 44mm',
+          'platform=iOS Simulator,name=iPad Pro (12.9-inch) (4th generation)',
+          'platform=macOS',
+          'platform=macOS,variant=Mac Catalyst',
+        ]
+      )
+    end
+  end
+
   lane :build_swiftpm do
     # Confirm Core can build against Swift without any Apple SDK requirements
     sh('rm -rf ../../SwiftCurrent.xcworkspace/')
