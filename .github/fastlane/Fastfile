@@ -17,11 +17,11 @@ platform :ios do
   end
 
   lane :platform_test do
-    sh('rm -rf ../../SwiftCurrent.xcworkspace/')
     Dir.chdir("..") do
       xcodebuild(
         test: true,
         scheme: 'SwiftCurrentMultiPlatformTests',
+        workspace: '../SwiftCurrent.xcworkspace',
         destination: [
           'platform=iOS Simulator,name=iPhone 8',
           'platform=tvOS Simulator,name=Apple TV',
