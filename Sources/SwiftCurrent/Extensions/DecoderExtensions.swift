@@ -23,26 +23,28 @@ extension JSONDecoder {
 extension JSONDecoder.WorkflowJSONSpec {
     fileprivate struct PlatformDecodable<T>: Decodable {
         var value: String
+
+        static var platformKey: String {
+            if #available(iOS 11.0, *) {
+                return "iOS"
+            } else if #available(macCatalyst 11.0, *) {
+                return "macCatalyst"
+            } else if #available(macOS 11.0, *) {
+                return "macOS"
+            } else if #available(watchOS 11.0, *) {
+                return "watchOS"
+            } else if #available(tvOS 11.0, *) {
+                return "tvOS"
+            } else {
+                return "*"
+            }
+        }
+
         init(from decoder: Decoder) throws {
             let container = try decoder.singleValueContainer()
 
             if let map = try? container.decode([String: String].self) {
-                let platformValue: String? = {
-                    if #available(iOS 11.0, *) {
-                        return map["iOS"]
-                    } else if #available(macCatalyst 11.0, *) {
-                        return map["macCatalyst"]
-                    } else if #available(macOS 11.0, *) {
-                        return map["macOS"]
-                    } else if #available(watchOS 11.0, *) {
-                        return map["watchOS"]
-                    } else if #available(tvOS 11.0, *) {
-                        return map["tvOS"]
-                    } else {
-                        return map["*"]
-                    }
-                }()
-                if let mappedValue = platformValue ?? map["*"] {
+                if let mappedValue = map[Self.platformKey] ?? map["*"] {
                     value = mappedValue
                 } else {
                     throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "No \(String(describing: T.self)) found for platform", underlyingError: nil))
