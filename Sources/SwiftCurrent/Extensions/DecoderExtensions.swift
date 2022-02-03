@@ -7,22 +7,70 @@
 //
 
 import Foundation
+import UIKit
+
+
 
 extension JSONDecoder {
     struct WorkflowJSONSpec: Decodable {
         let schemaVersion: AnyWorkflow.JSONSchemaVersion
         let sequence: [Sequence]
-
-        struct Sequence: Decodable {
-            let flowRepresentableName: String
-            let launchStyle: String?
-            let flowPersistence: String?
-        }
     }
 
     /// Convenience method to decode an ``AnyWorkflow`` from Data.
     public func decodeWorkflow(withAggregator aggregator: FlowRepresentableAggregator, from data: Data) throws -> AnyWorkflow {
         try AnyWorkflow(spec: decode(WorkflowJSONSpec.self, from: data), aggregator: aggregator)
+    }
+}
+
+extension JSONDecoder.WorkflowJSONSpec {
+    struct Sequence: Decodable {
+        let flowRepresentableName: String
+        let launchStyle: String?
+        let flowPersistence: String?
+
+        enum CodingKeys: String, CodingKey {
+            case flowRepresentableName
+            case launchStyle
+            case flowPersistence
+        }
+
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+
+            if let flowRepresentableNameMap = try? container.decode([String: String].self, forKey: .flowRepresentableName) {
+                if let value = flowRepresentableNameMap["*"] {
+                    self.flowRepresentableName = value
+                } else {
+#warning("Need to test this")
+                    throw URLError(.badURL)
+                }
+            } else {
+                self.flowRepresentableName = try container.decode(String.self, forKey: .flowRepresentableName)
+            }
+
+            if let launchStyleMap = try? container.decodeIfPresent([String: String].self, forKey: .launchStyle) {
+                if let value = launchStyleMap["*"] {
+                    self.launchStyle = value
+                } else {
+#warning("Need to test this")
+                    throw URLError(.badURL)
+                }
+            } else {
+                self.launchStyle = try container.decodeIfPresent(String.self, forKey: .launchStyle)
+            }
+
+            if let flowPersistenceMap = try? container.decodeIfPresent([String: String].self, forKey: .flowPersistence) {
+                if let value = flowPersistenceMap["*"] {
+                    self.flowPersistence = value
+                } else {
+#warning("Need to test this")
+                    throw URLError(.badURL)
+                }
+            } else {
+                self.flowPersistence = try container.decodeIfPresent(String.self, forKey: .flowPersistence)
+            }
+        }
     }
 }
 
