@@ -13,6 +13,9 @@ jobs:
       - name: Run TESTS
         run: bundle exec fastlane unit_test
         working-directory: ${{ env.working-directory }}
+      - name: Run Multiplatform TESTS
+        run: bundle exec fastlane platform_test
+        working-directory: ${{ env.working-directory }}
       - name: Codecov
         uses: codecov/codecov-action@v1.5.2
         with:
