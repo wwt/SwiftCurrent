@@ -325,6 +325,32 @@ final class JsonSpecificationTests: XCTestCase {
             XCTAssertEqual((error as? AnyWorkflow.DecodingError), .invalidFlowPersistence("testPersistence"))
         }
     }
+    
+    func testWorkflowCanBeInstantiatedFromComplexJSON() throws {
+        struct FR2: FlowRepresentable, WorkflowDecodable, TestLookup {
+            weak var _workflowPointer: AnyFlowRepresentable?
+        }
+        
+        struct FR3: FlowRepresentable, WorkflowDecodable, TestLookup {
+            weak var _workflowPointer: AnyFlowRepresentable?
+        }
+        
+        let registry = TestRegistry(types: [
+            FR2.self,
+            FR3.self,
+        ])
+        
+        let wf = try JSONDecoder().decodeWorkflow(withAggregator: registry, from: simpleComplexValidWorkflowJSON)
+        let or = MockOrchestrationResponder()
+        
+        XCTAssertEqual(wf.first?.value.metadata.flowRepresentableTypeDescriptor, FR2.flowRepresentableName)
+        XCTAssertIdentical(wf.first?.value.metadata.launchStyle, LaunchStyle.testStyle)
+        
+        wf.launch(withOrchestrationResponder: or, passedArgs: .none)
+        XCTAssertIdentical(or.lastTo?.value.metadata.persistence, FlowPersistence.testPersistence)
+        
+        XCTAssertEqual(wf.first?.next?.value.metadata.flowRepresentableTypeDescriptor, FR3.flowRepresentableName)
+    }
 }
 
 public protocol TestLookup { } // For example: View
@@ -334,7 +360,7 @@ extension WorkflowDecodable where Self: TestLookup {
         switch name.lowercased() {
             case "teststyle": return LaunchStyle.testStyle
             default:
-                throw URLError.init(.badURL)
+                throw URLError(.badURL)
         }
     }
 }
@@ -344,7 +370,7 @@ extension WorkflowDecodable where Self: TestLookup {
         switch name.lowercased() {
             case "testpersistence": return FlowPersistence.testPersistence
             default:
-                throw URLError.init(.badURL)
+                throw URLError(.badURL)
         }
     }
 }
@@ -384,6 +410,76 @@ extension JsonSpecificationTests {
                 "thisIsValid": 0
             }
             """.data(using: .utf8))
+        }
+    }
+    
+    fileprivate var simpleComplexValidWorkflowJSON: Data {
+        get throws {
+            try XCTUnwrap("""
+            {
+                "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
+                "sequence": [
+                    {
+                        "flowRepresentableName": "FR2",
+                        "launchStyle": "testStyle",
+                        "flowPersistence": "testPersistence"
+                    },
+                    {
+                        "flowRepresentableName": {
+                            "*": "FR3"
+                        },
+                        "launchStyle": {
+                            "*": "testStyle"
+                        },
+                        "flowPersistence": {
+                            "*": "testPersistence"
+                        }
+                    }
+                ]
+            }
+""".data(using: .utf8))
+        }
+    }
+    fileprivate var complexValidWorkflowJSON: Data {
+        get throws {
+            try XCTUnwrap("""
+            {
+                "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
+                "sequence": [
+                    {
+                        "flowRepresentableName": "FR2",
+                        "launchStyle": "testStyle",
+                        "flowPersistence": "testPersistence"
+                    },
+                    {
+                        "flowRepresentableName": {
+                            "watchOS": "FR3",
+                            "macOS": "FR3",
+                            "iOS": "FR3",
+                            "iPadOS": "FR3",
+                            "tvOS": "FR3",
+                            "android": "FRA3"
+                        },
+                        "launchStyle": {
+                            "watchOS": "modal",
+                            "macOS": "modal",
+                            "iOS": "modal",
+                            "iPadOS": "popover",
+                            "tvOS": "modal",
+                            "android": "widget"
+                        },
+                        "flowPersistence": {
+                            "watchOS": "removedAfterProceeding",
+                            "macOS": "removedAfterProceeding",
+                            "iOS": "removedAfterProceeding",
+                            "iPadOS": "removedAfterProceeding",
+                            "tvOS": "removedAfterProceeding",
+                            "android": "somethingElse"
+                        }
+                    }
+                ]
+            }
+""".data(using: .utf8))
         }
     }
 }
