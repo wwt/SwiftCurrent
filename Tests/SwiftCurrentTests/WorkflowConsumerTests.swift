@@ -223,6 +223,30 @@ class WorkflowConsumerTests: XCTestCase {
                       args: 1)
         }
     }
+    
+    func testWorkflowCanEraseToAnyWorkflow() {
+        struct FR1: FlowRepresentable {
+            var _workflowPointer: AnyFlowRepresentable?
+        }
+        
+        struct FR2: FlowRepresentable {
+            var _workflowPointer: AnyFlowRepresentable?
+        }
+        
+        struct FR3: FlowRepresentable {
+            var _workflowPointer: AnyFlowRepresentable?
+        }
+        
+        let wf = Workflow(FR1.self)
+            .thenProceed(with: FR2.self)
+            .thenProceed(with: FR3.self)
+        
+        let anyWF = wf.eraseToAnyWorkflow()
+        
+        wf.forEach {
+            XCTAssertIdentical($0.value, anyWF.first?.traverse($0.position)?.value)
+        }
+    }
 }
 
 extension WorkflowConsumerTests {

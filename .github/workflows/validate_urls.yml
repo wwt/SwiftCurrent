@@ -27,8 +27,16 @@ jobs:
         git_path: https://github.com/wwt/SwiftCurrent
         branch: ${{ env.GIT_BRANCH }}
         file_types: .md,.swift
-        exclude_urls: https://github.com/wwt/SwiftCurrent/discussions/new
-        
+        exclude_urls: https://github.com/wwt/SwiftCurrent/discussions/new,https://img.shields.io/cocoapods/v/SwiftCurrent.svg?style=popout,https://img.shields.io/github/license/wwt/SwiftCurrent,https://img.shields.io/github/stars/wwt/SwiftCurrent?style=social
+    - name: slack-send
+      if: failure()
+      uses: slackapi/slack-github-action@v1.16.0
+      with:
+        payload: "{\"text\":\":alert: <https://github.com/wwt/SwiftCurrent/actions|URL Checker Failed> :alert: \"}"
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK  
+
   validate_documentation_links_on_website:
     name: Validate links on Github Pages
     runs-on: ubuntu-latest
@@ -38,4 +46,13 @@ jobs:
         git_path: https://github.com/wwt/SwiftCurrent
         branch: gh-pages
         file_types: .html,.css,.scss
-        exclude_urls: https://github.com/wwt/SwiftCurrent/discussions/new,https://github.com/realm/jazzy,https://realm.io,https://github.com/wwt/SwiftCurrent
+        exclude_urls: https://github.com/wwt/SwiftCurrent/discussions/new,https://github.com/realm/jazzy,https://realm.io,https://github.com/wwt/SwiftCurrent,https://img.shields.io/cocoapods/v/SwiftCurrent.svg?style=popout,https://img.shields.io/github/license/wwt/SwiftCurrent,https://img.shields.io/github/stars/wwt/SwiftCurrent?style=social
+    - name: slack-send
+      if: failure()
+      uses: slackapi/slack-github-action@v1.16.0
+      with:
+        payload: "{\"text\":\":alert: <https://github.com/wwt/SwiftCurrent/actions|URL Checker Failed> :alert: \"}"
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+        
