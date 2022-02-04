@@ -12,7 +12,7 @@ import XCTest
 
 @testable import SwiftCurrent_SwiftUI
 
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, *)
+@available(iOS 15.0, macOS 10.15, tvOS 13.0, *)
 extension View where Self: Inspectable {
     func hostAndInspect<E: InspectionEmissary>(with emmisary: KeyPath<Self, E>) async throws -> InspectableView<ViewType.View<Self>> where E.V == Self {
         DispatchQueue.main.async { ViewHosting.host(view: self) }
@@ -20,7 +20,7 @@ extension View where Self: Inspectable {
     }
 }
 
-@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+@available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension InspectableView where View: CustomViewType & SingleViewContent {
     func extractWorkflowItem<F, W, C>() async throws -> InspectableView<ViewType.View<WorkflowItem<F, W, C>>> where View.T == WorkflowLauncher<WorkflowItem<F, W, C>> {
         let mirror = Mirror(reflecting: try actualView())
@@ -43,7 +43,7 @@ extension InspectableView where View: CustomViewType & SingleViewContent {
     }
 }
 
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, *)
+@available(iOS 15.0, macOS 10.15, tvOS 13.0, *)
 public extension InspectionEmissary where V: View & Inspectable {
     func inspect(after delay: TimeInterval = 0,
                  function: String = #function,

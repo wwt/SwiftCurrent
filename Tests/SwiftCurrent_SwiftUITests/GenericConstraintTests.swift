@@ -33,10 +33,6 @@ extension FlowRepresentable {
 
 @available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class GenericConstraintTests: XCTestCase, View {
-    override func tearDownWithError() throws {
-        removeQueuedExpectations()
-    }
-
     // MARK: Generic Initializer Tests
 
     // MARK: Input Type == Never
@@ -197,81 +193,77 @@ final class GenericConstraintTests: XCTestCase, View {
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
-//
-//    func testWhenInputIsNeverWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        struct FR2: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: AnyWorkflow.PassedArgs) { }
-//        }
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true)) {
-//            thenProceed(with: FR1.self) {
-//                thenProceed(with: FR2.self)
-//            }
-//        }
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-//            try view.actualView().inspectWrapped { view in
-//                XCTAssertNoThrow(try view.find(FR2.self))
-//            }
-//        }
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
-//
-//    func testWhenInputIsNeverWithAutoclosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        struct FR2: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: AnyWorkflow.PassedArgs) { }
-//        }
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true)) {
-//            thenProceed(with: FR1.self) {
-//                thenProceed(with: FR2.self)
-//            }.persistence(.removedAfterProceeding)
-//        }
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .removedAfterProceeding)
-//            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-//            try view.actualView().inspectWrapped { view in
-//                XCTAssertNoThrow(try view.find(FR2.self))
-//            }
-//        }
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
-//
-//    func testWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() throws {
-//        struct FR1: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//        }
-//        struct FR2: FlowRepresentable, View, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text(String(describing: Self.self)) }
-//            init(with args: AnyWorkflow.PassedArgs) { }
-//        }
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true)) {
-//            thenProceed(with: FR1.self) {
-//                thenProceed(with: FR2.self)
-//            }.persistence { .removedAfterProceeding }
-//        }
-//
-//        let expectViewLoaded = ViewHosting.loadView(workflowView).inspection.inspect { view in
-//            XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .removedAfterProceeding)
-//            XCTAssertNoThrow(try view.find(FR1.self).actualView().proceedInWorkflow())
-//            try view.actualView().inspectWrapped { view in
-//                XCTAssertNoThrow(try view.find(FR2.self))
-//            }
-//        }
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
+
+    func testWhenInputIsNeverWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() async throws {
+        struct FR1: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        struct FR2: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: AnyWorkflow.PassedArgs) { }
+        }
+        let workflowView = try await MainActor.run {
+            WorkflowLauncher(isLaunched: .constant(true)) {
+                thenProceed(with: FR1.self) {
+                    thenProceed(with: FR2.self)
+                }
+            }
+        }.hostAndInspect(with: \.inspection).extractWorkflowItem()
+
+        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow())
+        let view = try await workflowView.extractWrappedWorkflowItem()
+        XCTAssertNoThrow(try view.find(FR2.self))
+    }
+
+    func testWhenInputIsNeverWithAutoclosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() async throws {
+        struct FR1: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        struct FR2: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: AnyWorkflow.PassedArgs) { }
+        }
+        let workflowView = try await MainActor.run {
+            WorkflowLauncher(isLaunched: .constant(true)) {
+                thenProceed(with: FR1.self) {
+                    thenProceed(with: FR2.self)
+                }.persistence(.removedAfterProceeding)
+            }
+        }.hostAndInspect(with: \.inspection).extractWorkflowItem()
+
+        XCTAssertEqual(try workflowView.find(FR1.self).actualView().persistence, .removedAfterProceeding)
+        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow())
+        let view = try await workflowView.extractWrappedWorkflowItem()
+        XCTAssertNoThrow(try view.find(FR2.self))
+    }
+
+    func testWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem() async throws {
+        struct FR1: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+        }
+        struct FR2: FlowRepresentable, View, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text(String(describing: Self.self)) }
+            init(with args: AnyWorkflow.PassedArgs) { }
+        }
+        let workflowView = try await MainActor.run {
+            WorkflowLauncher(isLaunched: .constant(true)) {
+                thenProceed(with: FR1.self) {
+                    thenProceed(with: FR2.self)
+                }.persistence { .removedAfterProceeding }
+            }
+        }.hostAndInspect(with: \.inspection).extractWorkflowItem()
+
+        XCTAssertEqual(try workflowView.find(FR1.self).actualView().persistence, .removedAfterProceeding)
+        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow())
+        let view = try await workflowView.extractWrappedWorkflowItem()
+        XCTAssertNoThrow(try view.find(FR2.self))
+    }
 //
 //    func testWhenInputIsNeverWithDefaultFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem() throws {
 //        struct FR1: FlowRepresentable, View, Inspectable {
