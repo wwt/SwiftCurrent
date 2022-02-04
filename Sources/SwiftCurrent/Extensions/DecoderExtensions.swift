@@ -25,19 +25,19 @@ extension JSONDecoder.WorkflowJSONSpec {
         var value: String
 
         static var platformKey: String {
-            if #available(iOS 11.0, *) {
-                return "iOS"
-            } else if #available(macCatalyst 11.0, *) {
-                return "macCatalyst"
-            } else if #available(macOS 11.0, *) {
-                return "macOS"
-            } else if #available(watchOS 11.0, *) {
-                return "watchOS"
-            } else if #available(tvOS 11.0, *) {
-                return "tvOS"
-            } else {
-                return "*"
-            }
+#if os(iOS)
+            return "iOS"
+#elseif os(macOS) && targetEnvironment(macCatalyst)
+            return "macCatalyst"
+#elseif os(macOS)
+            return "macOS"
+#elseif os(watchOS)
+            return "watchOS"
+#elseif os(tvOS)
+            return "tvOS"
+#else
+            return "*"
+#endif
         }
 
         init(from decoder: Decoder) throws {
