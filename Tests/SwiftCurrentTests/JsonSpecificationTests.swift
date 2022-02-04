@@ -523,7 +523,7 @@ extension JsonSpecificationTests {
                     }
                 ]
             }
-""".data(using: .utf8))
+            """.data(using: .utf8))
         }
     }
 
@@ -566,7 +566,7 @@ extension JsonSpecificationTests {
                     }
                 ]
             }
-""".data(using: .utf8))
+            """.data(using: .utf8))
         }
     }
 }
