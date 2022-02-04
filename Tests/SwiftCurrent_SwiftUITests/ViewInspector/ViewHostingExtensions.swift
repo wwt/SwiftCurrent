@@ -39,7 +39,15 @@ extension InspectableView where View: CustomViewType & SingleViewContent {
 
     func extractWrappedWorkflowItem<F, W, C, PF, PC>() async throws -> InspectableView<ViewType.View<WorkflowItem<F, W, C>>> where View.T == WorkflowItem<PF, WorkflowItem<F, W, C>, PC> {
         let wrapped = try await actualView().getWrappedView()
-        return try find(type(of: wrapped))
+        let mirror = Mirror(reflecting: try actualView())
+        let model = try XCTUnwrap(mirror.descendant("_model") as? EnvironmentObject<WorkflowViewModel>)
+        let launcher = try XCTUnwrap(mirror.descendant("_launcher") as? EnvironmentObject<Launcher>)
+        DispatchQueue.main.async {
+            ViewHosting.host(view: wrapped
+                                .environmentObject(model.wrappedValue)
+                                .environmentObject(launcher.wrappedValue))
+        }
+        return try await wrapped.inspection.inspect()
     }
 }
 
