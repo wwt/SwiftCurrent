@@ -13,7 +13,6 @@ platform :ios do
       scheme:  'SwiftCurrent',
       workspace: '../SwiftCurrent.xcworkspace',
       derived_data_path: "~/Library/Developer/Xcode/DerivedData",
-      devices: ['platform=iOS Simulator,name=iPhone 13 Pro Max,OS=15.0']
     )
   end
 
