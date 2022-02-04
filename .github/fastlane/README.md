@@ -23,6 +23,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
+### ios platform_test
+
+```sh
+[bundle exec] fastlane ios platform_test
+```
+
+
+
 ### ios build_swiftpm
 
 ```sh

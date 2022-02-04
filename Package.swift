@@ -69,5 +69,11 @@ let package = Package(
                 .product(name: "Algorithms", package: "swift-algorithms")
             ],
             path: "Tests/SwiftCurrent_SwiftUITests"),
+        .testTarget(
+            name: "SwiftCurrentMultiPlatformTests",
+            dependencies: [
+                "SwiftCurrent",
+                "SwiftCurrent_Testing"
+            ]),
     ]
 )

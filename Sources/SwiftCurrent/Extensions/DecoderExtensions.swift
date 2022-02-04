@@ -12,17 +12,71 @@ extension JSONDecoder {
     struct WorkflowJSONSpec: Decodable {
         let schemaVersion: AnyWorkflow.JSONSchemaVersion
         let sequence: [Sequence]
-
-        struct Sequence: Decodable {
-            let flowRepresentableName: String
-            let launchStyle: String?
-            let flowPersistence: String?
-        }
     }
 
     /// Convenience method to decode an ``AnyWorkflow`` from Data.
     public func decodeWorkflow(withAggregator aggregator: FlowRepresentableAggregator, from data: Data) throws -> AnyWorkflow {
         try AnyWorkflow(spec: decode(WorkflowJSONSpec.self, from: data), aggregator: aggregator)
+    }
+}
+
+extension JSONDecoder.WorkflowJSONSpec {
+    fileprivate struct PlatformDecodable<T>: Decodable {
+        var value: String
+
+        static var platformKey: String {
+#if os(iOS)
+            return "iOS"
+#elseif os(macOS) && targetEnvironment(macCatalyst)
+            return "macCatalyst"
+#elseif os(macOS)
+            return "macOS"
+#elseif os(watchOS)
+            return "watchOS"
+#elseif os(tvOS)
+            return "tvOS"
+#else
+            return "*"
+#endif
+        }
+
+        init(from decoder: Decoder) throws {
+            let container = try decoder.singleValueContainer()
+
+            if let map = try? container.decode([String: String].self) {
+                if let mappedValue = map[Self.platformKey] ?? map["*"] {
+                    value = mappedValue
+                } else {
+                    throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "No \(String(describing: T.self)) found for platform", underlyingError: nil))
+                }
+            } else {
+                value = try container.decode(String.self)
+            }
+        }
+    }
+
+    struct Sequence: Decodable {
+        let flowRepresentableName: String
+        let launchStyle: String?
+        let flowPersistence: String?
+
+        enum CodingKeys: String, CodingKey {
+            case flowRepresentableName
+            case launchStyle
+            case flowPersistence
+        }
+
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            do {
+                flowRepresentableName = try container.decode(PlatformDecodable<Never>.self, forKey: .flowRepresentableName).value
+            } catch {
+                throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "No FlowRepresentable name found for platform", underlyingError: nil))
+            }
+
+            launchStyle = try container.decodeIfPresent(PlatformDecodable<LaunchStyle>.self, forKey: .launchStyle)?.value
+            flowPersistence = try container.decodeIfPresent(PlatformDecodable<FlowPersistence>.self, forKey: .flowPersistence)?.value
+        }
     }
 }
 
