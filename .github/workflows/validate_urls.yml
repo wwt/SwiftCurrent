@@ -47,7 +47,8 @@ jobs:
         git_path: https://github.com/wwt/SwiftCurrent
         branch: gh-pages
         file_types: .html,.css,.scss
-        exclude_urls: https://github.com/wwt/SwiftCurrent/discussions/new,https://github.com/realm/jazzy,https://realm.io,https://github.com/wwt/SwiftCurrent,https://img.shields.io/cocoapods/v/SwiftCurrent.svg?style=popout,https://img.shields.io/github/license/wwt/SwiftCurrent,https://img.shields.io/github/stars/wwt/SwiftCurrent?style=social,https://img.shields.io/github/issues-pr/wwt/SwiftCurrent?color=bright-green
+        exclude_urls: https://github.com/wwt/SwiftCurrent/discussions/new,https://github.com/realm/jazzy,https://realm.io,https://github.com/wwt/SwiftCurrent
+        exclude_patterns: https://img.shields.io
     - name: slack-send
       if: failure()
       uses: slackapi/slack-github-action@v1.16.0
