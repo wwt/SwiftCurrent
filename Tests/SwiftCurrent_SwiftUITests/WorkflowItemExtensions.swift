@@ -14,6 +14,10 @@ import ViewInspector
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension WorkflowItem {
+    func getWrappedView() throws -> Wrapped {
+        try XCTUnwrap((Mirror(reflecting: self).descendant("_wrapped") as? State<Wrapped?>)?.wrappedValue)
+    }
+
     @discardableResult func inspectWrapped<F, W, C>(function: String = #function, file: StaticString = #file, line: UInt = #line, inspection: @escaping (InspectableView<ViewType.View<Wrapped>>) throws -> Void) throws -> XCTestExpectation where Wrapped == WorkflowItem<F, W, C> {
         let wrapped = try XCTUnwrap((Mirror(reflecting: self).descendant("_wrapped") as? State<Wrapped?>)?.wrappedValue)
         return try wrapped.inspect(function: function, file: file, line: line, inspection: inspection)
