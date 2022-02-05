@@ -18,6 +18,11 @@ extension View where Self: Inspectable {
     func host() async {
         await MainActor.run { ViewHosting.host(view: self ) }
     }
+
+    func host<V: View>(_ transform: (Self) -> V) async {
+        await MainActor.run { ViewHosting.host(view: transform(self) ) }
+    }
+
     func hostAndInspect<E: InspectionEmissary>(with emissary: KeyPath<Self, E>) async throws -> InspectableView<ViewType.View<Self>> where E.V == Self {
         await host()
         return try await self[keyPath: emissary].inspect()
