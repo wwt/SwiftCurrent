@@ -14,9 +14,12 @@ import XCTest
 
 @available(iOS 15.0, macOS 10.15, tvOS 13.0, *)
 extension View where Self: Inspectable {
-    func hostAndInspect<E: InspectionEmissary>(with emmisary: KeyPath<Self, E>) async throws -> InspectableView<ViewType.View<Self>> where E.V == Self {
-        DispatchQueue.main.async { ViewHosting.host(view: self) }
-        return try await self[keyPath: emmisary].inspect()
+    func host() async {
+        await MainActor.run { ViewHosting.host(view: self ) }
+    }
+    func hostAndInspect<E: InspectionEmissary>(with emissary: KeyPath<Self, E>) async throws -> InspectableView<ViewType.View<Self>> where E.V == Self {
+        await host()
+        return try await self[keyPath: emissary].inspect()
     }
 }
 
