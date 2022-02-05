@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import ViewInspector
 import XCTest
+import SwiftCurrent
 
 @testable import SwiftCurrent_SwiftUI
 
@@ -51,6 +52,32 @@ extension InspectableView where View: CustomViewType & SingleViewContent {
                                 .environmentObject(launcher.wrappedValue))
         }
         return try await wrapped.inspection.inspect()
+    }
+}
+
+@available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension InspectableView where View: CustomViewType & SingleViewContent, View.T: FlowRepresentable {
+    func proceedInWorkflow() async throws where View.T.WorkflowOutput == Never {
+        try await MainActor.run { try actualView().proceedInWorkflow() }
+    }
+
+    func proceedInWorkflow(_ args: View.T.WorkflowOutput) async throws where View.T.WorkflowOutput == AnyWorkflow.PassedArgs {
+        try await MainActor.run { try actualView().proceedInWorkflow(args) }
+    }
+
+    func proceedInWorkflow(_ args: View.T.WorkflowOutput) async throws {
+        try await MainActor.run { try actualView().proceedInWorkflow(args) }
+    }
+
+    func backUpInWorkflow() async throws {
+        try await MainActor.run { try actualView().backUpInWorkflow() }
+    }
+}
+
+@available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension InspectableView where View: CustomViewType & SingleViewContent, View.T: PassthroughFlowRepresentable {
+   func proceedInWorkflow() async throws {
+        try await MainActor.run { try actualView().proceedInWorkflow() }
     }
 }
 

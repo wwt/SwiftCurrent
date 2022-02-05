@@ -143,7 +143,7 @@ final class GenericConstraintTests: XCTestCase, View {
                 }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR1.self).proceedInWorkflow()
         let view = try await workflowView.actualView().getWrappedView()
         XCTAssertNoThrow(try workflowView.find(type(of: view)).find(FR2.self))
     }
@@ -166,7 +166,7 @@ final class GenericConstraintTests: XCTestCase, View {
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
         XCTAssertEqual(try workflowView.find(FR1.self).actualView().persistence, .removedAfterProceeding)
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR1.self).proceedInWorkflow()
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -189,7 +189,7 @@ final class GenericConstraintTests: XCTestCase, View {
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
         XCTAssertEqual(try workflowView.find(FR1.self).actualView().persistence, .removedAfterProceeding)
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR1.self).proceedInWorkflow()
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -212,7 +212,7 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR1.self).proceedInWorkflow()
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -236,7 +236,7 @@ final class GenericConstraintTests: XCTestCase, View {
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
         XCTAssertEqual(try workflowView.find(FR1.self).actualView().persistence, .removedAfterProceeding)
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR1.self).proceedInWorkflow()
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -260,7 +260,7 @@ final class GenericConstraintTests: XCTestCase, View {
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
         XCTAssertEqual(try workflowView.find(FR1.self).actualView().persistence, .removedAfterProceeding)
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR1.self).proceedInWorkflow()
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -284,7 +284,7 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow(1))
+        try await workflowView.find(FR1.self).proceedInWorkflow(1)
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -309,7 +309,7 @@ final class GenericConstraintTests: XCTestCase, View {
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
         XCTAssertEqual(try workflowView.find(FR1.self).actualView().persistence, .removedAfterProceeding)
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow(1))
+        try await workflowView.find(FR1.self).proceedInWorkflow(1)
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -334,7 +334,7 @@ final class GenericConstraintTests: XCTestCase, View {
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
         XCTAssertEqual(try workflowView.find(FR1.self).actualView().persistence, .removedAfterProceeding)
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow(1))
+        try await workflowView.find(FR1.self).proceedInWorkflow(1)
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -418,7 +418,7 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR1.self).proceedInWorkflow()
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -444,7 +444,7 @@ final class GenericConstraintTests: XCTestCase, View {
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
         XCTAssertEqual(try workflowView.find(FR1.self).actualView().persistence, .removedAfterProceeding)
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR1.self).proceedInWorkflow()
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -473,7 +473,7 @@ final class GenericConstraintTests: XCTestCase, View {
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
         XCTAssertEqual(try workflowView.find(FR1.self).actualView().persistence, .removedAfterProceeding)
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR1.self).proceedInWorkflow()
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -499,7 +499,7 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR1.self).proceedInWorkflow()
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -526,7 +526,7 @@ final class GenericConstraintTests: XCTestCase, View {
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
         XCTAssertEqual(try workflowView.find(FR1.self).actualView().persistence, .removedAfterProceeding)
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR1.self).proceedInWorkflow()
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -556,7 +556,7 @@ final class GenericConstraintTests: XCTestCase, View {
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
         XCTAssertEqual(try workflowView.find(FR1.self).actualView().persistence, .removedAfterProceeding)
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR1.self).proceedInWorkflow()
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -583,7 +583,7 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow(1))
+        try await workflowView.find(FR1.self).proceedInWorkflow(1)
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -611,7 +611,7 @@ final class GenericConstraintTests: XCTestCase, View {
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
         XCTAssertEqual(try workflowView.find(FR1.self).actualView().persistence, .removedAfterProceeding)
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow(1))
+        try await workflowView.find(FR1.self).proceedInWorkflow(1)
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -642,7 +642,7 @@ final class GenericConstraintTests: XCTestCase, View {
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
         XCTAssertEqual(try workflowView.find(FR1.self).actualView().persistence, .removedAfterProceeding)
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow(1))
+        try await workflowView.find(FR1.self).proceedInWorkflow(1)
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -725,7 +725,7 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR1.self).proceedInWorkflow()
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -751,7 +751,7 @@ final class GenericConstraintTests: XCTestCase, View {
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
         XCTAssertEqual(try workflowView.find(FR1.self).actualView().persistence, .removedAfterProceeding)
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR1.self).proceedInWorkflow()
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -780,7 +780,7 @@ final class GenericConstraintTests: XCTestCase, View {
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
         XCTAssertEqual(try workflowView.find(FR1.self).actualView().persistence, .removedAfterProceeding)
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR1.self).proceedInWorkflow()
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -806,7 +806,7 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR1.self).proceedInWorkflow()
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -833,7 +833,7 @@ final class GenericConstraintTests: XCTestCase, View {
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
         XCTAssertEqual(try workflowView.find(FR1.self).actualView().persistence, .removedAfterProceeding)
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR1.self).proceedInWorkflow()
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -863,7 +863,7 @@ final class GenericConstraintTests: XCTestCase, View {
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
         XCTAssertEqual(try workflowView.find(FR1.self).actualView().persistence, .removedAfterProceeding)
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR1.self).proceedInWorkflow()
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -890,7 +890,7 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow(1))
+        try await workflowView.find(FR1.self).proceedInWorkflow(1)
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -918,7 +918,7 @@ final class GenericConstraintTests: XCTestCase, View {
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
         XCTAssertEqual(try workflowView.find(FR1.self).actualView().persistence, .removedAfterProceeding)
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow(1))
+        try await workflowView.find(FR1.self).proceedInWorkflow(1)
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -949,7 +949,7 @@ final class GenericConstraintTests: XCTestCase, View {
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
         XCTAssertEqual(try workflowView.find(FR1.self).actualView().persistence, .removedAfterProceeding)
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow(1))
+        try await workflowView.find(FR1.self).proceedInWorkflow(1)
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -976,7 +976,7 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow(""))
+        try await workflowView.find(FR1.self).proceedInWorkflow("")
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -1004,7 +1004,7 @@ final class GenericConstraintTests: XCTestCase, View {
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
         XCTAssertEqual(try workflowView.find(FR1.self).actualView().persistence, .removedAfterProceeding)
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow(""))
+        try await workflowView.find(FR1.self).proceedInWorkflow("")
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -1035,7 +1035,7 @@ final class GenericConstraintTests: XCTestCase, View {
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
         XCTAssertEqual(try workflowView.find(FR1.self).actualView().persistence, .removedAfterProceeding)
-        XCTAssertNoThrow(try workflowView.find(FR1.self).actualView().proceedInWorkflow(""))
+        try await workflowView.find(FR1.self).proceedInWorkflow("")
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -1063,7 +1063,7 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .removedAfterProceeding)
     }
@@ -1091,7 +1091,7 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .removedAfterProceeding)
         wait(for: [expectation], timeout: TestConstant.timeout)
@@ -1122,11 +1122,11 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
 
         let workflowItem = try await workflowView.extractWrappedWorkflowItem()
 
-        XCTAssertNoThrow(try workflowItem.find(FR1.self).actualView().proceedInWorkflow())
+        try await workflowItem.find(FR1.self).proceedInWorkflow()
 
         let view = try await workflowItem.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
@@ -1157,9 +1157,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let workflowItem = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try workflowItem.find(FR1.self).actualView().proceedInWorkflow())
+        try await workflowItem.find(FR1.self).proceedInWorkflow()
         let view = try await workflowItem.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
         XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .removedAfterProceeding)
@@ -1190,9 +1190,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let workflowItem = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try workflowItem.find(FR1.self).actualView().proceedInWorkflow())
+        try await workflowItem.find(FR1.self).proceedInWorkflow()
         let view = try await workflowItem.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
         XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .removedAfterProceeding)
@@ -1224,9 +1224,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let workflowItem = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try workflowItem.find(FR1.self).actualView().proceedInWorkflow())
+        try await workflowItem.find(FR1.self).proceedInWorkflow()
         let view = try await workflowItem.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -1257,9 +1257,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let workflowItem = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try workflowItem.find(FR1.self).actualView().proceedInWorkflow())
+        try await workflowItem.find(FR1.self).proceedInWorkflow()
         let view = try await workflowItem.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
         XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .removedAfterProceeding)
@@ -1291,9 +1291,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let workflowItem = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try workflowItem.find(FR1.self).actualView().proceedInWorkflow())
+        try await workflowItem.find(FR1.self).proceedInWorkflow()
 
         let view = try await workflowItem.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
@@ -1327,9 +1327,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let workflowItem = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try workflowItem.find(FR1.self).actualView().proceedInWorkflow(1))
+        try await workflowItem.find(FR1.self).proceedInWorkflow(1)
         let view = try await workflowItem.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -1361,9 +1361,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let workflowItem = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try workflowItem.find(FR1.self).actualView().proceedInWorkflow(1))
+        try await workflowItem.find(FR1.self).proceedInWorkflow(1)
         let view = try await workflowItem.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
         XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .removedAfterProceeding)
@@ -1399,9 +1399,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let workflowItem = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try workflowItem.find(FR1.self).actualView().proceedInWorkflow(1))
+        try await workflowItem.find(FR1.self).proceedInWorkflow(1)
         let view = try await workflowItem.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
         XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .removedAfterProceeding)
@@ -1430,7 +1430,7 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .removedAfterProceeding)
     }
@@ -1460,7 +1460,7 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .removedAfterProceeding)
         wait(for: [expectation], timeout: TestConstant.timeout)
@@ -1492,9 +1492,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let workflowItem = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try workflowItem.find(FR1.self).actualView().proceedInWorkflow())
+        try await workflowItem.find(FR1.self).proceedInWorkflow()
         let view = try await workflowItem.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -1525,9 +1525,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let workflowItem = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try workflowItem.find(FR1.self).actualView().proceedInWorkflow())
+        try await workflowItem.find(FR1.self).proceedInWorkflow()
         let view = try await workflowItem.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try view.find(FR2.self))
         XCTAssertEqual(try view.find(FR2.self).actualView().persistence, .removedAfterProceeding)
@@ -1562,10 +1562,10 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let wfr1 = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertEqual(try wfr1.find(FR1.self).actualView().persistence, .removedAfterProceeding)
-        XCTAssertNoThrow(try wfr1.find(FR1.self).actualView().proceedInWorkflow())
+        try await wfr1.find(FR1.self).proceedInWorkflow()
         let wfr2 = try await wfr1.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try wfr2.find(FR2.self))
     }
@@ -1597,9 +1597,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let wfr1 = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try wfr1.find(FR1.self).actualView().proceedInWorkflow())
+        try await wfr1.find(FR1.self).proceedInWorkflow()
         let wfr2 = try await wfr1.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try wfr2.find(FR2.self))
     }
@@ -1631,9 +1631,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let wfr1 = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try wfr1.find(FR1.self).actualView().proceedInWorkflow())
+        try await wfr1.find(FR1.self).proceedInWorkflow()
         let wfr2 = try await wfr1.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try wfr2.find(FR2.self))
         XCTAssertEqual(try wfr2.find(FR2.self).actualView().persistence, .removedAfterProceeding)
@@ -1669,9 +1669,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let wfr1 = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try wfr1.find(FR1.self).actualView().proceedInWorkflow())
+        try await wfr1.find(FR1.self).proceedInWorkflow()
         let wfr2 = try await wfr1.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try wfr2.find(FR2.self))
         XCTAssertEqual(try wfr2.find(FR2.self).actualView().persistence, .removedAfterProceeding)
@@ -1705,9 +1705,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let wfr1 = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try wfr1.find(FR1.self).actualView().proceedInWorkflow(1))
+        try await wfr1.find(FR1.self).proceedInWorkflow(1)
         let wfr2 = try await wfr1.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try wfr2.find(FR2.self))
     }
@@ -1740,9 +1740,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let wfr1 = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try wfr1.find(FR1.self).actualView().proceedInWorkflow(1))
+        try await wfr1.find(FR1.self).proceedInWorkflow(1)
         let wfr2 = try await wfr1.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try wfr2.find(FR2.self))
         XCTAssertEqual(try wfr2.find(FR2.self).actualView().persistence, .removedAfterProceeding)
@@ -1779,9 +1779,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let wfr1 = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try wfr1.find(FR1.self).actualView().proceedInWorkflow(1))
+        try await wfr1.find(FR1.self).proceedInWorkflow(1)
         let wfr2 = try await wfr1.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try wfr2.find(FR2.self))
         XCTAssertEqual(try wfr2.find(FR2.self).actualView().persistence, .removedAfterProceeding)
@@ -1829,7 +1829,7 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .removedAfterProceeding)
     }
@@ -1859,7 +1859,7 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let view = try await workflowView.extractWrappedWorkflowItem()
         XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .removedAfterProceeding)
         wait(for: [expectation], timeout: TestConstant.timeout)
@@ -1891,9 +1891,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let wfr1 = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try wfr1.find(FR1.self).actualView().proceedInWorkflow())
+        try await wfr1.find(FR1.self).proceedInWorkflow()
         let wfr2 = try await wfr1.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try wfr2.find(FR2.self))
     }
@@ -1924,9 +1924,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let wfr1 = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try wfr1.find(FR1.self).actualView().proceedInWorkflow())
+        try await wfr1.find(FR1.self).proceedInWorkflow()
         let wfr2 = try await wfr1.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try wfr2.find(FR2.self))
         XCTAssertEqual(try wfr2.find(FR2.self).actualView().persistence, .removedAfterProceeding)
@@ -1958,9 +1958,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let wfr1 = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try wfr1.find(FR1.self).actualView().proceedInWorkflow())
+        try await wfr1.find(FR1.self).proceedInWorkflow()
         let wfr2 = try await wfr1.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try wfr2.find(FR2.self))
         XCTAssertEqual(try wfr2.find(FR2.self).actualView().persistence, .removedAfterProceeding)
@@ -1993,9 +1993,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let wfr1 = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try wfr1.find(FR1.self).actualView().proceedInWorkflow())
+        try await wfr1.find(FR1.self).proceedInWorkflow()
         let wfr2 = try await wfr1.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try wfr2.find(FR2.self))
     }
@@ -2027,9 +2027,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let wfr1 = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try wfr1.find(FR1.self).actualView().proceedInWorkflow())
+        try await wfr1.find(FR1.self).proceedInWorkflow()
         let wfr2 = try await wfr1.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try wfr2.find(FR2.self))
         XCTAssertEqual(try wfr2.find(FR2.self).actualView().persistence, .removedAfterProceeding)
@@ -2062,9 +2062,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let wfr1 = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try wfr1.find(FR1.self).actualView().proceedInWorkflow())
+        try await wfr1.find(FR1.self).proceedInWorkflow()
         let wfr2 = try await wfr1.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try wfr2.find(FR2.self))
         XCTAssertEqual(try wfr2.find(FR2.self).actualView().persistence, .removedAfterProceeding)
@@ -2098,9 +2098,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let wfr1 = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try wfr1.find(FR1.self).actualView().proceedInWorkflow(1))
+        try await wfr1.find(FR1.self).proceedInWorkflow(1)
         let wfr2 = try await wfr1.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try wfr2.find(FR2.self))
     }
@@ -2133,9 +2133,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let wfr1 = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try wfr1.find(FR1.self).actualView().proceedInWorkflow(1))
+        try await wfr1.find(FR1.self).proceedInWorkflow(1)
         let wfr2 = try await wfr1.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try wfr2.find(FR2.self))
         XCTAssertEqual(try wfr2.find(FR2.self).actualView().persistence, .removedAfterProceeding)
@@ -2172,9 +2172,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let wfr1 = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try wfr1.find(FR1.self).actualView().proceedInWorkflow(1))
+        try await wfr1.find(FR1.self).proceedInWorkflow(1)
         let wfr2 = try await wfr1.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try wfr2.find(FR2.self))
         XCTAssertEqual(try wfr2.find(FR2.self).actualView().persistence, .removedAfterProceeding)
@@ -2208,9 +2208,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let wfr1 = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try wfr1.find(FR1.self).actualView().proceedInWorkflow(""))
+        try await wfr1.find(FR1.self).proceedInWorkflow("")
         let wfr2 = try await wfr1.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try wfr2.find(FR2.self))
     }
@@ -2243,9 +2243,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let wfr1 = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try wfr1.find(FR1.self).actualView().proceedInWorkflow(""))
+        try await wfr1.find(FR1.self).proceedInWorkflow("")
         let wfr2 = try await wfr1.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try wfr2.find(FR2.self))
         XCTAssertEqual(try wfr2.find(FR2.self).actualView().persistence, .removedAfterProceeding)
@@ -2279,9 +2279,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let wfr1 = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try wfr1.find(FR1.self).actualView().proceedInWorkflow(""))
+        try await wfr1.find(FR1.self).proceedInWorkflow("")
         let wfr2 = try await wfr1.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try wfr2.find(FR2.self))
         XCTAssertEqual(try wfr2.find(FR2.self).actualView().persistence, .removedAfterProceeding)
@@ -2315,9 +2315,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let wfr1 = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try wfr1.find(FR1.self).actualView().proceedInWorkflow(expectedArgs))
+        try await wfr1.find(FR1.self).proceedInWorkflow(expectedArgs)
         let wfr2 = try await wfr1.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try wfr2.find(FR2.self))
         XCTAssertEqual(try wfr2.find(FR2.self).actualView().persistence, .removedAfterProceeding)
@@ -2350,9 +2350,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let wfr1 = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try wfr1.find(FR1.self).actualView().proceedInWorkflow(expectedArgs))
+        try await wfr1.find(FR1.self).proceedInWorkflow(expectedArgs)
         let wfr2 = try await wfr1.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try wfr2.find(FR2.self))
         XCTAssertEqual(try wfr2.find(FR2.self).actualView().persistence, .removedAfterProceeding)
@@ -2381,9 +2381,9 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(ViewControllerWrapper<FR0>.self).actualView().proceedInWorkflow())
+        try await workflowView.find(ViewControllerWrapper<FR0>.self).proceedInWorkflow()
         let wfr1 = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try wfr1.find(ViewControllerWrapper<FR1>.self).actualView().proceedInWorkflow())
+        try await wfr1.find(ViewControllerWrapper<FR1>.self).proceedInWorkflow()
         let wfr2 = try await wfr1.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try wfr2.find(ViewControllerWrapper<FR2>.self))
     }
@@ -2419,9 +2419,9 @@ final class ThenProceedOnAppTests: XCTestCase, App {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let wfr1 = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try wfr1.find(FR1.self).actualView().proceedInWorkflow(""))
+        try await wfr1.find(FR1.self).proceedInWorkflow("")
         let wfr2 = try await wfr1.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try wfr2.find(FR2.self))
         XCTAssertEqual(try wfr2.find(FR2.self).actualView().persistence, .removedAfterProceeding)
@@ -2450,9 +2450,9 @@ final class ThenProceedOnAppTests: XCTestCase, App {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(ViewControllerWrapper<FR0>.self).actualView().proceedInWorkflow())
+        try await workflowView.find(ViewControllerWrapper<FR0>.self).proceedInWorkflow()
         let wfr1 = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try wfr1.find(ViewControllerWrapper<FR1>.self).actualView().proceedInWorkflow())
+        try await wfr1.find(ViewControllerWrapper<FR1>.self).proceedInWorkflow()
         let wfr2 = try await wfr1.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try wfr2.find(ViewControllerWrapper<FR2>.self))
     }
@@ -2488,9 +2488,9 @@ final class ThenProceedOnSceneTests: XCTestCase, Scene {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(FR0.self).actualView().proceedInWorkflow())
+        try await workflowView.find(FR0.self).proceedInWorkflow()
         let wfr1 = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try wfr1.find(FR1.self).actualView().proceedInWorkflow(""))
+        try await wfr1.find(FR1.self).proceedInWorkflow("")
         let wfr2 = try await wfr1.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try wfr2.find(FR2.self))
         XCTAssertEqual(try wfr2.find(FR2.self).actualView().persistence, .removedAfterProceeding)
@@ -2519,9 +2519,9 @@ final class ThenProceedOnSceneTests: XCTestCase, Scene {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
-        XCTAssertNoThrow(try workflowView.find(ViewControllerWrapper<FR0>.self).actualView().proceedInWorkflow())
+        try await workflowView.find(ViewControllerWrapper<FR0>.self).proceedInWorkflow()
         let wfr1 = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertNoThrow(try wfr1.find(ViewControllerWrapper<FR1>.self).actualView().proceedInWorkflow())
+        try await wfr1.find(ViewControllerWrapper<FR1>.self).proceedInWorkflow()
         let wfr2 = try await wfr1.extractWrappedWorkflowItem()
         XCTAssertNoThrow(try wfr2.find(ViewControllerWrapper<FR2>.self))
     }
