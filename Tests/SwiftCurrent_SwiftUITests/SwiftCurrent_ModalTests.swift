@@ -1,59 +1,69 @@
+////
+////  SwiftCurrent_ModalTests.swift
+////  SwiftCurrent
+////
+////  Created by Tyler Thompson on 7/12/21.
+////  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
+////
 //
-//  SwiftCurrent_ModalTests.swift
-//  SwiftCurrent
+//import XCTest
+//import SwiftUI
 //
-//  Created by Tyler Thompson on 7/12/21.
-//  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
+//import SwiftCurrent
 //
-
-import XCTest
-import SwiftUI
-
-import SwiftCurrent
-
-@testable import ViewInspector
-@testable import SwiftCurrent_SwiftUI // testable sadly needed for inspection.inspect to work
-
-@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-extension InspectableView where View == ViewType.Sheet {
-    func isPresented() throws -> Bool {
-        return (Mirror(reflecting: content.view).descendant("presenter", "isPresented") as? Binding<Bool>)?.wrappedValue ?? false
-    }
-}
-
-@available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-final class SwiftCurrent_ModalTests: XCTestCase, Scene {
-    func testWorkflowCanBeFollowed() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
-            var body: some View { Text("FR1 type") }
-        }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
-            var body: some View { Text("FR2 type") }
-        }
-        let expectOnFinish = expectation(description: "OnFinish called")
-        let wfr1 = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self) {
-                    thenProceed(with: FR2.self).presentationType(.modal)
-                }
-            }
-            .onFinish { _ in
-                expectOnFinish.fulfill()
-            }
-        }.hostAndInspect(with: \.inspection).extractWorkflowItem()
-
-        let fr1 = try wfr1.find(FR1.self)
-        XCTAssertEqual(try fr1.text().string(), "FR1 type")
-        try await fr1.proceedInWorkflow()
-        let fr2 = try fr1.find(ViewType.Sheet.self).find(FR2.self)
-        XCTAssertEqual(try fr2.text().string(), "FR2 type")
-        try await fr2.proceedInWorkflow()
-
-        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
-    }
-
+//@testable import ViewInspector
+//@testable import SwiftCurrent_SwiftUI // testable sadly needed for inspection.inspect to work
+//
+//@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+//extension InspectableView where View == ViewType.Sheet {
+//    func isPresented() throws -> Bool {
+//        return (Mirror(reflecting: content.view).descendant("presenter", "isPresented") as? Binding<Bool>)?.wrappedValue ?? false
+//    }
+//}
+//
+//@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+//final class SwiftCurrent_ModalTests: XCTestCase, Scene {
+//    override func tearDownWithError() throws {
+//        removeQueuedExpectations()
+//    }
+//
+//    func testWorkflowCanBeFollowed() throws {
+//        struct FR1: View, FlowRepresentable, Inspectable {
+//            var _workflowPointer: AnyFlowRepresentable?
+//            var body: some View { Text("FR1 type") }
+//        }
+//        struct FR2: View, FlowRepresentable, Inspectable {
+//            var _workflowPointer: AnyFlowRepresentable?
+//            var body: some View { Text("FR2 type") }
+//        }
+//        let expectOnFinish = expectation(description: "OnFinish called")
+//        let expectViewLoaded = ViewHosting.loadView(
+//            WorkflowLauncher(isLaunched: .constant(true)) {
+//                thenProceed(with: FR1.self) {
+//                    thenProceed(with: FR2.self).presentationType(.modal)
+//                }
+//            }
+//            .onFinish { _ in
+//                expectOnFinish.fulfill()
+//            }).inspection.inspect { fr1 in
+//                let model = (Mirror(reflecting: try fr1.actualView()).descendant("_model") as! EnvironmentObject<WorkflowViewModel>).wrappedValue
+//                let launcher = (Mirror(reflecting: try fr1.actualView()).descendant("_launcher") as! EnvironmentObject<Launcher>).wrappedValue
+//                XCTAssertEqual(try fr1.find(FR1.self).text().string(), "FR1 type")
+//                try fr1.actualView().inspect(model: model, launcher: launcher) { fr1 in
+//                    XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
+//                    try fr1.actualView().inspect(model: model, launcher: launcher) { fr1 in
+//                        XCTAssertTrue(try fr1.find(ViewType.Sheet.self).isPresented())
+//                        try fr1.find(ViewType.Sheet.self).find(WorkflowItem<FR2, Never, FR2>.self).actualView().inspect(model: model, launcher: launcher) { fr2 in
+//                            XCTAssertEqual(try fr2.view(FR2.self).text().string(), "FR2 type")
+//                            XCTAssertNoThrow(try fr2.view(FR2.self).actualView().proceedInWorkflow())
+//                        }
+//                    }
+//                }
+//            }
+//
+//        wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
+//    }
+//
 //    func testWorkflowItemsOfTheSameTypeCanBeFollowed() throws {
 //        struct FR1: View, FlowRepresentable, Inspectable {
 //            var _workflowPointer: AnyFlowRepresentable?
@@ -71,17 +81,17 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 //        ).inspection.inspect { fr1 in
 //            let model = (Mirror(reflecting: try fr1.actualView()).descendant("_model") as! EnvironmentObject<WorkflowViewModel>).wrappedValue
 //            let launcher = (Mirror(reflecting: try fr1.actualView()).descendant("_launcher") as! EnvironmentObject<Launcher>).wrappedValue
-//            try await fr1.find(FR1.self).proceedInWorkflow()
+//            XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
 //            try fr1.actualView().inspect { first in
 //                XCTAssert(try first.find(ViewType.Sheet.self).isPresented())
 //                try first.find(ViewType.Sheet.self).view(WorkflowItem<FR1, WorkflowItem<FR1, Never, FR1>, FR1>.self).actualView().inspect(model: model, launcher: launcher) { second in
 //                    XCTAssert(try first.find(ViewType.Sheet.self).isPresented())
-//                    try await second.find(FR1.self).proceedInWorkflow()
+//                    XCTAssertNoThrow(try second.find(FR1.self).actualView().proceedInWorkflow())
 //                    try second.actualView().inspect { second in
 //                        XCTAssert(try first.find(ViewType.Sheet.self).isPresented())
 //                        XCTAssert(try second.find(ViewType.Sheet.self).isPresented())
 //                        try second.find(ViewType.Sheet.self).view(WorkflowItem<FR1, Never, FR1>.self).actualView().inspect(model: model, launcher: launcher) { third in
-//                            try await third.find(FR1.self).proceedInWorkflow()
+//                            XCTAssertNoThrow(try third.find(FR1.self).actualView().proceedInWorkflow())
 //                            try third.actualView().inspect { third in
 //                                XCTAssert(try first.find(ViewType.Sheet.self).isPresented())
 //                                XCTAssert(try second.find(ViewType.Sheet.self).isPresented())
@@ -152,7 +162,7 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 //        ).inspection.inspect { fr_1 in
 //            model = (Mirror(reflecting: try fr_1.actualView()).descendant("_model") as! EnvironmentObject<WorkflowViewModel>).wrappedValue
 //            launcher = (Mirror(reflecting: try fr_1.actualView()).descendant("_launcher") as! EnvironmentObject<Launcher>).wrappedValue
-//            try await fr_1.find(FR1.self).proceedInWorkflow()
+//            XCTAssertNoThrow(try fr_1.find(FR1.self).actualView().proceedInWorkflow())
 //            try fr_1.actualView().inspect { fr_1 in
 //                XCTAssert(try fr_1.find(ViewType.Sheet.self).isPresented())
 //                fr1 = fr_1
@@ -165,7 +175,7 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 //
 //        try fr1.find(ViewType.Sheet.self).view(WorkflowItem<FR2, WorkflowItem<FR3, WorkflowItem<FR4, WorkflowItem<FR5, WorkflowItem<FR6, WorkflowItem<FR7, Never, FR7>, FR6>, FR5>, FR4>, FR3>, FR2>.self).actualView().inspect(model: model, launcher: launcher) { fr_2 in
 //            XCTAssert(try fr1.find(ViewType.Sheet.self).isPresented())
-//            try await fr_2.find(FR2.self).proceedInWorkflow()
+//            XCTAssertNoThrow(try fr_2.find(FR2.self).actualView().proceedInWorkflow())
 //            try fr_2.actualView().inspect { fr_2 in
 //                XCTAssert(try fr1.find(ViewType.Sheet.self).isPresented())
 //                XCTAssert(try fr_2.find(ViewType.Sheet.self).isPresented())
@@ -176,7 +186,7 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 //        removeQueuedExpectations()
 //
 //        try fr2.find(ViewType.Sheet.self).view(WorkflowItem<FR3, WorkflowItem<FR4, WorkflowItem<FR5, WorkflowItem<FR6, WorkflowItem<FR7, Never, FR7>, FR6>, FR5>, FR4>, FR3>.self).actualView().inspect(model: model, launcher: launcher) { fr_3 in
-//            try await fr_3.find(FR3.self).proceedInWorkflow()
+//            XCTAssertNoThrow(try fr_3.find(FR3.self).actualView().proceedInWorkflow())
 //            try fr_3.actualView().inspect { fr_3 in
 //                XCTAssert(try fr1.find(ViewType.Sheet.self).isPresented())
 //                XCTAssert(try fr2.find(ViewType.Sheet.self).isPresented())
@@ -188,7 +198,7 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 //        removeQueuedExpectations()
 //
 //        try fr3.find(ViewType.Sheet.self).view(WorkflowItem<FR4, WorkflowItem<FR5, WorkflowItem<FR6, WorkflowItem<FR7, Never, FR7>, FR6>, FR5>, FR4>.self).actualView().inspect(model: model, launcher: launcher) { fr_4 in
-//            try await fr_4.find(FR4.self).proceedInWorkflow()
+//            XCTAssertNoThrow(try fr_4.find(FR4.self).actualView().proceedInWorkflow())
 //            try fr_4.actualView().inspect { fr_4 in
 //                XCTAssert(try fr1.find(ViewType.Sheet.self).isPresented())
 //                XCTAssert(try fr2.find(ViewType.Sheet.self).isPresented())
@@ -201,7 +211,7 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 //        removeQueuedExpectations()
 //
 //        try fr4.find(ViewType.Sheet.self).view(WorkflowItem<FR5, WorkflowItem<FR6, WorkflowItem<FR7, Never, FR7>, FR6>, FR5>.self).actualView().inspect(model: model, launcher: launcher) { fr_5 in
-//            try await fr_5.find(FR5.self).proceedInWorkflow()
+//            XCTAssertNoThrow(try fr_5.find(FR5.self).actualView().proceedInWorkflow())
 //            try fr_5.actualView().inspect { fr_5 in
 //                XCTAssert(try fr1.find(ViewType.Sheet.self).isPresented())
 //                XCTAssert(try fr2.find(ViewType.Sheet.self).isPresented())
@@ -215,7 +225,7 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 //        removeQueuedExpectations()
 //
 //        try fr5.find(ViewType.Sheet.self).view(WorkflowItem<FR6, WorkflowItem<FR7, Never, FR7>, FR6>.self).actualView().inspect(model: model, launcher: launcher) { fr_6 in
-//            try await fr_6.find(FR6.self).proceedInWorkflow()
+//            XCTAssertNoThrow(try fr_6.find(FR6.self).actualView().proceedInWorkflow())
 //            try fr_6.actualView().inspect { fr_6 in
 //                XCTAssert(try fr1.find(ViewType.Sheet.self).isPresented())
 //                XCTAssert(try fr2.find(ViewType.Sheet.self).isPresented())
@@ -230,7 +240,7 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 //        removeQueuedExpectations()
 //
 //        try fr6.find(ViewType.Sheet.self).view(WorkflowItem<FR7, Never, FR7>.self).actualView().inspect(model: model, launcher: launcher) { fr7 in
-//            try await fr7.find(FR7.self).proceedInWorkflow()
+//            XCTAssertNoThrow(try fr7.find(FR7.self).actualView().proceedInWorkflow())
 //            try fr7.actualView().inspect { fr7 in
 //                XCTAssert(try fr1.find(ViewType.Sheet.self).isPresented())
 //                XCTAssert(try fr2.find(ViewType.Sheet.self).isPresented())
@@ -269,7 +279,7 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 //            let launcher = (Mirror(reflecting: try fr1.actualView()).descendant("_launcher") as! EnvironmentObject<Launcher>).wrappedValue
 //            XCTAssertThrowsError(try fr1.find(FR1.self).actualView())
 //            try fr1.view(WorkflowItem<FR2, WorkflowItem<FR3, Never, FR3>, FR2>.self).actualView().inspect(model: model, launcher: launcher) { fr2 in
-//                try await fr2.find(FR2.self).proceedInWorkflow()
+//                XCTAssertNoThrow(try fr2.find(FR2.self).actualView().proceedInWorkflow())
 //                try fr2.actualView().inspect { fr2 in
 //                    try fr2.find(ViewType.Sheet.self).view(WorkflowItem<FR3, Never, FR3>.self).actualView().inspect(model: model, launcher: launcher) { fr3 in
 //                        XCTAssert(try fr2.find(ViewType.Sheet.self).isPresented())
@@ -307,7 +317,7 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 //        ).inspection.inspect { fr1 in
 //            let model = (Mirror(reflecting: try fr1.actualView()).descendant("_model") as! EnvironmentObject<WorkflowViewModel>).wrappedValue
 //            let launcher = (Mirror(reflecting: try fr1.actualView()).descendant("_launcher") as! EnvironmentObject<Launcher>).wrappedValue
-//            try await fr1.find(FR1.self).proceedInWorkflow()
+//            XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
 //            try fr1.actualView().inspect { fr1 in
 //                XCTAssert(try fr1.find(ViewType.Sheet.self).isPresented())
 //                try fr1.find(ViewType.Sheet.self).view(WorkflowItem<FR2, WorkflowItem<FR3, Never, FR3>, FR2>.self).view(WorkflowItem<FR3, Never, FR3>.self).actualView().inspect(model: model, launcher: launcher) { fr3 in
@@ -353,7 +363,7 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 //        ).inspection.inspect { fr1 in
 //            let model = (Mirror(reflecting: try fr1.actualView()).descendant("_model") as! EnvironmentObject<WorkflowViewModel>).wrappedValue
 //            let launcher = (Mirror(reflecting: try fr1.actualView()).descendant("_launcher") as! EnvironmentObject<Launcher>).wrappedValue
-//            try await fr1.find(FR1.self).proceedInWorkflow()
+//            XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
 //            try fr1.actualView().inspect { fr1 in
 //                XCTAssert(try fr1.find(ViewType.Sheet.self).isPresented())
 //                try fr1.find(ViewType.Sheet.self).view(WorkflowItem<FR2, WorkflowItem<FR3, WorkflowItem<FR4, Never, FR4>, FR3>, FR2>.self).view(WorkflowItem<FR3, WorkflowItem<FR4, Never, FR4>, FR3>.self).view(WorkflowItem<FR4, Never, FR4>.self).actualView().inspect(model: model, launcher: launcher) { fr4 in
@@ -397,17 +407,17 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 //            }).inspection.inspect { fr1 in
 //                let model = (Mirror(reflecting: try fr1.actualView()).descendant("_model") as! EnvironmentObject<WorkflowViewModel>).wrappedValue
 //                let launcher = (Mirror(reflecting: try fr1.actualView()).descendant("_launcher") as! EnvironmentObject<Launcher>).wrappedValue
-//                try await fr1.find(FR1.self).proceedInWorkflow()
+//                XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
 //                try fr1.actualView().inspect { fr1 in
 //                    XCTAssert(try fr1.find(ViewType.Sheet.self).isPresented())
 //                    try fr1.find(ViewType.Sheet.self).view(WorkflowItem<FR2, WorkflowItem<FR3, Never, FR3>, FR2>.self).actualView().inspect(model: model, launcher: launcher) { fr2 in
 //                        XCTAssert(try fr1.find(ViewType.Sheet.self).isPresented())
-//                        try await fr2.find(FR2.self).proceedInWorkflow()
+//                        XCTAssertNoThrow(try fr2.find(FR2.self).actualView().proceedInWorkflow())
 //                    }
 //                }
 //            }
 //
 //        wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
 //    }
-
-}
+//
+//}
