@@ -91,7 +91,8 @@ final class UIKitInteropTests: XCTestCase, View {
 
             self.wait(for: [proceedCalled], timeout: TestConstant.timeout)
 
-            try workflowLauncher.actualView().inspectWrapped { fr1 in
+            #warning("Do not think this ever worked")
+            try workflowLauncher.actualView().getWrappedView().inspection.inspect { fr1 in
                 XCTAssertNoThrow(try fr1.find(FR1.self))
             }
         }
