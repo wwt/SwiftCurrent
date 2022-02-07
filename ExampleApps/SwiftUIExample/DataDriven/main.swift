@@ -21,6 +21,23 @@ func main() throws {
     printFindings(files)
 }
 
+func findTypesConforming(to conformance: String, in files: [File]) -> [Type.ObjectType: [Type]] {
+    var typesConforming: [Type.ObjectType: [Type]] = [:]
+
+    files.forEach {
+        let root = $0.results.rootNode
+
+        for type in root.types {
+            if type.inheritance.contains(conformance) {
+                if typesConforming[type.type] == nil { typesConforming[type.type] = [] }
+                typesConforming[type.type]?.append(type)
+            }
+        }
+    }
+
+    return typesConforming
+}
+
 func printFindings(_ files: [File]) {
     var protocolsConforming: [Type] = []
 
@@ -34,7 +51,6 @@ func printFindings(_ files: [File]) {
             }
 
             if type.type == .protocol && (type.inheritance.contains(conformance) == true) {
-                _ = findFlowRepresentableName(type.name, files: files)
                 protocolsConforming.append(type)
                 print("Appending \(type.type.rawValue) \(type.name) to list of protocols conforming to \(conformance)")
             }
@@ -55,7 +71,11 @@ func printFindings(_ files: [File]) {
     }
 }
 
-func findFlowRepresentableName(_ filename: String, files: [File]) -> Type? {
+func hasFlowRepresentableName(_ node: DataDriven.Node) -> Bool {
+    return node.variables.contains("flowRepresentableName")
+}
+
+func getFlowRepresentableNameFor(_ filename: String, files: [File]) -> Type? {
     var x: Type?
     files.forEach { file in
         file.results.rootNode.types.forEach { type in
