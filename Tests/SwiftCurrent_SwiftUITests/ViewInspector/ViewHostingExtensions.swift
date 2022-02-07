@@ -77,6 +77,10 @@ extension InspectableView where View: CustomViewType & SingleViewContent, View.T
     func backUpInWorkflow() async throws {
         try await MainActor.run { try actualView().backUpInWorkflow() }
     }
+
+    func abandonWorkflow() async throws {
+        try await MainActor.run { try actualView().workflow?.abandon() }
+    }
 }
 
 @available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
