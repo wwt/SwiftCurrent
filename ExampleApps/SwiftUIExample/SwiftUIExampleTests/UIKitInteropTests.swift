@@ -96,7 +96,7 @@ final class UIKitInteropTests: XCTestCase, View {
         }
     }
 
-    func testPuttingAUIKitViewThatDoesNotTakeInDataInsideASwiftUIWorkflow() throws {
+    func testPuttingAUIKitViewThatDoesNotTakeInDataInsideASwiftUIWorkflow() async throws {
         final class FR1: UIWorkflowItem<Never, Never>, FlowRepresentable {
             let nextButton = UIButton()
 
@@ -116,37 +116,39 @@ final class UIKitInteropTests: XCTestCase, View {
                 nextButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
             }
         }
-        let workflowView = WorkflowLauncher(isLaunched: .constant(true)) {
-            thenProceed(with: FR1.self)
-        }
-        var vc: FR1!
 
-        let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
-            let wrapper = try workflowLauncher.view(ViewControllerWrapper<FR1>.self)
+        let workflowView = try await MainActor.run {
+            WorkflowLauncher(isLaunched: .constant(true)) {
+                thenProceed(with: FR1.self)
+            }
+        }
+        .hostAndInspect(with: \.inspection)
+        .extractWorkflowItem()
+
+        try await MainActor.run {
+            let wrapper = try workflowView.view(ViewControllerWrapper<FR1>.self)
 
             let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<FR1>>.self)
-            vc = try wrapper.actualView().makeUIViewController(context: context)
+            var vc = try wrapper.actualView().makeUIViewController(context: context)
+
+            vc.removeFromParent()
+            vc.loadOnDevice()
+
+            XCTAssertUIViewControllerDisplayed(isInstance: vc)
+
+            let proceedCalled = expectation(description: "proceedCalled")
+            vc.proceedInWorkflowStorage = { _ in
+                proceedCalled.fulfill()
+            }
+
+            XCTAssertEqual(vc.nextButton.willRespondToUser, true)
+            vc.nextButton.simulateTouch()
+
+            wait(for: [proceedCalled], timeout: TestConstant.timeout)
         }
-
-        wait(for: [exp], timeout: TestConstant.timeout)
-
-        vc.removeFromParent()
-        vc.loadOnDevice()
-
-        XCTAssertUIViewControllerDisplayed(isInstance: vc)
-
-        let proceedCalled = expectation(description: "proceedCalled")
-        vc.proceedInWorkflowStorage = { _ in
-            proceedCalled.fulfill()
-        }
-
-        XCTAssertEqual(vc.nextButton.willRespondToUser, true)
-        vc.nextButton.simulateTouch()
-
-        wait(for: [proceedCalled], timeout: TestConstant.timeout)
     }
 
-    func testWorkflowPointerIsSetBeforeShouldLoadIsCalled() throws {
+    func testWorkflowPointerIsSetBeforeShouldLoadIsCalled() async throws {
         final class FR1: UIWorkflowItem<Never, String>, FlowRepresentable {
             func shouldLoad() -> Bool {
                 proceedInWorkflow("FR1")
@@ -160,88 +162,89 @@ final class UIKitInteropTests: XCTestCase, View {
             }
             required init?(coder: NSCoder) { nil }
         }
-        let workflowView = WorkflowLauncher(isLaunched: .constant(true)) {
-            thenProceed(with: FR1.self) {
-                thenProceed(with: FR2.self)
+        let launcher = try await MainActor.run {
+            WorkflowLauncher(isLaunched: .constant(true)) {
+                thenProceed(with: FR1.self) {
+                    thenProceed(with: FR2.self)
+                }
             }
         }
-        var vc: FR2!
+        .hostAndInspect(with: \.inspection)
 
-        let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
-            let wrapper = try workflowLauncher.find(ViewControllerWrapper<FR2>.self)
+        try await MainActor.run {
+            let wrapper = try launcher.find(ViewControllerWrapper<FR2>.self)
 
             let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<FR2>>.self)
-            vc = try wrapper.actualView().makeUIViewController(context: context)
+            let vc = try wrapper.actualView().makeUIViewController(context: context)
+            vc.removeFromParent()
+            vc.loadOnDevice()
+
+            XCTAssertUIViewControllerDisplayed(isInstance: vc)
         }
-
-        wait(for: [exp], timeout: TestConstant.timeout)
-
-        vc.removeFromParent()
-        vc.loadOnDevice()
-
-        XCTAssertUIViewControllerDisplayed(isInstance: vc)
     }
 
-    func testPuttingAUIKitViewFromStoryboardInsideASwiftUIWorkflow() throws {
+    func testPuttingAUIKitViewFromStoryboardInsideASwiftUIWorkflow() async throws {
         let launchArgs = UUID().uuidString
-        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: launchArgs) {
-            thenProceed(with: TestInputViewController.self)
+        let launcher = try await MainActor.run {
+            WorkflowLauncher(isLaunched: .constant(true), startingArgs: launchArgs) {
+                thenProceed(with: TestInputViewController.self)
+            }
         }
-        var vc: TestInputViewController!
+        .hostAndInspect(with: \.inspection)
+        .extractWorkflowItem()
 
-        let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
-            let wrapper = try workflowLauncher.view(ViewControllerWrapper<TestInputViewController>.self)
+        try await MainActor.run {
+            let wrapper = try launcher.view(ViewControllerWrapper<TestInputViewController>.self)
             let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<TestInputViewController>>.self)
-            vc = try wrapper.actualView().makeUIViewController(context: context)
+            var vc = try wrapper.actualView().makeUIViewController(context: context)
+
+            vc.removeFromParent()
+            vc.loadOnDevice()
+
+            XCTAssertUIViewControllerDisplayed(isInstance: vc)
+
+            let proceedCalled = expectation(description: "proceedCalled")
+            vc.proceedInWorkflowStorage = { _ in
+                proceedCalled.fulfill()
+            }
+
+            vc.proceedInWorkflow()
+
+            wait(for: [proceedCalled], timeout: TestConstant.timeout)
         }
-
-        wait(for: [exp], timeout: TestConstant.timeout)
-
-        vc.removeFromParent()
-        vc.loadOnDevice()
-
-        XCTAssertUIViewControllerDisplayed(isInstance: vc)
-
-        let proceedCalled = expectation(description: "proceedCalled")
-        vc.proceedInWorkflowStorage = { _ in
-            proceedCalled.fulfill()
-        }
-
-        vc.proceedInWorkflow()
-
-        wait(for: [proceedCalled], timeout: TestConstant.timeout)
     }
 
-    func testPuttingAUIKitViewFromStoryboardThatDoesNotTakeInDataInsideASwiftUIWorkflow() throws {
-        let workflowView = WorkflowLauncher(isLaunched: .constant(true)) {
-            thenProceed(with: TestNoInputViewController.self)
+    func testPuttingAUIKitViewFromStoryboardThatDoesNotTakeInDataInsideASwiftUIWorkflow() async throws {
+        let launcher = try await MainActor.run {
+            WorkflowLauncher(isLaunched: .constant(true)) {
+                thenProceed(with: TestNoInputViewController.self)
+            }
         }
-        var vc: TestNoInputViewController!
+        .hostAndInspect(with: \.inspection)
+        .extractWorkflowItem()
 
-        let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
-            let wrapper = try workflowLauncher.view(ViewControllerWrapper<TestNoInputViewController>.self)
+        try await MainActor.run {
+            let wrapper = try launcher.view(ViewControllerWrapper<TestNoInputViewController>.self)
             let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<TestNoInputViewController>>.self)
-            vc = try wrapper.actualView().makeUIViewController(context: context)
+            var vc = try wrapper.actualView().makeUIViewController(context: context)
+
+            vc.removeFromParent()
+            vc.loadOnDevice()
+
+            XCTAssertUIViewControllerDisplayed(isInstance: vc)
+
+            let proceedCalled = expectation(description: "proceedCalled")
+            vc.proceedInWorkflowStorage = { _ in
+                proceedCalled.fulfill()
+            }
+
+            vc.proceedInWorkflow()
+
+            wait(for: [proceedCalled], timeout: TestConstant.timeout)
         }
-
-        wait(for: [exp], timeout: TestConstant.timeout)
-
-        vc.removeFromParent()
-        vc.loadOnDevice()
-
-        XCTAssertUIViewControllerDisplayed(isInstance: vc)
-
-        let proceedCalled = expectation(description: "proceedCalled")
-        vc.proceedInWorkflowStorage = { _ in
-            proceedCalled.fulfill()
-        }
-
-        vc.proceedInWorkflow()
-
-        wait(for: [proceedCalled], timeout: TestConstant.timeout)
     }
 
-    func testPuttingAUIKitViewThatDoesNotLoadInsideASwiftUIWorkflow() throws {
+    func testPuttingAUIKitViewThatDoesNotLoadInsideASwiftUIWorkflow() async throws {
         final class FR1: UIWorkflowItem<Never, Never>, FlowRepresentable {
             func shouldLoad() -> Bool { false }
         }
@@ -253,25 +256,26 @@ final class UIKitInteropTests: XCTestCase, View {
                 Text("FR2")
             }
         }
-        let workflowView = WorkflowLauncher(isLaunched: .constant(true)) {
-            thenProceed(with: FR1.self) {
-                thenProceed(with: FR2.self)
+
+        let launcher = try await MainActor.run {
+            WorkflowLauncher(isLaunched: .constant(true)) {
+                thenProceed(with: FR1.self) {
+                    thenProceed(with: FR2.self)
+                }
             }
         }
+        .hostAndInspect(with: \.inspection)
+        .extractWorkflowItem()
 
-        let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
-            XCTAssertThrowsError(try workflowLauncher.view(ViewControllerWrapper<FR1>.self))
-            XCTAssertEqual(try workflowLauncher.find(FR2.self).text().string(), "FR2")
-        }
-
-        wait(for: [exp], timeout: TestConstant.timeout)
+        XCTAssertThrowsError(try launcher.view(ViewControllerWrapper<FR1>.self))
+        XCTAssertEqual(try launcher.find(FR2.self).text().string(), "FR2")
     }
 }
 
 extension UIViewController {
     func loadOnDevice() {
         // UIUTest's loadForTesting method does not work because it uses the deprecated `keyWindow` property.
-        let window = UIApplication.shared.windows.first
+        let window = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first?.windows.first
         window?.removeViewsFromRootViewController()
 
         window?.rootViewController = self
