@@ -18,7 +18,8 @@ func main() throws {
     let fileURLs = getSwiftFileURLs(from: directoryPath)
     let files: [File] = fileURLs.compactMap { try? File(url: $0) }
 
-    printFindings(files)
+    let conformingTypes = findTypesConforming(to: conformance, in: files)
+    print(conformingTypes, for: conformance)
 }
 
 func findTypesConforming(to conformance: String, in files: [File]) -> [Type.ObjectType: [Type]] {
@@ -36,6 +37,13 @@ func findTypesConforming(to conformance: String, in files: [File]) -> [Type.Obje
     }
 
     return typesConforming
+}
+
+func print(_ types: [Type.ObjectType: [Type]], for conformance: String) {
+    for key in types.keys {
+        print("Printing \(key.rawValue)s conforming to \(conformance):")
+        types[key]?.forEach { print("\($0.name)") }
+    }
 }
 
 func printFindings(_ files: [File]) {
@@ -69,22 +77,6 @@ func printFindings(_ files: [File]) {
             }
         }
     }
-}
-
-func hasFlowRepresentableName(_ node: DataDriven.Node) -> Bool {
-    return node.variables.contains("flowRepresentableName")
-}
-
-func getFlowRepresentableNameFor(_ filename: String, files: [File]) -> Type? {
-    var x: Type?
-    files.forEach { file in
-        file.results.rootNode.types.forEach { type in
-            if type.variables.contains("flowRepresentableName") {
-                x = type
-            }
-        }
-    }
-    return x
 }
 
 func getSwiftFileURLs(from directory: String) -> [URL] {
