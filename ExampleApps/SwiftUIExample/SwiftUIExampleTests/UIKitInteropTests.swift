@@ -21,17 +21,21 @@ import SwiftCurrent_UIKit
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class UIKitInteropTests: XCTestCase, View {
-    func testPuttingAUIKitViewInsideASwiftUIWorkflow() throws {
+    func testPuttingAUIKitViewInsideASwiftUIWorkflow() async throws {
         let launchArgs = UUID().uuidString
-        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: launchArgs) {
-            thenProceed(with: UIKitInteropProgrammaticViewController.self)
-        }
-        var vc: UIKitInteropProgrammaticViewController!
 
-        let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
-            let wrapper = try workflowLauncher.view(ViewControllerWrapper<UIKitInteropProgrammaticViewController>.self)
+        let launcher = try await MainActor.run {
+            WorkflowLauncher(isLaunched: .constant(true), startingArgs: launchArgs) {
+                thenProceed(with: UIKitInteropProgrammaticViewController.self)
+            }
+        }
+        .hostAndInspect(with: \.inspection)
+        .extractWorkflowItem()
+
+        try await MainActor.run {
+            let wrapper = try launcher.view(ViewControllerWrapper<UIKitInteropProgrammaticViewController>.self)
             let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<UIKitInteropProgrammaticViewController>>.self)
-            vc = try wrapper.actualView().makeUIViewController(context: context)
+            var vc = try wrapper.actualView().makeUIViewController(context: context)
             vc.removeFromParent()
             vc.loadOnDevice()
 
@@ -44,60 +48,52 @@ final class UIKitInteropTests: XCTestCase, View {
             }
 
             XCTAssertEqual(vc.saveButton?.willRespondToUser, true)
-            XCTAssertEqual(vc?.emailTextField?.willRespondToUser, true)
+            XCTAssertEqual(vc.emailTextField?.willRespondToUser, true)
             vc.emailTextField?.simulateTouch()
-            vc.emailTextField?.simulateTyping(vc?.welcomeLabel?.text)
+            vc.emailTextField?.simulateTyping(vc.welcomeLabel?.text)
             vc.saveButton?.simulateTouch()
 
             self.wait(for: [proceedCalled], timeout: TestConstant.timeout)
         }
-
-        wait(for: [exp], timeout: TestConstant.timeout)
     }
 
-    func testPuttingAUIKitViewInsideASwiftUIWorkflowWithOtherSwiftUIViews() throws {
+    func testPuttingAUIKitViewInsideASwiftUIWorkflowWithOtherSwiftUIViews() async throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             weak var _workflowPointer: AnyFlowRepresentable?
-            var body: some View { EmptyView() }
+            let str: String
+            init(with str: String) {
+                self.str = str
+            }
+            var body: some View { Text(str) }
         }
         let launchArgs = UUID().uuidString
-        let workflowView = WorkflowLauncher(isLaunched: .constant(true), startingArgs: launchArgs) {
-            thenProceed(with: UIKitInteropProgrammaticViewController.self) {
-                thenProceed(with: FR1.self)
+        let launcher = try await MainActor.run {
+            WorkflowLauncher(isLaunched: .constant(true), startingArgs: launchArgs) {
+                thenProceed(with: UIKitInteropProgrammaticViewController.self) {
+                    thenProceed(with: FR1.self)
+                }
             }
         }
-        var vc: UIKitInteropProgrammaticViewController!
+        .hostAndInspect(with: \.inspection)
+        .extractWorkflowItem()
 
-        let exp = ViewHosting.loadView(workflowView).inspection.inspect { workflowLauncher in
-            let wrapper = try workflowLauncher.view(ViewControllerWrapper<UIKitInteropProgrammaticViewController>.self)
+        try await MainActor.run {
+            let wrapper = try launcher.view(ViewControllerWrapper<UIKitInteropProgrammaticViewController>.self)
             let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<UIKitInteropProgrammaticViewController>>.self)
-            vc = try wrapper.actualView().makeUIViewController(context: context)
+            let vc = try wrapper.actualView().makeUIViewController(context: context)
             vc.removeFromParent()
             vc.loadOnDevice()
 
             XCTAssertUIViewControllerDisplayed(isInstance: vc)
 
-            let proceedCalled = self.expectation(description: "proceedCalled")
-            vc.proceedInWorkflowStorage = { args in
-                XCTAssertEqual(args.extractArgs(defaultValue: nil) as? String, "Welcome \(launchArgs)!")
-                proceedCalled.fulfill()
-            }
-
             XCTAssertEqual(vc.saveButton?.willRespondToUser, true)
-            XCTAssertEqual(vc?.emailTextField?.willRespondToUser, true)
+            XCTAssertEqual(vc.emailTextField?.willRespondToUser, true)
             vc.emailTextField?.simulateTouch()
-            vc.emailTextField?.simulateTyping(vc?.welcomeLabel?.text)
+            vc.emailTextField?.simulateTyping(vc.welcomeLabel?.text)
             vc.saveButton?.simulateTouch()
 
-            self.wait(for: [proceedCalled], timeout: TestConstant.timeout)
-
-            #warning("Do not think this ever worked")
-            try workflowLauncher.actualView().getWrappedView().inspection.inspect { fr1 in
-                XCTAssertNoThrow(try fr1.find(FR1.self))
-            }
+            XCTAssertEqual(try launcher.find(FR1.self).text().string(), "Welcome \(launchArgs)!")
         }
-
-        wait(for: [exp], timeout: TestConstant.timeout)
     }
 
     func testPuttingAUIKitViewThatDoesNotTakeInDataInsideASwiftUIWorkflow() throws {
