@@ -5,6 +5,7 @@ on: [ pull_request ]
 jobs:
   test:
     runs-on: macos-12
+    if: ${{ false }}  # disable for now, until macos-12 because available
     env:
       working-directory: .github
       DEVELOPER_DIR: /Applications/Xcode_13.0.app/Contents/Developer
