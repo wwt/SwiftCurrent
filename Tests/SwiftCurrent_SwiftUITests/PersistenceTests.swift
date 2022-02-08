@@ -85,7 +85,7 @@ final class PersistenceTests: XCTestCase, View {
 
         try await launcher.find(FR1.self).proceedInWorkflow()
         try await launcher.find(FR2.self).proceedInWorkflow()
-        XCTAssertNoThrow(try launcher.find(FR3.self).actualView().backUpInWorkflow())
+        try await launcher.find(FR3.self).backUpInWorkflow()
 
         try await launcher.find(FR1.self).proceedInWorkflow()
         try await launcher.find(FR2.self).proceedInWorkflow()
@@ -171,7 +171,7 @@ final class PersistenceTests: XCTestCase, View {
         try await launcher.find(FR1.self).proceedInWorkflow()
         try await launcher.find(FR2.self).proceedInWorkflow()
         try await launcher.find(FR3.self).proceedInWorkflow()
-        XCTAssertNoThrow(try launcher.find(FR4.self).actualView().backUpInWorkflow())
+        try await launcher.find(FR4.self).backUpInWorkflow()
         try await launcher.find(FR1.self).proceedInWorkflow()
         try await launcher.find(FR2.self).proceedInWorkflow()
         try await launcher.find(FR3.self).proceedInWorkflow()
