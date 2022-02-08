@@ -22,44 +22,28 @@ final class ContentViewTests: XCTestCase {
         Container.default.removeAll()
     }
 
-    #warning("FIXME")
-//    func testContentView() throws {
-//        let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
-//        Container.default.register(UserDefaults.self) { _ in defaults }
-//        var wf1: MapWorkflow!
-//        var wf2: QRScannerWorkflow!
-//        var wf3: ProfileWorkflow!
-//        let exp = ViewHosting.loadView(ContentView()).inspection.inspect { view in
-//            wf1 = try view.tabView().view(MapWorkflow.self, 0).actualView()
-//            XCTAssertEqual(try view.tabView().view(MapWorkflow.self, 0).tabItem().label().title().text().string(), "Map")
-//            wf2 = try view.tabView().view(QRScannerWorkflow.self, 1).actualView()
-//            XCTAssertEqual(try view.tabView().view(QRScannerWorkflow.self, 1).tabItem().label().title().text().string(), "QR Scanner")
-//            wf3 = try view.tabView().view(ProfileWorkflow.self, 2).actualView()
-//            XCTAssertEqual(try view.tabView().view(ProfileWorkflow.self, 2).tabItem().label().title().text().string(), "Profile")
-//        }
-//        wait(for: [exp], timeout: TestConstant.timeout)
-//        XCTAssertNotNil(wf1)
-//        XCTAssertNotNil(wf2)
-//        XCTAssertNotNil(wf3)
-//        wait(for: [
-//            ViewHosting.loadView(wf1).inspection.inspect { view in
-//                XCTAssertNoThrow(try view.find(MapFeatureOnboardingView.self).actualView().proceedInWorkflow())
-//                try view.actualView().inspectWrapped { view in
-//                    XCTAssertNoThrow(try view.find(MapFeatureView.self))
-//                }
-//            },
-//            ViewHosting.loadView(wf2).inspection.inspect { view in
-//                XCTAssertNoThrow(try view.find(QRScannerFeatureOnboardingView.self).actualView().proceedInWorkflow())
-//                try view.actualView().inspectWrapped { view in
-//                    XCTAssertNoThrow(try view.find(QRScannerFeatureView.self))
-//                }
-//            },
-//            ViewHosting.loadView(wf3).inspection.inspect { view in
-//                XCTAssertNoThrow(try view.find(ProfileFeatureOnboardingView.self).actualView().proceedInWorkflow())
-//                try view.actualView().inspectWrapped { view in
-//                    XCTAssertNoThrow(try view.find(ProfileFeatureView.self))
-//                }
-//            }
-//        ].compactMap { $0 }, timeout: TestConstant.timeout)
-//    }
+    func testContentView() async throws {
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
+        Container.default.register(UserDefaults.self) { _ in defaults }
+
+        let contentView = try await ContentView().hostAndInspect(with: \.inspection)
+        let wf1 = try contentView.tabView().view(MapWorkflow.self, 0).actualView()
+        XCTAssertEqual(try contentView.tabView().view(MapWorkflow.self, 0).tabItem().label().title().text().string(), "Map")
+        let wf2 = try contentView.tabView().view(QRScannerWorkflow.self, 1).actualView()
+        XCTAssertEqual(try contentView.tabView().view(QRScannerWorkflow.self, 1).tabItem().label().title().text().string(), "QR Scanner")
+        let wf3 = try contentView.tabView().view(ProfileWorkflow.self, 2).actualView()
+        XCTAssertEqual(try contentView.tabView().view(ProfileWorkflow.self, 2).tabItem().label().title().text().string(), "Profile")
+
+        let wfr1 = try await wf1.hostAndInspect(with: \.inspection)
+        try await wfr1.find(MapFeatureOnboardingView.self).proceedInWorkflow()
+        XCTAssertNoThrow(try wfr1.find(MapFeatureView.self))
+
+        let wfr2 = try await wf2.hostAndInspect(with: \.inspection)
+        try await wfr2.find(QRScannerFeatureOnboardingView.self).proceedInWorkflow()
+        XCTAssertNoThrow(try wfr2.find(QRScannerFeatureView.self))
+
+        let wfr3 = try await wf3.hostAndInspect(with: \.inspection)
+        try await wfr3.find(ProfileFeatureOnboardingView.self).proceedInWorkflow()
+        XCTAssertNoThrow(try wfr3.find(ProfileFeatureView.self))
+    }
 }
