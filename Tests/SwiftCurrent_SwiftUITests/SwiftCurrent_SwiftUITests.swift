@@ -37,7 +37,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         }.hostAndInspect(with: \.inspection)
 
         XCTAssertEqual(try launcher.find(FR1.self).text().string(), "FR1 type")
-        XCTAssertNoThrow(try launcher.find(FR1.self).actualView().proceedInWorkflow())
+        try await launcher.find(FR1.self).proceedInWorkflow()
         let fr2 = try launcher.find(FR2.self)
         XCTAssertEqual(try fr2.text().string(), "FR2 type")
         XCTAssertNoThrow(try fr2.actualView().proceedInWorkflow())
@@ -67,7 +67,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             }
         }.hostAndInspect(with: \.inspection)
 
-        XCTAssertNoThrow(try launcher.find(FR1.self).actualView().proceedInWorkflow())
+        try await launcher.find(FR1.self).proceedInWorkflow()
 
         wait(for: [expectOnFinish1, expectOnFinish2], timeout: TestConstant.timeout)
     }
@@ -99,20 +99,20 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             }
         }.hostAndInspect(with: \.inspection)
 
-        XCTAssertNoThrow(try launcher.find(FR1.self).actualView().proceedInWorkflow())
-        XCTAssertNoThrow(try launcher.find(FR2.self).actualView().proceedInWorkflow())
+        try await launcher.find(FR1.self).proceedInWorkflow()
+        try await launcher.find(FR2.self).proceedInWorkflow()
         await MainActor.run {
             TestUtils.showWorkflow.wrappedValue = true
             TestUtils.showWorkflow.update()
         }
-        XCTAssertNoThrow(try launcher.find(FR1.self).actualView().proceedInWorkflow())
-        XCTAssertNoThrow(try launcher.find(FR2.self).actualView().proceedInWorkflow())
+        try await launcher.find(FR1.self).proceedInWorkflow()
+        try await launcher.find(FR2.self).proceedInWorkflow()
         await MainActor.run {
             TestUtils.showWorkflow.wrappedValue = true
             TestUtils.showWorkflow.update()
         }
-        XCTAssertNoThrow(try launcher.find(FR1.self).actualView().proceedInWorkflow())
-        XCTAssertNoThrow(try launcher.find(FR2.self).actualView().proceedInWorkflow())
+        try await launcher.find(FR1.self).proceedInWorkflow()
+        try await launcher.find(FR2.self).proceedInWorkflow()
 
         wait(for: [expectOnFinish1, expectOnFinish2], timeout: TestConstant.timeout)
     }
@@ -226,11 +226,11 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         }.hostAndInspect(with: \.inspection)
 
         XCTAssertEqual(try launcher.find(FR1.self).actualView().property, expectedFR1)
-        XCTAssertNoThrow(try launcher.find(FR1.self).actualView().proceedInWorkflow(expectedFR2))
+        try await launcher.find(FR1.self).proceedInWorkflow(expectedFR2)
         XCTAssertEqual(try launcher.find(FR2.self).actualView().property, expectedFR2)
-        XCTAssertNoThrow(try launcher.find(FR2.self).actualView().proceedInWorkflow(expectedFR3))
+        try await launcher.find(FR2.self).proceedInWorkflow(expectedFR3)
         XCTAssertEqual(try launcher.find(FR3.self).actualView().property, expectedFR3)
-        XCTAssertNoThrow(try launcher.find(FR3.self).actualView().proceedInWorkflow(expectedEnd))
+        try await launcher.find(FR3.self).proceedInWorkflow(expectedEnd)
     }
 
     func testLargeWorkflowCanBeFollowed() async throws {
@@ -281,13 +281,13 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             }
         }.hostAndInspect(with: \.inspection)
 
-        XCTAssertNoThrow(try launcher.find(FR1.self).actualView().proceedInWorkflow())
-        XCTAssertNoThrow(try launcher.find(FR2.self).actualView().proceedInWorkflow())
-        XCTAssertNoThrow(try launcher.find(FR3.self).actualView().proceedInWorkflow())
-        XCTAssertNoThrow(try launcher.find(FR4.self).actualView().proceedInWorkflow())
-        XCTAssertNoThrow(try launcher.find(FR5.self).actualView().proceedInWorkflow())
-        XCTAssertNoThrow(try launcher.find(FR6.self).actualView().proceedInWorkflow())
-        XCTAssertNoThrow(try launcher.find(FR7.self).actualView().proceedInWorkflow())
+        try await launcher.find(FR1.self).proceedInWorkflow()
+        try await launcher.find(FR2.self).proceedInWorkflow()
+        try await launcher.find(FR3.self).proceedInWorkflow()
+        try await launcher.find(FR4.self).proceedInWorkflow()
+        try await launcher.find(FR5.self).proceedInWorkflow()
+        try await launcher.find(FR6.self).proceedInWorkflow()
+        try await launcher.find(FR7.self).proceedInWorkflow()
     }
 
     func testWorkflowOnlyShowsOneViewAtATime() async throws {
@@ -315,10 +315,10 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             }
         }.hostAndInspect(with: \.inspection)
 
-        XCTAssertNoThrow(try launcher.find(FR1.self).actualView().proceedInWorkflow())
-        XCTAssertNoThrow(try launcher.find(FR2.self).actualView().proceedInWorkflow())
-        XCTAssertNoThrow(try launcher.find(FR3.self).actualView().proceedInWorkflow())
-        XCTAssertNoThrow(try launcher.find(FR2.self).actualView().proceedInWorkflow())
+        try await launcher.find(FR1.self).proceedInWorkflow()
+        try await launcher.find(FR2.self).proceedInWorkflow()
+        try await launcher.find(FR3.self).proceedInWorkflow()
+        try await launcher.find(FR2.self).proceedInWorkflow()
         XCTAssertThrowsError(try launcher.find(ViewType.Text.self, skipFound: 1))
     }
 
@@ -351,14 +351,14 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             }
         }.hostAndInspect(with: \.inspection)
 
-        XCTAssertNoThrow(try launcher.find(FR1.self).actualView().proceedInWorkflow())
+        try await launcher.find(FR1.self).proceedInWorkflow()
         XCTAssertNoThrow(try launcher.find(FR2.self).actualView().backUpInWorkflow())
-        XCTAssertNoThrow(try launcher.find(FR1.self).actualView().proceedInWorkflow())
-        XCTAssertNoThrow(try launcher.find(FR2.self).actualView().proceedInWorkflow())
+        try await launcher.find(FR1.self).proceedInWorkflow()
+        try await launcher.find(FR2.self).proceedInWorkflow()
         XCTAssertNoThrow(try launcher.find(FR3.self).actualView().backUpInWorkflow())
-        XCTAssertNoThrow(try launcher.find(FR2.self).actualView().proceedInWorkflow())
-        XCTAssertNoThrow(try launcher.find(FR3.self).actualView().proceedInWorkflow())
-        XCTAssertNoThrow(try launcher.find(FR4.self).actualView().proceedInWorkflow())
+        try await launcher.find(FR2.self).proceedInWorkflow()
+        try await launcher.find(FR3.self).proceedInWorkflow()
+        try await launcher.find(FR4.self).proceedInWorkflow()
     }
 
     func testWorkflowSetsBindingBooleanToFalseWhenAbandoned() async throws {
@@ -459,7 +459,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             }
         }.hostAndInspect(with: \.inspection)
 
-        XCTAssertNoThrow(try launcher.find(FR1.self).actualView().proceedInWorkflow())
+        try await launcher.find(FR1.self).proceedInWorkflow()
 
         await MainActor.run { TestUtils.binding.wrappedValue = false }
         XCTAssertThrowsError(try launcher.find(FR1.self))
@@ -498,11 +498,11 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             }
         }.hostAndInspect(with: \.inspection)
 
-        XCTAssertNoThrow(try launcher.find(FR1.self).actualView().proceedInWorkflow())
+        try await launcher.find(FR1.self).proceedInWorkflow()
         XCTAssertNoThrow(try launcher.find(FR2.self).actualView().abandon())
         XCTAssertThrowsError(try launcher.find(FR2.self))
-        XCTAssertNoThrow(try launcher.find(FR1.self).actualView().proceedInWorkflow())
-        XCTAssertNoThrow(try launcher.find(FR2.self).actualView().proceedInWorkflow())
+        try await launcher.find(FR1.self).proceedInWorkflow()
+        try await launcher.find(FR2.self).proceedInWorkflow()
 
         wait(for: [onFinishCalled], timeout: TestConstant.timeout)
     }
@@ -537,9 +537,9 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         }.hostAndInspect(with: \.inspection)
 
         XCTAssertEqual(try launcher.find(FR1.self).text().string(), "FR1 type")
-        XCTAssertNoThrow(try launcher.find(FR1.self).actualView().proceedInWorkflow(.args(expectedArgs)))
+        try await launcher.find(FR1.self).proceedInWorkflow(.args(expectedArgs))
         XCTAssertEqual(try launcher.find(FR2.self).text().string(), "FR2 type")
-        XCTAssertNoThrow(try launcher.find(FR2.self).actualView().proceedInWorkflow())
+        try await launcher.find(FR2.self).proceedInWorkflow()
 
         wait(for: [expectOnFinish], timeout: TestConstant.timeout)
     }
@@ -573,7 +573,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
 
         XCTAssertEqual(try launcher.find(FR1.self).text().string(), "FR1 type")
         XCTAssertEqual(try launcher.find(FR1.self).actualView().data, expectedArgs)
-        XCTAssertNoThrow(try launcher.find(FR1.self).actualView().proceedInWorkflow())
+        try await launcher.find(FR1.self).proceedInWorkflow()
 
         wait(for: [expectOnFinish], timeout: TestConstant.timeout)
     }
@@ -617,11 +617,11 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         }.hostAndInspect(with: \.inspection)
 
         XCTAssertEqual(try launcher.find(FR1.self).text().string(), "FR1 type")
-        XCTAssertNoThrow(try launcher.find(FR1.self).actualView().proceedInWorkflow())
+        try await launcher.find(FR1.self).proceedInWorkflow()
         XCTAssertEqual(try launcher.find(FR2.self).text().string(), "FR2 type")
-        XCTAssertNoThrow(try launcher.find(FR2.self).actualView().proceedInWorkflow(.args(expectedArgs)))
+        try await launcher.find(FR2.self).proceedInWorkflow(.args(expectedArgs))
         XCTAssertEqual(try launcher.find(FR3.self).text().string(), "FR3 type, \(expectedArgs)")
-        XCTAssertNoThrow(try launcher.find(FR3.self).actualView().proceedInWorkflow())
+        try await launcher.find(FR3.self).proceedInWorkflow()
 
         wait(for: [expectOnFinish], timeout: TestConstant.timeout)
     }
