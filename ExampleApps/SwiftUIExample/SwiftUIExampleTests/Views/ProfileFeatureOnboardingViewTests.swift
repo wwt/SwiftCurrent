@@ -31,7 +31,8 @@ final class ProfileFeatureOnboardingViewTests: XCTestCase, View {
             }.onFinish { _ in
                 workflowFinished.fulfill()
             }
-        }.hostAndInspect(with: \.inspection)
+        }
+        .hostAndInspect(with: \.inspection)
 
         XCTAssertNoThrow(try launcher.find(ViewType.Text.self))
         XCTAssertEqual(try launcher.find(ViewType.Text.self).string(), "Welcome to our new profile management feature!")
