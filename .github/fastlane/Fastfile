@@ -13,6 +13,7 @@ platform :ios do
       scheme:  'SwiftCurrent',
       workspace: '../SwiftCurrent.xcworkspace',
       derived_data_path: "~/Library/Developer/Xcode/DerivedData",
+      result_bundle: true
     )
   end
 
