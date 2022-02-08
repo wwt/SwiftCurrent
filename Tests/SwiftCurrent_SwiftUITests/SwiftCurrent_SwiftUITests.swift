@@ -412,28 +412,24 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         wait(for: [expectOnAbandon1, expectOnAbandon2], timeout: TestConstant.timeout)
     }
 
-    #warning("FIXME")
-//
-//    func testWorkflowCanHaveModifiers() throws {
-//        struct FR1: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR1 type") }
-//
-//            func customModifier() -> Self { self }
-//        }
-//
-//        let expectViewLoaded = ViewHosting.loadView(
-//            WorkflowLauncher(isLaunched: .constant(true)) {
-//                thenProceed(with: FR1.self).applyModifiers { $0.customModifier().background(Color.blue)
-//                }
-//            }
-//        ).inspection.inspect { viewUnderTest in
-//            XCTAssertNoThrow(try viewUnderTest.find(FR1.self).background())
-//        }
-//
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
-//
+    func testWorkflowCanHaveModifiers() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+
+            func customModifier() -> Self { self }
+        }
+
+        let launcher = try await MainActor.run {
+            WorkflowLauncher(isLaunched: .constant(true)) {
+                thenProceed(with: FR1.self).applyModifiers { $0.customModifier().padding().onAppear { } }
+            }
+        }.hostAndInspect(with: \.inspection)
+
+        XCTAssert(try launcher.find(FR1.self).hasPadding())
+        XCTAssertNoThrow(try launcher.find(FR1.self).callOnAppear())
+    }
+
     func testWorkflowRelaunchesWhenSubsequentlyLaunched() async throws {
         throw XCTSkip("We are currently unable to test this because of a limitation in ViewInspector, see here: https://github.com/nalexn/ViewInspector/issues/126")
         struct FR1: View, FlowRepresentable, Inspectable {
