@@ -1,102 +1,109 @@
-////
-////  SwiftCurrent_NavigationLinkTests.swift
-////  SwiftCurrent
-////
-////  Created by Tyler Thompson on 7/12/21.
-////  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
-////
 //
-//import XCTest
-//import SwiftUI
-//import ViewInspector
+//  SwiftCurrent_NavigationLinkTests.swift
+//  SwiftCurrent
 //
-//import SwiftCurrent
-//@testable import SwiftCurrent_SwiftUI // testable sadly needed for inspection.inspect to work
+//  Created by Tyler Thompson on 7/12/21.
+//  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
-//@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-//final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
-//    override func tearDownWithError() throws {
-//        removeQueuedExpectations()
-//    }
-//    
-//    func testWorkflowCanBeFollowed() throws {
-//        struct FR1: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR1 type") }
-//        }
-//        struct FR2: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR2 type") }
-//        }
-//        let expectOnFinish = expectation(description: "OnFinish called")
-//        let expectViewLoaded = ViewHosting.loadView(
-//            WorkflowLauncher(isLaunched: .constant(true)) {
-//                thenProceed(with: FR1.self) {
-//                    thenProceed(with: FR2.self)
-//                }.presentationType(.navigationLink)
-//            }
-//            .onFinish { _ in
-//                expectOnFinish.fulfill()
-//            }).inspection.inspect { fr1 in
-//                let model = (Mirror(reflecting: try fr1.actualView()).descendant("_model") as! EnvironmentObject<WorkflowViewModel>).wrappedValue
-//                let launcher = (Mirror(reflecting: try fr1.actualView()).descendant("_launcher") as! EnvironmentObject<Launcher>).wrappedValue
-//                XCTAssertEqual(try fr1.find(FR1.self).text().string(), "FR1 type")
-//                XCTAssertFalse(try fr1.find(ViewType.NavigationLink.self).isActive())
-//                XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
-//                try fr1.actualView().inspect { fr1 in
-//                    XCTAssertTrue(try fr1.find(ViewType.NavigationLink.self).isActive())
-//                    try fr1.find(ViewType.NavigationLink.self).find(WorkflowItem<FR2, Never, FR2>.self).actualView().inspect(model: model, launcher: launcher) { fr2 in
-//                        XCTAssertEqual(try fr2.find(FR2.self).text().string(), "FR2 type")
-//                        XCTAssertNoThrow(try fr2.find(FR2.self).actualView().proceedInWorkflow())
-//                    }
-//                }
-//            }
-//
-//        wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
-//    }
-//
-//    func testWorkflowItemsOfTheSameTypeCanBeFollowed() throws {
-//        struct FR1: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR1 type") }
-//        }
-//
-//        let expectViewLoaded = ViewHosting.loadView(
-//            WorkflowLauncher(isLaunched: .constant(true)) {
-//                thenProceed(with: FR1.self) {
-//                    thenProceed(with: FR1.self) {
-//                        thenProceed(with: FR1.self)
-//                    }.presentationType(.navigationLink)
-//                }.presentationType(.navigationLink)
-//            }
-//        ).inspection.inspect { fr1 in
-//            let model = (Mirror(reflecting: try fr1.actualView()).descendant("_model") as! EnvironmentObject<WorkflowViewModel>).wrappedValue
-//            let launcher = (Mirror(reflecting: try fr1.actualView()).descendant("_launcher") as! EnvironmentObject<Launcher>).wrappedValue
-//            XCTAssertFalse(try fr1.find(ViewType.NavigationLink.self).isActive())
-//            XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
-//            try fr1.actualView().inspect { first in
-//                XCTAssert(try first.find(ViewType.NavigationLink.self).isActive())
-//                try first.find(ViewType.NavigationLink.self).view(WorkflowItem<FR1, WorkflowItem<FR1, Never, FR1>, FR1>.self).actualView().inspect(model: model, launcher: launcher) { second in
-//                    XCTAssert(try first.find(ViewType.NavigationLink.self).isActive())
-//                    XCTAssertFalse(try second.find(ViewType.NavigationLink.self).isActive())
-//                    XCTAssertNoThrow(try second.find(FR1.self).actualView().proceedInWorkflow())
-//                    try second.actualView().inspect { second in
-//                        XCTAssert(try first.find(ViewType.NavigationLink.self).isActive())
-//                        XCTAssert(try second.find(ViewType.NavigationLink.self).isActive())
-//                        try second.find(ViewType.NavigationLink.self).view(WorkflowItem<FR1, Never, FR1>.self).actualView().inspect(model: model, launcher: launcher) { third in
-//                            XCTAssertNoThrow(try third.find(FR1.self).actualView().proceedInWorkflow())
-//                            try third.actualView().inspect { third in
-//                                XCTAssert(try first.find(ViewType.NavigationLink.self).isActive())
-//                                XCTAssert(try second.find(ViewType.NavigationLink.self).isActive())
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
+
+import XCTest
+import SwiftUI
+import ViewInspector
+
+import SwiftCurrent
+@testable import SwiftCurrent_SwiftUI // testable sadly needed for inspection.inspect to work
+
+@available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
+    func testWorkflowCanBeFollowed() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let wfr1 = try await MainActor.run {
+            WorkflowLauncher(isLaunched: .constant(true)) {
+                thenProceed(with: FR1.self) {
+                    thenProceed(with: FR2.self)
+                }.presentationType(.navigationLink)
+            }
+            .onFinish { _ in
+                expectOnFinish.fulfill()
+            }
+        }
+        .hostAndInspect(with: \.inspection)
+        .extractWorkflowItem()
+
+        let model = try await MainActor.run {
+            try XCTUnwrap((Mirror(reflecting: try wfr1.actualView()).descendant("_model") as? EnvironmentObject<WorkflowViewModel>)?.wrappedValue)
+        }
+        let launcher = try await MainActor.run {
+            try XCTUnwrap((Mirror(reflecting: try wfr1.actualView()).descendant("_launcher") as? EnvironmentObject<Launcher>)?.wrappedValue)
+        }
+
+        XCTAssertEqual(try wfr1.find(FR1.self).text().string(), "FR1 type")
+        XCTAssertFalse(try wfr1.find(ViewType.NavigationLink.self).isActive())
+        XCTAssertNoThrow(try wfr1.find(FR1.self).actualView().proceedInWorkflow())
+
+        // needed to re-host to avoid some kind of race with the nav link
+        try await wfr1.actualView().host { $0.environmentObject(model).environmentObject(launcher) }
+
+        XCTAssertTrue(try wfr1.find(ViewType.NavigationLink.self).isActive())
+        XCTAssertEqual(try wfr1.find(FR2.self).text().string(), "FR2 type")
+        XCTAssertNoThrow(try wfr1.find(FR2.self).actualView().proceedInWorkflow())
+
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
+    }
+
+    func testWorkflowItemsOfTheSameTypeCanBeFollowed() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+
+        let wfr1 = try await MainActor.run {
+            WorkflowLauncher(isLaunched: .constant(true)) {
+                thenProceed(with: FR1.self) {
+                    thenProceed(with: FR1.self) {
+                        thenProceed(with: FR1.self)
+                    }.presentationType(.navigationLink)
+                }.presentationType(.navigationLink)
+            }
+        }
+        .hostAndInspect(with: \.inspection)
+        .extractWorkflowItem()
+
+        let model = try await MainActor.run {
+            try XCTUnwrap((Mirror(reflecting: try wfr1.actualView()).descendant("_model") as? EnvironmentObject<WorkflowViewModel>)?.wrappedValue)
+        }
+        let launcher = try await MainActor.run {
+            try XCTUnwrap((Mirror(reflecting: try wfr1.actualView()).descendant("_launcher") as? EnvironmentObject<Launcher>)?.wrappedValue)
+        }
+
+        XCTAssertFalse(try wfr1.find(ViewType.NavigationLink.self).isActive())
+        XCTAssertNoThrow(try wfr1.find(FR1.self).actualView().proceedInWorkflow())
+
+        // needed to re-host to avoid some kind of race with the nav link
+        try await wfr1.actualView().host { $0.environmentObject(model).environmentObject(launcher) }
+
+        XCTAssert(try wfr1.find(ViewType.NavigationLink.self).isActive())
+
+        let wfr2 = try wfr1.findWrapped()
+        let fr2 = try wfr1.find(ViewType.NavigationLink.self).find(FR1.self)
+        try await fr2.proceedInWorkflow()
+
+        XCTAssert(try wfr2.find(ViewType.NavigationLink.self).isActive())
+
+        let wfr3 = try wfr2.findWrapped()
+        let fr3 = try wfr2.find(ViewType.NavigationLink.self).find(FR1.self)
+        try await fr3.proceedInWorkflow()
+
+        XCTAssert(try wfr3.find(ViewType.NavigationLink.self).isActive())
+    }
 //
 //    func testLargeWorkflowCanBeFollowed() throws {
 //        struct FR1: View, FlowRepresentable, Inspectable {
@@ -407,4 +414,4 @@
 //        ViewHosting.host(view: launcherView)
 //        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
 //    }
-//}
+}

@@ -411,6 +411,8 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
 
         wait(for: [expectOnAbandon1, expectOnAbandon2], timeout: TestConstant.timeout)
     }
+
+    #warning("FIXME")
 //
 //    func testWorkflowCanHaveModifiers() throws {
 //        struct FR1: View, FlowRepresentable, Inspectable {
