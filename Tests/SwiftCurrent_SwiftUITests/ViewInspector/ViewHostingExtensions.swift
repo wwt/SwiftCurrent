@@ -58,10 +58,6 @@ extension InspectableView where View: CustomViewType & SingleViewContent {
         }
         return try await wrapped.inspection.inspect()
     }
-
-    func findWrapped<F, W, C, PF, PC>() throws -> InspectableView<ViewType.View<WorkflowItem<PF, WorkflowItem<F, W, C>, PC>>> where View.T == WorkflowItem<PF, WorkflowItem<F, W, C>, PC> {
-        try find(View.T.self)
-    }
 }
 
 @available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
