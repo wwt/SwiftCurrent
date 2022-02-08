@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'SwiftCurrent'
-  s.version          = '4.5.14'
+  s.version          = '4.5.17'
   s.summary          = 'A library for complex workflows in Swift'
   s.description      = <<-DESC
   SwiftCurrent is a library that lets you easily manage journeys through your Swift application.
