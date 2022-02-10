@@ -18,18 +18,28 @@ func main() throws {
     let fileURLs = getSwiftFileURLs(from: directoryPath)
     let files: [File] = fileURLs.compactMap { try? File(url: $0) }
 
+    print("Checking \(conformance)...")
     let conformingTypes = findTypesConforming(to: conformance, in: files)
     print(conformingTypes, for: conformance)
+
+    for conformingProtocol in conformingTypes[.protocol]! {
+        print("Checking \(conformingProtocol.name)...")
+        let typesConformingToProtocol = findTypesConforming(to: conformingProtocol.name, in: files)
+        print(typesConformingToProtocol, for: conformingProtocol.name)
+    }
 }
 
-func findTypesConforming(to conformance: String, in files: [File]) -> [Type.ObjectType: [Type]] {
+func findTypesConforming(to conformance: String, in files: [File], objectType: Type.ObjectType? = nil) -> [Type.ObjectType: [Type]] {
     var typesConforming: [Type.ObjectType: [Type]] = [:]
 
     files.forEach {
         let root = $0.results.rootNode
-
         for type in root.types {
-            if type.inheritance.contains(conformance) {
+            let conformanceCheck = objectType == nil ? // THIS IS ANTI-STYLE GUIDE
+                type.inheritance.contains(conformance) :
+                type.inheritance.contains(conformance) && type.type == objectType
+            
+            if conformanceCheck {
                 if typesConforming[type.type] == nil { typesConforming[type.type] = [] }
                 typesConforming[type.type]?.append(type)
             }
@@ -39,43 +49,21 @@ func findTypesConforming(to conformance: String, in files: [File]) -> [Type.Obje
     return typesConforming
 }
 
+//func findParent(for node: Node, in files: [File]) -> Type? {
+//    files.forEach {
+//        let root = $0.results.rootNode
+//
+//        for type in root.types {
+//            if node == Node(type) { return type }
+//        }
+//    }
+//    return nil
+//}
+
 func print(_ types: [Type.ObjectType: [Type]], for conformance: String) {
     for key in types.keys {
-        print("Printing \(key.rawValue)s conforming to \(conformance):")
-        types[key]?.forEach { print("\($0.name)") }
-    }
-}
-
-func printFindings(_ files: [File]) {
-    var protocolsConforming: [Type] = []
-
-    files.forEach {
-        let root = $0.results.rootNode
-
-        for type in root.types {
-
-            if type.inheritance.contains(conformance) {
-                print("Inheritance for \(type.type.rawValue) \(type.name): \(type.inheritance)")
-            }
-
-            if type.type == .protocol && (type.inheritance.contains(conformance) == true) {
-                protocolsConforming.append(type)
-                print("Appending \(type.type.rawValue) \(type.name) to list of protocols conforming to \(conformance)")
-            }
-        }
-    }
-
-    files.forEach {
-        let root = $0.results.rootNode
-
-        protocolsConforming.forEach { proto in
-
-            for type in root.types {
-                if type.inheritance.contains(proto.name) {
-                    print("Inheritance for \(type.type.rawValue) \(type.name): \(type.inheritance)")
-                }
-            }
-        }
+        print("\(key.rawValue)s conforming to \(conformance):")
+        types[key]?.forEach { print("- \($0.name)") }
     }
 }
 

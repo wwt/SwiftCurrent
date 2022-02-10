@@ -31,6 +31,10 @@ protocol FRToo: FlowRepresentable, WorkflowDecodable {
 protocol FooToo: FlowRepresentable, WorkflowDecodable {
 }
 
+enum Namespace {
+    struct MyType: FlowRepresentable, WorkflowDecodable { /* ... */ }
+}
+
 struct FooView: View, FooToo {
     static var flowRepresentableName: String {
         "FooView"
