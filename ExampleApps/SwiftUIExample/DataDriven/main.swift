@@ -14,6 +14,8 @@ var conformance = "WorkflowDecodable"
 try main()
 
 func main() throws {
+    let start = CFAbsoluteTimeGetCurrent()
+    // run your work
     let directoryPath = CommandLine.arguments[1]
     let fileURLs = getSwiftFileURLs(from: directoryPath)
     let files: [File] = fileURLs.compactMap { try? File(url: $0) }
@@ -27,6 +29,9 @@ func main() throws {
         let typesConformingToProtocol = findTypesConforming(to: conformingProtocol.name, in: files)
         print(typesConformingToProtocol, for: conformingProtocol.name)
     }
+
+    let diff = CFAbsoluteTimeGetCurrent() - start
+    print("Took \(diff) seconds")
 }
 
 func findTypesConforming(to conformance: String, in files: [File], objectType: Type.ObjectType? = nil) -> [Type.ObjectType: [Type]] {
@@ -36,12 +41,22 @@ func findTypesConforming(to conformance: String, in files: [File], objectType: T
         let root = $0.results.rootNode
         for type in root.types {
             let conformanceCheck = objectType == nil ? // THIS IS ANTI-STYLE GUIDE
-                type.inheritance.contains(conformance) :
-                type.inheritance.contains(conformance) && type.type == objectType
-            
+            type.inheritance.contains(conformance) :
+            type.inheritance.contains(conformance) && type.type == objectType
+
             if conformanceCheck {
                 if typesConforming[type.type] == nil { typesConforming[type.type] = [] }
                 typesConforming[type.type]?.append(type)
+            }
+            for type in type.types {
+                let conformanceCheck = objectType == nil ? // THIS IS ANTI-STYLE GUIDE
+                type.inheritance.contains(conformance) :
+                type.inheritance.contains(conformance) && type.type == objectType
+
+                if conformanceCheck {
+                    if typesConforming[type.type] == nil { typesConforming[type.type] = [] }
+                    typesConforming[type.type]?.append(type)
+                }
             }
         }
     }
