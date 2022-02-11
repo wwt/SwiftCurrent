@@ -25,26 +25,26 @@ func main() throws {
     print(conformingTypes, for: conformance)
 
     for conformingProtocol in conformingTypes[.protocol]! {
-        print("Checking \(conformingProtocol.name)...")
-        let typesConformingToProtocol = findTypesConforming(to: conformingProtocol.name, in: files)
-        print(typesConformingToProtocol, for: conformingProtocol.name)
+        print("Checking \(conformingProtocol.type.name)...")
+        let typesConformingToProtocol = findTypesConforming(to: conformingProtocol.type.name, in: files)
+        print(typesConformingToProtocol, for: conformingProtocol.type.name)
     }
 
     let diff = CFAbsoluteTimeGetCurrent() - start
     print("Took \(diff) seconds")
 }
 
-func findTypesConforming(to conformance: String, in files: [File], objectType: Type.ObjectType? = nil) -> [Type.ObjectType: [Type]] {
-    var typesConforming: [Type.ObjectType: [Type]] = [:]
+func findTypesConforming(to conformance: String, in files: [File], objectType: Type.ObjectType? = nil) -> [Type.ObjectType: [ConformingType]] {
+    var typesConforming: [Type.ObjectType: [ConformingType]] = [:]
 
     files.forEach {
         let rootNode = $0.results.rootNode
 
         for firstSubtype in rootNode.types {
-            checkTypeForConformance(firstSubtype, conformance: conformance, objectType: objectType, typesConforming: &typesConforming)
+            checkTypeForConformance(firstSubtype, parentType: nil, conformance: conformance, objectType: objectType, typesConforming: &typesConforming)
 
             for secondSubtype in firstSubtype.types {
-                checkTypeForConformance(secondSubtype, conformance: conformance, objectType: objectType, typesConforming: &typesConforming)
+                checkTypeForConformance(secondSubtype, parentType: firstSubtype, conformance: conformance, objectType: objectType, typesConforming: &typesConforming)
             }
         }
     }
@@ -52,14 +52,15 @@ func findTypesConforming(to conformance: String, in files: [File], objectType: T
     return typesConforming
 }
 
-func checkTypeForConformance(_ type: Type, conformance: String, objectType: Type.ObjectType?, typesConforming: inout [Type.ObjectType: [Type]]) {
+func checkTypeForConformance(_ type: Type, parentType: Type?, conformance: String, objectType: Type.ObjectType?, typesConforming: inout [Type.ObjectType: [ConformingType]]) {
     let conformanceCheck = objectType == nil ? // THIS IS ANTI-STYLE GUIDE
         type.inheritance.contains(conformance) :
         type.inheritance.contains(conformance) && type.type == objectType
 
     if conformanceCheck {
         if typesConforming[type.type] == nil { typesConforming[type.type] = [] }
-        typesConforming[type.type]?.append(type)
+        let conforming = ConformingType(type: type, parent: parentType)
+        typesConforming[type.type]?.append(conforming)
     }
 }
 
@@ -79,15 +80,17 @@ class ConformingType {
 //
 //    Should generate into:
 //    Registry([ Namespace.MyType.self ])
-    func toString() -> String {
-        "Registry([\(parent?.name).\(type.name).self])"
+    var registryDescription: String {
+        parent == nil ? // THIS IS ANTI-STYLE GUIDE
+            "- [\(type.name)]" :
+            "- [\(parent?.name ?? "").\(type.name)]"
     }
 }
 
-func print(_ types: [Type.ObjectType: [Type]], for conformance: String) {
+func print(_ types: [Type.ObjectType: [ConformingType]], for conformance: String) {
     for key in types.keys {
         print("\(key.rawValue)s conforming to \(conformance):")
-        types[key]?.forEach { print("- \($0.name)") }
+        types[key]?.forEach { print("\($0.registryDescription)") }
     }
 }
 
