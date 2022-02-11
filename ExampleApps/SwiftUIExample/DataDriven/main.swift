@@ -15,7 +15,7 @@ try main()
 
 func main() throws {
     let start = CFAbsoluteTimeGetCurrent()
-    // run your work
+
     let directoryPath = CommandLine.arguments[1]
     let fileURLs = getSwiftFileURLs(from: directoryPath)
     let files: [File] = fileURLs.compactMap { try? File(url: $0) }
@@ -63,16 +63,26 @@ func checkTypeForConformance(_ type: Type, conformance: String, objectType: Type
     }
 }
 
-//func findParent(for node: Node, in files: [File]) -> Type? {
-//    files.forEach {
-//        let root = $0.results.rootNode
-//
-//        for type in root.types {
-//            if node == Node(type) { return type }
-//        }
+class ConformingType {
+    let type: Type
+    let parent: Type?
+
+    init(type: Type, parent: Type?) {
+        self.type = type
+        self.parent = parent
+    }
+
+
+//    enum Namespace {
+//        struct MyType: FlowRepresentable, WorkflowDecodable { /* ... */ }
 //    }
-//    return nil
-//}
+//
+//    Should generate into:
+//    Registry([ Namespace.MyType.self ])
+    func toString() -> String {
+        "Registry([\(parent?.name).\(type.name).self])"
+    }
+}
 
 func print(_ types: [Type.ObjectType: [Type]], for conformance: String) {
     for key in types.keys {

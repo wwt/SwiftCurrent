@@ -35,6 +35,10 @@ enum Namespace {
     struct MyType: FlowRepresentable, WorkflowDecodable { /* ... */ }
 }
 
+protocol ScrewWithMorgan: WorkflowDecodable
+
+struct Lulz: FlowRepresentable, ScrewWithMorgan { /* ... */ }
+
 struct FooView: View, FooToo {
     static var flowRepresentableName: String {
         "FooView"
