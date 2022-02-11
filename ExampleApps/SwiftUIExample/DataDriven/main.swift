@@ -38,30 +38,29 @@ func findTypesConforming(to conformance: String, in files: [File], objectType: T
     var typesConforming: [Type.ObjectType: [Type]] = [:]
 
     files.forEach {
-        let root = $0.results.rootNode
-        for type in root.types {
-            let conformanceCheck = objectType == nil ? // THIS IS ANTI-STYLE GUIDE
-            type.inheritance.contains(conformance) :
-            type.inheritance.contains(conformance) && type.type == objectType
+        let rootNode = $0.results.rootNode
 
-            if conformanceCheck {
-                if typesConforming[type.type] == nil { typesConforming[type.type] = [] }
-                typesConforming[type.type]?.append(type)
-            }
-            for type in type.types {
-                let conformanceCheck = objectType == nil ? // THIS IS ANTI-STYLE GUIDE
-                type.inheritance.contains(conformance) :
-                type.inheritance.contains(conformance) && type.type == objectType
+        for firstSubtype in rootNode.types {
+            checkTypeForConformance(firstSubtype, conformance: conformance, objectType: objectType, typesConforming: &typesConforming)
 
-                if conformanceCheck {
-                    if typesConforming[type.type] == nil { typesConforming[type.type] = [] }
-                    typesConforming[type.type]?.append(type)
-                }
+            for secondSubtype in firstSubtype.types {
+                checkTypeForConformance(secondSubtype, conformance: conformance, objectType: objectType, typesConforming: &typesConforming)
             }
         }
     }
 
     return typesConforming
+}
+
+func checkTypeForConformance(_ type: Type, conformance: String, objectType: Type.ObjectType?, typesConforming: inout [Type.ObjectType: [Type]]) {
+    let conformanceCheck = objectType == nil ? // THIS IS ANTI-STYLE GUIDE
+        type.inheritance.contains(conformance) :
+        type.inheritance.contains(conformance) && type.type == objectType
+
+    if conformanceCheck {
+        if typesConforming[type.type] == nil { typesConforming[type.type] = [] }
+        typesConforming[type.type]?.append(type)
+    }
 }
 
 //func findParent(for node: Node, in files: [File]) -> Type? {
