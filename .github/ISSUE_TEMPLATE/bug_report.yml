@@ -16,12 +16,15 @@ body:
       placeholder: Tell us what you see!
     validations:
       required: true
-  - type: input
+  - type: textarea
     id: version
     attributes:
       label: Version
-      description: What version of our software are you running?
-      placeholder: v4.5.17
+      description: Please specify as relevant version information (SwiftCurrent version, Xcode Version, Swift Version, etc.)
+      placeholder: |
+        SwiftCurrent Version: v4.5.17
+        Xcode Version: 13.2.1
+        Swift Verison: 5.5
     validations:
       required: true
   - type: textarea
@@ -39,28 +42,3 @@ body:
         - label: I agree to follow this project's Code of Conduct
           required: true
 ---
-
-### Describe the bug
-A clear and concise description of what the bug is.
-
-## To Reproduce
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
-
-### Expected behavior
-A clear and concise description of what you expected to happen.
-
-### Screenshots
-If applicable, add screenshots to help explain your problem.
-
-### Additional context
-Add any other context about the problem here.
- - XCode Version: [e.g. XCode 10.2]
- - Workflow Version: [e.g. 2.1.24]
- - Example Feature File (if applicable)
-
-### Debug Logs
-If applicable, add any debug logs that you have around the time of the problem.
