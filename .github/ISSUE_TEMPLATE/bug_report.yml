@@ -21,9 +21,9 @@ body:
       label: Version
       description: Please specify all relevant version information (SwiftCurrent version, Xcode Version, Swift Version, etc.)
       placeholder: |
-        SwiftCurrent Version: v4.5.17
-        Xcode Version: 13.2.1
-        Swift Verison: 5.5
+        - SwiftCurrent Version: v4.5.17
+        - Xcode Version: 13.2.1
+        - Swift Verison: 5.5
     validations:
       required: true
   - type: textarea
