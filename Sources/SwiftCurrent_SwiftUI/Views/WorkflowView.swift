@@ -12,9 +12,6 @@ import SwiftCurrent
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 struct WorkflowView<Content: View>: View {
     @State var content: Content
-    @State private var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
-    @State private var onAbandon = [() -> Void]()
-    @State private var shouldEmbedInNavView = false
 
     let inspection = Inspection<Self>()
 
@@ -23,40 +20,45 @@ struct WorkflowView<Content: View>: View {
             .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 
-    init<F, W, C>(@WorkflowBuilder builder: () -> WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>>, F.WorkflowInput == Never {
-        self.init(startingArgs: .none, content: builder())
+    init<F, W, C>(isLaunched: Binding<Bool> = .constant(true),
+                  @WorkflowBuilder builder: () -> WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>>, F.WorkflowInput == Never {
+        self.init(isLaunched: isLaunched, startingArgs: .none, content: builder())
     }
 
-    init<F, W, C>(launchingWith args: F.WorkflowInput,
+    init<F, W, C>(isLaunched: Binding<Bool> = .constant(true),
+                  launchingWith args: F.WorkflowInput,
                   @WorkflowBuilder content: () -> WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
-        self.init(startingArgs: .args(args), content: content())
+        self.init(isLaunched: isLaunched, startingArgs: .args(args), content: content())
     }
 
-    init<F, W, C>(launchingWith args: AnyWorkflow.PassedArgs,
+    init<F, W, C>(isLaunched: Binding<Bool> = .constant(true),
+                  launchingWith args: AnyWorkflow.PassedArgs,
                   @WorkflowBuilder content: () -> WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>>, F.WorkflowInput == AnyWorkflow.PassedArgs {
-        self.init(startingArgs: args, content: content())
+        self.init(isLaunched: isLaunched, startingArgs: args, content: content())
     }
 
-    init<A, F, W, C>(launchingWith args: A,
+    init<A, F, W, C>(isLaunched: Binding<Bool> = .constant(true),
+                     launchingWith args: A,
                      @WorkflowBuilder content: () -> WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>>, F.WorkflowInput == AnyWorkflow.PassedArgs {
-        self.init(startingArgs: .args(args), content: content())
+        self.init(isLaunched: isLaunched, startingArgs: .args(args), content: content())
     }
 
-    private init<F, W, C>(startingArgs: AnyWorkflow.PassedArgs,
+    private init<F, W, C>(isLaunched: Binding<Bool>,
+                          startingArgs: AnyWorkflow.PassedArgs,
                           content: WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
-        _content = State(wrappedValue: WorkflowLauncher(isLaunched: .constant(true), startingArgs: startingArgs) { content })
+        _content = State(wrappedValue: WorkflowLauncher(isLaunched: isLaunched, startingArgs: startingArgs) { content })
     }
 
     private init<F, W, C>(_ other: WorkflowView<Content>,
-                          newContent: Content,
-                          onFinish: [(AnyWorkflow.PassedArgs) -> Void]) where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
+                          newContent: Content) where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
         _content = State(wrappedValue: newContent)
-        _onFinish = State(initialValue: onFinish)
     }
 
     func onFinish<F, W, C>(_ closure: @escaping (AnyWorkflow.PassedArgs) -> Void) -> Self where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
-        var onFinish = onFinish
-        onFinish.append(closure)
-        return Self(self, newContent: _content.wrappedValue.onFinish(closure: closure), onFinish: onFinish)
+        Self(self, newContent: _content.wrappedValue.onFinish(closure: closure))
+    }
+
+    func onAbandon<F, W, C>(_ closure: @escaping () -> Void) -> Self where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
+        Self(self, newContent: _content.wrappedValue.onAbandon(closure: closure))
     }
 }

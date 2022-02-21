@@ -375,28 +375,28 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-//    func testWorkflowSetsBindingBooleanToFalseWhenAbandoned() throws {
-//        struct FR1: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR1 type") }
-//        }
-//        let isLaunched = Binding(wrappedValue: true)
-//        let expectOnAbandon = expectation(description: "OnAbandon called")
-//        let expectViewLoaded = ViewHosting.loadView(
-//            WorkflowLauncher(isLaunched: isLaunched) {
-//                thenProceed(with: FR1.self)}
-//                .onAbandon {
-//                    XCTAssertFalse(isLaunched.wrappedValue)
-//                    expectOnAbandon.fulfill()
-//                }).inspection.inspect { viewUnderTest in
-//                    XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
-//                    XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().workflow?.abandon())
-//                    XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
-//                }
-//
-//        wait(for: [expectOnAbandon, expectViewLoaded], timeout: TestConstant.timeout)
-//    }
-//
+    func testWorkflowSetsBindingBooleanToFalseWhenAbandoned() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        let isLaunched = Binding(wrappedValue: true)
+        let expectOnAbandon = expectation(description: "OnAbandon called")
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowView(isLaunched: isLaunched) {
+                WorkflowItem(FR1.self)
+            }.onAbandon {
+                XCTAssertFalse(isLaunched.wrappedValue)
+                expectOnAbandon.fulfill()
+            }).inspection.inspect { viewUnderTest in
+                XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
+                XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().workflow?.abandon())
+                XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
+            }
+
+        wait(for: [expectOnAbandon, expectViewLoaded], timeout: TestConstant.timeout)
+    }
+
 //    func testWorkflowCanHaveMultipleOnAbandonCallbacks() throws {
 //        struct FR1: View, FlowRepresentable, Inspectable {
 //            var _workflowPointer: AnyFlowRepresentable?
