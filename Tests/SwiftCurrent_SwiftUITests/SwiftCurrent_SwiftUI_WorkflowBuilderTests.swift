@@ -639,35 +639,23 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
         wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-//    func testWorkflowCorrectlyHandlesState() throws {
-//        struct FR1: View, FlowRepresentable {
-//            weak var _workflowPointer: AnyFlowRepresentable?
-//
-//            var body: some View {
-//                Button("Proceed") { proceedInWorkflow() }
-//            }
-//        }
-//
-//        let workflowView = WorkflowLauncher(isLaunched: .constant(true)) {
-//            thenProceed(with: FR1.self)
-//        }
-//
-//        typealias WorkflowViewContent = State<WorkflowItem<FR1, Never, FR1>>
-//        let content = try XCTUnwrap(Mirror(reflecting: workflowView).descendant("_content") as? WorkflowViewContent)
-//
-//        // Note: Only add to these exceptions if you are *certain* the property should not be @State. Err on the side of the property being @State
-//        let exceptions = ["_model", "_launcher", "_location", "_value", "inspection", "_presentation"]
-//
-//        let mirror = Mirror(reflecting: content.wrappedValue)
-//
-//        XCTAssertGreaterThan(mirror.children.count, 0)
-//
-//        mirror.children.forEach {
-//            guard let label = $0.label, !exceptions.contains(label) else { return }
-//            XCTAssert($0.value is StateIdentifiable, "Property named: \(label) was note @State")
-//        }
-//    }
-//
+    func testWorkflowCorrectlyHandlesState() throws {
+        struct FR1: View, FlowRepresentable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+
+            var body: some View {
+                Button("Proceed") { proceedInWorkflow() }
+            }
+        }
+
+        let workflowView = WorkflowView(isLaunched: .constant(true)) {
+            WorkflowItem(FR1.self)
+        }
+
+        typealias WorkflowViewContent = State<WorkflowLauncher<WorkflowItem<FR1, Never, FR1>>>
+        _ = try XCTUnwrap(Mirror(reflecting: workflowView).descendant("_content") as? WorkflowViewContent)
+    }
+
 //    func testWorkflowCanHaveADelayedLaunch() throws {
 //        struct FR1: View, FlowRepresentable, Inspectable {
 //            weak var _workflowPointer: AnyFlowRepresentable?
