@@ -229,6 +229,18 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR7 type") }
         }
+        struct FR8: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR7 type") }
+        }
+        struct FR9: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR7 type") }
+        }
+        struct FR10: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR7 type") }
+        }
         let expectViewLoaded = ViewHosting.loadView(
             WorkflowView {
                 WorkflowItem(FR1.self)
@@ -238,6 +250,9 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
                 WorkflowItem(FR5.self)
                 WorkflowItem(FR6.self)
                 WorkflowItem(FR7.self)
+                WorkflowItem(FR8.self)
+                WorkflowItem(FR9.self)
+                WorkflowItem(FR10.self)
             }
         ).inspection.inspect { viewUnderTest in
             XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
@@ -253,6 +268,15 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
                                 XCTAssertNoThrow(try viewUnderTest.find(FR6.self).actualView().proceedInWorkflow())
                                 try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
                                     XCTAssertNoThrow(try viewUnderTest.find(FR7.self).actualView().proceedInWorkflow())
+                                    try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                                        XCTAssertNoThrow(try viewUnderTest.find(FR8.self).actualView().proceedInWorkflow())
+                                        try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                                            XCTAssertNoThrow(try viewUnderTest.find(FR9.self).actualView().proceedInWorkflow())
+                                            try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                                                XCTAssertNoThrow(try viewUnderTest.find(FR10.self).actualView().proceedInWorkflow())
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
