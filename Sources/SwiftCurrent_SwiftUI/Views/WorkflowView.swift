@@ -14,9 +14,6 @@ import SwiftCurrent
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 struct WorkflowView<Content: View>: View {
-    @StateObject private var model: WorkflowViewModel
-    @StateObject private var launcher: Launcher
-
     @State var content: Content
     @State private var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
     @State private var onAbandon = [() -> Void]()
@@ -26,42 +23,25 @@ struct WorkflowView<Content: View>: View {
 
     var body: some View {
         content
-            .environmentObject(model)
-            .environmentObject(launcher)
-            .onReceive(model.onFinishPublisher, perform: _onFinish)
             .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 
-    init<F, W, C>(@WorkflowBuilder builder: () -> Content) where Content == WorkflowItem<F, W, C> {
+    init<F, W, C>(@WorkflowBuilder builder: () -> WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>>, F.WorkflowInput == Never {
         self.init(startingArgs: .none, content: builder())
     }
 
-    private init<F, W, C>(startingArgs: AnyWorkflow.PassedArgs, content: Content) where Content == WorkflowItem<F, W, C> {
-        let wf = AnyWorkflow.empty
-        content.modify(workflow: wf)
-        let model = WorkflowViewModel(isLaunched: .constant(true), launchArgs: startingArgs)
-        _model = StateObject(wrappedValue: model)
-        _launcher = StateObject(wrappedValue: Launcher(workflow: wf,
-                                                       responder: model,
-                                                       launchArgs: startingArgs))
-        _content = State(wrappedValue: content)
+    private init<F, W, C>(startingArgs: AnyWorkflow.PassedArgs, content: WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>>, F.WorkflowInput == Never {
+        _content = State(wrappedValue: WorkflowLauncher(isLaunched: .constant(true)) { content })
     }
 
-    private init(_ other: Self, onFinish: [(AnyWorkflow.PassedArgs) -> Void]) {
-        _content = other._content
+    private init<F, W, C>(_ other: WorkflowView<Content>, newContent: Content, onFinish: [(AnyWorkflow.PassedArgs) -> Void]) where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
+        _content = State(wrappedValue: newContent)
         _onFinish = State(initialValue: onFinish)
-        _model = other._model
-        _launcher = other._launcher
     }
 
-    private func _onFinish(_ args: AnyWorkflow.PassedArgs?) {
-        guard let args = args else { return }
-        onFinish.forEach { $0(args) }
-    }
-
-    func onFinish(_ closure: @escaping (AnyWorkflow.PassedArgs) -> Void) -> Self {
+    func onFinish<F, W, C>(_ closure: @escaping (AnyWorkflow.PassedArgs) -> Void) -> Self where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
         var onFinish = onFinish
         onFinish.append(closure)
-        return Self(self, onFinish: onFinish)
+        return Self(self, newContent: _content.wrappedValue.onFinish(closure: closure), onFinish: onFinish)
     }
 }

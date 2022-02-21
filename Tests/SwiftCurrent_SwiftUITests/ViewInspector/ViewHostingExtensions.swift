@@ -45,11 +45,14 @@ extension ViewHosting {
         return workflowItem
     }
 
-    static func loadView<F, W, C>(_ view: WorkflowView<WorkflowItem<F, W, C>>) -> WorkflowItem<F, W, C> {
+    static func loadView<F, W, C>(_ view: WorkflowView<WorkflowLauncher<WorkflowItem<F, W, C>>>) -> WorkflowItem<F, W, C> {
         var workflowItem: WorkflowItem<F, W, C>!
+        var workflowLauncher: WorkflowLauncher<WorkflowItem<F, W, C>>!
         let exp = view.inspection.inspect {
             do {
-                workflowItem = try $0.view(WorkflowItem<F, W, C>.self).actualView()
+                let inspectedLauncher = try $0.view(WorkflowLauncher<WorkflowItem<F, W, C>>.self)
+                workflowLauncher = try inspectedLauncher.actualView()
+                workflowItem = try inspectedLauncher.view(WorkflowItem<F, W, C>.self).actualView()
             } catch {
                 XCTFail(error.localizedDescription)
             }
@@ -59,8 +62,8 @@ extension ViewHosting {
 
         XCTWaiter().wait(for: [exp], timeout: TestConstant.timeout)
         XCTAssertNotNil(workflowItem)
-        let model = Mirror(reflecting: view).descendant("_model") as? StateObject<WorkflowViewModel>
-        let launcher = Mirror(reflecting: view).descendant("_launcher") as? StateObject<Launcher>
+        let model = Mirror(reflecting: workflowLauncher!).descendant("_model") as? StateObject<WorkflowViewModel>
+        let launcher = Mirror(reflecting: workflowLauncher!).descendant("_launcher") as? StateObject<Launcher>
         XCTAssertNotNil(model)
         XCTAssertNotNil(launcher)
         defer {
