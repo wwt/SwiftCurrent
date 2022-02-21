@@ -121,12 +121,18 @@ public struct WorkflowView<Content: View>: View {
     }
 
     /// Adds an action to perform when this `Workflow` has finished.
-    func onFinish<F, W, C>(_ closure: @escaping (AnyWorkflow.PassedArgs) -> Void) -> Self where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
+    public func onFinish<F, W, C>(_ closure: @escaping (AnyWorkflow.PassedArgs) -> Void) -> Self where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
         Self(self, newContent: _content.wrappedValue.onFinish(closure: closure))
     }
 
     /// Adds an action to perform when this `Workflow` has abandoned.
-    func onAbandon<F, W, C>(_ closure: @escaping () -> Void) -> Self where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
+    public func onAbandon<F, W, C>(_ closure: @escaping () -> Void) -> Self where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
         Self(self, newContent: _content.wrappedValue.onAbandon(closure: closure))
     }
+
+    /// Wraps content in a NavigationView.
+//    public func embedInNavigationView() -> Self {
+//        Self(self, newContent: _content.wrappedValue.embedInNavigationView())
+//    }
+
 }
