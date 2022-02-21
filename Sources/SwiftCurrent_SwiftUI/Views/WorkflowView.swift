@@ -37,6 +37,12 @@ struct WorkflowView<Content: View>: View {
         self.init(isLaunched: isLaunched, startingArgs: args, content: content())
     }
 
+    init<F, W, C>(isLaunched: Binding<Bool> = .constant(true),
+                  launchingWith args: AnyWorkflow.PassedArgs,
+                  @WorkflowBuilder content: () -> WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
+        self.init(isLaunched: isLaunched, startingArgs: args, content: content())
+    }
+
     init<A, F, W, C>(isLaunched: Binding<Bool> = .constant(true),
                      launchingWith args: A,
                      @WorkflowBuilder content: () -> WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>>, F.WorkflowInput == AnyWorkflow.PassedArgs {
