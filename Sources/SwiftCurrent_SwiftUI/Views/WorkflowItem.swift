@@ -72,15 +72,6 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         wrapped?.environmentObject(model).environmentObject(launcher)
     }
 
-    private init<A, W, C, A1, W1, C1>(previous: WorkflowItem<A, W, C>, _ closure: () -> Wrapped) where Wrapped == WorkflowItem<A1, W1, C1> {
-        let wrapped = closure()
-        _wrapped = State(initialValue: wrapped)
-        _metadata = previous._metadata
-        _modifierClosure = previous._modifierClosure
-        _flowPersistenceClosure = previous._flowPersistenceClosure
-        _launchStyle = previous._launchStyle
-    }
-
     private init<C>(previous: WorkflowItem<F, Wrapped, C>,
                     launchStyle: LaunchStyle.SwiftUI.PresentationType,
                     modifierClosure: @escaping ((AnyFlowRepresentableView) -> Void),
@@ -131,15 +122,6 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         _wrapped = State(initialValue: wrapped())
     }
 
-    init() where Wrapped == Never {
-        let metadata = FlowRepresentableMetadata(F.self,
-                                                 launchStyle: .new,
-                                                 flowPersistence: flowPersistenceClosure,
-                                                 flowRepresentableFactory: factory)
-        _metadata = State(initialValue: metadata)
-        _wrapped = State(initialValue: nil)
-    }
-
     #if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)
     /// Creates a `WorkflowItem` from a `UIViewController`.
     @available(iOS 14.0, macOS 11, tvOS 14.0, *)
@@ -163,12 +145,6 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         _metadata = State(initialValue: metadata)
     }
     #endif
-
-    func wrap<F1, W1, C1>(_ next: WorkflowItem<F1, W1, C1>) -> WorkflowItem<F, WorkflowItem<F1, W1, C1>, Content> {
-        WorkflowItem<F, WorkflowItem<F1, W1, C1>, Content>(F.self) {
-            next
-        }
-    }
 
     /**
      Provides a way to apply modifiers to your `FlowRepresentable` view.
