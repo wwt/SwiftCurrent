@@ -74,28 +74,28 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
         wait(for: [expectOnFinish1, expectOnFinish2, expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-//
-//    func testWorkflowPassesArgumentsToTheFirstItem() throws {
-//        struct FR1: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            let stringProperty: String
-//            init(with: String) {
-//                self.stringProperty = with
-//            }
-//            var body: some View { Text("FR1 type") }
-//        }
-//        let expected = UUID().uuidString
-//        let expectViewLoaded = ViewHosting.loadView(
-//            WorkflowLauncher(isLaunched: .constant(true), startingArgs: expected) {
-//                thenProceed(with: FR1.self)
-//            })
-//            .inspection.inspect { viewUnderTest in
-//                XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().stringProperty, expected)
-//            }
-//
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
-//
+    func testWorkflowPassesArgumentsToTheFirstItem() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            let stringProperty: String
+            init(with string: String) {
+                self.stringProperty = string
+            }
+            var body: some View { Text("FR1 type") }
+        }
+        let expected = UUID().uuidString
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowView(launchingWith: expected) {
+                WorkflowItem(FR1.self)
+            }
+        )
+        .inspection.inspect { viewUnderTest in
+            XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().stringProperty, expected)
+        }
+
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
+
 //    func testWorkflowPassesArgumentsToTheFirstItem_WhenThatFirstItemTakesInAnyWorkflowPassedArgs() throws {
 //        struct FR1: View, FlowRepresentable, Inspectable {
 //            var _workflowPointer: AnyFlowRepresentable?

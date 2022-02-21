@@ -29,9 +29,13 @@ struct WorkflowView<Content: View>: View {
     init<F, W, C>(@WorkflowBuilder builder: () -> WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>>, F.WorkflowInput == Never {
         self.init(startingArgs: .none, content: builder())
     }
+    
+    init<F, W, C>(launchingWith args: F.WorkflowInput, @WorkflowBuilder content: () -> WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
+        self.init(startingArgs: .args(args), content: content())
+    }
 
-    private init<F, W, C>(startingArgs: AnyWorkflow.PassedArgs, content: WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>>, F.WorkflowInput == Never {
-        _content = State(wrappedValue: WorkflowLauncher(isLaunched: .constant(true)) { content })
+    private init<F, W, C>(startingArgs: AnyWorkflow.PassedArgs, content: WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
+        _content = State(wrappedValue: WorkflowLauncher(isLaunched: .constant(true), startingArgs: startingArgs) { content })
     }
 
     private init<F, W, C>(_ other: WorkflowView<Content>, newContent: Content, onFinish: [(AnyWorkflow.PassedArgs) -> Void]) where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
