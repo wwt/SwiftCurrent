@@ -96,28 +96,29 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-//    func testWorkflowPassesArgumentsToTheFirstItem_WhenThatFirstItemTakesInAnyWorkflowPassedArgs() throws {
-//        struct FR1: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            let property: AnyWorkflow.PassedArgs
-//            init(with: AnyWorkflow.PassedArgs) {
-//                self.property = with
-//            }
-//            var body: some View { Text("FR1 type") }
-//        }
-//        let expected = UUID().uuidString
-//        let expectViewLoaded = ViewHosting.loadView(
-//            WorkflowLauncher(isLaunched: .constant(true), startingArgs: expected) {
-//                thenProceed(with: FR1.self) {
-//                    thenProceed(with: FR1.self)
-//                }
-//            }).inspection.inspect { viewUnderTest in
-//                XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().property.extractArgs(defaultValue: nil) as? String, expected)
-//            }
-//
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
-//
+    func testWorkflowPassesArgumentsToTheFirstItem_WhenThatFirstItemTakesInAnyWorkflowPassedArgs() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            let property: AnyWorkflow.PassedArgs
+            init(with: AnyWorkflow.PassedArgs) {
+                self.property = with
+            }
+            var body: some View { Text("FR1 type") }
+        }
+        let expected = UUID().uuidString
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowView(launchingWith: expected) {
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR1.self)
+            }
+        )
+        .inspection.inspect { viewUnderTest in
+            XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().property.extractArgs(defaultValue: nil) as? String, expected)
+        }
+
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
+
 //    func testWorkflowPassesArgumentsToTheFirstItem_WhenThatFirstItemTakesInAnyWorkflowPassedArgs_AndTheLaunchArgsAreAnyWorkflowPassedArgs() throws {
 //        struct FR1: View, FlowRepresentable, Inspectable {
 //            typealias WorkflowOutput = AnyWorkflow.PassedArgs
