@@ -590,57 +590,55 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
         wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-//    func testWorkflowCanHaveAPassthroughRepresentableInTheMiddle() throws {
-//        struct FR1: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR1 type") }
-//        }
-//        struct FR2: View, FlowRepresentable, Inspectable {
-//            typealias WorkflowOutput = AnyWorkflow.PassedArgs
-//            var _workflowPointer: AnyFlowRepresentable?
-//            private let data: AnyWorkflow.PassedArgs
-//            var body: some View { Text("FR2 type") }
-//
-//            init(with data: AnyWorkflow.PassedArgs) {
-//                self.data = data
-//            }
-//        }
-//        struct FR3: View, FlowRepresentable, Inspectable {
-//            let str: String
-//            init(with str: String) {
-//                self.str = str
-//            }
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR3 type, \(str)") }
-//        }
-//        let expectOnFinish = expectation(description: "OnFinish called")
-//        let expectedArgs = UUID().uuidString
-//        let expectViewLoaded = ViewHosting.loadView(
-//            WorkflowLauncher(isLaunched: .constant(true)) {
-//                thenProceed(with: FR1.self) {
-//                    thenProceed(with: FR2.self) {
-//                        thenProceed(with: FR3.self)
-//                    }
-//                }
-//            }
-//            .onFinish { _ in
-//                expectOnFinish.fulfill()
-//            }).inspection.inspect { viewUnderTest in
-//                XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
-//                XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
-//                try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
-//                    XCTAssertEqual(try viewUnderTest.find(FR2.self).text().string(), "FR2 type")
-//                    XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow(.args(expectedArgs)))
-//                    try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
-//                        XCTAssertEqual(try viewUnderTest.find(FR3.self).text().string(), "FR3 type, \(expectedArgs)")
-//                        XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
-//                    }
-//                }
-//            }
-//
-//        wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
-//    }
-//
+    func testWorkflowCanHaveAPassthroughRepresentableInTheMiddle() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            typealias WorkflowOutput = AnyWorkflow.PassedArgs
+            var _workflowPointer: AnyFlowRepresentable?
+            private let data: AnyWorkflow.PassedArgs
+            var body: some View { Text("FR2 type") }
+
+            init(with data: AnyWorkflow.PassedArgs) {
+                self.data = data
+            }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable {
+            let str: String
+            init(with str: String) {
+                self.str = str
+            }
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR3 type, \(str)") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let expectedArgs = UUID().uuidString
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowView(isLaunched: .constant(true)) {
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self)
+                WorkflowItem(FR3.self)
+            }
+            .onFinish { _ in
+                expectOnFinish.fulfill()
+            }).inspection.inspect { viewUnderTest in
+                XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
+                XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
+                try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                    XCTAssertEqual(try viewUnderTest.find(FR2.self).text().string(), "FR2 type")
+                    XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow(.args(expectedArgs)))
+                    try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                        XCTAssertEqual(try viewUnderTest.find(FR3.self).text().string(), "FR3 type, \(expectedArgs)")
+                        XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
+                    }
+                }
+            }
+
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
+    }
+
 //    func testWorkflowCorrectlyHandlesState() throws {
 //        struct FR1: View, FlowRepresentable {
 //            weak var _workflowPointer: AnyFlowRepresentable?
