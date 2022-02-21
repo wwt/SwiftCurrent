@@ -27,8 +27,10 @@ custom_categories:
     - Working with Modals
 - name: Creating Workflows in SwiftUI
   children:
+    - WorkflowView
     - WorkflowLauncher
     - WorkflowItem
+    - WorkflowBuilder
     - View
     - App
     - Scene
