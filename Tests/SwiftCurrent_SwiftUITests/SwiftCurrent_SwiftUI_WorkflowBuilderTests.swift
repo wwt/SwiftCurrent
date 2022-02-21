@@ -519,44 +519,43 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
         wait(for: [expectViewLoaded, onFinishCalled], timeout: TestConstant.timeout)
     }
 
-//    func testWorkflowCanHaveAPassthroughRepresentable() throws {
-//        struct FR1: View, FlowRepresentable, Inspectable {
-//            typealias WorkflowOutput = AnyWorkflow.PassedArgs
-//            var _workflowPointer: AnyFlowRepresentable?
-//            private let data: AnyWorkflow.PassedArgs
-//            var body: some View { Text("FR1 type") }
-//
-//            init(with data: AnyWorkflow.PassedArgs) {
-//                self.data = data
-//            }
-//        }
-//        struct FR2: View, FlowRepresentable, Inspectable {
-//            init(with str: String) { }
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR2 type") }
-//        }
-//        let expectOnFinish = expectation(description: "OnFinish called")
-//        let expectedArgs = UUID().uuidString
-//        let expectViewLoaded = ViewHosting.loadView(
-//            WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedArgs) {
-//                thenProceed(with: FR1.self) {
-//                    thenProceed(with: FR2.self)
-//                }
-//            }
-//            .onFinish { _ in
-//                expectOnFinish.fulfill()
-//            }).inspection.inspect { viewUnderTest in
-//                XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
-//                XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow(.args(expectedArgs)))
-//                try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
-//                    XCTAssertEqual(try viewUnderTest.find(FR2.self).text().string(), "FR2 type")
-//                    XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
-//                }
-//            }
-//
-//        wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
-//    }
-//
+    func testWorkflowCanHaveAPassthroughRepresentable() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            typealias WorkflowOutput = AnyWorkflow.PassedArgs
+            var _workflowPointer: AnyFlowRepresentable?
+            private let data: AnyWorkflow.PassedArgs
+            var body: some View { Text("FR1 type") }
+
+            init(with data: AnyWorkflow.PassedArgs) {
+                self.data = data
+            }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            init(with str: String) { }
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let expectedArgs = UUID().uuidString
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowView(isLaunched: .constant(true), launchingWith: expectedArgs) {
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self)
+            }
+            .onFinish { _ in
+                expectOnFinish.fulfill()
+            }).inspection.inspect { viewUnderTest in
+                XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
+                XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow(.args(expectedArgs)))
+                try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                    XCTAssertEqual(try viewUnderTest.find(FR2.self).text().string(), "FR2 type")
+                    XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
+                }
+            }
+
+        wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
+    }
+
 //    func testWorkflowCanConvertAnyArgsToCorrectTypeForFirstItem() throws {
 //        struct FR1: View, FlowRepresentable, Inspectable {
 //            var _workflowPointer: AnyFlowRepresentable?
