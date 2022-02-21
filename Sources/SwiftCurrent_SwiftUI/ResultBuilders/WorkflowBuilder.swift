@@ -10,9 +10,29 @@
 
 import Foundation
 
+/**
+ Used to build a `Workflow` in SwiftUI; Embed `WorkflowItem`s in a `WorkflowBuilder` to define your workflow.
+
+ ### Discussion
+ Typically, you'll use this when you use `WorkflowView`. Otherwise you might use it as a parameter attribute for child `WorkflowItem`-producing closure parameters.
+
+ #### Example
+ ```swift
+ WorkflowView(isLaunched: $isLaunched.animation(), launchingWith: "String in") {
+     WorkflowItem(FirstView.self)
+     WorkflowItem(SecondView.self)
+ }
+ .onAbandon { print("isLaunched is now false") }
+ .onFinish { args in print("Finished 1: \(args)") }
+ .onFinish { print("Finished 2: \($0)") }
+ .background(Color.green)
+ ```
+
+ #### NOTE
+ There is a Swift-imposed limit on how many items we can have in a `WorkflowBuilder`. Similar to SwiftUI's ViewBuilder, `WorkflowBuilder` has a limit of 10 items.
+ */
 @resultBuilder
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-// swiftlint:disable:next missing_docs
 public enum WorkflowBuilder {
     static func buildBlock<F, V>(_ component: WorkflowItem<F, Never, V>) -> WorkflowItem<F, Never, V> {
         component
