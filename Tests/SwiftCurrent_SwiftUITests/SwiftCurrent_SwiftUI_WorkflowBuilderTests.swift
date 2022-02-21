@@ -142,65 +142,62 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-//    func testWorkflowPassesArgumentsToAllItems() throws {
-//        struct FR1: View, FlowRepresentable, Inspectable {
-//            typealias WorkflowOutput = Int
-//            var _workflowPointer: AnyFlowRepresentable?
-//            let property: String
-//            init(with: String) {
-//                self.property = with
-//            }
-//            var body: some View { Text("FR1 type") }
-//        }
-//        struct FR2: View, FlowRepresentable, Inspectable {
-//            typealias WorkflowOutput = Bool
-//            var _workflowPointer: AnyFlowRepresentable?
-//            let property: Int
-//            init(with: Int) {
-//                self.property = with
-//            }
-//            var body: some View { Text("FR1 type") }
-//        }
-//        struct FR3: View, FlowRepresentable, Inspectable {
-//            typealias WorkflowOutput = String
-//            var _workflowPointer: AnyFlowRepresentable?
-//            let property: Bool
-//            init(with: Bool) {
-//                self.property = with
-//            }
-//            var body: some View { Text("FR1 type") }
-//        }
-//        let expectedFR1 = UUID().uuidString
-//        let expectedFR2 = Int.random(in: 1...10)
-//        let expectedFR3 = Bool.random()
-//        let expectedEnd = UUID().uuidString
-//        let expectViewLoaded = ViewHosting.loadView(
-//            WorkflowLauncher(isLaunched: .constant(true), startingArgs: expectedFR1) {
-//                thenProceed(with: FR1.self) {
-//                    thenProceed(with: FR2.self) {
-//                        thenProceed(with: FR3.self)
-//                    }
-//                }
-//            }
-//            .onFinish {
-//                XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedEnd)
-//            }).inspection.inspect { viewUnderTest in
-//                XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().property, expectedFR1)
-//                XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow(expectedFR2))
-//                try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
-//                    XCTAssertEqual(try viewUnderTest.find(FR2.self).actualView().property, expectedFR2)
-//                    XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow(expectedFR3))
-//                    try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
-//                        XCTAssertEqual(try viewUnderTest.find(FR3.self).actualView().property, expectedFR3)
-//                        XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow(expectedEnd))
-//                    }
-//                }
-//            }
-//
-//
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
-//
+    func testWorkflowPassesArgumentsToAllItems() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            typealias WorkflowOutput = Int
+            var _workflowPointer: AnyFlowRepresentable?
+            let property: String
+            init(with: String) {
+                self.property = with
+            }
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            typealias WorkflowOutput = Bool
+            var _workflowPointer: AnyFlowRepresentable?
+            let property: Int
+            init(with: Int) {
+                self.property = with
+            }
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable {
+            typealias WorkflowOutput = String
+            var _workflowPointer: AnyFlowRepresentable?
+            let property: Bool
+            init(with: Bool) {
+                self.property = with
+            }
+            var body: some View { Text("FR1 type") }
+        }
+        let expectedFR1 = UUID().uuidString
+        let expectedFR2 = Int.random(in: 1...10)
+        let expectedFR3 = Bool.random()
+        let expectedEnd = UUID().uuidString
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowView(launchingWith: expectedFR1) {
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self)
+                WorkflowItem(FR3.self)
+            }
+            .onFinish {
+                XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedEnd)
+            }).inspection.inspect { viewUnderTest in
+                XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().property, expectedFR1)
+                XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow(expectedFR2))
+                try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                    XCTAssertEqual(try viewUnderTest.find(FR2.self).actualView().property, expectedFR2)
+                    XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow(expectedFR3))
+                    try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
+                        XCTAssertEqual(try viewUnderTest.find(FR3.self).actualView().property, expectedFR3)
+                        XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow(expectedEnd))
+                    }
+                }
+            }
+
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
+
     func testLargeWorkflowCanBeFollowed() throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
