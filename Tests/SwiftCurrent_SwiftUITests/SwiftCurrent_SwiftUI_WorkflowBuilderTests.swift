@@ -656,37 +656,38 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
         _ = try XCTUnwrap(Mirror(reflecting: workflowView).descendant("_content") as? WorkflowViewContent)
     }
 
-//    func testWorkflowCanHaveADelayedLaunch() throws {
-//        struct FR1: View, FlowRepresentable, Inspectable {
-//            weak var _workflowPointer: AnyFlowRepresentable?
-//
-//            var body: some View {
-//                Button("Proceed") { proceedInWorkflow() }
-//            }
-//        }
-//
-//        struct Wrapper: View, Inspectable {
-//            @State var showingWorkflow = false
-//            let inspection = Inspection<Self>()
-//            var body: some View {
-//                VStack {
-//                    Button("") { showingWorkflow = true }
-//                    WorkflowLauncher(isLaunched: $showingWorkflow) {
-//                        thenProceed(with: FR1.self)
-//                    }
-//                }
-//                .onReceive(inspection.notice) { inspection.visit(self, $0) }
-//            }
-//        }
-//
-//        let exp = ViewHosting.loadView(Wrapper()).inspection.inspect { view in
-//            let stack = try view.vStack()
-//            let launcher = try stack.view(WorkflowLauncher<WorkflowItem<FR1, Never, FR1>>.self, 1)
-//            XCTAssertThrowsError(try launcher.view(WorkflowItem<FR1, Never, FR1>.self))
-//            XCTAssertNoThrow(try stack.button(0).tap())
-//            XCTAssertNoThrow(try launcher.view(WorkflowItem<FR1, Never, FR1>.self))
-//        }
-//
-//        wait(for: [exp], timeout: TestConstant.timeout)
-//    }
+    func testWorkflowCanHaveADelayedLaunch() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+
+            var body: some View {
+                Button("Proceed") { proceedInWorkflow() }
+            }
+        }
+
+        struct Wrapper: View, Inspectable {
+            @State var showingWorkflow = false
+            let inspection = Inspection<Self>()
+            var body: some View {
+                VStack {
+                    Button("") { showingWorkflow = true }
+                    WorkflowView(isLaunched: $showingWorkflow) {
+                        WorkflowItem(FR1.self)
+                    }
+                }
+                .onReceive(inspection.notice) { inspection.visit(self, $0) }
+            }
+        }
+
+        let exp = ViewHosting.loadView(Wrapper()).inspection.inspect { view in
+            let stack = try view.vStack()
+            let workflowView = try stack.view(WorkflowView<WorkflowLauncher<WorkflowItem<FR1, Never, FR1>>>.self, 1)
+            let launcher = try workflowView.view(WorkflowLauncher<WorkflowItem<FR1, Never, FR1>>.self)
+            XCTAssertThrowsError(try launcher.view(WorkflowItem<FR1, Never, FR1>.self))
+            XCTAssertNoThrow(try stack.button(0).tap())
+            XCTAssertNoThrow(try launcher.view(WorkflowItem<FR1, Never, FR1>.self))
+        }
+
+        wait(for: [exp], timeout: TestConstant.timeout)
+    }
 }
