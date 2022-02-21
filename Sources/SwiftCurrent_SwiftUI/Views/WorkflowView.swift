@@ -6,9 +6,6 @@
 //  Copyright © 2022 WWT and Tyler Thompson. All rights reserved.
 //  
 
-#warning("REVISIT: Can we extend `Workflow` to do this?")
-#warning("REVISIT THE REVISIT: ... should we?")
-
 import SwiftUI
 import SwiftCurrent
 
@@ -30,23 +27,29 @@ struct WorkflowView<Content: View>: View {
         self.init(startingArgs: .none, content: builder())
     }
 
-    init<F, W, C>(launchingWith args: F.WorkflowInput, @WorkflowBuilder content: () -> WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
+    init<F, W, C>(launchingWith args: F.WorkflowInput,
+                  @WorkflowBuilder content: () -> WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
         self.init(startingArgs: .args(args), content: content())
     }
 
-    init<F, W, C>(launchingWith args: AnyWorkflow.PassedArgs, @WorkflowBuilder content: () -> WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>>, F.WorkflowInput == AnyWorkflow.PassedArgs {
+    init<F, W, C>(launchingWith args: AnyWorkflow.PassedArgs,
+                  @WorkflowBuilder content: () -> WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>>, F.WorkflowInput == AnyWorkflow.PassedArgs {
         self.init(startingArgs: args, content: content())
     }
 
-    init<A, F, W, C>(launchingWith args: A, @WorkflowBuilder content: () -> WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>>, F.WorkflowInput == AnyWorkflow.PassedArgs {
+    init<A, F, W, C>(launchingWith args: A,
+                     @WorkflowBuilder content: () -> WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>>, F.WorkflowInput == AnyWorkflow.PassedArgs {
         self.init(startingArgs: .args(args), content: content())
     }
 
-    private init<F, W, C>(startingArgs: AnyWorkflow.PassedArgs, content: WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
+    private init<F, W, C>(startingArgs: AnyWorkflow.PassedArgs,
+                          content: WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
         _content = State(wrappedValue: WorkflowLauncher(isLaunched: .constant(true), startingArgs: startingArgs) { content })
     }
 
-    private init<F, W, C>(_ other: WorkflowView<Content>, newContent: Content, onFinish: [(AnyWorkflow.PassedArgs) -> Void]) where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
+    private init<F, W, C>(_ other: WorkflowView<Content>,
+                          newContent: Content,
+                          onFinish: [(AnyWorkflow.PassedArgs) -> Void]) where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
         _content = State(wrappedValue: newContent)
         _onFinish = State(initialValue: onFinish)
     }
