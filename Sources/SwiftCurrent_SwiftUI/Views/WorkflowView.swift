@@ -131,8 +131,7 @@ public struct WorkflowView<Content: View>: View {
     }
 
     /// Wraps content in a NavigationView.
-//    public func embedInNavigationView() -> Self {
-//        Self(self, newContent: _content.wrappedValue.embedInNavigationView())
-//    }
-
+    public func embedInNavigationView<F, W, C>() -> Self where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
+        Self(self, newContent: _content.wrappedValue.embedInNavigationView())
+    }
 }

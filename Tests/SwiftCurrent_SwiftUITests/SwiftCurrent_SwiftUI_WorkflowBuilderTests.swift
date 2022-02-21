@@ -690,4 +690,22 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
 
         wait(for: [exp], timeout: TestConstant.timeout)
     }
+
+    func testWorkflowCanBeEmbeddedInNavView() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        let view = WorkflowView {
+            WorkflowItem(FR1.self)
+        }.embedInNavigationView()
+
+        let expectViewLoaded = view.inspection.inspect { viewUnderTest in
+            XCTAssertNoThrow(try viewUnderTest.view(WorkflowLauncher<WorkflowItem<FR1, Never, FR1>>.self).navigationView())
+            XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
+        }
+
+        ViewHosting.host(view: view)
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
 }
