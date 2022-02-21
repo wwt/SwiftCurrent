@@ -397,32 +397,32 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
         wait(for: [expectOnAbandon, expectViewLoaded], timeout: TestConstant.timeout)
     }
 
-//    func testWorkflowCanHaveMultipleOnAbandonCallbacks() throws {
-//        struct FR1: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR1 type") }
-//        }
-//        let isLaunched = Binding(wrappedValue: true)
-//        let expectOnAbandon1 = expectation(description: "OnAbandon1 called")
-//        let expectOnAbandon2 = expectation(description: "OnAbandon2 called")
-//        let expectViewLoaded = ViewHosting.loadView(
-//            WorkflowLauncher(isLaunched: isLaunched) {
-//                thenProceed(with: FR1.self)
-//            }
-//            .onAbandon {
-//                XCTAssertFalse(isLaunched.wrappedValue)
-//                expectOnAbandon1.fulfill()
-//            }.onAbandon {
-//                XCTAssertFalse(isLaunched.wrappedValue)
-//                expectOnAbandon2.fulfill()
-//            }).inspection.inspect { viewUnderTest in
-//                XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().workflow?.abandon())
-//                XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
-//            }
-//
-//        wait(for: [expectOnAbandon1, expectOnAbandon2, expectViewLoaded], timeout: TestConstant.timeout)
-//    }
-//
+    func testWorkflowCanHaveMultipleOnAbandonCallbacks() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        let isLaunched = Binding(wrappedValue: true)
+        let expectOnAbandon1 = expectation(description: "OnAbandon1 called")
+        let expectOnAbandon2 = expectation(description: "OnAbandon2 called")
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowView(isLaunched: isLaunched) {
+                WorkflowItem(FR1.self)
+            }
+            .onAbandon {
+                XCTAssertFalse(isLaunched.wrappedValue)
+                expectOnAbandon1.fulfill()
+            }.onAbandon {
+                XCTAssertFalse(isLaunched.wrappedValue)
+                expectOnAbandon2.fulfill()
+            }).inspection.inspect { viewUnderTest in
+                XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().workflow?.abandon())
+                XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
+            }
+
+        wait(for: [expectOnAbandon1, expectOnAbandon2, expectViewLoaded], timeout: TestConstant.timeout)
+    }
+
 //    func testWorkflowCanHaveModifiers() throws {
 //        struct FR1: View, FlowRepresentable, Inspectable {
 //            var _workflowPointer: AnyFlowRepresentable?
