@@ -97,15 +97,23 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
     }
 
     init(_ item: F.Type) where Wrapped == Never, Content == F {
-        let metadata = FlowRepresentableMetadata(Content.self,
+        let metadata = FlowRepresentableMetadata(F.self,
                                                  launchStyle: .new,
                                                  flowPersistence: flowPersistenceClosure,
                                                  flowRepresentableFactory: factory)
         _metadata = State(initialValue: metadata)
     }
 
-    init(_ item: F.Type, wrapped: () -> Wrapped) where Content == F {
-        let metadata = FlowRepresentableMetadata(Content.self,
+    init(_ item: F.Type) where Wrapped == Never {
+        let metadata = FlowRepresentableMetadata(F.self,
+                                                 launchStyle: .new,
+                                                 flowPersistence: flowPersistenceClosure,
+                                                 flowRepresentableFactory: factory)
+        _metadata = State(initialValue: metadata)
+    }
+
+    init(_ item: F.Type, wrapped: () -> Wrapped) {
+        let metadata = FlowRepresentableMetadata(F.self,
                                                  launchStyle: .new,
                                                  flowPersistence: flowPersistenceClosure,
                                                  flowRepresentableFactory: factory)
@@ -113,23 +121,13 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         _wrapped = State(initialValue: wrapped())
     }
 
-    #warning("Does not work yet")
-    init<F, C, F1, W1, C1>() where Wrapped == WorkflowItem<F, WorkflowItem<F1, W1, C1>, C> {
+    init(_ item: F.Type, wrapped: () -> Wrapped) where Content == F {
         let metadata = FlowRepresentableMetadata(F.self,
                                                  launchStyle: .new,
                                                  flowPersistence: flowPersistenceClosure,
                                                  flowRepresentableFactory: factory)
         _metadata = State(initialValue: metadata)
-        _wrapped = State(initialValue: nil)
-    }
-
-    init<F, C>() where Wrapped == WorkflowItem<F, Never, C> {
-        let metadata = FlowRepresentableMetadata(F.self,
-                                                 launchStyle: .new,
-                                                 flowPersistence: flowPersistenceClosure,
-                                                 flowRepresentableFactory: factory)
-        _metadata = State(initialValue: metadata)
-        _wrapped = State(initialValue: Wrapped())
+        _wrapped = State(initialValue: wrapped())
     }
 
     init() where Wrapped == Never {
@@ -164,6 +162,12 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         _metadata = State(initialValue: metadata)
     }
     #endif
+
+    func wrap<F1, W1, C1>(_ next: WorkflowItem<F1, W1, C1>) -> WorkflowItem<F, WorkflowItem<F1, W1, C1>, Content> {
+        WorkflowItem<F, WorkflowItem<F1, W1, C1>, Content>(F.self) {
+            next
+        }
+    }
 
     /**
      Provides a way to apply modifiers to your `FlowRepresentable` view.
