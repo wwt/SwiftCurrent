@@ -287,102 +287,96 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
 
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
     }
-//
-//    func testWorkflowOnlyShowsOneViewAtATime() throws {
-//        struct FR1: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR1 type") }
-//        }
-//        struct FR2: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR2 type") }
-//        }
-//        struct FR3: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR3 type") }
-//        }
-//        let expectViewLoaded = ViewHosting.loadView(
-//            WorkflowLauncher(isLaunched: .constant(true)) {
-//                thenProceed(with: FR1.self) {
-//                    thenProceed(with: FR2.self) {
-//                        thenProceed(with: FR3.self) {
-//                            thenProceed(with: FR2.self)
-//                        }
-//                    }
-//                }
-//            }
-//        ).inspection.inspect { fr1 in
-//            XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
-//            try fr1.actualView().inspectWrapped { fr2 in
-//                XCTAssertNoThrow(try fr2.find(FR2.self).actualView().proceedInWorkflow())
-//                try fr2.actualView().inspectWrapped { fr3 in
-//                    XCTAssertNoThrow(try fr3.find(FR3.self).actualView().proceedInWorkflow())
-//                    try fr3.actualView().inspectWrapped { fr4 in
-//                        XCTAssertNoThrow(try fr4.find(FR2.self).actualView().proceedInWorkflow())
-//                    }
-//                }
-//            }
-//            XCTAssertThrowsError(try fr1.find(ViewType.Text.self, skipFound: 1))
-//        }
-//
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
-//
-//    func testMovingBiDirectionallyInAWorkflow() throws {
-//        struct FR1: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR1 type") }
-//        }
-//        struct FR2: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR2 type") }
-//        }
-//        struct FR3: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR3 type") }
-//        }
-//        struct FR4: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR4 type") }
-//        }
-//        let expectViewLoaded = ViewHosting.loadView(
-//            WorkflowLauncher(isLaunched: .constant(true)) {
-//                thenProceed(with: FR1.self) {
-//                    thenProceed(with: FR2.self) {
-//                        thenProceed(with: FR3.self) {
-//                            thenProceed(with: FR4.self)
-//                        }
-//                    }
-//                }
-//            }
-//        ).inspection.inspect { fr1 in
-//            XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
-//            try fr1.actualView().inspectWrapped { fr2 in
-//                XCTAssertNoThrow(try fr2.find(FR2.self).actualView().backUpInWorkflow())
-//                try fr1.actualView().inspect { fr1 in
-//                    XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
-//                    try fr1.actualView().inspectWrapped { fr2 in
-//                        XCTAssertNoThrow(try fr2.find(FR2.self).actualView().proceedInWorkflow())
-//                        try fr2.actualView().inspectWrapped { fr3 in
-//                            XCTAssertNoThrow(try fr3.find(FR3.self).actualView().backUpInWorkflow())
-//                            try fr2.actualView().inspect { fr2 in
-//                                XCTAssertNoThrow(try fr2.find(FR2.self).actualView().proceedInWorkflow())
-//                                try fr2.actualView().inspectWrapped { fr3 in
-//                                    XCTAssertNoThrow(try fr3.find(FR3.self).actualView().proceedInWorkflow())
-//                                    try fr3.actualView().inspectWrapped { fr4 in
-//                                        XCTAssertNoThrow(try fr4.find(FR4.self).actualView().proceedInWorkflow())
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//
-//        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
-//    }
-//
+
+    func testWorkflowOnlyShowsOneViewAtATime() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR3 type") }
+        }
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self)
+                WorkflowItem(FR3.self)
+                WorkflowItem(FR2.self)
+            }
+        ).inspection.inspect { fr1 in
+            XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
+            try fr1.actualView().inspectWrapped { fr2 in
+                XCTAssertNoThrow(try fr2.find(FR2.self).actualView().proceedInWorkflow())
+                try fr2.actualView().inspectWrapped { fr3 in
+                    XCTAssertNoThrow(try fr3.find(FR3.self).actualView().proceedInWorkflow())
+                    try fr3.actualView().inspectWrapped { fr4 in
+                        XCTAssertNoThrow(try fr4.find(FR2.self).actualView().proceedInWorkflow())
+                    }
+                }
+            }
+            XCTAssertThrowsError(try fr1.find(ViewType.Text.self, skipFound: 1))
+        }
+
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
+
+    func testMovingBiDirectionallyInAWorkflow() throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR3 type") }
+        }
+        struct FR4: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR4 type") }
+        }
+        let expectViewLoaded = ViewHosting.loadView(
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self)
+                WorkflowItem(FR3.self)
+                WorkflowItem(FR4.self)
+            }
+        ).inspection.inspect { fr1 in
+            XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
+            try fr1.actualView().inspectWrapped { fr2 in
+                XCTAssertNoThrow(try fr2.find(FR2.self).actualView().backUpInWorkflow())
+                try fr1.actualView().inspect { fr1 in
+                    XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
+                    try fr1.actualView().inspectWrapped { fr2 in
+                        XCTAssertNoThrow(try fr2.find(FR2.self).actualView().proceedInWorkflow())
+                        try fr2.actualView().inspectWrapped { fr3 in
+                            XCTAssertNoThrow(try fr3.find(FR3.self).actualView().backUpInWorkflow())
+                            try fr2.actualView().inspect { fr2 in
+                                XCTAssertNoThrow(try fr2.find(FR2.self).actualView().proceedInWorkflow())
+                                try fr2.actualView().inspectWrapped { fr3 in
+                                    XCTAssertNoThrow(try fr3.find(FR3.self).actualView().proceedInWorkflow())
+                                    try fr3.actualView().inspectWrapped { fr4 in
+                                        XCTAssertNoThrow(try fr4.find(FR4.self).actualView().proceedInWorkflow())
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
+
 //    func testWorkflowSetsBindingBooleanToFalseWhenAbandoned() throws {
 //        struct FR1: View, FlowRepresentable, Inspectable {
 //            var _workflowPointer: AnyFlowRepresentable?

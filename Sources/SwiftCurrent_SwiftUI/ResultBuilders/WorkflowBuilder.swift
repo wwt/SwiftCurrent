@@ -12,11 +12,13 @@ import Foundation
 
 @resultBuilder
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+// swiftlint:disable:next missing_docs
 public enum WorkflowBuilder {
     static func buildBlock<F, V>(_ component: WorkflowItem<F, Never, V>) -> WorkflowItem<F, Never, V> {
         component
     }
 
+    // swiftlint:disable:next missing_docs
     public static func buildBlock<F0, V0,
                                   F1, V1>(_ f0: WorkflowItem<F0, Never, V0>,
                                           _ f1: WorkflowItem<F1, Never, V1>) -> WorkflowItem<F0, WorkflowItem<F1, Never, V1>, V0> {
@@ -25,6 +27,7 @@ public enum WorkflowBuilder {
         }
     }
 
+    // swiftlint:disable:next missing_docs
     public static func buildBlock<F0, V0,
                                   F1, V1,
                                   F2, V2>(_ f0: WorkflowItem<F0, Never, V0>,
@@ -37,6 +40,7 @@ public enum WorkflowBuilder {
         }
     }
 
+    // swiftlint:disable:next missing_docs
     public static func buildBlock<F0, V0,
                                   F1, V1,
                                   F2, V2,
@@ -53,6 +57,7 @@ public enum WorkflowBuilder {
         }
     }
 
+    // swiftlint:disable:next missing_docs
     public static func buildBlock<F0, V0,
                                   F1, V1,
                                   F2, V2,
@@ -73,6 +78,7 @@ public enum WorkflowBuilder {
         }
     }
 
+    // swiftlint:disable:next missing_docs
     public static func buildBlock<F0, V0,
                                   F1, V1,
                                   F2, V2,
@@ -97,6 +103,7 @@ public enum WorkflowBuilder {
         }
     }
 
+    // swiftlint:disable:next missing_docs
     public static func buildBlock<F0, V0,
                                   F1, V1,
                                   F2, V2,
@@ -125,6 +132,7 @@ public enum WorkflowBuilder {
         }
     }
 
+    // swiftlint:disable:next missing_docs
     public static func buildBlock<F0, V0,
                                   F1, V1,
                                   F2, V2,
@@ -157,6 +165,7 @@ public enum WorkflowBuilder {
         }
     }
 
+    // swiftlint:disable:next missing_docs
     public static func buildBlock<F0, V0,
                                   F1, V1,
                                   F2, V2,
@@ -193,6 +202,7 @@ public enum WorkflowBuilder {
         }
     }
 
+    // swiftlint:disable:next missing_docs
     public static func buildBlock<F0, V0,
                                   F1, V1,
                                   F2, V2,

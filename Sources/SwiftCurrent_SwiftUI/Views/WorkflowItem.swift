@@ -96,6 +96,7 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
         _metadata = State(initialValue: metadata)
     }
 
+    /// Creates a workflow item from a FlowRepresentable type
     init(_ item: F.Type) where Wrapped == Never, Content == F {
         let metadata = FlowRepresentableMetadata(F.self,
                                                  launchStyle: .new,
