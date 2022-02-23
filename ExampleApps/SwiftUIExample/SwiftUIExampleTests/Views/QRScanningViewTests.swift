@@ -16,21 +16,23 @@ import CodeScanner
 @testable import SwiftUIExample
 
 final class QRScanningViewTests: XCTestCase {
-    func testQRScanningView() throws {
-        let exp = ViewHosting.loadView(QRScannerFeatureView()).inspection.inspect { viewUnderTest in
-            XCTAssertEqual(try viewUnderTest.view(CodeScannerView.self).actualView().codeTypes, [.qr])
+    func testQRScanningView() async throws {
+        let view = try await QRScannerFeatureView().hostAndInspect(with: \.inspection)
+
+        try await MainActor.run {
+            XCTAssertEqual(try view.view(CodeScannerView.self).actualView().codeTypes, [.qr])
         }
-        wait(for: [exp], timeout: TestConstant.timeout)
     }
 
-    func testQRScanningView_ShowsSheetWhenScanCompletes() throws {
+    func testQRScanningView_ShowsSheetWhenScanCompletes() async throws {
         let code = UUID().uuidString
-        let exp = ViewHosting.loadView(QRScannerFeatureView()).inspection.inspect { viewUnderTest in
-            XCTAssertNoThrow(try viewUnderTest.view(CodeScannerView.self).actualView().completion(.success(code)))
-            XCTAssertEqual(try viewUnderTest.view(CodeScannerView.self).sheet().find(ViewType.Text.self).string(), "SCANNED DATA: \(code)")
-            XCTAssertNoThrow(try viewUnderTest.view(CodeScannerView.self).sheet().callOnDismiss())
-            XCTAssertThrowsError(try viewUnderTest.view(CodeScannerView.self).sheet())
+        let view = try await QRScannerFeatureView().hostAndInspect(with: \.inspection)
+
+        try await MainActor.run {
+            XCTAssertNoThrow(try view.view(CodeScannerView.self).actualView().completion(.success(code)))
+            XCTAssertEqual(try view.view(CodeScannerView.self).sheet().find(ViewType.Text.self).string(), "SCANNED DATA: \(code)")
+            XCTAssertNoThrow(try view.view(CodeScannerView.self).sheet().dismiss())
+            XCTAssertThrowsError(try view.view(CodeScannerView.self).sheet())
         }
-        wait(for: [exp], timeout: TestConstant.timeout)
     }
 }
