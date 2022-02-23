@@ -113,6 +113,16 @@ public struct WorkflowView<Content: View>: View {
         self.init(isLaunched: isLaunched, startingArgs: .args(args), content: content())
     }
 
+    /**
+     Creates a base for proceeding with a `WorkflowItem`.
+     - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
+     - Parameter content: `WorkflowBuilder` consisting of `WorkflowItem`s that define your workflow.
+     */
+    public init<WI: _WorkflowItemProtocol>(isLaunched: Binding<Bool> = .constant(true),
+                                           @WorkflowBuilder content: () -> WI) where Content == WorkflowLauncher<WI>, WI.F.WorkflowInput == AnyWorkflow.PassedArgs {
+        self.init(isLaunched: isLaunched, startingArgs: .none, content: content())
+    }
+
     private init<WI: _WorkflowItemProtocol>(isLaunched: Binding<Bool>,
                                             startingArgs: AnyWorkflow.PassedArgs,
                                             content: WI) where Content == WorkflowLauncher<WI> {
