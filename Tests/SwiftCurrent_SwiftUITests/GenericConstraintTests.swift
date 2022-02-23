@@ -1125,7 +1125,6 @@ final class GenericConstraintTests: XCTestCase, View {
         try await workflowView.find(FR0.self).proceedInWorkflow()
 
         let workflowItem = try await workflowView.extractWrappedWorkflowItem()
-
         try await workflowItem.find(FR1.self).proceedInWorkflow()
 
         let view = try await workflowItem.extractWrappedWorkflowItem()
