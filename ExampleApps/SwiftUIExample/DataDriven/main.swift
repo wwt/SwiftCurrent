@@ -94,6 +94,20 @@ func print(_ types: [Type.ObjectType: [ConformingType]], for conformance: String
     }
 }
 
+func writeToDocuments(contents: String, filename: String) {
+    var filePath = ""
+    let directories:[String] = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true)
+    let directory = directories[0] 
+    filePath = directory.appending("/" + fileName)
+    print("Local path = \(filePath)")
+    
+    do {
+        try contents.write(toFile: filePath, atomically: false, encoding: String.Encoding.utf8)
+    } catch let error as NSError {
+        print("An error took place: \(error)")
+    }
+}
+
 func getSwiftFileURLs(from directory: String) -> [URL] {
     let url = URL(fileURLWithPath: directory)
     var files = [URL]()
