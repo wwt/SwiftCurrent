@@ -35,8 +35,8 @@ import Foundation
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public enum WorkflowBuilder {
     // swiftlint:disable:next missing_docs
-    public static func buildBlock<WI: _WorkflowItemProtocol>(_ component: WI) -> WI {
-        component
+    public static func buildBlock<WI: _WorkflowItemProtocol>(_ component: WI) -> WorkflowItem<WI.F, Never, WI.Content> {
+        WorkflowItem(WI.F.self)
     }
 
     // swiftlint:disable:next missing_docs
