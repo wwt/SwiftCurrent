@@ -96,16 +96,14 @@ public extension InspectionEmissary where V: View & Inspectable {
                  function: String = #function,
                  file: StaticString = #file,
                  line: UInt = #line) async throws -> InspectableView<ViewType.View<V>> {
-        try await withCheckedThrowingContinuation { continuation in
-            do {
-                var v: InspectableView<ViewType.View<V>>?
+        await withCheckedContinuation { continuation in
+            DispatchQueue.main.async {
                 let exp = self.inspect(after: delay, function: function, file: file, line: line) { view in
-                    v = view
+                    continuation.resume(returning: view)
                 }
-                XCTWaiter().wait(for: [exp], timeout: TestConstant.timeout)
-                continuation.resume(returning: try XCTUnwrap(v, "view type \(String(describing: V.self)) not inspected"))
-            } catch {
-                continuation.resume(throwing: error)
+                DispatchQueue.global(qos: .background).async {
+                    XCTWaiter().wait(for: [exp], timeout: TestConstant.timeout)
+                }
             }
         }
     }

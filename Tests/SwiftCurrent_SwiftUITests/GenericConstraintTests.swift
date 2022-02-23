@@ -1431,8 +1431,7 @@ final class GenericConstraintTests: XCTestCase, View {
         }.hostAndInspect(with: \.inspection).extractWorkflowItem()
 
         try await workflowView.find(FR0.self).proceedInWorkflow()
-        let view = try await workflowView.extractWrappedWorkflowItem()
-        XCTAssertEqual(try view.find(FR1.self).actualView().persistence, .removedAfterProceeding)
+        XCTAssertEqual(try workflowView.find(FR1.self).actualView().persistence, .removedAfterProceeding)
     }
 
     func testProceedingWhenInputIsAnyWorkflowPassedArgs_FlowPersistenceCanBeSetWithClosure() async throws {
