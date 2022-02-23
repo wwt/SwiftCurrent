@@ -40,8 +40,8 @@ final class LoginTests: XCTestCase, View, WorkflowTestingReceiver {
     func testLoginProceedsWorkflow() async throws {
         let workflowFinished = expectation(description: "View Proceeded")
         let view = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: LoginView.self)
+            WorkflowView {
+                WorkflowItem(LoginView.self)
             }.onFinish { _ in
                 workflowFinished.fulfill()
             }

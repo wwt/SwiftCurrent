@@ -25,8 +25,8 @@ final class SignUpTests: XCTestCase, View {
     func testContinueProceedsWorkflow() async throws {
         let workflowFinished = expectation(description: "View Proceeded")
         let launcher = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: SignUp.self)
+            WorkflowView {
+                WorkflowItem(SignUp.self)
             }.onFinish { _ in
                 workflowFinished.fulfill()
             }

@@ -23,8 +23,8 @@ final class TermsAndConditionsTests: XCTestCase, View {
     func testPrimaryAcceptButtonCompletesWorkflow() async throws {
         let workflowFinished = expectation(description: "View Proceeded")
         let launcher = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: TermsAndConditions.self)
+            WorkflowView {
+                WorkflowItem(TermsAndConditions.self)
             }.onAbandon {
                 XCTFail("Abandon should not have been called")
             }.onFinish { _ in
@@ -44,8 +44,8 @@ final class TermsAndConditionsTests: XCTestCase, View {
     func testSecondaryRejectButtonAbandonsWorkflow() async throws {
         let workflowAbandoned = expectation(description: "View Proceeded")
         let launcher = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: TermsAndConditions.self)
+            WorkflowView {
+                WorkflowItem(TermsAndConditions.self)
             }.onAbandon {
                 workflowAbandoned.fulfill()
             }.onFinish { _ in

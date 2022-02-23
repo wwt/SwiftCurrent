@@ -27,8 +27,8 @@ final class MapFeatureOnboardingViewTests: XCTestCase, View {
         let workflowFinished = expectation(description: "View Proceeded")
 
         let view = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: MapFeatureOnboardingView.self)
+            WorkflowView {
+                WorkflowItem(MapFeatureOnboardingView.self)
             }.onFinish { _ in
                 workflowFinished.fulfill()
             }

@@ -25,8 +25,8 @@ final class UIKitInteropTests: XCTestCase, View {
         let launchArgs = UUID().uuidString
 
         let launcher = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true), startingArgs: launchArgs) {
-                thenProceed(with: UIKitInteropProgrammaticViewController.self)
+            WorkflowView(launchingWith: launchArgs) {
+                WorkflowItem(UIKitInteropProgrammaticViewController.self)
             }
         }
         .hostAndInspect(with: \.inspection)
@@ -68,10 +68,9 @@ final class UIKitInteropTests: XCTestCase, View {
         }
         let launchArgs = UUID().uuidString
         let launcher = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true), startingArgs: launchArgs) {
-                thenProceed(with: UIKitInteropProgrammaticViewController.self) {
-                    thenProceed(with: FR1.self)
-                }
+            WorkflowView(launchingWith: launchArgs) {
+                WorkflowItem(UIKitInteropProgrammaticViewController.self)
+                WorkflowItem(FR1.self)
             }
         }
         .hostAndInspect(with: \.inspection)
@@ -118,8 +117,8 @@ final class UIKitInteropTests: XCTestCase, View {
         }
 
         let workflowView = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self)
+            WorkflowView {
+                WorkflowItem(FR1.self)
             }
         }
         .hostAndInspect(with: \.inspection)
@@ -163,10 +162,9 @@ final class UIKitInteropTests: XCTestCase, View {
             required init?(coder: NSCoder) { nil }
         }
         let launcher = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self) {
-                    thenProceed(with: FR2.self)
-                }
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self)
             }
         }
         .hostAndInspect(with: \.inspection)
@@ -186,8 +184,8 @@ final class UIKitInteropTests: XCTestCase, View {
     func testPuttingAUIKitViewFromStoryboardInsideASwiftUIWorkflow() async throws {
         let launchArgs = UUID().uuidString
         let launcher = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true), startingArgs: launchArgs) {
-                thenProceed(with: TestInputViewController.self)
+            WorkflowView(launchingWith: launchArgs) {
+                WorkflowItem(TestInputViewController.self)
             }
         }
         .hostAndInspect(with: \.inspection)
@@ -216,8 +214,8 @@ final class UIKitInteropTests: XCTestCase, View {
 
     func testPuttingAUIKitViewFromStoryboardThatDoesNotTakeInDataInsideASwiftUIWorkflow() async throws {
         let launcher = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: TestNoInputViewController.self)
+            WorkflowView {
+                WorkflowItem(TestNoInputViewController.self)
             }
         }
         .hostAndInspect(with: \.inspection)
@@ -258,10 +256,9 @@ final class UIKitInteropTests: XCTestCase, View {
         }
 
         let launcher = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self) {
-                    thenProceed(with: FR2.self)
-                }
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self)
             }
         }
         .hostAndInspect(with: \.inspection)

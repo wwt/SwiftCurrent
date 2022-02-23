@@ -32,8 +32,8 @@ final class GenericOnboardingViewTests: XCTestCase, View {
         Container.default.register(UserDefaults.self) { _ in defaults }
         let workflowFinished = expectation(description: "View Proceeded")
         let launcher = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true), startingArgs: defaultModel) {
-                thenProceed(with: GenericOnboardingView.self)
+            WorkflowView(launchingWith: defaultModel) {
+                WorkflowItem(GenericOnboardingView.self)
             }.onFinish { _ in
                 workflowFinished.fulfill()
             }

@@ -29,8 +29,8 @@ final class ChangePasswordViewTests: XCTestCase, View {
         let currentPassword = UUID().uuidString
         let onFinish = expectation(description: "onFinish called")
         let view = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true), startingArgs: currentPassword) {
-                thenProceed(with: ChangePasswordView.self)
+            WorkflowView(launchingWith: currentPassword) {
+                WorkflowItem(ChangePasswordView.self)
             }
             .onFinish { _ in onFinish.fulfill() }
         }

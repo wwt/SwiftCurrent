@@ -26,8 +26,8 @@ final class QRScannerFeatureOnboardingViewTests: XCTestCase, View {
         Container.default.register(UserDefaults.self) { _ in defaults }
         let workflowFinished = expectation(description: "View Proceeded")
         let launcher = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: QRScannerFeatureOnboardingView.self)
+            WorkflowView {
+                WorkflowItem(QRScannerFeatureOnboardingView.self)
             }.onFinish { _ in
                 workflowFinished.fulfill()
             }
