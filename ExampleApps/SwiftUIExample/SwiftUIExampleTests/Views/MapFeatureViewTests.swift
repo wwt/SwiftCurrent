@@ -12,13 +12,12 @@ import ViewInspector
 @testable import SwiftUIExample
 
 final class MapFeatureViewTests: XCTestCase {
-    func testMapFeatureView() throws {
-        let exp = ViewHosting.loadView(MapFeatureView()).inspection.inspect { view in
-            let map = try view.map()
-            let region = try map.coordinateRegion()
-            XCTAssertEqual(region.center.latitude, 38.70196, accuracy: 0.9) // swiftlint:disable:this number_separator
-            XCTAssertEqual(region.center.longitude, -90.44906, accuracy: 0.9) // swiftlint:disable:this number_separator
-        }
-        wait(for: [exp], timeout: TestConstant.timeout)
+    func testMapFeatureView() async throws {
+        let view = try await MapFeatureView().hostAndInspect(with: \.inspection)
+
+        let map = try view.map()
+        let region = try map.coordinateRegion()
+        XCTAssertEqual(region.center.latitude, 38.70196, accuracy: 0.9) // swiftlint:disable:this number_separator
+        XCTAssertEqual(region.center.longitude, -90.44906, accuracy: 0.9) // swiftlint:disable:this number_separator
     }
 }

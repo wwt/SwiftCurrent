@@ -28,40 +28,39 @@ final class LoginTests: XCTestCase, View, WorkflowTestingReceiver {
         Self.workflowLaunchedData.removeAll()
     }
 
-    func testBasicLayout() {
-        let exp = ViewHosting.loadView(LoginView()).inspection.inspect { view in
-            XCTAssertEqual(view.findAll(ViewType.TextField.self).count, 1)
-            XCTAssertEqual(view.findAll(ViewType.SecureField.self).count, 1)
-            XCTAssertNoThrow(try view.findLoginButton())
-            XCTAssertNoThrow(try view.findSignUpButton())
-        }
-        wait(for: [exp], timeout: TestConstant.timeout)
+    func testBasicLayout() async throws {
+        let view = try await LoginView().hostAndInspect(with: \.inspection)
+
+        XCTAssertEqual(view.findAll(ViewType.TextField.self).count, 1)
+        XCTAssertEqual(view.findAll(ViewType.SecureField.self).count, 1)
+        XCTAssertNoThrow(try view.findLoginButton())
+        XCTAssertNoThrow(try view.findSignUpButton())
     }
 
-    func testLoginProceedsWorkflow() {
+    func testLoginProceedsWorkflow() async throws {
         let workflowFinished = expectation(description: "View Proceeded")
-        let exp = ViewHosting.loadView(WorkflowLauncher(isLaunched: .constant(true)) {
-            thenProceed(with: LoginView.self)
-        }.onFinish { _ in
-            workflowFinished.fulfill()
-        }).inspection.inspect { view in
-            XCTAssertNoThrow(try view.findLoginButton().tap())
+        let view = try await MainActor.run {
+            WorkflowLauncher(isLaunched: .constant(true)) {
+                thenProceed(with: LoginView.self)
+            }.onFinish { _ in
+                workflowFinished.fulfill()
+            }
         }
-        wait(for: [exp, workflowFinished], timeout: TestConstant.timeout)
+        .hostAndInspect(with: \.inspection)
+        .extractWorkflowItem()
+
+        XCTAssertNoThrow(try view.findLoginButton().tap())
+
+        wait(for: [workflowFinished], timeout: TestConstant.timeout)
     }
 
-    func testSignupCorrectlyLaunchesSignupWorkflow() throws {
+    func testSignupCorrectlyLaunchesSignupWorkflow() async throws {
         Self.workflowLaunchedData.removeAll()
-        var loginView: InspectableView<ViewType.View<LoginView>>!
-        let exp = ViewHosting.loadView(LoginView()).inspection.inspect { view in
-            loginView = view
-            XCTAssertFalse(try view.actualView().showSignUp)
-            XCTAssertNoThrow(try view.findSignUpButton().tap())
-            XCTAssert(try view.actualView().showSignUp)
-        }
-        wait(for: [exp], timeout: TestConstant.timeout)
+        let loginView = try await LoginView().hostAndInspect(with: \.inspection)
 
-        XCTAssertNotNil(loginView)
+        XCTAssertFalse(try loginView.actualView().showSignUp)
+        XCTAssertNoThrow(try loginView.findSignUpButton().tap())
+        XCTAssert(try loginView.actualView().showSignUp)
 
         waitUntil(Self.workflowTestingData != nil)
         let data = Self.workflowTestingData
@@ -76,11 +75,8 @@ final class LoginTests: XCTestCase, View, WorkflowTestingReceiver {
         // Complete workflow
         (Self.workflowTestingData?.orchestrationResponder as? WorkflowViewModel)?.onFinishPublisher.send(AnyWorkflow.PassedArgs.none)
 
-        wait(for: [
-            ViewHosting.loadView(try loginView.actualView()).inspection.inspect { view in
-                XCTAssertFalse(try view.actualView().showSignUp)
-            }
-        ], timeout: TestConstant.timeout)
+        let view = try await loginView.actualView().hostAndInspect(with: \.inspection)
+        XCTAssertFalse(try view.actualView().showSignUp)
     }
 }
 

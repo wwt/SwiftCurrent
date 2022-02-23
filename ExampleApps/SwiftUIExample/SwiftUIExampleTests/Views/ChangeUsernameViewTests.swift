@@ -13,17 +13,16 @@ import ViewInspector
 @testable import SwiftUIExample
 
 final class ChangeUsernameViewTests: XCTestCase {
-    func testChangeUsernameView() throws {
+    func testChangeUsernameView() async throws {
         let currentUsername = UUID().uuidString
-        let exp = ViewHosting.loadView(ChangeEmailView(with: currentUsername)).inspection.inspect { view in
-            XCTAssertEqual(try view.find(ViewType.Text.self, traversal: .depthFirst).string(), "New email: ")
-            XCTAssertEqual(try view.find(ViewType.TextField.self).labelView().text().string(), "\(currentUsername)")
-            XCTAssertNoThrow(try view.find(ViewType.Button.self))
-        }
-        wait(for: [exp], timeout: TestConstant.timeout)
+        let view = try await ChangeEmailView(with: currentUsername).hostAndInspect(with: \.inspection)
+
+        XCTAssertEqual(try view.find(ViewType.Text.self, traversal: .depthFirst).string(), "New email: ")
+        XCTAssertEqual(try view.find(ViewType.TextField.self).labelView().text().string(), "\(currentUsername)")
+        XCTAssertNoThrow(try view.find(ViewType.Button.self))
     }
 
-    func testChangeUsernameViewProceedsWithCorrectDataWhenNameChanged() {
+    func testChangeUsernameViewProceedsWithCorrectDataWhenNameChanged() async throws {
         let newUsername = UUID().uuidString
         let proceedCalled = expectation(description: "Proceed called")
         let erased = AnyFlowRepresentableView(type: ChangeEmailView.self, args: .args(""))
@@ -34,11 +33,12 @@ final class ChangeUsernameViewTests: XCTestCase {
             proceedCalled.fulfill()
         }
         changeUsernameView._workflowPointer = erased
-        let exp = ViewHosting.loadView(changeUsernameView).inspection.inspect { view in
-            XCTAssertEqual(try view.find(ViewType.Text.self, traversal: .depthFirst).string(), "New email: ")
-            XCTAssertNoThrow(try view.find(ViewType.TextField.self).setInput(newUsername))
-            XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
-        }
-        wait(for: [exp, proceedCalled], timeout: TestConstant.timeout)
+        let view = try await changeUsernameView.hostAndInspect(with: \.inspection)
+
+        XCTAssertEqual(try view.find(ViewType.Text.self, traversal: .depthFirst).string(), "New email: ")
+        XCTAssertNoThrow(try view.find(ViewType.TextField.self).setInput(newUsername))
+        XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
+
+        wait(for: [proceedCalled], timeout: TestConstant.timeout)
     }
 }
