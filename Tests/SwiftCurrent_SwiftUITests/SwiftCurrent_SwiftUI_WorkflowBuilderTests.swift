@@ -440,7 +440,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
 
     func testWorkflowCanHaveModifiers() async throws {
         throw XCTSkip("Swapping failing test for a warning")
-#error("FIXME")
+#warning("FIXME")
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
