@@ -14,42 +14,51 @@ import ViewInspector
 @testable import SwiftUIExample
 
 final class TermsAndConditionsTests: XCTestCase, View {
-    func testLayout() {
-        let exp = ViewHosting.loadView(TermsAndConditions()).inspection.inspect { view in
-            XCTAssertEqual(view.findAll(ViewType.Button.self).count, 2)
-        }
-        wait(for: [exp], timeout: TestConstant.timeout)
+    func testLayout() async throws {
+        let view = try await TermsAndConditions().hostAndInspect(with: \.inspection)
+
+        XCTAssertEqual(view.findAll(ViewType.Button.self).count, 2)
     }
 
-    func testPrimaryAcceptButtonCompletesWorkflow() {
+    func testPrimaryAcceptButtonCompletesWorkflow() async throws {
         let workflowFinished = expectation(description: "View Proceeded")
-        let exp = ViewHosting.loadView(WorkflowLauncher(isLaunched: .constant(true)) {
-            thenProceed(with: TermsAndConditions.self)
-        }.onAbandon {
-            XCTFail("Abandon should not have been called")
-        }.onFinish { _ in
-            workflowFinished.fulfill()
-        }).inspection.inspect { view in
-            let primaryButton = try view.find(PrimaryButton.self) // ToS should have a primary call to accept
-            XCTAssertEqual(try primaryButton.find(ViewType.Text.self).string(), "Accept")
-            XCTAssertNoThrow(try primaryButton.find(ViewType.Button.self).tap())
+        let launcher = try await MainActor.run {
+            WorkflowLauncher(isLaunched: .constant(true)) {
+                thenProceed(with: TermsAndConditions.self)
+            }.onAbandon {
+                XCTFail("Abandon should not have been called")
+            }.onFinish { _ in
+                workflowFinished.fulfill()
+            }
         }
-        wait(for: [exp, workflowFinished], timeout: TestConstant.timeout)
+        .hostAndInspect(with: \.inspection)
+        .extractWorkflowItem()
+
+        let primaryButton = try launcher.find(PrimaryButton.self) // ToS should have a primary call to accept
+        XCTAssertEqual(try primaryButton.find(ViewType.Text.self).string(), "Accept")
+        XCTAssertNoThrow(try primaryButton.find(ViewType.Button.self).tap())
+
+        wait(for: [workflowFinished], timeout: TestConstant.timeout)
     }
 
-    func testSecondaryRejectButtonAbandonsWorkflow() {
+    func testSecondaryRejectButtonAbandonsWorkflow() async throws {
         let workflowAbandoned = expectation(description: "View Proceeded")
-        let exp = ViewHosting.loadView(WorkflowLauncher(isLaunched: .constant(true)) {
-            thenProceed(with: TermsAndConditions.self)
-        }.onAbandon {
-            workflowAbandoned.fulfill()
-        }.onFinish { _ in
-            XCTFail("Complete should not have been called")
-        }).inspection.inspect { view in
-            let secondaryButton = try view.find(SecondaryButton.self) // ToS sould have a secondary call to decline
-            XCTAssertEqual(try secondaryButton.find(ViewType.Text.self).string(), "Decline")
-            XCTAssertNoThrow(try secondaryButton.find(ViewType.Button.self).tap())
+        let launcher = try await MainActor.run {
+            WorkflowLauncher(isLaunched: .constant(true)) {
+                thenProceed(with: TermsAndConditions.self)
+            }.onAbandon {
+                workflowAbandoned.fulfill()
+            }.onFinish { _ in
+                XCTFail("Complete should not have been called")
+            }
         }
-        wait(for: [exp, workflowAbandoned], timeout: TestConstant.timeout)
+        .hostAndInspect(with: \.inspection)
+        .extractWorkflowItem()
+
+        let secondaryButton = try launcher.find(SecondaryButton.self) // ToS sould have a secondary call to decline
+        XCTAssertEqual(try secondaryButton.find(ViewType.Text.self).string(), "Decline")
+        XCTAssertNoThrow(try secondaryButton.find(ViewType.Button.self).tap())
+
+        wait(for: [workflowAbandoned], timeout: TestConstant.timeout)
     }
 }
