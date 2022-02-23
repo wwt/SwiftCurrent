@@ -45,11 +45,11 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
     func testWorkflowCanBeCreated_WithTrueCondition() async throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
-            var body: some View { Text("FR1 type") }
+            var body: some View { Text("\(String(describing: Self.self)) type") }
         }
         struct FR2: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
-            var body: some View { Text("FR2 type") }
+            var body: some View { Text("\(String(describing: Self.self)) type") }
         }
         let expectOnFinish = expectation(description: "OnFinish called")
         let viewUnderTest = try await MainActor.run {
@@ -57,17 +57,51 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
                 if true {
                     WorkflowItem(FR1.self)
                 }
-//                WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
             .onFinish { _ in
                 expectOnFinish.fulfill()
             }
-        }.hostAndInspect(with: \.inspection)//.extractWorkflowLauncher().extractWorkflowItem()
+        }.hostAndInspect(with: \.inspection)
 
         XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
         try await viewUnderTest.find(FR1.self).proceedInWorkflow()
-//        XCTAssertEqual(try viewUnderTest.find(FR2.self).text().string(), "FR2 type")
-//        try await viewUnderTest.find(FR2.self).proceedInWorkflow()
+        XCTAssertEqual(try viewUnderTest.find(FR2.self).text().string(), "FR2 type")
+        try await viewUnderTest.find(FR2.self).proceedInWorkflow()
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
+    }
+
+    func testWorkflowCanBeCreated_WithFalseCondition() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("\(String(describing: Self.self)) type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("\(String(describing: Self.self)) type") }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("\(String(describing: Self.self)) type") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let viewUnderTest = try await MainActor.run {
+            WorkflowView {
+                if false {
+                    WorkflowItem(FR1.self)
+                }
+                WorkflowItem(FR2.self)
+                WorkflowItem(FR3.self)
+            }
+            .onFinish { _ in
+                expectOnFinish.fulfill()
+            }
+        }.hostAndInspect(with: \.inspection)
+
+        XCTAssertEqual(try viewUnderTest.find(FR2.self).text().string(), "FR2 type")
+        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
+        XCTAssertEqual(try viewUnderTest.find(FR3.self).text().string(), "FR3 type")
+        try await viewUnderTest.find(FR2.self).proceedInWorkflow()
         wait(for: [expectOnFinish], timeout: TestConstant.timeout)
     }
 

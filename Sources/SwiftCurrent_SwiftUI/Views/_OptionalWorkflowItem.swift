@@ -28,7 +28,19 @@ public struct _OptionalWorkflowItem<WI: _WorkflowItemProtocol>: _WorkflowItemPro
         }
     }
 
+    init(workflowItem: WI?) {
+        self.workflowItem = workflowItem
+    }
+
+    public init?() {
+        workflowItem = nil
+    }
+
     func modify(workflow: AnyWorkflow) {
-        (workflowItem as? WorkflowModifier)?.modify(workflow: workflow)
+        if let workflowItem = workflowItem {
+            (workflowItem as? WorkflowModifier)?.modify(workflow: workflow)
+        } else {
+            (Wrapped() as? WorkflowModifier)?.modify(workflow: workflow)
+        }
     }
 }

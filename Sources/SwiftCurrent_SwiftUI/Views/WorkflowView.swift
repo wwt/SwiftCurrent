@@ -21,21 +21,21 @@ import SwiftCurrent
  #### Example
  ```swift
  WorkflowView(isLaunched: $isLaunched.animation(), launchingWith: "String in") {
-     WorkflowItem(FirstView.self)
-         .applyModifiers {
-             $0.background(Color.gray)
-                 .transition(.slide)
-                 .animation(.spring())
-         }
-     WorkflowItem(SecondView.self)
-         .persistence(.removedAfterProceeding)
-         .applyModifiers {
-             $0.SecondViewSpecificModifier()
-                 .padding(10)
-                 .background(Color.purple)
-                 .transition(.opacity)
-                 .animation(.easeInOut)
-         }
+ WorkflowItem(FirstView.self)
+ .applyModifiers {
+ $0.background(Color.gray)
+ .transition(.slide)
+ .animation(.spring())
+ }
+ WorkflowItem(SecondView.self)
+ .persistence(.removedAfterProceeding)
+ .applyModifiers {
+ $0.SecondViewSpecificModifier()
+ .padding(10)
+ .background(Color.purple)
+ .transition(.opacity)
+ .animation(.easeInOut)
+ }
  }
  .onAbandon { print("isLaunched is now false") }
  .onFinish { args in print("Finished 1: \(args)") }
@@ -61,6 +61,7 @@ public struct WorkflowView<Content: View>: View {
      */
     public init<WI: _WorkflowItemProtocol>(isLaunched: Binding<Bool> = .constant(true),
                                            @WorkflowBuilder content: () -> WI) where Content == WorkflowLauncher<WI>, WI.F.WorkflowInput == Never {
+        print(type(of: content()))
         self.init(isLaunched: isLaunched, startingArgs: .none, content: content())
     }
 
@@ -83,7 +84,7 @@ public struct WorkflowView<Content: View>: View {
      - Parameter content: `WorkflowBuilder` consisting of `WorkflowItem`s that define your workflow.
      */
     public init<WI: _WorkflowItemProtocol>(isLaunched: Binding<Bool> = .constant(true),
-                         launchingWith args: AnyWorkflow.PassedArgs,
+                                           launchingWith args: AnyWorkflow.PassedArgs,
                                            @WorkflowBuilder content: () -> WI) where Content == WorkflowLauncher<WI>, WI.F.WorkflowInput == AnyWorkflow.PassedArgs {
         self.init(isLaunched: isLaunched, startingArgs: args, content: content())
     }
@@ -95,7 +96,7 @@ public struct WorkflowView<Content: View>: View {
      - Parameter content: `WorkflowBuilder` consisting of `WorkflowItem`s that define your workflow.
      */
     public init<WI: _WorkflowItemProtocol>(isLaunched: Binding<Bool> = .constant(true),
-                         launchingWith args: AnyWorkflow.PassedArgs,
+                                           launchingWith args: AnyWorkflow.PassedArgs,
                                            @WorkflowBuilder content: () -> WI) where Content == WorkflowLauncher<WI> {
         self.init(isLaunched: isLaunched, startingArgs: args, content: content())
     }
@@ -107,13 +108,13 @@ public struct WorkflowView<Content: View>: View {
      - Parameter content: `WorkflowBuilder` consisting of `WorkflowItem`s that define your workflow.
      */
     public init<A, WI: _WorkflowItemProtocol>(isLaunched: Binding<Bool> = .constant(true),
-                            launchingWith args: A,
+                                              launchingWith args: A,
                                               @WorkflowBuilder content: () -> WI) where Content == WorkflowLauncher<WI>, WI.F.WorkflowInput == AnyWorkflow.PassedArgs {
         self.init(isLaunched: isLaunched, startingArgs: .args(args), content: content())
     }
 
     private init<WI: _WorkflowItemProtocol>(isLaunched: Binding<Bool>,
-                          startingArgs: AnyWorkflow.PassedArgs,
+                                            startingArgs: AnyWorkflow.PassedArgs,
                                             content: WI) where Content == WorkflowLauncher<WI> {
         _content = State(wrappedValue: WorkflowLauncher(isLaunched: isLaunched, startingArgs: startingArgs) { content })
     }

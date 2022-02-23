@@ -28,7 +28,7 @@ import UIKit
   ```
  */
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: View>: _WorkflowItemProtocol {
+public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: _WorkflowItemProtocol, Content: View>: _WorkflowItemProtocol {
     // These need to be state variables to survive SwiftUI re-rendering. Change under penalty of torture BY the codebase you modified.
     @State private var content: Content?
     @State private var wrapped: Wrapped?
@@ -85,6 +85,20 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: 
                                                  flowPersistence: flowPersistenceClosure,
                                                  flowRepresentableFactory: factory)
         _metadata = State(initialValue: metadata)
+    }
+
+    public init?() {
+        let metadata = FlowRepresentableMetadata(F.self,
+                                                 launchStyle: .new,
+                                                 flowPersistence: flowPersistenceClosure,
+                                                 flowRepresentableFactory: factory)
+        _metadata = State(initialValue: metadata)
+
+        if Wrapped.self is Never.Type {
+            _wrapped = State(initialValue: nil)
+        } else {
+            _wrapped = State(initialValue: Wrapped())
+        }
     }
 
     /// Creates a workflow item from a FlowRepresentable type
