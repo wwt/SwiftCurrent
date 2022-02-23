@@ -28,7 +28,7 @@ import UIKit
   ```
  */
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: View>: View {
+public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: View, Content: View>: _WorkflowItemProtocol {
     // These need to be state variables to survive SwiftUI re-rendering. Change under penalty of torture BY the codebase you modified.
     @State private var content: Content?
     @State private var wrapped: Wrapped?
