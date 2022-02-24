@@ -87,8 +87,20 @@ public struct WorkflowItem<F: FlowRepresentable & View, Wrapped: _WorkflowItemPr
         _metadata = State(initialValue: metadata)
     }
 
-    internal init<C>(_ previous: WorkflowItem<F, Wrapped, C>) {
+    init<C>(wrapping previous: WorkflowItem<F, Wrapped, C>) {
         _wrapped = previous._wrapped
+        _modifierClosure = previous._modifierClosure
+        _flowPersistenceClosure = previous._flowPersistenceClosure
+        _launchStyle = previous._launchStyle
+        let metadata = FlowRepresentableMetadata(F.self,
+                                                 launchStyle: launchStyle.rawValue,
+                                                 flowPersistence: flowPersistenceClosure,
+                                                 flowRepresentableFactory: factory)
+        _metadata = State(initialValue: metadata)
+    }
+
+    init<C>(wrapping previous: WorkflowItem<F, Never, C>, wrapped: () -> Wrapped) {
+        _wrapped = State(initialValue: wrapped())
         _modifierClosure = previous._modifierClosure
         _flowPersistenceClosure = previous._flowPersistenceClosure
         _launchStyle = previous._launchStyle
