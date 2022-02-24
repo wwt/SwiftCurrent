@@ -22,11 +22,17 @@ struct SwiftUIExampleApp: App {
                 TestView()
             } else {
                 WorkflowView {
-                    WorkflowItem(SwiftCurrentOnboarding.self)
-                        .applyModifiers { $0.transition(.slide) }
+//                   WorkflowItem(SwiftCurrentOnboarding.self)
+//                        .applyModifiers { $0.transition(.slide) }
                     WorkflowItem(ContentView.self)
                         .applyModifiers { $0.transition(.slide) }
                 }
+//                WorkflowLauncher(isLaunched: .constant(true)) {
+////                    WorkflowItem(SwiftCurrentOnboarding.self)
+////                        .applyModifiers { $0.transition(.slide) }
+//                    WorkflowItem(ContentView.self)
+//                        .applyModifiers { $0.transition(.slide) }
+//                }
                 .preferredColorScheme(.dark)
             }
         }
