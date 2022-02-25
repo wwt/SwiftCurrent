@@ -32,8 +32,9 @@ final class SwiftCurrentOnboardingTests: XCTestCase, View {
                 workflowFinished.fulfill()
             }
         }
-        .hostAndInspect(with: \.inspection)
-        .extractWorkflowItem()
+            .content
+            .hostAndInspect(with: \.inspection)
+            .extractWorkflowItem()
 
         XCTAssertNoThrow(try launcher.find(ViewType.Button.self).tap())
 

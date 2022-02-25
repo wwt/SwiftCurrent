@@ -31,8 +31,9 @@ final class TermsAndConditionsTests: XCTestCase, View {
                 workflowFinished.fulfill()
             }
         }
-        .hostAndInspect(with: \.inspection)
-        .extractWorkflowItem()
+            .content
+            .hostAndInspect(with: \.inspection)
+            .extractWorkflowItem()
 
         let primaryButton = try launcher.find(PrimaryButton.self) // ToS should have a primary call to accept
         XCTAssertEqual(try primaryButton.find(ViewType.Text.self).string(), "Accept")
@@ -52,8 +53,9 @@ final class TermsAndConditionsTests: XCTestCase, View {
                 XCTFail("Complete should not have been called")
             }
         }
-        .hostAndInspect(with: \.inspection)
-        .extractWorkflowItem()
+            .content
+            .hostAndInspect(with: \.inspection)
+            .extractWorkflowItem()
 
         let secondaryButton = try launcher.find(SecondaryButton.self) // ToS sould have a secondary call to decline
         XCTAssertEqual(try secondaryButton.find(ViewType.Text.self).string(), "Decline")

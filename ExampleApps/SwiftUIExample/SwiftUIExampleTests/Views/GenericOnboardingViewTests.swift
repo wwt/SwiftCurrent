@@ -38,8 +38,9 @@ final class GenericOnboardingViewTests: XCTestCase, View {
                 workflowFinished.fulfill()
             }
         }
-        .hostAndInspect(with: \.inspection)
-        .extractWorkflowItem()
+            .content
+            .hostAndInspect(with: \.inspection)
+            .extractWorkflowItem()
 
         XCTAssertNoThrow(try launcher.find(ViewType.Text.self))
         XCTAssertEqual(try launcher.find(ViewType.Text.self).string(), self.defaultModel.featureTitle)

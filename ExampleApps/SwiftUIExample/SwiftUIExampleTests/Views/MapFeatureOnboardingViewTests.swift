@@ -33,8 +33,9 @@ final class MapFeatureOnboardingViewTests: XCTestCase, View {
                 workflowFinished.fulfill()
             }
         }
-        .hostAndInspect(with: \.inspection)
-        .extractWorkflowItem()
+            .content
+            .hostAndInspect(with: \.inspection)
+            .extractWorkflowItem()
 
         XCTAssertNoThrow(try view.find(ViewType.Text.self))
         XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Learn about our awesome map feature!")
