@@ -43,8 +43,16 @@ func findTypesConforming(to conformance: String, in files: [File], objectType: T
         for firstSubtype in rootNode.types {
             checkTypeForConformance(firstSubtype, parentType: nil, conformance: conformance, objectType: objectType, typesConforming: &typesConforming)
 
-            for secondSubtype in firstSubtype.types {
-                checkTypeForConformance(secondSubtype, parentType: firstSubtype, conformance: conformance, objectType: objectType, typesConforming: &typesConforming)
+            if firstSubtype.types.containsSubTypes() {
+                for secondSubtype in firstSubtype.types {
+                    checkTypeForConformance(secondSubtype, parentType: firstSubtype, conformance: conformance, objectType: objectType, typesConforming: &typesConforming)
+
+                    if secondSubtype.types.containsSubTypes() {
+                        for thirdSubtype in secondSubtype.types {
+                            checkTypeForConformance(thirdSubtype, parentType: secondSubtype, conformance: conformance, objectType: objectType, typesConforming: &typesConforming)
+                        }
+                    }
+                }
             }
         }
     }
@@ -73,6 +81,9 @@ class ConformingType {
         self.parent = parent
     }
 
+    var hasSubTypes: Bool {
+        !self.type.types.isEmpty
+    }
 
 //    enum Namespace {
 //        struct MyType: FlowRepresentable, WorkflowDecodable { /* ... */ }
@@ -96,9 +107,9 @@ func print(_ types: [Type.ObjectType: [ConformingType]], for conformance: String
 
 func writeToDocuments(contents: String, filename: String) {
     var filePath = ""
-    let directories:[String] = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true)
+    let directories:[String] = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true)
     let directory = directories[0] 
-    filePath = directory.appending("/" + fileName)
+    filePath = directory.appending("/" + filename)
     print("Local path = \(filePath)")
     
     do {
@@ -127,4 +138,11 @@ func getSwiftFileURLs(from directory: String) -> [URL] {
         }
     }
     return []
+}
+
+
+extension Array where Self.Element: Type {
+    func containsSubTypes() -> Bool {
+       !self.allSatisfy { $0.types.isEmpty }
+    }
 }

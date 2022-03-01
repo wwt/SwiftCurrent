@@ -31,17 +31,40 @@ protocol FRToo: FlowRepresentable, WorkflowDecodable {
 protocol FooToo: FlowRepresentable, WorkflowDecodable {
 }
 
-enum Namespace {
-    struct MyType: FlowRepresentable, WorkflowDecodable { /* ... */ }
+protocol FooThree: FooToo {
 }
 
-protocol ScrewWithMorgan: WorkflowDecodable
+enum Namespace {
+    struct MyType: FlowRepresentable, WorkflowDecodable {
+        var _workflowPointer: AnyFlowRepresentable?
+    }
+}
 
-struct Lulz: FlowRepresentable, ScrewWithMorgan { /* ... */ }
+protocol ScrewWithMorgan: WorkflowDecodable { }
+
+struct Lulz: FlowRepresentable, ScrewWithMorgan {
+    var _workflowPointer: AnyFlowRepresentable?
+}
 
 struct FooView: View, FooToo {
     static var flowRepresentableName: String {
         "FooView"
+    }
+
+    static func metadataFactory(launchStyle: LaunchStyle, flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) -> FlowRepresentableMetadata {
+        FlowRepresentableMetadata(Self.self, launchStyle: launchStyle, flowPersistence: flowPersistence)
+    }
+
+    var _workflowPointer: AnyFlowRepresentable?
+
+    var body: some View {
+        Text("Woo")
+    }
+}
+
+struct FooThreeView: View, FooThree {
+    static var flowRepresentableName: String {
+        "FooThreeView"
     }
 
     static func metadataFactory(launchStyle: LaunchStyle, flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) -> FlowRepresentableMetadata {
