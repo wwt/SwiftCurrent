@@ -23,9 +23,17 @@ custom_categories:
 - name: How to use SwiftCurrent with SwiftUI
   children:
     - Getting Started with SwiftUI
+    - Getting Started with SwiftUI (WorkflowView)
     - Working with NavigationView
+    - Working with NavigationView (WorkflowView)
     - Working with Modals
 - name: Creating Workflows in SwiftUI
+  children:
+    - WorkflowLauncher
+    - View
+    - App
+    - Scene
+- name: Creating Workflows in SwiftUI (WorkflowView)
   children:
     - WorkflowView
     - WorkflowLauncher
