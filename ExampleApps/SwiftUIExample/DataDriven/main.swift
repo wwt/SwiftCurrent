@@ -46,12 +46,6 @@ func findTypesConforming(to conformance: String, in files: [File], objectType: T
             if firstSubtype.types.containsSubTypes() {
                 for secondSubtype in firstSubtype.types {
                     checkTypeForConformance(secondSubtype, parentType: firstSubtype, conformance: conformance, objectType: objectType, typesConforming: &typesConforming)
-
-                    if secondSubtype.types.containsSubTypes() {
-                        for thirdSubtype in secondSubtype.types {
-                            checkTypeForConformance(thirdSubtype, parentType: secondSubtype, conformance: conformance, objectType: objectType, typesConforming: &typesConforming)
-                        }
-                    }
                 }
             }
         }
@@ -72,7 +66,7 @@ func checkTypeForConformance(_ type: Type, parentType: Type?, conformance: Strin
     }
 }
 
-class ConformingType {
+struct ConformingType: Codable {
     let type: Type
     let parent: Type?
 
@@ -85,12 +79,6 @@ class ConformingType {
         !self.type.types.isEmpty
     }
 
-//    enum Namespace {
-//        struct MyType: FlowRepresentable, WorkflowDecodable { /* ... */ }
-//    }
-//
-//    Should generate into:
-//    Registry([ Namespace.MyType.self ])
     var registryDescription: String {
         parent == nil ? // THIS IS ANTI-STYLE GUIDE
             "- [\(type.name)]" :
@@ -143,6 +131,6 @@ func getSwiftFileURLs(from directory: String) -> [URL] {
 
 extension Array where Self.Element: Type {
     func containsSubTypes() -> Bool {
-       !self.allSatisfy { $0.types.isEmpty }
+        !self.allSatisfy { $0.types.isEmpty }
     }
 }
