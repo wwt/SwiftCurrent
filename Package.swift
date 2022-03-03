@@ -80,7 +80,8 @@ let package = Package(
             path: "Tests/SwiftCurrent_SwiftUITests"),
         .testTarget(name: "SwiftCurrent-IRGeneratorTests",
                     dependencies: [
-                        "SwiftCurrent_IRGenerator"
+                        "SwiftCurrent_IRGenerator",
+                        .product(name: "SwiftSyntax", package: "swift-syntax"),
                     ],
                    path: "Tests/SwiftCurrent_IRGeneratorTests")
     ]
