@@ -26,7 +26,7 @@ class FirstViewController: UIWorkflowItem<String, String>, FlowRepresentable { /
 }
 ```
 
-> **Note:** Call `FlowRepresentable.proceedInWorkflow()` to have your view move forward to the next item in the `Workflow` it is part of. 
+> **Note:** Call `FlowRepresentable.proceedInWorkflow()` to have your view move forward to the next item in the `Workflow` it is part of.
 
 ### Step 2
 Define your `Workflow` and launch it. This is what allows you to configure or reorder your workflow.
@@ -36,7 +36,7 @@ Define your `Workflow` and launch it. This is what allows you to configure or re
 // From the ViewController you'd like to launch the workflow
 @objc private func didTapLaunchWorkflow() {
     let workflow = Workflow(FirstViewController.self) // SwiftCurrent
-        .thenPresent(SecondViewController.self) // SwiftCurrent
+        .thenProceed(with: SecondViewController.self) // SwiftCurrent
 
     launchInto(workflow, args: "Some starting arguments")
 }
