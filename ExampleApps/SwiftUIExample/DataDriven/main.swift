@@ -28,6 +28,7 @@ func main() throws {
         print("Checking \(conformingProtocol.type.name)...")
         let typesConformingToProtocol = findTypesConforming(to: conformingProtocol.type.name, in: files)
         print(typesConformingToProtocol, for: conformingProtocol.type.name)
+        writeToDocuments(contents: typesConformingToProtocol, filename: "ConformingTypes.json")
     }
 
     let diff = CFAbsoluteTimeGetCurrent() - start
@@ -93,18 +94,25 @@ func print(_ types: [Type.ObjectType: [ConformingType]], for conformance: String
     }
 }
 
-func writeToDocuments(contents: String, filename: String) {
-    var filePath = ""
-    let directories:[String] = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true)
-    let directory = directories[0] 
-    filePath = directory.appending("/" + filename)
-    print("Local path = \(filePath)")
-    
+func writeToDocuments(contents: [Type.ObjectType: [ConformingType]], filename: String) {
     do {
-        try contents.write(toFile: filePath, atomically: false, encoding: String.Encoding.utf8)
-    } catch let error as NSError {
-        print("An error took place: \(error)")
+        let encodedDictionary = try JSONEncoder().encode(contents)
+        let jsonString = String(data: encodedDictionary, encoding: .utf8)
+        print(jsonString!)
+
+        var filePath = ""
+        let directories: [String] = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true)
+        let directory = directories[0]
+        filePath = directory.appending("/" + filename)
+        print("Local path = \(filePath)")
+
+        try jsonString?.write(toFile: filePath, atomically: false, encoding: String.Encoding.utf8)
+        // TODO: This is currently overwriting, not appending
+    } catch {
+        print("Error: ", error)
     }
+
+
 }
 
 func getSwiftFileURLs(from directory: String) -> [URL] {
