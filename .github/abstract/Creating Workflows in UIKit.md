@@ -36,7 +36,7 @@ Define your `Workflow` and launch it. This is what allows you to configure or re
 // From the ViewController you'd like to launch the workflow
 @objc private func didTapLaunchWorkflow() {
     let workflow = Workflow(FirstViewController.self) // SwiftCurrent
-        .thenProceed(SecondViewController.self) // SwiftCurrent
+        .thenProceed(with: SecondViewController.self) // SwiftCurrent
 
     launchInto(workflow, args: "Some starting arguments")
 }

@@ -156,7 +156,7 @@ class ViewController: UIViewController {
 
     @objc private func didTapLaunchWorkflow() {
         let workflow = Workflow(FirstViewController.self) // SwiftCurrent
-            .thenProceed(SecondViewController.self) // SwiftCurrent
+            .thenProceed(with: SecondViewController.self) // SwiftCurrent
 
         launchInto(workflow, args: "Noble Six") { passedArgs in // SwiftCurrent
             workflow.abandon()

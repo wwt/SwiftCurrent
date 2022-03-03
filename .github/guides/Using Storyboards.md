@@ -141,8 +141,8 @@ import SwiftCurrent_UIKit
 class ViewController: UIViewController {
     @IBAction private func launchWorkflow() {
         let workflow = Workflow(FirstViewController.self) // SwiftCurrent
-                            .thenProceed(SecondViewController.self) // SwiftCurrent
-        
+                            .thenProceed(with: SecondViewController.self) // SwiftCurrent
+
         launchInto(workflow, args: "Some Name") { passedArgs in // SwiftCurrent
             workflow.abandon()
             guard case .args(let emailAddress as String) = passedArgs else {
