@@ -73,7 +73,7 @@ Our directions are written for only 1 major version upgrade at a time, as we hav
   We no longer allow empty workflows, so if you instantiated a workflow like this:
   ```swift
   Workflow()
-    .thenPresent(EnterAddressViewController.self)
+    .thenProceed(EnterAddressViewController.self)
   ```
   Then you will need to update it to this: 
   ```swift

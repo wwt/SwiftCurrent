@@ -141,7 +141,7 @@ import SwiftCurrent_UIKit
 class ViewController: UIViewController {
     @IBAction private func launchWorkflow() {
         let workflow = Workflow(FirstViewController.self) // SwiftCurrent
-                            .thenPresent(SecondViewController.self) // SwiftCurrent
+                            .thenProceed(SecondViewController.self) // SwiftCurrent
         
         launchInto(workflow, args: "Some Name") { passedArgs in // SwiftCurrent
             workflow.abandon()
