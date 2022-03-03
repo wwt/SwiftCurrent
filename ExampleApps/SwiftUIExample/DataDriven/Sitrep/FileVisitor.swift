@@ -267,9 +267,6 @@ extension ExtensionDeclSyntax: CommonSyntax {
     var name: String { "\(extendedType)" }
 }
 
-
-//
-
 /// The root class for the types we can scan in code
 class Node: Encodable {
     /// The keys we need to write for debug output
@@ -293,17 +290,15 @@ class Node: Encodable {
     var cases = [String]()
 }
 
-//
-
 /// One data type from our code, with a very loose definition of "type"
-class Type: Node {
+class Type: Node, Decodable {
     /// All the data we want to be able to write out for debugging purposes
     private enum CodingKeys: CodingKey {
         case name, type, inheritance, comments, body, strippedBody
     }
 
     /// The list of "types" we support
-    enum ObjectType: String {
+    enum ObjectType: String, Codable {
         case `class`, `enum`, `extension`, `protocol`, `struct`
     }
 
@@ -334,35 +329,17 @@ class Type: Node {
         self.body = body.trimmingCharacters(in: .whitespacesAndNewlines)
         self.strippedBody = body.removingDuplicateLineBreaks()
     }
-
-    /// Encodes the type, so we can produce debug output
-    override func encode(to encoder: Encoder) throws {
-        try super.encode(to: encoder)
-
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(name, forKey: .name)
-        try container.encode(type.rawValue, forKey: .type)
-        try container.encode(inheritance, forKey: .inheritance)
-        try container.encode(comments, forKey: .comments)
-        try container.encode(body, forKey: .body)
-        try container.encode(strippedBody, forKey: .strippedBody)
-    }
 }
 
-
-//
-
 /// One comment, regular or documentation, from the code
-struct Comment: Encodable {
-    enum CommentType: String, Encodable {
+struct Comment: Codable {
+    enum CommentType: String, Codable {
         case regular, documentation
     }
 
     var type: CommentType
     var text: String
 }
-
-//
 
 
 /// Represents one function or method in our parsed code.
@@ -413,9 +390,6 @@ class Function: Node {
         try container.encode(returnType, forKey: .returnType)
     }
 }
-
-
-//
 
 
 extension String {
