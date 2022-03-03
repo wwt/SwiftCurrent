@@ -7,11 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B643605F2746E65F00007579 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B643605E2746E65F00007579 /* main.swift */; };
-		B6D55B0D2747F50A00C198DD /* SwiftSyntax in Frameworks */ = {isa = PBXBuildFile; productRef = B6D55B0C2747F50A00C198DD /* SwiftSyntax */; };
-		B6D55B0F2747F50A00C198DD /* SwiftSyntaxBuilder in Frameworks */ = {isa = PBXBuildFile; productRef = B6D55B0E2747F50A00C198DD /* SwiftSyntaxBuilder */; };
-		B6DD6708278DEC0200F871C9 /* FileVisitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DD6707278DEC0200F871C9 /* FileVisitor.swift */; };
-		B6DD670B278E130D00F871C9 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DD670A278E130D00F871C9 /* File.swift */; };
 		CA0536F626A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536F526A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift */; };
 		CA238D1426A1153B000A36EC /* ContentViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA238D1326A1153B000A36EC /* ContentViewTests.swift */; };
 		CA4A6F2026CDAEE600BE3E74 /* TestEventReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4A6F1F26CDAEE600BE3E74 /* TestEventReceiver.swift */; };
@@ -116,23 +111,7 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		B643605A2746E65F00007579 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		B643605C2746E65F00007579 /* DataDriven */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DataDriven; sourceTree = BUILT_PRODUCTS_DIR; };
-		B643605E2746E65F00007579 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		B6DD6707278DEC0200F871C9 /* FileVisitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVisitor.swift; sourceTree = "<group>"; };
-		B6DD670A278E130D00F871C9 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		CA0536F526A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFeatureOnboardingView.swift; sourceTree = "<group>"; };
 		CA238D1326A1153B000A36EC /* ContentViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewTests.swift; sourceTree = "<group>"; };
 		CA4A6F1F26CDAEE600BE3E74 /* TestEventReceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestEventReceiver.swift; sourceTree = "<group>"; };
@@ -219,15 +198,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		B64360592746E65F00007579 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B6D55B0D2747F50A00C198DD /* SwiftSyntax in Frameworks */,
-				B6D55B0F2747F50A00C198DD /* SwiftSyntaxBuilder in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CAC34B3C26A07F830039A373 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -261,24 +231,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B643605D2746E65F00007579 /* DataDriven */ = {
-			isa = PBXGroup;
-			children = (
-				B643605E2746E65F00007579 /* main.swift */,
-				B6DD6709278E04A400F871C9 /* Sitrep */,
-			);
-			path = DataDriven;
-			sourceTree = "<group>";
-		};
-		B6DD6709278E04A400F871C9 /* Sitrep */ = {
-			isa = PBXGroup;
-			children = (
-				B6DD6707278DEC0200F871C9 /* FileVisitor.swift */,
-				B6DD670A278E130D00F871C9 /* File.swift */,
-			);
-			path = Sitrep;
-			sourceTree = "<group>";
-		};
 		CA0536F926A0917A00BF8FC5 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -322,7 +274,6 @@
 				CAC34B4126A07F830039A373 /* SwiftUIExample */,
 				CAC34B5326A07F840039A373 /* SwiftUIExampleTests */,
 				D7A6CE7326E0316C00599824 /* SwiftCurrent_SwiftUI_UITests */,
-				B643605D2746E65F00007579 /* DataDriven */,
 				CAC34B4026A07F830039A373 /* Products */,
 				CAC34B8026A080910039A373 /* Frameworks */,
 			);
@@ -334,7 +285,6 @@
 				CAC34B3F26A07F830039A373 /* SwiftUIExample.app */,
 				CAC34B5026A07F840039A373 /* SwiftUIExampleTests.xctest */,
 				D7A6CE7226E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.xctest */,
-				B643605C2746E65F00007579 /* DataDriven */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -560,30 +510,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B643605B2746E65F00007579 /* DataDriven */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B64360622746E65F00007579 /* Build configuration list for PBXNativeTarget "DataDriven" */;
-			buildPhases = (
-				B64360582746E65F00007579 /* Sources */,
-				B64360592746E65F00007579 /* Frameworks */,
-				B643605A2746E65F00007579 /* CopyFiles */,
-				B613A93F274805BD00214E2C /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B6D55B112747F69300C198DD /* PBXTargetDependency */,
-				B6D55B132747F69300C198DD /* PBXTargetDependency */,
-			);
-			name = DataDriven;
-			packageProductDependencies = (
-				B6D55B0C2747F50A00C198DD /* SwiftSyntax */,
-				B6D55B0E2747F50A00C198DD /* SwiftSyntaxBuilder */,
-			);
-			productName = DataDriven;
-			productReference = B643605C2746E65F00007579 /* DataDriven */;
-			productType = "com.apple.product-type.tool";
-		};
 		CAC34B3E26A07F830039A373 /* SwiftUIExample */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CAC34B6426A07F840039A373 /* Build configuration list for PBXNativeTarget "SwiftUIExample" */;
@@ -662,9 +588,6 @@
 				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = "WWT and Tyler Thompson";
 				TargetAttributes = {
-					B643605B2746E65F00007579 = {
-						CreatedOnToolsVersion = 13.1;
-					};
 					CAC34B3E26A07F830039A373 = {
 						CreatedOnToolsVersion = 12.5.1;
 					};
@@ -701,7 +624,6 @@
 				CAC34B3E26A07F830039A373 /* SwiftUIExample */,
 				CAC34B4F26A07F840039A373 /* SwiftUIExampleTests */,
 				D7A6CE7126E0316C00599824 /* SwiftCurrent_SwiftUI_UITests */,
-				B643605B2746E65F00007579 /* DataDriven */,
 			);
 		};
 /* End PBXProject section */
@@ -733,37 +655,7 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		B613A93F274805BD00214E2C /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cp ${BUILT_PRODUCTS_DIR}/DataDriven ${PROJECT_DIR}/bin/\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		B64360582746E65F00007579 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B6DD6708278DEC0200F871C9 /* FileVisitor.swift in Sources */,
-				B6DD670B278E130D00F871C9 /* File.swift in Sources */,
-				B643605F2746E65F00007579 /* main.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CAC34B3B26A07F830039A373 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -861,14 +753,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		B6D55B112747F69300C198DD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = B6D55B102747F69300C198DD /* SwiftSyntax */;
-		};
-		B6D55B132747F69300C198DD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = B6D55B122747F69300C198DD /* SwiftSyntaxBuilder */;
-		};
 		CAC34B5226A07F840039A373 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CAC34B3E26A07F830039A373 /* SwiftUIExample */;
@@ -882,30 +766,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		B64360602746E65F00007579 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CODE_SIGN_STYLE = Automatic;
-				MACOSX_DEPLOYMENT_TARGET = 11.6;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		B64360612746E65F00007579 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CODE_SIGN_STYLE = Automatic;
-				MACOSX_DEPLOYMENT_TARGET = 11.6;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
 		CAC34B6226A07F840039A373 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1153,15 +1013,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B64360622746E65F00007579 /* Build configuration list for PBXNativeTarget "DataDriven" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B64360602746E65F00007579 /* Debug */,
-				B64360612746E65F00007579 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		CAC34B3A26A07F830039A373 /* Build configuration list for PBXProject "SwiftUIExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1244,26 +1095,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B6D55B0C2747F50A00C198DD /* SwiftSyntax */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B6D55B0B2747F50A00C198DD /* XCRemoteSwiftPackageReference "swift-syntax" */;
-			productName = SwiftSyntax;
-		};
-		B6D55B0E2747F50A00C198DD /* SwiftSyntaxBuilder */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B6D55B0B2747F50A00C198DD /* XCRemoteSwiftPackageReference "swift-syntax" */;
-			productName = SwiftSyntaxBuilder;
-		};
-		B6D55B102747F69300C198DD /* SwiftSyntax */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B6D55B0B2747F50A00C198DD /* XCRemoteSwiftPackageReference "swift-syntax" */;
-			productName = SwiftSyntax;
-		};
-		B6D55B122747F69300C198DD /* SwiftSyntaxBuilder */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B6D55B0B2747F50A00C198DD /* XCRemoteSwiftPackageReference "swift-syntax" */;
-			productName = SwiftSyntaxBuilder;
-		};
 		CA6FB0DF26C6AD7900FB3285 /* SwiftCurrent_UIKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftCurrent_UIKit;
