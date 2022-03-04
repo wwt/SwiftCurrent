@@ -53,14 +53,13 @@ struct GenerateIR: ParsableCommand {
         }
 
         let allConformances = findTypesConforming(to: "\(Self.conformance)", in: files)
-        var conformingTypes = allConformances.filter { $0.key != .protocol }.flatMap(\.value)
+        var conformingTypes = allConformances.flatMap(\.value)
 
         allConformances[.protocol]?.forEach { conformingProtocol in
             let typesConformingToProtocol = findTypesConforming(to: conformingProtocol.type.name, in: files)
             conformingTypes.append(contentsOf: typesConformingToProtocol.flatMap(\.value))
         }
 
-        print("FAIL")
         let encoded = try JSONEncoder().encode(conformingTypes)
         if let jsonString = String(data: encoded, encoding: .utf8) {
             print(jsonString)

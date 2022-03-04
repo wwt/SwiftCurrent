@@ -20,28 +20,62 @@ class SwiftCurrent_IRGeneratorTests: XCTestCase {
     }()
 
     override class func setUp() {
-        XCTAssert(try shell("cd \(Self.packageSwiftDirectory.path) && swift build --target=SwiftCurrent_IRGenerator").contains("Build complete!"))
+        XCTAssertNoThrow(try shell("rm -rf \(Self.packageSwiftDirectory.path)/.build/*/debug"))
+        XCTAssert(try shell("cd \(Self.packageSwiftDirectory.path) && swift build --product=SwiftCurrent_IRGenerator").contains("Build complete!"))
     }
 
-    func testExample() throws {
+    func testSingleDecodableStruct() throws {
         let source = """
         struct Foo: WorkflowDecodable { }
-        """.literalized()
+        """
 
         let output = try shell("\(generatorCommand) \"\(source)\"")
-        let IR = try JSONSerialization.jsonObject(with: XCTUnwrap(output.data(using: .utf8))) as? [[String: Any]]
+        let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
 
-        XCTAssertEqual(IR?.count, 1)
-        XCTAssertEqual(IR?.first?["name"] as? String, "Foo")
+        XCTAssertEqual(IR.count, 1)
+        XCTAssertEqual(IR.first?.name, "Foo")
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
+    func testSingleDecodableClass() throws {
+        let source = """
+        class Foo: WorkflowDecodable { }
+        """
+
+        let output = try shell("\(generatorCommand) \"\(source)\"")
+        let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
+
+        XCTAssertEqual(IR.count, 1)
+        XCTAssertEqual(IR.first?.name, "Foo")
+    }
+
+    func testMultipleMixedStructsAndClasses() throws {
+        let source = """
+        class Foo: WorkflowDecodable { }
+        struct Bar: WorkflowDecodable { }
+        """
+
+        let output = try shell("\(generatorCommand) \"\(source)\"")
+        let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
+            .sorted { $0.name < $1.name }
+
+        XCTAssertEqual(IR.count, 2)
+        XCTAssertEqual(IR.first?.name, "Bar")
+        XCTAssertEqual(IR.last?.name, "Foo")
+    }
+
+    func testPerformance_WithASingleType() throws {
+        let source = """
+        struct Foo: WorkflowDecodable { }
+        """
         measure {
-            // Put the code you want to measure the time of here.
+            _ = try? shell("\(generatorCommand) \"\(source)\"")
         }
     }
 
+}
+
+struct IRType: Decodable {
+    let name: String
 }
 
 @discardableResult fileprivate func shell(_ command: String) throws -> String {
@@ -54,19 +88,10 @@ class SwiftCurrent_IRGeneratorTests: XCTestCase {
     task.executableURL = URL(fileURLWithPath: "/bin/zsh")
 
     try task.run()
+    task.waitUntilExit()
 
     let data = pipe.fileHandleForReading.readDataToEndOfFile()
     let output = String(data: data, encoding: .utf8)!
 
     return output
-}
-
-extension Unicode.Scalar {
-    var asciiEscaped: String { escaped(asASCII: true) }
-}
-
-extension StringProtocol {
-    func literalized() -> String {
-        unicodeScalars.map(\.asciiEscaped).joined()
-    }
 }
