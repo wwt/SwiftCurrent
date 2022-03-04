@@ -9,6 +9,7 @@
 import Foundation
 import SwiftSyntax
 
+/// A type used to hold parsing results for an individual file.
 public struct ParsedFile {
     let url: URL?
     var results: ParsedFileVisitor

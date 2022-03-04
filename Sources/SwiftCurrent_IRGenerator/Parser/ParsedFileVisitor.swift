@@ -1,4 +1,4 @@
-
+//
 //  ParsedFileVisitor.swift
 //  SwiftCurrent
 //
@@ -130,12 +130,12 @@ class ParsedFileVisitor: SyntaxVisitor {
 
     func extractComments(from trivia: TriviaPiece) -> Comment? {
         switch trivia {
-        case .lineComment(let text), .blockComment(let text):
-            return Comment(type: .regular, text: text)
-        case .docLineComment(let text), .docBlockComment(let text):
-            return Comment(type: .documentation, text: text)
-        default:
-            return nil
+            case .lineComment(let text), .blockComment(let text):
+                return Comment(type: .regular, text: text)
+            case .docLineComment(let text), .docBlockComment(let text):
+                return Comment(type: .documentation, text: text)
+            default:
+                return nil
         }
     }
 
@@ -167,32 +167,6 @@ class ParsedFileVisitor: SyntaxVisitor {
         return comments
     }
 }
-protocol CommonSyntax: SyntaxProtocol {
-    var inheritanceClause: SwiftSyntax.TypeInheritanceClauseSyntax? { get set }
-    var name: String { get }
-    var leadingTrivia: SwiftSyntax.Trivia? { get set }
-    func withoutTrivia() -> Self
-}
-
-extension ClassDeclSyntax: CommonSyntax {
-    var name: String { identifier.text }
-}
-
-extension EnumDeclSyntax: CommonSyntax {
-    var name: String { identifier.text }
-}
-
-extension StructDeclSyntax: CommonSyntax {
-    var name: String { identifier.text }
-}
-
-extension ProtocolDeclSyntax: CommonSyntax {
-    var name: String { identifier.text }
-}
-
-extension ExtensionDeclSyntax: CommonSyntax {
-    var name: String { "\(extendedType)" }
-}
 
 class Node: Encodable {
     private enum CodingKeys: CodingKey {
@@ -205,6 +179,7 @@ class Node: Encodable {
     var functions = [Function]()
     var cases = [String]()
 }
+
 class Type: Node, Decodable {
     private enum CodingKeys: CodingKey {
         case name, type, inheritance, comments, body, strippedBody
@@ -275,6 +250,12 @@ class Function: Node {
     }
 }
 
+protocol CommonSyntax: SyntaxProtocol {
+    var inheritanceClause: SwiftSyntax.TypeInheritanceClauseSyntax? { get set }
+    var name: String { get }
+    var leadingTrivia: SwiftSyntax.Trivia? { get set }
+    func withoutTrivia() -> Self
+}
 
 extension String {
     var lines: [String] {
@@ -288,3 +269,22 @@ extension String {
     }
 }
 
+extension ClassDeclSyntax: CommonSyntax {
+    var name: String { identifier.text }
+}
+
+extension EnumDeclSyntax: CommonSyntax {
+    var name: String { identifier.text }
+}
+
+extension StructDeclSyntax: CommonSyntax {
+    var name: String { identifier.text }
+}
+
+extension ProtocolDeclSyntax: CommonSyntax {
+    var name: String { identifier.text }
+}
+
+extension ExtensionDeclSyntax: CommonSyntax {
+    var name: String { "\(extendedType)" }
+}
