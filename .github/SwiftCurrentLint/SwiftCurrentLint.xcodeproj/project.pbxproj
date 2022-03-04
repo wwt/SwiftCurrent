@@ -6,16 +6,33 @@
 	objectVersion = 50;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		CA7B459C27D196BB002EA040 /* SwiftCurrent_IRGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7B459B27D196BB002EA040 /* SwiftCurrent_IRGeneratorTests.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		CA09510C256DD69400759957 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		CA185E12256DD2F3008C9143 /* libSwiftCurrentLint.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSwiftCurrentLint.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA7B459927D196BB002EA040 /* SwiftCurrent-IRGeneratorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SwiftCurrent-IRGeneratorTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA7B459B27D196BB002EA040 /* SwiftCurrent_IRGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftCurrent_IRGeneratorTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CA7B459627D196BB002EA040 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		CA185E09256DD2F3008C9143 = {
 			isa = PBXGroup;
 			children = (
 				CA09510C256DD69400759957 /* .swiftlint.yml */,
+				CA7B459A27D196BB002EA040 /* SwiftCurrent-IRGeneratorTests */,
 				CA185E13256DD2F3008C9143 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -24,8 +41,17 @@
 			isa = PBXGroup;
 			children = (
 				CA185E12256DD2F3008C9143 /* libSwiftCurrentLint.a */,
+				CA7B459927D196BB002EA040 /* SwiftCurrent-IRGeneratorTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		CA7B459A27D196BB002EA040 /* SwiftCurrent-IRGeneratorTests */ = {
+			isa = PBXGroup;
+			children = (
+				CA7B459B27D196BB002EA040 /* SwiftCurrent_IRGeneratorTests.swift */,
+			);
+			path = "SwiftCurrent-IRGeneratorTests";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -46,18 +72,38 @@
 			productReference = CA185E12256DD2F3008C9143 /* libSwiftCurrentLint.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		CA7B459827D196BB002EA040 /* SwiftCurrent-IRGeneratorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA7B459F27D196BB002EA040 /* Build configuration list for PBXNativeTarget "SwiftCurrent-IRGeneratorTests" */;
+			buildPhases = (
+				CA7B459527D196BB002EA040 /* Sources */,
+				CA7B459627D196BB002EA040 /* Frameworks */,
+				CA7B459727D196BB002EA040 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SwiftCurrent-IRGeneratorTests";
+			productName = "SwiftCurrent-IRGeneratorTests";
+			productReference = CA7B459927D196BB002EA040 /* SwiftCurrent-IRGeneratorTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		CA185E0A256DD2F3008C9143 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1220;
+				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = "WWT and Tyler Thompson";
 				TargetAttributes = {
 					CA185E11256DD2F3008C9143 = {
 						CreatedOnToolsVersion = 12.2;
+					};
+					CA7B459827D196BB002EA040 = {
+						CreatedOnToolsVersion = 13.2.1;
 					};
 				};
 			};
@@ -75,9 +121,20 @@
 			projectRoot = "";
 			targets = (
 				CA185E11256DD2F3008C9143 /* SwiftCurrentLint */,
+				CA7B459827D196BB002EA040 /* SwiftCurrent-IRGeneratorTests */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CA7B459727D196BB002EA040 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		CA0950DB256DD32400759957 /* Lint */ = {
@@ -99,6 +156,17 @@
 			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint lint ${PROJECT_DIR}\nelif which /opt/homebrew/bin/swiftlint >/dev/null; then\n  /opt/homebrew/bin/swiftlint lint ${PROJECT_DIR}\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CA7B459527D196BB002EA040 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA7B459C27D196BB002EA040 /* SwiftCurrent_IRGeneratorTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
 		CA185E17256DD2F3008C9143 /* Debug */ = {
@@ -243,6 +311,42 @@
 			};
 			name = Release;
 		};
+		CA7B459D27D196BB002EA040 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = SXUM4Q27FL;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "WWT.SwiftCurrent-IRGeneratorTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		CA7B459E27D196BB002EA040 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = SXUM4Q27FL;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "WWT.SwiftCurrent-IRGeneratorTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -260,6 +364,15 @@
 			buildConfigurations = (
 				CA185E1A256DD2F3008C9143 /* Debug */,
 				CA185E1B256DD2F3008C9143 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CA7B459F27D196BB002EA040 /* Build configuration list for PBXNativeTarget "SwiftCurrent-IRGeneratorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA7B459D27D196BB002EA040 /* Debug */,
+				CA7B459E27D196BB002EA040 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

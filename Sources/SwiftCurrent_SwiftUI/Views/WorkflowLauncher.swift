@@ -90,6 +90,15 @@ public struct WorkflowLauncher<Content: View>: View {
     /**
      Creates a base for proceeding with a `WorkflowItem`.
      - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
+     - Parameter workflow: workflow to be launched; must contain `FlowRepresentable`s of type `View`
+     */
+    public init(isLaunched: Binding<Bool>, workflow: AnyWorkflow) where Content == AnyWorkflowItem {
+        self.init(isLaunched: isLaunched, startingArgs: .none, workflow: workflow)
+    }
+
+    /**
+     Creates a base for proceeding with a `WorkflowItem`.
+     - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
      - Parameter startingArgs: arguments passed to the first loaded `FlowRepresentable` in the underlying `Workflow`.
      - Parameter workflow: workflow to be launched; must contain `FlowRepresentable`s of type `View`
      */
