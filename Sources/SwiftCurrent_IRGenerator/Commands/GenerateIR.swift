@@ -11,31 +11,6 @@ import Foundation
 import ArgumentParser
 import SwiftSyntax
 
-extension URL: ExpressibleByArgument {
-    public init?(argument: String) {
-        self.init(string: argument)
-    }
-
-    public var defaultValueDescription: String {
-        "A valid URL or valid source code"
-    }
-}
-
-enum Either<A: ExpressibleByArgument & Decodable, B: ExpressibleByArgument & Decodable>: ExpressibleByArgument, Decodable {
-    case firstChoice(A)
-    case secondChoice(B)
-
-    init?(argument: String) {
-        if let a = A(argument: argument) {
-            self = .firstChoice(a)
-        } else if let b = B(argument: argument) {
-            self = .secondChoice(b)
-        } else {
-            return nil
-        }
-    }
-}
-
 struct GenerateIR: ParsableCommand {
     fileprivate static let conformance: StaticString = "WorkflowDecodable"
 
@@ -46,7 +21,7 @@ struct GenerateIR: ParsableCommand {
         let files: [File]
         switch pathOrSourceCode {
             case .firstChoice(let url):
-                let fileURLs = getSwiftFileURLs(from: url)
+                let fileURLs = try getSwiftFileURLs(from: url)
                 files = fileURLs.compactMap { try? File(url: $0) }
             case .secondChoice(let source):
                 files = try [File(sourceCode: source)]
@@ -75,10 +50,8 @@ struct GenerateIR: ParsableCommand {
             for firstSubtype in rootNode.types {
                 checkTypeForConformance(firstSubtype, parentType: nil, conformance: conformance, objectType: objectType, typesConforming: &typesConforming)
 
-                if firstSubtype.types.containsSubTypes() {
-                    for secondSubtype in firstSubtype.types {
-                        checkTypeForConformance(secondSubtype, parentType: firstSubtype, conformance: conformance, objectType: objectType, typesConforming: &typesConforming)
-                    }
+                for secondSubtype in firstSubtype.types where firstSubtype.types.containsSubTypes() {
+                    checkTypeForConformance(secondSubtype, parentType: firstSubtype, conformance: conformance, objectType: objectType, typesConforming: &typesConforming)
                 }
             }
         }
@@ -92,65 +65,24 @@ struct GenerateIR: ParsableCommand {
             type.inheritance.contains(conformance) && type.type == objectType
 
         if conformanceCheck {
-            if typesConforming[type.type] == nil { typesConforming[type.type] = [] }
             let conforming = ConformingType(type: type, parent: parentType)
-            typesConforming[type.type]?.append(conforming)
+            typesConforming[type.type, default: []].append(conforming)
         }
     }
 
-    func getSwiftFileURLs(from directory: URL) -> [URL] {
+    func getSwiftFileURLs(from directory: URL) throws -> [URL] {
         var files = [URL]()
 
         if let enumerator = FileManager.default.enumerator(at: directory, includingPropertiesForKeys: [.isRegularFileKey], options: [.skipsHiddenFiles, .skipsPackageDescendants]) {
-            for case let fileURL as URL in enumerator {
-                do {
-                    let fileAttributes = try fileURL.resourceValues(forKeys: [.isRegularFileKey])
-                    if fileAttributes.isRegularFile! && fileURL.absoluteString.contains(".swift") {
-                        files.append(fileURL)
-                    }
-                } catch { print(error, fileURL) }
-            }
-            return files.map { filename in
-                guard let rangeOfFilePrefix = filename.relativeString.range(of: "file://") else { return URL(fileURLWithPath: filename.relativeString) }
-                return URL(fileURLWithPath: String(filename.relativeString.suffix(from: rangeOfFilePrefix.upperBound)))
+            for case let fileURL as URL in enumerator where fileURL.pathExtension == "swift" {
+                let fileAttributes = try fileURL.resourceValues(forKeys: [.isRegularFileKey])
+                if fileAttributes.isRegularFile == true {
+                    files.append(fileURL)
+                }
             }
         }
-        return []
-    }
-}
 
-struct ConformingType: Codable {
-    let name: String
-    let type: Type
-    let parent: Type?
-
-    init(type: Type, parent: Type?) {
-        self.type = type
-        self.parent = parent
-        if let parent = parent {
-            name = "\(parent.name).\(type.name)"
-        } else {
-            name = type.name
-        }
-    }
-
-    var isStructuralType: Bool {
-        switch type.type {
-            case .class:
-                return true
-            case .enum:
-                return true
-            case .extension:
-                return true
-            case .protocol:
-                return false
-            case .struct:
-                return true
-        }
-    }
-
-    var hasSubTypes: Bool {
-        !self.type.types.isEmpty
+        return files.filter(\.isFileURL)
     }
 }
 
