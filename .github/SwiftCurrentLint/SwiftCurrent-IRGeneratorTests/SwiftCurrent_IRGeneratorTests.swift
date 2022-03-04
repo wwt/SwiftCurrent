@@ -63,6 +63,106 @@ class SwiftCurrent_IRGeneratorTests: XCTestCase {
         XCTAssertEqual(IR.last?.name, "Foo")
     }
 
+    func testOnlyDetectWorkflowDecodableTypes() throws {
+        let source = """
+        struct Foo: WorkflowDecodable { }
+        struct Bar { }
+        """
+
+        let output = try shell("\(generatorCommand) \"\(source)\"")
+        let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
+
+        XCTAssertEqual(IR.count, 1)
+        XCTAssertEqual(IR.first?.name, "Foo")
+    }
+
+    func testSingleLayerOfIndirection() throws {
+        let source = """
+        protocol Foo: WorkflowDecodable { }
+        struct Bar: Foo { }
+        """
+
+        let output = try shell("\(generatorCommand) \"\(source)\"")
+        let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
+
+        XCTAssertEqual(IR.count, 1)
+        XCTAssertEqual(IR.first?.name, "Bar")
+    }
+
+    func testMultipleLayersOfIndirection() throws {
+        let source = """
+        protocol Foo: WorkflowDecodable { }
+        protocol Bar: Foo { }
+        struct Baz: Bar { }
+        """
+
+        let output = try shell("\(generatorCommand) \"\(source)\"")
+        let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
+
+        XCTAssertEqual(IR.count, 1)
+        XCTAssertEqual(IR.first?.name, "Baz")
+    }
+
+    func testSingleLayerOfNesting() throws {
+        let source = """
+        enum Foo {
+            struct Bar: WorkflowDecodable { }
+        }
+        """
+
+        let output = try shell("\(generatorCommand) \"\(source)\"")
+        let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
+
+        XCTAssertEqual(IR.count, 1)
+        XCTAssertEqual(IR.first?.name, "Foo.Bar")
+    }
+
+    func testMultipleLayersOfNesting() throws {
+        let source = """
+        enum Foo {
+            struct Bar {
+                class Baz: WorkflowDecodable { }
+            }
+        }
+        """
+
+        let output = try shell("\(generatorCommand) \"\(source)\"")
+        let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
+
+        XCTAssertEqual(IR.count, 1)
+        XCTAssertEqual(IR.first?.name, "Foo.Bar.Baz")
+    }
+
+    func testConformanceViaExtension() throws {
+        let source = """
+        struct Foo { }
+
+        extension Foo: WorkflowDecodable { }
+        """
+
+        let output = try shell("\(generatorCommand) \"\(source)\"")
+        let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
+
+        XCTAssertEqual(IR.count, 1)
+        XCTAssertEqual(IR.first?.name, "Foo")
+    }
+
+    func testConformanceViaExtension_WithNesting() throws {
+        let source = """
+        enum Foo {
+            struct Bar { }
+        }
+
+        extension Foo.Bar: WorkflowDecodable { }
+        """
+
+        let output = try shell("\(generatorCommand) \"\(source)\"")
+        let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
+
+        XCTAssertEqual(IR.count, 1)
+        XCTAssertEqual(IR.first?.name, "Foo.Bar")
+    }
+
     func testPerformance_WithASingleType() throws {
         let source = """
         struct Foo: WorkflowDecodable { }
@@ -72,6 +172,28 @@ class SwiftCurrent_IRGeneratorTests: XCTestCase {
         }
     }
 
+    func testPerformance_WithManyTypes() throws {
+        struct Structure {
+            let name: String
+            let type: String
+        }
+        func generateType() -> Structure {
+            let nominalType = ["struct", "enum", "class"].randomElement()!
+            let name: String = (Unicode.Scalar("A").value...Unicode.Scalar("Z").value)
+                .map(String.init(describing:))
+                .filter { _ in Bool.random() }
+                .joined()
+            return Structure(name: name, type: nominalType)
+        }
+        let typeDefs = (1...1000).map { _ -> String in
+            let type = generateType()
+            return "\(type.type) \(type.name): WorkflowDecodable { }"
+        }
+        let source = typeDefs.joined()
+        measure {
+            _ = try? shell("\(generatorCommand) \"\(source)\"")
+        }
+    }
 }
 
 struct IRType: Decodable {

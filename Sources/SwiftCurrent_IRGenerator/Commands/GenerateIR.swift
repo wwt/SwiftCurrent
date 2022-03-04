@@ -60,7 +60,7 @@ struct GenerateIR: ParsableCommand {
             conformingTypes.append(contentsOf: typesConformingToProtocol.flatMap(\.value))
         }
 
-        let encoded = try JSONEncoder().encode(conformingTypes)
+        let encoded = try JSONEncoder().encode(conformingTypes.lazy.filter(\.isStructuralType))
         if let jsonString = String(data: encoded, encoding: .utf8) {
             print(jsonString)
         }
@@ -131,6 +131,21 @@ struct ConformingType: Codable {
             name = "\(parent.name).\(type.name)"
         } else {
             name = type.name
+        }
+    }
+
+    var isStructuralType: Bool {
+        switch type.type {
+            case .class:
+                return true
+            case .enum:
+                return true
+            case .extension:
+                return true
+            case .protocol:
+                return false
+            case .struct:
+                return true
         }
     }
 
