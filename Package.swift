@@ -77,12 +77,6 @@ let package = Package(
                 "ViewInspector",
                 .product(name: "Algorithms", package: "swift-algorithms")
             ],
-            path: "Tests/SwiftCurrent_SwiftUITests"),
-        .testTarget(name: "SwiftCurrent-IRGeneratorTests",
-                    dependencies: [
-                        "SwiftCurrent_IRGenerator",
-                        .product(name: "SwiftSyntax", package: "swift-syntax"),
-                    ],
-                   path: "Tests/SwiftCurrent_IRGeneratorTests")
+            path: "Tests/SwiftCurrent_SwiftUITests")
     ]
 )

@@ -17,7 +17,22 @@ extension URL: ExpressibleByArgument {
     }
 
     public var defaultValueDescription: String {
-        "A valid URL"
+        "A valid URL or valid source code"
+    }
+}
+
+enum Either<A: ExpressibleByArgument & Decodable, B: ExpressibleByArgument & Decodable>: ExpressibleByArgument, Decodable {
+    case firstChoice(A)
+    case secondChoice(B)
+
+    init?(argument: String) {
+        if let a = A(argument: argument) {
+            self = .firstChoice(a)
+        } else if let b = B(argument: argument) {
+            self = .secondChoice(b)
+        } else {
+            return nil
+        }
     }
 }
 
@@ -25,20 +40,30 @@ struct GenerateIR: ParsableCommand {
     fileprivate static let conformance: StaticString = "WorkflowDecodable"
 
     @Argument(help: "The path to a directory containing swift source files with types conforming to \(Self.conformance)")
-    var directoryPath: URL
+    var pathOrSourceCode: Either<URL, String>
 
     mutating func run() throws {
-        let fileURLs = getSwiftFileURLs(from: directoryPath)
-        let files: [File] = fileURLs.compactMap { try? File(url: $0) }
+        let files: [File]
+        switch pathOrSourceCode {
+            case .firstChoice(let url):
+                let fileURLs = getSwiftFileURLs(from: url)
+                files = fileURLs.compactMap { try? File(url: $0) }
+            case .secondChoice(let source):
+                files = try [File(sourceCode: source)]
+        }
 
-        let conformingTypes = findTypesConforming(to: "\(Self.conformance)", in: files)
+        let allConformances = findTypesConforming(to: "\(Self.conformance)", in: files)
+        var conformingTypes = allConformances.filter { $0.key != .protocol }.flatMap(\.value)
 
-        try conformingTypes[.protocol]?.forEach { conformingProtocol in
+        allConformances[.protocol]?.forEach { conformingProtocol in
             let typesConformingToProtocol = findTypesConforming(to: conformingProtocol.type.name, in: files)
-            let encodedDictionary = try JSONEncoder().encode(typesConformingToProtocol)
-            if let jsonString = String(data: encodedDictionary, encoding: .utf8) {
-                print(jsonString)
-            }
+            conformingTypes.append(contentsOf: typesConformingToProtocol.flatMap(\.value))
+        }
+
+        print("FAIL")
+        let encoded = try JSONEncoder().encode(conformingTypes)
+        if let jsonString = String(data: encoded, encoding: .utf8) {
+            print(jsonString)
         }
     }
 
@@ -96,22 +121,22 @@ struct GenerateIR: ParsableCommand {
 }
 
 struct ConformingType: Codable {
+    let name: String
     let type: Type
     let parent: Type?
 
     init(type: Type, parent: Type?) {
         self.type = type
         self.parent = parent
+        if let parent = parent {
+            name = "\(parent.name).\(type.name)"
+        } else {
+            name = type.name
+        }
     }
 
     var hasSubTypes: Bool {
         !self.type.types.isEmpty
-    }
-
-    var registryDescription: String {
-        parent == nil ? // THIS IS ANTI-STYLE GUIDE
-            "- [\(type.name)]" :
-            "- [\(parent?.name ?? "").\(type.name)]"
     }
 }
 
