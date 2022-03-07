@@ -12,11 +12,16 @@ struct ConformingType: Codable {
     let name: String
     let type: Type
     let parent: Type?
+    let grandparent: Type?
 
-    init(type: Type, parent: Type?) {
+    init(type: Type, parent: Type? = nil, grandparent: Type? = nil) {
         self.type = type
         self.parent = parent
-        if let parent = parent {
+        self.grandparent = grandparent
+
+        if let grandparent = grandparent, let parent = parent {
+            name = "\(grandparent.name).\(parent.name).\(type.name)"
+        } else if let parent = parent {
             name = "\(parent.name).\(type.name)"
         } else {
             name = type.name

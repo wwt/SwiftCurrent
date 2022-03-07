@@ -55,10 +55,14 @@ struct GenerateIR: ParsableCommand {
             let rootNode = $0.results.root
 
             for firstSubtype in rootNode.types {
-                checkTypeForConformance(firstSubtype, parentType: nil, conformance: conformance, objectType: objectType, typesConforming: &typesConforming)
+                checkTypeForConformance(firstSubtype, conformance: conformance, typesConforming: &typesConforming)
 
                 for secondSubtype in firstSubtype.types {
-                    checkTypeForConformance(secondSubtype, parentType: firstSubtype, conformance: conformance, objectType: objectType, typesConforming: &typesConforming)
+                    checkTypeForConformance(secondSubtype, parent: firstSubtype, conformance: conformance, typesConforming: &typesConforming)
+
+                    for third in secondSubtype.types {
+                        checkTypeForConformance(third, parent: secondSubtype, grandparent: firstSubtype, conformance: conformance, typesConforming: &typesConforming)
+                    }
                 }
             }
         }
@@ -66,13 +70,9 @@ struct GenerateIR: ParsableCommand {
         return typesConforming
     }
 
-    func checkTypeForConformance(_ type: Type, parentType: Type?, conformance: String, objectType: Type.ObjectType?, typesConforming: inout [Type.ObjectType: [ConformingType]]) {
-        let conformanceCheck = objectType == nil ? // THIS IS ANTI-STYLE GUIDE
-            type.inheritance.contains(conformance) :
-            type.inheritance.contains(conformance) && type.type == objectType
-
-        if conformanceCheck {
-            let conforming = ConformingType(type: type, parent: parentType)
+    func checkTypeForConformance(_ type: Type, parent: Type? = nil, grandparent: Type? = nil, conformance: String, typesConforming: inout [Type.ObjectType: [ConformingType]]) {
+        if type.inheritance.contains(conformance) {
+            let conforming = ConformingType(type: type, parent: parent, grandparent: grandparent)
             typesConforming[type.type, default: []].append(conforming)
         }
     }
