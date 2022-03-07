@@ -29,10 +29,17 @@ struct GenerateIR: ParsableCommand {
 
         let allConformances = findTypesConforming(to: "\(Self.conformance)", in: files)
         var conformingTypes = allConformances.flatMap(\.value)
+        var secondLevelConformances: [ConformingType] = []
 
-        allConformances[.protocol]?.forEach { conformingProtocol in
-            let typesConformingToProtocol = findTypesConforming(to: conformingProtocol.type.name, in: files)
-            conformingTypes.append(contentsOf: typesConformingToProtocol.flatMap(\.value))
+        for conformingType in conformingTypes {
+            let typesConforming = findTypesConforming(to: conformingType.type.name, in: files)
+            secondLevelConformances.append(contentsOf: typesConforming.flatMap(\.value))
+            conformingTypes.append(contentsOf: typesConforming.flatMap(\.value))
+        }
+
+        for conformingType in secondLevelConformances {
+            let types = findTypesConforming(to: conformingType.type.name, in: files)
+            conformingTypes.append(contentsOf: types.flatMap(\.value))
         }
 
         let encoded = try JSONEncoder().encode(conformingTypes.lazy.filter(\.isStructuralType))
@@ -50,7 +57,7 @@ struct GenerateIR: ParsableCommand {
             for firstSubtype in rootNode.types {
                 checkTypeForConformance(firstSubtype, parentType: nil, conformance: conformance, objectType: objectType, typesConforming: &typesConforming)
 
-                for secondSubtype in firstSubtype.types where firstSubtype.types.containsSubTypes() {
+                for secondSubtype in firstSubtype.types {
                     checkTypeForConformance(secondSubtype, parentType: firstSubtype, conformance: conformance, objectType: objectType, typesConforming: &typesConforming)
                 }
             }
