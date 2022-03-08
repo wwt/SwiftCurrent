@@ -628,12 +628,12 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
 
         let view = try await MainActor.run { Wrapper() }.hostAndInspect(with: \.inspection)
         let stack = try view.vStack()
-        let workflowView = try stack.view(WorkflowView<WorkflowLauncher<WorkflowItem<FR1, Never, FR1>>>.self, 1)
-        let launcher = try workflowView.view(WorkflowLauncher<WorkflowItem<FR1, Never, FR1>>.self)
+        let workflowView = try stack.view(WorkflowView<WorkflowLauncher<WorkflowItem<FR1, FR1>>>.self, 1)
+        let launcher = try workflowView.view(WorkflowLauncher<WorkflowItem<FR1, FR1>>.self)
 
-        XCTAssertThrowsError(try launcher.view(WorkflowItem<FR1, Never, FR1>.self))
+        XCTAssertThrowsError(try launcher.view(WorkflowItem<FR1, FR1>.self))
         XCTAssertNoThrow(try stack.button(0).tap())
-        XCTAssertNoThrow(try launcher.view(WorkflowItem<FR1, Never, FR1>.self))
+        XCTAssertNoThrow(try launcher.view(WorkflowItem<FR1, FR1>.self))
     }
 
     func testWorkflowCanBeEmbeddedInNavView() async throws {
@@ -647,7 +647,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
             }.embedInNavigationView()
         }.hostAndInspect(with: \.inspection)
 
-        XCTAssertNoThrow(try viewUnderTest.view(WorkflowLauncher<WorkflowItem<FR1, Never, FR1>>.self).navigationView())
+        XCTAssertNoThrow(try viewUnderTest.view(WorkflowLauncher<WorkflowItem<FR1, FR1>>.self).navigationView())
         XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
     }
 
