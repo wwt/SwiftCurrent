@@ -613,11 +613,10 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             WorkflowItem(FR1.self)
         }
 
-        typealias WorkflowViewContent = State<WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>>
+        typealias WorkflowViewContent = State<WorkflowLauncher<WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>>>
         let content = try XCTUnwrap(Mirror(reflecting: workflowView).descendant("_content") as? WorkflowViewContent)
-
         // Note: Only add to these exceptions if you are *certain* the property should not be @State. Err on the side of the property being @State
-        let exceptions = ["_model", "_launcher", "_location", "_value", "inspection", "_presentation"]
+        let exceptions = ["_model", "_launcher", "_location", "_value", "inspection", "_presentation", "_isLaunched"]
 
         let mirror = Mirror(reflecting: content.wrappedValue)
 
@@ -655,7 +654,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         let wrapper = try await MainActor.run { Wrapper() }.hostAndInspect(with: \.inspection)
 
         let stack = try wrapper.vStack()
-        let launcher = try stack.view(WorkflowLauncher<WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>>.self, 1)
+        let launcher = try stack.view(WorkflowView<WorkflowLauncher<WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>>>.self, 1).view(WorkflowLauncher<WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>>.self)
         XCTAssertThrowsError(try launcher.view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self))
         XCTAssertNoThrow(try stack.button(0).tap())
         XCTAssertNoThrow(try launcher.view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self))
