@@ -55,10 +55,6 @@ You can install via Homebrew:
 
 `brew install swiftlint`
 
-via CocoaPods:
-
-`pod 'SwiftLint'`
-
 and [many other ways](https://github.com/realm/SwiftLint#installation).
 
 ## Test Etiquette
