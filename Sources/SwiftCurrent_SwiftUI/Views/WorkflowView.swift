@@ -6,9 +6,6 @@
 //  Copyright © 2022 WWT and Tyler Thompson. All rights reserved.
 //  
 
-#warning("FIXME")
-// swiftlint:disable all
-
 import SwiftUI
 import SwiftCurrent
 
@@ -21,21 +18,21 @@ import SwiftCurrent
  #### Example
  ```swift
  WorkflowView(isLaunched: $isLaunched.animation(), launchingWith: "String in") {
- WorkflowItem(FirstView.self)
- .applyModifiers {
- $0.background(Color.gray)
- .transition(.slide)
- .animation(.spring())
- }
- WorkflowItem(SecondView.self)
- .persistence(.removedAfterProceeding)
- .applyModifiers {
- $0.SecondViewSpecificModifier()
- .padding(10)
- .background(Color.purple)
- .transition(.opacity)
- .animation(.easeInOut)
- }
+     WorkflowItem(FirstView.self)
+         .applyModifiers {
+             $0.background(Color.gray)
+             .transition(.slide)
+             .animation(.spring())
+         }
+     WorkflowItem(SecondView.self)
+         .persistence(.removedAfterProceeding)
+         .applyModifiers {
+             $0.SecondViewSpecificModifier()
+             .padding(10)
+             .background(Color.purple)
+             .transition(.opacity)
+             .animation(.easeInOut)
+         }
  }
  .onAbandon { print("isLaunched is now false") }
  .onFinish { args in print("Finished 1: \(args)") }

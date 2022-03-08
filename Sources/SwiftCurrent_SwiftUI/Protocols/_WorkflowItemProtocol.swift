@@ -13,8 +13,6 @@ import SwiftCurrent
 public protocol _WorkflowItemProtocol: View where F: FlowRepresentable & View, /*Wrapped: _WorkflowItemProtocol,*/ Content: View {
     associatedtype F
     associatedtype Content
-
-    init?()
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)

@@ -11,8 +11,6 @@ import SwiftCurrent
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowGroup<Content: _WorkflowItemProtocol>: View, _WorkflowItemProtocol {
-    public init?() { nil }
-
     public typealias F = Content.F // swiftlint:disable:this type_name
 
     public typealias Content = Content.Content
