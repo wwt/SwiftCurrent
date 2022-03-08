@@ -27,136 +27,136 @@ extension View {
      - Parameter with: a `FlowRepresentable` type that should be presented.
      - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
      */
-    public func thenProceed<FR: FlowRepresentable & View>(with: FR.Type) -> WorkflowItem<FR, Never, FR> {
-        WorkflowItem(FR.self)
+    public func thenProceed<FR: FlowRepresentable & View>(with: FR.Type) -> WorkflowItemWrapper<WorkflowItem<FR, FR>, Never> {
+        .init(content: WorkflowItem(FR.self))
     }
 
-    /**
-     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
-     - Parameter with: a `FlowRepresentable` type that should be presented.
-     - Parameter nextItem: a closure returning the next item in the `Workflow`.
-     - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
-     */
-    public func thenProceed<FR: FlowRepresentable & View, F, W, C>(with: FR.Type, nextItem: () -> WorkflowItem<F, W, C>) -> WorkflowItem<FR, WorkflowItem<F, W, C>, FR> {
-        verifyWorkflowIsWellFormed(FR.self, F.self)
-        return WorkflowItem(FR.self) { nextItem() }
-    }
-
-    #if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)
-    /**
-     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
-     - Parameter with: a `FlowRepresentable` type that should be presented.
-     - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
-     */
-    @available(iOS 14.0, macOS 11, tvOS 14.0, *)
-    public func thenProceed<VC: FlowRepresentable & UIViewController>(with: VC.Type) -> WorkflowItem<ViewControllerWrapper<VC>, Never, ViewControllerWrapper<VC>> {
-        WorkflowItem(VC.self)
-    }
-
-    /**
-     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
-     - Parameter with: a `FlowRepresentable` type that should be presented.
-     - Parameter nextItem: a closure returning the next item in the `Workflow`.
-     - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
-     */
-    @available(iOS 14.0, macOS 11, tvOS 14.0, *)
-    public func thenProceed<VC: FlowRepresentable & UIViewController, F, W, C>(with: VC.Type, nextItem: () -> WorkflowItem<F, W, C>) -> WorkflowItem<ViewControllerWrapper<VC>, WorkflowItem<F, W, C>, ViewControllerWrapper<VC>> {
-        verifyWorkflowIsWellFormed(VC.self, F.self)
-        return WorkflowItem(VC.self) { nextItem() }
-    }
-    #endif
+//    /**
+//     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
+//     - Parameter with: a `FlowRepresentable` type that should be presented.
+//     - Parameter nextItem: a closure returning the next item in the `Workflow`.
+//     - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
+//     */
+//    public func thenProceed<FR: FlowRepresentable & View, F, W, C>(with: FR.Type, nextItem: () -> WorkflowItem<F, W, C>) -> WorkflowItem<FR, WorkflowItem<F, W, C>, FR> {
+//        verifyWorkflowIsWellFormed(FR.self, F.self)
+//        return WorkflowItem(FR.self) { nextItem() }
+//    }
+//
+//    #if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)
+//    /**
+//     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
+//     - Parameter with: a `FlowRepresentable` type that should be presented.
+//     - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
+//     */
+//    @available(iOS 14.0, macOS 11, tvOS 14.0, *)
+//    public func thenProceed<VC: FlowRepresentable & UIViewController>(with: VC.Type) -> WorkflowItem<ViewControllerWrapper<VC>, Never, ViewControllerWrapper<VC>> {
+//        WorkflowItem(VC.self)
+//    }
+//
+//    /**
+//     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
+//     - Parameter with: a `FlowRepresentable` type that should be presented.
+//     - Parameter nextItem: a closure returning the next item in the `Workflow`.
+//     - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
+//     */
+//    @available(iOS 14.0, macOS 11, tvOS 14.0, *)
+//    public func thenProceed<VC: FlowRepresentable & UIViewController, F, W, C>(with: VC.Type, nextItem: () -> WorkflowItem<F, W, C>) -> WorkflowItem<ViewControllerWrapper<VC>, WorkflowItem<F, W, C>, ViewControllerWrapper<VC>> {
+//        verifyWorkflowIsWellFormed(VC.self, F.self)
+//        return WorkflowItem(VC.self) { nextItem() }
+//    }
+//    #endif
 }
 
-@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-extension App {
-    /**
-     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
-     - Parameter with: a `FlowRepresentable` type that should be presented.
-     - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
-     */
-    public func thenProceed<FR: FlowRepresentable & View>(with: FR.Type) -> WorkflowItem<FR, Never, FR> {
-        WorkflowItem(FR.self)
-    }
-
-    /**
-     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
-     - Parameter with: a `FlowRepresentable` type that should be presented.
-     - Parameter nextItem: a closure returning the next item in the `Workflow`.
-     - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
-     */
-    public func thenProceed<FR: FlowRepresentable & View, F, W, C>(with: FR.Type, nextItem: () -> WorkflowItem<F, W, C>) -> WorkflowItem<FR, WorkflowItem<F, W, C>, FR> {
-        verifyWorkflowIsWellFormed(FR.self, F.self)
-        return WorkflowItem(FR.self) { nextItem() }
-    }
-
-    #if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)
-    /**
-     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
-     - Parameter with: a `FlowRepresentable` type that should be presented.
-     - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
-     */
-    @available(iOS 14.0, macOS 11, tvOS 14.0, *)
-    public func thenProceed<VC: FlowRepresentable & UIViewController>(with: VC.Type) -> WorkflowItem<ViewControllerWrapper<VC>, Never, ViewControllerWrapper<VC>> {
-        WorkflowItem(VC.self)
-    }
-
-    /**
-     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
-     - Parameter with: a `FlowRepresentable` type that should be presented.
-     - Parameter nextItem: a closure returning the next item in the `Workflow`.
-     - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
-     */
-    @available(iOS 14.0, macOS 11, tvOS 14.0, *)
-    public func thenProceed<VC: FlowRepresentable & UIViewController, F, W, C>(with: VC.Type, nextItem: () -> WorkflowItem<F, W, C>) -> WorkflowItem<ViewControllerWrapper<VC>, WorkflowItem<F, W, C>, ViewControllerWrapper<VC>> {
-        verifyWorkflowIsWellFormed(VC.self, F.self)
-        return WorkflowItem(VC.self) { nextItem() }
-    }
-    #endif
-}
-
-@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-extension Scene {
-    /**
-     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
-     - Parameter with: a `FlowRepresentable` type that should be presented.
-     - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
-     */
-    public func thenProceed<FR: FlowRepresentable & View>(with: FR.Type) -> WorkflowItem<FR, Never, FR> {
-        WorkflowItem(FR.self)
-    }
-
-    /**
-     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
-     - Parameter with: a `FlowRepresentable` type that should be presented.
-     - Parameter nextItem: a closure returning the next item in the `Workflow`.
-     - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
-     */
-    public func thenProceed<FR: FlowRepresentable & View, F, W, C>(with: FR.Type, nextItem: () -> WorkflowItem<F, W, C>) -> WorkflowItem<FR, WorkflowItem<F, W, C>, FR> {
-        verifyWorkflowIsWellFormed(FR.self, F.self)
-        return WorkflowItem(FR.self) { nextItem() }
-    }
-
-    #if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)
-    /**
-     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
-     - Parameter with: a `FlowRepresentable` type that should be presented.
-     - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
-     */
-    @available(iOS 14.0, macOS 11, tvOS 14.0, *)
-    public func thenProceed<VC: FlowRepresentable & UIViewController>(with: VC.Type) -> WorkflowItem<ViewControllerWrapper<VC>, Never, ViewControllerWrapper<VC>> {
-        WorkflowItem(VC.self)
-    }
-
-    /**
-     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
-     - Parameter with: a `FlowRepresentable` type that should be presented.
-     - Parameter nextItem: a closure returning the next item in the `Workflow`.
-     - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
-     */
-    @available(iOS 14.0, macOS 11, tvOS 14.0, *)
-    public func thenProceed<VC: FlowRepresentable & UIViewController, F, W, C>(with: VC.Type, nextItem: () -> WorkflowItem<F, W, C>) -> WorkflowItem<ViewControllerWrapper<VC>, WorkflowItem<F, W, C>, ViewControllerWrapper<VC>> {
-        verifyWorkflowIsWellFormed(VC.self, F.self)
-        return WorkflowItem(VC.self) { nextItem() }
-    }
-    #endif
-}
+//@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+//extension App {
+//    /**
+//     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
+//     - Parameter with: a `FlowRepresentable` type that should be presented.
+//     - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
+//     */
+//    public func thenProceed<FR: FlowRepresentable & View>(with: FR.Type) -> WorkflowItem<FR, Never, FR> {
+//        WorkflowItem(FR.self)
+//    }
+//
+//    /**
+//     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
+//     - Parameter with: a `FlowRepresentable` type that should be presented.
+//     - Parameter nextItem: a closure returning the next item in the `Workflow`.
+//     - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
+//     */
+//    public func thenProceed<FR: FlowRepresentable & View, F, W, C>(with: FR.Type, nextItem: () -> WorkflowItem<F, W, C>) -> WorkflowItem<FR, WorkflowItem<F, W, C>, FR> {
+//        verifyWorkflowIsWellFormed(FR.self, F.self)
+//        return WorkflowItem(FR.self) { nextItem() }
+//    }
+//
+//    #if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)
+//    /**
+//     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
+//     - Parameter with: a `FlowRepresentable` type that should be presented.
+//     - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
+//     */
+//    @available(iOS 14.0, macOS 11, tvOS 14.0, *)
+//    public func thenProceed<VC: FlowRepresentable & UIViewController>(with: VC.Type) -> WorkflowItem<ViewControllerWrapper<VC>, Never, ViewControllerWrapper<VC>> {
+//        WorkflowItem(VC.self)
+//    }
+//
+//    /**
+//     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
+//     - Parameter with: a `FlowRepresentable` type that should be presented.
+//     - Parameter nextItem: a closure returning the next item in the `Workflow`.
+//     - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
+//     */
+//    @available(iOS 14.0, macOS 11, tvOS 14.0, *)
+//    public func thenProceed<VC: FlowRepresentable & UIViewController, F, W, C>(with: VC.Type, nextItem: () -> WorkflowItem<F, W, C>) -> WorkflowItem<ViewControllerWrapper<VC>, WorkflowItem<F, W, C>, ViewControllerWrapper<VC>> {
+//        verifyWorkflowIsWellFormed(VC.self, F.self)
+//        return WorkflowItem(VC.self) { nextItem() }
+//    }
+//    #endif
+//}
+//
+//@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+//extension Scene {
+//    /**
+//     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
+//     - Parameter with: a `FlowRepresentable` type that should be presented.
+//     - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
+//     */
+//    public func thenProceed<FR: FlowRepresentable & View>(with: FR.Type) -> WorkflowItem<FR, Never, FR> {
+//        WorkflowItem(FR.self)
+//    }
+//
+//    /**
+//     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
+//     - Parameter with: a `FlowRepresentable` type that should be presented.
+//     - Parameter nextItem: a closure returning the next item in the `Workflow`.
+//     - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
+//     */
+//    public func thenProceed<FR: FlowRepresentable & View, F, W, C>(with: FR.Type, nextItem: () -> WorkflowItem<F, W, C>) -> WorkflowItem<FR, WorkflowItem<F, W, C>, FR> {
+//        verifyWorkflowIsWellFormed(FR.self, F.self)
+//        return WorkflowItem(FR.self) { nextItem() }
+//    }
+//
+//    #if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)
+//    /**
+//     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
+//     - Parameter with: a `FlowRepresentable` type that should be presented.
+//     - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
+//     */
+//    @available(iOS 14.0, macOS 11, tvOS 14.0, *)
+//    public func thenProceed<VC: FlowRepresentable & UIViewController>(with: VC.Type) -> WorkflowItem<ViewControllerWrapper<VC>, Never, ViewControllerWrapper<VC>> {
+//        WorkflowItem(VC.self)
+//    }
+//
+//    /**
+//     Adds an item to the workflow; enforces the `FlowRepresentable.WorkflowOutput` of the previous item matches the args that will be passed forward.
+//     - Parameter with: a `FlowRepresentable` type that should be presented.
+//     - Parameter nextItem: a closure returning the next item in the `Workflow`.
+//     - Returns: a new `WorkflowItem` with the additional `FlowRepresentable` item.
+//     */
+//    @available(iOS 14.0, macOS 11, tvOS 14.0, *)
+//    public func thenProceed<VC: FlowRepresentable & UIViewController, F, W, C>(with: VC.Type, nextItem: () -> WorkflowItem<F, W, C>) -> WorkflowItem<ViewControllerWrapper<VC>, WorkflowItem<F, W, C>, ViewControllerWrapper<VC>> {
+//        verifyWorkflowIsWellFormed(VC.self, F.self)
+//        return WorkflowItem(VC.self) { nextItem() }
+//    }
+//    #endif
+//}

@@ -24,8 +24,10 @@ struct SwiftUIExampleApp: App {
                 WorkflowView {
                    WorkflowItem(SwiftCurrentOnboarding.self)
                         .applyModifiers { $0.transition(.slide) }
-                    WorkflowItem(ContentView.self)
-                        .applyModifiers { $0.transition(.slide) }
+                    WorkflowGroup {
+                        WorkflowItem(ContentView.self)
+                            .applyModifiers { $0.transition(.slide) }
+                    }
                 }
                 .preferredColorScheme(.dark)
             }

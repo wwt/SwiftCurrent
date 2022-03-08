@@ -116,9 +116,9 @@ struct SwiftCurrentOnboarding: View, PassthroughFlowRepresentable {
         }.onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 
-    func shouldLoad() -> Bool {
-        !onboardedToSwiftCurrent
-    }
+//    func shouldLoad() -> Bool {
+//        !onboardedToSwiftCurrent
+//    }
 }
 
 extension SwiftCurrentOnboarding {
