@@ -31,8 +31,8 @@ extension View where Self: Inspectable {
 
 @available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension InspectableView where View: CustomViewType & SingleViewContent {
-    func extractWorkflowLauncher<F, W, C>() async throws -> InspectableView<ViewType.View<WorkflowLauncher<WorkflowItem<F, W, C>>>> where View.T == WorkflowView<WorkflowLauncher<WorkflowItem<F, W, C>>> {
-        let actual = try view(WorkflowLauncher<WorkflowItem<F, W, C>>.self).actualView()
+    func extractWorkflowLauncher<WI>() async throws -> InspectableView<ViewType.View<WorkflowLauncher<WI>>> where View.T == WorkflowView<WorkflowLauncher<WI>> {
+        let actual = try view(WorkflowLauncher<WI>.self).actualView()
 
         DispatchQueue.main.async {
             ViewHosting.host(view: actual)
@@ -41,11 +41,11 @@ extension InspectableView where View: CustomViewType & SingleViewContent {
         return try await actual.inspection.inspect()
     }
 
-    func extractWorkflowItem<F, W, C>() async throws -> InspectableView<ViewType.View<WorkflowItem<F, W, C>>> where View.T == WorkflowLauncher<WorkflowItem<F, W, C>> {
+    func extractWorkflowItemWrapper<C, W>() async throws -> InspectableView<ViewType.View<WorkflowItemWrapper<C, W>>> where View.T == WorkflowLauncher<WorkflowItemWrapper<C, W>> {
         let mirror = Mirror(reflecting: try actualView())
         let model = try XCTUnwrap(mirror.descendant("_model") as? StateObject<WorkflowViewModel>)
         let launcher = try XCTUnwrap(mirror.descendant("_launcher") as? StateObject<Launcher>)
-        let actual = try view(WorkflowItem<F, W, C>.self).actualView()
+        let actual = try view(WorkflowItemWrapper<C, W>.self).actualView()
 
         DispatchQueue.main.async {
             ViewHosting.host(view: actual
@@ -56,7 +56,7 @@ extension InspectableView where View: CustomViewType & SingleViewContent {
         return try await actual.inspection.inspect()
     }
 
-    func extractWrappedWorkflowItem<F, W, C, PF, PC>() async throws -> InspectableView<ViewType.View<WorkflowItem<F, W, C>>> where View.T == WorkflowItem<PF, WorkflowItem<F, W, C>, PC> {
+    func extractWrappedWrapper<C, C1, W1>() async throws -> InspectableView<ViewType.View<WorkflowItemWrapper<C1, W1>>> where View.T == WorkflowItemWrapper<C, WorkflowItemWrapper<C1, W1>> {
         let wrapped = try await actualView().getWrappedView()
         let mirror = Mirror(reflecting: try actualView())
         let model = try XCTUnwrap(mirror.descendant("_model") as? EnvironmentObject<WorkflowViewModel>)

@@ -141,17 +141,17 @@ public struct WorkflowItem<F: FlowRepresentable & View, Content: View>: _Workflo
 //        _wrapped = State(initialValue: wrapped())
 //    }
 
-//    #if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)
-//    /// Creates a `WorkflowItem` from a `UIViewController`.
-//    @available(iOS 14.0, macOS 11, tvOS 14.0, *)
-//    init<VC: FlowRepresentable & UIViewController>(_: VC.Type) where Content == ViewControllerWrapper<VC>, Wrapped == Never, F == ViewControllerWrapper<VC> {
-//        let metadata = FlowRepresentableMetadata(ViewControllerWrapper<VC>.self,
-//                                                 launchStyle: .new,
-//                                                 flowPersistence: flowPersistenceClosure,
-//                                                 flowRepresentableFactory: factory)
-//        _metadata = State(initialValue: metadata)
-//    }
-//
+    #if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)
+    /// Creates a `WorkflowItem` from a `UIViewController`.
+    @available(iOS 14.0, macOS 11, tvOS 14.0, *)
+    init<VC: FlowRepresentable & UIViewController>(_: VC.Type) where Content == ViewControllerWrapper<VC>, /*Wrapped == Never,*/ F == ViewControllerWrapper<VC> {
+        let metadata = FlowRepresentableMetadata(ViewControllerWrapper<VC>.self,
+                                                 launchStyle: .new,
+                                                 flowPersistence: flowPersistenceClosure,
+                                                 flowRepresentableFactory: factory)
+        _metadata = State(initialValue: metadata)
+    }
+
 //    /// Creates a `WorkflowItem` from a `UIViewController`.
 //    @available(iOS 14.0, macOS 11, tvOS 14.0, *)
 //    init<VC: FlowRepresentable & UIViewController>(_: VC.Type, wrapped: () -> Wrapped) where Content == ViewControllerWrapper<VC>, F == ViewControllerWrapper<VC> {
@@ -163,7 +163,7 @@ public struct WorkflowItem<F: FlowRepresentable & View, Content: View>: _Workflo
 //                                                 flowRepresentableFactory: factory)
 //        _metadata = State(initialValue: metadata)
 //    }
-//    #endif
+    #endif
 
     /**
      Provides a way to apply modifiers to your `FlowRepresentable` view.

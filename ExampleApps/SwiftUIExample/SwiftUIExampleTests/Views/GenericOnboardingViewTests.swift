@@ -40,7 +40,7 @@ final class GenericOnboardingViewTests: XCTestCase, View {
         }
             .content
             .hostAndInspect(with: \.inspection)
-            .extractWorkflowItem()
+            .extractWorkflowItemWrapper()
 
         XCTAssertNoThrow(try launcher.find(ViewType.Text.self))
         XCTAssertEqual(try launcher.find(ViewType.Text.self).string(), self.defaultModel.featureTitle)

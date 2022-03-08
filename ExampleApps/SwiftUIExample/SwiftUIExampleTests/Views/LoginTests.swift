@@ -48,7 +48,7 @@ final class LoginTests: XCTestCase, View, WorkflowTestingReceiver {
         }
             .content
             .hostAndInspect(with: \.inspection)
-            .extractWorkflowItem()
+            .extractWorkflowItemWrapper()
 
         XCTAssertNoThrow(try view.findLoginButton().tap())
 

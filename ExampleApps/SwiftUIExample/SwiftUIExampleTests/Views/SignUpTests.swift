@@ -33,7 +33,7 @@ final class SignUpTests: XCTestCase, View {
         }
             .content
             .hostAndInspect(with: \.inspection)
-            .extractWorkflowItem()
+            .extractWorkflowItemWrapper()
 
         XCTAssertNoThrow(try launcher.findProceedButton().tap())
         wait(for: [workflowFinished], timeout: TestConstant.timeout)

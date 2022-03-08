@@ -34,7 +34,7 @@ final class QRScannerFeatureOnboardingViewTests: XCTestCase, View {
         }
             .content
             .hostAndInspect(with: \.inspection)
-            .extractWorkflowItem()
+            .extractWorkflowItemWrapper()
 
         XCTAssertNoThrow(try launcher.find(ViewType.Text.self))
         XCTAssertEqual(try launcher.find(ViewType.Text.self).string(), "Learn about our awesome QR scanning feature!")

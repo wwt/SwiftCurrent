@@ -33,7 +33,7 @@ final class TermsAndConditionsTests: XCTestCase, View {
         }
             .content
             .hostAndInspect(with: \.inspection)
-            .extractWorkflowItem()
+            .extractWorkflowItemWrapper()
 
         let primaryButton = try launcher.find(PrimaryButton.self) // ToS should have a primary call to accept
         XCTAssertEqual(try primaryButton.find(ViewType.Text.self).string(), "Accept")
@@ -55,7 +55,7 @@ final class TermsAndConditionsTests: XCTestCase, View {
         }
             .content
             .hostAndInspect(with: \.inspection)
-            .extractWorkflowItem()
+            .extractWorkflowItemWrapper()
 
         let secondaryButton = try launcher.find(SecondaryButton.self) // ToS sould have a secondary call to decline
         XCTAssertEqual(try secondaryButton.find(ViewType.Text.self).string(), "Decline")

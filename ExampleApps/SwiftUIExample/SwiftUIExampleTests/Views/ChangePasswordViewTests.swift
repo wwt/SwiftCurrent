@@ -36,7 +36,7 @@ final class ChangePasswordViewTests: XCTestCase, View {
         }
             .content
             .hostAndInspect(with: \.inspection)
-            .extractWorkflowItem()
+            .extractWorkflowItemWrapper()
 
         XCTAssertNoThrow(try view.find(ViewType.SecureField.self).setInput(currentPassword))
         XCTAssertNoThrow(try view.find(ViewType.SecureField.self, skipFound: 1).setInput("asdfF1"))

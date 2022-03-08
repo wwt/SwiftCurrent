@@ -32,7 +32,7 @@ final class AccountInformationViewTests: XCTestCase, WorkflowTestingReceiver {
         Self.workflowLaunchedData.removeAll()
     }
 
-    private typealias MFAViewWorkflowView = WorkflowLauncher<WorkflowItem<MFAView, Never, MFAView>>
+    private typealias MFAViewWorkflowView = WorkflowLauncher<WorkflowItemWrapper<WorkflowItem<MFAView, MFAView>, Never>>
 
     func testUpdatedAccountInformationView() async throws {
         let view = try await AccountInformationView().hostAndInspect(with: \.inspection)

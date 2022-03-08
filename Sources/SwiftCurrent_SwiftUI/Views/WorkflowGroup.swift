@@ -17,8 +17,11 @@ public struct WorkflowGroup<Content: _WorkflowItemProtocol>: View, _WorkflowItem
 
     @State var content: Content
 
+    let inspection = Inspection<Self>()
+
     public var body: some View {
         content
+            .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 
     public init(@WorkflowBuilder content: () -> Content) {

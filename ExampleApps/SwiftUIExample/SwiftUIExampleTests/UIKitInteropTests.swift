@@ -31,10 +31,10 @@ final class UIKitInteropTests: XCTestCase, View {
         }
             .content
             .hostAndInspect(with: \.inspection)
-            .extractWorkflowItem()
+            .extractWorkflowItemWrapper()
 
         try await MainActor.run {
-            let wrapper = try launcher.view(ViewControllerWrapper<UIKitInteropProgrammaticViewController>.self)
+            let wrapper = try launcher.find(ViewControllerWrapper<UIKitInteropProgrammaticViewController>.self)
             let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<UIKitInteropProgrammaticViewController>>.self)
             var vc = try wrapper.actualView().makeUIViewController(context: context)
             vc.removeFromParent()
@@ -59,8 +59,6 @@ final class UIKitInteropTests: XCTestCase, View {
     }
 
     func testPuttingAUIKitViewInsideASwiftUIWorkflowWithOtherSwiftUIViews() async throws {
-        throw XCTSkip("Danger will robinson")
-        #warning("no idea what sorcery this takes to make it pass")
         struct FR1: View, FlowRepresentable, Inspectable {
             weak var _workflowPointer: AnyFlowRepresentable?
             let str: String
@@ -78,10 +76,10 @@ final class UIKitInteropTests: XCTestCase, View {
         }
             .content
             .hostAndInspect(with: \.inspection)
-            .extractWorkflowItem()
+            .extractWorkflowItemWrapper()
 
         try await MainActor.run {
-            let wrapper = try launcher.view(ViewControllerWrapper<UIKitInteropProgrammaticViewController>.self)
+            let wrapper = try launcher.find(ViewControllerWrapper<UIKitInteropProgrammaticViewController>.self)
             let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<UIKitInteropProgrammaticViewController>>.self)
             let vc = try wrapper.actualView().makeUIViewController(context: context)
             vc.removeFromParent()
@@ -127,10 +125,10 @@ final class UIKitInteropTests: XCTestCase, View {
         }
             .content
             .hostAndInspect(with: \.inspection)
-            .extractWorkflowItem()
+            .extractWorkflowItemWrapper()
 
         try await MainActor.run {
-            let wrapper = try workflowView.view(ViewControllerWrapper<FR1>.self)
+            let wrapper = try workflowView.find(ViewControllerWrapper<FR1>.self)
 
             let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<FR1>>.self)
             var vc = try wrapper.actualView().makeUIViewController(context: context)
@@ -195,10 +193,10 @@ final class UIKitInteropTests: XCTestCase, View {
         }
             .content
             .hostAndInspect(with: \.inspection)
-            .extractWorkflowItem()
+            .extractWorkflowItemWrapper()
 
         try await MainActor.run {
-            let wrapper = try launcher.view(ViewControllerWrapper<TestInputViewController>.self)
+            let wrapper = try launcher.find(ViewControllerWrapper<TestInputViewController>.self)
             let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<TestInputViewController>>.self)
             var vc = try wrapper.actualView().makeUIViewController(context: context)
 
@@ -226,10 +224,10 @@ final class UIKitInteropTests: XCTestCase, View {
         }
             .content
             .hostAndInspect(with: \.inspection)
-            .extractWorkflowItem()
+            .extractWorkflowItemWrapper()
 
         try await MainActor.run {
-            let wrapper = try launcher.view(ViewControllerWrapper<TestNoInputViewController>.self)
+            let wrapper = try launcher.find(ViewControllerWrapper<TestNoInputViewController>.self)
             let context = unsafeBitCast(FakeContext(), to: UIViewControllerRepresentableContext<ViewControllerWrapper<TestNoInputViewController>>.self)
             var vc = try wrapper.actualView().makeUIViewController(context: context)
 
@@ -270,7 +268,7 @@ final class UIKitInteropTests: XCTestCase, View {
         }
             .content
             .hostAndInspect(with: \.inspection)
-            .extractWorkflowItem()
+            .extractWorkflowItemWrapper()
 
         XCTAssertThrowsError(try launcher.view(ViewControllerWrapper<FR1>.self))
         XCTAssertEqual(try launcher.find(FR2.self).text().string(), "FR2")
