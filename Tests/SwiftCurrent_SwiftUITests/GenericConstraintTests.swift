@@ -70,7 +70,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgument) {
                 WorkflowItem(FR1.self)
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -138,7 +138,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView {
                 WorkflowItem(FR1.self)
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
         try await workflowView.find(FR1.self).proceedInWorkflow()
@@ -158,7 +158,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView {
                 WorkflowItem(FR1.self).persistence(.removedAfterProceeding)
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -180,7 +180,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView {
                 WorkflowItem(FR1.self).persistence { .removedAfterProceeding }
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -203,7 +203,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView {
                 WorkflowItem(FR1.self)
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -225,7 +225,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView {
                 WorkflowItem(FR1.self).persistence(.removedAfterProceeding)
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -248,7 +248,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView {
                 WorkflowItem(FR1.self).persistence { .removedAfterProceeding }
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -272,7 +272,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView {
                 WorkflowItem(FR1.self)
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -295,7 +295,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView {
                 WorkflowItem(FR1.self).persistence(.removedAfterProceeding)
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -319,7 +319,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView {
                 WorkflowItem(FR1.self).persistence { .removedAfterProceeding }
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -403,7 +403,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR1.self)
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -427,7 +427,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR1.self).persistence(.removedAfterProceeding)
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -455,7 +455,7 @@ final class GenericConstraintTests: XCTestCase, View {
                     XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
                     return .removedAfterProceeding
                 }
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -481,7 +481,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR1.self)
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -506,7 +506,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR1.self).persistence(.removedAfterProceeding)
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -535,7 +535,7 @@ final class GenericConstraintTests: XCTestCase, View {
                     XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
                     return .removedAfterProceeding
                 }
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -562,7 +562,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR1.self)
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -588,7 +588,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR1.self).persistence(.removedAfterProceeding)
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -618,7 +618,7 @@ final class GenericConstraintTests: XCTestCase, View {
                     XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
                     return .removedAfterProceeding
                 }
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -701,7 +701,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR1.self)
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -725,7 +725,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR1.self).persistence(.removedAfterProceeding)
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -753,7 +753,7 @@ final class GenericConstraintTests: XCTestCase, View {
                     XCTAssertEqual($0, expectedArgs)
                     return .removedAfterProceeding
                 }
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -779,7 +779,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR1.self)
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -804,7 +804,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR1.self).persistence(.removedAfterProceeding)
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -833,7 +833,7 @@ final class GenericConstraintTests: XCTestCase, View {
                     XCTAssertEqual($0, expectedArgs)
                     return .removedAfterProceeding
                 }
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -860,7 +860,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR1.self)
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -886,7 +886,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR1.self).persistence(.removedAfterProceeding)
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -916,7 +916,7 @@ final class GenericConstraintTests: XCTestCase, View {
                     XCTAssertEqual($0, expectedArgs)
                     return .removedAfterProceeding
                 }
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -943,7 +943,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR1.self)
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -969,7 +969,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR1.self).persistence(.removedAfterProceeding)
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -999,7 +999,7 @@ final class GenericConstraintTests: XCTestCase, View {
                     XCTAssertEqual($0, expectedArgs)
                     return .removedAfterProceeding
                 }
-                    WorkflowItem(FR2.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1027,7 +1027,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self).persistence(.removedAfterProceeding)
+                WorkflowItem(FR1.self).persistence(.removedAfterProceeding)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1051,10 +1051,10 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self).persistence {
-                        defer { expectation.fulfill() }
-                        return .removedAfterProceeding
-                    }
+                WorkflowItem(FR1.self).persistence {
+                    defer { expectation.fulfill() }
+                    return .removedAfterProceeding
+                }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1082,8 +1082,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1114,8 +1114,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1145,8 +1145,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self).persistence { .removedAfterProceeding }
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).persistence { .removedAfterProceeding }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1177,8 +1177,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1208,8 +1208,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1240,8 +1240,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self).persistence { _ in .removedAfterProceeding }
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).persistence { _ in .removedAfterProceeding }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1274,8 +1274,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1306,8 +1306,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1339,11 +1339,11 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self).persistence {
-                            XCTAssertEqual($0, 1)
-                            return .removedAfterProceeding
-                        }
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).persistence {
+                    XCTAssertEqual($0, 1)
+                    return .removedAfterProceeding
+                }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1373,7 +1373,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self).persistence(.removedAfterProceeding)
+                WorkflowItem(FR1.self).persistence(.removedAfterProceeding)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1397,11 +1397,11 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self).persistence {
-                        XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
-                        defer { expectation.fulfill() }
-                        return .removedAfterProceeding
-                    }
+                WorkflowItem(FR1.self).persistence {
+                    XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
+                    defer { expectation.fulfill() }
+                    return .removedAfterProceeding
+                }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1430,8 +1430,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1461,8 +1461,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1493,11 +1493,11 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self).persistence {
-                        XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
-                        return .removedAfterProceeding
-                    }
-                        WorkflowItem(FR2.self)
+                WorkflowItem(FR1.self).persistence {
+                    XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
+                    return .removedAfterProceeding
+                }
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1529,8 +1529,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1561,8 +1561,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1594,11 +1594,11 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self).persistence {
-                            XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
-                            return .removedAfterProceeding
-                        }
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).persistence {
+                    XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedArgs)
+                    return .removedAfterProceeding
+                }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1631,8 +1631,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1664,8 +1664,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1698,11 +1698,11 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self).persistence {
-                            XCTAssertEqual($0, 1)
-                            return .removedAfterProceeding
-                        }
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).persistence {
+                    XCTAssertEqual($0, 1)
+                    return .removedAfterProceeding
+                }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1730,7 +1730,7 @@ final class GenericConstraintTests: XCTestCase, View {
         try XCTAssertThrowsFatalError {
             _ = WorkflowView {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self).persistence(.removedAfterProceeding)
+                WorkflowItem(FR1.self).persistence(.removedAfterProceeding)
             }
         }
     }
@@ -1750,7 +1750,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self).persistence(.removedAfterProceeding)
+                WorkflowItem(FR1.self).persistence(.removedAfterProceeding)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1775,11 +1775,11 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self).persistence {
-                        XCTAssertEqual($0, expectedArgs)
-                        defer { expectation.fulfill() }
-                        return .removedAfterProceeding
-                    }
+                WorkflowItem(FR1.self).persistence {
+                    XCTAssertEqual($0, expectedArgs)
+                    defer { expectation.fulfill() }
+                    return .removedAfterProceeding
+                }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1808,8 +1808,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1839,8 +1839,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1871,8 +1871,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self).persistence { .removedAfterProceeding }
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).persistence { .removedAfterProceeding }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1904,8 +1904,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1936,8 +1936,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -1969,8 +1969,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self).persistence { _ in .removedAfterProceeding }
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).persistence { _ in .removedAfterProceeding }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -2003,8 +2003,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -2036,8 +2036,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -2070,11 +2070,11 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self).persistence {
-                            XCTAssertEqual($0, 1)
-                            return .removedAfterProceeding
-                        }
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).persistence {
+                    XCTAssertEqual($0, 1)
+                    return .removedAfterProceeding
+                }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -2107,8 +2107,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -2140,8 +2140,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -2174,8 +2174,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self).persistence { _ in .removedAfterProceeding }
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).persistence { _ in .removedAfterProceeding }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -2208,8 +2208,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -2241,8 +2241,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -2270,8 +2270,8 @@ final class GenericConstraintTests: XCTestCase, View {
         let workflowView = try await MainActor.run {
             WorkflowView {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -2306,8 +2306,8 @@ final class ThenProceedOnAppTests: XCTestCase, App {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -2335,8 +2335,8 @@ final class ThenProceedOnAppTests: XCTestCase, App {
         let workflowView = try await MainActor.run {
             WorkflowView {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -2371,8 +2371,8 @@ final class ThenProceedOnSceneTests: XCTestCase, Scene {
         let workflowView = try await MainActor.run {
             WorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).persistence(.removedAfterProceeding)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -2400,8 +2400,8 @@ final class ThenProceedOnSceneTests: XCTestCase, Scene {
         let workflowView = try await MainActor.run {
             WorkflowView {
                 WorkflowItem(FR0.self)
-                    WorkflowItem(FR1.self)
-                        WorkflowItem(FR2.self)
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self)
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
