@@ -599,7 +599,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
             }
         }
 
-        typealias WorkflowViewContent = State<WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>>
+        typealias WorkflowViewContent = State<WorkflowLauncher<WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>>>
         _ = try XCTUnwrap(Mirror(reflecting: workflowView).descendant("_content") as? WorkflowViewContent)
     }
 
@@ -628,12 +628,12 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
 
         let view = try await MainActor.run { Wrapper() }.hostAndInspect(with: \.inspection)
         let stack = try view.vStack()
-        let workflowView = try stack.view(WorkflowView<WorkflowLauncher<WorkflowItem<FR1, FR1>>>.self, 1)
-        let launcher = try workflowView.view(WorkflowLauncher<WorkflowItem<FR1, FR1>>.self)
+        let workflowView = try stack.view(WorkflowView<WorkflowLauncher<WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>>>.self, 1)
+        let launcher = try workflowView.view(WorkflowLauncher<WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>>.self)
 
-        XCTAssertThrowsError(try launcher.view(WorkflowItem<FR1, FR1>.self))
+        XCTAssertThrowsError(try launcher.view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self))
         XCTAssertNoThrow(try stack.button(0).tap())
-        XCTAssertNoThrow(try launcher.view(WorkflowItem<FR1, FR1>.self))
+        XCTAssertNoThrow(try launcher.view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self))
     }
 
     func testWorkflowCanBeEmbeddedInNavView() async throws {
