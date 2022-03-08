@@ -33,7 +33,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
             .onFinish { _ in
                 expectOnFinish.fulfill()
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItem()
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
         XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
         try await viewUnderTest.find(FR1.self).proceedInWorkflow()
@@ -63,7 +63,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
             }.onFinish { _ in
                 expectOnFinish2.fulfill()
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItem()
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
         try await viewUnderTest.find(FR1.self).proceedInWorkflow()
         wait(for: [expectOnFinish1, expectOnFinish2], timeout: TestConstant.timeout)
@@ -84,7 +84,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
             WorkflowView(launchingWith: expected) {
                 WorkflowItem(FR1.self)
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItem()
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
         XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().stringProperty, expected)
     }
@@ -105,7 +105,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
                 WorkflowItem(FR1.self)
                 WorkflowItem(FR1.self)
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItem()
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
         XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().property.extractArgs(defaultValue: nil) as? String, expected)
     }
@@ -127,7 +127,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
                 WorkflowItem(FR1.self)
                 WorkflowItem(FR1.self)
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItem()
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
         XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().property.extractArgs(defaultValue: nil) as? String, expected)
     }
@@ -174,7 +174,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
             .onFinish {
                 XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedEnd)
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItem()
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
         XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().property, expectedFR1)
         XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow(expectedFR2))
@@ -239,7 +239,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
                 WorkflowItem(FR9.self)
                 WorkflowItem(FR10.self)
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItem()
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
         try await viewUnderTest.find(FR1.self).proceedInWorkflow()
         try await viewUnderTest.find(FR2.self).proceedInWorkflow()
@@ -274,7 +274,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
                 WorkflowItem(FR3.self)
                 WorkflowItem(FR2.self)
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItem()
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
         try await viewUnderTest.find(FR1.self).proceedInWorkflow()
         XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
@@ -311,7 +311,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
                 WorkflowItem(FR3.self)
                 WorkflowItem(FR4.self)
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItem()
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
         try await viewUnderTest.find(FR1.self).proceedInWorkflow()
         try await viewUnderTest.find(FR2.self).backUpInWorkflow()
@@ -376,7 +376,6 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
 
     func testWorkflowCanHaveModifiers() async throws {
         throw XCTSkip("Swapping failing test for a warning")
-#warning("FIXME")
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
@@ -391,7 +390,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
                         $0.customModifier().padding().onAppear { }
                     }
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItem()
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
         XCTAssert(try viewUnderTest.find(FR1.self).hasPadding())
         XCTAssertNoThrow(try viewUnderTest.find(FR1.self).callOnAppear())
@@ -417,7 +416,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
                 WorkflowItem(FR1.self)
                 WorkflowItem(FR2.self)
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItem()
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
         try await viewUnderTest.find(FR1.self).proceedInWorkflow()
 
@@ -492,7 +491,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
             .onFinish { _ in
                 expectOnFinish.fulfill()
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItem()
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
         XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
         XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow(.args(expectedArgs)))
@@ -529,7 +528,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
             .onFinish { _ in
                 expectOnFinish.fulfill()
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItem()
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
         XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
         XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().data, expectedArgs)
@@ -573,7 +572,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
             .onFinish { _ in
                 expectOnFinish.fulfill()
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItem()
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
         XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
         try await viewUnderTest.find(FR1.self).proceedInWorkflow()
@@ -600,7 +599,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
             }
         }
 
-        typealias WorkflowViewContent = State<WorkflowLauncher<WorkflowItem<FR1, Never, FR1>>>
+        typealias WorkflowViewContent = State<WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>>
         _ = try XCTUnwrap(Mirror(reflecting: workflowView).descendant("_content") as? WorkflowViewContent)
     }
 
