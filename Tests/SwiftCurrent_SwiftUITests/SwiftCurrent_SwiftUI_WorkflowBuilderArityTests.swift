@@ -24,7 +24,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase, App {
             WorkflowView {
                 WorkflowItem(FR1.self)
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItem()
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
         try await viewUnderTest.find(FR1.self).proceedInWorkflow()
     }
@@ -44,7 +44,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase, App {
                 WorkflowItem(FR1.self)
                 WorkflowItem(FR2.self)
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItem()
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
         try await viewUnderTest.find(FR1.self).proceedInWorkflow()
         try await viewUnderTest.find(FR2.self).proceedInWorkflow()
@@ -69,7 +69,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase, App {
                 WorkflowItem(FR2.self)
                 WorkflowItem(FR3.self)
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItem()
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
         try await viewUnderTest.find(FR1.self).proceedInWorkflow()
         try await viewUnderTest.find(FR2.self).proceedInWorkflow()
@@ -101,7 +101,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase, App {
                 WorkflowItem(FR3.self)
                 WorkflowItem(FR4.self)
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItem()
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
         try await viewUnderTest.find(FR1.self).proceedInWorkflow()
         try await viewUnderTest.find(FR2.self).proceedInWorkflow()
@@ -139,7 +139,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase, App {
                 WorkflowItem(FR4.self)
                 WorkflowItem(FR5.self)
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItem()
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
         try await viewUnderTest.find(FR1.self).proceedInWorkflow()
         try await viewUnderTest.find(FR2.self).proceedInWorkflow()
@@ -183,7 +183,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase, App {
                 WorkflowItem(FR5.self)
                 WorkflowItem(FR6.self)
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItem()
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
         try await viewUnderTest.find(FR1.self).proceedInWorkflow()
         try await viewUnderTest.find(FR2.self).proceedInWorkflow()
@@ -233,7 +233,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase, App {
                 WorkflowItem(FR6.self)
                 WorkflowItem(FR7.self)
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItem()
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
         try await viewUnderTest.find(FR1.self).proceedInWorkflow()
         try await viewUnderTest.find(FR2.self).proceedInWorkflow()
@@ -289,7 +289,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase, App {
                 WorkflowItem(FR7.self)
                 WorkflowItem(FR8.self)
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItem()
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
         try await viewUnderTest.find(FR1.self).proceedInWorkflow()
         try await viewUnderTest.find(FR2.self).proceedInWorkflow()
@@ -351,7 +351,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase, App {
                 WorkflowItem(FR8.self)
                 WorkflowItem(FR9.self)
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItem()
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
         try await viewUnderTest.find(FR1.self).proceedInWorkflow()
         try await viewUnderTest.find(FR2.self).proceedInWorkflow()
@@ -419,7 +419,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase, App {
                 WorkflowItem(FR9.self)
                 WorkflowItem(FR10.self)
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItem()
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
         try await viewUnderTest.find(FR1.self).proceedInWorkflow()
         try await viewUnderTest.find(FR2.self).proceedInWorkflow()
