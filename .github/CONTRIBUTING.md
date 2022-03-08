@@ -57,7 +57,7 @@ You can install via Homebrew:
 
 via CocoaPods:
 
-`pod 'SwiftLint`
+`pod 'SwiftLint'`
 
 and [many other ways](https://github.com/realm/SwiftLint#installation).
 
