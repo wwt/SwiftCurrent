@@ -18,13 +18,13 @@ struct GenerateIR: ParsableCommand {
     var pathOrSourceCode: Either<URL, String>
 
     mutating func run() throws {
-        let files: [ParsedFile]
+        let files: [ParsedResult]
         switch pathOrSourceCode {
             case .firstChoice(let url):
                 let fileURLs = try getSwiftFileURLs(from: url)
-                files = fileURLs.compactMap { try? ParsedFile(url: $0) }
+                files = fileURLs.compactMap { try? ParsedResult(filepath: $0) }
             case .secondChoice(let source):
-                files = try [ParsedFile(sourceCode: source)]
+                files = try [ParsedResult(sourceCode: source)]
         }
 
         let allConformances = findTypesConforming(to: "\(Self.conformance)", in: files)
@@ -48,11 +48,11 @@ struct GenerateIR: ParsableCommand {
         }
     }
 
-    func findTypesConforming(to conformance: String, in files: [ParsedFile], objectType: Type.ObjectType? = nil) -> [Type.ObjectType: [ConformingType]] {
+    func findTypesConforming(to conformance: String, in files: [ParsedResult], objectType: Type.ObjectType? = nil) -> [Type.ObjectType: [ConformingType]] {
         var typesConforming: [Type.ObjectType: [ConformingType]] = [:]
 
         files.forEach {
-            let rootNode = $0.results.root
+            let rootNode = $0.walker.root
 
             for firstSubtype in rootNode.types {
                 checkTypeForConformance(firstSubtype, conformance: conformance, typesConforming: &typesConforming)
