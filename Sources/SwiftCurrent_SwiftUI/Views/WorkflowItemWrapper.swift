@@ -10,12 +10,12 @@ import SwiftUI
 import SwiftCurrent
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-public struct WorkflowItemWrapper<Content: _WorkflowItemProtocol, Wrapped: _WorkflowItemProtocol>: View, _WorkflowItemProtocol {
-    public typealias F = Content.F // swiftlint:disable:this type_name
+public struct WorkflowItemWrapper<WI: _WorkflowItemProtocol, Wrapped: _WorkflowItemProtocol>: View, _WorkflowItemProtocol {
+    public typealias F = WI.F // swiftlint:disable:this type_name
 
-    public typealias Content = Content.Content
+    public typealias Content = WI.Content
 
-    @State private var content: Content
+    @State private var content: WI
     @State private var wrapped: Wrapped?
     @State private var elementRef: AnyWorkflow.Element?
     @State private var isActive = false
@@ -31,18 +31,18 @@ public struct WorkflowItemWrapper<Content: _WorkflowItemProtocol, Wrapped: _Work
 
     public var body: some View {
         ViewBuilder {
-            if launchStyle == .navigationLink, let content = content {
+            if launchStyle == .navigationLink {
                 content.navLink(to: nextView, isActive: $isActive)
-            } else if case .modal(let modalStyle) = (wrapped as? WorkflowItemPresentable)?.workflowLaunchStyle, let content = content {
+            } else if case .modal(let modalStyle) = (wrapped as? WorkflowItemPresentable)?.workflowLaunchStyle {
                 switch modalStyle {
                     case .sheet: content.testableSheet(isPresented: $isActive) { nextView }
                     #if (os(iOS) || os(tvOS) || os(watchOS) || targetEnvironment(macCatalyst))
                     case .fullScreenCover: content.fullScreenCover(isPresented: $isActive) { nextView }
                     #endif
                 }
-            } else if model.body?.extractErasedView() as? Content.Content != nil,
-                        elementRef == nil || elementRef === model.body,
-                        launchStyle != .navigationLink {
+            } else if model.body?.extractErasedView() as? WI.Content != nil,
+                      elementRef == nil || elementRef === model.body,
+                      launchStyle != .navigationLink {
                 content
             } else {
                 nextView
@@ -58,13 +58,13 @@ public struct WorkflowItemWrapper<Content: _WorkflowItemProtocol, Wrapped: _Work
         wrapped?.environmentObject(model).environmentObject(launcher)
     }
 
-    init(content: Content) where Wrapped == Never {
+    init(content: WI) where Wrapped == Never {
         _wrapped = State(initialValue: nil)
         _elementRef = State(initialValue: nil)
         _content = State(initialValue: content)
     }
 
-    init(content: Content, wrapped: () -> Wrapped) {
+    init(content: WI, wrapped: () -> Wrapped) {
         _wrapped = State(initialValue: wrapped())
         _elementRef = State(initialValue: nil)
         _content = State(initialValue: content)
@@ -85,7 +85,7 @@ public struct WorkflowItemWrapper<Content: _WorkflowItemProtocol, Wrapped: _Work
     }
 
     private func proceedInWorkflow(element: AnyWorkflow.Element?) {
-        if element?.extractErasedView() as? Content.Content != nil, elementRef === element || elementRef == nil {
+        if element?.extractErasedView() as? WI.Content != nil, elementRef === element || elementRef == nil {
             elementRef = element
         }
     }
@@ -96,5 +96,12 @@ extension WorkflowItemWrapper: WorkflowModifier {
     func modify(workflow: AnyWorkflow) {
         (content as? WorkflowModifier)?.modify(workflow: workflow)
         (wrapped as? WorkflowModifier)?.modify(workflow: workflow)
+    }
+}
+
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension WorkflowItemWrapper: WorkflowItemPresentable where WI: WorkflowItemPresentable {
+    var workflowLaunchStyle: LaunchStyle.SwiftUI.PresentationType {
+        content.workflowLaunchStyle
     }
 }

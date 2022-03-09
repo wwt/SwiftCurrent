@@ -58,7 +58,6 @@ public struct WorkflowView<Content: View>: View {
      */
     public init<WI: _WorkflowItemProtocol>(isLaunched: Binding<Bool> = .constant(true),
                                            @WorkflowBuilder content: () -> WI) where Content == WorkflowLauncher<WI>, WI.F.WorkflowInput == Never {
-        print(type(of: content()))
         self.init(isLaunched: isLaunched, startingArgs: .none, content: content())
     }
 

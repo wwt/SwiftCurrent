@@ -30,34 +30,23 @@ import UIKit
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowItem<F: FlowRepresentable & View, Content: View>: _WorkflowItemProtocol {
     // These need to be state variables to survive SwiftUI re-rendering. Change under penalty of torture BY the codebase you modified.
-    @State private var content: Content?
     @State private var metadata: FlowRepresentableMetadata!
     @State private var modifierClosure: ((AnyFlowRepresentableView) -> Void)?
     @State private var flowPersistenceClosure: (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default }
     @State private var launchStyle: LaunchStyle.SwiftUI.PresentationType = .default
     @State private var persistence: FlowPersistence = .default
-    @State private var elementRef: AnyWorkflow.Element?
-    @State private var isActive = false
     @EnvironmentObject private var model: WorkflowViewModel
-    @EnvironmentObject private var launcher: Launcher
-    @Environment(\.presentationMode) var presentation
-
-    let inspection = Inspection<Self>()
 
     public var body: some View {
         ViewBuilder {
-            if let body = model.body?.extractErasedView() as? Content, elementRef == nil || elementRef === model.body, launchStyle != .navigationLink {
-                content ?? body
-            }
+            model.body?.extractErasedView() as? Content
         }
-        .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 
     private init<C>(previous: WorkflowItem<F, C>,
                     launchStyle: LaunchStyle.SwiftUI.PresentationType,
                     modifierClosure: @escaping ((AnyFlowRepresentableView) -> Void),
                     flowPersistenceClosure: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) {
-//        _wrapped = previous._wrapped
         _modifierClosure = State(initialValue: modifierClosure)
         _flowPersistenceClosure = State(initialValue: flowPersistenceClosure)
         _launchStyle = State(initialValue: launchStyle)
@@ -68,42 +57,12 @@ public struct WorkflowItem<F: FlowRepresentable & View, Content: View>: _Workflo
         _metadata = State(initialValue: metadata)
     }
 
-//    init<C>(wrapping previous: WorkflowItem<F, C>) {
-//        _wrapped = previous._wrapped
-//        _modifierClosure = previous._modifierClosure
-//        _flowPersistenceClosure = previous._flowPersistenceClosure
-//        _launchStyle = previous._launchStyle
-//        let metadata = FlowRepresentableMetadata(F.self,
-//                                                 launchStyle: launchStyle.rawValue,
-//                                                 flowPersistence: flowPersistenceClosure,
-//                                                 flowRepresentableFactory: factory)
-//        _metadata = State(initialValue: metadata)
-//    }
-//
-//    init<C>(wrapping previous: WorkflowItem<F, C>, wrapped: () -> Wrapped) {
-//        _wrapped = State(initialValue: wrapped())
-//        _modifierClosure = previous._modifierClosure
-//        _flowPersistenceClosure = previous._flowPersistenceClosure
-//        _launchStyle = previous._launchStyle
-//        let metadata = FlowRepresentableMetadata(F.self,
-//                                                 launchStyle: launchStyle.rawValue,
-//                                                 flowPersistence: flowPersistenceClosure,
-//                                                 flowRepresentableFactory: factory)
-//        _metadata = State(initialValue: metadata)
-//    }
-
     public init?() {
         let metadata = FlowRepresentableMetadata(F.self,
                                                  launchStyle: .new,
                                                  flowPersistence: flowPersistenceClosure,
                                                  flowRepresentableFactory: factory)
         _metadata = State(initialValue: metadata)
-
-//        if Wrapped.self is Never.Type {
-//            _wrapped = State(initialValue: nil)
-//        } else {
-//            _wrapped = State(initialValue: Wrapped())
-//        }
     }
 
     /// Creates a workflow item from a FlowRepresentable type
@@ -123,24 +82,6 @@ public struct WorkflowItem<F: FlowRepresentable & View, Content: View>: _Workflo
         _metadata = State(initialValue: metadata)
     }
 
-//    init(_ item: F.Type, wrapped: () -> Wrapped) {
-//        let metadata = FlowRepresentableMetadata(F.self,
-//                                                 launchStyle: .new,
-//                                                 flowPersistence: flowPersistenceClosure,
-//                                                 flowRepresentableFactory: factory)
-//        _metadata = State(initialValue: metadata)
-//        _wrapped = State(initialValue: wrapped())
-//    }
-
-//    init(_ item: F.Type, wrapped: () -> Wrapped) where Content == F {
-//        let metadata = FlowRepresentableMetadata(F.self,
-//                                                 launchStyle: .new,
-//                                                 flowPersistence: flowPersistenceClosure,
-//                                                 flowRepresentableFactory: factory)
-//        _metadata = State(initialValue: metadata)
-//        _wrapped = State(initialValue: wrapped())
-//    }
-
     #if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)
     /// Creates a `WorkflowItem` from a `UIViewController`.
     @available(iOS 14.0, macOS 11, tvOS 14.0, *)
@@ -151,18 +92,6 @@ public struct WorkflowItem<F: FlowRepresentable & View, Content: View>: _Workflo
                                                  flowRepresentableFactory: factory)
         _metadata = State(initialValue: metadata)
     }
-
-//    /// Creates a `WorkflowItem` from a `UIViewController`.
-//    @available(iOS 14.0, macOS 11, tvOS 14.0, *)
-//    init<VC: FlowRepresentable & UIViewController>(_: VC.Type, wrapped: () -> Wrapped) where Content == ViewControllerWrapper<VC>, F == ViewControllerWrapper<VC> {
-//        let wrapped = wrapped()
-//        _wrapped = State(initialValue: wrapped)
-//        let metadata = FlowRepresentableMetadata(ViewControllerWrapper<VC>.self,
-//                                                 launchStyle: .new,
-//                                                 flowPersistence: flowPersistenceClosure,
-//                                                 flowRepresentableFactory: factory)
-//        _metadata = State(initialValue: metadata)
-//    }
     #endif
 
     /**
@@ -186,17 +115,6 @@ public struct WorkflowItem<F: FlowRepresentable & View, Content: View>: _Workflo
         modifierClosure?(afrv)
         return afrv
     }
-
-    private func proceedInWorkflow(element: AnyWorkflow.Element?) {
-        if let body = element?.extractErasedView() as? Content, elementRef === element || elementRef == nil {
-            elementRef = element
-            content = body
-            persistence = element?.value.metadata.persistence ?? .default
-        } else if persistence == .removedAfterProceeding {
-            content = nil
-            elementRef = nil
-        }
-    }
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
@@ -210,7 +128,6 @@ extension WorkflowItem: WorkflowItemPresentable {
 extension WorkflowItem: WorkflowModifier {
     func modify(workflow: AnyWorkflow) {
         workflow.append(metadata)
-//        (wrapped as? WorkflowModifier)?.modify(workflow: workflow)
     }
 }
 

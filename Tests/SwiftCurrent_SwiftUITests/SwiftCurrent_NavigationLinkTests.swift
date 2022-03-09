@@ -38,23 +38,15 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
         .extractWorkflowLauncher()
         .extractWorkflowItemWrapper()
 
-        let model = try await MainActor.run {
-            try XCTUnwrap((Mirror(reflecting: try wfr1.actualView()).descendant("_model") as? EnvironmentObject<WorkflowViewModel>)?.wrappedValue)
-        }
-        let launcher = try await MainActor.run {
-            try XCTUnwrap((Mirror(reflecting: try wfr1.actualView()).descendant("_launcher") as? EnvironmentObject<Launcher>)?.wrappedValue)
-        }
+        print(type(of: wfr1))
 
         XCTAssertEqual(try wfr1.find(FR1.self).text().string(), "FR1 type")
-        XCTAssertFalse(try wfr1.find(ViewType.NavigationLink.self).isActive())
-        try await wfr1.find(FR1.self).proceedInWorkflow()
 
-        // needed to re-host to avoid some kind of race with the nav link
-        try await wfr1.actualView().host { $0.environmentObject(model).environmentObject(launcher) }
+        try await wfr1.proceedAndCheckNavLink(on: FR1.self)
 
-        XCTAssertTrue(try wfr1.find(ViewType.NavigationLink.self).isActive())
-        XCTAssertEqual(try wfr1.find(FR2.self).text().string(), "FR2 type")
-        try await wfr1.find(FR2.self).proceedInWorkflow()
+        let wfr2 = try await wfr1.extractWrappedWrapper()
+        XCTAssertEqual(try wfr2.find(FR2.self).text().string(), "FR2 type")
+        try await wfr2.find(FR2.self).proceedInWorkflow()
 
         wait(for: [expectOnFinish], timeout: TestConstant.timeout)
     }
@@ -144,48 +136,22 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
         .extractWorkflowLauncher()
         .extractWorkflowItemWrapper()
 
-        let model = try await MainActor.run {
-            try XCTUnwrap((Mirror(reflecting: try wfr1.actualView()).descendant("_model") as? EnvironmentObject<WorkflowViewModel>)?.wrappedValue)
-        }
-        let launcher = try await MainActor.run {
-            try XCTUnwrap((Mirror(reflecting: try wfr1.actualView()).descendant("_launcher") as? EnvironmentObject<Launcher>)?.wrappedValue)
-        }
-
-        XCTAssertFalse(try wfr1.find(ViewType.NavigationLink.self).isActive())
-        try await wfr1.find(FR1.self).proceedInWorkflow()
-        // needed to re-host to avoid some kind of race with the nav link
-        try await wfr1.actualView().host { $0.environmentObject(model).environmentObject(launcher) }
-        XCTAssert(try wfr1.find(ViewType.NavigationLink.self).isActive())
+        try await wfr1.proceedAndCheckNavLink(on: FR1.self)
 
         let wfr2 = try await wfr1.extractWrappedWrapper()
-        XCTAssertFalse(try wfr2.find(ViewType.NavigationLink.self).isActive())
-        try await wfr2.find(FR2.self).proceedInWorkflow()
-        try await wfr2.actualView().host { $0.environmentObject(model).environmentObject(launcher) }
-        XCTAssert(try wfr2.find(ViewType.NavigationLink.self).isActive())
+        try await wfr2.proceedAndCheckNavLink(on: FR2.self)
 
         let wfr3 = try await wfr2.extractWrappedWrapper()
-        XCTAssertFalse(try wfr3.find(ViewType.NavigationLink.self).isActive())
-        try await wfr3.find(FR3.self).proceedInWorkflow()
-        try await wfr3.actualView().host { $0.environmentObject(model).environmentObject(launcher) }
-        XCTAssert(try wfr3.find(ViewType.NavigationLink.self).isActive())
+        try await wfr3.proceedAndCheckNavLink(on: FR3.self)
 
         let wfr4 = try await wfr3.extractWrappedWrapper()
-        XCTAssertFalse(try wfr4.find(ViewType.NavigationLink.self).isActive())
-        try await wfr4.find(FR4.self).proceedInWorkflow()
-        try await wfr4.actualView().host { $0.environmentObject(model).environmentObject(launcher) }
-        XCTAssert(try wfr4.find(ViewType.NavigationLink.self).isActive())
+        try await wfr4.proceedAndCheckNavLink(on: FR4.self)
 
         let wfr5 = try await wfr4.extractWrappedWrapper()
-        XCTAssertFalse(try wfr5.find(ViewType.NavigationLink.self).isActive())
-        try await wfr5.find(FR5.self).proceedInWorkflow()
-        try await wfr5.actualView().host { $0.environmentObject(model).environmentObject(launcher) }
-        XCTAssert(try wfr5.find(ViewType.NavigationLink.self).isActive())
+        try await wfr5.proceedAndCheckNavLink(on: FR5.self)
 
         let wfr6 = try await wfr5.extractWrappedWrapper()
-        XCTAssertFalse(try wfr6.find(ViewType.NavigationLink.self).isActive())
-        try await wfr6.find(FR6.self).proceedInWorkflow()
-        try await wfr6.actualView().host { $0.environmentObject(model).environmentObject(launcher) }
-        XCTAssert(try wfr6.find(ViewType.NavigationLink.self).isActive())
+        try await wfr6.proceedAndCheckNavLink(on: FR6.self)
 
         let wfr7 = try await wfr6.extractWrappedWrapper()
         try await wfr7.find(FR7.self).proceedInWorkflow()
@@ -405,5 +371,17 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
         }
         ViewHosting.host(view: launcherView)
         wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+    }
+}
+
+@available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension InspectableView where View: CustomViewType & SingleViewContent, View.T: _WorkflowItemProtocol {
+    fileprivate func proceedAndCheckNavLink<FR: FlowRepresentable & Inspectable>(on: FR.Type) async throws where FR.WorkflowOutput == Never {
+        let navLink = try find(ViewType.NavigationLink.self)
+        XCTAssertFalse(try navLink.isActive())
+
+        try await find(FR.self).proceedInWorkflow()
+
+        XCTAssert(try navLink.isActive())
     }
 }

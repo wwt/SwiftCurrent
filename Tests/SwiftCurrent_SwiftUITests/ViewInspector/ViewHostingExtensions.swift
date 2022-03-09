@@ -15,12 +15,14 @@ import SwiftCurrent
 
 @available(iOS 15.0, macOS 10.15, tvOS 13.0, *)
 extension View where Self: Inspectable {
-    func host() async {
+    @discardableResult func host() async -> Self {
         await MainActor.run { ViewHosting.host(view: self ) }
+        return self
     }
 
-    func host<V: View>(_ transform: (Self) -> V) async {
+    @discardableResult func host<V: View>(_ transform: (Self) -> V) async -> Self {
         await MainActor.run { ViewHosting.host(view: transform(self) ) }
+        return self
     }
 
     func hostAndInspect<E: InspectionEmissary>(with emissary: KeyPath<Self, E>) async throws -> InspectableView<ViewType.View<Self>> where E.V == Self {
