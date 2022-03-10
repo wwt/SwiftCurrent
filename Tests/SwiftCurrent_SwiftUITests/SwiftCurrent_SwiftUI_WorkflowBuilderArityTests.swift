@@ -964,7 +964,6 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase, App {
                                     WorkflowItem(FR50.self)
                                     WorkflowItem(FR51.self)
                                     WorkflowItem(FR52.self)
-                                    WorkflowItem(FR52.self)
                                     WorkflowItem(FR53.self)
                                     WorkflowGroup {
                                         WorkflowItem(FR54.self)
