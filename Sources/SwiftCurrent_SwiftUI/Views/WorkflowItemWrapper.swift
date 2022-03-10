@@ -40,9 +40,7 @@ public struct WorkflowItemWrapper<WI: _WorkflowItemProtocol, Wrapped: _WorkflowI
                     case .fullScreenCover: content.fullScreenCover(isPresented: $isActive) { nextView }
                     #endif
                 }
-            } else if model.body?.extractErasedView() as? WI.Content != nil,
-                      elementRef == nil || elementRef === model.body,
-                      launchStyle != .navigationLink {
+            } else if launchStyle != .navigationLink, content.canDisplay(model.body) {
                 content
             } else {
                 nextView
@@ -68,6 +66,10 @@ public struct WorkflowItemWrapper<WI: _WorkflowItemProtocol, Wrapped: _WorkflowI
         _wrapped = State(initialValue: wrapped())
         _elementRef = State(initialValue: nil)
         _content = State(initialValue: content)
+    }
+
+    public func canDisplay(_ element: AnyWorkflow.Element?) -> Bool {
+        content.canDisplay(element) || wrapped?.canDisplay(element) == true
     }
 
     private func activateIfNeeded(element: AnyWorkflow.Element?) {

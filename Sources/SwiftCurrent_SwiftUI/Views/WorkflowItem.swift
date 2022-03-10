@@ -36,17 +36,27 @@ public struct WorkflowItem<F: FlowRepresentable & View, Content: View>: _Workflo
     @State private var launchStyle: LaunchStyle.SwiftUI.PresentationType = .default
     @State private var persistence: FlowPersistence = .default
     @State private var content: Content?
+    @State private var elementRef: AnyWorkflow.Element?
+
     @EnvironmentObject private var model: WorkflowViewModel
 
     public var body: some View {
         ViewBuilder {
-            content ?? model.body?.extractErasedView() as? Content
-        }
-        .onReceive(model.$body) {
-            if let body = $0?.extractErasedView() as? Content {
-                content = body
+            if let body = model.body?.extractErasedView() as? Content,
+                      elementRef == nil || elementRef === model.body {
+                content ?? body
             }
         }
+        .onReceive(model.$body) {
+            if let body = $0?.extractErasedView() as? Content, elementRef == nil || elementRef === $0 {
+                content = body
+                elementRef = $0
+            }
+        }
+    }
+
+    public func canDisplay(_ element: AnyWorkflow.Element?) -> Bool {
+        element?.extractErasedView() as? Content != nil && elementRef == nil || elementRef === element
     }
 
     private init<C>(previous: WorkflowItem<F, C>,

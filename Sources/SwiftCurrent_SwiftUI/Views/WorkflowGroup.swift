@@ -10,12 +10,12 @@ import SwiftUI
 import SwiftCurrent
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-public struct WorkflowGroup<Content: _WorkflowItemProtocol>: View, _WorkflowItemProtocol {
-    public typealias F = Content.F // swiftlint:disable:this type_name
+public struct WorkflowGroup<WI: _WorkflowItemProtocol>: View, _WorkflowItemProtocol {
+    public typealias F = WI.F // swiftlint:disable:this type_name
 
-    public typealias Content = Content.Content
+    public typealias Content = WI.Content
 
-    @State var content: Content
+    @State var content: WI
 
     let inspection = Inspection<Self>()
 
@@ -24,8 +24,12 @@ public struct WorkflowGroup<Content: _WorkflowItemProtocol>: View, _WorkflowItem
             .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 
-    public init(@WorkflowBuilder content: () -> Content) {
+    public init(@WorkflowBuilder content: () -> WI) {
         _content = State(initialValue: content())
+    }
+
+    public func canDisplay(_ element: AnyWorkflow.Element?) -> Bool {
+        content.canDisplay(element)
     }
 }
 
