@@ -35,11 +35,17 @@ public struct WorkflowItem<F: FlowRepresentable & View, Content: View>: _Workflo
     @State private var flowPersistenceClosure: (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default }
     @State private var launchStyle: LaunchStyle.SwiftUI.PresentationType = .default
     @State private var persistence: FlowPersistence = .default
+    @State private var content: Content?
     @EnvironmentObject private var model: WorkflowViewModel
 
     public var body: some View {
         ViewBuilder {
-            model.body?.extractErasedView() as? Content
+            content ?? model.body?.extractErasedView() as? Content
+        }
+        .onReceive(model.$body) {
+            if let body = $0?.extractErasedView() as? Content {
+                content = body
+            }
         }
     }
 
