@@ -625,6 +625,46 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase, App {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR10 type") }
         }
+        struct FR31: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR10 type") }
+        }
+        struct FR32: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR10 type") }
+        }
+        struct FR33: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR10 type") }
+        }
+        struct FR34: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR10 type") }
+        }
+        struct FR35: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR10 type") }
+        }
+        struct FR36: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR10 type") }
+        }
+        struct FR37: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR10 type") }
+        }
+        struct FR38: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR10 type") }
+        }
+        struct FR39: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR10 type") }
+        }
+        struct FR40: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR10 type") }
+        }
         struct FR41: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
@@ -896,6 +936,98 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase, App {
                         WorkflowItem(FR25.self)
                         WorkflowItem(FR26.self)
                         WorkflowItem(FR27.self)
+                        WorkflowGroup {
+                            WorkflowItem(FR28.self)
+                            WorkflowItem(FR29.self)
+                            WorkflowItem(FR30.self)
+                            WorkflowItem(FR31.self)
+                            WorkflowItem(FR32.self)
+                            WorkflowItem(FR33.self)
+                            WorkflowItem(FR34.self)
+                            WorkflowItem(FR35.self)
+                            WorkflowItem(FR36.self)
+                            WorkflowGroup {
+                                WorkflowItem(FR37.self)
+                                WorkflowItem(FR38.self)
+                                WorkflowItem(FR39.self)
+                                WorkflowItem(FR40.self)
+                                WorkflowItem(FR41.self)
+                                WorkflowItem(FR42.self)
+                                WorkflowItem(FR43.self)
+                                WorkflowItem(FR44.self)
+                                WorkflowItem(FR45.self)
+                                WorkflowGroup {
+                                    WorkflowItem(FR46.self)
+                                    WorkflowItem(FR47.self)
+                                    WorkflowItem(FR48.self)
+                                    WorkflowItem(FR49.self)
+                                    WorkflowItem(FR50.self)
+                                    WorkflowItem(FR51.self)
+                                    WorkflowItem(FR52.self)
+                                    WorkflowItem(FR52.self)
+                                    WorkflowItem(FR53.self)
+                                    WorkflowGroup {
+                                        WorkflowItem(FR54.self)
+                                        WorkflowItem(FR55.self)
+                                        WorkflowItem(FR56.self)
+                                        WorkflowItem(FR57.self)
+                                        WorkflowItem(FR58.self)
+                                        WorkflowItem(FR59.self)
+                                        WorkflowItem(FR60.self)
+                                        WorkflowItem(FR61.self)
+                                        WorkflowItem(FR62.self)
+                                        WorkflowGroup {
+                                            WorkflowItem(FR63.self)
+                                            WorkflowItem(FR64.self)
+                                            WorkflowItem(FR65.self)
+                                            WorkflowItem(FR66.self)
+                                            WorkflowItem(FR67.self)
+                                            WorkflowItem(FR68.self)
+                                            WorkflowItem(FR69.self)
+                                            WorkflowItem(FR70.self)
+                                            WorkflowItem(FR71.self)
+                                            WorkflowGroup {
+                                                WorkflowItem(FR72.self)
+                                                WorkflowItem(FR73.self)
+                                                WorkflowItem(FR74.self)
+                                                WorkflowItem(FR75.self)
+                                                WorkflowItem(FR76.self)
+                                                WorkflowItem(FR77.self)
+                                                WorkflowItem(FR78.self)
+                                                WorkflowItem(FR79.self)
+                                                WorkflowItem(FR80.self)
+                                                WorkflowGroup {
+                                                    WorkflowItem(FR81.self)
+                                                    WorkflowItem(FR82.self)
+                                                    WorkflowItem(FR83.self)
+                                                    WorkflowItem(FR84.self)
+                                                    WorkflowItem(FR85.self)
+                                                    WorkflowItem(FR86.self)
+                                                    WorkflowItem(FR87.self)
+                                                    WorkflowItem(FR88.self)
+                                                    WorkflowItem(FR89.self)
+                                                    WorkflowGroup {
+                                                        WorkflowItem(FR90.self)
+                                                        WorkflowItem(FR91.self)
+                                                        WorkflowItem(FR92.self)
+                                                        WorkflowItem(FR93.self)
+                                                        WorkflowItem(FR94.self)
+                                                        WorkflowItem(FR95.self)
+                                                        WorkflowItem(FR96.self)
+                                                        WorkflowItem(FR97.self)
+                                                        WorkflowItem(FR98.self)
+                                                        WorkflowGroup {
+                                                            WorkflowItem(FR99.self)
+                                                            WorkflowItem(FR100.self)
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
