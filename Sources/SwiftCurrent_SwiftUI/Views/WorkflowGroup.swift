@@ -9,6 +9,7 @@
 import SwiftUI
 import SwiftCurrent
 
+#warning("Needs tests when used in nav stacks and modals")
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowGroup<WI: _WorkflowItemProtocol>: View, _WorkflowItemProtocol {
     public typealias F = WI.F // swiftlint:disable:this type_name
@@ -37,5 +38,12 @@ public struct WorkflowGroup<WI: _WorkflowItemProtocol>: View, _WorkflowItemProto
 extension WorkflowGroup: WorkflowModifier {
     func modify(workflow: AnyWorkflow) {
         (content as? WorkflowModifier)?.modify(workflow: workflow)
+    }
+}
+
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension WorkflowGroup: WorkflowItemPresentable where WI: WorkflowItemPresentable {
+    var workflowLaunchStyle: LaunchStyle.SwiftUI.PresentationType {
+        content.workflowLaunchStyle
     }
 }

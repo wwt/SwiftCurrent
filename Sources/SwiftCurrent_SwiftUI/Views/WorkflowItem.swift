@@ -42,10 +42,7 @@ public struct WorkflowItem<F: FlowRepresentable & View, Content: View>: _Workflo
 
     public var body: some View {
         ViewBuilder {
-            if let body = model.body?.extractErasedView() as? Content,
-                      elementRef == nil || elementRef === model.body {
-                content ?? body
-            }
+            content ?? model.body?.extractErasedView() as? Content
         }
         .onReceive(model.$body) {
             if let body = $0?.extractErasedView() as? Content, elementRef == nil || elementRef === $0 {
