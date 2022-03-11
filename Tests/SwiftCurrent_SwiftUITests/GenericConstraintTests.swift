@@ -47,7 +47,7 @@ final class GenericConstraintTests: XCTestCase, View {
             WorkflowView(launchingWith: Optional("Discarded arguments")) {
                 WorkflowItem(FR1.self)
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
+        }.hostAndInspect(with: \.inspection)
 
         XCTAssertNoThrow(try workflowView.find(FR1.self))
     }
@@ -72,7 +72,7 @@ final class GenericConstraintTests: XCTestCase, View {
                 WorkflowItem(FR1.self)
                 WorkflowItem(FR2.self)
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
+        }.hostAndInspect(with: \.inspection)
 
         XCTAssertEqual(try workflowView.find(FR2.self).actualView().input, expectedArgument)
     }
