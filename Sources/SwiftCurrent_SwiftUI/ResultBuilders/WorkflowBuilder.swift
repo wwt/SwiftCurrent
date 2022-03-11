@@ -19,8 +19,8 @@ import Foundation
  #### Example
  ```swift
  WorkflowView(isLaunched: $isLaunched.animation(), launchingWith: "String in") {
- WorkflowItem(FirstView.self)
- WorkflowItem(SecondView.self)
+    WorkflowItem(FirstView.self)
+    WorkflowItem(SecondView.self)
  }
  .onAbandon { print("isLaunched is now false") }
  .onFinish { args in print("Finished 1: \(args)") }
