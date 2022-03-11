@@ -10,11 +10,18 @@ import SwiftUI
 import SwiftCurrent
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-public protocol _WorkflowItemProtocol: View where F: FlowRepresentable & View, /*Wrapped: _WorkflowItemProtocol,*/ Content: View {
+public protocol _WorkflowItemProtocol: View where F: FlowRepresentable & View, Content: View {
     associatedtype F // swiftlint:disable:this type_name
     associatedtype Content
 
     func canDisplay(_ element: AnyWorkflow.Element?) -> Bool
+    mutating func setElementRef(_ element: AnyWorkflow.Element?)
+}
+
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension _WorkflowItemProtocol {
+    // swiftlint:disable:next missing_docs
+    public func setElementRef(_ element: AnyWorkflow.Element?) { }
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
@@ -23,7 +30,5 @@ extension Never: _WorkflowItemProtocol {
 
     public typealias Content = Never
 
-    public func canDisplay(_ element: AnyWorkflow.Element?) -> Bool {
-        false
-    }
+    public func canDisplay(_ element: AnyWorkflow.Element?) -> Bool { false }
 }

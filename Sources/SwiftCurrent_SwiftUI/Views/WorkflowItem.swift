@@ -36,9 +36,9 @@ public struct WorkflowItem<F: FlowRepresentable & View, Content: View>: _Workflo
     @State private var launchStyle: LaunchStyle.SwiftUI.PresentationType = .default
     @State private var persistence: FlowPersistence = .default
     @State private var content: Content?
-    @State private var elementRef: AnyWorkflow.Element?
-
     @EnvironmentObject private var model: WorkflowViewModel
+
+    private var elementRef: AnyWorkflow.Element?
 
     public var body: some View {
         ViewBuilder {
@@ -47,13 +47,18 @@ public struct WorkflowItem<F: FlowRepresentable & View, Content: View>: _Workflo
         .onReceive(model.$body) {
             if let body = $0?.extractErasedView() as? Content, elementRef == nil || elementRef === $0 {
                 content = body
-                elementRef = $0
             }
         }
     }
 
     public func canDisplay(_ element: AnyWorkflow.Element?) -> Bool {
         element?.extractErasedView() as? Content != nil && elementRef == nil || elementRef === element
+    }
+
+    public mutating func setElementRef(_ element: AnyWorkflow.Element?) {
+        if canDisplay(element) {
+            elementRef = element
+        }
     }
 
     private init<C>(previous: WorkflowItem<F, C>,
@@ -161,11 +166,11 @@ extension WorkflowItem {
              launchStyle: launchStyle,
              modifierClosure: modifierClosure ?? { _ in },
              flowPersistenceClosure: {
-                guard case .args(let arg as F.WorkflowInput) = $0 else {
-                    fatalError("Could not cast \(String(describing: $0)) to expected type: \(F.WorkflowInput.self)")
-                }
+            guard case .args(let arg as F.WorkflowInput) = $0 else {
+                fatalError("Could not cast \(String(describing: $0)) to expected type: \(F.WorkflowInput.self)")
+            }
             return persistence(arg).rawValue
-             })
+        })
     }
 
     /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.

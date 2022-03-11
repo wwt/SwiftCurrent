@@ -75,6 +75,7 @@ public struct WorkflowItemWrapper<WI: _WorkflowItemProtocol, Wrapped: _WorkflowI
               !(LHS.WorkflowOutput.self is AnyWorkflow.PassedArgs.Type) else { return } // an output type of `AnyWorkflow.PassedArgs` can only be checked at runtime when the actual value is passed forward
 
         // trap if workflow is malformed (output does not match input)
+        // swiftlint:disable:next line_length
         assert(LHS.WorkflowOutput.self is RHS.WorkflowInput.Type, "Workflow is malformed, expected output of: \(LHS.self) (\(LHS.WorkflowOutput.self)) to match input of: \(RHS.self) (\(RHS.WorkflowInput.self)")
     }
 
@@ -100,6 +101,7 @@ public struct WorkflowItemWrapper<WI: _WorkflowItemProtocol, Wrapped: _WorkflowI
         if element?.extractErasedView() as? WI.Content != nil, elementRef === element || elementRef == nil {
             elementRef = element
         }
+        content.setElementRef(element)
     }
 }
 
