@@ -13,14 +13,10 @@ import ViewInspector
 import SwiftCurrent
 @testable import SwiftCurrent_SwiftUI // testable sadly needed for inspection.inspect to work
 
-@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+@available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class PersistenceTests: XCTestCase, View {
-    override func tearDownWithError() throws {
-        removeQueuedExpectations()
-    }
-
     // MARK: RemovedAfterProceedingTests
-    func testRemovedAfterProceeding_OnFirstItemInAWorkflow() throws {
+    func testRemovedAfterProceeding_OnFirstItemInAWorkflow() async throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
@@ -37,7 +33,7 @@ final class PersistenceTests: XCTestCase, View {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR4 type") }
         }
-        let expectViewLoaded = ViewHosting.loadView(
+        let launcher = try await MainActor.run {
             WorkflowLauncher(isLaunched: .constant(true)) {
                 thenProceed(with: FR1.self) {
                     thenProceed(with: FR2.self) {
@@ -48,24 +44,16 @@ final class PersistenceTests: XCTestCase, View {
                 }
                 .persistence(.removedAfterProceeding)
             }
-        ).inspection.inspect { viewUnderTest in
-            XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
-            try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
-                XCTAssertThrowsError(try viewUnderTest.find(FR2.self).actualView().backUpInWorkflow())
-                XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
-                try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
-                    XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
-                    try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
-                        XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
-                    }
-                }
-            }
-        }
+        }.hostAndInspect(with: \.inspection)
 
-        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+        try await launcher.find(FR1.self).proceedInWorkflow()
+        XCTAssertThrowsError(try launcher.find(FR2.self).actualView().backUpInWorkflow())
+        try await launcher.find(FR2.self).proceedInWorkflow()
+        try await launcher.find(FR3.self).proceedInWorkflow()
+        try await launcher.find(FR4.self).proceedInWorkflow()
     }
-    
-    func testRemovedAfterProceeding_OnMiddleItemInAWorkflow() throws {
+
+    func testRemovedAfterProceeding_OnMiddleItemInAWorkflow() async throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
@@ -82,7 +70,7 @@ final class PersistenceTests: XCTestCase, View {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR4 type") }
         }
-        let expectViewLoaded = ViewHosting.loadView(
+        let launcher = try await MainActor.run {
             WorkflowLauncher(isLaunched: .constant(true)) {
                 thenProceed(with: FR1.self) {
                     thenProceed(with: FR2.self) {
@@ -93,32 +81,19 @@ final class PersistenceTests: XCTestCase, View {
                     .persistence(.removedAfterProceeding)
                 }
             }
-        ).inspection.inspect { fr1 in
-            XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
-            try fr1.actualView().inspectWrapped { fr2 in
-                XCTAssertNoThrow(try fr2.find(FR2.self).actualView().proceedInWorkflow())
-                try fr2.actualView().inspectWrapped { fr3 in
-                    XCTAssertNoThrow(try fr3.find(FR3.self).actualView().backUpInWorkflow())
-                    try fr1.actualView().inspect { fr1 in
-                        XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
-                        try fr1.actualView().inspectWrapped { fr2 in
-                            XCTAssertNoThrow(try fr2.find(FR2.self).actualView().proceedInWorkflow())
-                            try fr2.actualView().inspectWrapped { fr3 in
-                                XCTAssertNoThrow(try fr3.find(FR3.self).actualView().proceedInWorkflow())
-                                try fr3.actualView().inspectWrapped { fr4 in
-                                    XCTAssertNoThrow(try fr4.find(FR4.self).actualView().proceedInWorkflow())
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        }.hostAndInspect(with: \.inspection)
 
-        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+        try await launcher.find(FR1.self).proceedInWorkflow()
+        try await launcher.find(FR2.self).proceedInWorkflow()
+        try await launcher.find(FR3.self).backUpInWorkflow()
+
+        try await launcher.find(FR1.self).proceedInWorkflow()
+        try await launcher.find(FR2.self).proceedInWorkflow()
+        try await launcher.find(FR3.self).proceedInWorkflow()
+        try await launcher.find(FR4.self).proceedInWorkflow()
     }
-    
-    func testRemovedAfterProceeding_OnLastItemInAWorkflow() throws {
+
+    func testRemovedAfterProceeding_OnLastItemInAWorkflow() async throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
@@ -136,7 +111,7 @@ final class PersistenceTests: XCTestCase, View {
             var body: some View { Text("FR4 type") }
         }
         let expectOnFinish = expectation(description: "OnFinish called")
-        let expectViewLoaded = ViewHosting.loadView(
+        let launcher = try await MainActor.run {
             WorkflowLauncher(isLaunched: .constant(true)) {
                 thenProceed(with: FR1.self) {
                     thenProceed(with: FR2.self) {
@@ -146,28 +121,23 @@ final class PersistenceTests: XCTestCase, View {
                     }
                 }
             }
-            .onFinish { _ in expectOnFinish.fulfill() }
-        ).inspection.inspect { viewUnderTest in
-            XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow())
-            try viewUnderTest.actualView().inspectWrapped { viewUnderTest in
-                XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
-                try viewUnderTest.actualView().inspectWrapped { fr3 in
-                    XCTAssertNoThrow(try fr3.find(FR3.self).actualView().proceedInWorkflow())
-                    try fr3.actualView().inspectWrapped { fr4 in
-                        XCTAssertNoThrow(try fr4.find(FR4.self).actualView().proceedInWorkflow())
-                        XCTAssertThrowsError(try fr4.find(FR4.self))
-                        try fr3.actualView().inspect { fr3 in
-                            XCTAssertNoThrow(try fr3.find(FR3.self))
-                        }
-                    }
-                }
+            .onFinish { _ in
+                expectOnFinish.fulfill()
+                
             }
-        }
+        }.hostAndInspect(with: \.inspection)
 
-        wait(for: [expectViewLoaded, expectOnFinish], timeout: TestConstant.timeout)
+        try await launcher.find(FR1.self).proceedInWorkflow()
+        try await launcher.find(FR2.self).proceedInWorkflow()
+        try await launcher.find(FR3.self).proceedInWorkflow()
+        try await launcher.find(FR4.self).proceedInWorkflow()
+        XCTAssertThrowsError(try launcher.find(FR4.self))
+        XCTAssertNoThrow(try launcher.find(FR3.self))
+
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
     }
 
-    func testRemovedAfterProceeding_OnMultipleItemsInAWorkflow() throws {
+    func testRemovedAfterProceeding_OnMultipleItemsInAWorkflow() async throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
@@ -184,7 +154,7 @@ final class PersistenceTests: XCTestCase, View {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR4 type") }
         }
-        let expectViewLoaded = ViewHosting.loadView(
+        let launcher = try await MainActor.run {
             WorkflowLauncher(isLaunched: .constant(true)) {
                 thenProceed(with: FR1.self) {
                     thenProceed(with: FR2.self) {
@@ -196,35 +166,19 @@ final class PersistenceTests: XCTestCase, View {
                     .persistence(.removedAfterProceeding)
                 }
             }
-        ).inspection.inspect { fr1 in
-            XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
-            try fr1.actualView().inspectWrapped { fr2 in
-                XCTAssertNoThrow(try fr2.find(FR2.self).actualView().proceedInWorkflow())
-                try fr2.actualView().inspectWrapped { fr3 in
-                    XCTAssertNoThrow(try fr3.find(FR3.self).actualView().proceedInWorkflow())
-                    try fr3.actualView().inspectWrapped { fr4 in
-                        XCTAssertNoThrow(try fr4.find(FR4.self).actualView().backUpInWorkflow())
-                        try fr1.actualView().inspect { fr1 in
-                            XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
-                            try fr1.actualView().inspectWrapped { fr2 in
-                                XCTAssertNoThrow(try fr2.find(FR2.self).actualView().proceedInWorkflow())
-                                try fr2.actualView().inspectWrapped { fr3 in
-                                    XCTAssertNoThrow(try fr3.find(FR3.self).actualView().proceedInWorkflow())
-                                    try fr3.actualView().inspectWrapped { fr4 in
-                                        XCTAssertNoThrow(try fr4.find(FR4.self).actualView().proceedInWorkflow())
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        }.hostAndInspect(with: \.inspection)
 
-        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+        try await launcher.find(FR1.self).proceedInWorkflow()
+        try await launcher.find(FR2.self).proceedInWorkflow()
+        try await launcher.find(FR3.self).proceedInWorkflow()
+        try await launcher.find(FR4.self).backUpInWorkflow()
+        try await launcher.find(FR1.self).proceedInWorkflow()
+        try await launcher.find(FR2.self).proceedInWorkflow()
+        try await launcher.find(FR3.self).proceedInWorkflow()
+        try await launcher.find(FR4.self).proceedInWorkflow()
     }
 
-    func testRemovedAfterProceeding_OnAllItemsInAWorkflow() throws {
+    func testRemovedAfterProceeding_OnAllItemsInAWorkflow() async throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
@@ -243,7 +197,7 @@ final class PersistenceTests: XCTestCase, View {
         }
         let binding = Binding(wrappedValue: true)
         let expectOnFinish = expectation(description: "OnFinish called")
-        let expectViewLoaded = ViewHosting.loadView(
+        let launcher = try await MainActor.run {
             WorkflowLauncher(isLaunched: binding) {
                 thenProceed(with: FR1.self) {
                     thenProceed(with: FR2.self) {
@@ -256,38 +210,26 @@ final class PersistenceTests: XCTestCase, View {
                 }
                 .persistence(.removedAfterProceeding)
             }
-            .onFinish { _ in expectOnFinish.fulfill() })
-            .inspection.inspect { fr1 in
-                XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
-                try fr1.actualView().inspectWrapped { fr2 in
-                    XCTAssertNoThrow(try fr2.find(FR2.self).actualView().proceedInWorkflow())
-                    try fr2.actualView().inspectWrapped { fr3 in
-                        XCTAssertNoThrow(try fr3.find(FR3.self).actualView().proceedInWorkflow())
-                        try fr3.actualView().inspectWrapped { fr4 in
-                            XCTAssertThrowsError(try fr4.find(FR4.self).actualView().backUpInWorkflow())
-                            XCTAssertNoThrow(try fr4.find(FR4.self).actualView().proceedInWorkflow())
-                            XCTAssertThrowsError(try fr4.find(FR4.self))
-                            try fr3.actualView().inspect { fr3 in
-                                XCTAssertThrowsError(try fr3.find(FR3.self))
-                                try fr2.actualView().inspect { fr2 in
-                                    XCTAssertThrowsError(try fr2.find(FR2.self))
-                                    try fr1.actualView().inspect { fr1 in
-                                        XCTAssertThrowsError(try fr1.find(FR1.self))
-                                        XCTAssertFalse(binding.wrappedValue, "Binding should be flipped to false")
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            .onFinish { _ in expectOnFinish.fulfill() }
+        }.hostAndInspect(with: \.inspection)
 
-        wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
+        try await launcher.find(FR1.self).proceedInWorkflow()
+        try await launcher.find(FR2.self).proceedInWorkflow()
+        try await launcher.find(FR3.self).proceedInWorkflow()
+        XCTAssertThrowsError(try launcher.find(FR4.self).actualView().backUpInWorkflow())
+        try await launcher.find(FR4.self).proceedInWorkflow()
+        XCTAssertThrowsError(try launcher.find(FR4.self))
+        XCTAssertThrowsError(try launcher.find(FR3.self))
+        XCTAssertThrowsError(try launcher.find(FR2.self))
+        XCTAssertThrowsError(try launcher.find(FR1.self))
+        XCTAssertFalse(binding.wrappedValue, "Binding should be flipped to false")
+
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
     }
 
     // MARK: Closure API Tests
 
-    func testPersistenceWorks_WhenDefinedFromAClosure() throws {
+    func testPersistenceWorks_WhenDefinedFromAClosure() async throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             init(with args: String) { }
             var _workflowPointer: AnyFlowRepresentable?
@@ -308,7 +250,7 @@ final class PersistenceTests: XCTestCase, View {
         let binding = Binding(wrappedValue: true)
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectedStart = UUID().uuidString
-        let expectViewLoaded = ViewHosting.loadView(
+        let launcher = try await MainActor.run {
             WorkflowLauncher(isLaunched: binding, startingArgs: expectedStart) {
                 thenProceed(with: FR1.self) {
                     thenProceed(with: FR2.self) {
@@ -324,35 +266,24 @@ final class PersistenceTests: XCTestCase, View {
                     return .removedAfterProceeding
                 }
             }
-            .onFinish { _ in expectOnFinish.fulfill() })
-            .inspection.inspect { fr1 in
-                XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
-                try fr1.actualView().inspectWrapped { fr2 in
-                    XCTAssertNoThrow(try fr2.find(FR2.self).actualView().proceedInWorkflow())
-                    try fr2.actualView().inspectWrapped { fr3 in
-                        XCTAssertNoThrow(try fr3.find(FR3.self).actualView().proceedInWorkflow())
-                        try fr3.actualView().inspectWrapped { fr4 in
-                            XCTAssertThrowsError(try fr4.find(FR4.self).actualView().backUpInWorkflow())
-                            XCTAssertNoThrow(try fr4.find(FR4.self).actualView().proceedInWorkflow())
-                            XCTAssertThrowsError(try fr4.find(FR4.self))
-                            try fr3.actualView().inspect { fr3 in
-                                XCTAssertThrowsError(try fr3.find(FR3.self))
-                                try fr2.actualView().inspect { fr2 in
-                                    XCTAssertThrowsError(try fr2.find(FR2.self))
-                                    try fr1.actualView().inspect { fr1 in
-                                        XCTAssertThrowsError(try fr1.find(FR1.self))
-                                        XCTAssertFalse(binding.wrappedValue, "Binding should be flipped to false")
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
+            .onFinish { _ in expectOnFinish.fulfill() }
+        }.hostAndInspect(with: \.inspection)
+
+        try await launcher.find(FR1.self).proceedInWorkflow()
+        try await launcher.find(FR2.self).proceedInWorkflow()
+        try await launcher.find(FR3.self).proceedInWorkflow()
+        XCTAssertThrowsError(try launcher.find(FR4.self).actualView().backUpInWorkflow())
+        try await launcher.find(FR4.self).proceedInWorkflow()
+        XCTAssertThrowsError(try launcher.find(FR4.self))
+        XCTAssertThrowsError(try launcher.find(FR3.self))
+        XCTAssertThrowsError(try launcher.find(FR2.self))
+        XCTAssertThrowsError(try launcher.find(FR1.self))
+        XCTAssertFalse(binding.wrappedValue, "Binding should be flipped to false")
+
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
     }
 
-    func testPersistenceWorks_WhenDefinedFromAClosure_AndItemHasInputOfPassedArgs() throws {
+    func testPersistenceWorks_WhenDefinedFromAClosure_AndItemHasInputOfPassedArgs() async throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             init(with args: AnyWorkflow.PassedArgs) { }
             var _workflowPointer: AnyFlowRepresentable?
@@ -373,7 +304,7 @@ final class PersistenceTests: XCTestCase, View {
         let binding = Binding(wrappedValue: true)
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectedStart = AnyWorkflow.PassedArgs.args(UUID().uuidString)
-        let expectViewLoaded = ViewHosting.loadView(
+        let launcher = try await MainActor.run {
             WorkflowLauncher(isLaunched: binding, startingArgs: expectedStart) {
                 thenProceed(with: FR1.self) {
 
@@ -391,36 +322,24 @@ final class PersistenceTests: XCTestCase, View {
                     return .removedAfterProceeding
                 }
             }
-            .onFinish { _ in expectOnFinish.fulfill() })
-            .inspection.inspect { fr1 in
-                XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
-                try fr1.actualView().inspectWrapped { fr2 in
-                    XCTAssertNoThrow(try fr2.find(FR2.self).actualView().proceedInWorkflow())
-                    try fr2.actualView().inspectWrapped { fr3 in
-                        XCTAssertNoThrow(try fr3.find(FR3.self).actualView().proceedInWorkflow())
-                        try fr3.actualView().inspectWrapped { fr4 in
-                            XCTAssertThrowsError(try fr4.find(FR4.self).actualView().backUpInWorkflow())
-                            XCTAssertNoThrow(try fr4.find(FR4.self).actualView().proceedInWorkflow())
-                            XCTAssertThrowsError(try fr4.find(FR4.self))
-                            try fr3.actualView().inspect { fr3 in
-                                XCTAssertThrowsError(try fr3.find(FR3.self))
-                                try fr2.actualView().inspect { fr2 in
-                                    XCTAssertThrowsError(try fr2.find(FR2.self))
-                                    try fr1.actualView().inspect { fr1 in
-                                        XCTAssertThrowsError(try fr1.find(FR1.self))
-                                        XCTAssertFalse(binding.wrappedValue, "Binding should be flipped to false")
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            .onFinish { _ in expectOnFinish.fulfill() }
+        }.hostAndInspect(with: \.inspection)
 
-        wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
+        try await launcher.find(FR1.self).proceedInWorkflow()
+        try await launcher.find(FR2.self).proceedInWorkflow()
+        try await launcher.find(FR3.self).proceedInWorkflow()
+        XCTAssertThrowsError(try launcher.find(FR4.self).actualView().backUpInWorkflow())
+        try await launcher.find(FR4.self).proceedInWorkflow()
+        XCTAssertThrowsError(try launcher.find(FR4.self))
+        XCTAssertThrowsError(try launcher.find(FR3.self))
+        XCTAssertThrowsError(try launcher.find(FR2.self))
+        XCTAssertThrowsError(try launcher.find(FR1.self))
+        XCTAssertFalse(binding.wrappedValue, "Binding should be flipped to false")
+
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
     }
 
-    func testPersistenceWorks_WhenDefinedFromAClosure_AndItemHasInputOfNever() throws {
+    func testPersistenceWorks_WhenDefinedFromAClosure_AndItemHasInputOfNever() async throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
@@ -439,10 +358,9 @@ final class PersistenceTests: XCTestCase, View {
         }
         let binding = Binding(wrappedValue: true)
         let expectOnFinish = expectation(description: "OnFinish called")
-        let expectViewLoaded = ViewHosting.loadView(
+        let launcher = try await MainActor.run {
             WorkflowLauncher(isLaunched: binding) {
                 thenProceed(with: FR1.self) {
-
                     thenProceed(with: FR2.self) {
                         thenProceed(with: FR3.self) {
                             thenProceed(with: FR4.self).persistence(.removedAfterProceeding)
@@ -453,33 +371,21 @@ final class PersistenceTests: XCTestCase, View {
                 }
                 .persistence { .removedAfterProceeding }
             }
-            .onFinish { _ in expectOnFinish.fulfill() })
-            .inspection.inspect { fr1 in
-                XCTAssertNoThrow(try fr1.find(FR1.self).actualView().proceedInWorkflow())
-                try fr1.actualView().inspectWrapped { fr2 in
-                    XCTAssertNoThrow(try fr2.find(FR2.self).actualView().proceedInWorkflow())
-                    try fr2.actualView().inspectWrapped { fr3 in
-                        XCTAssertNoThrow(try fr3.find(FR3.self).actualView().proceedInWorkflow())
-                        try fr3.actualView().inspectWrapped { fr4 in
-                            XCTAssertThrowsError(try fr4.find(FR4.self).actualView().backUpInWorkflow())
-                            XCTAssertNoThrow(try fr4.find(FR4.self).actualView().proceedInWorkflow())
-                            XCTAssertThrowsError(try fr4.find(FR4.self))
-                            try fr3.actualView().inspect { fr3 in
-                                XCTAssertThrowsError(try fr3.find(FR3.self))
-                                try fr2.actualView().inspect { fr2 in
-                                    XCTAssertThrowsError(try fr2.find(FR2.self))
-                                    try fr1.actualView().inspect { fr1 in
-                                        XCTAssertThrowsError(try fr1.find(FR1.self))
-                                        XCTAssertFalse(binding.wrappedValue, "Binding should be flipped to false")
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            .onFinish { _ in expectOnFinish.fulfill() }
+        }.hostAndInspect(with: \.inspection)
 
-        wait(for: [expectOnFinish, expectViewLoaded], timeout: TestConstant.timeout)
+        try await launcher.find(FR1.self).proceedInWorkflow()
+        try await launcher.find(FR2.self).proceedInWorkflow()
+        try await launcher.find(FR3.self).proceedInWorkflow()
+        XCTAssertThrowsError(try launcher.find(FR4.self).actualView().backUpInWorkflow())
+        try await launcher.find(FR4.self).proceedInWorkflow()
+        XCTAssertThrowsError(try launcher.find(FR4.self))
+        XCTAssertThrowsError(try launcher.find(FR3.self))
+        XCTAssertThrowsError(try launcher.find(FR2.self))
+        XCTAssertThrowsError(try launcher.find(FR1.self))
+        XCTAssertFalse(binding.wrappedValue, "Binding should be flipped to false")
+
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
     }
 
     // MARK: PersistWhenSkippedTests

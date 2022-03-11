@@ -825,7 +825,8 @@ Each guide is broken into a few sections. Sections contain a list of guidelines.
 
   // RIGHT
   @available(iOS 13, *)
-  @resultBuilder @requires_stored_property_inits
+  @resultBuilder
+  @requires_stored_property_inits
   class WorkflowBuilder {
     // ...
   }
