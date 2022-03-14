@@ -23,6 +23,17 @@ extension InspectableView where View == ViewType.Sheet {
 
 @available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class SwiftCurrent_ModalTests: XCTestCase, Scene {
+    func testModalModifier() throws {
+        let sampleView = Text("Test")
+        let binding = Binding(wrappedValue: true)
+        let viewUnderTest = try sampleView.modal(isPresented: binding, style: .sheet, destination: Text("nextView")).inspect()
+        XCTAssertNoThrow(try viewUnderTest.sheet())
+        XCTAssert(try viewUnderTest.sheet().isPresented())
+        XCTAssertEqual(try viewUnderTest.sheet().text().string(), "nextView")
+        binding.wrappedValue = false
+        XCTAssertThrowsError(try viewUnderTest.sheet())
+    }
+
     func testWorkflowCanBeFollowed() async throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
@@ -46,19 +57,12 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
         .extractWorkflowLauncher()
         .extractWorkflowItemWrapper()
 
-        let model = try await MainActor.run {
-            try XCTUnwrap((Mirror(reflecting: try wfr1.actualView()).descendant("_model") as? EnvironmentObject<WorkflowViewModel>)?.wrappedValue)
-        }
-        let launcher = try await MainActor.run {
-            try XCTUnwrap((Mirror(reflecting: try wfr1.actualView()).descendant("_launcher") as? EnvironmentObject<Launcher>)?.wrappedValue)
-        }
-
         XCTAssertEqual(try wfr1.find(FR1.self).text().string(), "FR1 type")
+        let modalModifier = try wfr1.find(ModalModifier<WorkflowItemWrapper<WorkflowItem<FR2, FR2>, Never>>.self)
         try await wfr1.find(FR1.self).proceedInWorkflow()
-        try await wfr1.actualView().host { $0.environmentObject(model).environmentObject(launcher) }
-        XCTAssertTrue(try wfr1.find(ViewType.Sheet.self).isPresented())
+        let wfr2 = try await wfr1.extractWrappedWrapper()
 
-        let fr2 = try wfr1.find(ViewType.Sheet.self).find(FR2.self)
+        let fr2 = try wfr2.find(FR2.self)
         XCTAssertEqual(try fr2.text().string(), "FR2 type")
         try await fr2.proceedInWorkflow()
 

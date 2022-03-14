@@ -34,12 +34,7 @@ public struct WorkflowItemWrapper<WI: _WorkflowItemProtocol, Wrapped: _WorkflowI
             if launchStyle == .navigationLink {
                 content.navLink(to: nextView, isActive: $isActive)
             } else if case .modal(let modalStyle) = (wrapped as? WorkflowItemPresentable)?.workflowLaunchStyle {
-                switch modalStyle {
-                    case .sheet: content.testableSheet(isPresented: $isActive) { nextView }
-                    #if (os(iOS) || os(tvOS) || os(watchOS) || targetEnvironment(macCatalyst))
-                    case .fullScreenCover: content.fullScreenCover(isPresented: $isActive) { nextView }
-                    #endif
-                }
+                content.modal(isPresented: $isActive, style: modalStyle, destination: nextView)
             } else if launchStyle != .navigationLink, content.canDisplay(model.body) {
                 content
             } else {
