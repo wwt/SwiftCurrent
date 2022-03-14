@@ -70,6 +70,10 @@ extension InspectableView where View: CustomViewType & SingleViewContent {
         }
         return try await wrapped.inspection.inspect()
     }
+
+    func findModalModifier<C, W: Inspectable>() throws -> InspectableView<ViewType.View<ModalModifier<W>>> where View.T == WorkflowItemWrapper<C, W> {
+        try find(ModalModifier<W>.self)
+    }
 }
 
 @available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
