@@ -56,7 +56,6 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
         .hostAndInspect(with: \.inspection)
         .extractWorkflowLauncher()
         .extractWorkflowItemWrapper()
-
         XCTAssertEqual(try wfr1.find(FR1.self).text().string(), "FR1 type")
         XCTAssertNoThrow(try wfr1.findModalModifier())
         try await wfr1.find(FR1.self).proceedInWorkflow()
@@ -195,8 +194,6 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
         .extractWorkflowItemWrapper()
 
         XCTAssertThrowsError(try wfr1.find(FR1.self))
-        #warning("Do we need this?")
-        XCTAssertNoThrow(try wfr1.find(FR2.self))
 
         let wfr2 = try await wfr1.extractWrappedWrapper()
         XCTAssertNoThrow(try wfr2.findModalModifier())
@@ -237,7 +234,6 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 
         let wfr2 = try await wfr1.extractWrappedWrapper()
         XCTAssertThrowsError(try wfr2.find(FR2.self))
-        XCTAssertNoThrow(try wfr2.find(FR3.self))
 
         let wfr3 = try await wfr2.extractWrappedWrapper()
         try await wfr3.find(FR3.self).proceedInWorkflow()
@@ -280,11 +276,9 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 
         let wfr2 = try await wfr1.extractWrappedWrapper()
         XCTAssertThrowsError(try wfr2.find(FR2.self))
-        XCTAssertNoThrow(try wfr2.find(FR4.self))
 
         let wfr3 = try await wfr2.extractWrappedWrapper()
         XCTAssertThrowsError(try wfr3.find(FR3.self))
-        XCTAssertNoThrow(try wfr3.find(FR4.self))
 
         let wfr4 = try await wfr3.extractWrappedWrapper()
         try await wfr4.find(FR4.self).proceedInWorkflow()
