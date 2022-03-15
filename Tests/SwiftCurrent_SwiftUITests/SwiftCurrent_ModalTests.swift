@@ -56,6 +56,7 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
         .hostAndInspect(with: \.inspection)
         .extractWorkflowLauncher()
         .extractWorkflowItemWrapper()
+        
         XCTAssertEqual(try wfr1.find(FR1.self).text().string(), "FR1 type")
         XCTAssertNoThrow(try wfr1.findModalModifier())
         try await wfr1.find(FR1.self).proceedInWorkflow()
