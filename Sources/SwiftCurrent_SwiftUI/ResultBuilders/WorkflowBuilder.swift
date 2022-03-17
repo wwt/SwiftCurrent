@@ -19,8 +19,8 @@ import Foundation
  #### Example
  ```swift
  WorkflowView(isLaunched: $isLaunched.animation(), launchingWith: "String in") {
-     WorkflowItem(FirstView.self)
-     WorkflowItem(SecondView.self)
+    WorkflowItem(FirstView.self)
+    WorkflowItem(SecondView.self)
  }
  .onAbandon { print("isLaunched is now false") }
  .onFinish { args in print("Finished 1: \(args)") }
@@ -34,64 +34,55 @@ import Foundation
 @resultBuilder
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public enum WorkflowBuilder {
-    static func buildBlock<F, V>(_ component: WorkflowItem<F, Never, V>) -> WorkflowItem<F, Never, V> {
-        component
+    // swiftlint:disable:next missing_docs
+    public static func buildBlock<W0: _WorkflowItemProtocol>(_ w0: W0) -> WorkflowItemWrapper<W0, Never> {
+        WorkflowItemWrapper<W0, Never>(content: w0)
     }
 
     // swiftlint:disable:next missing_docs
-    public static func buildBlock<F0, V0,
-                                  F1, V1>(_ f0: WorkflowItem<F0, Never, V0>,
-                                          _ f1: WorkflowItem<F1, Never, V1>) -> WorkflowItem<F0, WorkflowItem<F1, Never, V1>, V0> {
-        WorkflowItem(F0.self) {
-            WorkflowItem(F1.self)
+    public static func buildBlock<W0: _WorkflowItemProtocol,
+                                  W1: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1) -> WorkflowItemWrapper<W0, WorkflowItemWrapper<W1, Never>> {
+        WorkflowItemWrapper(content: w0) {
+            WorkflowItemWrapper(content: w1)
         }
     }
 
     // swiftlint:disable:next missing_docs
-    public static func buildBlock<F0, V0,
-                                  F1, V1,
-                                  F2, V2>(_ f0: WorkflowItem<F0, Never, V0>,
-                                          _ f1: WorkflowItem<F1, Never, V1>,
-                                          _ f2: WorkflowItem<F2, Never, V2>) -> WorkflowItem<F0, WorkflowItem<F1, WorkflowItem<F2, Never, V2>, V1>, V0> {
-        WorkflowItem(F0.self) {
-            WorkflowItem(F1.self) {
-                WorkflowItem(F2.self)
+    public static func buildBlock<W0: _WorkflowItemProtocol,
+                                  W1: _WorkflowItemProtocol,
+                                  W2: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1, _ w2: W2) -> WorkflowItemWrapper<W0, WorkflowItemWrapper<W1, WorkflowItemWrapper<W2, Never>>> {
+        WorkflowItemWrapper(content: w0) {
+            WorkflowItemWrapper(content: w1) {
+                WorkflowItemWrapper(content: w2)
             }
         }
     }
 
     // swiftlint:disable:next missing_docs
-    public static func buildBlock<F0, V0,
-                                  F1, V1,
-                                  F2, V2,
-                                  F3, V3>(_ f0: WorkflowItem<F0, Never, V0>,
-                                          _ f1: WorkflowItem<F1, Never, V1>,
-                                          _ f2: WorkflowItem<F2, Never, V2>,
-                                          _ f3: WorkflowItem<F3, Never, V3>) -> WorkflowItem<F0, WorkflowItem<F1, WorkflowItem<F2, WorkflowItem<F3, Never, V3>, V2>, V1>, V0> {
-        WorkflowItem(F0.self) {
-            WorkflowItem(F1.self) {
-                WorkflowItem(F2.self) {
-                    WorkflowItem(F3.self)
+    public static func buildBlock<W0: _WorkflowItemProtocol,
+                                  W1: _WorkflowItemProtocol,
+                                  W2: _WorkflowItemProtocol,
+                                  W3: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1, _ w2: W2, _ w3: W3) -> WorkflowItemWrapper<W0, WorkflowItemWrapper<W1, WorkflowItemWrapper<W2, WorkflowItemWrapper<W3, Never>>>> {
+        WorkflowItemWrapper(content: w0) {
+            WorkflowItemWrapper(content: w1) {
+                WorkflowItemWrapper(content: w2) {
+                    WorkflowItemWrapper(content: w3)
                 }
             }
         }
     }
 
     // swiftlint:disable:next missing_docs
-    public static func buildBlock<F0, V0,
-                                  F1, V1,
-                                  F2, V2,
-                                  F3, V3,
-                                  F4, V4>(_ f0: WorkflowItem<F0, Never, V0>,
-                                          _ f1: WorkflowItem<F1, Never, V1>,
-                                          _ f2: WorkflowItem<F2, Never, V2>,
-                                          _ f3: WorkflowItem<F3, Never, V3>,
-                                          _ f4: WorkflowItem<F4, Never, V4>) -> WorkflowItem<F0, WorkflowItem<F1, WorkflowItem<F2, WorkflowItem<F3, WorkflowItem<F4, Never, V4>, V3>, V2>, V1>, V0> {
-        WorkflowItem(F0.self) {
-            WorkflowItem(F1.self) {
-                WorkflowItem(F2.self) {
-                    WorkflowItem(F3.self) {
-                        WorkflowItem(F4.self)
+    public static func buildBlock<W0: _WorkflowItemProtocol,
+                                  W1: _WorkflowItemProtocol,
+                                  W2: _WorkflowItemProtocol,
+                                  W3: _WorkflowItemProtocol,
+                                  W4: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1, _ w2: W2, _ w3: W3, _ w4: W4) -> WorkflowItemWrapper<W0, WorkflowItemWrapper<W1, WorkflowItemWrapper<W2, WorkflowItemWrapper<W3, WorkflowItemWrapper<W4, Never>>>>> {
+        WorkflowItemWrapper(content: w0) {
+            WorkflowItemWrapper(content: w1) {
+                WorkflowItemWrapper(content: w2) {
+                    WorkflowItemWrapper(content: w3) {
+                        WorkflowItemWrapper(content: w4)
                     }
                 }
             }
@@ -99,23 +90,18 @@ public enum WorkflowBuilder {
     }
 
     // swiftlint:disable:next missing_docs
-    public static func buildBlock<F0, V0,
-                                  F1, V1,
-                                  F2, V2,
-                                  F3, V3,
-                                  F4, V4,
-                                  F5, V5>(_ f0: WorkflowItem<F0, Never, V0>,
-                                          _ f1: WorkflowItem<F1, Never, V1>,
-                                          _ f2: WorkflowItem<F2, Never, V2>,
-                                          _ f3: WorkflowItem<F3, Never, V3>,
-                                          _ f4: WorkflowItem<F4, Never, V4>,
-                                          _ f5: WorkflowItem<F5, Never, V5>) -> WorkflowItem<F0, WorkflowItem<F1, WorkflowItem<F2, WorkflowItem<F3, WorkflowItem<F4, WorkflowItem<F5, Never, V5>, V4>, V3>, V2>, V1>, V0> {
-        WorkflowItem(F0.self) {
-            WorkflowItem(F1.self) {
-                WorkflowItem(F2.self) {
-                    WorkflowItem(F3.self) {
-                        WorkflowItem(F4.self) {
-                            WorkflowItem(F5.self)
+    public static func buildBlock<W0: _WorkflowItemProtocol,
+                                  W1: _WorkflowItemProtocol,
+                                  W2: _WorkflowItemProtocol,
+                                  W3: _WorkflowItemProtocol,
+                                  W4: _WorkflowItemProtocol,
+                                  W5: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1, _ w2: W2, _ w3: W3, _ w4: W4, _ w5: W5) -> WorkflowItemWrapper<W0, WorkflowItemWrapper<W1, WorkflowItemWrapper<W2, WorkflowItemWrapper<W3, WorkflowItemWrapper<W4, WorkflowItemWrapper<W5, Never>>>>>> {
+        WorkflowItemWrapper(content: w0) {
+            WorkflowItemWrapper(content: w1) {
+                WorkflowItemWrapper(content: w2) {
+                    WorkflowItemWrapper(content: w3) {
+                        WorkflowItemWrapper(content: w4) {
+                            WorkflowItemWrapper(content: w5)
                         }
                     }
                 }
@@ -124,26 +110,20 @@ public enum WorkflowBuilder {
     }
 
     // swiftlint:disable:next missing_docs
-    public static func buildBlock<F0, V0,
-                                  F1, V1,
-                                  F2, V2,
-                                  F3, V3,
-                                  F4, V4,
-                                  F5, V5,
-                                  F6, V6>(_ f0: WorkflowItem<F0, Never, V0>,
-                                          _ f1: WorkflowItem<F1, Never, V1>,
-                                          _ f2: WorkflowItem<F2, Never, V2>,
-                                          _ f3: WorkflowItem<F3, Never, V3>,
-                                          _ f4: WorkflowItem<F4, Never, V4>,
-                                          _ f5: WorkflowItem<F5, Never, V5>,
-                                          _ f6: WorkflowItem<F6, Never, V6>) -> WorkflowItem<F0, WorkflowItem<F1, WorkflowItem<F2, WorkflowItem<F3, WorkflowItem<F4, WorkflowItem<F5, WorkflowItem<F6, Never, V6>, V5>, V4>, V3>, V2>, V1>, V0> {
-        WorkflowItem(F0.self) {
-            WorkflowItem(F1.self) {
-                WorkflowItem(F2.self) {
-                    WorkflowItem(F3.self) {
-                        WorkflowItem(F4.self) {
-                            WorkflowItem(F5.self) {
-                                WorkflowItem(F6.self)
+    public static func buildBlock<W0: _WorkflowItemProtocol,
+                                  W1: _WorkflowItemProtocol,
+                                  W2: _WorkflowItemProtocol,
+                                  W3: _WorkflowItemProtocol,
+                                  W4: _WorkflowItemProtocol,
+                                  W5: _WorkflowItemProtocol,
+                                  W6: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1, _ w2: W2, _ w3: W3, _ w4: W4, _ w5: W5, _ w6: W6) -> WorkflowItemWrapper<W0, WorkflowItemWrapper<W1, WorkflowItemWrapper<W2, WorkflowItemWrapper<W3, WorkflowItemWrapper<W4, WorkflowItemWrapper<W5, WorkflowItemWrapper<W6, Never>>>>>>> {
+        WorkflowItemWrapper(content: w0) {
+            WorkflowItemWrapper(content: w1) {
+                WorkflowItemWrapper(content: w2) {
+                    WorkflowItemWrapper(content: w3) {
+                        WorkflowItemWrapper(content: w4) {
+                            WorkflowItemWrapper(content: w5) {
+                                WorkflowItemWrapper(content: w6)
                             }
                         }
                     }
@@ -153,29 +133,22 @@ public enum WorkflowBuilder {
     }
 
     // swiftlint:disable:next missing_docs
-    public static func buildBlock<F0, V0,
-                                  F1, V1,
-                                  F2, V2,
-                                  F3, V3,
-                                  F4, V4,
-                                  F5, V5,
-                                  F6, V6,
-                                  F7, V7>(_ f0: WorkflowItem<F0, Never, V0>,
-                                          _ f1: WorkflowItem<F1, Never, V1>,
-                                          _ f2: WorkflowItem<F2, Never, V2>,
-                                          _ f3: WorkflowItem<F3, Never, V3>,
-                                          _ f4: WorkflowItem<F4, Never, V4>,
-                                          _ f5: WorkflowItem<F5, Never, V5>,
-                                          _ f6: WorkflowItem<F6, Never, V6>,
-                                          _ f7: WorkflowItem<F7, Never, V7>) -> WorkflowItem<F0, WorkflowItem<F1, WorkflowItem<F2, WorkflowItem<F3, WorkflowItem<F4, WorkflowItem<F5, WorkflowItem<F6, WorkflowItem<F7, Never, V7>, V6>, V5>, V4>, V3>, V2>, V1>, V0> {
-        WorkflowItem(F0.self) {
-            WorkflowItem(F1.self) {
-                WorkflowItem(F2.self) {
-                    WorkflowItem(F3.self) {
-                        WorkflowItem(F4.self) {
-                            WorkflowItem(F5.self) {
-                                WorkflowItem(F6.self) {
-                                    WorkflowItem(F7.self)
+    public static func buildBlock<W0: _WorkflowItemProtocol,
+                                  W1: _WorkflowItemProtocol,
+                                  W2: _WorkflowItemProtocol,
+                                  W3: _WorkflowItemProtocol,
+                                  W4: _WorkflowItemProtocol,
+                                  W5: _WorkflowItemProtocol,
+                                  W6: _WorkflowItemProtocol,
+                                  W7: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1, _ w2: W2, _ w3: W3, _ w4: W4, _ w5: W5, _ w6: W6, _ w7: W7) -> WorkflowItemWrapper<W0, WorkflowItemWrapper<W1, WorkflowItemWrapper<W2, WorkflowItemWrapper<W3, WorkflowItemWrapper<W4, WorkflowItemWrapper<W5, WorkflowItemWrapper<W6, WorkflowItemWrapper<W7, Never>>>>>>>> {
+        WorkflowItemWrapper(content: w0) {
+            WorkflowItemWrapper(content: w1) {
+                WorkflowItemWrapper(content: w2) {
+                    WorkflowItemWrapper(content: w3) {
+                        WorkflowItemWrapper(content: w4) {
+                            WorkflowItemWrapper(content: w5) {
+                                WorkflowItemWrapper(content: w6) {
+                                    WorkflowItemWrapper(content: w7)
                                 }
                             }
                         }
@@ -186,32 +159,24 @@ public enum WorkflowBuilder {
     }
 
     // swiftlint:disable:next missing_docs
-    public static func buildBlock<F0, V0,
-                                  F1, V1,
-                                  F2, V2,
-                                  F3, V3,
-                                  F4, V4,
-                                  F5, V5,
-                                  F6, V6,
-                                  F7, V7,
-                                  F8, V8>(_ f0: WorkflowItem<F0, Never, V0>,
-                                          _ f1: WorkflowItem<F1, Never, V1>,
-                                          _ f2: WorkflowItem<F2, Never, V2>,
-                                          _ f3: WorkflowItem<F3, Never, V3>,
-                                          _ f4: WorkflowItem<F4, Never, V4>,
-                                          _ f5: WorkflowItem<F5, Never, V5>,
-                                          _ f6: WorkflowItem<F6, Never, V6>,
-                                          _ f7: WorkflowItem<F7, Never, V7>,
-                                          _ f8: WorkflowItem<F8, Never, V8>) -> WorkflowItem<F0, WorkflowItem<F1, WorkflowItem<F2, WorkflowItem<F3, WorkflowItem<F4, WorkflowItem<F5, WorkflowItem<F6, WorkflowItem<F7, WorkflowItem<F8, Never, V8>, V7>, V6>, V5>, V4>, V3>, V2>, V1>, V0> {
-        WorkflowItem(F0.self) {
-            WorkflowItem(F1.self) {
-                WorkflowItem(F2.self) {
-                    WorkflowItem(F3.self) {
-                        WorkflowItem(F4.self) {
-                            WorkflowItem(F5.self) {
-                                WorkflowItem(F6.self) {
-                                    WorkflowItem(F7.self) {
-                                        WorkflowItem(F8.self)
+    public static func buildBlock<W0: _WorkflowItemProtocol,
+                                  W1: _WorkflowItemProtocol,
+                                  W2: _WorkflowItemProtocol,
+                                  W3: _WorkflowItemProtocol,
+                                  W4: _WorkflowItemProtocol,
+                                  W5: _WorkflowItemProtocol,
+                                  W6: _WorkflowItemProtocol,
+                                  W7: _WorkflowItemProtocol,
+                                  W8: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1, _ w2: W2, _ w3: W3, _ w4: W4, _ w5: W5, _ w6: W6, _ w7: W7, _ w8: W8) -> WorkflowItemWrapper<W0, WorkflowItemWrapper<W1, WorkflowItemWrapper<W2, WorkflowItemWrapper<W3, WorkflowItemWrapper<W4, WorkflowItemWrapper<W5, WorkflowItemWrapper<W6, WorkflowItemWrapper<W7, WorkflowItemWrapper<W8, Never>>>>>>>>> {
+        WorkflowItemWrapper(content: w0) {
+            WorkflowItemWrapper(content: w1) {
+                WorkflowItemWrapper(content: w2) {
+                    WorkflowItemWrapper(content: w3) {
+                        WorkflowItemWrapper(content: w4) {
+                            WorkflowItemWrapper(content: w5) {
+                                WorkflowItemWrapper(content: w6) {
+                                    WorkflowItemWrapper(content: w7) {
+                                        WorkflowItemWrapper(content: w8)
                                     }
                                 }
                             }
@@ -223,35 +188,26 @@ public enum WorkflowBuilder {
     }
 
     // swiftlint:disable:next missing_docs
-    public static func buildBlock<F0, V0,
-                                  F1, V1,
-                                  F2, V2,
-                                  F3, V3,
-                                  F4, V4,
-                                  F5, V5,
-                                  F6, V6,
-                                  F7, V7,
-                                  F8, V8,
-                                  F9, V9>(_ f0: WorkflowItem<F0, Never, V0>,
-                                          _ f1: WorkflowItem<F1, Never, V1>,
-                                          _ f2: WorkflowItem<F2, Never, V2>,
-                                          _ f3: WorkflowItem<F3, Never, V3>,
-                                          _ f4: WorkflowItem<F4, Never, V4>,
-                                          _ f5: WorkflowItem<F5, Never, V5>,
-                                          _ f6: WorkflowItem<F6, Never, V6>,
-                                          _ f7: WorkflowItem<F7, Never, V7>,
-                                          _ f8: WorkflowItem<F8, Never, V8>,
-                                          _ f9: WorkflowItem<F9, Never, V9>) -> WorkflowItem<F0, WorkflowItem<F1, WorkflowItem<F2, WorkflowItem<F3, WorkflowItem<F4, WorkflowItem<F5, WorkflowItem<F6, WorkflowItem<F7, WorkflowItem<F8, WorkflowItem<F9, Never, V9>, V8>, V7>, V6>, V5>, V4>, V3>, V2>, V1>, V0> {
-        WorkflowItem(F0.self) {
-            WorkflowItem(F1.self) {
-                WorkflowItem(F2.self) {
-                    WorkflowItem(F3.self) {
-                        WorkflowItem(F4.self) {
-                            WorkflowItem(F5.self) {
-                                WorkflowItem(F6.self) {
-                                    WorkflowItem(F7.self) {
-                                        WorkflowItem(F8.self) {
-                                            WorkflowItem(F9.self)
+    public static func buildBlock<W0: _WorkflowItemProtocol,
+                                  W1: _WorkflowItemProtocol,
+                                  W2: _WorkflowItemProtocol,
+                                  W3: _WorkflowItemProtocol,
+                                  W4: _WorkflowItemProtocol,
+                                  W5: _WorkflowItemProtocol,
+                                  W6: _WorkflowItemProtocol,
+                                  W7: _WorkflowItemProtocol,
+                                  W8: _WorkflowItemProtocol,
+                                  W9: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1, _ w2: W2, _ w3: W3, _ w4: W4, _ w5: W5, _ w6: W6, _ w7: W7, _ w8: W8, _ w9: W9) -> WorkflowItemWrapper<W0, WorkflowItemWrapper<W1, WorkflowItemWrapper<W2, WorkflowItemWrapper<W3, WorkflowItemWrapper<W4, WorkflowItemWrapper<W5, WorkflowItemWrapper<W6, WorkflowItemWrapper<W7, WorkflowItemWrapper<W8, WorkflowItemWrapper<W9, Never>>>>>>>>>> {
+        WorkflowItemWrapper(content: w0) {
+            WorkflowItemWrapper(content: w1) {
+                WorkflowItemWrapper(content: w2) {
+                    WorkflowItemWrapper(content: w3) {
+                        WorkflowItemWrapper(content: w4) {
+                            WorkflowItemWrapper(content: w5) {
+                                WorkflowItemWrapper(content: w6) {
+                                    WorkflowItemWrapper(content: w7) {
+                                        WorkflowItemWrapper(content: w8) {
+                                            WorkflowItemWrapper(content: w9)
                                         }
                                     }
                                 }

@@ -21,17 +21,17 @@ import SwiftCurrent
      WorkflowItem(FirstView.self)
          .applyModifiers {
              $0.background(Color.gray)
-                 .transition(.slide)
-                 .animation(.spring())
+             .transition(.slide)
+             .animation(.spring())
          }
      WorkflowItem(SecondView.self)
          .persistence(.removedAfterProceeding)
          .applyModifiers {
              $0.SecondViewSpecificModifier()
-                 .padding(10)
-                 .background(Color.purple)
-                 .transition(.opacity)
-                 .animation(.easeInOut)
+             .padding(10)
+             .background(Color.purple)
+             .transition(.opacity)
+             .animation(.easeInOut)
          }
  }
  .onAbandon { print("isLaunched is now false") }
@@ -56,8 +56,8 @@ public struct WorkflowView<Content: View>: View {
      - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
      - Parameter content: `WorkflowBuilder` consisting of `WorkflowItem`s that define your workflow.
      */
-    public init<F, W, C>(isLaunched: Binding<Bool> = .constant(true),
-                         @WorkflowBuilder content: () -> WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>>, F.WorkflowInput == Never {
+    public init<WI: _WorkflowItemProtocol>(isLaunched: Binding<Bool> = .constant(true),
+                                           @WorkflowBuilder content: () -> WI) where Content == WorkflowLauncher<WI>, WI.F.WorkflowInput == Never {
         self.init(isLaunched: isLaunched, startingArgs: .none, content: content())
     }
 
@@ -67,9 +67,9 @@ public struct WorkflowView<Content: View>: View {
      - Parameter launchingWith: arguments passed to the first loaded `FlowRepresentable` in the underlying `Workflow`.
      - Parameter content: `WorkflowBuilder` consisting of `WorkflowItem`s that define your workflow.
      */
-    public init<F, W, C>(isLaunched: Binding<Bool> = .constant(true),
-                         launchingWith args: F.WorkflowInput,
-                         @WorkflowBuilder content: () -> WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
+    public init<WI: _WorkflowItemProtocol>(isLaunched: Binding<Bool> = .constant(true),
+                                           launchingWith args: WI.F.WorkflowInput,
+                                           @WorkflowBuilder content: () -> WI) where Content == WorkflowLauncher<WI> {
         self.init(isLaunched: isLaunched, startingArgs: .args(args), content: content())
     }
 
@@ -79,9 +79,9 @@ public struct WorkflowView<Content: View>: View {
      - Parameter launchingWith: arguments passed to the first loaded `FlowRepresentable` in the underlying `Workflow`.
      - Parameter content: `WorkflowBuilder` consisting of `WorkflowItem`s that define your workflow.
      */
-    public init<F, W, C>(isLaunched: Binding<Bool> = .constant(true),
-                         launchingWith args: AnyWorkflow.PassedArgs,
-                         @WorkflowBuilder content: () -> WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>>, F.WorkflowInput == AnyWorkflow.PassedArgs {
+    public init<WI: _WorkflowItemProtocol>(isLaunched: Binding<Bool> = .constant(true),
+                                           launchingWith args: AnyWorkflow.PassedArgs,
+                                           @WorkflowBuilder content: () -> WI) where Content == WorkflowLauncher<WI>, WI.F.WorkflowInput == AnyWorkflow.PassedArgs {
         self.init(isLaunched: isLaunched, startingArgs: args, content: content())
     }
 
@@ -91,9 +91,9 @@ public struct WorkflowView<Content: View>: View {
      - Parameter launchingWith: arguments passed to the first loaded `FlowRepresentable` in the underlying `Workflow`.
      - Parameter content: `WorkflowBuilder` consisting of `WorkflowItem`s that define your workflow.
      */
-    public init<F, W, C>(isLaunched: Binding<Bool> = .constant(true),
-                         launchingWith args: AnyWorkflow.PassedArgs,
-                         @WorkflowBuilder content: () -> WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
+    public init<WI: _WorkflowItemProtocol>(isLaunched: Binding<Bool> = .constant(true),
+                                           launchingWith args: AnyWorkflow.PassedArgs,
+                                           @WorkflowBuilder content: () -> WI) where Content == WorkflowLauncher<WI> {
         self.init(isLaunched: isLaunched, startingArgs: args, content: content())
     }
 
@@ -103,35 +103,57 @@ public struct WorkflowView<Content: View>: View {
      - Parameter launchingWith: arguments passed to the first loaded `FlowRepresentable` in the underlying `Workflow`.
      - Parameter content: `WorkflowBuilder` consisting of `WorkflowItem`s that define your workflow.
      */
-    public init<A, F, W, C>(isLaunched: Binding<Bool> = .constant(true),
-                            launchingWith args: A,
-                            @WorkflowBuilder content: () -> WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>>, F.WorkflowInput == AnyWorkflow.PassedArgs {
+    public init<A, WI: _WorkflowItemProtocol>(isLaunched: Binding<Bool> = .constant(true),
+                                              launchingWith args: A,
+                                              @WorkflowBuilder content: () -> WI) where Content == WorkflowLauncher<WI>, WI.F.WorkflowInput == AnyWorkflow.PassedArgs {
         self.init(isLaunched: isLaunched, startingArgs: .args(args), content: content())
     }
 
-    private init<F, W, C>(isLaunched: Binding<Bool>,
-                          startingArgs: AnyWorkflow.PassedArgs,
-                          content: WorkflowItem<F, W, C>) where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
+    /**
+     Creates a base for proceeding with a `WorkflowItem`.
+     - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
+     - Parameter launchingWith: arguments passed to the first loaded `FlowRepresentable` in the underlying `Workflow`.
+     - Parameter content: `WorkflowBuilder` consisting of `WorkflowItem`s that define your workflow.
+     */
+    public init<A, WI: _WorkflowItemProtocol>(isLaunched: Binding<Bool> = .constant(true),
+                                              launchingWith args: A,
+                                              @WorkflowBuilder content: () -> WI) where Content == WorkflowLauncher<WI>, WI.F.WorkflowInput == Never {
+        self.init(isLaunched: isLaunched, startingArgs: .args(args), content: content())
+    }
+
+    /**
+     Creates a base for proceeding with a `WorkflowItem`.
+     - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
+     - Parameter content: `WorkflowBuilder` consisting of `WorkflowItem`s that define your workflow.
+     */
+    public init<WI: _WorkflowItemProtocol>(isLaunched: Binding<Bool> = .constant(true),
+                                           @WorkflowBuilder content: () -> WI) where Content == WorkflowLauncher<WI>, WI.F.WorkflowInput == AnyWorkflow.PassedArgs {
+        self.init(isLaunched: isLaunched, startingArgs: .none, content: content())
+    }
+
+    private init<WI: _WorkflowItemProtocol>(isLaunched: Binding<Bool>,
+                                            startingArgs: AnyWorkflow.PassedArgs,
+                                            content: WI) where Content == WorkflowLauncher<WI> {
         _content = State(wrappedValue: WorkflowLauncher(isLaunched: isLaunched, startingArgs: startingArgs) { content })
     }
 
-    private init<F, W, C>(_ other: WorkflowView<Content>,
-                          newContent: Content) where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
+    private init<WI: _WorkflowItemProtocol>(_ other: WorkflowView<Content>,
+                                            newContent: Content) where Content == WorkflowLauncher<WI> {
         _content = State(wrappedValue: newContent)
     }
 
     /// Adds an action to perform when this `Workflow` has finished.
-    public func onFinish<F, W, C>(_ closure: @escaping (AnyWorkflow.PassedArgs) -> Void) -> Self where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
+    public func onFinish<WI: _WorkflowItemProtocol>(_ closure: @escaping (AnyWorkflow.PassedArgs) -> Void) -> Self where Content == WorkflowLauncher<WI> {
         Self(self, newContent: _content.wrappedValue.onFinish(closure: closure))
     }
 
     /// Adds an action to perform when this `Workflow` has abandoned.
-    public func onAbandon<F, W, C>(_ closure: @escaping () -> Void) -> Self where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
+    public func onAbandon<WI: _WorkflowItemProtocol>(_ closure: @escaping () -> Void) -> Self where Content == WorkflowLauncher<WI> {
         Self(self, newContent: _content.wrappedValue.onAbandon(closure: closure))
     }
 
     /// Wraps content in a NavigationView.
-    public func embedInNavigationView<F, W, C>() -> Self where Content == WorkflowLauncher<WorkflowItem<F, W, C>> {
+    public func embedInNavigationView<WI: _WorkflowItemProtocol>() -> Self where Content == WorkflowLauncher<WI> {
         Self(self, newContent: _content.wrappedValue.embedInNavigationView())
     }
 }

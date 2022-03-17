@@ -21,11 +21,13 @@ struct SwiftUIExampleApp: App {
             if Environment.shouldTest {
                 TestView()
             } else {
-                WorkflowLauncher(isLaunched: .constant(true)) {
-                    thenProceed(with: SwiftCurrentOnboarding.self) {
-                        thenProceed(with: ContentView.self)
+                WorkflowView {
+                   WorkflowItem(SwiftCurrentOnboarding.self)
+                        .applyModifiers { $0.transition(.slide) }
+                    WorkflowGroup {
+                        WorkflowItem(ContentView.self)
                             .applyModifiers { $0.transition(.slide) }
-                    }.applyModifiers { $0.transition(.slide) }
+                    }
                 }
                 .preferredColorScheme(.dark)
             }
