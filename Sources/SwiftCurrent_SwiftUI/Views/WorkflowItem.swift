@@ -136,15 +136,14 @@ public struct WorkflowItem<F: FlowRepresentable & View, Content: View>: _Workflo
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-extension WorkflowItem: WorkflowItemPresentable {
-    var workflowLaunchStyle: LaunchStyle.SwiftUI.PresentationType {
+extension WorkflowItem {
+    /// :nodoc: Protocol requirement.
+    public var workflowLaunchStyle: LaunchStyle.SwiftUI.PresentationType {
         launchStyle
     }
-}
 
-@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-extension WorkflowItem: WorkflowModifier {
-    func modify(workflow: AnyWorkflow) {
+    /// :nodoc: Protocol requirement.
+    public func modify(workflow: AnyWorkflow) {
         workflow.append(metadata)
     }
 }

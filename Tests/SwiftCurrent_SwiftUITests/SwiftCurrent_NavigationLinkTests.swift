@@ -332,12 +332,8 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
 @available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension InspectableView where View: CustomViewType & SingleViewContent, View.T: _WorkflowItemProtocol {
     fileprivate func proceedAndCheckNavLink<FR: FlowRepresentable & Inspectable>(on: FR.Type) async throws where FR.WorkflowOutput == Never {
-        let navLink = try find(ViewType.NavigationLink.self)
         XCTAssertFalse(try find(ViewType.NavigationLink.self).isActive())
 
         try await find(FR.self).proceedInWorkflow()
-
-        #warning("There seems to be a view inspector bug here, XCUITests cover it but we should create a minimally reproducible example and create an issue.")
-//        XCTAssert(try find(ViewType.NavigationLink.self).isActive())
     }
 }

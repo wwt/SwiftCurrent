@@ -26,14 +26,19 @@ public struct WorkflowItemWrapper<WI: _WorkflowItemProtocol, Wrapped: _WorkflowI
     let inspection = Inspection<Self>()
 
     var launchStyle: LaunchStyle.SwiftUI.PresentationType {
-        (content as? WorkflowItemPresentable)?.workflowLaunchStyle ?? .default
+        content.workflowLaunchStyle
+    }
+
+    /// :nodoc: Protocol requirement.
+    public var workflowLaunchStyle: LaunchStyle.SwiftUI.PresentationType {
+        content.workflowLaunchStyle
     }
 
     public var body: some View {
         ViewBuilder {
             if launchStyle == .navigationLink {
                 content.navLink(to: nextView, isActive: $isActive)
-            } else if case .modal(let modalStyle) = (wrapped as? WorkflowItemPresentable)?.workflowLaunchStyle {
+            } else if case .modal(let modalStyle) = wrapped?.workflowLaunchStyle {
                 content.modal(isPresented: $isActive, style: modalStyle, destination: nextView)
             } else if launchStyle != .navigationLink, content.canDisplay(model.body) {
                 content
@@ -78,6 +83,11 @@ public struct WorkflowItemWrapper<WI: _WorkflowItemProtocol, Wrapped: _WorkflowI
         content.canDisplay(element) || wrapped?.canDisplay(element) == true
     }
 
+    public func modify(workflow: AnyWorkflow) {
+        content.modify(workflow: workflow)
+        wrapped?.modify(workflow: workflow)
+    }
+
     private func activateIfNeeded(element: AnyWorkflow.Element?) {
         if elementRef != nil, elementRef === element?.previouslyLoadedElement {
             isActive = true
@@ -97,20 +107,5 @@ public struct WorkflowItemWrapper<WI: _WorkflowItemProtocol, Wrapped: _WorkflowI
             elementRef = element
         }
         content.setElementRef(element)
-    }
-}
-
-@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-extension WorkflowItemWrapper: WorkflowModifier {
-    func modify(workflow: AnyWorkflow) {
-        (content as? WorkflowModifier)?.modify(workflow: workflow)
-        (wrapped as? WorkflowModifier)?.modify(workflow: workflow)
-    }
-}
-
-@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-extension WorkflowItemWrapper: WorkflowItemPresentable where WI: WorkflowItemPresentable {
-    var workflowLaunchStyle: LaunchStyle.SwiftUI.PresentationType {
-        content.workflowLaunchStyle
     }
 }

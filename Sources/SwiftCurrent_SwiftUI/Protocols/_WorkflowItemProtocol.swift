@@ -9,26 +9,38 @@
 import SwiftUI
 import SwiftCurrent
 
+/// :nodoc: Protocol is forced to be public, but it is an internal protocol.
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public protocol _WorkflowItemProtocol: View where F: FlowRepresentable & View, Content: View {
     associatedtype F // swiftlint:disable:this type_name
     associatedtype Content
 
+    var workflowLaunchStyle: LaunchStyle.SwiftUI.PresentationType { get }
+
     func canDisplay(_ element: AnyWorkflow.Element?) -> Bool
     mutating func setElementRef(_ element: AnyWorkflow.Element?)
+    func modify(workflow: AnyWorkflow)
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension _WorkflowItemProtocol {
-    // swiftlint:disable:next missing_docs
+    /// :nodoc: Protocol requirement.
     public func setElementRef(_ element: AnyWorkflow.Element?) { }
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension Never: _WorkflowItemProtocol {
+    /// :nodoc: Protocol requirement.
     public typealias F = Never // swiftlint:disable:this type_name
 
+    /// :nodoc: Protocol requirement.
     public typealias Content = Never
 
+    /// :nodoc: Protocol requirement.
+    public var workflowLaunchStyle: LaunchStyle.SwiftUI.PresentationType { .default }
+
+    /// :nodoc: Protocol requirement.
     public func canDisplay(_ element: AnyWorkflow.Element?) -> Bool { false }
+    /// :nodoc: Protocol requirement.
+    public func modify(workflow: AnyWorkflow) { }
 }

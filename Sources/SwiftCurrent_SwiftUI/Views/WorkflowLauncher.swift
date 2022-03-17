@@ -149,7 +149,7 @@ public struct WorkflowLauncher<Content: _WorkflowItemProtocol>: View {
     private init(isLaunched: Binding<Bool>, startingArgs: AnyWorkflow.PassedArgs, content: Content) {
         _isLaunched = isLaunched
         let wf = AnyWorkflow.empty
-        (content as? WorkflowModifier)?.modify(workflow: wf)
+        content.modify(workflow: wf)
         let model = WorkflowViewModel(isLaunched: isLaunched, launchArgs: startingArgs)
         _model = StateObject(wrappedValue: model)
         _launcher = StateObject(wrappedValue: Launcher(workflow: wf,

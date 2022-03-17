@@ -35,15 +35,14 @@ public struct WorkflowGroup<WI: _WorkflowItemProtocol>: View, _WorkflowItemProto
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-extension WorkflowGroup: WorkflowModifier {
-    func modify(workflow: AnyWorkflow) {
-        (content as? WorkflowModifier)?.modify(workflow: workflow)
+extension WorkflowGroup {
+    /// :nodoc: Protocol requirement.
+    public func modify(workflow: AnyWorkflow) {
+        content.modify(workflow: workflow)
     }
-}
 
-@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-extension WorkflowGroup: WorkflowItemPresentable where WI: WorkflowItemPresentable {
-    var workflowLaunchStyle: LaunchStyle.SwiftUI.PresentationType {
+    /// :nodoc: Protocol requirement.
+    public var workflowLaunchStyle: LaunchStyle.SwiftUI.PresentationType {
         content.workflowLaunchStyle
     }
 }
