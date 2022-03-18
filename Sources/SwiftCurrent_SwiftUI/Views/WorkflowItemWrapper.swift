@@ -12,7 +12,7 @@ import SwiftCurrent
 /// :nodoc: ResultBuilder requirement.
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowItemWrapper<WI: _WorkflowItemProtocol, Wrapped: _WorkflowItemProtocol>: View, _WorkflowItemProtocol {
-    public typealias F = WI.F // swiftlint:disable:this type_name
+    public typealias FlowRepresentableType = WI.FlowRepresentableType
 
     @State private var content: WI
     @State private var wrapped: Wrapped?
@@ -65,7 +65,8 @@ public struct WorkflowItemWrapper<WI: _WorkflowItemProtocol, Wrapped: _WorkflowI
         _wrapped = State(initialValue: wrapped())
         _elementRef = State(initialValue: nil)
         _content = State(initialValue: content)
-        verifyWorkflowIsWellFormed(WI.F.self, Wrapped.F.self)
+        // This may no longer be necessary depending on: https://forums.swift.org/t/pitch-buildpartialblock-for-result-builders/55561
+        verifyWorkflowIsWellFormed(WI.FlowRepresentableType.self, Wrapped.FlowRepresentableType.self)
     }
 
     private func verifyWorkflowIsWellFormed<LHS: FlowRepresentable, RHS: FlowRepresentable>(_ lhs: LHS.Type, _ rhs: RHS.Type) {

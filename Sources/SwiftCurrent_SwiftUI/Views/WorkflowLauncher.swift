@@ -42,6 +42,8 @@ import SwiftCurrent
  */
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowLauncher<Content: _WorkflowItemProtocol>: View {
+    public typealias WorkflowInput = Content.FlowRepresentableType.WorkflowInput
+
     @State private var content: Content
     @State private var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
     @State private var onAbandon = [() -> Void]()
@@ -82,7 +84,7 @@ public struct WorkflowLauncher<Content: _WorkflowItemProtocol>: View {
      - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
      - Parameter content: closure that holds the `WorkflowItem`
      */
-    public init(isLaunched: Binding<Bool>, content: () -> Content) where Content.F.WorkflowInput == Never {
+    public init(isLaunched: Binding<Bool>, content: () -> Content) where WorkflowInput == Never {
         self.init(isLaunched: isLaunched, startingArgs: .none, content: content())
     }
 
@@ -92,7 +94,7 @@ public struct WorkflowLauncher<Content: _WorkflowItemProtocol>: View {
      - Parameter startingArgs: arguments passed to the first loaded `FlowRepresentable` in the underlying `Workflow`.
      - Parameter content: closure that holds the `WorkflowItem`
      */
-    public init<A>(isLaunched: Binding<Bool>, startingArgs: A, content: () -> Content) where Content.F.WorkflowInput == Never {
+    public init<A>(isLaunched: Binding<Bool>, startingArgs: A, content: () -> Content) where WorkflowInput == Never {
         self.init(isLaunched: isLaunched, startingArgs: .args(startingArgs), content: content())
     }
 
@@ -102,7 +104,7 @@ public struct WorkflowLauncher<Content: _WorkflowItemProtocol>: View {
      - Parameter startingArgs: arguments passed to the first loaded `FlowRepresentable` in the underlying `Workflow`.
      - Parameter content: closure that holds the `WorkflowItem`
      */
-    public init(isLaunched: Binding<Bool>, startingArgs: Content.F.WorkflowInput, content: () -> Content) {
+    public init(isLaunched: Binding<Bool>, startingArgs: WorkflowInput, content: () -> Content) {
         self.init(isLaunched: isLaunched, startingArgs: .args(startingArgs), content: content())
     }
 
@@ -112,7 +114,7 @@ public struct WorkflowLauncher<Content: _WorkflowItemProtocol>: View {
      - Parameter startingArgs: arguments passed to the first loaded `FlowRepresentable` in the underlying `Workflow`.
      - Parameter content: closure that holds the `WorkflowItem`
      */
-    public init(isLaunched: Binding<Bool>, startingArgs: Content.F.WorkflowInput = .none, content: () -> Content) where Content.F.WorkflowInput == AnyWorkflow.PassedArgs {
+    public init(isLaunched: Binding<Bool>, startingArgs: WorkflowInput = .none, content: () -> Content) where WorkflowInput == AnyWorkflow.PassedArgs {
         self.init(isLaunched: isLaunched, startingArgs: startingArgs, content: content())
     }
 
@@ -132,7 +134,7 @@ public struct WorkflowLauncher<Content: _WorkflowItemProtocol>: View {
      - Parameter startingArgs: arguments passed to the first loaded `FlowRepresentable` in the underlying `Workflow`.
      - Parameter content: closure that holds the `WorkflowItem`
      */
-    public init<A>(isLaunched: Binding<Bool>, startingArgs: A, content: () -> Content) where Content.F.WorkflowInput == AnyWorkflow.PassedArgs {
+    public init<A>(isLaunched: Binding<Bool>, startingArgs: A, content: () -> Content) where WorkflowInput == AnyWorkflow.PassedArgs {
         self.init(isLaunched: isLaunched, startingArgs: .args(startingArgs), content: content())
     }
 

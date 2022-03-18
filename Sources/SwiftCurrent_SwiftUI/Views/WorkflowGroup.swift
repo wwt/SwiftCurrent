@@ -11,15 +11,12 @@ import SwiftCurrent
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowGroup<WI: _WorkflowItemProtocol>: View, _WorkflowItemProtocol {
-    public typealias F = WI.F // swiftlint:disable:this type_name
+    public typealias FlowRepresentableType = WI.FlowRepresentableType
 
     @State var content: WI
 
-    let inspection = Inspection<Self>()
-
     public var body: some View {
         content
-            .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 
     public init(@WorkflowBuilder content: () -> WI) {

@@ -11,7 +11,7 @@ import SwiftCurrent
 
 /// :nodoc: ResultBuilder requirement.
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-public struct EitherWorkflowItem<W0: _WorkflowItemProtocol, W1: _WorkflowItemProtocol>: View, _WorkflowItemProtocol where W0.F.WorkflowInput == W1.F.WorkflowInput {
+public struct EitherWorkflowItem<W0: _WorkflowItemProtocol, W1: _WorkflowItemProtocol>: View, _WorkflowItemProtocol where W0.FlowRepresentableType.WorkflowInput == W1.FlowRepresentableType.WorkflowInput {
     enum Either<First, Second>: View where First: _WorkflowItemProtocol, Second: _WorkflowItemProtocol {
         var workflowLaunchStyle: LaunchStyle.SwiftUI.PresentationType {
             switch self {
@@ -47,7 +47,7 @@ public struct EitherWorkflowItem<W0: _WorkflowItemProtocol, W1: _WorkflowItemPro
     }
 
     /// :nodoc: Protocol requirement.
-    public typealias F = W0.F // swiftlint:disable:this type_name
+    public typealias FlowRepresentableType = W0.FlowRepresentableType
 
     @State var content: Either<W0, W1>
 

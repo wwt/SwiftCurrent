@@ -13,7 +13,7 @@ import SwiftCurrent
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct OptionalWorkflowItem<WI: _WorkflowItemProtocol>: View, _WorkflowItemProtocol {
     /// :nodoc: Protocol requirement.
-    public typealias F = WI.F // swiftlint:disable:this type_name
+    public typealias FlowRepresentableType = WI.FlowRepresentableType
 
     @State var content: WI?
 
