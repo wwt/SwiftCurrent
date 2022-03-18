@@ -21,7 +21,7 @@ struct ContentView: View, FlowRepresentable {
     @State var selectedTab: Tab = .map
     weak var _workflowPointer: AnyFlowRepresentable?
     var body: some View {
-        TabView(selection: $selectedTab) {
+        TabView(selection: $selectedTab) { // swiftlint:disable:this closure_body_length
             // NOTE: Using constant here guarantees the workflow cannot abandon, it stays launched forever.
             WorkflowView {
                 WorkflowItem(MapFeatureOnboardingView.self)
