@@ -75,24 +75,8 @@ public struct WorkflowItem<FlowRepresentableType: FlowRepresentable & View, Cont
         _metadata = State(initialValue: metadata)
     }
 
-    public init?() {
-        let metadata = FlowRepresentableMetadata(FlowRepresentableType.self,
-                                                 launchStyle: .new,
-                                                 flowPersistence: flowPersistenceClosure,
-                                                 flowRepresentableFactory: factory)
-        _metadata = State(initialValue: metadata)
-    }
-
     /// Creates a workflow item from a FlowRepresentable type
     public init(_ item: FlowRepresentableType.Type) where Content == FlowRepresentableType {
-        let metadata = FlowRepresentableMetadata(FlowRepresentableType.self,
-                                                 launchStyle: .new,
-                                                 flowPersistence: flowPersistenceClosure,
-                                                 flowRepresentableFactory: factory)
-        _metadata = State(initialValue: metadata)
-    }
-
-    init(_ item: FlowRepresentableType.Type) {
         let metadata = FlowRepresentableMetadata(FlowRepresentableType.self,
                                                  launchStyle: .new,
                                                  flowPersistence: flowPersistenceClosure,
