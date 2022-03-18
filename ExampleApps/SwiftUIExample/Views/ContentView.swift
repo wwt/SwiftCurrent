@@ -16,6 +16,7 @@ struct ContentView: View, FlowRepresentable {
         case map
         case qr
         case profile
+        case settings
     }
     @State var selectedTab: Tab = .map
     weak var _workflowPointer: AnyFlowRepresentable?
@@ -45,6 +46,14 @@ struct ContentView: View, FlowRepresentable {
                 Label("Profile", systemImage: "person.crop.circle")
             }
             .tag(Tab.profile)
+
+            WorkflowView {
+                WorkflowItem(SettingsOnboardingViewController.self)
+                WorkflowItem(SettingsViewController.self)
+            }.tabItem {
+                Label("Settings", systemImage: "gear.circle.fill")
+            }
+            .tag(Tab.settings)
         }
         .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
