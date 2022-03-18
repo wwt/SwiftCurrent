@@ -27,6 +27,8 @@ extension OptionalWorkflowItem: Inspectable { }
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension EitherWorkflowItem: Inspectable { }
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension EitherWorkflowItem.Either: Inspectable { }
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension ViewControllerWrapper: Inspectable { }
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension ModalModifier: Inspectable { }

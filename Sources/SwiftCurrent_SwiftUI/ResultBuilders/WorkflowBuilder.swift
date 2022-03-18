@@ -41,12 +41,12 @@ public enum WorkflowBuilder {
 
     // swiftlint:disable:next missing_docs
     public static func buildEither<TrueCondition: _WorkflowItemProtocol, FalseCondition: _WorkflowItemProtocol>(first component: TrueCondition) -> EitherWorkflowItem<TrueCondition, FalseCondition> {
-        .init(first: component, second: nil)
+        .init(content: .first(component))
     }
 
     // swiftlint:disable:next missing_docs
     public static func buildEither<TrueCondition: _WorkflowItemProtocol, FalseCondition: _WorkflowItemProtocol>(second component: FalseCondition) -> EitherWorkflowItem<TrueCondition, FalseCondition> {
-        .init(first: nil, second: component)
+        .init(content: .second(component))
     }
 
     // swiftlint:disable:next missing_docs

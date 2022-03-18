@@ -13,26 +13,53 @@ import SwiftCurrent
 /// :nodoc: ResultBuilder requirement.
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct EitherWorkflowItem<W0: _WorkflowItemProtocol, W1: _WorkflowItemProtocol>: View, _WorkflowItemProtocol where W0.F.WorkflowInput == W1.F.WorkflowInput {
-    /// :nodoc: Protocol requirement.
-    public typealias F = W0.F // swiftlint:disable:this type_name
+    enum Either<First, Second>: View where First: _WorkflowItemProtocol, Second: _WorkflowItemProtocol {
+        var workflowLaunchStyle: LaunchStyle.SwiftUI.PresentationType {
+            switch self {
+                case .first(let first): return first.workflowLaunchStyle
+                case .second(let second): return second.workflowLaunchStyle
+            }
+        }
 
-    @State var first: W0?
-    @State var second: W1?
+        func canDisplay(_ element: AnyWorkflow.Element?) -> Bool {
+            switch self {
+                case .first(let first): return first.canDisplay(element)
+                case .second(let second): return second.canDisplay(element)
+            }
+        }
 
-    /// :nodoc: Protocol requirement.
-    public var body: some View {
-        ViewBuilder {
-            if let first = first {
+        func modify(workflow: AnyWorkflow) {
+            switch self {
+                case .first(let first): first.modify(workflow: workflow)
+                case .second(let second): second.modify(workflow: workflow)
+            }
+        }
+
+        case first(First)
+        case second(Second)
+
+        var body: some View {
+            if case .first(let first) = self {
                 first
-            } else {
+            } else if case .second(let second) = self {
                 second
             }
         }
     }
 
     /// :nodoc: Protocol requirement.
+    public typealias F = W0.F // swiftlint:disable:this type_name
+
+    @State var content: Either<W0, W1>
+
+    /// :nodoc: Protocol requirement.
+    public var body: some View {
+        content
+    }
+
+    /// :nodoc: Protocol requirement.
     public func canDisplay(_ element: AnyWorkflow.Element?) -> Bool {
-        first?.canDisplay(element) ?? second?.canDisplay(element) ?? false
+        content.canDisplay(element)
     }
 }
 
@@ -40,12 +67,11 @@ public struct EitherWorkflowItem<W0: _WorkflowItemProtocol, W1: _WorkflowItemPro
 extension EitherWorkflowItem {
     /// :nodoc: Protocol requirement.
     public func modify(workflow: AnyWorkflow) {
-        first?.modify(workflow: workflow)
-        second?.modify(workflow: workflow)
+        content.modify(workflow: workflow)
     }
 
     /// :nodoc: Protocol requirement.
     public var workflowLaunchStyle: LaunchStyle.SwiftUI.PresentationType {
-        first?.workflowLaunchStyle ?? second?.workflowLaunchStyle ?? .default
+        content.workflowLaunchStyle
     }
 }

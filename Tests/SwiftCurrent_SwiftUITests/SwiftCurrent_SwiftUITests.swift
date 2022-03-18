@@ -104,7 +104,6 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
     }
 
     func testWorkflowCanBuildEitherItem_WhenTrue() async throws {
-        throw XCTSkip("Problem with ViewInspector and injecting environment objects prevents this from properly executing")
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
@@ -142,7 +141,6 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
     }
 
     func testWorkflowCanBuildEitherItem_WhenFalse() async throws {
-        throw XCTSkip("Problem with ViewInspector and injecting environment objects prevents this from properly executing")
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
