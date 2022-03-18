@@ -51,6 +51,213 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
         wait(for: [expectOnFinish], timeout: TestConstant.timeout)
     }
 
+    func testWorkflowCanBeFollowed_WithWorkflowGroup() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let wfr1 = try await MainActor.run {
+            WorkflowView {
+                WorkflowItem(FR1.self).presentationType(.navigationLink)
+                WorkflowGroup {
+                    WorkflowItem(FR2.self)
+                }
+            }
+            .onFinish { _ in
+                expectOnFinish.fulfill()
+            }
+        }
+        .hostAndInspect(with: \.inspection)
+        .extractWorkflowLauncher()
+        .extractWorkflowItemWrapper()
+
+        print(type(of: wfr1))
+
+        XCTAssertEqual(try wfr1.find(FR1.self).text().string(), "FR1 type")
+
+        try await wfr1.proceedAndCheckNavLink(on: FR1.self)
+
+        let wfr2 = try await wfr1.extractWrappedWrapper()
+        XCTAssertEqual(try wfr2.find(FR2.self).text().string(), "FR2 type")
+        try await wfr2.find(FR2.self).proceedInWorkflow()
+
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
+    }
+
+    func testWorkflowCanBeFollowed_WithBuildOptions_WhenTrue() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let wfr1 = try await MainActor.run {
+            WorkflowView {
+                WorkflowItem(FR1.self).presentationType(.navigationLink)
+                if true {
+                    WorkflowItem(FR2.self)
+                }
+            }
+            .onFinish { _ in
+                expectOnFinish.fulfill()
+            }
+        }
+        .hostAndInspect(with: \.inspection)
+        .extractWorkflowLauncher()
+        .extractWorkflowItemWrapper()
+
+        print(type(of: wfr1))
+
+        XCTAssertEqual(try wfr1.find(FR1.self).text().string(), "FR1 type")
+
+        try await wfr1.proceedAndCheckNavLink(on: FR1.self)
+
+        let wfr2 = try await wfr1.extractWrappedWrapper()
+        XCTAssertEqual(try wfr2.find(FR2.self).text().string(), "FR2 type")
+        try await wfr2.find(FR2.self).proceedInWorkflow()
+
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
+    }
+
+    func testWorkflowCanBeFollowed_WithBuildOptions_WhenFalse() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR3 type") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let wfr1 = try await MainActor.run {
+            WorkflowView {
+                WorkflowItem(FR1.self).presentationType(.navigationLink)
+                if false {
+                    WorkflowItem(FR2.self)
+                }
+                WorkflowItem(FR3.self)
+            }
+            .onFinish { _ in
+                expectOnFinish.fulfill()
+            }
+        }
+        .hostAndInspect(with: \.inspection)
+        .extractWorkflowLauncher()
+        .extractWorkflowItemWrapper()
+
+        print(type(of: wfr1))
+
+        XCTAssertEqual(try wfr1.find(FR1.self).text().string(), "FR1 type")
+
+        try await wfr1.proceedAndCheckNavLink(on: FR1.self)
+
+        let wfr3 = try await wfr1.extractWrappedWrapper().extractWrappedWrapper()
+        XCTAssertEqual(try wfr3.find(FR3.self).text().string(), "FR3 type")
+        try await wfr3.find(FR3.self).proceedInWorkflow()
+
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
+    }
+
+    func testWorkflowCanBeFollowed_WithBuildEither_WhenTrue() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR3 type") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let wfr1 = try await MainActor.run {
+            WorkflowView {
+                WorkflowItem(FR1.self).presentationType(.navigationLink)
+                if true {
+                    WorkflowItem(FR2.self)
+                } else {
+                    WorkflowItem(FR3.self)
+                }
+            }
+            .onFinish { _ in
+                expectOnFinish.fulfill()
+            }
+        }
+        .hostAndInspect(with: \.inspection)
+        .extractWorkflowLauncher()
+        .extractWorkflowItemWrapper()
+
+        print(type(of: wfr1))
+
+        XCTAssertEqual(try wfr1.find(FR1.self).text().string(), "FR1 type")
+
+        try await wfr1.proceedAndCheckNavLink(on: FR1.self)
+
+        let wfr2 = try await wfr1.extractWrappedWrapper()
+        XCTAssertEqual(try wfr2.find(FR2.self).text().string(), "FR2 type")
+        try await wfr2.find(FR2.self).proceedInWorkflow()
+
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
+    }
+
+    func testWorkflowCanBeFollowed_WithBuildEither_WhenFalse() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR3 type") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let wfr1 = try await MainActor.run {
+            WorkflowView {
+                WorkflowItem(FR1.self).presentationType(.navigationLink)
+                if false {
+                    WorkflowItem(FR2.self)
+                } else {
+                    WorkflowItem(FR3.self)
+                }
+            }
+            .onFinish { _ in
+                expectOnFinish.fulfill()
+            }
+        }
+        .hostAndInspect(with: \.inspection)
+        .extractWorkflowLauncher()
+        .extractWorkflowItemWrapper()
+
+        print(type(of: wfr1))
+
+        XCTAssertEqual(try wfr1.find(FR1.self).text().string(), "FR1 type")
+
+        try await wfr1.proceedAndCheckNavLink(on: FR1.self)
+
+        let wfr2 = try await wfr1.extractWrappedWrapper()
+        XCTAssertEqual(try wfr2.find(FR3.self).text().string(), "FR3 type")
+        try await wfr2.find(FR3.self).proceedInWorkflow()
+
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
+    }
+
     func testWorkflowItemsOfTheSameTypeCanBeFollowed() async throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?

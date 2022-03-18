@@ -18,12 +18,9 @@ public struct OptionalWorkflowItem<WI: _WorkflowItemProtocol>: View, _WorkflowIt
 
     @State var content: WI?
 
-    let inspection = Inspection<Self>()
-
     /// :nodoc: Protocol requirement.
     public var body: some View {
         content
-            .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 
     init(content: WI?) {
