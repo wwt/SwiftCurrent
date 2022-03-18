@@ -62,10 +62,9 @@ import SwiftCurrent_SwiftUI
 // ...
 var body: some View { 
     // ... other view code (if any)
-    WorkflowLauncher(isLaunched: .constant(true), startingArgs: "Skip optional screen") {
-        thenProceed(with: OptionalView.self) {
-            thenProceed(with: ExampleView.self)
-        }
+    WorkflowView(launchingWith: "Skip optional screen") {
+        WorkflowItem(OptionalView.self)
+        WorkflowItem(ExampleView.self)
     }
 }
 ```
