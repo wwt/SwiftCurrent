@@ -4,10 +4,10 @@ When constructing a workflow, you can use `WorkflowItem.presentationType(_:)` al
 #### Example
 ```swift
 NavigationView {
-    WorkflowLauncher(isLaunched: .constant(true)) {
-        thenProceed(with: FirstView.self) {
-            thenProceed(with: SecondView.self)
-        }.presentationType(.navigationLink)
+    WorkflowView {
+        WorkflowItem(FirstView.self)
+            .presentationType(.navigationLink)
+        WorkflowItem(SecondView.self)
     }
 }
 ```
@@ -17,15 +17,15 @@ With that, you've described that `FirstView` should be wrapped in a `NavigationL
 > **NOTE:** The `NavigationLink` is in the background of the view to prevent your entire view from being tappable.
 
 ### Different NavigationView Styles
-SwiftCurrent comes with a convenience function on `WorkflowLauncher` that tries to pick the best `NavigationViewStyle` for a `Workflow`. Normally that's stack-based navigation.
+SwiftCurrent comes with a convenience function on `WorkflowView` that tries to pick the best `NavigationViewStyle` for a `Workflow`. Normally that's stack-based navigation.
 
 #### Example
 The earlier example could be rewritten as:
 ```swift
-WorkflowLauncher(isLaunched: .constant(true)) {
-    thenProceed(with: FirstView.self) {
-        thenProceed(with: SecondView.self)
-    }.presentationType(.navigationLink)
+WorkflowView {
+    WorkflowItem(FirstView.self)
+        .presentationType(.navigationLink)
+    WorkflowItem(SecondView.self)
 }.embedInNavigationView()
 ```
 
@@ -36,10 +36,10 @@ If you want to use column-based navigation you can simply manage it yourself:
 ```swift
 NavigationView {
     FirstColumn() // Could ALSO be a workflow
-    WorkflowLauncher(isLaunched: .constant(true)) {
-        thenProceed(with: FirstView.self) {
-            thenProceed(with: SecondView.self)
-        }.presentationType(.navigationLink)
+    WorkflowView {
+        WorkflowItem(FirstView.self)
+            .presentationType(.navigationLink)
+        WorkflowItem(SecondView.self)
     } // don't call embedInNavigationView here
 }
 ```
