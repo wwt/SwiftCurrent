@@ -76,6 +76,65 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase, App {
         try await viewUnderTest.find(FR3.self).proceedInWorkflow()
     }
 
+    func testArity3_WithBuildOptional() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR3 type") }
+        }
+        let viewUnderTest = try await MainActor.run {
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                if true {
+                    WorkflowItem(FR2.self)
+                    WorkflowItem(FR3.self)
+                }
+            }
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
+
+        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
+        try await viewUnderTest.find(FR2.self).proceedInWorkflow()
+        try await viewUnderTest.find(FR3.self).proceedInWorkflow()
+    }
+
+    func testArity3_WithBuildEither() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR3 type") }
+        }
+        let viewUnderTest = try await MainActor.run {
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                if true {
+                    WorkflowItem(FR2.self)
+                    WorkflowItem(FR3.self)
+                } else {
+                    WorkflowItem(FR3.self)
+                    WorkflowItem(FR2.self)
+                }
+            }
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
+
+        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
+        try await viewUnderTest.find(FR2.self).proceedInWorkflow()
+        try await viewUnderTest.find(FR3.self).proceedInWorkflow()
+    }
+
     func testArity4() async throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
