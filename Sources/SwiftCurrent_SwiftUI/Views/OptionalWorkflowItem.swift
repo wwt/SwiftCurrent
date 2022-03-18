@@ -9,7 +9,6 @@
 import SwiftUI
 import SwiftCurrent
 
-#warning("Needs tests when used in nav stacks and modals")
 /// :nodoc: ResultBuilder requirement.
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct OptionalWorkflowItem<WI: _WorkflowItemProtocol>: View, _WorkflowItemProtocol {

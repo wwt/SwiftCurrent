@@ -9,6 +9,7 @@
 import SwiftUI
 import SwiftCurrent
 
+/// :nodoc: ResultBuilder requirement.
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowItemWrapper<WI: _WorkflowItemProtocol, Wrapped: _WorkflowItemProtocol>: View, _WorkflowItemProtocol {
     public typealias F = WI.F // swiftlint:disable:this type_name

@@ -69,6 +69,166 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
         wait(for: [expectOnFinish], timeout: TestConstant.timeout)
     }
 
+    func testWorkflowCanBeFollowed_WithWorkflowGroup() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let wfr1 = try await MainActor.run {
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                WorkflowGroup {
+                    WorkflowItem(FR2.self).presentationType(.modal)
+                }
+            }
+            .onFinish { _ in
+                expectOnFinish.fulfill()
+            }
+        }
+        .hostAndInspect(with: \.inspection)
+        .extractWorkflowLauncher()
+        .extractWorkflowItemWrapper()
+
+        XCTAssertEqual(try wfr1.find(FR1.self).text().string(), "FR1 type")
+        XCTAssertNoThrow(try wfr1.findModalModifier())
+        try await wfr1.find(FR1.self).proceedInWorkflow()
+        let wfr2 = try await wfr1.extractWrappedWrapper()
+
+        let fr2 = try wfr2.find(FR2.self)
+        XCTAssertEqual(try fr2.text().string(), "FR2 type")
+        try await fr2.proceedInWorkflow()
+
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
+    }
+
+    func testWorkflowCanBeFollowed_WithOptionalWorkflowItem_WhenTrue() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let wfr1 = try await MainActor.run {
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                if true {
+                    WorkflowItem(FR2.self).presentationType(.modal)
+                }
+            }
+            .onFinish { _ in
+                expectOnFinish.fulfill()
+            }
+        }
+        .hostAndInspect(with: \.inspection)
+        .extractWorkflowLauncher()
+        .extractWorkflowItemWrapper()
+
+        XCTAssertEqual(try wfr1.find(FR1.self).text().string(), "FR1 type")
+        XCTAssertNoThrow(try wfr1.findModalModifier())
+        try await wfr1.find(FR1.self).proceedInWorkflow()
+        let wfr2 = try await wfr1.extractWrappedWrapper()
+
+        let fr2 = try wfr2.find(FR2.self)
+        XCTAssertEqual(try fr2.text().string(), "FR2 type")
+        try await fr2.proceedInWorkflow()
+
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
+    }
+
+    func testWorkflowCanBeFollowed_WithEitherWorkflowItem_WhenTrue() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR3 type") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let wfr1 = try await MainActor.run {
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                if true {
+                    WorkflowItem(FR2.self).presentationType(.modal)
+                } else {
+                    WorkflowItem(FR3.self).presentationType(.modal)
+                }
+            }
+            .onFinish { _ in
+                expectOnFinish.fulfill()
+            }
+        }
+        .hostAndInspect(with: \.inspection)
+        .extractWorkflowLauncher()
+        .extractWorkflowItemWrapper()
+
+        XCTAssertEqual(try wfr1.find(FR1.self).text().string(), "FR1 type")
+        XCTAssertNoThrow(try wfr1.findModalModifier())
+        try await wfr1.find(FR1.self).proceedInWorkflow()
+        let wfr2 = try await wfr1.extractWrappedWrapper()
+
+        let fr2 = try wfr2.find(FR2.self)
+        XCTAssertEqual(try fr2.text().string(), "FR2 type")
+        try await fr2.proceedInWorkflow()
+
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
+    }
+
+    func testWorkflowCanBeFollowed_WithEitherWorkflowItem_WhenFalse() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR3 type") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let wfr1 = try await MainActor.run {
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                if false {
+                    WorkflowItem(FR2.self).presentationType(.modal)
+                } else {
+                    WorkflowItem(FR3.self).presentationType(.modal)
+                }
+            }
+            .onFinish { _ in
+                expectOnFinish.fulfill()
+            }
+        }
+        .hostAndInspect(with: \.inspection)
+        .extractWorkflowLauncher()
+        .extractWorkflowItemWrapper()
+
+        XCTAssertEqual(try wfr1.find(FR1.self).text().string(), "FR1 type")
+        XCTAssertNoThrow(try wfr1.findModalModifier())
+        try await wfr1.find(FR1.self).proceedInWorkflow()
+        let wfr2 = try await wfr1.extractWrappedWrapper()
+
+        let fr3 = try wfr2.find(FR3.self)
+        XCTAssertEqual(try fr3.text().string(), "FR3 type")
+        try await fr3.proceedInWorkflow()
+
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
+    }
+
     func testWorkflowItemsOfTheSameTypeCanBeFollowed() async throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
