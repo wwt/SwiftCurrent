@@ -29,7 +29,7 @@ import Foundation
  ```
 
  #### NOTE
- There is a Swift-imposed limit on how many items we can have in a `WorkflowBuilder`. Similar to SwiftUI's ViewBuilder, `WorkflowBuilder` has a limit of 10 items.
+ There is a Swift-imposed limit on how many items we can have in a `WorkflowBuilder`. Similar to SwiftUI's ViewBuilder, `WorkflowBuilder` has a limit of 10 items. Just like you can use `Group` in SwiftUI you can use `WorkflowGroup` to get around that 10 item limit with SwiftCurrent.
  */
 @resultBuilder
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
