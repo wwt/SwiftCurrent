@@ -14,7 +14,7 @@ import Foundation
  Used to build a `Workflow` in SwiftUI; Embed `WorkflowItem`s in a `WorkflowBuilder` to define your workflow.
 
  ### Discussion
- Typically, you'll use this when you use `WorkflowView`. Otherwise you might use it as a parameter attribute for child `WorkflowItem`-producing closure parameters.
+ Typically, you'll use this when you use `WorkflowView`. Otherwise you might use it as a way to build your own workflows in a wrapper type.
 
  #### Example
  ```swift
