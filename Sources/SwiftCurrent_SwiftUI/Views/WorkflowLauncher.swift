@@ -49,28 +49,8 @@ public struct WorkflowLauncher<Content: _WorkflowItemProtocol>: View {
             .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 
-    init(isLaunched: Binding<Bool>, content: () -> Content) where WorkflowInput == Never {
-        self.init(isLaunched: isLaunched, startingArgs: .none, content: content())
-    }
-
-    init<A>(isLaunched: Binding<Bool>, startingArgs: A, content: () -> Content) where WorkflowInput == Never {
-        self.init(isLaunched: isLaunched, startingArgs: .args(startingArgs), content: content())
-    }
-
-    init(isLaunched: Binding<Bool>, startingArgs: WorkflowInput, content: () -> Content) {
-        self.init(isLaunched: isLaunched, startingArgs: .args(startingArgs), content: content())
-    }
-
-    init(isLaunched: Binding<Bool>, startingArgs: WorkflowInput = .none, content: () -> Content) where WorkflowInput == AnyWorkflow.PassedArgs {
-        self.init(isLaunched: isLaunched, startingArgs: startingArgs, content: content())
-    }
-
     init(isLaunched: Binding<Bool>, startingArgs: AnyWorkflow.PassedArgs, content: () -> Content) {
         self.init(isLaunched: isLaunched, startingArgs: startingArgs, content: content())
-    }
-
-    init<A>(isLaunched: Binding<Bool>, startingArgs: A, content: () -> Content) where WorkflowInput == AnyWorkflow.PassedArgs {
-        self.init(isLaunched: isLaunched, startingArgs: .args(startingArgs), content: content())
     }
 
     private init(current: Self, shouldEmbedInNavView: Bool, onFinish: [(AnyWorkflow.PassedArgs) -> Void], onAbandon: [() -> Void]) {
