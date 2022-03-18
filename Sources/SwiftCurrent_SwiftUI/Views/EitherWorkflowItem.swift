@@ -38,10 +38,9 @@ public struct EitherWorkflowItem<W0: _WorkflowItemProtocol, W1: _WorkflowItemPro
         case second(Second)
 
         var body: some View {
-            if case .first(let first) = self {
-                first
-            } else if case .second(let second) = self {
-                second
+            switch self {
+                case .first(let first): first
+                case .second(let second): second
             }
         }
     }
