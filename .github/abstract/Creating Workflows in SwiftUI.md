@@ -22,15 +22,13 @@ struct FirstView: View, FlowRepresentable {
 > **Note:** `FlowRepresentable.proceedInWorkflow()` is what you call to have your view move forward to the next item in the `Workflow` it is part of. 
 
 ### Step 2:
-Define your `WorkflowLauncher`. This indicates if the workflow is shown and describes what items are in it.
+Define your `WorkflowView`. This indicates if the workflow is shown and describes what items are in it.
 
 #### Example:
 ```swift
-WorkflowLauncher(isLaunched: .constant(true)) { // Could also have been $someStateOrBindingBoolean
-    thenProceed(with: FirstView.self) { // thenProceed is a function to create a `WorkflowItem`
-        thenProceed(with: SecondView.self) { // Use closures to define what comes next
-            thenProceed(with: ThirdView.self) // The final item needs no closures
-        }
-    }
+WorkflowView {
+    WorkflowItem(FirstView.self)  // each item in the workflow is defined as a `WorkflowItem`
+    WorkflowItem(SecondView.self) // passing the type of the FlowRepresentable to create
+    WorkflowItem(ThirdView.self)  // when appropriate as the workflow proceeds
 }
 ```
