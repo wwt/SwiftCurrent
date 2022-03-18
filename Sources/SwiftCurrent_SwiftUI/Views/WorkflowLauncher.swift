@@ -9,37 +9,7 @@
 import SwiftUI
 import SwiftCurrent
 
-/**
- Used to build a `Workflow` in SwiftUI; call thenProceed to create a SwiftUI view.
-
- ### Discussion
- The preferred method for creating a `Workflow` with SwiftUI is a combination of `WorkflowLauncher` and `WorkflowItem`. Initialize with arguments if your first `FlowRepresentable` has an input type.
-
- #### Example
- ```swift
- WorkflowLauncher(isLaunched: $isLaunched.animation(), args: "String in") {
-     thenProceed(with: FirstView.self) {
-         thenProceed(with: SecondView.self)
-             .persistence(.removedAfterProceeding)
-             .applyModifiers {
-                 $0.SecondViewSpecificModifier()
-                     .padding(10)
-                     .background(Color.purple)
-                     .transition(.opacity)
-                     .animation(.easeInOut)
-             }
-     }.applyModifiers {
-         $0.background(Color.gray)
-             .transition(.slide)
-             .animation(.spring())
-     }
- }
- .onAbandon { print("isLaunched is now false") }
- .onFinish { args in print("Finished 1: \(args)") }
- .onFinish { print("Finished 2: \($0)") }
- .background(Color.green)
- ```
- */
+/// :nodoc: WorkflowView requirement.
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowLauncher<Content: _WorkflowItemProtocol>: View {
     public typealias WorkflowInput = Content.FlowRepresentableType.WorkflowInput
@@ -79,62 +49,27 @@ public struct WorkflowLauncher<Content: _WorkflowItemProtocol>: View {
             .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 
-    /**
-     Creates a base for proceeding with a `WorkflowItem`.
-     - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
-     - Parameter content: closure that holds the `WorkflowItem`
-     */
-    public init(isLaunched: Binding<Bool>, content: () -> Content) where WorkflowInput == Never {
+    init(isLaunched: Binding<Bool>, content: () -> Content) where WorkflowInput == Never {
         self.init(isLaunched: isLaunched, startingArgs: .none, content: content())
     }
 
-    /**
-     Creates a base for proceeding with a `WorkflowItem`.
-     - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
-     - Parameter startingArgs: arguments passed to the first loaded `FlowRepresentable` in the underlying `Workflow`.
-     - Parameter content: closure that holds the `WorkflowItem`
-     */
-    public init<A>(isLaunched: Binding<Bool>, startingArgs: A, content: () -> Content) where WorkflowInput == Never {
+    init<A>(isLaunched: Binding<Bool>, startingArgs: A, content: () -> Content) where WorkflowInput == Never {
         self.init(isLaunched: isLaunched, startingArgs: .args(startingArgs), content: content())
     }
 
-    /**
-     Creates a base for proceeding with a `WorkflowItem`.
-     - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
-     - Parameter startingArgs: arguments passed to the first loaded `FlowRepresentable` in the underlying `Workflow`.
-     - Parameter content: closure that holds the `WorkflowItem`
-     */
-    public init(isLaunched: Binding<Bool>, startingArgs: WorkflowInput, content: () -> Content) {
+    init(isLaunched: Binding<Bool>, startingArgs: WorkflowInput, content: () -> Content) {
         self.init(isLaunched: isLaunched, startingArgs: .args(startingArgs), content: content())
     }
 
-    /**
-     Creates a base for proceeding with a `WorkflowItem`.
-     - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
-     - Parameter startingArgs: arguments passed to the first loaded `FlowRepresentable` in the underlying `Workflow`.
-     - Parameter content: closure that holds the `WorkflowItem`
-     */
-    public init(isLaunched: Binding<Bool>, startingArgs: WorkflowInput = .none, content: () -> Content) where WorkflowInput == AnyWorkflow.PassedArgs {
+    init(isLaunched: Binding<Bool>, startingArgs: WorkflowInput = .none, content: () -> Content) where WorkflowInput == AnyWorkflow.PassedArgs {
         self.init(isLaunched: isLaunched, startingArgs: startingArgs, content: content())
     }
 
-    /**
-     Creates a base for proceeding with a `WorkflowItem`.
-     - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
-     - Parameter startingArgs: arguments passed to the first loaded `FlowRepresentable` in the underlying `Workflow`.
-     - Parameter content: closure that holds the `WorkflowItem`
-     */
-    public init(isLaunched: Binding<Bool>, startingArgs: AnyWorkflow.PassedArgs, content: () -> Content) {
+    init(isLaunched: Binding<Bool>, startingArgs: AnyWorkflow.PassedArgs, content: () -> Content) {
         self.init(isLaunched: isLaunched, startingArgs: startingArgs, content: content())
     }
 
-    /**
-     Creates a base for proceeding with a `WorkflowItem`.
-     - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
-     - Parameter startingArgs: arguments passed to the first loaded `FlowRepresentable` in the underlying `Workflow`.
-     - Parameter content: closure that holds the `WorkflowItem`
-     */
-    public init<A>(isLaunched: Binding<Bool>, startingArgs: A, content: () -> Content) where WorkflowInput == AnyWorkflow.PassedArgs {
+    init<A>(isLaunched: Binding<Bool>, startingArgs: A, content: () -> Content) where WorkflowInput == AnyWorkflow.PassedArgs {
         self.init(isLaunched: isLaunched, startingArgs: .args(startingArgs), content: content())
     }
 
@@ -169,22 +104,19 @@ public struct WorkflowLauncher<Content: _WorkflowItemProtocol>: View {
         onFinish.forEach { $0(args) }
     }
 
-    /// Adds an action to perform when this `Workflow` has finished.
-    public func onFinish(closure: @escaping (AnyWorkflow.PassedArgs) -> Void) -> Self {
+    func onFinish(closure: @escaping (AnyWorkflow.PassedArgs) -> Void) -> Self {
         var onFinish = self.onFinish
         onFinish.append(closure)
         return Self(current: self, shouldEmbedInNavView: shouldEmbedInNavView, onFinish: onFinish, onAbandon: onAbandon)
     }
 
-    /// Adds an action to perform when this `Workflow` has abandoned.
-    public func onAbandon(closure: @escaping () -> Void) -> Self {
+    func onAbandon(closure: @escaping () -> Void) -> Self {
         var onAbandon = self.onAbandon
         onAbandon.append(closure)
         return Self(current: self, shouldEmbedInNavView: shouldEmbedInNavView, onFinish: onFinish, onAbandon: onAbandon)
     }
 
-    /// Wraps content in a NavigationView.
-    public func embedInNavigationView() -> Self {
+    func embedInNavigationView() -> Self {
         Self(current: self, shouldEmbedInNavView: true, onFinish: onFinish, onAbandon: onAbandon)
     }
 }
