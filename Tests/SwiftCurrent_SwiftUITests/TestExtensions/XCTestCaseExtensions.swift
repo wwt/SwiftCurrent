@@ -10,18 +10,6 @@ import SwiftUI
 import XCTest
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-extension XCTestCase {
-    static var queuedExpectations: [XCTestExpectation] = []
-
-    func removeQueuedExpectations() {
-        while let e = Self.queuedExpectations.first {
-            wait(for: [e], timeout: TestConstant.timeout)
-            Self.queuedExpectations.removeFirst()
-        }
-    }
-}
-
-@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension View where Self: XCTestCase {
     public var body: some View { EmptyView() }
 }
