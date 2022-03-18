@@ -40,6 +40,16 @@ public enum WorkflowBuilder {
     }
 
     // swiftlint:disable:next missing_docs
+    public static func buildEither<TrueCondition: _WorkflowItemProtocol, FalseCondition: _WorkflowItemProtocol>(first component: TrueCondition) -> EitherWorkflowItem<TrueCondition, FalseCondition> {
+        .init(first: component, second: nil)
+    }
+
+    // swiftlint:disable:next missing_docs
+    public static func buildEither<TrueCondition: _WorkflowItemProtocol, FalseCondition: _WorkflowItemProtocol>(second component: FalseCondition) -> EitherWorkflowItem<TrueCondition, FalseCondition> {
+        .init(first: nil, second: component)
+    }
+
+    // swiftlint:disable:next missing_docs
     public static func buildBlock<W0: _WorkflowItemProtocol>(_ w0: W0) -> WorkflowItemWrapper<W0, Never> {
         WorkflowItemWrapper<W0, Never>(content: w0)
     }

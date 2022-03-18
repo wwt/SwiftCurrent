@@ -103,6 +103,44 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         wait(for: [expectOnFinish], timeout: TestConstant.timeout)
     }
 
+    func testWorkflowCanBuildEitherItem_WhenTrue() async throws {
+        throw XCTSkip("Problem with ViewInspector and injecting environment objects prevents this from properly executing")
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR3 type") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let launcher = try await MainActor.run {
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                if true {
+                    WorkflowItem(FR2.self)
+                } else {
+                    WorkflowItem(FR3.self)
+                }
+            }
+            .onFinish { _ in
+                expectOnFinish.fulfill()
+            }
+        }.hostAndInspect(with: \.inspection)
+
+        XCTAssertEqual(try launcher.find(FR1.self).text().string(), "FR1 type")
+        try await launcher.find(FR1.self).proceedInWorkflow()
+        let fr2 = try launcher.find(FR2.self)
+        XCTAssertEqual(try fr2.text().string(), "FR2 type")
+        XCTAssertNoThrow(try fr2.actualView().proceedInWorkflow())
+
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
+    }
+
     func testWorkflowCanHaveMultipleOnFinishClosures() async throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
