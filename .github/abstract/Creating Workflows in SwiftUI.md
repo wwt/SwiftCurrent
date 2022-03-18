@@ -27,7 +27,7 @@ Define your `WorkflowView`. This indicates if the workflow is shown and describe
 #### Example:
 ```swift
 /*
-    each item in the workflow is defined as a `WorkflowItem`
+    Each item in the workflow is defined as a `WorkflowItem`
     passing the type of the FlowRepresentable to create
     when appropriate as the workflow proceeds
 */
