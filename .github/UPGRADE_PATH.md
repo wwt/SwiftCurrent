@@ -4,6 +4,26 @@ Use this document to help you understand how to update between major versions of
 Our directions are written for only 1 major version upgrade at a time, as we have found that to be the best experience.
 
 <details>
+  <summary><b>V4 -> V5</b></summary>
+
+  ## SwiftUI - WorkflowView
+  Our approach to a SwiftUI API drastically changed. This new API is much more idiomatic and natural feeling when using SwiftUI. Additionally, it enables a series of new features. Previously, you used `thenProceed(with:)` and `WorkflowLauncher` to launch a workflow in SwiftUI. You now use `WorkflowGroup` and `WorkflowItem`.
+
+  ```swift
+  WorkflowView {
+    WorkflowItem(FirstView.self) // This view is shown first
+    WorkflowItem(SecondView.self) // After proceeding, this view is shown
+  }
+  ```
+
+  To transition from the old API, replace your calls to `WorkflowLauncher` with `WorkflowView`. Also note that `startingArgs` has changed to `launchingWith`. So the full signature changes from `WorkflowLauncher(isLaunched: .constant(true), startingArgs: "someArgs")` to `WorkflowView(isLaunched: .constant(true), launchingWith: "someArgs")`.
+
+  `WorkflowView`'s initializer defaults `isLaunched` to `.constant(true)` meaning you can exclude that parameter and just use `WorkflowView(launchingWith: "someArgs")`
+</details>
+
+---
+
+<details>
   <summary><b>V3 -> V4</b></summary>
 
   ## Name Change
