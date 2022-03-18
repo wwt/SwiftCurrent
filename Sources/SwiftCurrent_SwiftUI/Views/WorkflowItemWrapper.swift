@@ -13,8 +13,6 @@ import SwiftCurrent
 public struct WorkflowItemWrapper<WI: _WorkflowItemProtocol, Wrapped: _WorkflowItemProtocol>: View, _WorkflowItemProtocol {
     public typealias F = WI.F // swiftlint:disable:this type_name
 
-    public typealias Content = WI.Content
-
     @State private var content: WI
     @State private var wrapped: Wrapped?
     @State private var elementRef: AnyWorkflow.Element?
@@ -103,7 +101,7 @@ public struct WorkflowItemWrapper<WI: _WorkflowItemProtocol, Wrapped: _WorkflowI
     }
 
     private func proceedInWorkflow(element: AnyWorkflow.Element?) {
-        if element?.extractErasedView() as? WI.Content != nil, elementRef === element || elementRef == nil {
+        if content.canDisplay(element), elementRef === element || elementRef == nil {
             elementRef = element
         }
         content.setElementRef(element)

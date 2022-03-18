@@ -10,25 +10,27 @@ import SwiftUI
 import SwiftCurrent
 
 #warning("Needs tests when used in nav stacks and modals")
+/// :nodoc: ResultBuilder requirement.
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct OptionalWorkflowItem<WI: _WorkflowItemProtocol>: View, _WorkflowItemProtocol {
+    /// :nodoc: Protocol requirement.
     public typealias F = WI.F // swiftlint:disable:this type_name
-
-    public typealias Content = WI.Content
 
     @State var content: WI?
 
     let inspection = Inspection<Self>()
 
+    /// :nodoc: Protocol requirement.
     public var body: some View {
         content
             .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 
-    public init(content: WI?) {
+    init(content: WI?) {
         _content = State(initialValue: content)
     }
 
+    /// :nodoc: Protocol requirement.
     public func canDisplay(_ element: AnyWorkflow.Element?) -> Bool {
         content?.canDisplay(element) ?? false
     }

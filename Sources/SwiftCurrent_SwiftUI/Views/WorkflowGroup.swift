@@ -14,8 +14,6 @@ import SwiftCurrent
 public struct WorkflowGroup<WI: _WorkflowItemProtocol>: View, _WorkflowItemProtocol {
     public typealias F = WI.F // swiftlint:disable:this type_name
 
-    public typealias Content = WI.Content
-
     @State var content: WI
 
     let inspection = Inspection<Self>()
