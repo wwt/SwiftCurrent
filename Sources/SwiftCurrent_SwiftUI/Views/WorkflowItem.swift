@@ -52,7 +52,7 @@ public struct WorkflowItem<FlowRepresentableType: FlowRepresentable & View, Cont
     }
 
     public func canDisplay(_ element: AnyWorkflow.Element?) -> Bool {
-        element?.extractErasedView() as? Content != nil && elementRef == nil || elementRef === element
+        (element?.extractErasedView() as? Content != nil) && (elementRef == nil || elementRef === element)
     }
 
     public mutating func setElementRef(_ element: AnyWorkflow.Element?) {
