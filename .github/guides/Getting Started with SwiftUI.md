@@ -124,7 +124,7 @@ struct ContentView: View {
             Button("Present") { workflowIsPresented = true }
         } else {
             WorkflowView(isLaunched: $workflowIsPresented, launchingWith: "SwiftCurrent") { // SwiftCurrent
-                WorkflowItem(FirstView.self) { // SwiftCurrent
+                WorkflowItem(FirstView.self) // SwiftCurrent
                     .applyModifiers { firstView in firstView.padding().border(Color.gray) } // SwiftCurrent
                 WorkflowItem(SecondView.self) // SwiftCurrent
                     .applyModifiers { $0.padding().border(Color.gray) } // SwiftCurrent
