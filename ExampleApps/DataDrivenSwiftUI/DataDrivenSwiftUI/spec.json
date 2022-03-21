@@ -1,0 +1,11 @@
+{
+    "schemaVersion": "v0.0.1",
+    "sequence": [
+        {
+            "flowRepresentableName": "AnotherView",
+        },
+        {
+            "flowRepresentableName": "ContentView",
+        }
+    ]
+}

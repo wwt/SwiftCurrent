@@ -13,36 +13,33 @@ import ViewInspector
 @testable import SwiftUIExample
 
 final class MFAViewTests: XCTestCase {
-    func testMFAView() throws {
-        let exp = ViewHosting.loadView(MFAView(with: .none)).inspection.inspect { view in
-            XCTAssertEqual(try view.find(ViewType.Text.self, traversal: .depthFirst).string(),
-                           "This is your friendly MFA Assistant! Tap the button below to pretend to send a push notification and require an account code")
-            XCTAssertEqual(try view.find(ViewType.Button.self).labelView().text().string(), "Start MFA")
-        }
-        wait(for: [exp], timeout: TestConstant.timeout)
+    func testMFAView() async throws {
+        let view = try await MFAView(with: .none).hostAndInspect(with: \.inspection)
+
+        XCTAssertEqual(try view.find(ViewType.Text.self, traversal: .depthFirst).string(),
+                       "This is your friendly MFA Assistant! Tap the button below to pretend to send a push notification and require an account code")
+        XCTAssertEqual(try view.find(ViewType.Button.self).labelView().text().string(), "Start MFA")
     }
 
-    func testMFAViewAllowsCodeInput() throws {
-        let exp = ViewHosting.loadView(MFAView(with: .none)).inspection.inspect { view in
-            XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
-            XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Code (enter 1234 to proceed)")
-            XCTAssertNoThrow(try view.find(ViewType.TextField.self).setInput("1111"))
-        }
-        wait(for: [exp], timeout: TestConstant.timeout)
+    func testMFAViewAllowsCodeInput() async throws {
+        let view = try await MFAView(with: .none).hostAndInspect(with: \.inspection)
+
+        XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
+        XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Code (enter 1234 to proceed)")
+        XCTAssertNoThrow(try view.find(ViewType.TextField.self).setInput("1111"))
     }
 
-    func testMFAViewShowsAlertWhenCodeIsWrong() throws {
-        let exp = ViewHosting.loadView(MFAView(with: .none)).inspection.inspect { view in
-            XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
-            XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Code (enter 1234 to proceed)")
-            XCTAssertNoThrow(try view.find(ViewType.TextField.self).setInput("1111"))
-            XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
-            XCTAssertEqual(try view.find(ViewType.Alert.self).title().string(), "Invalid code entered, abandoning workflow.")
-        }
-        wait(for: [exp], timeout: TestConstant.timeout)
+    func testMFAViewShowsAlertWhenCodeIsWrong() async throws {
+        let view = try await MFAView(with: .none).hostAndInspect(with: \.inspection)
+
+        XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
+        XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Code (enter 1234 to proceed)")
+        XCTAssertNoThrow(try view.find(ViewType.TextField.self).setInput("1111"))
+        XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
+        XCTAssertEqual(try view.find(ViewType.Alert.self).title().string(), "Invalid code entered, abandoning workflow.")
     }
 
-    func testMFAViewViewProceedsWithCorrectDataWhenCorrectMFACodeEntered() {
+    func testMFAViewViewProceedsWithCorrectDataWhenCorrectMFACodeEntered() async throws {
         class CustomObj { }
         let ref = CustomObj()
         let proceedCalled = expectation(description: "Proceed called")
@@ -54,12 +51,14 @@ final class MFAViewTests: XCTestCase {
             proceedCalled.fulfill()
         }
         mfaView._workflowPointer = erased
-        let exp = ViewHosting.loadView(mfaView).inspection.inspect { view in
-            XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
-            XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Code (enter 1234 to proceed)")
-            XCTAssertNoThrow(try view.find(ViewType.TextField.self).setInput("1234"))
-            XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
-        }
-        wait(for: [exp, proceedCalled], timeout: TestConstant.timeout)
+
+        let view = try await mfaView.hostAndInspect(with: \.inspection)
+
+        XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
+        XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Code (enter 1234 to proceed)")
+        XCTAssertNoThrow(try view.find(ViewType.TextField.self).setInput("1234"))
+        XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
+
+        wait(for: [proceedCalled], timeout: TestConstant.timeout)
     }
 }

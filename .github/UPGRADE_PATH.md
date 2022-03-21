@@ -7,7 +7,7 @@ Our directions are written for only 1 major version upgrade at a time, as we hav
   <summary><b>V3 -> V4</b></summary>
 
   ## Name Change
-  The library changed its name from "Workflow" to "SwiftCurrent". This change was an important step for us, because it helps with SEO and gives people a sense that the library isn't just some generic thing slapped together. 
+  The library changed its name from "Workflow" to "SwiftCurrent". This change was an important step for us, because it helps with SEO and gives people a sense that the library isn't just some generic thing slapped together.
 
   ### If you're using CocoaPods
   Update your `Podfile` to replace instances of `DynamicWorkflow` with `SwiftCurrent`
@@ -16,7 +16,7 @@ Our directions are written for only 1 major version upgrade at a time, as we hav
   pod 'SwiftCurrent' # NEW
   ```
 
-  Then update your import statements 
+  Then update your import statements
   ```swift
   // import Workflow // OLD
   import SwiftCurrent // NEW
@@ -32,7 +32,7 @@ Our directions are written for only 1 major version upgrade at a time, as we hav
   ```swift
   // import Workflow // OLD
   import SwiftCurrent // NEW
-  
+
   // import WorkflowUIKit // OLD
   import SwiftCurrent_UIKit // NEW
   ```
@@ -43,7 +43,7 @@ Our directions are written for only 1 major version upgrade at a time, as we hav
 
 <details>
   <summary><b>V2 -> V3</b></summary>
-  
+
   ### Package Management
   NOTE: We support both SwiftPM and CocoaPods now, pick whichever suits your needs best. The primary difference is that SwiftPM has different `import` statements for `import Workflow` and `import WorkflowUIKit`, CocoaPods just uses `import Workflow`.
   #### **Update Pods**
@@ -56,7 +56,7 @@ Our directions are written for only 1 major version upgrade at a time, as we hav
 
   ### IF YOU USE STORYBOARDS
   There is now a protocol for those using Storyboards called StoryboardLoadable.  See [the docs](https://wwt.github.io/SwiftCurrent/Protocols/StoryboardLoadable.html) for more info.
-  
+
   **IMPORTANT**: `StoryboardLoadable` has a minimum requirement of iOS 13. Be a little cautious of the Xcode fix-it here, it'll encourage you to add an `@available` attribute, or it may tell you to implement `_factory` methods. This is not correct, instead if you plan on using `StoryboardLoadable` you should just set your minimum iOS target to 13, otherwise you've gotta hand roll something. The implementation of `StoryboardLoadable` may help with hand rolling if that is what you decide to do.
 
   ### FlowRepresentable has Changed
@@ -73,9 +73,9 @@ Our directions are written for only 1 major version upgrade at a time, as we hav
   We no longer allow empty workflows, so if you instantiated a workflow like this:
   ```swift
   Workflow()
-    .thenPresent(EnterAddressViewController.self)
+    .thenProceed(with: EnterAddressViewController.self)
   ```
-  Then you will need to update it to this: 
+  Then you will need to update it to this:
   ```swift
   Workflow(EnterAddressViewController.self)
   ```
@@ -101,12 +101,12 @@ Our directions are written for only 1 major version upgrade at a time, as we hav
     self?.proceedInWorkflow(order)
   }
   ```
-  
+
   ### The way you Test has Changed
   You used to be able to re-assign `proceedInWorkflow` to assert it was called with the args you expected, this has now slightly changed.
-  To get the *exact* behavior as before use `_proceedInWorkflow` to re-assign that closure. 
+  To get the *exact* behavior as before use `_proceedInWorkflow` to re-assign that closure.
   There's also `proceedInWorkflowStorage` which gives you the `AnyWorkflow.PassedArgs` used when `proceedInWorkflow` was called.
-  
+
   If you were using some of the methods from our WorkflowExampleTests please look at how they're set up now, they're drastically different.
 </details>
 
@@ -114,8 +114,8 @@ Our directions are written for only 1 major version upgrade at a time, as we hav
 
 <details>
   <summary><b>V1 -> V2</b></summary>
-  
+
   ### License Change
-  
+
   The biggest change here was a license change. We moved from MIT to Apache 2.0. Please assess and make sure you are willing to accept the new license.
 </details>
