@@ -22,14 +22,14 @@ struct TestView: View {
 
     @ViewBuilder var oneItemWorkflow: some View {
         if Environment.shouldEmbedInNavStack {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self)
+            WorkflowView {
+                WorkflowItem(FR1.self)
                     .persistence(persistence(for: FR1.self))
                     .presentationType(presentationType(for: FR1.self))
             }.embedInNavigationView()
         } else {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self)
+            WorkflowView {
+                WorkflowItem(FR1.self)
                     .persistence(persistence(for: FR1.self))
                     .presentationType(presentationType(for: FR1.self))
             }
@@ -38,96 +38,84 @@ struct TestView: View {
 
     @ViewBuilder var twoItemWorkflow: some View {
         if Environment.shouldEmbedInNavStack {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self) {
-                    thenProceed(with: FR2.self)
-                        .persistence(persistence(for: FR2.self))
-                        .presentationType(presentationType(for: FR2.self))
-                }
-                .persistence(persistence(for: FR1.self))
-                .presentationType(presentationType(for: FR1.self))
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                    .persistence(persistence(for: FR1.self))
+                    .presentationType(presentationType(for: FR1.self))
+                WorkflowItem(FR2.self)
+                    .persistence(persistence(for: FR2.self))
+                    .presentationType(presentationType(for: FR2.self))
             }.embedInNavigationView()
         } else {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self) {
-                    thenProceed(with: FR2.self)
-                        .persistence(persistence(for: FR2.self))
-                        .presentationType(presentationType(for: FR2.self))
-                }
-                .persistence(persistence(for: FR1.self))
-                .presentationType(presentationType(for: FR1.self))
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                    .persistence(persistence(for: FR1.self))
+                    .presentationType(presentationType(for: FR1.self))
+                WorkflowItem(FR2.self)
+                    .persistence(persistence(for: FR2.self))
+                    .presentationType(presentationType(for: FR2.self))
             }
         }
     }
 
     @ViewBuilder var threeItemWorkflow: some View {
         if Environment.shouldEmbedInNavStack {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self) {
-                    thenProceed(with: FR2.self) {
-                        thenProceed(with: FR3.self)
-                            .persistence(persistence(for: FR2.self))
-                            .presentationType(presentationType(for: FR2.self))
-                    }
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                    .persistence(persistence(for: FR1.self))
+                    .presentationType(presentationType(for: FR1.self))
+                WorkflowItem(FR2.self)
                     .persistence(persistence(for: FR2.self))
                     .presentationType(presentationType(for: FR2.self))
-                }
-                .persistence(persistence(for: FR1.self))
-                .presentationType(presentationType(for: FR1.self))
+                WorkflowItem(FR3.self)
+                    .persistence(persistence(for: FR2.self))
+                    .presentationType(presentationType(for: FR2.self))
             }.embedInNavigationView()
         } else {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self) {
-                    thenProceed(with: FR2.self) {
-                        thenProceed(with: FR3.self)
-                            .persistence(persistence(for: FR2.self))
-                            .presentationType(presentationType(for: FR2.self))
-                    }
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                    .persistence(persistence(for: FR1.self))
+                    .presentationType(presentationType(for: FR1.self))
+                WorkflowItem(FR2.self)
                     .persistence(persistence(for: FR2.self))
                     .presentationType(presentationType(for: FR2.self))
-                }
-                .persistence(persistence(for: FR1.self))
-                .presentationType(presentationType(for: FR1.self))
+                WorkflowItem(FR3.self)
+                    .persistence(persistence(for: FR2.self))
+                    .presentationType(presentationType(for: FR2.self))
             }
         }
     }
 
     @ViewBuilder var fourItemWorkflow: some View {
         if Environment.shouldEmbedInNavStack {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self) {
-                    thenProceed(with: FR2.self) {
-                        thenProceed(with: FR3.self) {
-                            thenProceed(with: FR4.self)
-                                .persistence(persistence(for: FR4.self))
-                                .presentationType(presentationType(for: FR4.self))
-                        }
-                        .persistence(persistence(for: FR3.self))
-                        .presentationType(presentationType(for: FR3.self))
-                    }
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                    .persistence(persistence(for: FR1.self))
+                    .presentationType(presentationType(for: FR1.self))
+                WorkflowItem(FR2.self)
                     .persistence(persistence(for: FR2.self))
                     .presentationType(presentationType(for: FR2.self))
-                }
-                .persistence(persistence(for: FR1.self))
-                .presentationType(presentationType(for: FR1.self))
+                WorkflowItem(FR3.self)
+                    .persistence(persistence(for: FR3.self))
+                    .presentationType(presentationType(for: FR3.self))
+                WorkflowItem(FR4.self)
+                    .persistence(persistence(for: FR4.self))
+                    .presentationType(presentationType(for: FR4.self))
             }.embedInNavigationView()
         } else {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self) {
-                    thenProceed(with: FR2.self) {
-                        thenProceed(with: FR3.self) {
-                            thenProceed(with: FR4.self)
-                                .persistence(persistence(for: FR4.self))
-                                .presentationType(presentationType(for: FR4.self))
-                        }
-                        .persistence(persistence(for: FR3.self))
-                        .presentationType(presentationType(for: FR3.self))
-                    }
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                    .persistence(persistence(for: FR1.self))
+                    .presentationType(presentationType(for: FR1.self))
+                WorkflowItem(FR2.self)
                     .persistence(persistence(for: FR2.self))
                     .presentationType(presentationType(for: FR2.self))
-                }
-                .persistence(persistence(for: FR1.self))
-                .presentationType(presentationType(for: FR1.self))
+                WorkflowItem(FR3.self)
+                    .persistence(persistence(for: FR3.self))
+                    .presentationType(presentationType(for: FR3.self))
+                WorkflowItem(FR4.self)
+                    .persistence(persistence(for: FR4.self))
+                    .presentationType(presentationType(for: FR4.self))
             }
         }
     }

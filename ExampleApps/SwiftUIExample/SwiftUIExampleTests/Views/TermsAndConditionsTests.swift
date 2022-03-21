@@ -23,16 +23,17 @@ final class TermsAndConditionsTests: XCTestCase, View {
     func testPrimaryAcceptButtonCompletesWorkflow() async throws {
         let workflowFinished = expectation(description: "View Proceeded")
         let launcher = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: TermsAndConditions.self)
+            WorkflowView {
+                WorkflowItem(TermsAndConditions.self)
             }.onAbandon {
                 XCTFail("Abandon should not have been called")
             }.onFinish { _ in
                 workflowFinished.fulfill()
             }
         }
-        .hostAndInspect(with: \.inspection)
-        .extractWorkflowItem()
+            .content
+            .hostAndInspect(with: \.inspection)
+            .extractWorkflowItemWrapper()
 
         let primaryButton = try launcher.find(PrimaryButton.self) // ToS should have a primary call to accept
         XCTAssertEqual(try primaryButton.find(ViewType.Text.self).string(), "Accept")
@@ -44,16 +45,17 @@ final class TermsAndConditionsTests: XCTestCase, View {
     func testSecondaryRejectButtonAbandonsWorkflow() async throws {
         let workflowAbandoned = expectation(description: "View Proceeded")
         let launcher = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: TermsAndConditions.self)
+            WorkflowView {
+                WorkflowItem(TermsAndConditions.self)
             }.onAbandon {
                 workflowAbandoned.fulfill()
             }.onFinish { _ in
                 XCTFail("Complete should not have been called")
             }
         }
-        .hostAndInspect(with: \.inspection)
-        .extractWorkflowItem()
+            .content
+            .hostAndInspect(with: \.inspection)
+            .extractWorkflowItemWrapper()
 
         let secondaryButton = try launcher.find(SecondaryButton.self) // ToS sould have a secondary call to decline
         XCTAssertEqual(try secondaryButton.find(ViewType.Text.self).string(), "Decline")

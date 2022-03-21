@@ -19,7 +19,7 @@ class ExtendedFlowRepresentableMetadata: FlowRepresentableMetadata {
                                        flowRepresentableFactory: @escaping (AnyWorkflow.PassedArgs) -> AnyFlowRepresentable) {
         workflowItemFactory = {
             guard let wrappedWorkflowItem = $0 else { return AnyWorkflowItem(view: WorkflowItem(FR.self)) }
-            return AnyWorkflowItem(view: WorkflowItem(FR.self) { wrappedWorkflowItem })
+            return AnyWorkflowItem(view: WorkflowItemWrapper(content: WorkflowItem(FR.self)) { wrappedWorkflowItem })
         }
 
         super.init(flowRepresentableType, launchStyle: launchStyle, flowPersistence: flowPersistence, flowRepresentableFactory: flowRepresentableFactory)
@@ -30,7 +30,7 @@ class ExtendedFlowRepresentableMetadata: FlowRepresentableMetadata {
                                        flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default }) {
         workflowItemFactory = {
             guard let wrappedWorkflowItem = $0 else { return AnyWorkflowItem(view: WorkflowItem(FR.self)) }
-            return AnyWorkflowItem(view: WorkflowItem(FR.self) { wrappedWorkflowItem })
+            return AnyWorkflowItem(view: WorkflowItemWrapper(content: WorkflowItem(FR.self)) { wrappedWorkflowItem })
         }
 
         super.init(flowRepresentableType, launchStyle: launchStyle, flowPersistence: flowPersistence) { args in
