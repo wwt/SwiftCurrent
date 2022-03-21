@@ -23,6 +23,17 @@ extension InspectableView where View == ViewType.Sheet {
 
 @available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class SwiftCurrent_ModalTests: XCTestCase, Scene {
+    func testModalModifier() throws {
+        let sampleView = Text("Test")
+        let binding = Binding(wrappedValue: true)
+        let viewUnderTest = try sampleView.modal(isPresented: binding, style: .sheet, destination: Text("nextView")).inspect()
+        XCTAssertNoThrow(try viewUnderTest.sheet())
+        XCTAssert(try viewUnderTest.sheet().isPresented())
+        XCTAssertEqual(try viewUnderTest.sheet().text().string(), "nextView")
+        binding.wrappedValue = false
+        XCTAssertThrowsError(try viewUnderTest.sheet())
+    }
+
     func testWorkflowCanBeFollowed() async throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
@@ -34,9 +45,45 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
         }
         let expectOnFinish = expectation(description: "OnFinish called")
         let wfr1 = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self) {
-                    thenProceed(with: FR2.self).presentationType(.modal)
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).presentationType(.modal)
+            }
+            .onFinish { _ in
+                expectOnFinish.fulfill()
+            }
+        }
+        .hostAndInspect(with: \.inspection)
+        .extractWorkflowLauncher()
+        .extractWorkflowItemWrapper()
+        
+        XCTAssertEqual(try wfr1.find(FR1.self).text().string(), "FR1 type")
+        XCTAssertNoThrow(try wfr1.findModalModifier())
+        try await wfr1.find(FR1.self).proceedInWorkflow()
+        let wfr2 = try await wfr1.extractWrappedWrapper()
+
+        let fr2 = try wfr2.find(FR2.self)
+        XCTAssertEqual(try fr2.text().string(), "FR2 type")
+        try await fr2.proceedInWorkflow()
+
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
+    }
+
+    func testWorkflowCanBeFollowed_WithWorkflowGroup() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let wfr1 = try await MainActor.run {
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                WorkflowGroup {
+                    WorkflowItem(FR2.self).presentationType(.modal)
                 }
             }
             .onFinish { _ in
@@ -44,23 +91,140 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
             }
         }
         .hostAndInspect(with: \.inspection)
-        .extractWorkflowItem()
-
-        let model = try await MainActor.run {
-            try XCTUnwrap((Mirror(reflecting: try wfr1.actualView()).descendant("_model") as? EnvironmentObject<WorkflowViewModel>)?.wrappedValue)
-        }
-        let launcher = try await MainActor.run {
-            try XCTUnwrap((Mirror(reflecting: try wfr1.actualView()).descendant("_launcher") as? EnvironmentObject<Launcher>)?.wrappedValue)
-        }
+        .extractWorkflowLauncher()
+        .extractWorkflowItemWrapper()
 
         XCTAssertEqual(try wfr1.find(FR1.self).text().string(), "FR1 type")
+        XCTAssertNoThrow(try wfr1.findModalModifier())
         try await wfr1.find(FR1.self).proceedInWorkflow()
-        try await wfr1.actualView().host { $0.environmentObject(model).environmentObject(launcher) }
-        XCTAssertTrue(try wfr1.find(ViewType.Sheet.self).isPresented())
+        let wfr2 = try await wfr1.extractWrappedWrapper()
 
-        let fr2 = try wfr1.find(ViewType.Sheet.self).find(FR2.self)
+        let fr2 = try wfr2.find(FR2.self)
         XCTAssertEqual(try fr2.text().string(), "FR2 type")
         try await fr2.proceedInWorkflow()
+
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
+    }
+
+    func testWorkflowCanBeFollowed_WithOptionalWorkflowItem_WhenTrue() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let wfr1 = try await MainActor.run {
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                if true {
+                    WorkflowItem(FR2.self).presentationType(.modal)
+                }
+            }
+            .onFinish { _ in
+                expectOnFinish.fulfill()
+            }
+        }
+        .hostAndInspect(with: \.inspection)
+        .extractWorkflowLauncher()
+        .extractWorkflowItemWrapper()
+
+        XCTAssertEqual(try wfr1.find(FR1.self).text().string(), "FR1 type")
+        XCTAssertNoThrow(try wfr1.findModalModifier())
+        try await wfr1.find(FR1.self).proceedInWorkflow()
+        let wfr2 = try await wfr1.extractWrappedWrapper()
+
+        let fr2 = try wfr2.find(FR2.self)
+        XCTAssertEqual(try fr2.text().string(), "FR2 type")
+        try await fr2.proceedInWorkflow()
+
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
+    }
+
+    func testWorkflowCanBeFollowed_WithEitherWorkflowItem_WhenTrue() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR3 type") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let wfr1 = try await MainActor.run {
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                if true {
+                    WorkflowItem(FR2.self).presentationType(.modal)
+                } else {
+                    WorkflowItem(FR3.self).presentationType(.modal)
+                }
+            }
+            .onFinish { _ in
+                expectOnFinish.fulfill()
+            }
+        }
+        .hostAndInspect(with: \.inspection)
+        .extractWorkflowLauncher()
+        .extractWorkflowItemWrapper()
+
+        XCTAssertEqual(try wfr1.find(FR1.self).text().string(), "FR1 type")
+        XCTAssertNoThrow(try wfr1.findModalModifier())
+        try await wfr1.find(FR1.self).proceedInWorkflow()
+        let wfr2 = try await wfr1.extractWrappedWrapper()
+
+        let fr2 = try wfr2.find(FR2.self)
+        XCTAssertEqual(try fr2.text().string(), "FR2 type")
+        try await fr2.proceedInWorkflow()
+
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
+    }
+
+    func testWorkflowCanBeFollowed_WithEitherWorkflowItem_WhenFalse() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR3 type") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let wfr1 = try await MainActor.run {
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                if false {
+                    WorkflowItem(FR2.self).presentationType(.modal)
+                } else {
+                    WorkflowItem(FR3.self).presentationType(.modal)
+                }
+            }
+            .onFinish { _ in
+                expectOnFinish.fulfill()
+            }
+        }
+        .hostAndInspect(with: \.inspection)
+        .extractWorkflowLauncher()
+        .extractWorkflowItemWrapper()
+
+        XCTAssertEqual(try wfr1.find(FR1.self).text().string(), "FR1 type")
+        XCTAssertNoThrow(try wfr1.findModalModifier())
+        try await wfr1.find(FR1.self).proceedInWorkflow()
+        let wfr2 = try await wfr1.extractWrappedWrapper()
+
+        let fr3 = try wfr2.find(FR3.self)
+        XCTAssertEqual(try fr3.text().string(), "FR3 type")
+        try await fr3.proceedInWorkflow()
 
         wait(for: [expectOnFinish], timeout: TestConstant.timeout)
     }
@@ -72,36 +236,25 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
         }
 
         let wfr1 = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self) {
-                    thenProceed(with: FR1.self) {
-                        thenProceed(with: FR1.self).presentationType(.modal)
-                    }.presentationType(.modal)
-                }
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR1.self).presentationType(.modal)
+                WorkflowItem(FR1.self).presentationType(.modal)
             }
         }
         .hostAndInspect(with: \.inspection)
-        .extractWorkflowItem()
+        .extractWorkflowLauncher()
+        .extractWorkflowItemWrapper()
 
-        let model = try await MainActor.run {
-            try XCTUnwrap((Mirror(reflecting: try wfr1.actualView()).descendant("_model") as? EnvironmentObject<WorkflowViewModel>)?.wrappedValue)
-        }
-        let launcher = try await MainActor.run {
-            try XCTUnwrap((Mirror(reflecting: try wfr1.actualView()).descendant("_launcher") as? EnvironmentObject<Launcher>)?.wrappedValue)
-        }
-
+        XCTAssertNoThrow(try wfr1.findModalModifier())
         try await wfr1.find(FR1.self).proceedInWorkflow()
-        try await wfr1.actualView().host { $0.environmentObject(model).environmentObject(launcher) }
-        XCTAssertTrue(try wfr1.find(ViewType.Sheet.self).isPresented())
 
-        let wfr2 = try await wfr1.extractWrappedWorkflowItem()
+        let wfr2 = try await wfr1.extractWrappedWrapper()
+        XCTAssertNoThrow(try wfr2.findModalModifier())
         try await wfr2.find(FR1.self).proceedInWorkflow()
-        try await wfr2.actualView().host { $0.environmentObject(model).environmentObject(launcher) }
-        XCTAssertTrue(try wfr2.find(ViewType.Sheet.self).isPresented())
 
-        let wfr3 = try await wfr2.extractWrappedWorkflowItem()
+        let wfr3 = try await wfr2.extractWrappedWrapper()
         try await wfr3.find(FR1.self).proceedInWorkflow()
-        try await wfr3.actualView().host { $0.environmentObject(model).environmentObject(launcher) }
     }
 
     func testLargeWorkflowCanBeFollowed() async throws {
@@ -135,62 +288,44 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
         }
 
         let wfr1 = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self) {
-                    thenProceed(with: FR2.self) {
-                        thenProceed(with: FR3.self) {
-                            thenProceed(with: FR4.self) {
-                                thenProceed(with: FR5.self) {
-                                    thenProceed(with: FR6.self) {
-                                        thenProceed(with: FR7.self).presentationType(.modal)
-                                    }.presentationType(.modal)
-                                }.presentationType(.modal)
-                            }.presentationType(.modal)
-                        }.presentationType(.modal)
-                    }.presentationType(.modal)
-                }
+            WorkflowView {
+                WorkflowItem(FR1.self).presentationType(.modal)
+                WorkflowItem(FR2.self).presentationType(.modal)
+                WorkflowItem(FR3.self).presentationType(.modal)
+                WorkflowItem(FR4.self).presentationType(.modal)
+                WorkflowItem(FR5.self).presentationType(.modal)
+                WorkflowItem(FR6.self).presentationType(.modal)
+                WorkflowItem(FR7.self).presentationType(.modal)
             }
         }
         .hostAndInspect(with: \.inspection)
-        .extractWorkflowItem()
+        .extractWorkflowLauncher()
+        .extractWorkflowItemWrapper()
 
-        let model = try await MainActor.run {
-            try XCTUnwrap((Mirror(reflecting: try wfr1.actualView()).descendant("_model") as? EnvironmentObject<WorkflowViewModel>)?.wrappedValue)
-        }
-        let launcher = try await MainActor.run {
-            try XCTUnwrap((Mirror(reflecting: try wfr1.actualView()).descendant("_launcher") as? EnvironmentObject<Launcher>)?.wrappedValue)
-        }
-
+        XCTAssertNoThrow(try wfr1.findModalModifier())
         try await wfr1.find(FR1.self).proceedInWorkflow()
-        try await wfr1.actualView().host { $0.environmentObject(model).environmentObject(launcher) }
-        XCTAssertTrue(try wfr1.find(ViewType.Sheet.self).isPresented())
 
-        let wfr2 = try await wfr1.extractWrappedWorkflowItem()
+        let wfr2 = try await wfr1.extractWrappedWrapper()
+        XCTAssertNoThrow(try wfr2.findModalModifier())
         try await wfr2.find(FR2.self).proceedInWorkflow()
-        try await wfr2.actualView().host { $0.environmentObject(model).environmentObject(launcher) }
-        XCTAssertTrue(try wfr2.find(ViewType.Sheet.self).isPresented())
 
-        let wfr3 = try await wfr2.extractWrappedWorkflowItem()
+        let wfr3 = try await wfr2.extractWrappedWrapper()
+        XCTAssertNoThrow(try wfr3.findModalModifier())
         try await wfr3.find(FR3.self).proceedInWorkflow()
-        try await wfr3.actualView().host { $0.environmentObject(model).environmentObject(launcher) }
-        XCTAssertTrue(try wfr3.find(ViewType.Sheet.self).isPresented())
 
-        let wfr4 = try await wfr3.extractWrappedWorkflowItem()
+        let wfr4 = try await wfr3.extractWrappedWrapper()
+        XCTAssertNoThrow(try wfr4.findModalModifier())
         try await wfr4.find(FR4.self).proceedInWorkflow()
-        try await wfr4.actualView().host { $0.environmentObject(model).environmentObject(launcher) }
-        XCTAssertTrue(try wfr4.find(ViewType.Sheet.self).isPresented())
 
-        let wfr5 = try await wfr4.extractWrappedWorkflowItem()
+        let wfr5 = try await wfr4.extractWrappedWrapper()
+        XCTAssertNoThrow(try wfr5.findModalModifier())
         try await wfr5.find(FR5.self).proceedInWorkflow()
-        try await wfr5.actualView().host { $0.environmentObject(model).environmentObject(launcher) }
-        XCTAssertTrue(try wfr5.find(ViewType.Sheet.self).isPresented())
 
-        let wfr6 = try await wfr5.extractWrappedWorkflowItem()
+        let wfr6 = try await wfr5.extractWrappedWrapper()
+        XCTAssertNoThrow(try wfr6.findModalModifier())
         try await wfr6.find(FR6.self).proceedInWorkflow()
-        try await wfr6.actualView().host { $0.environmentObject(model).environmentObject(launcher) }
-        XCTAssertTrue(try wfr6.find(ViewType.Sheet.self).isPresented())
 
-        let wfr7 = try await wfr6.extractWrappedWorkflowItem()
+        let wfr7 = try await wfr6.extractWrappedWrapper()
         try await wfr7.find(FR7.self).proceedInWorkflow()
     }
 
@@ -209,33 +344,23 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
             var body: some View { Text("FR3 type") }
         }
         let wfr1 = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self) {
-                    thenProceed(with: FR2.self) {
-                        thenProceed(with: FR3.self).presentationType(.modal)
-                    }.presentationType(.modal)
-                }
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).presentationType(.modal)
+                WorkflowItem(FR3.self).presentationType(.modal)
             }
         }
         .hostAndInspect(with: \.inspection)
-        .extractWorkflowItem()
-
-        let model = try await MainActor.run {
-            try XCTUnwrap((Mirror(reflecting: try wfr1.actualView()).descendant("_model") as? EnvironmentObject<WorkflowViewModel>)?.wrappedValue)
-        }
-        let launcher = try await MainActor.run {
-            try XCTUnwrap((Mirror(reflecting: try wfr1.actualView()).descendant("_launcher") as? EnvironmentObject<Launcher>)?.wrappedValue)
-        }
+        .extractWorkflowLauncher()
+        .extractWorkflowItemWrapper()
 
         XCTAssertThrowsError(try wfr1.find(FR1.self))
-        XCTAssertNoThrow(try wfr1.find(FR2.self))
 
-        let wfr2 = try await wfr1.extractWrappedWorkflowItem()
+        let wfr2 = try await wfr1.extractWrappedWrapper()
+        XCTAssertNoThrow(try wfr2.findModalModifier())
         try await wfr2.find(FR2.self).proceedInWorkflow()
-        try await wfr2.actualView().host { $0.environmentObject(model).environmentObject(launcher) }
-        XCTAssertTrue(try wfr2.find(ViewType.Sheet.self).isPresented())
 
-        let wfr3 = try await wfr2.extractWrappedWorkflowItem()
+        let wfr3 = try await wfr2.extractWrappedWrapper()
         try await wfr3.find(FR3.self).proceedInWorkflow()
     }
 
@@ -255,33 +380,23 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
         }
 
         let wfr1 = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self) {
-                    thenProceed(with: FR2.self) {
-                        thenProceed(with: FR3.self).presentationType(.modal)
-                    }.presentationType(.modal)
-                }
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).presentationType(.modal)
+                WorkflowItem(FR3.self).presentationType(.modal)
             }
         }
         .hostAndInspect(with: \.inspection)
-        .extractWorkflowItem()
+        .extractWorkflowLauncher()
+        .extractWorkflowItemWrapper()
 
-        let model = try await MainActor.run {
-            try XCTUnwrap((Mirror(reflecting: try wfr1.actualView()).descendant("_model") as? EnvironmentObject<WorkflowViewModel>)?.wrappedValue)
-        }
-        let launcher = try await MainActor.run {
-            try XCTUnwrap((Mirror(reflecting: try wfr1.actualView()).descendant("_launcher") as? EnvironmentObject<Launcher>)?.wrappedValue)
-        }
-
+        XCTAssertNoThrow(try wfr1.findModalModifier())
         try await wfr1.find(FR1.self).proceedInWorkflow()
-        try await wfr1.actualView().host { $0.environmentObject(model).environmentObject(launcher) }
-        XCTAssertTrue(try wfr1.find(ViewType.Sheet.self).isPresented())
 
-        let wfr2 = try await wfr1.extractWrappedWorkflowItem()
+        let wfr2 = try await wfr1.extractWrappedWrapper()
         XCTAssertThrowsError(try wfr2.find(FR2.self))
-        XCTAssertNoThrow(try wfr2.find(FR3.self))
 
-        let wfr3 = try await wfr2.extractWrappedWorkflowItem()
+        let wfr3 = try await wfr2.extractWrappedWrapper()
         try await wfr3.find(FR3.self).proceedInWorkflow()
     }
 
@@ -306,39 +421,27 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
         }
 
         let wfr1 = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self) {
-                    thenProceed(with: FR2.self) {
-                        thenProceed(with: FR3.self) {
-                            thenProceed(with: FR4.self).presentationType(.modal)
-                        }
-                    }.presentationType(.modal)
-                }
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).presentationType(.modal)
+                WorkflowItem(FR3.self).presentationType(.modal)
+                WorkflowItem(FR4.self).presentationType(.modal)
             }
         }
         .hostAndInspect(with: \.inspection)
-        .extractWorkflowItem()
+        .extractWorkflowLauncher()
+        .extractWorkflowItemWrapper()
 
-        let model = try await MainActor.run {
-            try XCTUnwrap((Mirror(reflecting: try wfr1.actualView()).descendant("_model") as? EnvironmentObject<WorkflowViewModel>)?.wrappedValue)
-        }
-        let launcher = try await MainActor.run {
-            try XCTUnwrap((Mirror(reflecting: try wfr1.actualView()).descendant("_launcher") as? EnvironmentObject<Launcher>)?.wrappedValue)
-        }
-
+        XCTAssertNoThrow(try wfr1.findModalModifier())
         try await wfr1.find(FR1.self).proceedInWorkflow()
-        try await wfr1.actualView().host { $0.environmentObject(model).environmentObject(launcher) }
-        XCTAssertTrue(try wfr1.find(ViewType.Sheet.self).isPresented())
 
-        let wfr2 = try await wfr1.extractWrappedWorkflowItem()
+        let wfr2 = try await wfr1.extractWrappedWrapper()
         XCTAssertThrowsError(try wfr2.find(FR2.self))
-        XCTAssertNoThrow(try wfr2.find(FR4.self))
 
-        let wfr3 = try await wfr2.extractWrappedWorkflowItem()
+        let wfr3 = try await wfr2.extractWrappedWrapper()
         XCTAssertThrowsError(try wfr3.find(FR3.self))
-        XCTAssertNoThrow(try wfr3.find(FR4.self))
 
-        let wfr4 = try await wfr3.extractWrappedWorkflowItem()
+        let wfr4 = try await wfr3.extractWrappedWrapper()
         try await wfr4.find(FR4.self).proceedInWorkflow()
     }
 
@@ -359,36 +462,28 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 
         let expectOnFinish = expectation(description: "onFinish called")
         let wfr1 = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self) {
-                    thenProceed(with: FR2.self) {
-                        thenProceed(with: FR3.self).presentationType(.modal)
-                    }.presentationType(.modal)
-                }
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self).presentationType(.modal)
+                WorkflowItem(FR3.self).presentationType(.modal)
             }
             .onFinish { _ in
                 expectOnFinish.fulfill()
             }
         }
         .hostAndInspect(with: \.inspection)
-        .extractWorkflowItem()
+        .extractWorkflowLauncher()
+        .extractWorkflowItemWrapper()
 
-        let model = try await MainActor.run {
-            try XCTUnwrap((Mirror(reflecting: try wfr1.actualView()).descendant("_model") as? EnvironmentObject<WorkflowViewModel>)?.wrappedValue)
-        }
-        let launcher = try await MainActor.run {
-            try XCTUnwrap((Mirror(reflecting: try wfr1.actualView()).descendant("_launcher") as? EnvironmentObject<Launcher>)?.wrappedValue)
-        }
-
+        XCTAssertNoThrow(try wfr1.findModalModifier())
         try await wfr1.find(FR1.self).proceedInWorkflow()
-        try await wfr1.actualView().host { $0.environmentObject(model).environmentObject(launcher) }
-        XCTAssertTrue(try wfr1.find(ViewType.Sheet.self).isPresented())
 
-        let wfr2 = try await wfr1.extractWrappedWorkflowItem()
+        let wfr2 = try await wfr1.extractWrappedWrapper()
+        XCTAssertNoThrow(try wfr2.findModalModifier())
         try await wfr2.find(FR2.self).proceedInWorkflow()
         XCTAssertThrowsError(try wfr2.find(FR3.self))
 
-        let wfr3 = try await wfr2.extractWrappedWorkflowItem()
+        let wfr3 = try await wfr2.extractWrappedWrapper()
         XCTAssertThrowsError(try wfr3.find(FR3.self))
 
         wait(for: [expectOnFinish], timeout: TestConstant.timeout)

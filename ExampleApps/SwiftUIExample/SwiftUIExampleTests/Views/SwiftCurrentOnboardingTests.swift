@@ -26,14 +26,15 @@ final class SwiftCurrentOnboardingTests: XCTestCase, View {
         Container.default.register(UserDefaults.self) { _ in defaults }
         let workflowFinished = expectation(description: "View Proceeded")
         let launcher = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: SwiftCurrentOnboarding.self)
+            WorkflowView {
+                WorkflowItem(SwiftCurrentOnboarding.self)
             }.onFinish { _ in
                 workflowFinished.fulfill()
             }
         }
-        .hostAndInspect(with: \.inspection)
-        .extractWorkflowItem()
+            .content
+            .hostAndInspect(with: \.inspection)
+            .extractWorkflowItemWrapper()
 
         XCTAssertNoThrow(try launcher.find(ViewType.Button.self).tap())
 

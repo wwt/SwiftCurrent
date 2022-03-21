@@ -1,10 +1,10 @@
 //
-//  SwiftCurrent_SwiftUIConsumerTests.swift
+//  SwiftCurrent_SwiftUI_WorkflowBuilderTests.swift
 //  SwiftCurrent
 //
-//  Created by Tyler Thompson on 7/12/21.
-//  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
-//
+//  Created by Tyler Thompson on 2/21/22.
+//  Copyright © 2022 WWT and Tyler Thompson. All rights reserved.
+//  
 
 import XCTest
 import SwiftUI
@@ -14,7 +14,7 @@ import SwiftCurrent
 @testable import SwiftCurrent_SwiftUI // testable sadly needed for inspection.inspect to work
 
 @available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
+final class SwiftCurrent_SwiftUI_WorkflowBuilderTests: XCTestCase, App {
     func testWorkflowCanBeFollowed() async throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
@@ -25,7 +25,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             var body: some View { Text("FR2 type") }
         }
         let expectOnFinish = expectation(description: "OnFinish called")
-        let launcher = try await MainActor.run {
+        let viewUnderTest = try await MainActor.run {
             WorkflowView {
                 WorkflowItem(FR1.self)
                 WorkflowItem(FR2.self)
@@ -33,147 +33,12 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             .onFinish { _ in
                 expectOnFinish.fulfill()
             }
-        }.hostAndInspect(with: \.inspection)
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
-        XCTAssertEqual(try launcher.find(FR1.self).text().string(), "FR1 type")
-        try await launcher.find(FR1.self).proceedInWorkflow()
-        let fr2 = try launcher.find(FR2.self)
-        XCTAssertEqual(try fr2.text().string(), "FR2 type")
-        XCTAssertNoThrow(try fr2.actualView().proceedInWorkflow())
-
-        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
-    }
-
-    func testWorkflowCanBuildOptionalItem_WhenTrue() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
-            var body: some View { Text("FR1 type") }
-        }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
-            var body: some View { Text("FR2 type") }
-        }
-        let expectOnFinish = expectation(description: "OnFinish called")
-        let launcher = try await MainActor.run {
-            WorkflowView {
-                WorkflowItem(FR1.self)
-                if true {
-                    WorkflowItem(FR2.self)
-                }
-            }
-            .onFinish { _ in
-                expectOnFinish.fulfill()
-            }
-        }.hostAndInspect(with: \.inspection)
-
-        XCTAssertEqual(try launcher.find(FR1.self).text().string(), "FR1 type")
-        try await launcher.find(FR1.self).proceedInWorkflow()
-        let fr2 = try launcher.find(FR2.self)
-        XCTAssertEqual(try fr2.text().string(), "FR2 type")
-        XCTAssertNoThrow(try fr2.actualView().proceedInWorkflow())
-
-        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
-    }
-
-    func testWorkflowCanBuildOptionalItem_WhenFalse() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
-            var body: some View { Text("FR1 type") }
-        }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
-            var body: some View { Text("FR2 type") }
-        }
-        let expectOnFinish = expectation(description: "OnFinish called")
-        let launcher = try await MainActor.run {
-            WorkflowView {
-                WorkflowItem(FR1.self)
-                if false {
-                    WorkflowItem(FR2.self)
-                }
-            }
-            .onFinish { _ in
-                expectOnFinish.fulfill()
-            }
-        }.hostAndInspect(with: \.inspection)
-
-        XCTAssertEqual(try launcher.find(FR1.self).text().string(), "FR1 type")
-        try await launcher.find(FR1.self).proceedInWorkflow()
-
-        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
-    }
-
-    func testWorkflowCanBuildEitherItem_WhenTrue() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
-            var body: some View { Text("FR1 type") }
-        }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
-            var body: some View { Text("FR2 type") }
-        }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
-            var body: some View { Text("FR3 type") }
-        }
-        let expectOnFinish = expectation(description: "OnFinish called")
-        let launcher = try await MainActor.run {
-            WorkflowView {
-                WorkflowItem(FR1.self)
-                if true {
-                    WorkflowItem(FR2.self)
-                } else {
-                    WorkflowItem(FR3.self)
-                }
-            }
-            .onFinish { _ in
-                expectOnFinish.fulfill()
-            }
-        }.hostAndInspect(with: \.inspection)
-
-        XCTAssertEqual(try launcher.find(FR1.self).text().string(), "FR1 type")
-        try await launcher.find(FR1.self).proceedInWorkflow()
-        let fr2 = try launcher.find(FR2.self)
-        XCTAssertEqual(try fr2.text().string(), "FR2 type")
-        XCTAssertNoThrow(try fr2.actualView().proceedInWorkflow())
-
-        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
-    }
-
-    func testWorkflowCanBuildEitherItem_WhenFalse() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
-            var body: some View { Text("FR1 type") }
-        }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
-            var body: some View { Text("FR2 type") }
-        }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
-            var body: some View { Text("FR3 type") }
-        }
-        let expectOnFinish = expectation(description: "OnFinish called")
-        let launcher = try await MainActor.run {
-            WorkflowView {
-                WorkflowItem(FR1.self)
-                if false {
-                    WorkflowItem(FR2.self)
-                } else {
-                    WorkflowItem(FR3.self)
-                }
-            }
-            .onFinish { _ in
-                expectOnFinish.fulfill()
-            }
-        }.hostAndInspect(with: \.inspection)
-
-        XCTAssertEqual(try launcher.find(FR1.self).text().string(), "FR1 type")
-        try await launcher.find(FR1.self).proceedInWorkflow()
-        let fr2 = try launcher.find(FR3.self)
-        XCTAssertEqual(try fr2.text().string(), "FR3 type")
-        XCTAssertNoThrow(try fr2.actualView().proceedInWorkflow())
-
+        XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
+        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
+        XCTAssertEqual(try viewUnderTest.find(FR2.self).text().string(), "FR2 type")
+        try await viewUnderTest.find(FR2.self).proceedInWorkflow()
         wait(for: [expectOnFinish], timeout: TestConstant.timeout)
     }
 
@@ -188,7 +53,8 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         }
         let expectOnFinish1 = expectation(description: "OnFinish1 called")
         let expectOnFinish2 = expectation(description: "OnFinish2 called")
-        let launcher = try await MainActor.run {
+
+        let viewUnderTest = try await MainActor.run {
             WorkflowView {
                 WorkflowItem(FR1.self)
             }
@@ -197,54 +63,9 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             }.onFinish { _ in
                 expectOnFinish2.fulfill()
             }
-        }.hostAndInspect(with: \.inspection)
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
-        try await launcher.find(FR1.self).proceedInWorkflow()
-
-        wait(for: [expectOnFinish1, expectOnFinish2], timeout: TestConstant.timeout)
-    }
-
-    func testWorkflowCanFinishMultipleTimes() async throws {
-        throw XCTSkip("We are currently unable to test this because of a limitation in ViewInspector, see here: https://github.com/nalexn/ViewInspector/issues/126")
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
-            var body: some View { Text("FR1 type") }
-        }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
-            var body: some View { Text("FR2 type") }
-        }
-        @MainActor struct TestUtils {
-            static var showWorkflow = Binding(wrappedValue: true)
-        }
-        let expectOnFinish1 = expectation(description: "OnFinish1 called")
-        let expectOnFinish2 = expectation(description: "OnFinish2 called")
-        let launcher = try await MainActor.run {
-            WorkflowView(isLaunched: TestUtils.showWorkflow) {
-                WorkflowItem(FR1.self)
-                WorkflowItem(FR2.self)
-            }
-            .onFinish { _ in
-                TestUtils.showWorkflow.wrappedValue = false
-                TestUtils.showWorkflow.update()
-            }
-        }.hostAndInspect(with: \.inspection)
-
-        try await launcher.find(FR1.self).proceedInWorkflow()
-        try await launcher.find(FR2.self).proceedInWorkflow()
-        await MainActor.run {
-            TestUtils.showWorkflow.wrappedValue = true
-            TestUtils.showWorkflow.update()
-        }
-        try await launcher.find(FR1.self).proceedInWorkflow()
-        try await launcher.find(FR2.self).proceedInWorkflow()
-        await MainActor.run {
-            TestUtils.showWorkflow.wrappedValue = true
-            TestUtils.showWorkflow.update()
-        }
-        try await launcher.find(FR1.self).proceedInWorkflow()
-        try await launcher.find(FR2.self).proceedInWorkflow()
-
+        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
         wait(for: [expectOnFinish1, expectOnFinish2], timeout: TestConstant.timeout)
     }
 
@@ -252,19 +73,20 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
             let stringProperty: String
-            init(with: String) {
-                self.stringProperty = with
+            init(with string: String) {
+                self.stringProperty = string
             }
             var body: some View { Text("FR1 type") }
         }
         let expected = UUID().uuidString
-        let launcher = try await MainActor.run {
-            WorkflowView(isLaunched: .constant(true), launchingWith: expected) {
+
+        let viewUnderTest = try await MainActor.run {
+            WorkflowView(launchingWith: expected) {
                 WorkflowItem(FR1.self)
             }
-        }.hostAndInspect(with: \.inspection)
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
-        XCTAssertEqual(try launcher.find(FR1.self).actualView().stringProperty, expected)
+        XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().stringProperty, expected)
     }
 
     func testWorkflowPassesArgumentsToTheFirstItem_WhenThatFirstItemTakesInAnyWorkflowPassedArgs() async throws {
@@ -277,14 +99,15 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             var body: some View { Text("FR1 type") }
         }
         let expected = UUID().uuidString
-        let launcher = try await MainActor.run {
-            WorkflowView(isLaunched: .constant(true), launchingWith: expected) {
+
+        let viewUnderTest = try await MainActor.run {
+            WorkflowView(launchingWith: expected) {
                 WorkflowItem(FR1.self)
                 WorkflowItem(FR1.self)
             }
-        }.hostAndInspect(with: \.inspection)
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
-        XCTAssertEqual(try launcher.find(FR1.self).actualView().property.extractArgs(defaultValue: nil) as? String, expected)
+        XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().property.extractArgs(defaultValue: nil) as? String, expected)
     }
 
     func testWorkflowPassesArgumentsToTheFirstItem_WhenThatFirstItemTakesInAnyWorkflowPassedArgs_AndTheLaunchArgsAreAnyWorkflowPassedArgs() async throws {
@@ -298,14 +121,15 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             var body: some View { Text("FR1 type") }
         }
         let expected = UUID().uuidString
-        let launcher = try await MainActor.run {
-            WorkflowView(isLaunched: .constant(true), launchingWith: AnyWorkflow.PassedArgs.args(expected)) {
+
+        let viewUnderTest = try await MainActor.run {
+            WorkflowView(launchingWith: AnyWorkflow.PassedArgs.args(expected)) {
                 WorkflowItem(FR1.self)
                 WorkflowItem(FR1.self)
             }
-        }.hostAndInspect(with: \.inspection)
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
-        XCTAssertEqual(try launcher.find(FR1.self).actualView().property.extractArgs(defaultValue: nil) as? String, expected)
+        XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().property.extractArgs(defaultValue: nil) as? String, expected)
     }
 
     func testWorkflowPassesArgumentsToAllItems() async throws {
@@ -341,8 +165,8 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         let expectedFR3 = Bool.random()
         let expectedEnd = UUID().uuidString
 
-        let launcher = try await MainActor.run {
-            WorkflowView(isLaunched: .constant(true), launchingWith: expectedFR1) {
+        let viewUnderTest = try await MainActor.run {
+            WorkflowView(launchingWith: expectedFR1) {
                 WorkflowItem(FR1.self)
                 WorkflowItem(FR2.self)
                 WorkflowItem(FR3.self)
@@ -350,14 +174,14 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             .onFinish {
                 XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedEnd)
             }
-        }.hostAndInspect(with: \.inspection)
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
-        XCTAssertEqual(try launcher.find(FR1.self).actualView().property, expectedFR1)
-        try await launcher.find(FR1.self).proceedInWorkflow(expectedFR2)
-        XCTAssertEqual(try launcher.find(FR2.self).actualView().property, expectedFR2)
-        try await launcher.find(FR2.self).proceedInWorkflow(expectedFR3)
-        XCTAssertEqual(try launcher.find(FR3.self).actualView().property, expectedFR3)
-        try await launcher.find(FR3.self).proceedInWorkflow(expectedEnd)
+        XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().property, expectedFR1)
+        XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow(expectedFR2))
+        XCTAssertEqual(try viewUnderTest.find(FR2.self).actualView().property, expectedFR2)
+        XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow(expectedFR3))
+        XCTAssertEqual(try viewUnderTest.find(FR3.self).actualView().property, expectedFR3)
+        XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow(expectedEnd))
     }
 
     func testLargeWorkflowCanBeFollowed() async throws {
@@ -389,8 +213,20 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR7 type") }
         }
+        struct FR8: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR7 type") }
+        }
+        struct FR9: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR7 type") }
+        }
+        struct FR10: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR7 type") }
+        }
 
-        let launcher = try await MainActor.run {
+        let viewUnderTest = try await MainActor.run {
             WorkflowView {
                 WorkflowItem(FR1.self)
                 WorkflowItem(FR2.self)
@@ -399,16 +235,22 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
                 WorkflowItem(FR5.self)
                 WorkflowItem(FR6.self)
                 WorkflowItem(FR7.self)
+                WorkflowItem(FR8.self)
+                WorkflowItem(FR9.self)
+                WorkflowItem(FR10.self)
             }
-        }.hostAndInspect(with: \.inspection)
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
-        try await launcher.find(FR1.self).proceedInWorkflow()
-        try await launcher.find(FR2.self).proceedInWorkflow()
-        try await launcher.find(FR3.self).proceedInWorkflow()
-        try await launcher.find(FR4.self).proceedInWorkflow()
-        try await launcher.find(FR5.self).proceedInWorkflow()
-        try await launcher.find(FR6.self).proceedInWorkflow()
-        try await launcher.find(FR7.self).proceedInWorkflow()
+        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
+        try await viewUnderTest.find(FR2.self).proceedInWorkflow()
+        try await viewUnderTest.find(FR3.self).proceedInWorkflow()
+        try await viewUnderTest.find(FR4.self).proceedInWorkflow()
+        try await viewUnderTest.find(FR5.self).proceedInWorkflow()
+        try await viewUnderTest.find(FR6.self).proceedInWorkflow()
+        try await viewUnderTest.find(FR7.self).proceedInWorkflow()
+        try await viewUnderTest.find(FR8.self).proceedInWorkflow()
+        try await viewUnderTest.find(FR9.self).proceedInWorkflow()
+        try await viewUnderTest.find(FR10.self).proceedInWorkflow()
     }
 
     func testWorkflowOnlyShowsOneViewAtATime() async throws {
@@ -424,20 +266,24 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR3 type") }
         }
-        let launcher = try await MainActor.run {
+
+        let viewUnderTest = try await MainActor.run {
             WorkflowView {
                 WorkflowItem(FR1.self)
                 WorkflowItem(FR2.self)
                 WorkflowItem(FR3.self)
                 WorkflowItem(FR2.self)
             }
-        }.hostAndInspect(with: \.inspection)
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
-        try await launcher.find(FR1.self).proceedInWorkflow()
-        try await launcher.find(FR2.self).proceedInWorkflow()
-        try await launcher.find(FR3.self).proceedInWorkflow()
-        try await launcher.find(FR2.self).proceedInWorkflow()
-        XCTAssertThrowsError(try launcher.find(ViewType.Text.self, skipFound: 1))
+        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
+        XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
+        try await viewUnderTest.find(FR2.self).proceedInWorkflow()
+        XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
+        try await viewUnderTest.find(FR3.self).proceedInWorkflow()
+        XCTAssertThrowsError(try viewUnderTest.find(FR3.self))
+        try await viewUnderTest.find(FR2.self).proceedInWorkflow()
+        XCTAssertThrowsError(try viewUnderTest.find(ViewType.Text.self, skipFound: 1))
     }
 
     func testMovingBiDirectionallyInAWorkflow() async throws {
@@ -457,23 +303,24 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR4 type") }
         }
-        let launcher = try await MainActor.run {
+
+        let viewUnderTest = try await MainActor.run {
             WorkflowView {
                 WorkflowItem(FR1.self)
                 WorkflowItem(FR2.self)
                 WorkflowItem(FR3.self)
                 WorkflowItem(FR4.self)
             }
-        }.hostAndInspect(with: \.inspection)
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
-        try await launcher.find(FR1.self).proceedInWorkflow()
-        XCTAssertNoThrow(try launcher.find(FR2.self).actualView().backUpInWorkflow())
-        try await launcher.find(FR1.self).proceedInWorkflow()
-        try await launcher.find(FR2.self).proceedInWorkflow()
-        XCTAssertNoThrow(try launcher.find(FR3.self).actualView().backUpInWorkflow())
-        try await launcher.find(FR2.self).proceedInWorkflow()
-        try await launcher.find(FR3.self).proceedInWorkflow()
-        try await launcher.find(FR4.self).proceedInWorkflow()
+        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
+        try await viewUnderTest.find(FR2.self).backUpInWorkflow()
+        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
+        try await viewUnderTest.find(FR2.self).proceedInWorkflow()
+        try await viewUnderTest.find(FR3.self).backUpInWorkflow()
+        try await viewUnderTest.find(FR2.self).proceedInWorkflow()
+        try await viewUnderTest.find(FR3.self).proceedInWorkflow()
+        try await viewUnderTest.find(FR4.self).proceedInWorkflow()
     }
 
     func testWorkflowSetsBindingBooleanToFalseWhenAbandoned() async throws {
@@ -483,19 +330,19 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         }
         let isLaunched = Binding(wrappedValue: true)
         let expectOnAbandon = expectation(description: "OnAbandon called")
-        let launcher = try await MainActor.run {
+
+        let viewUnderTest = try await MainActor.run {
             WorkflowView(isLaunched: isLaunched) {
                 WorkflowItem(FR1.self)
-            }
-            .onAbandon {
+            }.onAbandon {
                 XCTAssertFalse(isLaunched.wrappedValue)
                 expectOnAbandon.fulfill()
             }
         }.hostAndInspect(with: \.inspection)
 
-        XCTAssertEqual(try launcher.find(FR1.self).text().string(), "FR1 type")
-        try await launcher.find(FR1.self).abandonWorkflow()
-        XCTAssertThrowsError(try launcher.find(FR1.self))
+        XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
+        try await viewUnderTest.find(FR1.self).abandonWorkflow()
+        XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
 
         wait(for: [expectOnAbandon], timeout: TestConstant.timeout)
     }
@@ -509,7 +356,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         let expectOnAbandon1 = expectation(description: "OnAbandon1 called")
         let expectOnAbandon2 = expectation(description: "OnAbandon2 called")
 
-        let launcher = try await MainActor.run {
+        let viewUnderTest = try await MainActor.run {
             WorkflowView(isLaunched: isLaunched) {
                 WorkflowItem(FR1.self)
             }
@@ -522,9 +369,8 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             }
         }.hostAndInspect(with: \.inspection)
 
-        try await launcher.find(FR1.self).abandonWorkflow()
-        XCTAssertThrowsError(try launcher.find(FR1.self))
-
+        try await viewUnderTest.find(FR1.self).abandonWorkflow()
+        XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
         wait(for: [expectOnAbandon1, expectOnAbandon2], timeout: TestConstant.timeout)
     }
 
@@ -536,14 +382,17 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             func customModifier() -> Self { self }
         }
 
-        let launcher = try await MainActor.run {
+        let viewUnderTest = try await MainActor.run {
             WorkflowView {
-                WorkflowItem(FR1.self).applyModifiers { $0.customModifier().padding().onAppear { } }
+                WorkflowItem(FR1.self)
+                    .applyModifiers {
+                        $0.customModifier().padding().onAppear { }
+                    }
             }
-        }.hostAndInspect(with: \.inspection)
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
-        XCTAssert(try launcher.find(FR1.self).hasPadding())
-        XCTAssertNoThrow(try launcher.find(FR1.self).callOnAppear())
+        XCTAssert(try viewUnderTest.find(FR1.self).hasPadding())
+        XCTAssertNoThrow(try viewUnderTest.find(FR1.self).callOnAppear())
     }
 
     func testWorkflowRelaunchesWhenSubsequentlyLaunched() async throws {
@@ -559,28 +408,25 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             var body: some View { Text("FR2 type") }
         }
 
-        @MainActor struct TestUtils {
-            static let binding = Binding(wrappedValue: true)
-        }
+        let binding = Binding(wrappedValue: true)
 
-        let launcher = try await MainActor.run {
-            WorkflowView(isLaunched: TestUtils.binding) {
+        let viewUnderTest = try await MainActor.run {
+            WorkflowView(isLaunched: binding) {
                 WorkflowItem(FR1.self)
                 WorkflowItem(FR2.self)
             }
-        }.hostAndInspect(with: \.inspection)
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
-        try await launcher.find(FR1.self).proceedInWorkflow()
+        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
 
-        await MainActor.run { TestUtils.binding.wrappedValue = false }
-        XCTAssertThrowsError(try launcher.find(FR1.self))
-        XCTAssertThrowsError(try launcher.find(FR2.self))
+        binding.wrappedValue = false
+        XCTAssertThrowsError(try viewUnderTest.find(FR1.self))
+        XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
 
-        await MainActor.run { TestUtils.binding.wrappedValue = true }
-        XCTAssertNoThrow(try launcher.callOnChange(newValue: false))
-        XCTAssertNoThrow(try launcher.find(FR1.self))
-        XCTAssertThrowsError(try launcher.find(FR2.self))
-
+        binding.wrappedValue = true
+        XCTAssertNoThrow(try viewUnderTest.callOnChange(newValue: false))
+        XCTAssertNoThrow(try viewUnderTest.find(FR1.self))
+        XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
     }
 
     func testWorkflowRelaunchesWhenAbandoned_WithAConstantOfTrue() async throws {
@@ -598,8 +444,8 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         }
         let onFinishCalled = expectation(description: "onFinish Called")
 
-        let launcher = try await MainActor.run {
-            WorkflowView {
+        let viewUnderTest = try await MainActor.run {
+            WorkflowView(isLaunched: .constant(true)) {
                 WorkflowItem(FR1.self)
                 WorkflowItem(FR2.self)
             }
@@ -608,11 +454,11 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             }
         }.hostAndInspect(with: \.inspection)
 
-        try await launcher.find(FR1.self).proceedInWorkflow()
-        XCTAssertNoThrow(try launcher.find(FR2.self).actualView().abandon())
-        XCTAssertThrowsError(try launcher.find(FR2.self))
-        try await launcher.find(FR1.self).proceedInWorkflow()
-        try await launcher.find(FR2.self).proceedInWorkflow()
+        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().abandon())
+        XCTAssertThrowsError(try viewUnderTest.find(FR2.self))
+        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
+        try await viewUnderTest.find(FR2.self).proceedInWorkflow()
 
         wait(for: [onFinishCalled], timeout: TestConstant.timeout)
     }
@@ -635,7 +481,8 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         }
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectedArgs = UUID().uuidString
-        let launcher = try await MainActor.run {
+
+        let viewUnderTest = try await MainActor.run {
             WorkflowView(isLaunched: .constant(true), launchingWith: expectedArgs) {
                 WorkflowItem(FR1.self)
                 WorkflowItem(FR2.self)
@@ -643,12 +490,12 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             .onFinish { _ in
                 expectOnFinish.fulfill()
             }
-        }.hostAndInspect(with: \.inspection)
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
-        XCTAssertEqual(try launcher.find(FR1.self).text().string(), "FR1 type")
-        try await launcher.find(FR1.self).proceedInWorkflow(.args(expectedArgs))
-        XCTAssertEqual(try launcher.find(FR2.self).text().string(), "FR2 type")
-        try await launcher.find(FR2.self).proceedInWorkflow()
+        XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
+        XCTAssertNoThrow(try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow(.args(expectedArgs)))
+        XCTAssertEqual(try viewUnderTest.find(FR2.self).text().string(), "FR2 type")
+        try await viewUnderTest.find(FR2.self).proceedInWorkflow()
 
         wait(for: [expectOnFinish], timeout: TestConstant.timeout)
     }
@@ -671,18 +518,20 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         }
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectedArgs = UUID().uuidString
-        let launcher = try await MainActor.run {
-            WorkflowView(isLaunched: .constant(true), launchingWith: AnyWorkflow.PassedArgs.args(expectedArgs)) {
+
+        let viewUnderTest = try await MainActor.run {
+            WorkflowView(isLaunched: .constant(true),
+                         launchingWith: AnyWorkflow.PassedArgs.args(expectedArgs)) {
                 WorkflowItem(FR1.self)
             }
             .onFinish { _ in
                 expectOnFinish.fulfill()
             }
-        }.hostAndInspect(with: \.inspection)
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
-        XCTAssertEqual(try launcher.find(FR1.self).text().string(), "FR1 type")
-        XCTAssertEqual(try launcher.find(FR1.self).actualView().data, expectedArgs)
-        try await launcher.find(FR1.self).proceedInWorkflow()
+        XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
+        XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().data, expectedArgs)
+        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
 
         wait(for: [expectOnFinish], timeout: TestConstant.timeout)
     }
@@ -712,8 +561,9 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         }
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectedArgs = UUID().uuidString
-        let launcher = try await MainActor.run {
-            WorkflowView {
+
+        let viewUnderTest = try await MainActor.run {
+            WorkflowView(isLaunched: .constant(true)) {
                 WorkflowItem(FR1.self)
                 WorkflowItem(FR2.self)
                 WorkflowItem(FR3.self)
@@ -721,19 +571,19 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             .onFinish { _ in
                 expectOnFinish.fulfill()
             }
-        }.hostAndInspect(with: \.inspection)
+        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
-        XCTAssertEqual(try launcher.find(FR1.self).text().string(), "FR1 type")
-        try await launcher.find(FR1.self).proceedInWorkflow()
-        XCTAssertEqual(try launcher.find(FR2.self).text().string(), "FR2 type")
-        try await launcher.find(FR2.self).proceedInWorkflow(.args(expectedArgs))
-        XCTAssertEqual(try launcher.find(FR3.self).text().string(), "FR3 type, \(expectedArgs)")
-        try await launcher.find(FR3.self).proceedInWorkflow()
+        XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
+        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
+        XCTAssertEqual(try viewUnderTest.find(FR2.self).text().string(), "FR2 type")
+        XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow(.args(expectedArgs)))
+        XCTAssertEqual(try viewUnderTest.find(FR3.self).text().string(), "FR3 type, \(expectedArgs)")
+        try await viewUnderTest.find(FR3.self).proceedInWorkflow()
 
         wait(for: [expectOnFinish], timeout: TestConstant.timeout)
     }
 
-    func testWorkflowCorrectlyHandlesState() throws {
+    func testWorkflowCorrectlyHandlesState() async throws {
         struct FR1: View, FlowRepresentable {
             weak var _workflowPointer: AnyFlowRepresentable?
 
@@ -742,23 +592,14 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             }
         }
 
-        let workflowView = WorkflowView {
-            WorkflowItem(FR1.self)
+        let workflowView = await MainActor.run {
+            WorkflowView(isLaunched: .constant(true)) {
+                WorkflowItem(FR1.self)
+            }
         }
 
         typealias WorkflowViewContent = State<WorkflowLauncher<WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>>>
-        let content = try XCTUnwrap(Mirror(reflecting: workflowView).descendant("_content") as? WorkflowViewContent)
-        // Note: Only add to these exceptions if you are *certain* the property should not be @State. Err on the side of the property being @State
-        let exceptions = ["_model", "_launcher", "_location", "_value", "inspection", "_presentation", "_isLaunched"]
-
-        let mirror = Mirror(reflecting: content.wrappedValue)
-
-        XCTAssertGreaterThan(mirror.children.count, 0)
-
-        mirror.children.forEach {
-            guard let label = $0.label, !exceptions.contains(label) else { return }
-            XCTAssert($0.value is StateIdentifiable, "Property named: \(label) was note @State")
-        }
+        _ = try XCTUnwrap(Mirror(reflecting: workflowView).descendant("_content") as? WorkflowViewContent)
     }
 
     func testWorkflowCanHaveADelayedLaunch() async throws {
@@ -784,20 +625,54 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
             }
         }
 
-        let wrapper = try await MainActor.run { Wrapper() }.hostAndInspect(with: \.inspection)
+        let view = try await MainActor.run { Wrapper() }.hostAndInspect(with: \.inspection)
+        let stack = try view.vStack()
+        let workflowView = try stack.view(WorkflowView<WorkflowLauncher<WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>>>.self, 1)
+        let launcher = try workflowView.view(WorkflowLauncher<WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>>.self)
 
-        let stack = try wrapper.vStack()
-        let launcher = try stack.view(WorkflowView<WorkflowLauncher<WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>>>.self, 1).view(WorkflowLauncher<WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>>.self)
         XCTAssertThrowsError(try launcher.view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self))
         XCTAssertNoThrow(try stack.button(0).tap())
         XCTAssertNoThrow(try launcher.view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self))
     }
-}
 
-@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-protocol StateIdentifiable { }
+    func testWorkflowCanBeEmbeddedInNavView() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        let viewUnderTest = try await MainActor.run {
+            WorkflowView {
+                WorkflowItem(FR1.self)
+            }.embedInNavigationView()
+        }.hostAndInspect(with: \.inspection)
 
-@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-extension State: StateIdentifiable {
+        XCTAssertNoThrow(try viewUnderTest.view(WorkflowLauncher<WorkflowItem<FR1, FR1>>.self).navigationView())
+        XCTAssertEqual(try viewUnderTest.find(FR1.self).text().string(), "FR1 type")
+    }
 
+    func testWorkflowCanBeLaunched_WithoutArguments_WhenInputIsAnyWorkflowPassedArgs() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            typealias WorkflowInput = AnyWorkflow.PassedArgs
+            let input: AnyWorkflow.PassedArgs
+            init(with args: AnyWorkflow.PassedArgs) {
+                input = args
+            }
+
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("I'm dropping these args on the flo") }
+        }
+
+        let view = try await MainActor.run {
+            WorkflowView {
+                WorkflowItem(FR1.self)
+            }
+        }.hostAndInspect(with: \.inspection)
+
+        XCTAssertNoThrow(try view.find(FR1.self))
+        let input = try view.find(FR1.self).actualView().input
+        guard case AnyWorkflow.PassedArgs.none = input else {
+            XCTFail("We expected AnyWorkflow.PassedArgs to be .none, but it was \(input)")
+            return
+        }
+    }
 }

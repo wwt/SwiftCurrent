@@ -26,8 +26,8 @@ final class ProfileFeatureOnboardingViewTests: XCTestCase, View {
         Container.default.register(UserDefaults.self) { _ in defaults }
         let workflowFinished = expectation(description: "View Proceeded")
         let launcher = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: ProfileFeatureOnboardingView.self)
+            WorkflowView {
+                WorkflowItem(ProfileFeatureOnboardingView.self)
             }.onFinish { _ in
                 workflowFinished.fulfill()
             }
