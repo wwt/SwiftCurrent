@@ -9,10 +9,12 @@
 import Foundation
 import ArgumentParser
 
-enum Either<A: ExpressibleByArgument & Decodable, B: ExpressibleByArgument & Decodable>: ExpressibleByArgument, Decodable {
+enum Either<A, B> {
     case firstChoice(A)
     case secondChoice(B)
+}
 
+extension Either: ExpressibleByArgument where A: ExpressibleByArgument, B: ExpressibleByArgument {
     init?(argument: String) {
         if let a = A(argument: argument) {
             self = .firstChoice(a)
@@ -23,3 +25,5 @@ enum Either<A: ExpressibleByArgument & Decodable, B: ExpressibleByArgument & Dec
         }
     }
 }
+
+extension Either: Decodable where A: Decodable, B: Decodable { }

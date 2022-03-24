@@ -10,7 +10,7 @@ import Foundation
 import SwiftSyntax
 
 protocol DeclarationSyntax: SyntaxProtocol {
-    var inheritanceClause: SwiftSyntax.TypeInheritanceClauseSyntax? { get set }
+    var inheritanceClause: SwiftSyntax.TypeInheritanceClauseSyntax? { get }
     var name: String { get }
 }
 
