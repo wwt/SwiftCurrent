@@ -22,40 +22,40 @@ struct GenerateIR: ParsableCommand {
 
         let conformingTypes = findTypesConforming(to: "\(Self.conformance)", in: files)
 
-        let encoded = try JSONEncoder().encode(conformingTypes.lazy.filter(\.isStructuralType))
+        let encoded = try JSONEncoder().encode(conformingTypes.lazy.filter(\.isConcreteType))
         if let jsonString = String(data: encoded, encoding: .utf8) {
             print(jsonString)
         }
     }
 
-    private func getFiles() throws -> [ParsedResult] {
+    private func getFiles() throws -> [File] {
         switch pathOrSourceCode {
             case .firstChoice(let url):
                 let fileURLs = try getSwiftFileURLs(from: url)
-                return fileURLs.compactMap { try? ParsedResult(filepath: $0) }
+                return fileURLs.compactMap { try? File(filepath: $0) }
             case .secondChoice(let source):
-                return try [ParsedResult(sourceCode: source)]
+                return try [File(sourceCode: source)]
         }
     }
 
-    private func findTypesConforming(to conformance: String, in files: [ParsedResult], objectType: Type.ObjectType? = nil) -> [ConformingType] {
+    private func findTypesConforming(to conformance: String, in files: [File], objectType: Declaration.NominalType? = nil) -> [ConformingType] {
         files
-            .flatMap(\.walker.root.types)
+            .flatMap(\.declarations)
             .flatMap { checkTypeForConformance($0, conformance: conformance) }
             .reduce(into: [ConformingType]()) {
                 $0.append($1)
                 // Find arbitrarily chained protocols (P1 inherits from WorkflowDecodable and P2 inherits from P1 and P3 inherits from P2...)
-                if $1.type.type == .protocol {
-                    $0.append(contentsOf: findTypesConforming(to: $1.type.name, in: files))
+                if $1.declaration.nominalType == .protocol {
+                    $0.append(contentsOf: findTypesConforming(to: $1.declaration.name, in: files))
                 }
             }
     }
 
-    private func checkTypeForConformance(_ type: Type, parents: [Type] = [], conformance: String) -> [ConformingType] {
+    private func checkTypeForConformance(_ type: Declaration, parents: [Declaration] = [], conformance: String) -> [ConformingType] {
         // Find arbitrarily nested types
-        type.types
+        type.declarations
             .flatMap { checkTypeForConformance($0, parents: parents.appending(type), conformance: conformance) }
-            .appending(contentsOf: type.inheritance.contains(conformance) ? [ConformingType(type: type, parents: parents)] : [])
+            .appending(contentsOf: type.inheritance.contains(conformance) ? [ConformingType(declaration: type, parents: parents)] : [])
     }
 
     private func getSwiftFileURLs(from directory: URL) throws -> [URL] {
@@ -68,12 +68,6 @@ struct GenerateIR: ParsableCommand {
         }
 
         return files.filter(\.isFileURL)
-    }
-}
-
-extension Array where Self.Element: Type {
-    func containsSubTypes() -> Bool {
-        !self.allSatisfy { $0.types.isEmpty }
     }
 }
 

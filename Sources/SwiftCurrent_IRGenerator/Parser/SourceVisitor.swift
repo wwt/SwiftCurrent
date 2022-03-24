@@ -1,5 +1,5 @@
 //
-//  IRWalker.swift
+//  SourceVisitor.swift
 //  SwiftCurrent
 //
 //  Created by Morgan Zellers on 3/8/22.
@@ -9,13 +9,14 @@
 import Foundation
 import SwiftSyntax
 
-class IRWalker: SyntaxVisitor {
-    var root = IRNode()
-    var body = ""
+class SourceVisitor: SyntaxVisitor {
+    var root = SyntaxNode()
 
-    lazy var current: IRNode? = {
-        root
-    }()
+    var current: SyntaxNode?
+
+    override init() {
+        current = root
+    }
 
     override func visit(_ node: ClassDeclSyntax) -> SyntaxVisitorContinueKind {
         create(.class, from: node)
@@ -33,10 +34,6 @@ class IRWalker: SyntaxVisitor {
 
     override func visitPost(_ node: EnumDeclSyntax) {
         current = current?.parent
-    }
-
-    override func visitPost(_ node: EnumCaseElementSyntax) {
-        current?.cases.append(node.identifier.text)
     }
 
     override func visit(_ node: ExtensionDeclSyntax) -> SyntaxVisitorContinueKind {
@@ -62,8 +59,7 @@ class IRWalker: SyntaxVisitor {
     }
 
     override func visit(_ node: SourceFileSyntax) -> SyntaxVisitorContinueKind {
-        body = "\(node)"
-        return .visitChildren
+        .visitChildren
     }
 
     override func visit(_ node: StructDeclSyntax) -> SyntaxVisitorContinueKind {
@@ -75,18 +71,16 @@ class IRWalker: SyntaxVisitor {
         current = current?.parent
     }
 
-    func create(_ type: Type.ObjectType, from node: CommonSyntax) {
-        let nodeBody = "\(node)"
-
+    func create(_ nominalType: Declaration.NominalType, from node: DeclarationSyntax) {
         let inheritanceClause = node.inheritanceClause?.inheritedTypeCollection.map {
             "\($0.typeName)".trimmingCharacters(in: .whitespacesAndNewlines)
         } ?? []
 
         let name = node.name.trimmingCharacters(in: .whitespaces)
-        let type = Type(type: type, name: name, inheritance: inheritanceClause, body: nodeBody)
+        let declaration = Declaration(nominalType: nominalType, name: name, inheritance: inheritanceClause)
 
-        type.parent = current
-        current?.types.append(type)
-        current = type
+        declaration.parent = current
+        current?.declarations.append(declaration)
+        current = declaration
     }
 }

@@ -1,4 +1,4 @@
-// swiftlint:disable:this file_name
+//
 //  SyntaxProtocolExtensions.swift
 //  SwiftCurrent
 //
@@ -9,27 +9,27 @@
 import Foundation
 import SwiftSyntax
 
-protocol CommonSyntax: SyntaxProtocol {
+protocol DeclarationSyntax: SyntaxProtocol {
     var inheritanceClause: SwiftSyntax.TypeInheritanceClauseSyntax? { get set }
     var name: String { get }
 }
 
-extension ClassDeclSyntax: CommonSyntax {
+extension ClassDeclSyntax: DeclarationSyntax {
     var name: String { identifier.text }
 }
 
-extension EnumDeclSyntax: CommonSyntax {
+extension EnumDeclSyntax: DeclarationSyntax {
     var name: String { identifier.text }
 }
 
-extension StructDeclSyntax: CommonSyntax {
+extension StructDeclSyntax: DeclarationSyntax {
     var name: String { identifier.text }
 }
 
-extension ProtocolDeclSyntax: CommonSyntax {
+extension ProtocolDeclSyntax: DeclarationSyntax {
     var name: String { identifier.text }
 }
 
-extension ExtensionDeclSyntax: CommonSyntax {
+extension ExtensionDeclSyntax: DeclarationSyntax {
     var name: String { "\(extendedType)" }
 }

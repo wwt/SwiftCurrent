@@ -8,16 +8,16 @@
 
 import Foundation
 
-struct ConformingType: Encodable {
-    let type: Type
-    let parents: [Type]
+struct ConformingType {
+    let declaration: Declaration
+    let parents: [Declaration]
 
     var name: String {
-        parents.map(\.name).appending(type.name).joined(separator: ".")
+        parents.map(\.name).appending(declaration.name).joined(separator: ".")
     }
 
-    var isStructuralType: Bool {
-        switch type.type {
+    var isConcreteType: Bool {
+        switch declaration.nominalType {
             case .class:
                 return true
             case .enum:
@@ -30,19 +30,15 @@ struct ConformingType: Encodable {
                 return true
         }
     }
+}
 
-    var hasSubTypes: Bool {
-        !self.type.types.isEmpty
+extension ConformingType: Encodable {
+    enum CodingKeys: String, CodingKey {
+        case name
     }
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(name, forKey: .name)
-    }
-}
-
-extension ConformingType {
-    enum CodingKeys: String, CodingKey {
-        case name
     }
 }
