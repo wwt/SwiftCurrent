@@ -27,14 +27,15 @@ final class MapFeatureOnboardingViewTests: XCTestCase, View {
         let workflowFinished = expectation(description: "View Proceeded")
 
         let view = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: MapFeatureOnboardingView.self)
+            WorkflowView {
+                WorkflowItem(MapFeatureOnboardingView.self)
             }.onFinish { _ in
                 workflowFinished.fulfill()
             }
         }
-        .hostAndInspect(with: \.inspection)
-        .extractWorkflowItem()
+            .content
+            .hostAndInspect(with: \.inspection)
+            .extractWorkflowItemWrapper()
 
         XCTAssertNoThrow(try view.find(ViewType.Text.self))
         XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Learn about our awesome map feature!")

@@ -22,6 +22,10 @@ extension MapFeatureOnboardingView: Inspectable { }
 extension MapFeatureView: Inspectable { }
 extension WorkflowItem: Inspectable { }
 extension WorkflowLauncher: Inspectable { }
+extension WorkflowView: Inspectable { }
+extension WorkflowItemWrapper: Inspectable { }
+extension WorkflowGroup: Inspectable { }
+extension ModalModifier: Inspectable { }
 extension ChangeEmailView: Inspectable { }
 extension ChangePasswordView: Inspectable { }
 extension QRScannerFeatureView: Inspectable { }

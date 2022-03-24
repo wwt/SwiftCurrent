@@ -27,11 +27,9 @@ custom_categories:
     - Working with Modals
 - name: Creating Workflows in SwiftUI
   children:
-    - WorkflowLauncher
+    - WorkflowView
     - WorkflowItem
-    - View
-    - App
-    - Scene
+    - WorkflowBuilder
 - name: How to use SwiftCurrent with UIKit
   children:
     - Using Programmatic Views

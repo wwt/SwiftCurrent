@@ -104,13 +104,13 @@ platform :ios do
 
   lane :cocoapods_liblint do
     pod_lib_lint(
-      podspec: '../SwiftCurrent.podspec', 
+      podspec: '../SwiftCurrent.podspec',
       allow_warnings: true,
       no_clean: true
     )
   end
 
-  lane :lint do 
+  lane :lint do
     swiftlint(
       config_file: 'SwiftCurrentLint/.swiftlint.yml',
       raise_if_swiftlint_error: true,
@@ -118,8 +118,8 @@ platform :ios do
     )
   end
 
-  lane :lintfix do 
-    sh('swiftlint --fix --config=../../SwiftCurrentLint/.swiftlint.yml')
+  lane :lintfix do
+    sh('swiftlint --fix --config=../SwiftCurrentLint/.swiftlint.yml')
   end
 
   desc "Release a new version with a patch bump_type"

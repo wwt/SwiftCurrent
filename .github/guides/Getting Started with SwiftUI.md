@@ -2,7 +2,7 @@
 
 This guide will walk you through getting a `Workflow` up and running in a new iOS project.  If you would like to see an existing project, clone the repo and view the `SwiftUIExample` scheme in `SwiftCurrent.xcworkspace`.
 
-The app in this guide is going to be very simple.  It consists of a view that will host the `WorkflowLauncher`, a view to enter an email address, and an optional view for when the user enters an email with `@wwt.com` in it.  Here is a preview of what the app will look like:
+The app in this guide is going to be very simple.  It consists of a view that will host the `WorkflowView`, a view to enter an email address, and an optional view for when the user enters an email with `@wwt.com` in it.  Here is a preview of what the app will look like:
 
 ![Preview image of app](https://user-images.githubusercontent.com/79471462/131556533-f2ad1e6c-9acd-4d62-94ac-9140c9718f95.gif)
 
@@ -111,7 +111,7 @@ struct SecondView_Previews: PreviewProvider {
 
 ## Launching the `Workflow`
 
-Next we add a `WorkflowLauncher` to the body of our starting app view, in this case `ContentView`.
+Next we add a `WorkflowView` to the body of our starting app view, in this case `ContentView`.
 
 ```swift
 import SwiftUI
@@ -123,10 +123,11 @@ struct ContentView: View {
         if !workflowIsPresented {
             Button("Present") { workflowIsPresented = true }
         } else {
-            WorkflowLauncher(isLaunched: $workflowIsPresented, startingArgs: "SwiftCurrent") { // SwiftCurrent
-                thenProceed(with: FirstView.self) { // SwiftCurrent
-                    thenProceed(with: SecondView.self).applyModifiers { $0.padding().border(Color.gray) } // SwiftCurrent
-                }.applyModifiers { firstView in firstView.padding().border(Color.gray) } // SwiftCurrent
+            WorkflowView(isLaunched: $workflowIsPresented, launchingWith: "SwiftCurrent") { // SwiftCurrent
+                WorkflowItem(FirstView.self) // SwiftCurrent
+                    .applyModifiers { firstView in firstView.padding().border(Color.gray) } // SwiftCurrent
+                WorkflowItem(SecondView.self) // SwiftCurrent
+                    .applyModifiers { $0.padding().border(Color.gray) } // SwiftCurrent
             }.onFinish { passedArgs in // SwiftCurrent
                 workflowIsPresented = false
                 guard case .args(let emailAddress as String) = passedArgs else {
@@ -152,21 +153,21 @@ struct Content_Previews: PreviewProvider {
 
 <details>
 
-In SwiftUI, the <code>Workflow</code> type is handled by the library when you start with a <code>WorkflowLauncher</code>.
+In SwiftUI, the <code>Workflow</code> type is handled by the library when you start with a <code>WorkflowView</code>.
 </details>
 
 #### **Where is the type safety I heard about?**
 
 <details>
 
-<code>WorkflowLauncher</code> is specialized with your <code>startingArgs</code> type. <code>FlowRepresentable</code> is specialized with the <code>FlowRepresentable.WorkflowInput</code> and <code>FlowRepresentable.WorkflowOutput</code> associated types. These all work together when creating your flow at run-time to ensure the validity of your <code>Workflow</code>. If the output of <code>FirstView</code> does not match the input of <code>SecondView</code>, the library will send an error when creating the <code>Workflow</code>.
+<code>WorkflowView</code> is specialized with your <code>launchingWith</code> type. <code>FlowRepresentable</code> is specialized with the <code>FlowRepresentable.WorkflowInput</code> and <code>FlowRepresentable.WorkflowOutput</code> associated types. These all work together when creating your flow at run-time to ensure the validity of your <code>Workflow</code>. If the output of <code>FirstView</code> does not match the input of <code>SecondView</code>, the library will send an error when creating the <code>Workflow</code>.
 </details>
 
-#### **What's going on with this `startingArgs` and `passedArgs`?**
+#### **What's going on with this `launchingWith` and `passedArgs`?**
 
 <details>
 
-<code>startingArgs</code> are the <code>AnyWorkflow.PassedArgs</code> handed to the first <code>FlowRepresentable</code> in the workflow. These arguments are used to pass data and determine if the view should load.
+<code>launchingWith</code> are the <code>AnyWorkflow.PassedArgs</code> handed to the first <code>FlowRepresentable</code> in the workflow. These arguments are used to pass data and determine if the view should load.
 
 <code>passedArgs</code> are the <code>AnyWorkflow.PassedArgs</code> coming from the last view in the workflow. <code>onFinish</code> is only called when the user has gone through all the screens in the <code>Workflow</code> by navigation or skipping. For this workflow, <code>passedArgs</code> is going to be the output of <code>FirstView</code> or <code>SecondView</code>, depending on the email signature typed in <code>FirstView</code>. To extract the value, we unwrap the variable within the case of <code>.args()</code> as we expect this workflow to return some argument.
 </details>
@@ -205,9 +206,8 @@ final class FirstViewController: UIWorkflowItem<Never, Never>, FlowRepresentable
 Now in SwiftUI simply reference that controller.
 
 ```swift
-WorkflowLauncher(isLaunched: $workflowIsPresented) { // SwiftCurrent
-    thenProceed(with: FirstViewController.self) { // SwiftCurrent
-        thenProceed(with: SecondView.self) // SwiftCurrent
-    }
+WorkflowView(isLaunched: $workflowIsPresented) { // SwiftCurrent
+    WorkflowItem(FirstViewController.self) // SwiftCurrent
+    WorkflowItem(SecondView.self) // SwiftCurrent
 }
 ```

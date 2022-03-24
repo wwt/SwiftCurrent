@@ -16,38 +16,44 @@ struct ContentView: View, FlowRepresentable {
         case map
         case qr
         case profile
+        case settings
     }
     @State var selectedTab: Tab = .map
     weak var _workflowPointer: AnyFlowRepresentable?
     var body: some View {
-        TabView(selection: $selectedTab) {
+        TabView(selection: $selectedTab) { // swiftlint:disable:this closure_body_length
             // NOTE: Using constant here guarantees the workflow cannot abandon, it stays launched forever.
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: MapFeatureOnboardingView.self) {
-                    thenProceed(with: MapFeatureView.self)
-                }
+            WorkflowView {
+                WorkflowItem(MapFeatureOnboardingView.self)
+                WorkflowItem(MapFeatureView.self)
             }.tabItem {
                 Label("Map", systemImage: "map")
             }
             .tag(Tab.map)
 
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: QRScannerFeatureOnboardingView.self) {
-                    thenProceed(with: QRScannerFeatureView.self)
-                }
+            WorkflowView {
+                WorkflowItem(QRScannerFeatureOnboardingView.self)
+                WorkflowItem(QRScannerFeatureView.self)
             }.tabItem {
                 Label("QR Scanner", systemImage: "camera")
             }
             .tag(Tab.qr)
 
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: ProfileFeatureOnboardingView.self) {
-                    thenProceed(with: ProfileFeatureView.self)
-                }
+            WorkflowView {
+                WorkflowItem(ProfileFeatureOnboardingView.self)
+                WorkflowItem(ProfileFeatureView.self)
             }.tabItem {
                 Label("Profile", systemImage: "person.crop.circle")
             }
             .tag(Tab.profile)
+
+            WorkflowView {
+                WorkflowItem(SettingsOnboardingViewController.self)
+                WorkflowItem(SettingsViewController.self)
+            }.tabItem {
+                Label("Settings", systemImage: "gear.circle.fill")
+            }
+            .tag(Tab.settings)
         }
         .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }

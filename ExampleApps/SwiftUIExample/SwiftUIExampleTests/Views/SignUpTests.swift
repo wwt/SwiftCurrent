@@ -25,14 +25,15 @@ final class SignUpTests: XCTestCase, View {
     func testContinueProceedsWorkflow() async throws {
         let workflowFinished = expectation(description: "View Proceeded")
         let launcher = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: SignUp.self)
+            WorkflowView {
+                WorkflowItem(SignUp.self)
             }.onFinish { _ in
                 workflowFinished.fulfill()
             }
         }
-        .hostAndInspect(with: \.inspection)
-        .extractWorkflowItem()
+            .content
+            .hostAndInspect(with: \.inspection)
+            .extractWorkflowItemWrapper()
 
         XCTAssertNoThrow(try launcher.findProceedButton().tap())
         wait(for: [workflowFinished], timeout: TestConstant.timeout)

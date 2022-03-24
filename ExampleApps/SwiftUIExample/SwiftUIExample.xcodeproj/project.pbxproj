@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		628952DA27E5281700FDDCEF /* SettingsOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628952D927E5281700FDDCEF /* SettingsOnboardingViewController.swift */; };
+		628952DC27E528CC00FDDCEF /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628952DB27E528CC00FDDCEF /* SettingsViewController.swift */; };
 		CA0536F626A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0536F526A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift */; };
 		CA238D1426A1153B000A36EC /* ContentViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA238D1326A1153B000A36EC /* ContentViewTests.swift */; };
 		CA4A6F2026CDAEE600BE3E74 /* TestEventReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4A6F1F26CDAEE600BE3E74 /* TestEventReceiver.swift */; };
@@ -112,6 +114,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		628952D927E5281700FDDCEF /* SettingsOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsOnboardingViewController.swift; sourceTree = "<group>"; };
+		628952DB27E528CC00FDDCEF /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		CA0536F526A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFeatureOnboardingView.swift; sourceTree = "<group>"; };
 		CA238D1326A1153B000A36EC /* ContentViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewTests.swift; sourceTree = "<group>"; };
 		CA4A6F1F26CDAEE600BE3E74 /* TestEventReceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestEventReceiver.swift; sourceTree = "<group>"; };
@@ -231,6 +235,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		628952D827E5280000FDDCEF /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				628952D927E5281700FDDCEF /* SettingsOnboardingViewController.swift */,
+				628952DB27E528CC00FDDCEF /* SettingsViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		CA0536F926A0917A00BF8FC5 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -334,6 +347,7 @@
 		CAC34B6D26A07FE90039A373 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				628952D827E5280000FDDCEF /* Settings */,
 				D72B763526FBCF5A00E0405F /* Design */,
 				D78139CB270DE3AD004A4721 /* Map */,
 				CA0536F926A0917A00BF8FC5 /* Profile */,
@@ -663,6 +677,7 @@
 				CA7B829F26A1FAAC005AA87D /* InspectableAlert.swift in Sources */,
 				CA0536F626A0888200BF8FC5 /* ProfileFeatureOnboardingView.swift in Sources */,
 				CAC34B4326A07F830039A373 /* SwiftUIExampleApp.swift in Sources */,
+				628952DC27E528CC00FDDCEF /* SettingsViewController.swift in Sources */,
 				D72B765526FC032B00E0405F /* ChangeEmailView.swift in Sources */,
 				CA6FB0DE26C6AD5200FB3285 /* UIKitInteropProgrammaticViewController.swift in Sources */,
 				CA7B821026A123F6005AA87D /* InspectableSheet.swift in Sources */,
@@ -687,6 +702,7 @@
 				D72B765726FC036A00E0405F /* AccountInformationView.swift in Sources */,
 				CAC34B7526A07FE90039A373 /* MapFeatureOnboardingView.swift in Sources */,
 				D72B764926FBCFB200E0405F /* LoginView.swift in Sources */,
+				628952DA27E5281700FDDCEF /* SettingsOnboardingViewController.swift in Sources */,
 				D72B764326FBCF7000E0405F /* PasswordField.swift in Sources */,
 				D7A6CE7E26E039C300599824 /* TestView.swift in Sources */,
 				D72B764A26FBCFB200E0405F /* SignUp.swift in Sources */,
