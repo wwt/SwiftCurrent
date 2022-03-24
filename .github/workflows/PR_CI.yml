@@ -36,6 +36,17 @@ jobs:
         run: bundle exec fastlane platform_test
         working-directory: ${{ env.working-directory }}
 
+  cli_test:
+    runs-on: macos-11
+    env:
+      working-directory: .github
+      DEVELOPER_DIR: /Applications/Xcode_13.0.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run CLI TESTS
+        run: bundle exec fastlane CLI_test
+        working-directory: ${{ env.working-directory }}
+
   build_for_swift_package_manager:
     runs-on: macos-11
     env:

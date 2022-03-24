@@ -7,6 +7,12 @@ platform :ios do
     clear_derived_data
   end
 
+  lane :all_tests do
+    unit_test
+    platform_test
+    CLI_test
+  end
+
   lane :unit_test do
     scan(
       code_coverage: true,
@@ -15,8 +21,6 @@ platform :ios do
       derived_data_path: "~/Library/Developer/Xcode/DerivedData",
       result_bundle: true
     )
-    platform_test
-    CLI_test
   end
 
   lane :platform_test do
