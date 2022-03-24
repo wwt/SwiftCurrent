@@ -43,7 +43,11 @@ platform :ios do
 
   lane :CLI_test do
     Dir.chdir("..") do
-      match(app_identifier: ["WWT.SwiftCurrent-IRGeneratorTests"])
+      match(
+        app_identifier: ["WWT.SwiftCurrent-IRGeneratorTests"],
+        readonly: is_ci,
+        git_url: "git@github.com:wwt/swiftcurrent-ios-certs-and-profiles.git"
+      )
       xcodebuild(
         test: true,
         scheme: 'SwiftCurrent_IRGenerator',
