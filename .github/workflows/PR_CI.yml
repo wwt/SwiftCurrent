@@ -8,6 +8,8 @@ jobs:
     env:
       working-directory: .github
       DEVELOPER_DIR: /Applications/Xcode_13.0.app/Contents/Developer
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
     steps:
       - uses: actions/checkout@v2
       - name: Run TESTS
