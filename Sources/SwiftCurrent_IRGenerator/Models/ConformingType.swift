@@ -8,24 +8,12 @@
 
 import Foundation
 
-struct ConformingType: Codable {
-    let name: String
+struct ConformingType: Encodable {
     let type: Type
-    let parent: Type?
-    let grandparent: Type?
+    let parents: [Type]
 
-    init(type: Type, parent: Type? = nil, grandparent: Type? = nil) {
-        self.type = type
-        self.parent = parent
-        self.grandparent = grandparent
-
-        if let grandparent = grandparent, let parent = parent {
-            name = "\(grandparent.name).\(parent.name).\(type.name)"
-        } else if let parent = parent {
-            name = "\(parent.name).\(type.name)"
-        } else {
-            name = type.name
-        }
+    var name: String {
+        parents.map(\.name).appending(type.name).joined(separator: ".")
     }
 
     var isStructuralType: Bool {
@@ -45,5 +33,16 @@ struct ConformingType: Codable {
 
     var hasSubTypes: Bool {
         !self.type.types.isEmpty
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(name, forKey: .name)
+    }
+}
+
+extension ConformingType {
+    enum CodingKeys: String, CodingKey {
+        case name
     }
 }

@@ -56,24 +56,19 @@ struct GenerateIR: ParsableCommand {
 
             for firstSubtype in rootNode.types {
                 checkTypeForConformance(firstSubtype, conformance: conformance, typesConforming: &typesConforming)
-
-                for secondSubtype in firstSubtype.types {
-                    checkTypeForConformance(secondSubtype, parent: firstSubtype, conformance: conformance, typesConforming: &typesConforming)
-
-                    for third in secondSubtype.types {
-                        checkTypeForConformance(third, parent: secondSubtype, grandparent: firstSubtype, conformance: conformance, typesConforming: &typesConforming)
-                    }
-                }
             }
         }
 
         return typesConforming
     }
 
-    func checkTypeForConformance(_ type: Type, parent: Type? = nil, grandparent: Type? = nil, conformance: String, typesConforming: inout [Type.ObjectType: [ConformingType]]) {
+    func checkTypeForConformance(_ type: Type, parents: [Type] = [], conformance: String, typesConforming: inout [Type.ObjectType: [ConformingType]]) {
         if type.inheritance.contains(conformance) {
-            let conforming = ConformingType(type: type, parent: parent, grandparent: grandparent)
+            let conforming = ConformingType(type: type, parents: parents)
             typesConforming[type.type, default: []].append(conforming)
+        }
+        for subType in type.types {
+            checkTypeForConformance(subType, parents: parents.appending(type), conformance: conformance, typesConforming: &typesConforming)
         }
     }
 
