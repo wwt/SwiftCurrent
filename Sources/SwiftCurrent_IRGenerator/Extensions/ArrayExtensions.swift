@@ -10,8 +10,10 @@ import Foundation
 
 extension Array {
     func appending(_ element: Element) -> [Element] {
-        var copy = self
-        copy.append(element)
-        return copy
+        self + [element]
+    }
+
+    func appending(contentsOf otherArray: [Element]) -> [Element] {
+        self + otherArray
     }
 }

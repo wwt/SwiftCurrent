@@ -55,21 +55,24 @@ struct GenerateIR: ParsableCommand {
             let rootNode = $0.walker.root
 
             for firstSubtype in rootNode.types {
-                checkTypeForConformance(firstSubtype, conformance: conformance, typesConforming: &typesConforming)
+                checkTypeForConformance(firstSubtype, conformance: conformance).forEach {
+                    typesConforming[$0.type.type, default: []].append($0)
+                }
             }
         }
 
         return typesConforming
     }
 
-    func checkTypeForConformance(_ type: Type, parents: [Type] = [], conformance: String, typesConforming: inout [Type.ObjectType: [ConformingType]]) {
+    func checkTypeForConformance(_ type: Type, parents: [Type] = [], conformance: String) -> [ConformingType] {
+        var conformingTypes = [ConformingType]()
         if type.inheritance.contains(conformance) {
-            let conforming = ConformingType(type: type, parents: parents)
-            typesConforming[type.type, default: []].append(conforming)
+            conformingTypes.append(ConformingType(type: type, parents: parents))
         }
-        for subType in type.types {
-            checkTypeForConformance(subType, parents: parents.appending(type), conformance: conformance, typesConforming: &typesConforming)
-        }
+
+        return type.types
+            .flatMap { checkTypeForConformance($0, parents: parents.appending(type), conformance: conformance) }
+            .appending(contentsOf: conformingTypes)
     }
 
     func getSwiftFileURLs(from directory: URL) throws -> [URL] {
