@@ -37,23 +37,15 @@ struct GenerateIR: ParsableCommand {
     }
 
     func findTypesConforming(to conformance: String, in files: [ParsedResult], objectType: Type.ObjectType? = nil) -> [Type.ObjectType: [ConformingType]] {
-        var typesConforming: [Type.ObjectType: [ConformingType]] = [:]
-
-        files.forEach {
-            let rootNode = $0.walker.root
-
-            for firstSubtype in rootNode.types {
-                checkTypeForConformance(firstSubtype, conformance: conformance).forEach {
-                    typesConforming[$0.type.type, default: []].append($0)
+        files
+            .flatMap(\.walker.root.types)
+            .flatMap { checkTypeForConformance($0, conformance: conformance) }
+            .reduce(into: [Type.ObjectType: [ConformingType]]()) {
+                $0[$1.type.type, default: []].append($1)
+                if $1.type.type == .protocol {
+                    $0.merge(findTypesConforming(to: $1.type.name, in: files)) { $0 + $1 }
                 }
             }
-        }
-
-        typesConforming[.protocol]?.forEach {
-            // Find arbitrarily deep protocol chains
-            typesConforming.merge(findTypesConforming(to: $0.type.name, in: files)) { $0 + $1 }
-        }
-        return typesConforming
     }
 
     func checkTypeForConformance(_ type: Type, parents: [Type] = [], conformance: String) -> [ConformingType] {
