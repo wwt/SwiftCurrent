@@ -28,7 +28,6 @@ struct GenerateIR: ParsableCommand {
         }
 
         let conformingTypes = findTypesConforming(to: "\(Self.conformance)", in: files)
-            .flatMap(\.value)
 
         let encoded = try JSONEncoder().encode(conformingTypes.lazy.filter(\.isStructuralType))
         if let jsonString = String(data: encoded, encoding: .utf8) {
@@ -36,22 +35,22 @@ struct GenerateIR: ParsableCommand {
         }
     }
 
-    func findTypesConforming(to conformance: String, in files: [ParsedResult], objectType: Type.ObjectType? = nil) -> [Type.ObjectType: [ConformingType]] {
+    func findTypesConforming(to conformance: String, in files: [ParsedResult], objectType: Type.ObjectType? = nil) -> [ConformingType] {
         files
             .flatMap(\.walker.root.types)
             .flatMap { checkTypeForConformance($0, conformance: conformance) }
-            .reduce(into: [Type.ObjectType: [ConformingType]]()) {
-                $0[$1.type.type, default: []].append($1)
+            .reduce(into: [ConformingType]()) {
+                $0.append($1)
                 // Find arbitrarily chained protocols (P1 inherits from WorkflowDecodable and P2 inherits from P1 and P3 inherits from P2...)
                 if $1.type.type == .protocol {
-                    $0.merge(findTypesConforming(to: $1.type.name, in: files)) { $0 + $1 }
+                    $0.append(contentsOf: findTypesConforming(to: $1.type.name, in: files))
                 }
             }
     }
 
     func checkTypeForConformance(_ type: Type, parents: [Type] = [], conformance: String) -> [ConformingType] {
         // Find arbitrarily nested types
-        return type.types
+        type.types
             .flatMap { checkTypeForConformance($0, parents: parents.appending(type), conformance: conformance) }
             .appending(contentsOf: type.inheritance.contains(conformance) ? [ConformingType(type: type, parents: parents)] : [])
     }
