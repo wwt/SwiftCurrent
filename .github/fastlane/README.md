@@ -31,6 +31,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
+### ios CLI_test
+
+```sh
+[bundle exec] fastlane ios CLI_test
+```
+
+
+
 ### ios build_swiftpm
 
 ```sh

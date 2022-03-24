@@ -15,6 +15,8 @@ platform :ios do
       derived_data_path: "~/Library/Developer/Xcode/DerivedData",
       result_bundle: true
     )
+    platform_test
+    CLI_test
   end
 
   lane :platform_test do
@@ -31,6 +33,17 @@ platform :ios do
           'platform=macOS',
           'platform=macOS,variant=Mac Catalyst',
         ]
+      )
+    end
+  end
+
+  lane :CLI_test do
+    Dir.chdir("..") do
+      xcodebuild(
+        test: true,
+        scheme: 'SwiftCurrent_IRGenerator',
+        workspace: 'SwiftCurrent.xcworkspace',
+        destination: [ 'platform=macOS' ]
       )
     end
   end
