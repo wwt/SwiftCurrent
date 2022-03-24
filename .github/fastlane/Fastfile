@@ -46,7 +46,7 @@ platform :ios do
       match(
         app_identifier: ["WWT.SwiftCurrent-IRGeneratorTests"],
         readonly: is_ci,
-        git_url: "git@github.com:wwt/swiftcurrent-ios-certs-and-profiles.git"
+        git_url: "https://github.com/wwt/swiftcurrent-ios-certs-and-profiles.git"
       )
       xcodebuild(
         test: true,
