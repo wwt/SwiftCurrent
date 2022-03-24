@@ -50,26 +50,18 @@ struct GenerateIR: ParsableCommand {
     }
 
     func checkTypeForConformance(_ type: Type, parents: [Type] = [], conformance: String) -> [ConformingType] {
-        var conformingTypes = [ConformingType]()
-        if type.inheritance.contains(conformance) {
-            conformingTypes.append(ConformingType(type: type, parents: parents))
-        }
-
         // Find arbitrarily nested types
         return type.types
             .flatMap { checkTypeForConformance($0, parents: parents.appending(type), conformance: conformance) }
-            .appending(contentsOf: conformingTypes)
+            .appending(contentsOf: type.inheritance.contains(conformance) ? [ConformingType(type: type, parents: parents)] : [])
     }
 
     func getSwiftFileURLs(from directory: URL) throws -> [URL] {
         var files = [URL]()
 
         if let enumerator = FileManager.default.enumerator(at: directory, includingPropertiesForKeys: [.isRegularFileKey], options: [.skipsHiddenFiles, .skipsPackageDescendants]) {
-            for case let fileURL as URL in enumerator where fileURL.pathExtension == "swift" {
-                let fileAttributes = try fileURL.resourceValues(forKeys: [.isRegularFileKey])
-                if fileAttributes.isRegularFile == true {
-                    files.append(fileURL)
-                }
+            for case let fileURL as URL in enumerator where try fileURL.isSwiftFile {
+                files.append(fileURL)
             }
         }
 
@@ -80,5 +72,13 @@ struct GenerateIR: ParsableCommand {
 extension Array where Self.Element: Type {
     func containsSubTypes() -> Bool {
         !self.allSatisfy { $0.types.isEmpty }
+    }
+}
+
+extension URL {
+    fileprivate var isSwiftFile: Bool {
+        get throws {
+            try pathExtension == "swift" && resourceValues(forKeys: [.isRegularFileKey]).isRegularFile == true
+        }
     }
 }
