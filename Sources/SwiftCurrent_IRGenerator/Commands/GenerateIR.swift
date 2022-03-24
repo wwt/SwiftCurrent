@@ -27,20 +27,8 @@ struct GenerateIR: ParsableCommand {
                 files = try [ParsedResult(sourceCode: source)]
         }
 
-        let allConformances = findTypesConforming(to: "\(Self.conformance)", in: files)
-        var conformingTypes = allConformances.flatMap(\.value)
-        var secondLevelConformances: [ConformingType] = []
-
-        for conformingType in conformingTypes {
-            let typesConforming = findTypesConforming(to: conformingType.type.name, in: files)
-            secondLevelConformances.append(contentsOf: typesConforming.flatMap(\.value))
-            conformingTypes.append(contentsOf: typesConforming.flatMap(\.value))
-        }
-
-        for conformingType in secondLevelConformances {
-            let types = findTypesConforming(to: conformingType.type.name, in: files)
-            conformingTypes.append(contentsOf: types.flatMap(\.value))
-        }
+        let conformingTypes = findTypesConforming(to: "\(Self.conformance)", in: files)
+            .flatMap(\.value)
 
         let encoded = try JSONEncoder().encode(conformingTypes.lazy.filter(\.isStructuralType))
         if let jsonString = String(data: encoded, encoding: .utf8) {
@@ -61,6 +49,10 @@ struct GenerateIR: ParsableCommand {
             }
         }
 
+        typesConforming[.protocol]?.forEach {
+            // Find arbitrarily deep protocol chains
+            typesConforming.merge(findTypesConforming(to: $0.type.name, in: files)) { $0 + $1 }
+        }
         return typesConforming
     }
 
@@ -70,6 +62,7 @@ struct GenerateIR: ParsableCommand {
             conformingTypes.append(ConformingType(type: type, parents: parents))
         }
 
+        // Find arbitrarily nested types
         return type.types
             .flatMap { checkTypeForConformance($0, parents: parents.appending(type), conformance: conformance) }
             .appending(contentsOf: conformingTypes)

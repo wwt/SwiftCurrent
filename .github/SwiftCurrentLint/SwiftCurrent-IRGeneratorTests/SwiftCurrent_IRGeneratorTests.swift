@@ -103,6 +103,21 @@ class SwiftCurrent_IRGeneratorTests: XCTestCase {
         XCTAssertEqual(IR.first?.name, "Baz")
     }
 
+    func testTonsOfLayersOfIndirection() throws {
+        let source = """
+        protocol Foo: WorkflowDecodable { }
+        protocol Bar: Foo { }
+        protocol Bat: Bar { }
+        struct Baz: Bat { }
+        """
+
+        let output = try shell("\(generatorCommand) \"\(source)\"")
+        let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
+
+        XCTAssertEqual(IR.count, 1)
+        XCTAssertEqual(IR.first?.name, "Baz")
+    }
+
     func testSingleLayerOfNesting() throws {
         let source = """
         enum Foo {
