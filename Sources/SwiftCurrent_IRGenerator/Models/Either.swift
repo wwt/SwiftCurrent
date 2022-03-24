@@ -24,6 +24,10 @@ extension Either: ExpressibleByArgument where A: ExpressibleByArgument, B: Expre
             return nil
         }
     }
+
+    var defaultValueDescription: String {
+        "Either a valid \(String(describing: A.self)) or a valid \(String(describing: B.self))"
+    }
 }
 
 extension Either: Decodable where A: Decodable, B: Decodable { }

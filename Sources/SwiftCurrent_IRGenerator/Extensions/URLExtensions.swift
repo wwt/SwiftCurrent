@@ -15,6 +15,6 @@ extension URL: ExpressibleByArgument {
     }
 
     public var defaultValueDescription: String {
-        "A valid URL or valid source code"
+        "A valid URL"
     }
 }
