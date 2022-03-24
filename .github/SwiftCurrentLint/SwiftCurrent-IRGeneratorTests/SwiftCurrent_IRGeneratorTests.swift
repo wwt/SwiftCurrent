@@ -7,6 +7,7 @@
 //  
 
 import Foundation
+import ShellOut
 import XCTest
 
 class SwiftCurrent_IRGeneratorTests: XCTestCase {
@@ -20,8 +21,8 @@ class SwiftCurrent_IRGeneratorTests: XCTestCase {
     }()
 
     override class func setUp() {
-        XCTAssertNoThrow(try shell("rm -rf \(Self.packageSwiftDirectory.path)/.build/*/debug"))
-        XCTAssert(try shell("cd \(Self.packageSwiftDirectory.path) && swift build --product=SwiftCurrent_IRGenerator").contains("Build complete!"))
+        XCTAssertNoThrow(try shellOut(to: "rm -rf \(Self.packageSwiftDirectory.path)/.build/*/debug"))
+        XCTAssert(try shellOut(to: "cd \(Self.packageSwiftDirectory.path) && swift build --product=SwiftCurrent_IRGenerator").contains("Build complete!"))
     }
 
     func testSingleDecodableStruct() throws {
@@ -29,7 +30,7 @@ class SwiftCurrent_IRGeneratorTests: XCTestCase {
         struct Foo: WorkflowDecodable { }
         """
 
-        let output = try shell("\(generatorCommand) \"\(source)\"")
+        let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
         let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
 
         XCTAssertEqual(IR.count, 1)
@@ -41,7 +42,7 @@ class SwiftCurrent_IRGeneratorTests: XCTestCase {
         class Foo: WorkflowDecodable { }
         """
 
-        let output = try shell("\(generatorCommand) \"\(source)\"")
+        let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
         let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
 
         XCTAssertEqual(IR.count, 1)
@@ -54,7 +55,7 @@ class SwiftCurrent_IRGeneratorTests: XCTestCase {
         struct Bar: WorkflowDecodable { }
         """
 
-        let output = try shell("\(generatorCommand) \"\(source)\"")
+        let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
         let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
             .sorted { $0.name < $1.name }
 
@@ -69,7 +70,7 @@ class SwiftCurrent_IRGeneratorTests: XCTestCase {
         struct Bar { }
         """
 
-        let output = try shell("\(generatorCommand) \"\(source)\"")
+        let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
         let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
 
         XCTAssertEqual(IR.count, 1)
@@ -82,7 +83,7 @@ class SwiftCurrent_IRGeneratorTests: XCTestCase {
         struct Bar: Foo { }
         """
 
-        let output = try shell("\(generatorCommand) \"\(source)\"")
+        let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
         let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
 
         XCTAssertEqual(IR.count, 1)
@@ -96,7 +97,7 @@ class SwiftCurrent_IRGeneratorTests: XCTestCase {
         struct Baz: Bar { }
         """
 
-        let output = try shell("\(generatorCommand) \"\(source)\"")
+        let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
         let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
 
         XCTAssertEqual(IR.count, 1)
@@ -111,7 +112,7 @@ class SwiftCurrent_IRGeneratorTests: XCTestCase {
         struct Baz: Bat { }
         """
 
-        let output = try shell("\(generatorCommand) \"\(source)\"")
+        let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
         let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
 
         XCTAssertEqual(IR.count, 1)
@@ -125,7 +126,7 @@ class SwiftCurrent_IRGeneratorTests: XCTestCase {
         }
         """
 
-        let output = try shell("\(generatorCommand) \"\(source)\"")
+        let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
         let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
 
         XCTAssertEqual(IR.count, 1)
@@ -141,7 +142,7 @@ class SwiftCurrent_IRGeneratorTests: XCTestCase {
         }
         """
 
-        let output = try shell("\(generatorCommand) \"\(source)\"")
+        let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
         let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
 
         XCTAssertEqual(IR.count, 1)
@@ -159,7 +160,7 @@ class SwiftCurrent_IRGeneratorTests: XCTestCase {
         }
         """
 
-        let output = try shell("\(generatorCommand) \"\(source)\"")
+        let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
         let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
 
         XCTAssertEqual(IR.count, 1)
@@ -173,7 +174,7 @@ class SwiftCurrent_IRGeneratorTests: XCTestCase {
         extension Foo: WorkflowDecodable { }
         """
 
-        let output = try shell("\(generatorCommand) \"\(source)\"")
+        let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
         let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
 
         XCTAssertEqual(IR.count, 1)
@@ -189,7 +190,7 @@ class SwiftCurrent_IRGeneratorTests: XCTestCase {
         extension Foo.Bar: WorkflowDecodable { }
         """
 
-        let output = try shell("\(generatorCommand) \"\(source)\"")
+        let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
         let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
 
         XCTAssertEqual(IR.count, 1)
@@ -201,7 +202,7 @@ class SwiftCurrent_IRGeneratorTests: XCTestCase {
         struct Foo: WorkflowDecodable { }
         """
         measure {
-            _ = try? shell("\(generatorCommand) \"\(source)\"")
+            _ = try? shellOut(to: "\(generatorCommand) \"\(source)\"")
         }
     }
 
@@ -224,29 +225,11 @@ class SwiftCurrent_IRGeneratorTests: XCTestCase {
         }
         let source = typeDefs.joined()
         measure {
-            _ = try? shell("\(generatorCommand) \"\(source)\"")
+            _ = try? shellOut(to: "\(generatorCommand) \"\(source)\"")
         }
     }
 }
 
 struct IRType: Decodable {
     let name: String
-}
-
-@discardableResult fileprivate func shell(_ command: String) throws -> String {
-    let task = Process()
-    let pipe = Pipe()
-
-    task.standardOutput = pipe
-    task.standardError = pipe
-    task.arguments = ["-c", command]
-    task.executableURL = URL(fileURLWithPath: "/bin/zsh")
-
-    try task.run()
-    task.waitUntilExit()
-
-    let data = pipe.fileHandleForReading.readDataToEndOfFile()
-    let output = String(data: data, encoding: .utf8)!
-
-    return output
 }
