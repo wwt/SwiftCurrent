@@ -43,6 +43,7 @@ platform :ios do
 
   lane :CLI_test do
     Dir.chdir("..") do
+      match(app_identifier: ["WWT.SwiftCurrent-IRGeneratorTests"])
       xcodebuild(
         test: true,
         scheme: 'SwiftCurrent_IRGenerator',
