@@ -18,14 +18,7 @@ struct GenerateIR: ParsableCommand {
     var pathOrSourceCode: Either<URL, String>
 
     mutating func run() throws {
-        let files: [ParsedResult]
-        switch pathOrSourceCode {
-            case .firstChoice(let url):
-                let fileURLs = try getSwiftFileURLs(from: url)
-                files = fileURLs.compactMap { try? ParsedResult(filepath: $0) }
-            case .secondChoice(let source):
-                files = try [ParsedResult(sourceCode: source)]
-        }
+        let files = try getFiles()
 
         let conformingTypes = findTypesConforming(to: "\(Self.conformance)", in: files)
 
@@ -35,7 +28,17 @@ struct GenerateIR: ParsableCommand {
         }
     }
 
-    func findTypesConforming(to conformance: String, in files: [ParsedResult], objectType: Type.ObjectType? = nil) -> [ConformingType] {
+    private func getFiles() throws -> [ParsedResult] {
+        switch pathOrSourceCode {
+            case .firstChoice(let url):
+                let fileURLs = try getSwiftFileURLs(from: url)
+                return fileURLs.compactMap { try? ParsedResult(filepath: $0) }
+            case .secondChoice(let source):
+                return try [ParsedResult(sourceCode: source)]
+        }
+    }
+
+    private func findTypesConforming(to conformance: String, in files: [ParsedResult], objectType: Type.ObjectType? = nil) -> [ConformingType] {
         files
             .flatMap(\.walker.root.types)
             .flatMap { checkTypeForConformance($0, conformance: conformance) }
@@ -48,14 +51,14 @@ struct GenerateIR: ParsableCommand {
             }
     }
 
-    func checkTypeForConformance(_ type: Type, parents: [Type] = [], conformance: String) -> [ConformingType] {
+    private func checkTypeForConformance(_ type: Type, parents: [Type] = [], conformance: String) -> [ConformingType] {
         // Find arbitrarily nested types
         type.types
             .flatMap { checkTypeForConformance($0, parents: parents.appending(type), conformance: conformance) }
             .appending(contentsOf: type.inheritance.contains(conformance) ? [ConformingType(type: type, parents: parents)] : [])
     }
 
-    func getSwiftFileURLs(from directory: URL) throws -> [URL] {
+    private func getSwiftFileURLs(from directory: URL) throws -> [URL] {
         var files = [URL]()
 
         if let enumerator = FileManager.default.enumerator(at: directory, includingPropertiesForKeys: [.isRegularFileKey], options: [.skipsHiddenFiles, .skipsPackageDescendants]) {
