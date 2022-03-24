@@ -29,13 +29,14 @@ final class ChangePasswordViewTests: XCTestCase, View {
         let currentPassword = UUID().uuidString
         let onFinish = expectation(description: "onFinish called")
         let view = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true), startingArgs: currentPassword) {
-                thenProceed(with: ChangePasswordView.self)
+            WorkflowView(launchingWith: currentPassword) {
+                WorkflowItem(ChangePasswordView.self)
             }
             .onFinish { _ in onFinish.fulfill() }
         }
-        .hostAndInspect(with: \.inspection)
-        .extractWorkflowItem()
+            .content
+            .hostAndInspect(with: \.inspection)
+            .extractWorkflowItemWrapper()
 
         XCTAssertNoThrow(try view.find(ViewType.SecureField.self).setInput(currentPassword))
         XCTAssertNoThrow(try view.find(ViewType.SecureField.self, skipFound: 1).setInput("asdfF1"))

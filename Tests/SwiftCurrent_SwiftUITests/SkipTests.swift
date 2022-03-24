@@ -35,14 +35,11 @@ final class SkipTests: XCTestCase, View {
             var body: some View { Text("FR4 type") }
         }
         let launcher = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self) {
-                    thenProceed(with: FR2.self) {
-                        thenProceed(with: FR3.self) {
-                            thenProceed(with: FR4.self)
-                        }
-                    }
-                }
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self)
+                WorkflowItem(FR3.self)
+                WorkflowItem(FR4.self)
             }
         }.hostAndInspect(with: \.inspection)
 
@@ -71,14 +68,11 @@ final class SkipTests: XCTestCase, View {
             var body: some View { Text("FR4 type") }
         }
         let launcher = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self) {
-                    thenProceed(with: FR2.self) {
-                        thenProceed(with: FR3.self) {
-                            thenProceed(with: FR4.self)
-                        }
-                    }
-                }
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self)
+                WorkflowItem(FR3.self)
+                WorkflowItem(FR4.self)
             }
         }.hostAndInspect(with: \.inspection)
 
@@ -108,14 +102,11 @@ final class SkipTests: XCTestCase, View {
         }
         let expectOnFinish = expectation(description: "OnFinish called")
         let launcher = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self) {
-                    thenProceed(with: FR2.self) {
-                        thenProceed(with: FR3.self) {
-                            thenProceed(with: FR4.self)
-                        }
-                    }
-                }
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self)
+                WorkflowItem(FR3.self)
+                WorkflowItem(FR4.self)
             }
             .onFinish { _ in expectOnFinish.fulfill() }
         }.hostAndInspect(with: \.inspection)
@@ -149,14 +140,11 @@ final class SkipTests: XCTestCase, View {
             var body: some View { Text("FR4 type") }
         }
         let launcher = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self) {
-                    thenProceed(with: FR2.self) {
-                        thenProceed(with: FR3.self) {
-                            thenProceed(with: FR4.self)
-                        }
-                    }
-                }
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self)
+                WorkflowItem(FR3.self)
+                WorkflowItem(FR4.self)
             }
         }.hostAndInspect(with: \.inspection)
 
@@ -189,14 +177,11 @@ final class SkipTests: XCTestCase, View {
         }
         let expectOnFinish = expectation(description: "OnFinish called")
         let launcher = try await MainActor.run {
-            WorkflowLauncher(isLaunched: .constant(true)) {
-                thenProceed(with: FR1.self) {
-                    thenProceed(with: FR2.self) {
-                        thenProceed(with: FR3.self) {
-                            thenProceed(with: FR4.self)
-                        }
-                    }
-                }
+            WorkflowView {
+                WorkflowItem(FR1.self)
+                WorkflowItem(FR2.self)
+                WorkflowItem(FR3.self)
+                WorkflowItem(FR4.self)
             }
             .onFinish { _ in expectOnFinish.fulfill() }
         }.hostAndInspect(with: \.inspection)
