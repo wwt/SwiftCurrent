@@ -42,6 +42,7 @@ struct GenerateIR: ParsableCommand {
             .flatMap { checkTypeForConformance($0, conformance: conformance) }
             .reduce(into: [Type.ObjectType: [ConformingType]]()) {
                 $0[$1.type.type, default: []].append($1)
+                // Find arbitrarily chained protocols (P1 inherits from WorkflowDecodable and P2 inherits from P1 and P3 inherits from P2...)
                 if $1.type.type == .protocol {
                     $0.merge(findTypesConforming(to: $1.type.name, in: files)) { $0 + $1 }
                 }
