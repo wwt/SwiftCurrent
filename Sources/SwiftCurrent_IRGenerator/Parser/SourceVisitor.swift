@@ -45,10 +45,6 @@ class SourceVisitor: SyntaxVisitor {
         current = current?.parent
     }
 
-    override func visitPost(_ node: FunctionDeclSyntax) {
-        current = current?.parent
-    }
-
     override func visit(_ node: ProtocolDeclSyntax) -> SyntaxVisitorContinueKind {
         create(.protocol, from: node)
         return .visitChildren
