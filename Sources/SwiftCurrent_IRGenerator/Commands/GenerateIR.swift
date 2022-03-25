@@ -23,9 +23,11 @@ struct GenerateIR: ParsableCommand {
         let conformingTypes = findTypesConforming(to: "\(Self.conformance)", in: files)
 
         let encoded = try JSONEncoder().encode(conformingTypes.lazy.filter(\.isConcreteType))
-        if let jsonString = String(data: encoded, encoding: .utf8) {
-            print(jsonString)
-        }
+
+        // this is actually preferred, if we can't encode to UTF8 something horribly unpredictably wrong happened, all we'd do is trap anyways
+        // swiftlint:disable:next force_unwrapping
+        let jsonString = String(data: encoded, encoding: .utf8)!
+        print(jsonString)
     }
 
     private func getFiles() throws -> [File] {
