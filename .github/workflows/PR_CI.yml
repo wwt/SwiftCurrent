@@ -48,7 +48,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Setup SSH for Match
-      - name: fastlane
         run: |
           eval "$(ssh-agent -s)"
           ssh-add - <<< "${MATCH_DEPLOY_KEY}"
