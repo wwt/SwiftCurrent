@@ -7,6 +7,12 @@ platform :ios do
     clear_derived_data
   end
 
+  lane :all_tests do
+    unit_test
+    platform_test
+    CLI_test
+  end
+
   lane :unit_test do
     scan(
       code_coverage: true,
@@ -31,6 +37,23 @@ platform :ios do
           'platform=macOS',
           'platform=macOS,variant=Mac Catalyst',
         ]
+      )
+    end
+  end
+
+  lane :CLI_test do
+    Dir.chdir("..") do
+      setup_ci()
+      match(
+        app_identifier: ["WWT.SwiftCurrent-IRGeneratorTests"],
+        readonly: is_ci,
+        git_url: "git@github.com:wwt/swiftcurrent-ios-certs-and-profiles.git"
+      )
+      xcodebuild(
+        test: true,
+        scheme: 'SwiftCurrent_IRGenerator',
+        workspace: 'SwiftCurrent.xcworkspace',
+        destination: [ 'platform=macOS' ]
       )
     end
   end

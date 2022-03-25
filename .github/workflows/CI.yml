@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run TESTS
-        run: bundle exec fastlane unit_test
+        run: bundle exec fastlane all_tests
         working-directory: ${{ env.working-directory }}
       - name: Codecov
         uses: codecov/codecov-action@v1.5.2

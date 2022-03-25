@@ -18,14 +18,18 @@ let package = Package(
             targets: ["SwiftCurrent_SwiftUI"]),
         .library(
             name: "SwiftCurrent_Testing",
-            targets: ["SwiftCurrent_Testing_ObjC", "SwiftCurrent_Testing"])
+            targets: ["SwiftCurrent_Testing_ObjC", "SwiftCurrent_Testing"]),
+        .executable(name: "SwiftCurrent_IRGenerator",
+                    targets: ["SwiftCurrent_IRGenerator"])
     ],
     dependencies: [
         .package(url: "https://github.com/mattgallagher/CwlPreconditionTesting.git", from: Version("2.0.0-beta.1")),
         .package(url: "https://github.com/mattgallagher/CwlCatchException.git", from: Version("2.0.0-beta.1")),
         .package(url: "https://github.com/apple/swift-algorithms", .upToNextMajor(from: "0.0.1")),
         .package(url: "https://github.com/sindresorhus/ExceptionCatcher", from: "2.0.0"),
-        .package(url: "https://github.com/nalexn/ViewInspector.git", from: "0.9.1")
+        .package(url: "https://github.com/nalexn/ViewInspector.git", from: "0.9.1"),
+        .package(url: "https://github.com/apple/swift-argument-parser", .exact("1.0.3")), // For pipeline
+        .package(url: "https://github.com/apple/swift-syntax.git", .exact("0.50500.0"))
     ],
     targets: [
         .target(
@@ -46,6 +50,11 @@ let package = Package(
             name: "SwiftCurrent_Testing",
             dependencies: ["SwiftCurrent_Testing_ObjC",
                            "SwiftCurrent"]),
+        .target(name: "SwiftCurrent_IRGenerator",
+                dependencies: [
+                    .product(name: "SwiftSyntax", package: "swift-syntax"),
+                    .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                ]),
         .testTarget(
             name: "SwiftCurrentTests",
             dependencies: [
