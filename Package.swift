@@ -28,7 +28,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-algorithms", .upToNextMajor(from: "0.0.1")),
         .package(url: "https://github.com/sindresorhus/ExceptionCatcher", from: "2.0.0"),
         .package(url: "https://github.com/nalexn/ViewInspector.git", from: "0.9.1"),
-        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.0.0"),
+        .package(url: "https://github.com/apple/swift-argument-parser", .exact("1.0.3")), // For pipeline
         .package(url: "https://github.com/apple/swift-syntax.git", .exact("0.50500.0"))
     ],
     targets: [
