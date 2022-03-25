@@ -47,16 +47,13 @@ jobs:
       MATCH_READONLY: true
     steps:
       - uses: actions/checkout@v2
-      - name: Setup SSH for Match
+      - name: Run CLI TESTS
         run: |
           eval "$(ssh-agent -s)"
           ssh-add - <<< "${MATCH_DEPLOY_KEY}"
-          bundle exec fastlane test
+          bundle exec fastlane CLI_test
         working-directory: ${{ env.working-directory }}
-      - name: Run CLI TESTS
-        run: bundle exec fastlane CLI_test
-        working-directory: ${{ env.working-directory }}
-
+      
   build_for_swift_package_manager:
     runs-on: macos-11
     env:
