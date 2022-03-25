@@ -43,9 +43,9 @@ platform :ios do
 
   lane :CLI_test do
     Dir.chdir("..") do
-      setup_ci(
-        provider: "github"
-      )
+      # setup_ci(
+      #   provider: "github"
+      # )
       match(
         app_identifier: ["WWT.SwiftCurrent-IRGeneratorTests"],
         readonly: is_ci,
