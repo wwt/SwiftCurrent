@@ -27,4 +27,12 @@ extension WorkflowDecodable where Self: FlowRepresentable & View {
             default: throw AnyWorkflow.DecodingError.invalidLaunchStyle(name)
         }
     }
+
+    /// Decodes a ``FlowPersistence`` from a string.
+    public static func decodeFlowPersistence(named name: String) throws -> FlowPersistence {
+        switch name.lowercased() {
+            case "removedafterproceeding": return .removedAfterProceeding
+            default: throw AnyWorkflow.DecodingError.invalidFlowPersistence(name)
+        }
+    }
 }

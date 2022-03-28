@@ -18,7 +18,9 @@ class ExtendedFlowRepresentableMetadata: FlowRepresentableMetadata {
                                        flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default },
                                        flowRepresentableFactory: @escaping (AnyWorkflow.PassedArgs) -> AnyFlowRepresentable) {
         func createWorkflowItem() -> WorkflowItem<FR, FR> {
-            WorkflowItem(FR.self).presentationType(.init(rawValue: launchStyle) ?? .default)
+            WorkflowItem(FR.self)
+                .presentationType(.init(rawValue: launchStyle) ?? .default)
+                .settingPersistence(flowPersistence)
         }
 
         workflowItemFactory = {
@@ -33,7 +35,9 @@ class ExtendedFlowRepresentableMetadata: FlowRepresentableMetadata {
                                        launchStyle: LaunchStyle = .default,
                                        flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default }) {
         func createWorkflowItem() -> WorkflowItem<FR, FR> {
-            WorkflowItem(FR.self).presentationType(.init(rawValue: launchStyle) ?? .default)
+            WorkflowItem(FR.self)
+                .presentationType(.init(rawValue: launchStyle) ?? .default)
+                .settingPersistence(flowPersistence)
         }
 
         workflowItemFactory = {
