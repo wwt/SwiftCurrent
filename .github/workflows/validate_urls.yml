@@ -48,7 +48,7 @@ jobs:
         branch: gh-pages
         file_types: .html,.css,.scss
         exclude_urls: https://github.com/wwt/SwiftCurrent/discussions/new,https://github.com/realm/jazzy,https://realm.io,https://github.com/wwt/SwiftCurrent
-        exclude_patterns: https://img.shields.io
+        exclude_patterns: https://img.shields.io, https://codecov.io/gh/wwt/SwiftCurrent
     - name: slack-send
       if: failure()
       uses: slackapi/slack-github-action@v1.16.0
