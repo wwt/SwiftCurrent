@@ -158,6 +158,13 @@ extension WorkflowItem {
         })
     }
 
+    func settingPersistence(_ persistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) -> Self {
+        Self(previous: self,
+             launchStyle: launchStyle,
+             modifierClosure: modifierClosure ?? { _ in },
+             flowPersistenceClosure: persistence)
+    }
+
     /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.
     public func persistence(_ persistence: @escaping (FlowRepresentableType.WorkflowInput) -> FlowPersistence.SwiftUI.Persistence) -> Self where FlowRepresentableType.WorkflowInput == AnyWorkflow.PassedArgs { // swiftlint:disable:this line_length
         Self(previous: self,

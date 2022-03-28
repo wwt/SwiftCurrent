@@ -868,6 +868,61 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         XCTAssertEqual(secondFr1LaunchStyle, .navigationLink)
     }
 
+    func testLaunchingAWorkflowFromAnAnyWorkflow_UsesCorrectPersistence() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+
+            var body: some View {
+                Button("Proceed") { proceedInWorkflow() }
+            }
+        }
+
+        let firstWorkflowJSON = try XCTUnwrap("""
+        {
+            "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
+            "sequence" : [
+                {
+                    "flowRepresentableName" : "FR1",
+                }
+            ]
+        }
+        """.data(using: .utf8))
+
+        let firstWF = try JSONDecoder().decodeWorkflow(withAggregator: TestRegistry(types: [FR1.self]), from: firstWorkflowJSON)
+
+        let firstLauncher = try await MainActor.run {
+            WorkflowView(workflow: firstWF)
+        }.hostAndInspect(with: \.inspection)
+
+        XCTAssertNoThrow(try firstLauncher.find(FR1.self), "Unable to find FR1")
+        let fr1Wrapper = try await firstLauncher.extractWorkflowLauncher().view(AnyWorkflowItem.self).anyView().view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self)
+        let fr1PersistenceClosure = try XCTUnwrap(Mirror(reflecting: fr1Wrapper.view(WorkflowItem<FR1, FR1>.self).actualView()).descendant("_flowPersistenceClosure") as? State<(AnyWorkflow.PassedArgs) -> FlowPersistence>).wrappedValue
+        XCTAssertEqual(fr1PersistenceClosure(.none), .default)
+
+        let secondWorkflowJSON = try XCTUnwrap("""
+        {
+            "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
+            "sequence" : [
+                {
+                    "flowRepresentableName" : "FR1",
+                    "flowPersistence" : "removedAfterProceeding"
+                }
+            ]
+        }
+        """.data(using: .utf8))
+
+        let secondWF = try JSONDecoder().decodeWorkflow(withAggregator: TestRegistry(types: [FR1.self]), from: secondWorkflowJSON)
+
+        let secondLauncher = try await MainActor.run {
+            WorkflowView(workflow: secondWF)
+        }.hostAndInspect(with: \.inspection)
+
+        XCTAssertNoThrow(try secondLauncher.find(FR1.self), "Unable to find FR1")
+        let secondFr1Wrapper = try await secondLauncher.extractWorkflowLauncher().view(AnyWorkflowItem.self).anyView().view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self)
+        let secondFr1PersistenceClosure = try XCTUnwrap(Mirror(reflecting: secondFr1Wrapper.view(WorkflowItem<FR1, FR1>.self).actualView()).descendant("_flowPersistenceClosure") as? State<(AnyWorkflow.PassedArgs) -> FlowPersistence>).wrappedValue
+        XCTAssertEqual(secondFr1PersistenceClosure(.none), .removedAfterProceeding)
+    }
+
     func testLaunchingAMultiTypeLongWorkflowFromAnAnyWorkflow() async throws {
         struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
             var _workflowPointer: AnyFlowRepresentable?

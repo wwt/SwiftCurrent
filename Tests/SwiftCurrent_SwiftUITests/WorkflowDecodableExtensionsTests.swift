@@ -27,4 +27,13 @@ class WorkflowDecodableExtensionsTests: XCTestCase {
         XCTAssert(type(of: metadata) != FlowRepresentableMetadata.self, "\(type(of: metadata)) should be overridden from type FlowRepresentableMetadata")
         XCTAssert(type(of: genericMetadata) != FlowRepresentableMetadata.self, "\(type(of: genericMetadata)) should be overridden from type FlowRepresentableMetadata")
     }
+
+    func testDecodingLaunchStyleThatSwiftUIDoesNotRecognize_Throws() {
+        struct FR1: View, FlowRepresentable, WorkflowDecodable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { EmptyView() }
+        }
+
+        XCTAssertThrowsError(try FR1.decodeFlowPersistence(named: "persistWhenSkipped"))
+    }
 }
