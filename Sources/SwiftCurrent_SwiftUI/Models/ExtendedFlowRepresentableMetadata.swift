@@ -17,9 +17,13 @@ class ExtendedFlowRepresentableMetadata: FlowRepresentableMetadata {
                                        launchStyle: LaunchStyle = .default,
                                        flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default },
                                        flowRepresentableFactory: @escaping (AnyWorkflow.PassedArgs) -> AnyFlowRepresentable) {
+        func createWorkflowItem() -> WorkflowItem<FR, FR> {
+            WorkflowItem(FR.self).presentationType(.init(rawValue: launchStyle) ?? .default)
+        }
+
         workflowItemFactory = {
-            guard let wrappedWorkflowItem = $0 else { return AnyWorkflowItem(view: WorkflowItem(FR.self)) }
-            return AnyWorkflowItem(view: WorkflowItemWrapper(content: WorkflowItem(FR.self)) { wrappedWorkflowItem })
+            guard let wrappedWorkflowItem = $0 else { return AnyWorkflowItem(view: WorkflowItemWrapper(content: createWorkflowItem())) }
+            return AnyWorkflowItem(view: WorkflowItemWrapper(content: createWorkflowItem()) { wrappedWorkflowItem })
         }
 
         super.init(flowRepresentableType, launchStyle: launchStyle, flowPersistence: flowPersistence, flowRepresentableFactory: flowRepresentableFactory)
@@ -28,9 +32,13 @@ class ExtendedFlowRepresentableMetadata: FlowRepresentableMetadata {
     init<FR: FlowRepresentable & View>(flowRepresentableType: FR.Type,
                                        launchStyle: LaunchStyle = .default,
                                        flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default }) {
+        func createWorkflowItem() -> WorkflowItem<FR, FR> {
+            WorkflowItem(FR.self).presentationType(.init(rawValue: launchStyle) ?? .default)
+        }
+
         workflowItemFactory = {
-            guard let wrappedWorkflowItem = $0 else { return AnyWorkflowItem(view: WorkflowItem(FR.self)) }
-            return AnyWorkflowItem(view: WorkflowItemWrapper(content: WorkflowItem(FR.self)) { wrappedWorkflowItem })
+            guard let wrappedWorkflowItem = $0 else { return AnyWorkflowItem(view: WorkflowItemWrapper(content: createWorkflowItem())) }
+            return AnyWorkflowItem(view: WorkflowItemWrapper(content: createWorkflowItem()) { wrappedWorkflowItem })
         }
 
         super.init(flowRepresentableType, launchStyle: launchStyle, flowPersistence: flowPersistence) { args in

@@ -794,7 +794,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         XCTAssertNoThrow(try launcher.view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self))
     }
 
-    func testLaunchingAWorkflowWithOneItemFromAnAnyWorkflow() throws {
+    func testLaunchingAWorkflowWithOneItemFromAnAnyWorkflow() async throws {
         struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
             weak var _workflowPointer: AnyFlowRepresentable?
 
@@ -805,15 +805,67 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
 
         let wf = try decodeAnyWorkflow(with: FR1.self)
 
-        let launcher = WorkflowView(workflow: wf)
+        let launcher = try await MainActor.run {
+            WorkflowView(workflow: wf)
+        }.hostAndInspect(with: \.inspection)
 
-        let exp = launcher.inspection.inspect { view in
-            XCTAssertNoThrow(try view.find(FR1.self))
+        XCTAssertNoThrow(try launcher.find(FR1.self), "Unable to find FR1")
+    }
+
+    func testLaunchingAWorkflowFromAnAnyWorkflow_UsesCorrectLaunchStyle() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+
+            var body: some View {
+                Button("Proceed") { proceedInWorkflow() }
+            }
         }
 
-        ViewHosting.host(view: launcher)
+        let firstWorkflowJSON = try XCTUnwrap("""
+        {
+            "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
+            "sequence" : [
+                {
+                    "flowRepresentableName" : "FR1",
+                    "launchStyle" : "modal"
+                }
+            ]
+        }
+        """.data(using: .utf8))
 
-        wait(for: [exp], timeout: TestConstant.timeout)
+        let firstWF = try JSONDecoder().decodeWorkflow(withAggregator: TestRegistry(types: [FR1.self]), from: firstWorkflowJSON)
+
+        let firstLauncher = try await MainActor.run {
+            WorkflowView(workflow: firstWF)
+        }.hostAndInspect(with: \.inspection)
+
+        XCTAssertNoThrow(try firstLauncher.find(FR1.self), "Unable to find FR1")
+        let fr1Wrapper = try await firstLauncher.extractWorkflowLauncher().view(AnyWorkflowItem.self).anyView().view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self)
+        let fr1LaunchStyle = try await fr1Wrapper.actualView().workflowLaunchStyle
+        XCTAssertEqual(fr1LaunchStyle, .modal)
+
+        let secondWorkflowJSON = try XCTUnwrap("""
+        {
+            "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
+            "sequence" : [
+                {
+                    "flowRepresentableName" : "FR1",
+                    "launchStyle" : "navigationLink"
+                }
+            ]
+        }
+        """.data(using: .utf8))
+
+        let secondWF = try JSONDecoder().decodeWorkflow(withAggregator: TestRegistry(types: [FR1.self]), from: secondWorkflowJSON)
+
+        let secondLauncher = try await MainActor.run {
+            WorkflowView(workflow: secondWF)
+        }.hostAndInspect(with: \.inspection)
+
+        XCTAssertNoThrow(try secondLauncher.find(FR1.self), "Unable to find FR1")
+        let secondFr1Wrapper = try await secondLauncher.extractWorkflowLauncher().view(AnyWorkflowItem.self).anyView().view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self)
+        let secondFr1LaunchStyle = try await secondFr1Wrapper.actualView().workflowLaunchStyle
+        XCTAssertEqual(secondFr1LaunchStyle, .navigationLink)
     }
 
     func testLaunchingAMultiTypeLongWorkflowFromAnAnyWorkflow() async throws {
@@ -1008,7 +1060,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         wait(for: [expectOnFinish], timeout: TestConstant.timeout)
     }
 
-    func testLaunchingAWorkflowUsingNonPassedArgsStartingArgs() throws {
+    func testLaunchingAWorkflowUsingNonPassedArgsStartingArgs() async throws {
         struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
             weak var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
@@ -1019,15 +1071,11 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         let wf = try decodeAnyWorkflow(with: FR1.self)
 
         let expectedData = UUID().uuidString
-        let launcher = WorkflowView(launchingWith: expectedData, workflow: wf)
+        let launcher = try await MainActor.run {
+            WorkflowView(launchingWith: expectedData, workflow: wf)
+        }.hostAndInspect(with: \.inspection)
 
-        let expectViewLoaded = launcher.inspection.inspect { viewUnderTest in
-            XCTAssertEqual(try viewUnderTest.find(FR1.self).actualView().data, expectedData)
-        }
-
-        ViewHosting.host(view: launcher)
-
-        wait(for: [expectViewLoaded], timeout: TestConstant.timeout)
+        XCTAssertEqual(try launcher.find(FR1.self).actualView().data, expectedData)
     }
 
     func testIfNoWorkflowItemsThenFatalError() throws {
