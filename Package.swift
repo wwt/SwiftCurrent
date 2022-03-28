@@ -19,8 +19,8 @@ let package = Package(
         .library(
             name: "SwiftCurrent_Testing",
             targets: ["SwiftCurrent_Testing_ObjC", "SwiftCurrent_Testing"]),
-        .executable(name: "SwiftCurrent_IRGenerator",
-                    targets: ["SwiftCurrent_IRGenerator"])
+        .executable(name: "SwiftCurrent_CLI",
+                    targets: ["SwiftCurrent_CLI"])
     ],
     dependencies: [
         .package(url: "https://github.com/mattgallagher/CwlPreconditionTesting.git", from: Version("2.0.0-beta.1")),
@@ -50,7 +50,7 @@ let package = Package(
             name: "SwiftCurrent_Testing",
             dependencies: ["SwiftCurrent_Testing_ObjC",
                            "SwiftCurrent"]),
-        .target(name: "SwiftCurrent_IRGenerator",
+        .target(name: "SwiftCurrent_CLI",
                 dependencies: [
                     .product(name: "SwiftSyntax", package: "swift-syntax"),
                     .product(name: "ArgumentParser", package: "swift-argument-parser"),

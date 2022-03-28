@@ -1,17 +1,16 @@
 //
-//  GenerateIR.swift
+//  IR.swift
 //  SwiftCurrent
 //
-//  Created by Tyler Thompson on 3/3/22.
+//  Created by Tyler Thompson on 3/28/22.
 //  Copyright © 2022 WWT and Tyler Thompson. All rights reserved.
-//
+//  
 
 import Foundation
-
 import ArgumentParser
 import SwiftSyntax
 
-struct GenerateIR: ParsableCommand {
+struct IR: ParsableCommand {
     fileprivate static let conformance: StaticString = "WorkflowDecodable"
 
     @Argument(help: "The path to a directory containing swift source files with types conforming to \(Self.conformance)")
