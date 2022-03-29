@@ -34,32 +34,10 @@ final class SwiftCurrent_TypeRegistryGeneratorTests: XCTestCase {
         let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
         let structure = try JSONDecoder().decode(SyntaxStructure.self, from: XCTUnwrap(Structure(file: File(contents: output)).description.data(using: .utf8)))
 
-        XCTAssertEqual(structure.subStructure?.first?.kind, "source.lang.swift.decl.struct")
-        XCTAssertEqual(structure.subStructure?.first?.accessibility, "source.lang.swift.accessibility.public")
-        XCTAssertEqual(structure.subStructure?.first?.name, "SwiftCurrentTypeRegistry")
-        XCTAssertEqual(structure.subStructure?.first?.inheritedTypes?.count, 1)
-        XCTAssertEqual(structure.subStructure?.first?.inheritedTypes?.first?.name, "FlowRepresentableAggregator")
+        try assertTypeRegistryStructExists(on: structure)
+        try assertTypesArrayExistsOnRegistry(in: structure)
 
-        guard let memberStructure = structure.subStructure?.first?.subStructure, memberStructure.count == 2 else {
-            XCTFail("Incorrect member structure found for struct")
-            return
-        }
-
-        XCTAssertEqual(memberStructure[0].accessibility, "source.lang.swift.accessibility.public")
-        XCTAssertEqual(memberStructure[0].kind, "source.lang.swift.decl.var.instance")
-        XCTAssertEqual(memberStructure[0].name, "types")
-        XCTAssertEqual(memberStructure[0].typeName, "[WorkflowDecodable.self]")
-        XCTAssertEqual(memberStructure[1].kind, "source.lang.swift.expr.array")
-
-        memberStructure[1].elements?.forEach {
-            XCTAssertEqual($0.kind, "source.lang.swift.structure.elem.expr")
-        }
-
-        let actualTypes = try memberStructure[1].elements?.map { element -> String in
-            let offset = try XCTUnwrap(element.offset)
-            let length = try XCTUnwrap(element.length)
-            return String(output[output.index(output.startIndex, offsetBy: offset)..<output.index(output.startIndex, offsetBy: offset + length)])
-        }
+        let actualTypes = try getTypeArrayLiteralFromRegistry(in: structure, fromCode: output)
 
         XCTAssertEqual(actualTypes?.count, 1)
         XCTAssertEqual(actualTypes?.first, "Foo.self")
@@ -71,10 +49,15 @@ final class SwiftCurrent_TypeRegistryGeneratorTests: XCTestCase {
         """
 
         let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
-        let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
+        let structure = try JSONDecoder().decode(SyntaxStructure.self, from: XCTUnwrap(Structure(file: File(contents: output)).description.data(using: .utf8)))
 
-        XCTAssertEqual(IR.count, 1)
-        XCTAssertEqual(IR.first?.name, "Foo")
+        try assertTypeRegistryStructExists(on: structure)
+        try assertTypesArrayExistsOnRegistry(in: structure)
+
+        let actualTypes = try getTypeArrayLiteralFromRegistry(in: structure, fromCode: output)
+
+        XCTAssertEqual(actualTypes?.count, 1)
+        XCTAssertEqual(actualTypes?.first, "Foo.self")
     }
 
     func testMultipleMixedStructsAndClasses() throws {
@@ -84,12 +67,16 @@ final class SwiftCurrent_TypeRegistryGeneratorTests: XCTestCase {
         """
 
         let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
-        let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
-            .sorted { $0.name < $1.name }
+        let structure = try JSONDecoder().decode(SyntaxStructure.self, from: XCTUnwrap(Structure(file: File(contents: output)).description.data(using: .utf8)))
 
-        XCTAssertEqual(IR.count, 2)
-        XCTAssertEqual(IR.first?.name, "Bar")
-        XCTAssertEqual(IR.last?.name, "Foo")
+        try assertTypeRegistryStructExists(on: structure)
+        try assertTypesArrayExistsOnRegistry(in: structure)
+
+        let actualTypes = try getTypeArrayLiteralFromRegistry(in: structure, fromCode: output)?.sorted(by: <)
+
+        XCTAssertEqual(actualTypes?.count, 2)
+        XCTAssertEqual(actualTypes?.first, "Bar.self")
+        XCTAssertEqual(actualTypes?.last, "Foo.self")
     }
 
     func testOnlyDetectWorkflowDecodableTypes() throws {
@@ -99,10 +86,15 @@ final class SwiftCurrent_TypeRegistryGeneratorTests: XCTestCase {
         """
 
         let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
-        let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
+        let structure = try JSONDecoder().decode(SyntaxStructure.self, from: XCTUnwrap(Structure(file: File(contents: output)).description.data(using: .utf8)))
 
-        XCTAssertEqual(IR.count, 1)
-        XCTAssertEqual(IR.first?.name, "Foo")
+        try assertTypeRegistryStructExists(on: structure)
+        try assertTypesArrayExistsOnRegistry(in: structure)
+
+        let actualTypes = try getTypeArrayLiteralFromRegistry(in: structure, fromCode: output)
+
+        XCTAssertEqual(actualTypes?.count, 1)
+        XCTAssertEqual(actualTypes?.first, "Foo.self")
     }
 
     func testSingleLayerOfIndirection() throws {
@@ -112,10 +104,15 @@ final class SwiftCurrent_TypeRegistryGeneratorTests: XCTestCase {
         """
 
         let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
-        let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
+        let structure = try JSONDecoder().decode(SyntaxStructure.self, from: XCTUnwrap(Structure(file: File(contents: output)).description.data(using: .utf8)))
 
-        XCTAssertEqual(IR.count, 1)
-        XCTAssertEqual(IR.first?.name, "Bar")
+        try assertTypeRegistryStructExists(on: structure)
+        try assertTypesArrayExistsOnRegistry(in: structure)
+
+        let actualTypes = try getTypeArrayLiteralFromRegistry(in: structure, fromCode: output)
+
+        XCTAssertEqual(actualTypes?.count, 1)
+        XCTAssertEqual(actualTypes?.first, "Bar.self")
     }
 
     func testMultipleLayersOfIndirection() throws {
@@ -126,10 +123,15 @@ final class SwiftCurrent_TypeRegistryGeneratorTests: XCTestCase {
         """
 
         let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
-        let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
+        let structure = try JSONDecoder().decode(SyntaxStructure.self, from: XCTUnwrap(Structure(file: File(contents: output)).description.data(using: .utf8)))
 
-        XCTAssertEqual(IR.count, 1)
-        XCTAssertEqual(IR.first?.name, "Baz")
+        try assertTypeRegistryStructExists(on: structure)
+        try assertTypesArrayExistsOnRegistry(in: structure)
+
+        let actualTypes = try getTypeArrayLiteralFromRegistry(in: structure, fromCode: output)
+
+        XCTAssertEqual(actualTypes?.count, 1)
+        XCTAssertEqual(actualTypes?.first, "Baz.self")
     }
 
     func testTonsOfLayersOfIndirection() throws {
@@ -141,10 +143,15 @@ final class SwiftCurrent_TypeRegistryGeneratorTests: XCTestCase {
         """
 
         let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
-        let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
+        let structure = try JSONDecoder().decode(SyntaxStructure.self, from: XCTUnwrap(Structure(file: File(contents: output)).description.data(using: .utf8)))
 
-        XCTAssertEqual(IR.count, 1)
-        XCTAssertEqual(IR.first?.name, "Baz")
+        try assertTypeRegistryStructExists(on: structure)
+        try assertTypesArrayExistsOnRegistry(in: structure)
+
+        let actualTypes = try getTypeArrayLiteralFromRegistry(in: structure, fromCode: output)
+
+        XCTAssertEqual(actualTypes?.count, 1)
+        XCTAssertEqual(actualTypes?.first, "Baz.self")
     }
 
     func testSingleLayerOfNesting() throws {
@@ -155,10 +162,15 @@ final class SwiftCurrent_TypeRegistryGeneratorTests: XCTestCase {
         """
 
         let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
-        let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
+        let structure = try JSONDecoder().decode(SyntaxStructure.self, from: XCTUnwrap(Structure(file: File(contents: output)).description.data(using: .utf8)))
 
-        XCTAssertEqual(IR.count, 1)
-        XCTAssertEqual(IR.first?.name, "Foo.Bar")
+        try assertTypeRegistryStructExists(on: structure)
+        try assertTypesArrayExistsOnRegistry(in: structure)
+
+        let actualTypes = try getTypeArrayLiteralFromRegistry(in: structure, fromCode: output)
+
+        XCTAssertEqual(actualTypes?.count, 1)
+        XCTAssertEqual(actualTypes?.first, "Foo.Bar.self")
     }
 
     func testMultipleLayersOfNesting() throws {
@@ -171,10 +183,15 @@ final class SwiftCurrent_TypeRegistryGeneratorTests: XCTestCase {
         """
 
         let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
-        let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
+        let structure = try JSONDecoder().decode(SyntaxStructure.self, from: XCTUnwrap(Structure(file: File(contents: output)).description.data(using: .utf8)))
 
-        XCTAssertEqual(IR.count, 1)
-        XCTAssertEqual(IR.first?.name, "Foo.Bar.Baz")
+        try assertTypeRegistryStructExists(on: structure)
+        try assertTypesArrayExistsOnRegistry(in: structure)
+
+        let actualTypes = try getTypeArrayLiteralFromRegistry(in: structure, fromCode: output)
+
+        XCTAssertEqual(actualTypes?.count, 1)
+        XCTAssertEqual(actualTypes?.first, "Foo.Bar.Baz.self")
     }
 
     func testTonsOfLayersOfNesting() throws {
@@ -189,10 +206,15 @@ final class SwiftCurrent_TypeRegistryGeneratorTests: XCTestCase {
         """
 
         let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
-        let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
+        let structure = try JSONDecoder().decode(SyntaxStructure.self, from: XCTUnwrap(Structure(file: File(contents: output)).description.data(using: .utf8)))
 
-        XCTAssertEqual(IR.count, 1)
-        XCTAssertEqual(IR.first?.name, "Foo.Bar.Baz.Bat")
+        try assertTypeRegistryStructExists(on: structure)
+        try assertTypesArrayExistsOnRegistry(in: structure)
+
+        let actualTypes = try getTypeArrayLiteralFromRegistry(in: structure, fromCode: output)
+
+        XCTAssertEqual(actualTypes?.count, 1)
+        XCTAssertEqual(actualTypes?.first, "Foo.Bar.Baz.Bat.self")
     }
 
     func testConformanceViaExtension() throws {
@@ -203,10 +225,15 @@ final class SwiftCurrent_TypeRegistryGeneratorTests: XCTestCase {
         """
 
         let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
-        let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
+        let structure = try JSONDecoder().decode(SyntaxStructure.self, from: XCTUnwrap(Structure(file: File(contents: output)).description.data(using: .utf8)))
 
-        XCTAssertEqual(IR.count, 1)
-        XCTAssertEqual(IR.first?.name, "Foo")
+        try assertTypeRegistryStructExists(on: structure)
+        try assertTypesArrayExistsOnRegistry(in: structure)
+
+        let actualTypes = try getTypeArrayLiteralFromRegistry(in: structure, fromCode: output)
+
+        XCTAssertEqual(actualTypes?.count, 1)
+        XCTAssertEqual(actualTypes?.first, "Foo.self")
     }
 
     func testConformanceViaExtension_WithNesting() throws {
@@ -219,10 +246,15 @@ final class SwiftCurrent_TypeRegistryGeneratorTests: XCTestCase {
         """
 
         let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
-        let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
+        let structure = try JSONDecoder().decode(SyntaxStructure.self, from: XCTUnwrap(Structure(file: File(contents: output)).description.data(using: .utf8)))
 
-        XCTAssertEqual(IR.count, 1)
-        XCTAssertEqual(IR.first?.name, "Foo.Bar")
+        try assertTypeRegistryStructExists(on: structure)
+        try assertTypesArrayExistsOnRegistry(in: structure)
+
+        let actualTypes = try getTypeArrayLiteralFromRegistry(in: structure, fromCode: output)
+
+        XCTAssertEqual(actualTypes?.count, 1)
+        XCTAssertEqual(actualTypes?.first, "Foo.Bar.self")
     }
 
     func testPerformance_WithASingleType() throws {
@@ -254,6 +286,45 @@ final class SwiftCurrent_TypeRegistryGeneratorTests: XCTestCase {
         let source = typeDefs.joined()
         measure {
             _ = try? shellOut(to: "\(generatorCommand) \"\(source)\"")
+        }
+    }
+}
+
+extension SwiftCurrent_TypeRegistryGeneratorTests {
+    func assertTypeRegistryStructExists(on structure: SyntaxStructure) throws {
+        XCTAssertEqual(structure.subStructure?.first?.kind, "source.lang.swift.decl.struct")
+        XCTAssertEqual(structure.subStructure?.first?.accessibility, "source.lang.swift.accessibility.public")
+        XCTAssertEqual(structure.subStructure?.first?.name, "SwiftCurrentTypeRegistry")
+        XCTAssertEqual(structure.subStructure?.first?.inheritedTypes?.count, 1)
+        XCTAssertEqual(structure.subStructure?.first?.inheritedTypes?.first?.name, "FlowRepresentableAggregator")
+    }
+
+    func assertTypesArrayExistsOnRegistry(in structure: SyntaxStructure) throws {
+        guard let memberStructure = structure.subStructure?.first?.subStructure, memberStructure.count == 2 else {
+            XCTFail("Incorrect member structure found for struct")
+            return
+        }
+
+        XCTAssertEqual(memberStructure[0].accessibility, "source.lang.swift.accessibility.public")
+        XCTAssertEqual(memberStructure[0].kind, "source.lang.swift.decl.var.instance")
+        XCTAssertEqual(memberStructure[0].name, "types")
+        XCTAssertEqual(memberStructure[0].typeName, "[WorkflowDecodable.self]")
+        XCTAssertEqual(memberStructure[1].kind, "source.lang.swift.expr.array")
+
+        memberStructure[1].elements?.forEach {
+            XCTAssertEqual($0.kind, "source.lang.swift.structure.elem.expr")
+        }
+    }
+
+    func getTypeArrayLiteralFromRegistry(in structure: SyntaxStructure, fromCode code: String) throws -> [String]? {
+        guard let memberStructure = structure.subStructure?.first?.subStructure, memberStructure.count == 2 else {
+            XCTFail("Incorrect member structure found for struct")
+            return nil
+        }
+        return try memberStructure[1].elements?.map { element -> String in
+            let offset = try XCTUnwrap(element.offset)
+            let length = try XCTUnwrap(element.length)
+            return String(code[code.index(code.startIndex, offsetBy: offset)..<code.index(code.startIndex, offsetBy: offset + length)])
         }
     }
 }

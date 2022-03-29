@@ -17,7 +17,13 @@ struct TypeRegistry: ParsableCommand {
     var pathOrSourceCode: Either<URL, String>
 
     mutating func run() throws {
-        let types = ["Foo.self"]
+        let irGenerator = IRGenerator()
+        let files = try irGenerator.getFiles(from: pathOrSourceCode)
+
+        let conformingTypes = irGenerator.findTypesConforming(to: "\(Self.conformance)", in: files).filter(\.isConcreteType)
+
+        let types = conformingTypes.map { "\($0.name).self" }
+
         print(
             """
             import SwiftCurrent
