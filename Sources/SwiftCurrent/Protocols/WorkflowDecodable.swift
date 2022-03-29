@@ -7,6 +7,7 @@
 //  
 
 /// Aspects of the described ``FlowRepresentable`` needed to dynamically generate metadata from the Workflow Data Scheme.
+/// Only types conforming to `WorkflowDecodable` will be able to be decoded from data.
 public protocol WorkflowDecodable {
     /// The name of the ``FlowRepresentable`` as used in the Workflow Data Scheme.
     static var flowRepresentableName: String { get }

@@ -8,6 +8,8 @@
 
 /**
  Aggregates ``WorkflowDecodable`` types for decoding.
+
+ NOTE: Unless you are using a tool like the SwiftCurrent_CLI to generate an aggregator, you'll need to create your own. Simply supply the types for every `FlowRepresentable` you want to decode (make sure they conform to `WorkflowDecodable`).
  */
 public protocol FlowRepresentableAggregator {
     /// A list of ``WorkflowDecodable`` types to use when decoding a workflow

@@ -42,9 +42,11 @@ custom_categories:
     - StoryboardLoadable
 - name: Server Driven Workflows
   children:
+    - Generated Type Registry
     - JSONDecoder
     - DecodeWorkflow
     - FlowRepresentableAggregator
+    - WorkflowDecodable
 - name: Controlling Presentation
   children:
     - LaunchStyle
