@@ -31,7 +31,7 @@
                BlueprintIdentifier = "CA185E11256DD2F3008C9143"
                BuildableName = "libSwiftCurrentLint.a"
                BlueprintName = "SwiftCurrentLint"
-               ReferencedContainer = "container:.github/SwiftCurrentLint/CLI_Utilities.xcodeproj">
+               ReferencedContainer = "container:.github/SwiftCurrentLint/SwiftCurrentLint.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -49,7 +49,7 @@
                BlueprintIdentifier = "CA7B459827D196BB002EA040"
                BuildableName = "SwiftCurrent-IRGeneratorTests.xctest"
                BlueprintName = "SwiftCurrent-IRGeneratorTests"
-               ReferencedContainer = "container:.github/SwiftCurrentLint/CLI_Utilities.xcodeproj">
+               ReferencedContainer = "container:.github/SwiftCurrentLint/SwiftCurrentLint.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>

@@ -129,7 +129,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CA185E0D256DD2F3008C9143 /* Build configuration list for PBXProject "CLI_Utilities" */;
+			buildConfigurationList = CA185E0D256DD2F3008C9143 /* Build configuration list for PBXProject "SwiftCurrentLint" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -381,7 +381,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CA185E0D256DD2F3008C9143 /* Build configuration list for PBXProject "CLI_Utilities" */ = {
+		CA185E0D256DD2F3008C9143 /* Build configuration list for PBXProject "SwiftCurrentLint" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CA185E17256DD2F3008C9143 /* Debug */,

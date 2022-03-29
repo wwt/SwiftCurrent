@@ -31,7 +31,7 @@
                BlueprintIdentifier = "CA185E11256DD2F3008C9143"
                BuildableName = "libSwiftCurrentLint.a"
                BlueprintName = "SwiftCurrentLint"
-               ReferencedContainer = "container:.github/SwiftCurrentLint/CLI_Utilities.xcodeproj">
+               ReferencedContainer = "container:.github/SwiftCurrentLint/SwiftCurrentLint.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
