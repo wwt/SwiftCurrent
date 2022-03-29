@@ -15,6 +15,7 @@ struct IRGenerator {
         switch pathOrSourceCode {
             case .firstChoice(let url):
                 let fileURLs = try getSwiftFileURLs(from: url)
+                #warning("If pointed at a file, this fails to produce a result")
                 return fileURLs.compactMap { try? File(filepath: $0) }
             case .secondChoice(let source):
                 return try [File(sourceCode: source)]

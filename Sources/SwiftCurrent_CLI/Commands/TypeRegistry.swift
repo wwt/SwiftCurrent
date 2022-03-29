@@ -16,15 +16,17 @@ struct TypeRegistry: ParsableCommand {
     @Argument(help: "The path to a directory containing swift source files with types conforming to \(Self.conformance)")
     var pathOrSourceCode: Either<URL, String>
 
+    @Option(help: "The path to write the generated code to")
+    var output: String?
+
     mutating func run() throws {
         let irGenerator = IRGenerator()
         let files = try irGenerator.getFiles(from: pathOrSourceCode)
 
         let conformingTypes = irGenerator.findTypesConforming(to: "\(Self.conformance)", in: files).filter(\.isConcreteType)
-
         let types = conformingTypes.map { "\($0.name).self" }
 
-        print(
+        let code =
             """
             import SwiftCurrent
 
@@ -39,6 +41,11 @@ struct TypeRegistry: ParsableCommand {
                 }
             }
             """
-        )
+
+        if let output = output {
+            try code.write(toFile: output, atomically: true, encoding: .utf8)
+        } else {
+            print(code)
+        }
     }
 }
