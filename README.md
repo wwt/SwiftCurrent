@@ -10,11 +10,11 @@
 
 # Welcome
 
-SwiftCurrent is a library that lets you easily manage journeys through your Swift application.
+SwiftCurrent is a library that lets you easily manage journeys through your Swift application and comes with built-in support for UIKit and SwiftUI app-routing.
 
-It comes with built-in support for UIKit and SwiftUI app-routing. In SwiftCurrent, workflows are a sequence of operations. Those operations usually display views in an application. The workflow describes the sequence of views and manages which view should come next. Your views are responsible for performing necessary tasks before proceeding forward in the workflow, like processing user input.
+## Why Should I Use SwiftCurrent?
 
-### Why Should I Use SwiftCurrent?
+In SwiftCurrent, workflows are a sequence of operations. Those operations usually display views in an application. The workflow describes the sequence of views and manages which view should come next. Your views are responsible for performing necessary tasks before proceeding forward in the workflow, like processing user input.
 
 Architectural patterns and libraries that attempt to create a separation between views and workflows already exist. However, SwiftCurrent is different. We took a new design approach that focuses on:
 
@@ -22,7 +22,7 @@ Architectural patterns and libraries that attempt to create a separation between
 - **Compile-Time Safety**. At compile-time, we tell you everything we can so you know things will work.
 - **Minimal Boilerplate**. We have hidden this as much as possible. We hate it as much as you do and are constantly working on cutting the cruft.
 
-#### From There, We Created a Library
+### From There, We Created a Library
 
 This library:
 
