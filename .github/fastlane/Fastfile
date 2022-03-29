@@ -1,4 +1,4 @@
-fastlane_version "2.201.2"
+fastlane_version "2.27.0"
 default_platform :ios
 
 platform :ios do
@@ -13,7 +13,6 @@ platform :ios do
       scheme:  'SwiftCurrent',
       workspace: '../SwiftCurrent.xcworkspace',
       derived_data_path: "~/Library/Developer/Xcode/DerivedData",
-      result_bundle: true
     )
   end
 
