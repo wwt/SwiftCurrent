@@ -15,7 +15,6 @@ struct IRGenerator {
         switch pathOrSourceCode {
             case .firstChoice(let url):
                 let fileURLs = try getSwiftFileURLs(from: url)
-                #warning("If pointed at a file, this fails to produce a result")
                 return fileURLs.compactMap { try? File(filepath: $0) }
             case .secondChoice(let source):
                 return try [File(sourceCode: source)]
@@ -42,10 +41,18 @@ struct IRGenerator {
             .appending(contentsOf: type.inheritance.contains(conformance) ? [ConformingType(declaration: type, parents: parents)] : [])
     }
 
-    private func getSwiftFileURLs(from directory: URL) throws -> [URL] {
+    private func getSwiftFileURLs(from path: URL) throws -> [URL] {
+        guard path.pathExtension.isEmpty else {
+            if FileManager.default.fileExists(atPath: path.path) && path.pathExtension == "swift" {
+                return [URL(fileURLWithPath: path.path)]
+            } else {
+                return []
+            }
+        }
+
         var files = [URL]()
 
-        if let enumerator = FileManager.default.enumerator(at: directory, includingPropertiesForKeys: [.isRegularFileKey], options: [.skipsHiddenFiles, .skipsPackageDescendants]) {
+        if let enumerator = FileManager.default.enumerator(at: path, includingPropertiesForKeys: [.isRegularFileKey], options: [.skipsHiddenFiles, .skipsPackageDescendants]) {
             for case let fileURL as URL in enumerator where try fileURL.isSwiftFile {
                 files.append(fileURL)
             }
