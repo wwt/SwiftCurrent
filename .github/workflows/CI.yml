@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run TESTS
-        run: bundle exec fastlane all_tests
+        run: bundle exec fastlane unit_test
         working-directory: ${{ env.working-directory }}
       - name: Codecov
         uses: codecov/codecov-action@v1.5.2
@@ -27,6 +27,35 @@ jobs:
           name: test-logs
           path: ~/Library/Logs/scan
           retention-days: 90
+
+  platform_test:
+    runs-on: macos-11
+    env:
+      working-directory: .github
+      DEVELOPER_DIR: /Applications/Xcode_13.0.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Multiplatform TESTS
+        run: bundle exec fastlane platform_test
+        working-directory: ${{ env.working-directory }}
+
+  cli_test:
+    runs-on: macos-11
+    env:
+      working-directory: .github
+      DEVELOPER_DIR: /Applications/Xcode_13.0.app/Contents/Developer
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      MATCH_DEPLOY_KEY: ${{ secrets.MATCH_DEPLOY_KEY  }}
+      GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
+      MATCH_READONLY: true
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run CLI TESTS
+        run: |
+          eval "$(ssh-agent -s)"
+          ssh-add - <<< "${MATCH_DEPLOY_KEY}"
+          bundle exec fastlane CLI_test
+        working-directory: ${{ env.working-directory }}
 
   build_for_swift_package_manager:
     runs-on: macos-11
