@@ -3,12 +3,9 @@ When constructing a workflow, you can use `WorkflowItem.presentationType(_:)` al
 
 #### Example
 ```swift
-NavigationView {
-    WorkflowLauncher(isLaunched: .constant(true)) {
-        thenProceed(with: FirstView.self) {
-            thenProceed(with: SecondView.self).presentationType(.modal)
-        }
-    }
+WorkflowView {
+    WorkflowItem(FirstView.self)
+    WorkflowItem(SecondView.self).presentationType(.modal)
 }
 ```
 
@@ -22,11 +19,8 @@ When you use a presentation type of `LaunchStyle.SwiftUI.PresentationType.modal`
 #### Example
 The following will use a full-screen cover:
 ```swift
-NavigationView {
-    WorkflowLauncher(isLaunched: .constant(true)) {
-        thenProceed(with: FirstView.self) {
-            thenProceed(with: SecondView.self).presentationType(.modal(.fullScreenCover))
-        }
-    }
+WorkflowView {
+    WorkflowItem(FirstView.self)
+    WorkflowItem(SecondView.self).presentationType(.modal(.fullScreenCover))
 }
 ```

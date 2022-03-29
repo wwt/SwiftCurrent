@@ -26,21 +26,27 @@ final class GenericOnboardingViewTests: XCTestCase, View {
         Container.default.removeAll()
     }
 
-    func testOnboardingInWorkflow() throws {
+    func testOnboardingInWorkflow() async throws {
         let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
         defaults.set(false, forKey: defaultModel.appStorageKey)
         Container.default.register(UserDefaults.self) { _ in defaults }
         let workflowFinished = expectation(description: "View Proceeded")
-        let exp = ViewHosting.loadView(WorkflowLauncher(isLaunched: .constant(true), startingArgs: defaultModel) {
-            thenProceed(with: GenericOnboardingView.self)
-        }.onFinish { _ in
-            workflowFinished.fulfill()
-        }).inspection.inspect { view in
-            XCTAssertNoThrow(try view.find(ViewType.Text.self))
-            XCTAssertEqual(try view.find(ViewType.Text.self).string(), self.defaultModel.featureTitle)
-            XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
+        let launcher = try await MainActor.run {
+            WorkflowView(launchingWith: defaultModel) {
+                WorkflowItem(GenericOnboardingView.self)
+            }.onFinish { _ in
+                workflowFinished.fulfill()
+            }
         }
-        wait(for: [exp, workflowFinished], timeout: TestConstant.timeout)
+            .content
+            .hostAndInspect(with: \.inspection)
+            .extractWorkflowItemWrapper()
+
+        XCTAssertNoThrow(try launcher.find(ViewType.Text.self))
+        XCTAssertEqual(try launcher.find(ViewType.Text.self).string(), self.defaultModel.featureTitle)
+        XCTAssertNoThrow(try launcher.find(ViewType.Button.self).tap())
+
+        wait(for: [workflowFinished], timeout: TestConstant.timeout)
     }
 
     func testOnboardingViewLoads_WhenNoValueIsInUserDefaults() throws {
@@ -64,22 +70,23 @@ final class GenericOnboardingViewTests: XCTestCase, View {
         XCTAssertFalse(GenericOnboardingView(with: defaultModel).shouldLoad(), "Profile onboarding should not show if default is true")
     }
 
-    func testOnboardingAsView() throws {
+    func testOnboardingAsView() async throws {
         let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
         defaults.set(true, forKey: defaultModel.appStorageKey)
         Container.default.register(UserDefaults.self) { _ in defaults }
 
         let onboardingActionExpectation = expectation(description: "View Proceeded")
-        let genericOnboardingView = GenericOnboardingView(model: defaultModel) {
-            onboardingActionExpectation.fulfill()
+        let onboarding = try await MainActor.run {
+            GenericOnboardingView(model: defaultModel) {
+                onboardingActionExpectation.fulfill()
+            }
         }
+        .hostAndInspect(with: \.inspection)
 
-        let exp = ViewHosting.loadView(genericOnboardingView).inspection.inspect { view in
-            XCTAssertNoThrow(try view.find(ViewType.Text.self))
-            XCTAssertEqual(try view.find(ViewType.Text.self).string(), self.defaultModel.featureTitle)
-            XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
-        }
+        XCTAssertNoThrow(try onboarding.find(ViewType.Text.self))
+        XCTAssertEqual(try onboarding.find(ViewType.Text.self).string(), self.defaultModel.featureTitle)
+        XCTAssertNoThrow(try onboarding.find(ViewType.Button.self).tap())
 
-        wait(for: [exp, onboardingActionExpectation], timeout: TestConstant.timeout)
+        wait(for: [onboardingActionExpectation], timeout: TestConstant.timeout)
     }
 }

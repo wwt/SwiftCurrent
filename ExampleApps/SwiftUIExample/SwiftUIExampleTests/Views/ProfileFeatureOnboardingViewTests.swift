@@ -20,21 +20,25 @@ final class ProfileFeatureOnboardingViewTests: XCTestCase, View {
         Container.default.removeAll()
     }
 
-    func testOnboardingInWorkflow() throws {
+    func testOnboardingInWorkflow() async throws {
         let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
         defaults.set(false, forKey: defaultsKey)
         Container.default.register(UserDefaults.self) { _ in defaults }
         let workflowFinished = expectation(description: "View Proceeded")
-        let exp = ViewHosting.loadView(WorkflowLauncher(isLaunched: .constant(true)) {
-            thenProceed(with: ProfileFeatureOnboardingView.self)
-        }.onFinish { _ in
-            workflowFinished.fulfill()
-        }).inspection.inspect { view in
-            XCTAssertNoThrow(try view.find(ViewType.Text.self))
-            XCTAssertEqual(try view.find(ViewType.Text.self).string(), "Welcome to our new profile management feature!")
-            XCTAssertNoThrow(try view.find(ViewType.Button.self).tap())
+        let launcher = try await MainActor.run {
+            WorkflowView {
+                WorkflowItem(ProfileFeatureOnboardingView.self)
+            }.onFinish { _ in
+                workflowFinished.fulfill()
+            }
         }
-        wait(for: [exp, workflowFinished], timeout: TestConstant.timeout)
+        .hostAndInspect(with: \.inspection)
+
+        XCTAssertNoThrow(try launcher.find(ViewType.Text.self))
+        XCTAssertEqual(try launcher.find(ViewType.Text.self).string(), "Welcome to our new profile management feature!")
+        XCTAssertNoThrow(try launcher.find(ViewType.Button.self).tap())
+
+        wait(for: [workflowFinished], timeout: TestConstant.timeout)
     }
 
     func testOnboardingViewLoads_WhenNoValueIsInUserDefaults() throws {

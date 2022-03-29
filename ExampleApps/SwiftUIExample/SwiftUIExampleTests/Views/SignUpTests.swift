@@ -14,25 +14,29 @@ import ViewInspector
 @testable import SwiftUIExample
 
 final class SignUpTests: XCTestCase, View {
-    func testBasicLayout() {
-        let exp = ViewHosting.loadView(SignUp()).inspection.inspect { view in
-            XCTAssertEqual(view.findAll(PasswordField.self).count, 2, "2 password fields needed")
-            XCTAssertEqual(view.findAll(ViewType.TextField.self).count, 1, "1 username field needed")
-            XCTAssertNoThrow(try view.findProceedButton(), "proceed button needed")
-        }
-        wait(for: [exp], timeout: TestConstant.timeout)
+    func testBasicLayout() async throws {
+        let view = try await SignUp().hostAndInspect(with: \.inspection)
+
+        XCTAssertEqual(view.findAll(PasswordField.self).count, 2, "2 password fields needed")
+        XCTAssertEqual(view.findAll(ViewType.TextField.self).count, 1, "1 username field needed")
+        XCTAssertNoThrow(try view.findProceedButton(), "proceed button needed")
     }
 
-    func testContinueProceedsWorkflow() {
+    func testContinueProceedsWorkflow() async throws {
         let workflowFinished = expectation(description: "View Proceeded")
-        let exp = ViewHosting.loadView(WorkflowLauncher(isLaunched: .constant(true)) {
-            thenProceed(with: SignUp.self)
-        }.onFinish { _ in
-            workflowFinished.fulfill()
-        }).inspection.inspect { view in
-            XCTAssertNoThrow(try view.findProceedButton().tap())
+        let launcher = try await MainActor.run {
+            WorkflowView {
+                WorkflowItem(SignUp.self)
+            }.onFinish { _ in
+                workflowFinished.fulfill()
+            }
         }
-        wait(for: [exp, workflowFinished], timeout: TestConstant.timeout)
+            .content
+            .hostAndInspect(with: \.inspection)
+            .extractWorkflowItemWrapper()
+
+        XCTAssertNoThrow(try launcher.findProceedButton().tap())
+        wait(for: [workflowFinished], timeout: TestConstant.timeout)
     }
 }
 

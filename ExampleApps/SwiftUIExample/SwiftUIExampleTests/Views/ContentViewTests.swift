@@ -14,51 +14,61 @@ import Swinject
 @testable import SwiftUIExample
 
 final class ContentViewTests: XCTestCase {
-    private typealias MapWorkflow = WorkflowLauncher<WorkflowItem<MapFeatureOnboardingView, WorkflowItem<MapFeatureView, Never, MapFeatureView>, MapFeatureOnboardingView>>
-    private typealias QRScannerWorkflow = WorkflowLauncher<WorkflowItem<QRScannerFeatureOnboardingView, WorkflowItem<QRScannerFeatureView, Never, QRScannerFeatureView>, QRScannerFeatureOnboardingView>>
-    private typealias ProfileWorkflow = WorkflowLauncher<WorkflowItem<ProfileFeatureOnboardingView, WorkflowItem<ProfileFeatureView, Never, ProfileFeatureView>, ProfileFeatureOnboardingView>>
-
     override func setUpWithError() throws {
         Container.default.removeAll()
     }
 
-    func testContentView() throws {
+    func testContentView() async throws {
         let defaults = try XCTUnwrap(UserDefaults(suiteName: #function))
         Container.default.register(UserDefaults.self) { _ in defaults }
-        var wf1: MapWorkflow!
-        var wf2: QRScannerWorkflow!
-        var wf3: ProfileWorkflow!
-        let exp = ViewHosting.loadView(ContentView()).inspection.inspect { view in
-            wf1 = try view.tabView().view(MapWorkflow.self, 0).actualView()
-            XCTAssertEqual(try view.tabView().view(MapWorkflow.self, 0).tabItem().label().title().text().string(), "Map")
-            wf2 = try view.tabView().view(QRScannerWorkflow.self, 1).actualView()
-            XCTAssertEqual(try view.tabView().view(QRScannerWorkflow.self, 1).tabItem().label().title().text().string(), "QR Scanner")
-            wf3 = try view.tabView().view(ProfileWorkflow.self, 2).actualView()
-            XCTAssertEqual(try view.tabView().view(ProfileWorkflow.self, 2).tabItem().label().title().text().string(), "Profile")
-        }
-        wait(for: [exp], timeout: TestConstant.timeout)
-        XCTAssertNotNil(wf1)
-        XCTAssertNotNil(wf2)
-        XCTAssertNotNil(wf3)
-        wait(for: [
-            ViewHosting.loadView(wf1).inspection.inspect { view in
-                XCTAssertNoThrow(try view.find(MapFeatureOnboardingView.self).actualView().proceedInWorkflow())
-                try view.actualView().inspectWrapped { view in
-                    XCTAssertNoThrow(try view.find(MapFeatureView.self))
-                }
-            },
-            ViewHosting.loadView(wf2).inspection.inspect { view in
-                XCTAssertNoThrow(try view.find(QRScannerFeatureOnboardingView.self).actualView().proceedInWorkflow())
-                try view.actualView().inspectWrapped { view in
-                    XCTAssertNoThrow(try view.find(QRScannerFeatureView.self))
-                }
-            },
-            ViewHosting.loadView(wf3).inspection.inspect { view in
-                XCTAssertNoThrow(try view.find(ProfileFeatureOnboardingView.self).actualView().proceedInWorkflow())
-                try view.actualView().inspectWrapped { view in
-                    XCTAssertNoThrow(try view.find(ProfileFeatureView.self))
-                }
+
+        let contentView = try await ContentView().hostAndInspect(with: \.inspection)
+        let wf1 = try await MainActor.run {
+            try contentView.tabView().workflow(0) {
+                WorkflowItem(MapFeatureOnboardingView.self)
+                WorkflowItem(MapFeatureView.self)
             }
-        ].compactMap { $0 }, timeout: TestConstant.timeout)
+        }
+        XCTAssertEqual(try wf1.tabItem().label().title().text().string(), "Map")
+        let wf2 = try await MainActor.run {
+            try contentView.tabView().workflow(1) {
+                WorkflowItem(QRScannerFeatureOnboardingView.self)
+                WorkflowItem(QRScannerFeatureView.self)
+            }
+        }
+        XCTAssertEqual(try wf2.tabItem().label().title().text().string(), "QR Scanner")
+        let wf3 = try await MainActor.run {
+            try contentView.tabView().workflow(2) {
+                WorkflowItem(ProfileFeatureOnboardingView.self)
+                WorkflowItem(ProfileFeatureView.self)
+            }
+        }
+        XCTAssertEqual(try wf3.tabItem().label().title().text().string(), "Profile")
+
+        let wfr1 = try await wf1.actualView().hostAndInspect(with: \.inspection)
+        try await wfr1.find(MapFeatureOnboardingView.self).proceedInWorkflow()
+        XCTAssertNoThrow(try wfr1.find(MapFeatureView.self))
+
+        let wfr2 = try await wf2.actualView().hostAndInspect(with: \.inspection)
+        try await wfr2.find(QRScannerFeatureOnboardingView.self).proceedInWorkflow()
+        XCTAssertNoThrow(try wfr2.find(QRScannerFeatureView.self))
+
+        let wfr3 = try await wf3.actualView().hostAndInspect(with: \.inspection)
+        try await wfr3.find(ProfileFeatureOnboardingView.self).proceedInWorkflow()
+        XCTAssertNoThrow(try wfr3.find(ProfileFeatureView.self))
+    }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, *)
+extension InspectableView where View: SingleViewContent {
+    func workflow<T: Inspectable & _WorkflowItemProtocol>(@WorkflowBuilder builder: () -> T) throws -> InspectableView<ViewType.View<WorkflowView<WorkflowLauncher<T>>>> {
+        try view(WorkflowView<WorkflowLauncher<T>>.self)
+    }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, *)
+extension InspectableView where View: MultipleViewContent {
+    func workflow<T: Inspectable & _WorkflowItemProtocol>(_ index: Int, @WorkflowBuilder builder: () -> T) throws -> InspectableView<ViewType.View<WorkflowView<WorkflowLauncher<T>>>> {
+        try view(WorkflowView<WorkflowLauncher<T>>.self, index)
     }
 }

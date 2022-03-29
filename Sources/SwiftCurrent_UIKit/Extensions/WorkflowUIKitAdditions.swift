@@ -32,8 +32,8 @@ extension AnyWorkflow {
      */
     public func abandon(animated: Bool = true, onFinish:(() -> Void)? = nil) {
         if let presenter = orchestrationResponder as? UIKitPresenter {
-            presenter.abandon(self, animated: animated) { [weak self] in
-                self?._abandon()
+            presenter.abandon(self, animated: animated) { [self] in
+                self._abandon()
                 onFinish?()
             }
         } else if let responder = orchestrationResponder {

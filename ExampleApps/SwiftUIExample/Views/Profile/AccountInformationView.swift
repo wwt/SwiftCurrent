@@ -42,10 +42,9 @@ struct AccountInformationView: View, FlowRepresentable {
                 }
                 .textEntryStyle()
             } else {
-                WorkflowLauncher(isLaunched: $emailWorkflowLaunched.animation(), startingArgs: email) {
-                    thenProceed(with: MFAView.self) {
-                        thenProceed(with: ChangeEmailView.self)
-                    }
+                WorkflowView(isLaunched: $emailWorkflowLaunched.animation(), launchingWith: email) {
+                    WorkflowItem(MFAView.self)
+                    WorkflowItem(ChangeEmailView.self)
                 }.onFinish {
                     guard case .args(let newEmail as String) = $0 else { return }
                     email = newEmail
@@ -75,25 +74,24 @@ struct AccountInformationView: View, FlowRepresentable {
                 }
                 .textEntryStyle()
             } else {
-                WorkflowLauncher(isLaunched: $passwordWorkflowLaunched.animation(), startingArgs: password) {
-                    thenProceed(with: MFAView.self) {
-                        thenProceed(with: ChangePasswordView.self)
-                            .presentationType(.modal)
-                            .applyModifiers { cpv in
-                                NavigationView {
-                                    VStack {
-                                        cpv
-                                            .padding()
-                                            .background(Color.card)
-                                            .cornerRadius(35)
-                                            .padding(.horizontal, 20)
-                                            .navigationTitle("Update password")
+                WorkflowView(isLaunched: $passwordWorkflowLaunched.animation(), launchingWith: password) {
+                    WorkflowItem(MFAView.self)
+                    WorkflowItem(ChangePasswordView.self)
+                        .presentationType(.modal)
+                        .applyModifiers { cpv in
+                            NavigationView {
+                                VStack {
+                                    cpv
+                                        .padding()
+                                        .background(Color.card)
+                                        .cornerRadius(35)
+                                        .padding(.horizontal, 20)
+                                        .navigationTitle("Update password")
 
-                                        Spacer()
-                                    }
+                                    Spacer()
                                 }
                             }
-                    }
+                        }
                 }.onFinish {
                     guard case .args(let newPassword as String) = $0 else { return }
                     password = newPassword
