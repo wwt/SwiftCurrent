@@ -8,6 +8,21 @@
 
 import Foundation
 
+/**
+ A property wrapper to easily conform `AnyWorkflow` to `Decodable`.
+
+ ### Discussion
+ Swift's `Decodable` implementation is often more friendly when all your properties conform to `Decodable`. While `AnyWorkflow` does not directly conform to `Decodable`, the `DecodeWorkflow` property wrapper makes it conform. This provides a convenient way for you to decode workflows as part of other payloads.
+
+ #### Example
+ A struct that decodes a workflow and some metadata
+ ```swift
+ struct WorkflowServerResponse: Decodable {
+    @DecodeWorkflow<MyCustomAggregator> var workflow: AnyWorkflow
+    var workflowID: UUID
+ }
+ ```
+ */
 @propertyWrapper
 public struct DecodeWorkflow<Aggregator: FlowRepresentableAggregator>: Decodable {
     public var wrappedValue: AnyWorkflow

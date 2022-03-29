@@ -40,6 +40,11 @@ custom_categories:
     - UIWorkflowItem
     - HostedWorkflowItem
     - StoryboardLoadable
+- name: Server Driven Workflows
+  children:
+    - JSONDecoder
+    - DecodeWorkflow
+    - FlowRepresentableAggregator
 - name: Controlling Presentation
   children:
     - LaunchStyle
