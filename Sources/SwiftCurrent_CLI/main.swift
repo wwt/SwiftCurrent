@@ -8,4 +8,4 @@
 
 import ArgumentParser
 
-GenerateIR.main()
+RootCommand.main()

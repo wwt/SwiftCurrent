@@ -51,7 +51,7 @@ platform :ios do
       )
       xcodebuild(
         test: true,
-        scheme: 'SwiftCurrent_IRGenerator',
+        scheme: 'SwiftCurrent_CLI',
         workspace: 'SwiftCurrent.xcworkspace',
         destination: [ 'platform=macOS' ]
       )

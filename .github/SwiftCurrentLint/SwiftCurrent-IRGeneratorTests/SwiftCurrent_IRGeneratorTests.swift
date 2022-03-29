@@ -17,12 +17,12 @@ class SwiftCurrent_IRGeneratorTests: XCTestCase {
     }()
 
     lazy var generatorCommand: String = {
-        "\(Self.packageSwiftDirectory.path)/.build/*/debug/SwiftCurrent_IRGenerator"
+        "\(Self.packageSwiftDirectory.path)/.build/*/debug/SwiftCurrent_CLI generate ir"
     }()
 
     override class func setUp() {
         XCTAssertNoThrow(try shellOut(to: "rm -rf \(Self.packageSwiftDirectory.path)/.build/*/debug"))
-        XCTAssert(try shellOut(to: "cd \(Self.packageSwiftDirectory.path) && swift build --product=SwiftCurrent_IRGenerator").contains("Build complete!"))
+        XCTAssert(try shellOut(to: "cd \(Self.packageSwiftDirectory.path) && swift build --product=SwiftCurrent_CLI").contains("Build complete!"))
     }
 
     func testSingleDecodableStruct() throws {

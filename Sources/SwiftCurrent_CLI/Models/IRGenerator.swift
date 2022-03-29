@@ -1,36 +1,17 @@
 //
-//  GenerateIR.swift
+//  IRGenerator.swift
 //  SwiftCurrent
 //
-//  Created by Tyler Thompson on 3/3/22.
+//  Created by Tyler Thompson on 3/29/22.
 //  Copyright © 2022 WWT and Tyler Thompson. All rights reserved.
-//
+//  
 
 import Foundation
-
 import ArgumentParser
 import SwiftSyntax
 
-struct GenerateIR: ParsableCommand {
-    fileprivate static let conformance: StaticString = "WorkflowDecodable"
-
-    @Argument(help: "The path to a directory containing swift source files with types conforming to \(Self.conformance)")
-    var pathOrSourceCode: Either<URL, String>
-
-    mutating func run() throws {
-        let files = try getFiles()
-
-        let conformingTypes = findTypesConforming(to: "\(Self.conformance)", in: files)
-
-        let encoded = try JSONEncoder().encode(conformingTypes.lazy.filter(\.isConcreteType))
-
-        // this is actually preferred, if we can't encode to UTF8 something horribly unpredictably wrong happened, all we'd do is trap anyways
-        // swiftlint:disable:next force_unwrapping
-        let jsonString = String(data: encoded, encoding: .utf8)!
-        print(jsonString)
-    }
-
-    private func getFiles() throws -> [File] {
+struct IRGenerator {
+    func getFiles(from pathOrSourceCode: Either<URL, String>) throws -> [File] {
         switch pathOrSourceCode {
             case .firstChoice(let url):
                 let fileURLs = try getSwiftFileURLs(from: url)
@@ -40,7 +21,7 @@ struct GenerateIR: ParsableCommand {
         }
     }
 
-    private func findTypesConforming(to conformance: String, in files: [File], objectType: Declaration.NominalType? = nil) -> [ConformingType] {
+    func findTypesConforming(to conformance: String, in files: [File], objectType: Declaration.NominalType? = nil) -> [ConformingType] {
         files
             .flatMap(\.declarations)
             .flatMap { checkTypeForConformance($0, conformance: conformance) }
@@ -60,10 +41,18 @@ struct GenerateIR: ParsableCommand {
             .appending(contentsOf: type.inheritance.contains(conformance) ? [ConformingType(declaration: type, parents: parents)] : [])
     }
 
-    private func getSwiftFileURLs(from directory: URL) throws -> [URL] {
+    private func getSwiftFileURLs(from path: URL) throws -> [URL] {
+        guard path.pathExtension.isEmpty else {
+            if FileManager.default.fileExists(atPath: path.path) && path.pathExtension == "swift" {
+                return [URL(fileURLWithPath: path.path)]
+            } else {
+                return []
+            }
+        }
+
         var files = [URL]()
 
-        if let enumerator = FileManager.default.enumerator(at: directory, includingPropertiesForKeys: [.isRegularFileKey], options: [.skipsHiddenFiles, .skipsPackageDescendants]) {
+        if let enumerator = FileManager.default.enumerator(at: path, includingPropertiesForKeys: [.isRegularFileKey], options: [.skipsHiddenFiles, .skipsPackageDescendants]) {
             for case let fileURL as URL in enumerator where try fileURL.isSwiftFile {
                 files.append(fileURL)
             }
