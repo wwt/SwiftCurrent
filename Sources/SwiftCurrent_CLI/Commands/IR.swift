@@ -10,7 +10,7 @@ import Foundation
 import ArgumentParser
 import SwiftSyntax
 
-struct IR: ParsableCommand {
+struct IR: ParsableCommand { // swiftlint:disable:this type_name
     fileprivate static let conformance: StaticString = "WorkflowDecodable"
 
     @Argument(help: "The path to a directory containing swift source files with types conforming to \(Self.conformance)")
