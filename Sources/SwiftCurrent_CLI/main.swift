@@ -8,4 +8,4 @@
 
 import ArgumentParser
 
-RootCommand.main()
+SwiftCurrent.main()

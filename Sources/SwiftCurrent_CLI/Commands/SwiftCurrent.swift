@@ -8,7 +8,7 @@
 
 import ArgumentParser
 
-struct RootCommand: ParsableCommand {
+struct SwiftCurrent: ParsableCommand {
     static var configuration = CommandConfiguration(
             abstract: "A utility generating SwiftCurrent related files.",
             subcommands: [Generate.self])
