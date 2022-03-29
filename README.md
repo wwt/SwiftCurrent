@@ -8,16 +8,14 @@
 [![Build Status](https://github.com/wwt/SwiftCurrent/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/wwt/SwiftCurrent/actions?query=branch%3Amain)
 [![Code Coverage](https://codecov.io/gh/wwt/SwiftCurrent/branch/main/graph/badge.svg?token=04Q5KSHict)](https://codecov.io/gh/wwt/SwiftCurrent)
 
-
 # Welcome
 
 SwiftCurrent is a library that lets you easily manage journeys through your Swift application.
 
 It comes with built-in support for UIKit and SwiftUI app-routing. In SwiftCurrent, workflows are a sequence of operations. Those operations usually display views in an application. The workflow describes the sequence of views and manages which view should come next. Your views are responsible for performing necessary tasks before proceeding forward in the workflow, like processing user input.
 
-https://user-images.githubusercontent.com/33705774/132767762-7447753c-feba-4ef4-b54c-38bfe9d1ee82.mp4
-
 ### Why Should I Use SwiftCurrent?
+
 Architectural patterns and libraries that attempt to create a separation between views and workflows already exist. However, SwiftCurrent is different. We took a new design approach that focuses on:
 
 - **A Developer-Friendly API**. The library was built with developers in mind. It started with a group of developers talking about the code experience they desired. Then the library team took on whatever complexities were necessary to bring them that experience.
@@ -25,13 +23,16 @@ Architectural patterns and libraries that attempt to create a separation between
 - **Minimal Boilerplate**. We have hidden this as much as possible. We hate it as much as you do and are constantly working on cutting the cruft.
 
 #### From There, We Created a Library
+
 This library:
+
 - **Isolates Your Views**. Design your views so that they are unaware of the view that will come next.
 - **Easily Reorders Views**. Changing view order is as easy as ⌘+⌥+\[ (moving the line up or down).
 - **Composes Workflows Together**. Create branching flows easily by joining workflows together.
 - **Creates Conditional Flows**. Make your flows robust and handle ever-changing designs. Need a screen to only to show up sometimes? Need a flow for person A and another for person B? We've got you covered.
 
 # Quick Start
+
 Why show a quick start when we have an example app? Because it's so easy to get started, we can drop in two code snippets, and you're ready to go! This quick start uses Swift Package Manager and SwiftUI, but for other approaches, [see our installation instructions](https://wwt.github.io/SwiftCurrent/installation.html).
 
 ```swift
@@ -40,7 +41,9 @@ Why show a quick start when we have an example app? Because it's so easy to get 
 .product(name: "SwiftCurrent", package: "SwiftCurrent"),
 .product(name: "SwiftCurrent_SwiftUI", package: "SwiftCurrent")
 ```
+
 Then make your first FlowRepresentable view:
+
 ```swift
 import SwiftCurrent
 import SwiftUI
@@ -56,7 +59,9 @@ struct ExampleView: View, PassthroughFlowRepresentable {
     var body: some View { Text("This is ExampleView!") }
 }
 ```
-Then from your `ContentView` or whatever view (or app) you'd like to contain the workflow, add the following view to the body: 
+
+Then from your `ContentView` or whatever view (or app) you'd like to contain the workflow, add the following view to the body:
+
 ```swift
 import SwiftCurrent_SwiftUI
 // ...
@@ -73,10 +78,13 @@ var body: some View {
 And just like that, you've got a workflow! You can now add more items to it or reorder the items that are there. To understand more of how this works, [check out our developer docs.](https://wwt.github.io/SwiftCurrent/How%20to%20use%20SwiftCurrent%20with%20SwiftUI.html)
 
 # Look at Our Example Apps
-We have [example apps](https://github.com/wwt/SwiftCurrent/tree/main/ExampleApps) for both SwiftUI and UIKit that show SwiftCurrent in action. They've already been tested, so you can see what it's like to test SwiftCurrent code. To run it locally, start by cloning the repo, open `SwiftCurrent.xcworkspace` and then run the `SwiftUIExample` scheme or the `UIKitExample` scheme. 
+
+We have [example apps](https://github.com/wwt/SwiftCurrent/tree/main/ExampleApps) for both SwiftUI and UIKit that show SwiftCurrent in action. They've already been tested, so you can see what it's like to test SwiftCurrent code. To run it locally, start by cloning the repo, open `SwiftCurrent.xcworkspace` and then run the `SwiftUIExample` scheme or the `UIKitExample` scheme.
 
 # [Click Here to Learn More](https://wwt.github.io/SwiftCurrent/Creating%20Workflows.html)
+
 For specific documentation check out:
+
 - [Why SwiftCurrent?](https://wwt.github.io/SwiftCurrent/why-this-library.html)
 - [Installation](https://wwt.github.io/SwiftCurrent/installation.html)
 - [Getting Started With SwiftUI](https://wwt.github.io/SwiftCurrent/getting-started-with-swiftui.html)
