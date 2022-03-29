@@ -14,7 +14,7 @@
       location = "group:ExampleApps/UIKitExample/UIKitExample.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:.github/SwiftCurrentLint/SwiftCurrentLint.xcodeproj">
+      location = "group:/Users/tylerthompson/workspace/SwiftCurrent/.github/SwiftCurrentLint/CLI_Utilities.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:SwiftCurrent.podspec">
