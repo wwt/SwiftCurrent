@@ -33,11 +33,10 @@ struct TypeRegistry: ParsableCommand {
             }
 
             extension JSONDecoder {
-
-            }
-
-            extension DecodeWorkflow {
-
+                /// Convenience method to decode an ``AnyWorkflow`` from Data.
+                public func decodeWorkflow(from data: Data) throws -> AnyWorkflow {
+                    try decodeWorkflow(withAggregator: SwiftCurrentTypeRegistry(), from: data)
+                }
             }
             """
         )

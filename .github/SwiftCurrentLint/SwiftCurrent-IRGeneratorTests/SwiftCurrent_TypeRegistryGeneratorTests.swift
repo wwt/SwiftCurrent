@@ -257,6 +257,46 @@ final class SwiftCurrent_TypeRegistryGeneratorTests: XCTestCase {
         XCTAssertEqual(actualTypes?.first, "Foo.Bar.self")
     }
 
+    func testGeneratedCodeContainsConvenienceExtensions() throws {
+        let source = """
+        struct Foo: WorkflowDecodable { }
+        """
+
+        let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
+        let structure = try JSONDecoder().decode(SyntaxStructure.self, from: XCTUnwrap(Structure(file: File(contents: output)).description.data(using: .utf8)))
+
+        try assertTypeRegistryStructExists(on: structure)
+        try assertTypesArrayExistsOnRegistry(in: structure)
+
+        XCTAssertEqual(structure.subStructure?.count, 2)
+        guard let substructure = structure.subStructure, substructure.count == 2 else { return }
+        let extensionStructure = substructure[1]
+
+        XCTAssertEqual(extensionStructure.kind, "source.lang.swift.decl.extension")
+        let functionStructure = extensionStructure.subStructure?.first
+
+        XCTAssertNotNil(functionStructure, "expected function structure")
+        XCTAssertEqual(functionStructure?.accessibility, "source.lang.swift.accessibility.public")
+        XCTAssertEqual(functionStructure?.kind, "source.lang.swift.decl.function.method.instance")
+        XCTAssertEqual(functionStructure?.name, "decodeWorkflow(from:)")
+
+        let internalFunctionStructure = functionStructure?.subStructure
+        XCTAssertNotNil(internalFunctionStructure, "expected parameter structure")
+        XCTAssertEqual(internalFunctionStructure?.first?.kind, "source.lang.swift.decl.var.parameter")
+        XCTAssertEqual(internalFunctionStructure?.first?.typeName, "Data")
+        XCTAssertEqual(internalFunctionStructure?.last?.kind, "source.lang.swift.expr.call")
+        XCTAssertEqual(internalFunctionStructure?.last?.name, "decodeWorkflow")
+
+        let decodeWorkflowParameterStructure = internalFunctionStructure?.last?.subStructure
+        XCTAssertNotNil(decodeWorkflowParameterStructure, "expected internal structure to decodeWorkflow call")
+        XCTAssertEqual(decodeWorkflowParameterStructure?.first?.kind, "source.lang.swift.expr.argument")
+        XCTAssertEqual(decodeWorkflowParameterStructure?.first?.name, "withAggregator")
+        XCTAssertEqual(decodeWorkflowParameterStructure?.first?.subStructure?.first?.kind, "source.lang.swift.expr.call")
+        XCTAssertEqual(decodeWorkflowParameterStructure?.first?.subStructure?.first?.name, "SwiftCurrentTypeRegistry")
+        XCTAssertEqual(decodeWorkflowParameterStructure?.last?.kind, "source.lang.swift.expr.argument")
+        XCTAssertEqual(decodeWorkflowParameterStructure?.last?.name, "from")
+    }
+
     func testPerformance_WithASingleType() throws {
         let source = """
         struct Foo: WorkflowDecodable { }
