@@ -11,7 +11,7 @@ import ArgumentParser
 struct Generate: ParsableCommand {
     static var configuration = CommandConfiguration(
             abstract: "A utility generating SwiftCurrent related files.",
-            subcommands: [IR.self])
+            subcommands: [IR.self, TypeRegistry.self])
 
     mutating func run() throws { }
 }
