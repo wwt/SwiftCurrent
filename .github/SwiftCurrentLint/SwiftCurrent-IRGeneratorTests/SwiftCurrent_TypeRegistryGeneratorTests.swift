@@ -314,18 +314,36 @@ final class SwiftCurrent_TypeRegistryGeneratorTests: XCTestCase {
         func generateType() -> Structure {
             let nominalType = ["struct", "enum", "class"].randomElement()!
             let name: String = (Unicode.Scalar("A").value...Unicode.Scalar("Z").value)
-                .map(String.init(describing:))
+                .lazy
+                .compactMap(Unicode.Scalar.init)
+                .map(String.init)
                 .filter { _ in Bool.random() }
                 .joined()
             return Structure(name: name, type: nominalType)
         }
-        let typeDefs = (1...1000).map { _ -> String in
+        var typeDefs: [String] = (1...1000).lazy.map { _ -> String in
             let type = generateType()
             return "\(type.type) \(type.name): WorkflowDecodable { }"
         }
-        let source = typeDefs.joined()
+            .uniqued()
+            .map { $0 }
+
+        if typeDefs.count < 1000 {
+            (1...(1000 - typeDefs.count)).forEach {
+                let type = generateType()
+                typeDefs.append("\(type.type)\($0) \(type.name): WorkflowDecodable { }")
+            }
+        }
+
+        let source = typeDefs.joined(separator: "\n")
         measure {
-            _ = try? shellOut(to: "\(generatorCommand) \"\(source)\"")
+            if let output = try? shellOut(to: "\(generatorCommand) \"\(source)\""),
+               let data = output.data(using: .utf8) {
+                let IR = try? JSONDecoder().decode([IRType].self, from: data)
+                XCTAssertEqual(IR?.count, 1000)
+            } else {
+                XCTFail("No output from shell")
+            }
         }
     }
 }
