@@ -104,21 +104,6 @@ class SwiftCurrent_IRGeneratorTests: XCTestCase {
         XCTAssertEqual(IR.first?.name, "Baz")
     }
 
-    func testTonsOfLayersOfIndirection() throws {
-        let source = """
-        protocol Foo: WorkflowDecodable { }
-        protocol Bar: Foo { }
-        protocol Bat: Bar { }
-        struct Baz: Bat { }
-        """
-
-        let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
-        let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
-
-        XCTAssertEqual(IR.count, 1)
-        XCTAssertEqual(IR.first?.name, "Baz")
-    }
-
     func testSingleLayerOfNesting() throws {
         let source = """
         enum Foo {
@@ -147,24 +132,6 @@ class SwiftCurrent_IRGeneratorTests: XCTestCase {
 
         XCTAssertEqual(IR.count, 1)
         XCTAssertEqual(IR.first?.name, "Foo.Bar.Baz")
-    }
-
-    func testTonsOfLayersOfNesting() throws {
-        let source = """
-        enum Foo {
-            struct Bar {
-                class Baz {
-                    struct Bat: WorkflowDecodable { }
-                }
-            }
-        }
-        """
-
-        let output = try shellOut(to: "\(generatorCommand) \"\(source)\"")
-        let IR = try JSONDecoder().decode([IRType].self, from: XCTUnwrap(output.data(using: .utf8)))
-
-        XCTAssertEqual(IR.count, 1)
-        XCTAssertEqual(IR.first?.name, "Foo.Bar.Baz.Bat")
     }
 
     func testConformanceViaExtension() throws {
@@ -214,6 +181,7 @@ class SwiftCurrent_IRGeneratorTests: XCTestCase {
         func generateType() -> Structure {
             let nominalType = ["struct", "enum", "class"].randomElement()!
             let name: String = (Unicode.Scalar("A").value...Unicode.Scalar("Z").value)
+                .lazy
                 .map(String.init(describing:))
                 .filter { _ in Bool.random() }
                 .joined()
