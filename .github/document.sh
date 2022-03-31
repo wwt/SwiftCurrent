@@ -7,5 +7,5 @@ rm swiftcurrent-docs.json
 rm swiftcurrentuikit-docs.json
 rm swiftcurrent-swiftui-docs.json
 cd .github/DocsPostProcessor
-./DocsPostProcessor ../../Docs --replace-overview-with-readme --replace-readme-video-with-vimeo-embed
+./DocsPostProcessor ../../Docs --replace-overview-with-readme
 open ../../docs/index.html
