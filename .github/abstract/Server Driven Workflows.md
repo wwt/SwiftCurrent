@@ -6,7 +6,7 @@ You can use JSON, YAML, or any other key/value-based data formats to define a wo
 
 When using server driven workflows be aware that your views will all be wrapped in an `AnyView`. This is not true when you define workflows in Swift. This could affect certain animations and potentially have a performance impact on SwiftUI. 
 
-NOTE: The APIs for SwiftCurrent all accept any form of `Data`. This means you are free to use your own data formats, but it also means that data does not necessarily have to come from a server. You could feed it from a flat-file if you're writing a white-labelled application, for example.
+NOTE: The APIs for SwiftCurrent all accept any form of `Data`. This means you are free to use your own data formats, but it also means that data does not necessarily have to come from a server. For example, you could feed it from a flat-file if you're writing a white-labeled application.
 
 ### What is an Aggregator?
 `FlowRepresentableAggregator` is a simple protocol that identifies all types you wish to decode. It's how SwiftCurrent is able to take data and convert it into a `Workflow`. You can either create your own aggregator or [use our CLI utility](https://wwt.github.io/SwiftCurrent/generated-type-registry.html).
