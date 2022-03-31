@@ -1,5 +1,5 @@
 //
-//  SyntaxProtocolExtensions.swift
+//  DeclarationSyntax.swift
 //  SwiftCurrent
 //
 //  Created by Morgan Zellers on 3/8/22.
