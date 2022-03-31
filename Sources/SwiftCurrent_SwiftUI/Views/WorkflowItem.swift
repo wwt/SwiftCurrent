@@ -76,7 +76,7 @@ public struct WorkflowItem<FlowRepresentableType: FlowRepresentable & View, Cont
                                                          flowRepresentableFactory: factory)
         _metadata = State(initialValue: metadata)
     }
-    
+
     /// Creates a workflow item from a FlowRepresentable type
     public init(_ item: FlowRepresentableType.Type) where Content == FlowRepresentableType {
         let metadata = ExtendedFlowRepresentableMetadata(flowRepresentableType: FlowRepresentableType.self,
