@@ -951,11 +951,9 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         }.hostAndInspect(with: \.inspection)
 
         XCTAssertEqual(try launcher.find(FR1.self).text().string(), "FR1 type")
-        XCTAssertNoThrow(try launcher.find(FR1.self).actualView().proceedInWorkflow())
-        try launcher.actualView().inspect { viewUnderTest in
-            XCTAssertEqual(try launcher.find(FR2.self).text().string(), "FR2 type")
-            XCTAssertNoThrow(try launcher.find(FR2.self).actualView().proceedInWorkflow(.args(expectedArgs)))
-        }
+        try await launcher.find(FR1.self).proceedInWorkflow()
+        XCTAssertEqual(try launcher.find(FR2.self).text().string(), "FR2 type")
+        XCTAssertNoThrow(try launcher.find(FR2.self).actualView().proceedInWorkflow(.args(expectedArgs)))
 
         wait(for: [expectOnFinish], timeout: TestConstant.timeout)
     }
@@ -986,15 +984,12 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
 
 
         XCTAssertEqual(try launcher.find(FR1.self).text().string(), "FR1 type")
-        XCTAssertNoThrow(try launcher.find(FR1.self).actualView().proceedInWorkflow())
-        try launcher.actualView().inspect { viewUnderTest in
-            XCTAssertEqual(try viewUnderTest.find(FR2.self).text().string(), "FR2 type")
-            XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
-            try launcher.actualView().inspect { viewUnderTest in
-                XCTAssertEqual(try viewUnderTest.find(FR3.self).text().string(), "FR3 type")
-                XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
-            }
-        }
+        try await launcher.find(FR1.self).proceedInWorkflow()
+        XCTAssertEqual(try launcher.find(FR2.self).text().string(), "FR2 type")
+        try await launcher.find(FR2.self).proceedInWorkflow()
+        XCTAssertEqual(try launcher.find(FR3.self).text().string(), "FR3 type")
+        try await launcher.find(FR3.self).proceedInWorkflow()
+
         wait(for: [expectOnFinish], timeout: TestConstant.timeout)
     }
 
@@ -1040,19 +1035,13 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         let expectedArgs = UUID().uuidString
 
         XCTAssertEqual(try launcher.find(FR1.self).text().string(), "FR1 type")
-        XCTAssertNoThrow(try launcher.find(FR1.self).actualView().proceedInWorkflow())
-        try launcher.actualView().inspect { viewUnderTest in
-            XCTAssertEqual(try viewUnderTest.find(FR2.self).text().string(), "FR2 type")
-            XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow(expectedArgs))
-            try viewUnderTest.actualView().inspect { viewUnderTest in
-                XCTAssertEqual(try viewUnderTest.find(FR3.self).text().string(), "FR3 type, \(expectedArgs)")
-                XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
-                try viewUnderTest.actualView().inspect { viewUnderTest in
-                    XCTAssertEqual(try viewUnderTest.find(FR4.self).text().string(), "FR4 type")
-                    XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
-                }
-            }
-        }
+        try await launcher.find(FR1.self).proceedInWorkflow()
+        XCTAssertEqual(try launcher.find(FR2.self).text().string(), "FR2 type")
+        try await launcher.find(FR2.self).proceedInWorkflow(expectedArgs)
+        XCTAssertEqual(try launcher.find(FR3.self).text().string(), "FR3 type, \(expectedArgs)")
+        try await launcher.find(FR3.self).proceedInWorkflow()
+        XCTAssertEqual(try launcher.find(FR4.self).text().string(), "FR4 type")
+        try await launcher.find(FR4.self).proceedInWorkflow()
 
         wait(for: [expectOnFinish], timeout: TestConstant.timeout)
     }
@@ -1098,19 +1087,13 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         }.hostAndInspect(with: \.inspection)
 
         XCTAssertEqual(try launcher.find(FR1.self).text().string(), "FR1 type, \(expectedArgs)")
-        XCTAssertNoThrow(try launcher.find(FR1.self).actualView().proceedInWorkflow(.args(expectedArgs)))
-        try launcher.actualView().inspect { viewUnderTest in
-            XCTAssertEqual(try viewUnderTest.find(FR2.self).text().string(), "FR2 type, \(expectedArgs)")
-            XCTAssertNoThrow(try viewUnderTest.find(FR2.self).actualView().proceedInWorkflow())
-            try viewUnderTest.actualView().inspect { viewUnderTest in
-                XCTAssertEqual(try viewUnderTest.find(FR3.self).text().string(), "FR3 type")
-                XCTAssertNoThrow(try viewUnderTest.find(FR3.self).actualView().proceedInWorkflow())
-                try viewUnderTest.actualView().inspect { viewUnderTest in
-                    XCTAssertEqual(try viewUnderTest.find(FR4.self).text().string(), "FR4 type")
-                    XCTAssertNoThrow(try viewUnderTest.find(FR4.self).actualView().proceedInWorkflow())
-                }
-            }
-        }
+        try await launcher.find(FR1.self).proceedInWorkflow(.args(expectedArgs))
+        XCTAssertEqual(try launcher.find(FR2.self).text().string(), "FR2 type, \(expectedArgs)")
+        try await launcher.find(FR2.self).proceedInWorkflow()
+        XCTAssertEqual(try launcher.find(FR3.self).text().string(), "FR3 type")
+        try await launcher.find(FR3.self).proceedInWorkflow()
+        XCTAssertEqual(try launcher.find(FR4.self).text().string(), "FR4 type")
+        try await launcher.find(FR4.self).proceedInWorkflow()
 
         wait(for: [expectOnFinish], timeout: TestConstant.timeout)
     }
