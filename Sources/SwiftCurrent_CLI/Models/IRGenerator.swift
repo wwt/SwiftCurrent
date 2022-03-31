@@ -24,7 +24,7 @@ struct IRGenerator {
     func findDeclarationsConforming(to conformance: String, in files: [File], objectType: Declaration.NominalType? = nil) -> [ConformingDeclaration] {
         files
             .flatMap(\.declarations)
-            .flatMap { checkTypeForConformance($0, conformance: conformance) }
+            .flatMap { checkDeclarationForConformance($0, conformance: conformance) }
             .reduce(into: [ConformingDeclaration]()) {
                 $0.append($1)
                 // Find arbitrarily chained protocols (P1 inherits from WorkflowDecodable and P2 inherits from P1 and P3 inherits from P2...)
@@ -34,17 +34,17 @@ struct IRGenerator {
             }
     }
 
-    private func checkTypeForConformance(_ type: Declaration, parents: [Declaration] = [], conformance: String) -> [ConformingDeclaration] {
+    private func checkDeclarationForConformance(_ type: Declaration, parents: [Declaration] = [], conformance: String) -> [ConformingDeclaration] {
         // Find arbitrarily nested types
         type.declarations
-            .flatMap { checkTypeForConformance($0, parents: parents.appending(type), conformance: conformance) }
+            .flatMap { checkDeclarationForConformance($0, parents: parents.appending(type), conformance: conformance) }
             .appending(contentsOf: type.inheritance.contains(conformance) ? [ConformingDeclaration(declaration: type, parents: parents)] : [])
     }
 
-    private func getSwiftFileURLs(from path: URL) throws -> [URL] {
-        guard path.pathExtension.isEmpty else {
-            if FileManager.default.fileExists(atPath: path.path) && path.pathExtension == "swift" {
-                return [URL(fileURLWithPath: path.path)]
+    private func getSwiftFileURLs(from url: URL) throws -> [URL] {
+        guard url.pathExtension.isEmpty else {
+            if FileManager.default.fileExists(atPath: url.path) && url.pathExtension == "swift" {
+                return [URL(fileURLWithPath: url.path)]
             } else {
                 return []
             }
@@ -52,7 +52,7 @@ struct IRGenerator {
 
         var files = [URL]()
 
-        if let enumerator = FileManager.default.enumerator(at: path, includingPropertiesForKeys: [.isRegularFileKey], options: [.skipsHiddenFiles, .skipsPackageDescendants]) {
+        if let enumerator = FileManager.default.enumerator(at: url, includingPropertiesForKeys: [.isRegularFileKey], options: [.skipsHiddenFiles, .skipsPackageDescendants]) {
             for case let fileURL as URL in enumerator where try fileURL.isSwiftFile {
                 files.append(fileURL)
             }
