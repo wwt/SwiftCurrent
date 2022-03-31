@@ -114,11 +114,11 @@ public protocol TestLookup { } // For example: View
 extension WorkflowDecodable where Self: TestLookup {
     public static func decodeLaunchStyle(named name: String) throws -> LaunchStyle {
         switch name.lowercased() {
-            case "teststyle_iOS".lowercased(): return .testStyle_iOS
-            case "teststyle_iPadOS".lowercased(): return .testStyle_iPadOS
-            case "teststyle_macOS".lowercased(): return .testStyle_macOS
-            case "teststyle_watchOS".lowercased(): return .testStyle_watchOS
-            case "teststyle_tvOS".lowercased(): return .testStyle_tvOS
+            case "testStyle_iOS".lowercased(): return .testStyle_iOS
+            case "testStyle_iPadOS".lowercased(): return .testStyle_iPadOS
+            case "testStyle_macOS".lowercased(): return .testStyle_macOS
+            case "testStyle_watchOS".lowercased(): return .testStyle_watchOS
+            case "testStyle_tvOS".lowercased(): return .testStyle_tvOS
             case "testStyle_macCatalyst".lowercased(): return .testStyle_macCatalyst
             default:
                 throw URLError(.badURL)
@@ -129,13 +129,12 @@ extension WorkflowDecodable where Self: TestLookup {
 extension WorkflowDecodable where Self: TestLookup {
     public static func decodeFlowPersistence(named name: String) throws -> FlowPersistence {
         switch name.lowercased() {
-            case "testpersistence_iOS".lowercased(): return .testPersistence_iOS
-            case "testpersistence_iPadOS".lowercased(): return .testPersistence_iPadOS
-            case "testpersistence_macOS".lowercased(): return .testPersistence_macOS
-            case "testpersistence_watchOS".lowercased(): return .testPersistence_watchOS
-            case "testpersistence_tvOS".lowercased(): return .testPersistence_tvOS
-            case "testStyle_macCatalyst".lowercased(): return .testPersistence_macCatalyst
-
+            case "testPersistence_iOS".lowercased(): return .testPersistence_iOS
+            case "testPersistence_iPadOS".lowercased(): return .testPersistence_iPadOS
+            case "testPersistence_macOS".lowercased(): return .testPersistence_macOS
+            case "testPersistence_watchOS".lowercased(): return .testPersistence_watchOS
+            case "testPersistence_tvOS".lowercased(): return .testPersistence_tvOS
+            case "testPersistence_macCatalyst".lowercased(): return .testPersistence_macCatalyst
             default:
                 throw URLError(.badURL)
         }
