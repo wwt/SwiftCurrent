@@ -114,11 +114,11 @@ public protocol TestLookup { } // For example: View
 extension WorkflowDecodable where Self: TestLookup {
     public static func decodeLaunchStyle(named name: String) throws -> LaunchStyle {
         switch name.lowercased() {
-            case "teststyle_ios".lowercased(): return .testStyle_iOS
-            case "teststyle_ipados".lowercased(): return .testStyle_iPadOS
-            case "teststyle_macos".lowercased(): return .testStyle_macOS
-            case "teststyle_watchos".lowercased(): return .testStyle_watchOS
-            case "teststyle_tvos".lowercased(): return .testStyle_tvOS
+            case "teststyle_iOS".lowercased(): return .testStyle_iOS
+            case "teststyle_iPadOS".lowercased(): return .testStyle_iPadOS
+            case "teststyle_macOS".lowercased(): return .testStyle_macOS
+            case "teststyle_watchOS".lowercased(): return .testStyle_watchOS
+            case "teststyle_tvOS".lowercased(): return .testStyle_tvOS
             case "testStyle_macCatalyst".lowercased(): return .testStyle_macCatalyst
             default:
                 throw URLError(.badURL)
@@ -129,11 +129,11 @@ extension WorkflowDecodable where Self: TestLookup {
 extension WorkflowDecodable where Self: TestLookup {
     public static func decodeFlowPersistence(named name: String) throws -> FlowPersistence {
         switch name.lowercased() {
-            case "testpersistence_ios".lowercased(): return .testPersistence_iOS
-            case "testpersistence_ipados".lowercased(): return .testPersistence_iPadOS
-            case "testpersistence_macos".lowercased(): return .testPersistence_macOS
-            case "testpersistence_watchos".lowercased(): return .testPersistence_watchOS
-            case "testpersistence_tvos".lowercased(): return .testPersistence_tvOS
+            case "testpersistence_iOS".lowercased(): return .testPersistence_iOS
+            case "testpersistence_iPadOS".lowercased(): return .testPersistence_iPadOS
+            case "testpersistence_macOS".lowercased(): return .testPersistence_macOS
+            case "testpersistence_watchOS".lowercased(): return .testPersistence_watchOS
+            case "testpersistence_tvOS".lowercased(): return .testPersistence_tvOS
             case "testStyle_macCatalyst".lowercased(): return .testPersistence_macCatalyst
 
             default:
