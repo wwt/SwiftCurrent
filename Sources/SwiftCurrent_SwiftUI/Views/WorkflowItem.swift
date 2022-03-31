@@ -70,16 +70,16 @@ public struct WorkflowItem<FlowRepresentableType: FlowRepresentable & View, Cont
         _modifierClosure = State(initialValue: modifierClosure)
         _flowPersistenceClosure = State(initialValue: flowPersistenceClosure)
         _launchStyle = State(initialValue: launchStyle)
-        let metadata = ExtendedFlowRepresentableMetadata(FlowRepresentableType.self,
+        let metadata = ExtendedFlowRepresentableMetadata(flowRepresentableType: FlowRepresentableType.self,
                                                          launchStyle: launchStyle.rawValue,
                                                          flowPersistence: flowPersistenceClosure,
                                                          flowRepresentableFactory: factory)
         _metadata = State(initialValue: metadata)
     }
- 
+    
     /// Creates a workflow item from a FlowRepresentable type
     public init(_ item: FlowRepresentableType.Type) where Content == FlowRepresentableType {
-        let metadata = ExtendedFlowRepresentableMetadata(FlowRepresentableType.self,
+        let metadata = ExtendedFlowRepresentableMetadata(flowRepresentableType: FlowRepresentableType.self,
                                                          launchStyle: .new,
                                                          flowPersistence: flowPersistenceClosure,
                                                          flowRepresentableFactory: factory)
