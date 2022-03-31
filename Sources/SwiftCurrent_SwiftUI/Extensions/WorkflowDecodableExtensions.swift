@@ -14,7 +14,7 @@ extension WorkflowDecodable where Self: FlowRepresentable & View {
     /// Creates a new instance of ``FlowRepresentableMetadata``
     public static func metadataFactory(launchStyle: LaunchStyle,
                                        flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) -> FlowRepresentableMetadata {
-        ExtendedFlowRepresentableMetadata(flowRepresentableType: Self.self, launchStyle: launchStyle, flowPersistence: flowPersistence)
+        ExtendedFlowRepresentableMetadata(Self.self, launchStyle: launchStyle, flowPersistence: flowPersistence)
     }
 
     /// Decodes a ``LaunchStyle`` from a string.

@@ -13,7 +13,7 @@ import SwiftCurrent
 class ExtendedFlowRepresentableMetadata: FlowRepresentableMetadata {
     private(set) var workflowItemFactory: (AnyWorkflowItem?) -> AnyWorkflowItem
 
-    init<FR: FlowRepresentable & View>(flowRepresentableType: FR.Type,
+    init<FR: FlowRepresentable & View>(_ flowRepresentableType: FR.Type,
                                        launchStyle: LaunchStyle = .default,
                                        flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default },
                                        flowRepresentableFactory: @escaping (AnyWorkflow.PassedArgs) -> AnyFlowRepresentable) {
@@ -31,7 +31,7 @@ class ExtendedFlowRepresentableMetadata: FlowRepresentableMetadata {
         super.init(flowRepresentableType, launchStyle: launchStyle, flowPersistence: flowPersistence, flowRepresentableFactory: flowRepresentableFactory)
     }
 
-    init<FR: FlowRepresentable & View>(flowRepresentableType: FR.Type,
+    init<FR: FlowRepresentable & View>(_ flowRepresentableType: FR.Type,
                                        launchStyle: LaunchStyle = .default,
                                        flowPersistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence = { _ in .default }) {
         func createWorkflowItem() -> WorkflowItem<FR, FR> {
