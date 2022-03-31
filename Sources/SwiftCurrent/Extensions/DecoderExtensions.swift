@@ -8,19 +8,21 @@
 
 import Foundation
 
-extension JSONDecoder {
-    struct WorkflowJSONSpec: Decodable {
+extension AnyWorkflow {
+    struct WorkflowKVSchema: Decodable {
         let schemaVersion: AnyWorkflow.JSONSchemaVersion
         let sequence: [Sequence]
     }
+}
 
+extension JSONDecoder {
     /// Convenience method to decode an ``AnyWorkflow`` from Data.
     public func decodeWorkflow(withAggregator aggregator: FlowRepresentableAggregator, from data: Data) throws -> AnyWorkflow {
-        try AnyWorkflow(spec: decode(WorkflowJSONSpec.self, from: data), aggregator: aggregator)
+        try AnyWorkflow(spec: decode(AnyWorkflow.WorkflowKVSchema.self, from: data), aggregator: aggregator)
     }
 }
 
-extension JSONDecoder.WorkflowJSONSpec {
+extension AnyWorkflow.WorkflowKVSchema {
     fileprivate struct PlatformDecodable<T>: Decodable {
         var value: String
 
@@ -81,7 +83,7 @@ extension JSONDecoder.WorkflowJSONSpec {
 }
 
 extension AnyWorkflow {
-    convenience init(spec: JSONDecoder.WorkflowJSONSpec, aggregator: FlowRepresentableAggregator) throws {
+    convenience init(spec: AnyWorkflow.WorkflowKVSchema, aggregator: FlowRepresentableAggregator) throws {
         let typeMap = aggregator.typeMap
         self.init(Workflow<Never>())
         try spec.sequence.forEach {
@@ -95,12 +97,12 @@ extension AnyWorkflow {
         }
     }
 
-    private func getLaunchStyle(decodable: WorkflowDecodable.Type, from sequence: JSONDecoder.WorkflowJSONSpec.Sequence) throws -> LaunchStyle {
+    private func getLaunchStyle(decodable: WorkflowDecodable.Type, from sequence: AnyWorkflow.WorkflowKVSchema.Sequence) throws -> LaunchStyle {
         guard let launchStyleName = sequence.launchStyle else { return .default }
         return try decodable.decodeLaunchStyle(named: launchStyleName)
     }
 
-    private func getFlowPersistence(decodable: WorkflowDecodable.Type, from sequence: JSONDecoder.WorkflowJSONSpec.Sequence) throws -> FlowPersistence {
+    private func getFlowPersistence(decodable: WorkflowDecodable.Type, from sequence: AnyWorkflow.WorkflowKVSchema.Sequence) throws -> FlowPersistence {
         guard let flowPersistenceName = sequence.flowPersistence else { return .default }
         return try decodable.decodeFlowPersistence(named: flowPersistenceName)
     }

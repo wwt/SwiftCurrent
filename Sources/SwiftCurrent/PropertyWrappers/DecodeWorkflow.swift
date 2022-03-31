@@ -33,7 +33,7 @@ public struct DecodeWorkflow<Aggregator: FlowRepresentableAggregator>: Decodable
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        let spec = try container.decode(JSONDecoder.WorkflowJSONSpec.self)
+        let spec = try container.decode(AnyWorkflow.WorkflowKVSchema.self)
         wrappedValue = try AnyWorkflow(spec: spec, aggregator: Aggregator())
     }
 }
