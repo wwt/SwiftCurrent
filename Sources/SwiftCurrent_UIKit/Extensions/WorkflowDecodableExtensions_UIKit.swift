@@ -13,18 +13,18 @@ extension WorkflowDecodable where Self: UIViewController & FlowRepresentable {
     /// Decodes a ``LaunchStyle`` from a string.
     public static func decodeLaunchStyle(named name: String) throws -> LaunchStyle {
         switch name.lowercased() {
-            case "automatic": return .default
-            case "navigationstack": return ._navigationStack
-            case "modal": return ._modal
-            case "modal(.automatic)": return ._modal_automatic
-            case "modal(.currentcontext)": return ._modal_currentContext
-            case "modal(.custom)": return ._modal_custom
-            case "modal(.formsheet)": return ._modal_formSheet
-            case "modal(.fullscreen)": return ._modal_fullscreen
-            case "modal(.overcurrentcontext)": return ._modal_overCurrentContext
-            case "modal(.overfullscreen)": return ._modal_overFullScreen
-            case "modal(.popover)": return ._modal_popover
-            case "modal(.pagesheet)": return ._modal_pageSheet
+            case "automatic".lowercased(): return .default
+            case "navigationStack".lowercased(): return ._navigationStack
+            case "modal".lowercased(): return ._modal
+            case "modal(.automatic)".lowercased(): return ._modal_automatic
+            case "modal(.currentContext)".lowercased(): return ._modal_currentContext
+            case "modal(.custom)".lowercased(): return ._modal_custom
+            case "modal(.formSheet)".lowercased(): return ._modal_formSheet
+            case "modal(.fullscreen)".lowercased(): return ._modal_fullscreen
+            case "modal(.overCurrentContext)".lowercased(): return ._modal_overCurrentContext
+            case "modal(.overFullScreen)".lowercased(): return ._modal_overFullScreen
+            case "modal(.popover)".lowercased(): return ._modal_popover
+            case "modal(.pageSheet)".lowercased(): return ._modal_pageSheet
             default: throw AnyWorkflow.DecodingError.invalidLaunchStyle(name)
         }
     }
