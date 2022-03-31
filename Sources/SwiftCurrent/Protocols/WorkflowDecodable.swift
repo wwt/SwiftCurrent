@@ -32,8 +32,8 @@ extension WorkflowDecodable {
     /// Decodes a ``FlowPersistence`` from a string.
     public static func decodeFlowPersistence(named name: String) throws -> FlowPersistence {
         switch name.lowercased() {
-            case "persistwhenskipped": return .persistWhenSkipped
-            case "removedafterproceeding": return .removedAfterProceeding
+            case "persistWhenSkipped".lowercased(): return .persistWhenSkipped
+            case "removedAfterProceeding".lowercased(): return .removedAfterProceeding
             default: throw AnyWorkflow.DecodingError.invalidFlowPersistence(name)
         }
     }

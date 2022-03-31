@@ -20,10 +20,10 @@ extension WorkflowDecodable where Self: FlowRepresentable & View {
     /// Decodes a ``LaunchStyle`` from a string.
     public static func decodeLaunchStyle(named name: String) throws -> LaunchStyle {
         switch name.lowercased() {
-            case "viewswapping": return .default
-            case "modal": return ._swiftUI_modal
-            case "modal(.fullscreen)": return ._swiftUI_modal_fullscreen
-            case "navigationlink": return ._swiftUI_navigationLink
+            case "viewSwapping".lowercased(): return .default
+            case "modal".lowercased(): return ._swiftUI_modal
+            case "modal(.fullscreen)".lowercased(): return ._swiftUI_modal_fullscreen
+            case "navigationLink".lowercased(): return ._swiftUI_navigationLink
             default: throw AnyWorkflow.DecodingError.invalidLaunchStyle(name)
         }
     }
@@ -31,7 +31,7 @@ extension WorkflowDecodable where Self: FlowRepresentable & View {
     /// Decodes a ``FlowPersistence`` from a string.
     public static func decodeFlowPersistence(named name: String) throws -> FlowPersistence {
         switch name.lowercased() {
-            case "removedafterproceeding": return .removedAfterProceeding
+            case "removedAfterProceeding".lowercased(): return .removedAfterProceeding
             default: throw AnyWorkflow.DecodingError.invalidFlowPersistence(name)
         }
     }
