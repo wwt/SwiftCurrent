@@ -9,7 +9,7 @@ When using server driven workflows be aware that your views will all be wrapped 
 NOTE: The APIs for SwiftCurrent all accept any form of `Data`. This means you are free to use your own data formats, but it also means that data does not necessarily have to come from a server. For example, you could feed it from a flat-file if you're writing a white-labeled application.
 
 ### What is an Aggregator?
-`FlowRepresentableAggregator` is a simple protocol that identifies all types you wish to decode. It's how SwiftCurrent is able to take data and convert it into a `Workflow`. You can either create your own aggregator or [use our CLI utility](https://wwt.github.io/SwiftCurrent/generated-type-registry.html).
+`FlowRepresentableAggregator` is a simple protocol that identifies all types you wish to decode. It's how SwiftCurrent can take data and convert it into a `Workflow`. You can either create your own aggregator or [use our CLI utility](https://wwt.github.io/SwiftCurrent/generated-type-registry.html).
 
 ## Putting it all together
 
