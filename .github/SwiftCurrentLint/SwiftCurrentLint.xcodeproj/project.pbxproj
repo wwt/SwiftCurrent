@@ -11,6 +11,7 @@
 		CA34724527F35A0000C56F00 /* SourceKittenFramework in Frameworks */ = {isa = PBXBuildFile; productRef = CA34724427F35A0000C56F00 /* SourceKittenFramework */; };
 		CA7B459C27D196BB002EA040 /* SwiftCurrent_IRGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7B459B27D196BB002EA040 /* SwiftCurrent_IRGeneratorTests.swift */; };
 		CA9E0C1127ED2546009B388E /* ShellOut in Frameworks */ = {isa = PBXBuildFile; productRef = CA9E0C1027ED2546009B388E /* ShellOut */; };
+		CAFA4A9527F631C5004C5CF7 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = CAFA4A9427F631C5004C5CF7 /* Algorithms */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAFA4A9527F631C5004C5CF7 /* Algorithms in Frameworks */,
 				CA9E0C1127ED2546009B388E /* ShellOut in Frameworks */,
 				CA34724527F35A0000C56F00 /* SourceKittenFramework in Frameworks */,
 			);
@@ -85,6 +87,7 @@
 			name = SwiftCurrentLint;
 			packageProductDependencies = (
 				CA9E0C0E27ED251E009B388E /* ShellOut */,
+				CAD0168B27F631140089047E /* Algorithms */,
 			);
 			productName = SwiftCurrentLint;
 			productReference = CA185E12256DD2F3008C9143 /* libSwiftCurrentLint.a */;
@@ -106,6 +109,7 @@
 			packageProductDependencies = (
 				CA9E0C1027ED2546009B388E /* ShellOut */,
 				CA34724427F35A0000C56F00 /* SourceKittenFramework */,
+				CAFA4A9427F631C5004C5CF7 /* Algorithms */,
 			);
 			productName = "SwiftCurrent-IRGeneratorTests";
 			productReference = CA7B459927D196BB002EA040 /* SwiftCurrent-IRGeneratorTests.xctest */;
@@ -141,6 +145,7 @@
 			packageReferences = (
 				CA9E0C0D27ED251E009B388E /* XCRemoteSwiftPackageReference "ShellOut" */,
 				CA34724327F35A0000C56F00 /* XCRemoteSwiftPackageReference "SourceKitten" */,
+				CAD0168A27F631140089047E /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 			);
 			productRefGroup = CA185E13256DD2F3008C9143 /* Products */;
 			projectDirPath = "";
@@ -427,6 +432,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		CAD0168A27F631140089047E /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-algorithms.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -444,6 +457,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CA9E0C0D27ED251E009B388E /* XCRemoteSwiftPackageReference "ShellOut" */;
 			productName = ShellOut;
+		};
+		CAD0168B27F631140089047E /* Algorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CAD0168A27F631140089047E /* XCRemoteSwiftPackageReference "swift-algorithms" */;
+			productName = Algorithms;
+		};
+		CAFA4A9427F631C5004C5CF7 /* Algorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CAD0168A27F631140089047E /* XCRemoteSwiftPackageReference "swift-algorithms" */;
+			productName = Algorithms;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
