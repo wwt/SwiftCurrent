@@ -337,12 +337,21 @@ final class SwiftCurrent_TypeRegistryGeneratorTests: XCTestCase {
 
         let source = typeDefs.joined(separator: "\n")
         measure {
-            if let output = try? shellOut(to: "\(generatorCommand) \"\(source)\""),
-               let data = output.data(using: .utf8) {
-                let IR = try? JSONDecoder().decode([IRType].self, from: data)
-                XCTAssertEqual(IR?.count, 1000)
-            } else {
-                XCTFail("No output from shell")
+            do {
+                if let output = try? shellOut(to: "\(generatorCommand) \"\(source)\"") {
+                    let data = try XCTUnwrap(SourceKittenFramework.Structure(file: File(contents: output)).description.data(using: .utf8))
+                    let structure = try JSONDecoder().decode(SyntaxStructure.self, from: data)
+
+                    try assertTypeRegistryStructExists(on: structure)
+                    try assertTypesArrayExistsOnRegistry(in: structure)
+
+                    let actualTypes = try getTypeArrayLiteralFromRegistry(in: structure, fromCode: output)
+                    XCTAssertEqual(actualTypes?.count, 1000)
+                } else {
+                    XCTFail("No output from shell")
+                }
+            } catch {
+                XCTFail(error.localizedDescription)
             }
         }
     }
