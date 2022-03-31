@@ -72,7 +72,7 @@ var body: some View {
 And just like that, you've got a workflow! You can now add more items to it or reorder the items that are there. To understand more of how this works, [check out our developer docs.](https://wwt.github.io/SwiftCurrent/How%20to%20use%20SwiftCurrent%20with%20SwiftUI.html)
 
 # Server Driven Workflows
-SwiftCurrent now supports server driven workflows! Check out our schema for details on how to define workflows with JSON, YAML or any other key/value based data format. Then, simply have your `FlowRepresentable` types that you wish to decode conform to `WorkflowDecodable` and decode the workflow. For more information, [see our docs](https://wwt.github.io/SwiftCurrent/server-driven-workflows.html).
+SwiftCurrent now supports server driven workflows! Check out our schema for details on defining workflows with JSON, YAML, or any other key/value-based data format. Then, simply have your `FlowRepresentable` types that you wish to decode conform to `WorkflowDecodable` and decode the workflow. For more information, [see our docs](https://wwt.github.io/SwiftCurrent/server-driven-workflows.html).
 
 # Look at Our Example Apps
 We have [example apps](https://github.com/wwt/SwiftCurrent/tree/main/ExampleApps) for both SwiftUI and UIKit that show SwiftCurrent in action. They've already been tested, so you can see what it's like to test SwiftCurrent code. To run it locally, start by cloning the repo, open `SwiftCurrent.xcworkspace` and then run the `SwiftUIExample` scheme or the `UIKitExample` scheme. 
