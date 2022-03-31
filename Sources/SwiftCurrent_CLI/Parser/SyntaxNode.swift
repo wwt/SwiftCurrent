@@ -1,5 +1,5 @@
 //
-//  IRNode.swift
+//  SyntaxNode.swift
 //  SwiftCurrent
 //
 //  Created by Morgan Zellers on 3/8/22.
