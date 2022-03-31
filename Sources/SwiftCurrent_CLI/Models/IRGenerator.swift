@@ -21,24 +21,24 @@ struct IRGenerator {
         }
     }
 
-    func findTypesConforming(to conformance: String, in files: [File], objectType: Declaration.NominalType? = nil) -> [ConformingType] {
+    func findDeclarationsConforming(to conformance: String, in files: [File], objectType: Declaration.NominalType? = nil) -> [ConformingDeclaration] {
         files
             .flatMap(\.declarations)
             .flatMap { checkTypeForConformance($0, conformance: conformance) }
-            .reduce(into: [ConformingType]()) {
+            .reduce(into: [ConformingDeclaration]()) {
                 $0.append($1)
                 // Find arbitrarily chained protocols (P1 inherits from WorkflowDecodable and P2 inherits from P1 and P3 inherits from P2...)
                 if $1.declaration.nominalType == .protocol {
-                    $0.append(contentsOf: findTypesConforming(to: $1.declaration.name, in: files))
+                    $0.append(contentsOf: findDeclarationsConforming(to: $1.declaration.name, in: files))
                 }
             }
     }
 
-    private func checkTypeForConformance(_ type: Declaration, parents: [Declaration] = [], conformance: String) -> [ConformingType] {
+    private func checkTypeForConformance(_ type: Declaration, parents: [Declaration] = [], conformance: String) -> [ConformingDeclaration] {
         // Find arbitrarily nested types
         type.declarations
             .flatMap { checkTypeForConformance($0, parents: parents.appending(type), conformance: conformance) }
-            .appending(contentsOf: type.inheritance.contains(conformance) ? [ConformingType(declaration: type, parents: parents)] : [])
+            .appending(contentsOf: type.inheritance.contains(conformance) ? [ConformingDeclaration(declaration: type, parents: parents)] : [])
     }
 
     private func getSwiftFileURLs(from path: URL) throws -> [URL] {

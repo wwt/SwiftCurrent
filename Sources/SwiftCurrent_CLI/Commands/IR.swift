@@ -20,7 +20,7 @@ struct IR: ParsableCommand { // swiftlint:disable:this type_name
         let irGenerator = IRGenerator()
         let files = try irGenerator.getFiles(from: pathOrSourceCode)
 
-        let conformingTypes = irGenerator.findTypesConforming(to: "\(Self.conformance)", in: files)
+        let conformingTypes = irGenerator.findDeclarationsConforming(to: "\(Self.conformance)", in: files)
 
         let encoded = try JSONEncoder().encode(conformingTypes.lazy.filter(\.isConcreteType))
 

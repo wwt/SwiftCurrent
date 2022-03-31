@@ -23,7 +23,7 @@ struct TypeRegistry: ParsableCommand {
         let irGenerator = IRGenerator()
         let files = try irGenerator.getFiles(from: pathOrSourceCode)
 
-        let conformingTypes = irGenerator.findTypesConforming(to: "\(Self.conformance)", in: files).filter(\.isConcreteType)
+        let conformingTypes = irGenerator.findDeclarationsConforming(to: "\(Self.conformance)", in: files).filter(\.isConcreteType)
         let types = conformingTypes.map { "\($0.name).self" }
 
         let code =

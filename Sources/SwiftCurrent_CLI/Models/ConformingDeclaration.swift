@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ConformingType {
+struct ConformingDeclaration {
     let declaration: Declaration
     let parents: [Declaration]
 
@@ -32,7 +32,7 @@ struct ConformingType {
     }
 }
 
-extension ConformingType: Encodable {
+extension ConformingDeclaration: Encodable {
     enum CodingKeys: String, CodingKey {
         case name
     }
