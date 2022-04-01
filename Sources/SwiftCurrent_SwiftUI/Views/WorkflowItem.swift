@@ -70,19 +70,19 @@ public struct WorkflowItem<FlowRepresentableType: FlowRepresentable & View, Cont
         _modifierClosure = State(initialValue: modifierClosure)
         _flowPersistenceClosure = State(initialValue: flowPersistenceClosure)
         _launchStyle = State(initialValue: launchStyle)
-        let metadata = FlowRepresentableMetadata(FlowRepresentableType.self,
-                                                 launchStyle: launchStyle.rawValue,
-                                                 flowPersistence: flowPersistenceClosure,
-                                                 flowRepresentableFactory: factory)
+        let metadata = ExtendedFlowRepresentableMetadata(flowRepresentableType: FlowRepresentableType.self,
+                                                         launchStyle: launchStyle.rawValue,
+                                                         flowPersistence: flowPersistenceClosure,
+                                                         flowRepresentableFactory: factory)
         _metadata = State(initialValue: metadata)
     }
 
     /// Creates a workflow item from a FlowRepresentable type
     public init(_ item: FlowRepresentableType.Type) where Content == FlowRepresentableType {
-        let metadata = FlowRepresentableMetadata(FlowRepresentableType.self,
-                                                 launchStyle: .new,
-                                                 flowPersistence: flowPersistenceClosure,
-                                                 flowRepresentableFactory: factory)
+        let metadata = ExtendedFlowRepresentableMetadata(flowRepresentableType: FlowRepresentableType.self,
+                                                         launchStyle: .new,
+                                                         flowPersistence: flowPersistenceClosure,
+                                                         flowRepresentableFactory: factory)
         _metadata = State(initialValue: metadata)
     }
 
@@ -156,6 +156,13 @@ extension WorkflowItem {
             }
             return persistence(arg).rawValue
         })
+    }
+
+    func settingPersistence(_ persistence: @escaping (AnyWorkflow.PassedArgs) -> FlowPersistence) -> Self {
+        Self(previous: self,
+             launchStyle: launchStyle,
+             modifierClosure: modifierClosure ?? { _ in },
+             flowPersistenceClosure: persistence)
     }
 
     /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.

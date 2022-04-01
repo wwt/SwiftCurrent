@@ -51,6 +51,26 @@ public struct WorkflowView<Content: View>: View {
             .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 
+    private static func itemToLaunch(from workflow: AnyWorkflow) -> AnyWorkflowItem {
+        let lastMetadata = workflow.last?.value.metadata as? ExtendedFlowRepresentableMetadata
+        let lastItem = lastMetadata?.workflowItemFactory(nil)
+
+        if let headItem = Self.findHeadItem(element: workflow.last, item: lastItem) {
+            return headItem
+        } else if let lastItem = lastItem {
+            return lastItem
+        }
+
+        fatalError("Workflow has no items to launch")
+    }
+
+    private static func findHeadItem(element: AnyWorkflow.Element?, item: AnyWorkflowItem?) -> AnyWorkflowItem? {
+        guard let previous = element?.previous,
+              let previousItem = (previous.value.metadata as? ExtendedFlowRepresentableMetadata)?.workflowItemFactory(item) else { return item }
+
+        return findHeadItem(element: previous, item: previousItem)
+    }
+
     /**
      Creates a base for proceeding with a `WorkflowItem`.
      - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
@@ -129,6 +149,34 @@ public struct WorkflowView<Content: View>: View {
     public init<WI: _WorkflowItemProtocol>(isLaunched: Binding<Bool> = .constant(true),
                                            @WorkflowBuilder content: () -> WI) where Content == WorkflowLauncher<WI>, WI.FlowRepresentableType.WorkflowInput == AnyWorkflow.PassedArgs {
         self.init(isLaunched: isLaunched, startingArgs: .none, content: content())
+    }
+
+    /**
+     Creates a base for proceeding with a `WorkflowItem`.
+     - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
+     - Parameter startingArgs: arguments passed to the first loaded `FlowRepresentable` in the underlying `Workflow`.
+     - Parameter workflow: workflow to be launched; must contain `FlowRepresentable`s of type `View`
+     */
+    public init(isLaunched: Binding<Bool> = .constant(true), launchingWith startingArgs: AnyWorkflow.PassedArgs = .none, workflow: AnyWorkflow) where Content == WorkflowLauncher<AnyWorkflowItem> {
+        workflow.forEach {
+            assert($0.value.metadata is ExtendedFlowRepresentableMetadata, "It is possible the workflow was constructed incorrectly. This represents an internal error, please file a bug at https://github.com/wwt/SwiftCurrent/issues") // swiftlint:disable:this line_length
+        }
+
+        _content = State(wrappedValue: WorkflowLauncher(isLaunched: isLaunched, startingArgs: startingArgs) { Self.itemToLaunch(from: workflow) })
+    }
+
+    /**
+     Creates a base for proceeding with a `WorkflowItem`.
+     - Parameter isLaunched: binding that controls launching the underlying `Workflow`.
+     - Parameter startingArgs: arguments passed to the first loaded `FlowRepresentable` in the underlying `Workflow`.
+     - Parameter workflow: workflow to be launched; must contain `FlowRepresentable`s of type `View`
+     */
+    public init<A>(isLaunched: Binding<Bool> = .constant(true), launchingWith startingArgs: A, workflow: AnyWorkflow) where Content == WorkflowLauncher<AnyWorkflowItem> {
+        workflow.forEach {
+            assert($0.value.metadata is ExtendedFlowRepresentableMetadata, "It is possible the workflow was constructed incorrectly. This represents an internal error, please file a bug at https://github.com/wwt/SwiftCurrent/issues") // swiftlint:disable:this line_length
+        }
+
+        _content = State(wrappedValue: WorkflowLauncher(isLaunched: isLaunched, startingArgs: .args(startingArgs)) { Self.itemToLaunch(from: workflow) })
     }
 
     private init<WI: _WorkflowItemProtocol>(isLaunched: Binding<Bool>,

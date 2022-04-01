@@ -34,6 +34,9 @@ public class AnyWorkflow {
     /// The first `LinkedList.Node` of the wrapped `Workflow`.
     public var first: Element? { storageBase.first }
 
+    /// The last `LinkedList.Node` of the wrapped `Workflow`.
+    public var last: Element? { storageBase.last }
+
     fileprivate var storageBase: AnyWorkflowStorageBase
 
     /// Creates a type erased `Workflow`.
@@ -85,6 +88,44 @@ extension AnyWorkflow: Sequence {
 }
 
 extension AnyWorkflow {
+    /// Errors that can occur during decoding
+    public enum DecodingError: Error, Equatable {
+        /// The ``WorkflowDecodable`` could not be found in supplied aggregator.
+        /// AssociatedType: invalid FlowRepresentable name
+        case invalidFlowRepresentable(String)
+        /// The ``LaunchStyle`` could not be found.
+        /// AssociatedType: invalid LaunchStyle
+        case invalidLaunchStyle(String)
+        /// The ``FlowPersistence`` could not be found.
+        /// AssociatedType: invalid LaunchStyle
+        case invalidFlowPersistence(String)
+
+        public static func == (lhs: DecodingError, rhs: DecodingError) -> Bool {
+            switch (lhs, rhs) {
+                case (.invalidFlowRepresentable(let lhsName), .invalidFlowRepresentable(let rhsName)):
+                    return lhsName == rhsName
+                case (.invalidLaunchStyle(let lhsName), .invalidLaunchStyle(let rhsName)):
+                    return lhsName == rhsName
+                case (.invalidFlowPersistence(let lhsName), .invalidFlowPersistence(let rhsName)):
+                    return lhsName == rhsName
+                default: return false
+            }
+        }
+    }
+}
+
+extension AnyWorkflow {
+    /// Latest supported schema version
+    public static var jsonSchemaVersion: JSONSchemaVersion = .v0_0_1
+
+    /// Codified list of supported JSON schema versions by this library
+    public enum JSONSchemaVersion: String, Decodable {
+        /// JSON Schema v0.0.1
+        case v0_0_1 = "v0.0.1"
+    }
+}
+
+extension AnyWorkflow {
     /// A type that represents either a type erased value or no value.
     public enum PassedArgs {
         /// No arguments are passed forward.
@@ -111,6 +152,7 @@ fileprivate class AnyWorkflowStorageBase {
     var orchestrationResponder: OrchestrationResponder?
     var count: Int { fatalError("count not overridden by AnyWorkflowStorage") }
     var first: LinkedList<_WorkflowItem>.Element? { fatalError("first not overridden by AnyWorkflowStorage") }
+    var last: LinkedList<_WorkflowItem>.Element? { fatalError("last not overridden by AnyWorkflowStorage") }
 
     // https://github.com/wwt/SwiftCurrent/blob/main/.github/STYLEGUIDE.md#type-erasure
     // swiftlint:disable:next unavailable_function
@@ -157,6 +199,7 @@ fileprivate final class AnyWorkflowStorage<F: FlowRepresentable>: AnyWorkflowSto
     override var count: Int { workflow.count }
 
     override var first: LinkedList<_WorkflowItem>.Element? { workflow.first }
+    override var last: LinkedList<_WorkflowItem>.Element? { workflow.last }
 
     init(_ workflow: Workflow<F>) {
         self.workflow = workflow

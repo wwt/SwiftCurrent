@@ -12,6 +12,7 @@ import ViewInspector
 
 import SwiftCurrent
 @testable import SwiftCurrent_SwiftUI // testable sadly needed for inspection.inspect to work
+import SwiftCurrent_Testing
 
 @available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
@@ -792,6 +793,334 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         XCTAssertNoThrow(try stack.button(0).tap())
         XCTAssertNoThrow(try launcher.view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self))
     }
+
+    func testLaunchingAWorkflowWithOneItemFromAnAnyWorkflow() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+
+            var body: some View {
+                Button("Proceed") { proceedInWorkflow() }
+            }
+        }
+
+        let wf = try decodeAnyWorkflow(with: FR1.self)
+
+        let launcher = try await MainActor.run {
+            WorkflowView(workflow: wf)
+        }.hostAndInspect(with: \.inspection)
+
+        XCTAssertNoThrow(try launcher.find(FR1.self), "Unable to find FR1")
+    }
+
+    func testLaunchingAWorkflowFromAnAnyWorkflow_UsesCorrectLaunchStyle() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+
+            var body: some View {
+                Button("Proceed") { proceedInWorkflow() }
+            }
+        }
+
+        let firstWorkflowJSON = try XCTUnwrap("""
+        {
+            "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
+            "sequence" : [
+                {
+                    "flowRepresentableName" : "FR1",
+                    "launchStyle" : "modal"
+                }
+            ]
+        }
+        """.data(using: .utf8))
+
+        let firstWF = try JSONDecoder().decodeWorkflow(withAggregator: TestRegistry(types: [FR1.self]), from: firstWorkflowJSON)
+
+        let firstLauncher = try await MainActor.run {
+            WorkflowView(workflow: firstWF)
+        }.hostAndInspect(with: \.inspection)
+
+        XCTAssertNoThrow(try firstLauncher.find(FR1.self), "Unable to find FR1")
+        let fr1Wrapper = try await firstLauncher.extractWorkflowLauncher().view(AnyWorkflowItem.self).anyView().view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self)
+        let fr1LaunchStyle = try await fr1Wrapper.actualView().workflowLaunchStyle
+        XCTAssertEqual(fr1LaunchStyle, .modal)
+
+        let secondWorkflowJSON = try XCTUnwrap("""
+        {
+            "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
+            "sequence" : [
+                {
+                    "flowRepresentableName" : "FR1",
+                    "launchStyle" : "navigationLink"
+                }
+            ]
+        }
+        """.data(using: .utf8))
+
+        let secondWF = try JSONDecoder().decodeWorkflow(withAggregator: TestRegistry(types: [FR1.self]), from: secondWorkflowJSON)
+
+        let secondLauncher = try await MainActor.run {
+            WorkflowView(workflow: secondWF)
+        }.hostAndInspect(with: \.inspection)
+
+        XCTAssertNoThrow(try secondLauncher.find(FR1.self), "Unable to find FR1")
+        let secondFr1Wrapper = try await secondLauncher.extractWorkflowLauncher().view(AnyWorkflowItem.self).anyView().view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self)
+        let secondFr1LaunchStyle = try await secondFr1Wrapper.actualView().workflowLaunchStyle
+        XCTAssertEqual(secondFr1LaunchStyle, .navigationLink)
+    }
+
+    func testLaunchingAWorkflowFromAnAnyWorkflow_UsesCorrectPersistence() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+
+            var body: some View {
+                Button("Proceed") { proceedInWorkflow() }
+            }
+        }
+
+        let firstWorkflowJSON = try XCTUnwrap("""
+        {
+            "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
+            "sequence" : [
+                {
+                    "flowRepresentableName" : "FR1",
+                }
+            ]
+        }
+        """.data(using: .utf8))
+
+        let firstWF = try JSONDecoder().decodeWorkflow(withAggregator: TestRegistry(types: [FR1.self]), from: firstWorkflowJSON)
+
+        let firstLauncher = try await MainActor.run {
+            WorkflowView(workflow: firstWF)
+        }.hostAndInspect(with: \.inspection)
+
+        XCTAssertNoThrow(try firstLauncher.find(FR1.self), "Unable to find FR1")
+        let fr1Wrapper = try await firstLauncher.extractWorkflowLauncher().view(AnyWorkflowItem.self).anyView().view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self)
+        let fr1PersistenceClosure = try XCTUnwrap(Mirror(reflecting: fr1Wrapper.view(WorkflowItem<FR1, FR1>.self).actualView()).descendant("_flowPersistenceClosure") as? State<(AnyWorkflow.PassedArgs) -> FlowPersistence>).wrappedValue
+        XCTAssertEqual(fr1PersistenceClosure(.none), .default)
+
+        let secondWorkflowJSON = try XCTUnwrap("""
+        {
+            "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
+            "sequence" : [
+                {
+                    "flowRepresentableName" : "FR1",
+                    "flowPersistence" : "removedAfterProceeding"
+                }
+            ]
+        }
+        """.data(using: .utf8))
+
+        let secondWF = try JSONDecoder().decodeWorkflow(withAggregator: TestRegistry(types: [FR1.self]), from: secondWorkflowJSON)
+
+        let secondLauncher = try await MainActor.run {
+            WorkflowView(workflow: secondWF)
+        }.hostAndInspect(with: \.inspection)
+
+        XCTAssertNoThrow(try secondLauncher.find(FR1.self), "Unable to find FR1")
+        let secondFr1Wrapper = try await secondLauncher.extractWorkflowLauncher().view(AnyWorkflowItem.self).anyView().view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self)
+        let secondFr1PersistenceClosure = try XCTUnwrap(Mirror(reflecting: secondFr1Wrapper.view(WorkflowItem<FR1, FR1>.self).actualView()).descendant("_flowPersistenceClosure") as? State<(AnyWorkflow.PassedArgs) -> FlowPersistence>).wrappedValue
+        XCTAssertEqual(secondFr1PersistenceClosure(.none), .removedAfterProceeding)
+    }
+
+    func testLaunchingAMultiTypeLongWorkflowFromAnAnyWorkflow() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+            typealias WorkflowOutput = AnyWorkflow.PassedArgs
+            var _workflowPointer: AnyFlowRepresentable?
+            private let data: AnyWorkflow.PassedArgs
+            var body: some View { Text("FR2 type") }
+
+            init(with data: AnyWorkflow.PassedArgs) {
+                self.data = data
+            }
+        }
+
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let expectedArgs = UUID().uuidString
+
+        let wf = try decodeAnyWorkflow(with: FR1.self, FR2.self)
+        let launcher = try await MainActor.run {
+            WorkflowView(workflow: wf)
+                .onFinish { _ in
+                    expectOnFinish.fulfill()
+                }
+        }.hostAndInspect(with: \.inspection)
+
+        XCTAssertEqual(try launcher.find(FR1.self).text().string(), "FR1 type")
+        try await launcher.find(FR1.self).proceedInWorkflow()
+        XCTAssertEqual(try launcher.find(FR2.self).text().string(), "FR2 type")
+        XCTAssertNoThrow(try launcher.find(FR2.self).actualView().proceedInWorkflow(.args(expectedArgs)))
+
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
+    }
+
+    func testLaunchingAWorkflowFromAnAnyWorkflow() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, PassthroughFlowRepresentable, Inspectable, WorkflowDecodable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR3 type") }
+        }
+
+        let expectOnFinish = expectation(description: "OnFinish called")
+
+        let wf = try decodeAnyWorkflow(with: FR1.self, FR2.self, FR3.self)
+        let launcher = try await MainActor.run {
+            WorkflowView(workflow: wf)
+                .onFinish { _ in
+                    expectOnFinish.fulfill()
+                }
+        }.hostAndInspect(with: \.inspection)
+
+
+        XCTAssertEqual(try launcher.find(FR1.self).text().string(), "FR1 type")
+        try await launcher.find(FR1.self).proceedInWorkflow()
+        XCTAssertEqual(try launcher.find(FR2.self).text().string(), "FR2 type")
+        try await launcher.find(FR2.self).proceedInWorkflow()
+        XCTAssertEqual(try launcher.find(FR3.self).text().string(), "FR3 type")
+        try await launcher.find(FR3.self).proceedInWorkflow()
+
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
+    }
+
+    func testWorkflowLaunchedFromAnAnyWorkflowCanHavePassthroughFlowRepresentableInTheMiddle() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+            typealias WorkflowOutput = String
+            var _workflowPointer: AnyFlowRepresentable?
+            private let data: AnyWorkflow.PassedArgs
+            var body: some View { Text("FR2 type") }
+
+            init(with args: AnyWorkflow.PassedArgs) {
+                self.data = args
+            }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+            typealias WorkflowInput = String
+            let str: String
+            init(with str: String) {
+                self.str = str
+            }
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR3 type, \(str)") }
+        }
+        struct FR4: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR4 type") }
+        }
+
+        let wf = try decodeAnyWorkflow(with: FR1.self, FR2.self, FR3.self, FR4.self)
+
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let launcher = try await MainActor.run {
+            WorkflowView(workflow: wf)
+                .onFinish { _ in
+                    expectOnFinish.fulfill()
+                }
+        }.hostAndInspect(with: \.inspection)
+
+        let expectedArgs = UUID().uuidString
+
+        XCTAssertEqual(try launcher.find(FR1.self).text().string(), "FR1 type")
+        try await launcher.find(FR1.self).proceedInWorkflow()
+        XCTAssertEqual(try launcher.find(FR2.self).text().string(), "FR2 type")
+        try await launcher.find(FR2.self).proceedInWorkflow(expectedArgs)
+        XCTAssertEqual(try launcher.find(FR3.self).text().string(), "FR3 type, \(expectedArgs)")
+        try await launcher.find(FR3.self).proceedInWorkflow()
+        XCTAssertEqual(try launcher.find(FR4.self).text().string(), "FR4 type")
+        try await launcher.find(FR4.self).proceedInWorkflow()
+
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
+    }
+
+    func testWorkflowLaunchedFromAnAnyWorkflowCanHaveStartingArgs() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+            typealias WorkflowOutput = AnyWorkflow.PassedArgs
+            var _workflowPointer: AnyFlowRepresentable?
+            var args: AnyWorkflow.PassedArgs
+            var body: some View { Text("FR1 type, \(args.extractArgs(defaultValue: "") as! String)") }
+
+            init(with args: AnyWorkflow.PassedArgs) {
+                self.args = args
+            }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var args: AnyWorkflow.PassedArgs
+            var body: some View { Text("FR2 type, \(args.extractArgs(defaultValue: "") as! String)") }
+
+            init(with args: AnyWorkflow.PassedArgs) {
+                self.args = args
+            }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR3 type") }
+        }
+        struct FR4: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR4 type") }
+        }
+
+        let wf = try decodeAnyWorkflow(with: FR1.self, FR2.self, FR3.self, FR4.self)
+
+        let expectedArgs = UUID().uuidString
+        let expectOnFinish = expectation(description: "OnFinish called")
+        let launcher = try await MainActor.run {
+            WorkflowView(launchingWith: .args(expectedArgs), workflow: wf)
+                .onFinish { _ in
+                    expectOnFinish.fulfill()
+                }
+        }.hostAndInspect(with: \.inspection)
+
+        XCTAssertEqual(try launcher.find(FR1.self).text().string(), "FR1 type, \(expectedArgs)")
+        try await launcher.find(FR1.self).proceedInWorkflow(.args(expectedArgs))
+        XCTAssertEqual(try launcher.find(FR2.self).text().string(), "FR2 type, \(expectedArgs)")
+        try await launcher.find(FR2.self).proceedInWorkflow()
+        XCTAssertEqual(try launcher.find(FR3.self).text().string(), "FR3 type")
+        try await launcher.find(FR3.self).proceedInWorkflow()
+        XCTAssertEqual(try launcher.find(FR4.self).text().string(), "FR4 type")
+        try await launcher.find(FR4.self).proceedInWorkflow()
+
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
+    }
+
+    func testLaunchingAWorkflowUsingNonPassedArgsStartingArgs() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+            weak var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+            public var data: String
+            init(with data: String) { self.data = data }
+        }
+
+        let wf = try decodeAnyWorkflow(with: FR1.self)
+
+        let expectedData = UUID().uuidString
+        let launcher = try await MainActor.run {
+            WorkflowView(launchingWith: expectedData, workflow: wf)
+        }.hostAndInspect(with: \.inspection)
+
+        XCTAssertEqual(try launcher.find(FR1.self).actualView().data, expectedData)
+    }
+
+    func testIfNoWorkflowItemsThenFatalError() throws {
+        try XCTAssertThrowsFatalError {
+            _ = WorkflowView(workflow: AnyWorkflow.empty)
+        }
+    }
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
@@ -800,4 +1129,21 @@ protocol StateIdentifiable { }
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension State: StateIdentifiable {
 
+}
+
+fileprivate extension XCTestCase {
+    func decodeAnyWorkflow(with sequence: WorkflowDecodable.Type...) throws -> AnyWorkflow {
+        try JSONDecoder().decodeWorkflow(withAggregator: TestRegistry(types: sequence), from: generateValidWorkflowSpecification(with: sequence))
+    }
+
+    func generateValidWorkflowSpecification(with sequence: [WorkflowDecodable.Type]) throws -> Data {
+        return try XCTUnwrap("""
+        {
+            "schemaVersion": "\(AnyWorkflow.jsonSchemaVersion.rawValue)",
+            "sequence" : [
+            \(sequence.map { "{\"flowRepresentableName\" : \"\($0.flowRepresentableName)\"}" }.joined(separator: ",\n"))
+            ]
+        }
+        """.data(using: .utf8))
+    }
 }
