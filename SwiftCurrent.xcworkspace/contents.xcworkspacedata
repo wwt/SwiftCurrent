@@ -14,6 +14,9 @@
       location = "group:.github/SwiftCurrentLint/SwiftCurrentLint.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:UseCases/SwiftUI_UseCases/SwiftUI_UseCases.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:SwiftCurrent.podspec">
    </FileRef>
 </Workspace>
