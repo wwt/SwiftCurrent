@@ -85,26 +85,6 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CAC34B4F26A07F840039A373"
-               BuildableName = "SwiftUIExampleTests.xctest"
-               BlueprintName = "SwiftUIExampleTests"
-               ReferencedContainer = "container:ExampleApps/SwiftUIExample/SwiftUIExample.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CAF586AD256CF2B40044C864"
-               BuildableName = "UIKitExampleTests.xctest"
-               BlueprintName = "UIKitExampleTests"
-               ReferencedContainer = "container:ExampleApps/UIKitExample/UIKitExample.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "SwiftCurrent-SwiftUITests"
                BuildableName = "SwiftCurrent-SwiftUITests"
                BlueprintName = "SwiftCurrent-SwiftUITests"
@@ -115,10 +95,40 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "SwiftCurrentMultiPlatformTests"
+               BuildableName = "SwiftCurrentMultiPlatformTests"
+               BlueprintName = "SwiftCurrentMultiPlatformTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CAC34B4F26A07F840039A373"
+               BuildableName = "SwiftUIExampleTests.xctest"
+               BlueprintName = "SwiftUIExampleTests"
+               ReferencedContainer = "container:.github/ExampleApps/SwiftUIExample/SwiftUIExample.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CAF586AD256CF2B40044C864"
+               BuildableName = "UIKitExampleTests.xctest"
+               BlueprintName = "UIKitExampleTests"
+               ReferencedContainer = "container:.github/ExampleApps/UIKitExample/UIKitExample.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "CAF58634256CF0E50044C864"
                BuildableName = "SwiftCurrent_UIKitTests.xctest"
                BlueprintName = "SwiftCurrent_UIKitTests"
-               ReferencedContainer = "container:ExampleApps/UIKitExample/UIKitExample.xcodeproj">
+               ReferencedContainer = "container:.github/ExampleApps/UIKitExample/UIKitExample.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -128,17 +138,7 @@
                BlueprintIdentifier = "D7A6CE7126E0316C00599824"
                BuildableName = "SwiftCurrent_SwiftUI_UITests.xctest"
                BlueprintName = "SwiftCurrent_SwiftUI_UITests"
-               ReferencedContainer = "container:ExampleApps/SwiftUIExample/SwiftUIExample.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "SwiftCurrentMultiPlatformTests"
-               BuildableName = "SwiftCurrentMultiPlatformTests"
-               BlueprintName = "SwiftCurrentMultiPlatformTests"
-               ReferencedContainer = "container:">
+               ReferencedContainer = "container:.github/ExampleApps/SwiftUIExample/SwiftUIExample.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>

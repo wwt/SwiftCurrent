@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/mattgallagher/CwlCatchException.git",
         "state": {
           "branch": null,
-          "revision": "35f9e770f54ce62dd8526470f14c6e137cef3eea",
-          "version": "2.1.1"
+          "revision": "682841464136f8c66e04afe5dbd01ab51a3a56f2",
+          "version": "2.1.0"
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/mattgallagher/CwlPreconditionTesting.git",
         "state": {
           "branch": null,
-          "revision": "c21f7bab5ca8eee0a9998bbd17ca1d0eb45d4688",
-          "version": "2.1.0"
+          "revision": "0630439888c94657a235ffcd5977d6047ef3c87b",
+          "version": "2.0.1"
         }
       },
       {
@@ -51,13 +51,13 @@
         "repositoryURL": "https://github.com/jpsim/SourceKitten.git",
         "state": {
           "branch": "main",
-          "revision": "cd09bbcc90f5b424dcd32cfa464021cdb572dfb0",
+          "revision": "2810d5d4e22d7c6ba9da35f9837494407ccaa74f",
           "version": null
         }
       },
       {
         "package": "swift-algorithms",
-        "repositoryURL": "https://github.com/apple/swift-algorithms",
+        "repositoryURL": "https://github.com/apple/swift-algorithms.git",
         "state": {
           "branch": null,
           "revision": "b14b7f4c528c942f121c8b860b9410b2bf57825e",

@@ -116,16 +116,16 @@
 		CA0536C526A0834B00BF8FC5 /* StoryboardLoadable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardLoadable.swift; sourceTree = "<group>"; };
 		CA0536C626A0834B00BF8FC5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA0536C726A0834B00BF8FC5 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		CA0536DA26A0848B00BF8FC5 /* EnterAddressViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EnterAddressViewControllerTests.swift; path = ../../../Tests/UIKitExampleTests/EnterAddressViewControllerTests.swift; sourceTree = "<group>"; };
-		CA0536DB26A0848B00BF8FC5 /* SetupViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SetupViewControllerTests.swift; path = ../../../Tests/UIKitExampleTests/SetupViewControllerTests.swift; sourceTree = "<group>"; };
-		CA0536DC26A0848B00BF8FC5 /* ReviewOrderViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReviewOrderViewControllerTests.swift; path = ../../../Tests/UIKitExampleTests/ReviewOrderViewControllerTests.swift; sourceTree = "<group>"; };
-		CA0536DD26A0848B00BF8FC5 /* ViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewControllerTest.swift; path = ../../../Tests/UIKitExampleTests/ViewControllerTest.swift; sourceTree = "<group>"; };
-		CA0536DE26A0848B00BF8FC5 /* PickupOrDeliveryViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PickupOrDeliveryViewControllerTests.swift; path = ../../../Tests/UIKitExampleTests/PickupOrDeliveryViewControllerTests.swift; sourceTree = "<group>"; };
-		CA0536DF26A0848B00BF8FC5 /* LocationsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationsViewControllerTests.swift; path = ../../../Tests/UIKitExampleTests/LocationsViewControllerTests.swift; sourceTree = "<group>"; };
-		CA0536E026A0848B00BF8FC5 /* MenuSelectionViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuSelectionViewControllerTests.swift; path = ../../../Tests/UIKitExampleTests/MenuSelectionViewControllerTests.swift; sourceTree = "<group>"; };
-		CA0536E126A0848B00BF8FC5 /* FoodSelectionViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FoodSelectionViewControllerTests.swift; path = ../../../Tests/UIKitExampleTests/FoodSelectionViewControllerTests.swift; sourceTree = "<group>"; };
-		CA0536E226A0848B00BF8FC5 /* Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Convenience.swift; path = ../../../Tests/UIKitExampleTests/Convenience.swift; sourceTree = "<group>"; };
-		CA0536E326A0848B00BF8FC5 /* TestFinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestFinder.swift; path = ../../../Tests/UIKitExampleTests/TestFinder.swift; sourceTree = "<group>"; };
+		CA0536DA26A0848B00BF8FC5 /* EnterAddressViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EnterAddressViewControllerTests.swift; path = ../../../../Tests/UIKitExampleTests/EnterAddressViewControllerTests.swift; sourceTree = "<group>"; };
+		CA0536DB26A0848B00BF8FC5 /* SetupViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SetupViewControllerTests.swift; path = ../../../../Tests/UIKitExampleTests/SetupViewControllerTests.swift; sourceTree = "<group>"; };
+		CA0536DC26A0848B00BF8FC5 /* ReviewOrderViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReviewOrderViewControllerTests.swift; path = ../../../../Tests/UIKitExampleTests/ReviewOrderViewControllerTests.swift; sourceTree = "<group>"; };
+		CA0536DD26A0848B00BF8FC5 /* ViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewControllerTest.swift; path = ../../../../Tests/UIKitExampleTests/ViewControllerTest.swift; sourceTree = "<group>"; };
+		CA0536DE26A0848B00BF8FC5 /* PickupOrDeliveryViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PickupOrDeliveryViewControllerTests.swift; path = ../../../../Tests/UIKitExampleTests/PickupOrDeliveryViewControllerTests.swift; sourceTree = "<group>"; };
+		CA0536DF26A0848B00BF8FC5 /* LocationsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationsViewControllerTests.swift; path = ../../../../Tests/UIKitExampleTests/LocationsViewControllerTests.swift; sourceTree = "<group>"; };
+		CA0536E026A0848B00BF8FC5 /* MenuSelectionViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuSelectionViewControllerTests.swift; path = ../../../../Tests/UIKitExampleTests/MenuSelectionViewControllerTests.swift; sourceTree = "<group>"; };
+		CA0536E126A0848B00BF8FC5 /* FoodSelectionViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FoodSelectionViewControllerTests.swift; path = ../../../../Tests/UIKitExampleTests/FoodSelectionViewControllerTests.swift; sourceTree = "<group>"; };
+		CA0536E226A0848B00BF8FC5 /* Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Convenience.swift; path = ../../../../Tests/UIKitExampleTests/Convenience.swift; sourceTree = "<group>"; };
+		CA0536E326A0848B00BF8FC5 /* TestFinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestFinder.swift; path = ../../../../Tests/UIKitExampleTests/TestFinder.swift; sourceTree = "<group>"; };
 		CA357F19263E67DE003D1ACB /* UIKitPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitPresenterTests.swift; sourceTree = "<group>"; };
 		CA357F1E263E68AD003D1ACB /* UIKitAssertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitAssertions.swift; sourceTree = "<group>"; };
 		CA4A6F1B26CDAEA600BE3E74 /* TestEventReceiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestEventReceiver.swift; sourceTree = "<group>"; };
@@ -366,7 +366,7 @@
 				D7DBD21326CD969B00F1E39B /* CustomAssertions.swift */,
 			);
 			name = SwiftCurrent_Testing;
-			path = ../../../Sources/SwiftCurrent_Testing;
+			path = ../../../../Sources/SwiftCurrent_Testing;
 			sourceTree = "<group>";
 		};
 		D7DBD21426CD969B00F1E39B /* SwiftCurrent_Testing_ObjC */ = {
@@ -377,7 +377,7 @@
 				D7DBD21A26CD969B00F1E39B /* NSObjectLoadable.m */,
 			);
 			name = SwiftCurrent_Testing_ObjC;
-			path = ../../../Sources/SwiftCurrent_Testing_ObjC;
+			path = ../../../../Sources/SwiftCurrent_Testing_ObjC;
 			sourceTree = "<group>";
 		};
 		D7DBD21626CD969B00F1E39B /* Include */ = {
@@ -397,7 +397,7 @@
 				D7DBD22926CD96C500F1E39B /* NSObjectLoadable.m */,
 			);
 			name = SwiftCurrent_Testing_ObjC;
-			path = ../../../Sources/SwiftCurrent_Testing_ObjC;
+			path = ../../../../Sources/SwiftCurrent_Testing_ObjC;
 			sourceTree = "<group>";
 		};
 		D7DBD22526CD96C500F1E39B /* Include */ = {
@@ -420,7 +420,7 @@
 				D7DBD23026CD96C500F1E39B /* CustomAssertions.swift */,
 			);
 			name = SwiftCurrent_Testing;
-			path = ../../../Sources/SwiftCurrent_Testing;
+			path = ../../../../Sources/SwiftCurrent_Testing;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -857,7 +857,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = TT.WorkflowTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "../../Sources/SwiftCurrent_Testing_ObjC/SwiftCurrent_UIKitTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "../../../Sources/SwiftCurrent_Testing_ObjC/SwiftCurrent_UIKitTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -881,7 +881,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = TT.WorkflowTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "../../Sources/SwiftCurrent_Testing_ObjC/SwiftCurrent_UIKitTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "../../../Sources/SwiftCurrent_Testing_ObjC/SwiftCurrent_UIKitTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/UIKitExample.app/UIKitExample";
@@ -905,7 +905,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = TT.SwiftCurrentExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "../../Sources/SwiftCurrent_Testing_ObjC/UIKitExampleTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "../../../Sources/SwiftCurrent_Testing_ObjC/UIKitExampleTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -930,7 +930,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = TT.SwiftCurrentExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "../../Sources/SwiftCurrent_Testing_ObjC/UIKitExampleTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "../../../Sources/SwiftCurrent_Testing_ObjC/UIKitExampleTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/UIKitExample.app/UIKitExample";

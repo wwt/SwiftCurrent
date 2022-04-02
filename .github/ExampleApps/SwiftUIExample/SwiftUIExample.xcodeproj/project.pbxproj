@@ -132,13 +132,13 @@
 		CA7B829C26A1E1D6005AA87D /* ChangeUsernameViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeUsernameViewTests.swift; sourceTree = "<group>"; };
 		CA7B829E26A1FAAC005AA87D /* InspectableAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectableAlert.swift; sourceTree = "<group>"; };
 		CA7B82A026A1FB97005AA87D /* MFAViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFAViewTests.swift; sourceTree = "<group>"; };
-		CA7F7F7D26D4531C00DB1903 /* WorkflowItemExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkflowItemExtensions.swift; path = ../../../../Tests/SwiftCurrent_SwiftUITests/WorkflowItemExtensions.swift; sourceTree = "<group>"; };
-		CA7F7F7F26D453C100DB1903 /* ViewHostingExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewHostingExtensions.swift; path = ../../../../Tests/SwiftCurrent_SwiftUITests/ViewInspector/ViewHostingExtensions.swift; sourceTree = "<group>"; };
+		CA7F7F7D26D4531C00DB1903 /* WorkflowItemExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkflowItemExtensions.swift; path = ../../../../../Tests/SwiftCurrent_SwiftUITests/WorkflowItemExtensions.swift; sourceTree = "<group>"; };
+		CA7F7F7F26D453C100DB1903 /* ViewHostingExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewHostingExtensions.swift; path = ../../../../../Tests/SwiftCurrent_SwiftUITests/ViewInspector/ViewHostingExtensions.swift; sourceTree = "<group>"; };
 		CA84D8E226A0E3F5006CF964 /* QRScannerFeatureOnboardingViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerFeatureOnboardingViewTests.swift; sourceTree = "<group>"; };
 		CA84D8E426A0E5A8006CF964 /* MapFeatureOnboardingViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFeatureOnboardingViewTests.swift; sourceTree = "<group>"; };
 		CA84D8E626A0E72A006CF964 /* MapFeatureViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFeatureViewTests.swift; sourceTree = "<group>"; };
 		CA84D8E826A0ED66006CF964 /* ChangePasswordViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewTests.swift; sourceTree = "<group>"; };
-		CA971D2126D593150083821A /* XCTestCaseExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XCTestCaseExtensions.swift; path = ../../../../Tests/SwiftCurrent_SwiftUITests/TestExtensions/XCTestCaseExtensions.swift; sourceTree = "<group>"; };
+		CA971D2126D593150083821A /* XCTestCaseExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XCTestCaseExtensions.swift; path = ../../../../../Tests/SwiftCurrent_SwiftUITests/TestExtensions/XCTestCaseExtensions.swift; sourceTree = "<group>"; };
 		CAC34B3F26A07F830039A373 /* SwiftUIExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAC34B4226A07F830039A373 /* SwiftUIExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIExampleApp.swift; sourceTree = "<group>"; };
 		CAC34B4626A07F830039A373 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -498,7 +498,7 @@
 				D7DBD1F926CD920700F1E39B /* CustomAssertions.swift */,
 			);
 			name = SwiftCurrent_Testing;
-			path = ../../../Sources/SwiftCurrent_Testing;
+			path = ../../../../Sources/SwiftCurrent_Testing;
 			sourceTree = "<group>";
 		};
 		D7DBD20026CD923600F1E39B /* SwiftCurrent_Testing_ObjC */ = {
@@ -509,7 +509,7 @@
 				D7DBD20526CD923600F1E39B /* NSObjectLoadable.m */,
 			);
 			name = SwiftCurrent_Testing_ObjC;
-			path = ../../../Sources/SwiftCurrent_Testing_ObjC;
+			path = ../../../../Sources/SwiftCurrent_Testing_ObjC;
 			sourceTree = "<group>";
 		};
 		D7DBD20226CD923600F1E39B /* Include */ = {
@@ -957,7 +957,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = WWT.SwiftUIExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "../../Sources/SwiftCurrent_Testing_ObjC/SwiftUIExampleTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "../../../Sources/SwiftCurrent_Testing_ObjC/SwiftUIExampleTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftUIExample.app/SwiftUIExample";
@@ -980,7 +980,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = WWT.SwiftUIExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "../../Sources/SwiftCurrent_Testing_ObjC/SwiftUIExampleTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "../../../Sources/SwiftCurrent_Testing_ObjC/SwiftUIExampleTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftUIExample.app/SwiftUIExample";
