@@ -92,7 +92,7 @@ For specific documentation check out:
 - [Getting Started With SwiftUI](https://wwt.github.io/SwiftCurrent/getting-started-with-swiftui.html)
 - [Getting Started With Storyboards](https://wwt.github.io/SwiftCurrent/using-storyboards.html)
 - [Getting Started With Programmatic UIKit Views](https://wwt.github.io/SwiftCurrent/using-programmatic-views.html)
-- [Server Driven Workflows](https://wwt.github.io/SwiftCurrent/server-driven-workflows.html)
+- [Server Driven Workflows](https://wwt.github.io/SwiftCurrent/Server%20Driven%20Workflows.html)
 - [Developer Documentation](https://wwt.github.io/SwiftCurrent/index.html)
 - [Upgrade Path](https://github.com/wwt/SwiftCurrent/blob/main/.github/UPGRADE_PATH.md)
 - [Contributing to SwiftCurrent](https://github.com/wwt/SwiftCurrent/blob/main/.github/CONTRIBUTING.md)
