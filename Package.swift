@@ -29,7 +29,7 @@ let package = Package(
         .package(url: "https://github.com/sindresorhus/ExceptionCatcher", from: "2.0.0"),
         .package(url: "https://github.com/nalexn/ViewInspector.git", from: "0.9.1"),
         .package(url: "https://github.com/apple/swift-argument-parser", .exact("1.0.3")), // For pipeline
-        .package(url: "https://github.com/apple/swift-syntax.git", .exact("0.50500.0"))
+        .package(url: "https://github.com/apple/swift-syntax.git", .exact("0.50600.1"))
     ],
     targets: [
         .target(
@@ -53,6 +53,7 @@ let package = Package(
         .target(name: "SwiftCurrent_CLI",
                 dependencies: [
                     .product(name: "SwiftSyntax", package: "swift-syntax"),
+                    .product(name: "SwiftSyntaxParser", package: "swift-syntax"),
                     .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 ]),
         .testTarget(
