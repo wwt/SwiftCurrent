@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftSyntax
+import SwiftSyntaxParser
 
 /// Represents a file that has been parsed by the `IRWalker`
 public struct File {
