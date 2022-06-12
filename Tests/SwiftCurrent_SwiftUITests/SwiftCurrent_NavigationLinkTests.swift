@@ -399,9 +399,7 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
         .extractWorkflowLauncher()
         .extractWorkflowItemWrapper()
 
-        let navLink = try XCTUnwrap(try? wfr1.find(ViewType.NavigationLink.self))
         try await wfr1.proceedAndCheckNavLink(on: FR1.self)
-        XCTAssertFalse(try navLink.isActive())
 
         let wfr2 = try await wfr1.extractWrappedWrapper()
         try await wfr2.proceedAndCheckNavLink(on: FR2.self)
@@ -411,8 +409,8 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
 
         XCTAssertNoThrow(try wfr1.find(FR1.self))
         XCTAssertEqual(try wfr1.find(ViewType.NavigationLink.self).isActive(), false)
-        XCTAssertThrowsError(try wfr1.find(FR2.self))
-        XCTAssertThrowsError(try wfr1.find(FR3.self))
+        XCTAssertThrowsError(try wfr2.find(FR2.self))
+        XCTAssertThrowsError(try wfr3.find(FR3.self))
     }
 
     func testNavLinkWorkflowsCanSkipTheFirstItem() async throws {
