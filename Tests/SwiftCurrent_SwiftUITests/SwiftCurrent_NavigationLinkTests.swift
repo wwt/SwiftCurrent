@@ -33,6 +33,7 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
             .onFinish { _ in
                 expectOnFinish.fulfill()
             }
+            .embedInNavigationView()
         }
         .hostAndInspect(with: \.inspection)
         .extractWorkflowLauncher()
@@ -71,6 +72,7 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
             .onFinish { _ in
                 expectOnFinish.fulfill()
             }
+            .embedInNavigationView()
         }
         .hostAndInspect(with: \.inspection)
         .extractWorkflowLauncher()
@@ -109,6 +111,7 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
             .onFinish { _ in
                 expectOnFinish.fulfill()
             }
+            .embedInNavigationView()
         }
         .hostAndInspect(with: \.inspection)
         .extractWorkflowLauncher()
@@ -152,6 +155,7 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
             .onFinish { _ in
                 expectOnFinish.fulfill()
             }
+            .embedInNavigationView()
         }
         .hostAndInspect(with: \.inspection)
         .extractWorkflowLauncher()
@@ -196,6 +200,7 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
             .onFinish { _ in
                 expectOnFinish.fulfill()
             }
+            .embedInNavigationView()
         }
         .hostAndInspect(with: \.inspection)
         .extractWorkflowLauncher()
@@ -240,6 +245,7 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
             .onFinish { _ in
                 expectOnFinish.fulfill()
             }
+            .embedInNavigationView()
         }
         .hostAndInspect(with: \.inspection)
         .extractWorkflowLauncher()
@@ -269,7 +275,7 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
                 WorkflowItem(FR1.self).presentationType(.navigationLink)
                 WorkflowItem(FR1.self).presentationType(.navigationLink)
                 WorkflowItem(FR1.self)
-            }
+            }.embedInNavigationView()
         }
         .hostAndInspect(with: \.inspection)
         .extractWorkflowLauncher()
@@ -337,7 +343,7 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
                 WorkflowItem(FR5.self).presentationType(.navigationLink)
                 WorkflowItem(FR6.self).presentationType(.navigationLink)
                 WorkflowItem(FR7.self).presentationType(.navigationLink)
-            }
+            }.embedInNavigationView()
         }
         .hostAndInspect(with: \.inspection)
         .extractWorkflowLauncher()
@@ -364,6 +370,49 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
         try await wfr7.find(FR7.self).proceedInWorkflow()
     }
 
+    func testWorkflowCanBeAbandoned() async throws {
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR2 type") }
+        }
+        struct FR3: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View {
+                Button("continue") {
+                    workflow?.abandon()
+                }
+            }
+        }
+
+        let wfr1 = try await MainActor.run {
+            WorkflowView {
+                WorkflowItem(FR1.self).presentationType(.navigationLink)
+                WorkflowItem(FR2.self).presentationType(.navigationLink)
+                WorkflowItem(FR3.self).presentationType(.navigationLink)
+            }.embedInNavigationView()
+        }
+        .hostAndInspect(with: \.inspection)
+        .extractWorkflowLauncher()
+        .extractWorkflowItemWrapper()
+
+        try await wfr1.proceedAndCheckNavLink(on: FR1.self)
+
+        let wfr2 = try await wfr1.extractWrappedWrapper()
+        try await wfr2.proceedAndCheckNavLink(on: FR2.self)
+
+        let wfr3 = try await wfr2.extractWrappedWrapper()
+        XCTAssertNoThrow(try wfr3.find(button: "continue").tap())
+
+        XCTAssertNoThrow(try wfr1.find(FR1.self))
+        XCTAssertEqual(try wfr1.find(ViewType.NavigationLink.self).isActive(), false)
+        XCTAssertThrowsError(try wfr2.find(FR2.self))
+        XCTAssertThrowsError(try wfr3.find(FR3.self))
+    }
+
     func testNavLinkWorkflowsCanSkipTheFirstItem() async throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?
@@ -384,6 +433,7 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
                 WorkflowItem(FR2.self).presentationType(.navigationLink)
                 WorkflowItem(FR3.self)
             }
+            .embedInNavigationView()
         }
         .hostAndInspect(with: \.inspection)
         .extractWorkflowLauncher()
@@ -418,6 +468,7 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
                 WorkflowItem(FR2.self).presentationType(.navigationLink)
                 WorkflowItem(FR3.self)
             }
+            .embedInNavigationView()
         }
         .hostAndInspect(with: \.inspection)
         .extractWorkflowLauncher()
@@ -458,6 +509,7 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
                 WorkflowItem(FR3.self)
                 WorkflowItem(FR4.self)
             }
+            .embedInNavigationView()
         }
         .hostAndInspect(with: \.inspection)
         .extractWorkflowLauncher()
@@ -500,6 +552,7 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
             .onFinish { _ in
                 expectOnFinish.fulfill()
             }
+            .embedInNavigationView()
         }
         .hostAndInspect(with: \.inspection)
         .extractWorkflowLauncher()

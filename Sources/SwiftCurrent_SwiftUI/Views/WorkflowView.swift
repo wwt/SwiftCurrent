@@ -78,7 +78,7 @@ public struct WorkflowView<Content: View>: View {
      */
     public init<WI: _WorkflowItemProtocol>(isLaunched: Binding<Bool> = .constant(true),
                                            @WorkflowBuilder content: () -> WI) where Content == WorkflowLauncher<WI>, WI.FlowRepresentableType.WorkflowInput == Never {
-        self.init(isLaunched: isLaunched, startingArgs: .none, content: content())
+        self.init(isLaunched: isLaunched, startingArgs: .none, content: content)
     }
 
     /**
@@ -90,7 +90,7 @@ public struct WorkflowView<Content: View>: View {
     public init<WI: _WorkflowItemProtocol>(isLaunched: Binding<Bool> = .constant(true),
                                            launchingWith args: WI.FlowRepresentableType.WorkflowInput,
                                            @WorkflowBuilder content: () -> WI) where Content == WorkflowLauncher<WI> {
-        self.init(isLaunched: isLaunched, startingArgs: .args(args), content: content())
+        self.init(isLaunched: isLaunched, startingArgs: .args(args), content: content)
     }
 
     /**
@@ -102,7 +102,7 @@ public struct WorkflowView<Content: View>: View {
     public init<WI: _WorkflowItemProtocol>(isLaunched: Binding<Bool> = .constant(true),
                                            launchingWith args: AnyWorkflow.PassedArgs,
                                            @WorkflowBuilder content: () -> WI) where Content == WorkflowLauncher<WI>, WI.FlowRepresentableType.WorkflowInput == AnyWorkflow.PassedArgs {
-        self.init(isLaunched: isLaunched, startingArgs: args, content: content())
+        self.init(isLaunched: isLaunched, startingArgs: args, content: content)
     }
 
     /**
@@ -114,7 +114,7 @@ public struct WorkflowView<Content: View>: View {
     public init<WI: _WorkflowItemProtocol>(isLaunched: Binding<Bool> = .constant(true),
                                            launchingWith args: AnyWorkflow.PassedArgs,
                                            @WorkflowBuilder content: () -> WI) where Content == WorkflowLauncher<WI> {
-        self.init(isLaunched: isLaunched, startingArgs: args, content: content())
+        self.init(isLaunched: isLaunched, startingArgs: args, content: content)
     }
 
     /**
@@ -126,7 +126,7 @@ public struct WorkflowView<Content: View>: View {
     public init<A, WI: _WorkflowItemProtocol>(isLaunched: Binding<Bool> = .constant(true),
                                               launchingWith args: A,
                                               @WorkflowBuilder content: () -> WI) where Content == WorkflowLauncher<WI>, WI.FlowRepresentableType.WorkflowInput == AnyWorkflow.PassedArgs {
-        self.init(isLaunched: isLaunched, startingArgs: .args(args), content: content())
+        self.init(isLaunched: isLaunched, startingArgs: .args(args), content: content)
     }
 
     /**
@@ -138,7 +138,7 @@ public struct WorkflowView<Content: View>: View {
     public init<A, WI: _WorkflowItemProtocol>(isLaunched: Binding<Bool> = .constant(true),
                                               launchingWith args: A,
                                               @WorkflowBuilder content: () -> WI) where Content == WorkflowLauncher<WI>, WI.FlowRepresentableType.WorkflowInput == Never {
-        self.init(isLaunched: isLaunched, startingArgs: .args(args), content: content())
+        self.init(isLaunched: isLaunched, startingArgs: .args(args), content: content)
     }
 
     /**
@@ -148,7 +148,7 @@ public struct WorkflowView<Content: View>: View {
      */
     public init<WI: _WorkflowItemProtocol>(isLaunched: Binding<Bool> = .constant(true),
                                            @WorkflowBuilder content: () -> WI) where Content == WorkflowLauncher<WI>, WI.FlowRepresentableType.WorkflowInput == AnyWorkflow.PassedArgs {
-        self.init(isLaunched: isLaunched, startingArgs: .none, content: content())
+        self.init(isLaunched: isLaunched, startingArgs: .none, content: content)
     }
 
     /**
@@ -157,7 +157,9 @@ public struct WorkflowView<Content: View>: View {
      - Parameter startingArgs: arguments passed to the first loaded `FlowRepresentable` in the underlying `Workflow`.
      - Parameter workflow: workflow to be launched; must contain `FlowRepresentable`s of type `View`
      */
-    public init(isLaunched: Binding<Bool> = .constant(true), launchingWith startingArgs: AnyWorkflow.PassedArgs = .none, workflow: AnyWorkflow) where Content == WorkflowLauncher<AnyWorkflowItem> {
+    public init(isLaunched: Binding<Bool> = .constant(true),
+                launchingWith startingArgs: AnyWorkflow.PassedArgs = .none,
+                workflow: AnyWorkflow) where Content == WorkflowLauncher<WorkflowItemWrapper<AnyWorkflowItem, Never>> {
         workflow.forEach {
             assert($0.value.metadata is ExtendedFlowRepresentableMetadata, "It is possible the workflow was constructed incorrectly. This represents an internal error, please file a bug at https://github.com/wwt/SwiftCurrent/issues") // swiftlint:disable:this line_length
         }
@@ -171,7 +173,7 @@ public struct WorkflowView<Content: View>: View {
      - Parameter startingArgs: arguments passed to the first loaded `FlowRepresentable` in the underlying `Workflow`.
      - Parameter workflow: workflow to be launched; must contain `FlowRepresentable`s of type `View`
      */
-    public init<A>(isLaunched: Binding<Bool> = .constant(true), launchingWith startingArgs: A, workflow: AnyWorkflow) where Content == WorkflowLauncher<AnyWorkflowItem> {
+    public init<A>(isLaunched: Binding<Bool> = .constant(true), launchingWith startingArgs: A, workflow: AnyWorkflow) where Content == WorkflowLauncher<WorkflowItemWrapper<AnyWorkflowItem, Never>> {
         workflow.forEach {
             assert($0.value.metadata is ExtendedFlowRepresentableMetadata, "It is possible the workflow was constructed incorrectly. This represents an internal error, please file a bug at https://github.com/wwt/SwiftCurrent/issues") // swiftlint:disable:this line_length
         }
@@ -181,8 +183,8 @@ public struct WorkflowView<Content: View>: View {
 
     private init<WI: _WorkflowItemProtocol>(isLaunched: Binding<Bool>,
                                             startingArgs: AnyWorkflow.PassedArgs,
-                                            content: WI) where Content == WorkflowLauncher<WI> {
-        _content = State(wrappedValue: WorkflowLauncher(isLaunched: isLaunched, startingArgs: startingArgs) { content })
+                                            @WorkflowBuilder content: () -> WI) where Content == WorkflowLauncher<WI> {
+        _content = State(wrappedValue: WorkflowLauncher(isLaunched: isLaunched, startingArgs: startingArgs, content: content))
     }
 
     private init<WI: _WorkflowItemProtocol>(_ other: WorkflowView<Content>,

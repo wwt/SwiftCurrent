@@ -34,7 +34,7 @@ extension View where Self: Inspectable {
 @available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension InspectableView where View: CustomViewType & SingleViewContent {
     func extractWorkflowLauncher<WI>() async throws -> InspectableView<ViewType.View<WorkflowLauncher<WI>>> where View.T == WorkflowView<WorkflowLauncher<WI>> {
-        let actual = try view(WorkflowLauncher<WI>.self).actualView()
+        let actual = try find(WorkflowLauncher<WI>.self).actualView()
 
         DispatchQueue.main.async {
             ViewHosting.host(view: actual)
@@ -47,7 +47,7 @@ extension InspectableView where View: CustomViewType & SingleViewContent {
         let mirror = Mirror(reflecting: try actualView())
         let model = try XCTUnwrap(mirror.descendant("_model") as? StateObject<WorkflowViewModel>)
         let launcher = try XCTUnwrap(mirror.descendant("_launcher") as? StateObject<Launcher>)
-        let actual = try view(WorkflowItemWrapper<C, W>.self).actualView()
+        let actual = try find(WorkflowItemWrapper<C, W>.self).actualView()
 
         DispatchQueue.main.async {
             ViewHosting.host(view: actual
