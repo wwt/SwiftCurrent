@@ -750,7 +750,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         typealias WorkflowViewContent = State<WorkflowLauncher<WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>>>
         let content = try XCTUnwrap(Mirror(reflecting: workflowView).descendant("_content") as? WorkflowViewContent)
         // Note: Only add to these exceptions if you are *certain* the property should not be @State. Err on the side of the property being @State
-        let exceptions = ["_model", "_launcher", "_location", "_value", "inspection", "_presentation", "_isLaunched"]
+        let exceptions = ["_model", "_launcher", "_location", "_value", "inspection", "_presentation", "_isLaunched", "content"]
 
         let mirror = Mirror(reflecting: content.wrappedValue)
 
@@ -840,7 +840,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         }.hostAndInspect(with: \.inspection)
 
         XCTAssertNoThrow(try firstLauncher.find(FR1.self), "Unable to find FR1")
-        let fr1Wrapper = try await firstLauncher.extractWorkflowLauncher().view(AnyWorkflowItem.self).anyView().view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self)
+        let fr1Wrapper = try await firstLauncher.extractWorkflowLauncher().view(WorkflowItemWrapper<AnyWorkflowItem, Never>.self).view(AnyWorkflowItem.self).anyView().view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self)
         let fr1LaunchStyle = try await fr1Wrapper.actualView().workflowLaunchStyle
         XCTAssertEqual(fr1LaunchStyle, .modal)
 
@@ -863,7 +863,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         }.hostAndInspect(with: \.inspection)
 
         XCTAssertNoThrow(try secondLauncher.find(FR1.self), "Unable to find FR1")
-        let secondFr1Wrapper = try await secondLauncher.extractWorkflowLauncher().view(AnyWorkflowItem.self).anyView().view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self)
+        let secondFr1Wrapper = try await secondLauncher.extractWorkflowLauncher().view(WorkflowItemWrapper<AnyWorkflowItem, Never>.self).view(AnyWorkflowItem.self).anyView().view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self)
         let secondFr1LaunchStyle = try await secondFr1Wrapper.actualView().workflowLaunchStyle
         XCTAssertEqual(secondFr1LaunchStyle, .navigationLink)
     }
@@ -895,7 +895,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         }.hostAndInspect(with: \.inspection)
 
         XCTAssertNoThrow(try firstLauncher.find(FR1.self), "Unable to find FR1")
-        let fr1Wrapper = try await firstLauncher.extractWorkflowLauncher().view(AnyWorkflowItem.self).anyView().view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self)
+        let fr1Wrapper = try await firstLauncher.extractWorkflowLauncher().view(WorkflowItemWrapper<AnyWorkflowItem, Never>.self).view(AnyWorkflowItem.self).anyView().view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self)
         let fr1PersistenceClosure = try XCTUnwrap(Mirror(reflecting: fr1Wrapper.view(WorkflowItem<FR1, FR1>.self).actualView()).descendant("_flowPersistenceClosure") as? State<(AnyWorkflow.PassedArgs) -> FlowPersistence>).wrappedValue
         XCTAssertEqual(fr1PersistenceClosure(.none), .default)
 
@@ -918,7 +918,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
         }.hostAndInspect(with: \.inspection)
 
         XCTAssertNoThrow(try secondLauncher.find(FR1.self), "Unable to find FR1")
-        let secondFr1Wrapper = try await secondLauncher.extractWorkflowLauncher().view(AnyWorkflowItem.self).anyView().view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self)
+        let secondFr1Wrapper = try await secondLauncher.extractWorkflowLauncher().view(WorkflowItemWrapper<AnyWorkflowItem, Never>.self).view(AnyWorkflowItem.self).anyView().view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self)
         let secondFr1PersistenceClosure = try XCTUnwrap(Mirror(reflecting: secondFr1Wrapper.view(WorkflowItem<FR1, FR1>.self).actualView()).descendant("_flowPersistenceClosure") as? State<(AnyWorkflow.PassedArgs) -> FlowPersistence>).wrappedValue
         XCTAssertEqual(secondFr1PersistenceClosure(.none), .removedAfterProceeding)
     }

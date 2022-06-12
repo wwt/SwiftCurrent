@@ -48,6 +48,7 @@ public struct WorkflowItemWrapper<WI: _WorkflowItemProtocol, Wrapped: _WorkflowI
         .onReceive(model.$body, perform: activateIfNeeded)
         .onReceive(model.$body, perform: proceedInWorkflow)
         .onReceive(model.onBackUpPublisher, perform: backUpInWorkflow)
+        .onReceive(model.onAbandonPublisher) { isActive = false }
         .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 

@@ -14,7 +14,7 @@ import SwiftCurrent
 public struct WorkflowLauncher<Content: _WorkflowItemProtocol>: View {
     public typealias WorkflowInput = Content.FlowRepresentableType.WorkflowInput
 
-    @State private var content: Content
+    @WorkflowBuilder private var content: Content
     @State private var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
     @State private var onAbandon = [() -> Void]()
     @State private var shouldEmbedInNavView = false
@@ -49,30 +49,26 @@ public struct WorkflowLauncher<Content: _WorkflowItemProtocol>: View {
             .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 
-    init(isLaunched: Binding<Bool>, startingArgs: AnyWorkflow.PassedArgs, content: () -> Content) {
-        self.init(isLaunched: isLaunched, startingArgs: startingArgs, content: content())
-    }
-
-    private init(current: Self, shouldEmbedInNavView: Bool, onFinish: [(AnyWorkflow.PassedArgs) -> Void], onAbandon: [() -> Void]) {
-        _model = current._model
-        _launcher = current._launcher
-        _content = current._content
-        _isLaunched = current._isLaunched
-        _shouldEmbedInNavView = State(initialValue: shouldEmbedInNavView)
-        _onFinish = State(initialValue: onFinish)
-        _onAbandon = State(initialValue: onAbandon)
-    }
-
-    private init(isLaunched: Binding<Bool>, startingArgs: AnyWorkflow.PassedArgs, content: Content) {
+    init(isLaunched: Binding<Bool>, startingArgs: AnyWorkflow.PassedArgs, @WorkflowBuilder content: () -> Content) {
         _isLaunched = isLaunched
         let wf = AnyWorkflow.empty
-        content.modify(workflow: wf)
+        content().modify(workflow: wf)
         let model = WorkflowViewModel(isLaunched: isLaunched, launchArgs: startingArgs)
         _model = StateObject(wrappedValue: model)
         _launcher = StateObject(wrappedValue: Launcher(workflow: wf,
                                                        responder: model,
                                                        launchArgs: startingArgs))
-        _content = State(wrappedValue: content)
+        self.content = content()
+    }
+
+    private init(current: Self, shouldEmbedInNavView: Bool, onFinish: [(AnyWorkflow.PassedArgs) -> Void], onAbandon: [() -> Void]) {
+        _model = current._model
+        _launcher = current._launcher
+        content = current.content
+        _isLaunched = current._isLaunched
+        _shouldEmbedInNavView = State(initialValue: shouldEmbedInNavView)
+        _onFinish = State(initialValue: onFinish)
+        _onAbandon = State(initialValue: onAbandon)
     }
 
     private func resetWorkflow() {
