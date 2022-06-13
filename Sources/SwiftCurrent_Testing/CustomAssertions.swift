@@ -18,7 +18,16 @@ import UIKit
 #if !os(watchOS)
 /// Assert that a workflow was launched and matches the workflow passed in
 public func XCTAssertWorkflowLaunched<F>(from VC: UIViewController, workflow: Workflow<F>, file: StaticString = #filePath, line: UInt = #line) {
+    XCTAssertWorkflowLaunched(from: VC, workflow: AnyWorkflow(workflow), file: file, line: line)
+}
+
+/// Assert that a workflow was launched and matches the workflow passed in
+public func XCTAssertWorkflowLaunched(from VC: UIViewController, workflow: AnyWorkflow?, file: StaticString = #filePath, line: UInt = #line) {
     let last = VC.launchedWorkflows.last
+    guard let workflow = workflow else {
+        XCTAssertNil(last, "workflow found when none expected", file: file, line: line)
+        return
+    }
     XCTAssertNotNil(last, "No workflow found", file: file, line: line)
     guard let listenerWorkflow = last,
           listenerWorkflow.count == workflow.count else {
