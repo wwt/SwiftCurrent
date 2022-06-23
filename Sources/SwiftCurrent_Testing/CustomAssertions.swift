@@ -23,11 +23,12 @@ public func XCTAssertWorkflowLaunched<F>(from VC: UIViewController, workflow: Wo
 
 /// Assert that a workflow was launched and matches the workflow passed in
 public func XCTAssertWorkflowLaunched(from VC: UIViewController, workflow: AnyWorkflow?, file: StaticString = #filePath, line: UInt = #line) {
-    let last = VC.launchedWorkflows.last
     guard let workflow = workflow else {
-        XCTAssertNil(last, "workflow found when none expected", file: file, line: line)
+        XCTAssertNoWorkflowLaunched(from: VC, file: file, line: line)
         return
     }
+
+    let last = VC.launchedWorkflows.last
     XCTAssertNotNil(last, "No workflow found", file: file, line: line)
     guard let listenerWorkflow = last,
           listenerWorkflow.count == workflow.count else {
@@ -44,6 +45,11 @@ public func XCTAssertWorkflowLaunched(from VC: UIViewController, workflow: AnyWo
         let expected = workflowNode.value.metadata.flowRepresentableTypeDescriptor
         XCTAssert(actual == expected, "Expected type: \(expected), but got: \(actual)", file: file, line: line)
     }
+}
+
+/// Assert that no workflow was launched
+public func XCTAssertNoWorkflowLaunched(from VC: UIViewController, file: StaticString = #filePath, line: UInt = #line) {
+    XCTAssertNil(VC.launchedWorkflows.last, "workflow found when none expected", file: file, line: line)
 }
 #endif
 #endif
