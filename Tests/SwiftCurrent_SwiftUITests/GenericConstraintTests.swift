@@ -2284,7 +2284,7 @@ final class GenericConstraintTests: XCTestCase, View {
 }
 
 @available(iOS 15, macOS 11, tvOS 14.0, watchOS 7.0, *)
-final class ThenProceedOnAppTests: XCTestCase, App {
+final class ThenProceedOnAppTests: XCTestCase {
     func testThenProceedFunctionsAsExpectedOnApp() async throws {
         struct FR0: PassthroughFlowRepresentable, View, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?

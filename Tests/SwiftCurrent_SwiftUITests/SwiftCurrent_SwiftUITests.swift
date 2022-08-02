@@ -15,7 +15,7 @@ import SwiftCurrent
 import SwiftCurrent_Testing
 
 @available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase, App {
+final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     func testWorkflowCanBeFollowed() async throws {
         struct FR1: View, FlowRepresentable, Inspectable {
             var _workflowPointer: AnyFlowRepresentable?

@@ -35,12 +35,14 @@ public struct WorkflowItemWrapper<WI: _WorkflowItemProtocol, Wrapped: _WorkflowI
 
     public var body: some View {
         ViewBuilder {
-            if launchStyle == .navigationLink {
-                content.navLink(to: nextView, isActive: $isActive)
-            } else if case .modal(let modalStyle) = wrapped?.workflowLaunchStyle {
-                content.modal(isPresented: $isActive, style: modalStyle, destination: nextView)
-            } else if launchStyle != .navigationLink, content.canDisplay(model.body) {
-                content
+            if content.canDisplay(model.body) {
+                if launchStyle == .navigationLink {
+                    content.navLink(to: nextView, isActive: $isActive)
+                } else if case .modal(let modalStyle) = wrapped?.workflowLaunchStyle {
+                    content.modal(isPresented: $isActive, style: modalStyle, destination: nextView)
+                } else {
+                    content
+                }
             } else {
                 nextView
             }
