@@ -31,14 +31,6 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
-### ios CLI_test
-
-```sh
-[bundle exec] fastlane ios CLI_test
-```
-
-
-
 ### ios build_swiftpm
 
 ```sh
@@ -94,6 +86,19 @@ Release a new version with a minor bump_type
 ```
 
 Release a new version with a major bump_type
+
+----
+
+
+## macOS
+
+### macOS CLI_test
+
+```sh
+[bundle exec] fastlane macOS CLI_test
+```
+
+
 
 ----
 

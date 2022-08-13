@@ -35,23 +35,6 @@ platform :ios do
     end
   end
 
-  lane :CLI_test do
-    Dir.chdir("..") do
-      setup_ci()
-      match(
-        app_identifier: ["WWT.SwiftCurrent-IRGeneratorTests"],
-        readonly: is_ci,
-        git_url: "git@github.com:wwt/swiftcurrent-ios-certs-and-profiles.git"
-      )
-      xcodebuild(
-        test: true,
-        scheme: 'SwiftCurrent_CLI',
-        workspace: 'SwiftCurrent.xcworkspace',
-        destination: [ 'platform=macOS' ]
-      )
-    end
-  end
-
   lane :build_swiftpm do
     # Confirm Core can build against Swift without any Apple SDK requirements
     sh('rm -rf ../../SwiftCurrent.xcworkspace/')
@@ -142,5 +125,18 @@ platform :ios do
                                    bump_type: type)
     echo(message: "New Version: #{version}")
     echo(message: "##[set-output name=version;]#{version}")
+  end
+end
+
+platform :macOS do
+  lane :CLI_test do
+    scan(
+      code_coverage: true,
+      scheme:  'SwiftCurrent_CLI',
+      workspace: '../SwiftCurrent.xcworkspace',
+      derived_data_path: "~/Library/Developer/Xcode/DerivedData",
+      result_bundle: true,
+      destination: "platform=macOS"
+    )
   end
 end

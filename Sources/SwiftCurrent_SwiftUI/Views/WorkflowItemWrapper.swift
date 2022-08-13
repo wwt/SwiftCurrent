@@ -47,6 +47,7 @@ public struct WorkflowItemWrapper<WI: _WorkflowItemProtocol, Wrapped: _WorkflowI
                 nextView
             }
         }
+        .environmentObject(model)
         .onReceive(model.$body, perform: activateIfNeeded)
         .onReceive(model.$body, perform: proceedInWorkflow)
         .onReceive(model.onBackUpPublisher, perform: backUpInWorkflow)
