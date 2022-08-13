@@ -90,12 +90,12 @@ Release a new version with a major bump_type
 ----
 
 
-## macOS
+## Mac
 
-### macOS CLI_test
+### mac CLI_test
 
 ```sh
-[bundle exec] fastlane macOS CLI_test
+[bundle exec] fastlane mac CLI_test
 ```
 
 
