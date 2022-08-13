@@ -6,6 +6,7 @@
 //  Copyright © 2022 WWT and Tyler Thompson. All rights reserved.
 //  
 
+import Combine
 import SwiftUI
 import SwiftCurrent
 
@@ -200,6 +201,11 @@ public struct WorkflowView<Content: View>: View {
     /// Adds an action to perform when this `Workflow` has abandoned.
     public func onAbandon<WI: _WorkflowItemProtocol>(_ closure: @escaping () -> Void) -> Self where Content == WorkflowLauncher<WI> {
         Self(self, newContent: _content.wrappedValue.onAbandon(closure: closure))
+    }
+
+    /// Subscribers to a combine publisher, when a value is emitted the workflow will abandon.
+    public func abandonOn<WI: _WorkflowItemProtocol, P: Publisher>(_ publisher: P) -> Self where Content == WorkflowLauncher<WI>, P.Failure == Never {
+        Self(self, newContent: _content.wrappedValue.abandonOn(publisher))
     }
 
     /// Wraps content in a NavigationView.
