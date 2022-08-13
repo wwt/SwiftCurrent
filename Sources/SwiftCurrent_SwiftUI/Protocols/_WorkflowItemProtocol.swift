@@ -19,6 +19,7 @@ public protocol _WorkflowItemProtocol: View where FlowRepresentableType: FlowRep
     func canDisplay(_ element: AnyWorkflow.Element?) -> Bool
     mutating func setElementRef(_ element: AnyWorkflow.Element?)
     func modify(workflow: AnyWorkflow)
+    func didDisplay(_ element: AnyWorkflow.Element?) -> Bool
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
@@ -42,4 +43,6 @@ extension Never: _WorkflowItemProtocol {
     public func canDisplay(_ element: AnyWorkflow.Element?) -> Bool { false }
     /// :nodoc: Protocol requirement.
     public func modify(workflow: AnyWorkflow) { }
+    /// :nodoc: Protocol requirement.
+    public func didDisplay(_ element: AnyWorkflow.Element?) -> Bool { false }
 }

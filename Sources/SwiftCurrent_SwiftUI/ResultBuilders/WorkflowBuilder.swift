@@ -5,8 +5,6 @@
 //  Created by Tyler Thompson on 2/21/22.
 //  Copyright © 2022 WWT and Tyler Thompson. All rights reserved.
 //  swiftlint:disable line_length
-//  swiftlint:disable operator_usage_whitespace
-//  swiftlint BUG: https://github.com/realm/SwiftLint/issues/3668
 
 import Foundation
 

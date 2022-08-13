@@ -30,6 +30,11 @@ public struct OptionalWorkflowItem<WI: _WorkflowItemProtocol>: View, _WorkflowIt
     public func canDisplay(_ element: AnyWorkflow.Element?) -> Bool {
         content?.canDisplay(element) ?? false
     }
+
+    /// :nodoc: Protocol requirement.
+    public func didDisplay(_ element: AnyWorkflow.Element?) -> Bool {
+        content?.didDisplay(element) ?? false
+    }
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)

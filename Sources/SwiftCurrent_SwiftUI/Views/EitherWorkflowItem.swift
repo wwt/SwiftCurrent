@@ -34,6 +34,13 @@ public struct EitherWorkflowItem<W0: _WorkflowItemProtocol, W1: _WorkflowItemPro
             }
         }
 
+        func didDisplay(_ element: AnyWorkflow.Element?) -> Bool {
+            switch self {
+                case .first(let first): return first.didDisplay(element)
+                case .second(let second): return second.didDisplay(element)
+            }
+        }
+
         case first(First)
         case second(Second)
 
@@ -58,6 +65,11 @@ public struct EitherWorkflowItem<W0: _WorkflowItemProtocol, W1: _WorkflowItemPro
     /// :nodoc: Protocol requirement.
     public func canDisplay(_ element: AnyWorkflow.Element?) -> Bool {
         content.canDisplay(element)
+    }
+
+    /// :nodoc: Protocol requirement.
+    public func didDisplay(_ element: AnyWorkflow.Element?) -> Bool {
+        content.didDisplay(element)
     }
 }
 
