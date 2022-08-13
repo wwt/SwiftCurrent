@@ -26,6 +26,10 @@ public struct WorkflowGroup<WI: _WorkflowItemProtocol>: View, _WorkflowItemProto
     public func canDisplay(_ element: AnyWorkflow.Element?) -> Bool {
         content.canDisplay(element)
     }
+
+    public func didDisplay(_ element: AnyWorkflow.Element?) -> Bool {
+        content.didDisplay(element)
+    }
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)

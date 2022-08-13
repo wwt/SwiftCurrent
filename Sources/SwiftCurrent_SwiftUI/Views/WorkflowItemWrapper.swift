@@ -35,7 +35,7 @@ public struct WorkflowItemWrapper<WI: _WorkflowItemProtocol, Wrapped: _WorkflowI
 
     public var body: some View {
         ViewBuilder {
-            if content.canDisplay(model.body) {
+            if content.canDisplay(model.body) || content.didDisplay(model.body) {
                 if launchStyle == .navigationLink {
                     content.navLink(to: nextView, isActive: $isActive)
                 } else if case .modal(let modalStyle) = wrapped?.workflowLaunchStyle {
@@ -84,6 +84,10 @@ public struct WorkflowItemWrapper<WI: _WorkflowItemProtocol, Wrapped: _WorkflowI
 
     public func canDisplay(_ element: AnyWorkflow.Element?) -> Bool {
         content.canDisplay(element) || wrapped?.canDisplay(element) == true
+    }
+
+    public func didDisplay(_ element: AnyWorkflow.Element?) -> Bool {
+        content.didDisplay(element) || wrapped?.canDisplay(element) == true
     }
 
     public func modify(workflow: AnyWorkflow) {
