@@ -46,7 +46,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Run CLI TESTS
         run: |
-          bundle exec fastlane macOS CLI_test
+          bundle exec fastlane mac CLI_test
         working-directory: ${{ env.working-directory }}
       
   build_for_swift_package_manager:

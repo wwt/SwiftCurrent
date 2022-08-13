@@ -35,19 +35,18 @@ public struct WorkflowItemWrapper<WI: _WorkflowItemProtocol, Wrapped: _WorkflowI
 
     public var body: some View {
         ViewBuilder {
-            if content.canDisplay(model.body) || content.didDisplay(model.body) {
-                if launchStyle == .navigationLink {
-                    content.navLink(to: nextView, isActive: $isActive)
-                } else if case .modal(let modalStyle) = wrapped?.workflowLaunchStyle {
-                    content.modal(isPresented: $isActive, style: modalStyle, destination: nextView)
-                } else {
-                    content
-                }
+            let canDisplay = content.canDisplay(model.body)
+            let shouldDisplayContent = canDisplay || content.didDisplay(model.body)
+            if launchStyle == .navigationLink, shouldDisplayContent {
+                content.navLink(to: nextView, isActive: $isActive)
+            } else if case .modal(let modalStyle) = wrapped?.workflowLaunchStyle, shouldDisplayContent {
+                content.modal(isPresented: $isActive, style: modalStyle, destination: nextView)
+            } else if canDisplay {
+                content
             } else {
                 nextView
             }
         }
-        .environmentObject(model)
         .onReceive(model.$body, perform: activateIfNeeded)
         .onReceive(model.$body, perform: proceedInWorkflow)
         .onReceive(model.onBackUpPublisher, perform: backUpInWorkflow)

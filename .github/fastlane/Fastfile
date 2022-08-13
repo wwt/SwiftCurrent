@@ -128,7 +128,7 @@ platform :ios do
   end
 end
 
-platform :macOS do
+platform :mac do
   lane :CLI_test do
     scan(
       code_coverage: true,
