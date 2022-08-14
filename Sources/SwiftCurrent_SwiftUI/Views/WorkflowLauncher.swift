@@ -6,6 +6,7 @@
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 //
 
+import Combine
 import SwiftUI
 import SwiftCurrent
 
@@ -15,6 +16,7 @@ public struct WorkflowLauncher<Content: _WorkflowItemProtocol>: View {
     public typealias WorkflowInput = Content.FlowRepresentableType.WorkflowInput
 
     @WorkflowBuilder private var content: Content
+    @State private var abandonOnPublisher: AnyPublisher<Void, Never> = Empty(completeImmediately: false).eraseToAnyPublisher()
     @State private var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
     @State private var onAbandon = [() -> Void]()
     @State private var shouldEmbedInNavView = false
@@ -38,6 +40,7 @@ public struct WorkflowLauncher<Content: _WorkflowItemProtocol>: View {
             }
         }
         .onChange(of: isLaunched) { if $0 == false { resetWorkflow() } }
+        .onReceive(abandonOnPublisher) { launcher.workflow.abandon() }
     }
 
     private var workflowContent: some View {
@@ -61,14 +64,19 @@ public struct WorkflowLauncher<Content: _WorkflowItemProtocol>: View {
         self.content = content()
     }
 
-    private init(current: Self, shouldEmbedInNavView: Bool, onFinish: [(AnyWorkflow.PassedArgs) -> Void], onAbandon: [() -> Void]) {
+    private init(current: Self,
+                 abandonOnPublisher: AnyPublisher<Void, Never> = Empty(completeImmediately: false).eraseToAnyPublisher(),
+                 shouldEmbedInNavView: Bool,
+                 onFinish: [(AnyWorkflow.PassedArgs) -> Void],
+                 onAbandon: [() -> Void]) {
         _model = current._model
         _launcher = current._launcher
         content = current.content
         _isLaunched = current._isLaunched
-        _shouldEmbedInNavView = State(initialValue: shouldEmbedInNavView)
-        _onFinish = State(initialValue: onFinish)
-        _onAbandon = State(initialValue: onAbandon)
+        _shouldEmbedInNavView = State(wrappedValue: shouldEmbedInNavView)
+        _onFinish = State(wrappedValue: onFinish)
+        _onAbandon = State(wrappedValue: onAbandon)
+        _abandonOnPublisher = State(wrappedValue: abandonOnPublisher)
     }
 
     private func resetWorkflow() {
@@ -90,6 +98,14 @@ public struct WorkflowLauncher<Content: _WorkflowItemProtocol>: View {
         var onAbandon = self.onAbandon
         onAbandon.append(closure)
         return Self(current: self, shouldEmbedInNavView: shouldEmbedInNavView, onFinish: onFinish, onAbandon: onAbandon)
+    }
+
+    func abandonOn<P: Publisher>(_ publisher: P) -> Self where P.Failure == Never {
+        Self(current: self,
+             abandonOnPublisher: publisher.map { _ in () }.eraseToAnyPublisher(),
+             shouldEmbedInNavView: shouldEmbedInNavView,
+             onFinish: onFinish,
+             onAbandon: onAbandon)
     }
 
     func embedInNavigationView() -> Self {

@@ -8,6 +8,7 @@
 
 import XCTest
 import SwiftUI
+import Combine
 import ViewInspector
 
 import SwiftCurrent
@@ -527,6 +528,32 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         XCTAssertThrowsError(try launcher.find(FR1.self))
 
         wait(for: [expectOnAbandon1, expectOnAbandon2], timeout: TestConstant.timeout)
+    }
+
+    func testWorkflowCanAbandonFromAPublisher() async throws {
+        let publisher = PassthroughSubject<Void, Never>()
+        struct FR1: View, FlowRepresentable, Inspectable {
+            var _workflowPointer: AnyFlowRepresentable?
+            var body: some View { Text("FR1 type") }
+        }
+        let isLaunched = Binding(wrappedValue: true)
+        let expectOnAbandon = expectation(description: "OnAbandon called")
+        let launcher = try await MainActor.run {
+            WorkflowView(isLaunched: isLaunched) {
+                WorkflowItem(FR1.self)
+            }
+            .onAbandon {
+                XCTAssertFalse(isLaunched.wrappedValue)
+                expectOnAbandon.fulfill()
+            }
+            .abandonOn(publisher)
+        }.hostAndInspect(with: \.inspection)
+
+        XCTAssertEqual(try launcher.find(FR1.self).text().string(), "FR1 type")
+        publisher.send()
+        XCTAssertThrowsError(try launcher.find(FR1.self))
+
+        wait(for: [expectOnAbandon], timeout: TestConstant.timeout)
     }
 
     func testWorkflowCanHaveModifiers() async throws {
