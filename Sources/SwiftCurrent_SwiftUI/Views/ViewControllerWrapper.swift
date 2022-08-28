@@ -9,6 +9,7 @@
 
 #if (os(iOS) || os(tvOS) || targetEnvironment(macCatalyst)) && canImport(UIKit)
 import SwiftUI
+import Combine
 import SwiftCurrent
 
 /// A wrapper for exposing `UIViewController`s that are `FlowRepresentable` to SwiftUI.
@@ -27,6 +28,7 @@ public struct ViewControllerWrapper<F: FlowRepresentable & UIViewController>: Vi
     private var vc: F
 
     @StateObject private var model: Model
+    @EnvironmentObject private var workflowModel: WorkflowViewModel
 
     public init(with args: F.WorkflowInput) {
         let vc = F._factory(F.self, with: args)
@@ -42,6 +44,16 @@ public struct ViewControllerWrapper<F: FlowRepresentable & UIViewController>: Vi
 
     public func makeUIViewController(context: Context) -> F {
         model.vc._workflowPointer = _workflowPointer
+        workflowModel.onAbandonPublisher
+            .receive(on: RunLoop.main)
+            .sink {
+                if let navController = model.vc.navigationController,
+                   let parent = model.vc.parent {
+                    navController.popToViewController(parent, animated: true)
+                    print("")
+                }
+            }
+            .store(in: &model.subscribers)
         return model.vc
     }
 
@@ -57,6 +69,7 @@ extension ViewControllerWrapper {
     @available(iOS 14.0, macOS 11, tvOS 14.0, *)
     final class Model: ObservableObject {
         var vc: F
+        var subscribers = Set<AnyCancellable>()
 
         init(vc: F) {
             self.vc = vc
