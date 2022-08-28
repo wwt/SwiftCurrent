@@ -25,21 +25,42 @@ public struct ViewControllerWrapper<F: FlowRepresentable & UIViewController>: Vi
     }
 
     private var vc: F
-    private let args: WorkflowInput?
+
+    @StateObject private var model: Model
+
     public init(with args: F.WorkflowInput) {
-        self.args = args
-        vc = F._factory(F.self, with: args)
+        let vc = F._factory(F.self, with: args)
+        self.vc = vc
+        _model = StateObject(wrappedValue: Model(vc: vc))
     }
 
     public init() {
-        args = nil
-        vc = F._factory(F.self)
+        let vc = F._factory(F.self)
+        self.vc = vc
+        _model = StateObject(wrappedValue: Model(vc: vc))
     }
 
-    public func makeUIViewController(context: Context) -> F { vc }
+    public func makeUIViewController(context: Context) -> F {
+        model.vc._workflowPointer = _workflowPointer
+        return model.vc
+    }
 
-    public func updateUIViewController(_ uiViewController: F, context: Context) { }
+    public func updateUIViewController(_ uiViewController: F, context: Context) {
+        model.vc._workflowPointer = _workflowPointer
+    }
 
     public func shouldLoad() -> Bool { vc.shouldLoad() }
+}
+
+@available(iOS 14.0, macOS 11, tvOS 14.0, *)
+extension ViewControllerWrapper {
+    @available(iOS 14.0, macOS 11, tvOS 14.0, *)
+    final class Model: ObservableObject {
+        var vc: F
+
+        init(vc: F) {
+            self.vc = vc
+        }
+    }
 }
 #endif
