@@ -18,7 +18,11 @@ public struct ViewControllerWrapper<F: FlowRepresentable & UIViewController>: Vi
     public typealias WorkflowInput = F.WorkflowInput
     public typealias WorkflowOutput = F.WorkflowOutput
 
-    public weak var _workflowPointer: AnyFlowRepresentable?
+    public weak var _workflowPointer: AnyFlowRepresentable? {
+        didSet {
+            vc._workflowPointer = _workflowPointer
+        }
+    }
 
     private var vc: F
 
