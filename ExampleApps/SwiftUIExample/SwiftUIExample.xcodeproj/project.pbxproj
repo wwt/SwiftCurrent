@@ -34,6 +34,7 @@
 		CA84D8E726A0E72A006CF964 /* MapFeatureViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA84D8E626A0E72A006CF964 /* MapFeatureViewTests.swift */; };
 		CA84D8E926A0ED66006CF964 /* ChangePasswordViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA84D8E826A0ED66006CF964 /* ChangePasswordViewTests.swift */; };
 		CA971D2226D593150083821A /* XCTestCaseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA971D2126D593150083821A /* XCTestCaseExtensions.swift */; };
+		CAA4DE0228BB1A740059324B /* SwiftCurrent_UIKit in Frameworks */ = {isa = PBXBuildFile; productRef = CAA4DE0128BB1A740059324B /* SwiftCurrent_UIKit */; };
 		CABEC41726E13BC900F1BF53 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A6CE7D26E039C300599824 /* TestView.swift */; };
 		CABEC41926E1899000F1BF53 /* SwiftCurrent_SwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = CABEC41826E1899000F1BF53 /* SwiftCurrent_SwiftUI */; };
 		CABEC41B26E1899000F1BF53 /* SwiftCurrent in Frameworks */ = {isa = PBXBuildFile; productRef = CABEC41A26E1899000F1BF53 /* SwiftCurrent */; };
@@ -227,6 +228,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAA4DE0228BB1A740059324B /* SwiftCurrent_UIKit in Frameworks */,
 				CABEC41B26E1899000F1BF53 /* SwiftCurrent in Frameworks */,
 				CABEC41926E1899000F1BF53 /* SwiftCurrent_SwiftUI in Frameworks */,
 			);
@@ -587,6 +589,7 @@
 			packageProductDependencies = (
 				CABEC41826E1899000F1BF53 /* SwiftCurrent_SwiftUI */,
 				CABEC41A26E1899000F1BF53 /* SwiftCurrent */,
+				CAA4DE0128BB1A740059324B /* SwiftCurrent_UIKit */,
 			);
 			productName = SwiftCurrent_SwiftUI_UITests;
 			productReference = D7A6CE7226E0316C00599824 /* SwiftCurrent_SwiftUI_UITests.xctest */;
@@ -1110,6 +1113,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CA6FB0E526C6ADCD00FB3285 /* XCRemoteSwiftPackageReference "UIUTest" */;
 			productName = UIUTest;
+		};
+		CAA4DE0128BB1A740059324B /* SwiftCurrent_UIKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftCurrent_UIKit;
 		};
 		CABEC41826E1899000F1BF53 /* SwiftCurrent_SwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
