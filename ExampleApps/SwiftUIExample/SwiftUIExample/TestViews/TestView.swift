@@ -8,6 +8,7 @@
 
 import SwiftUI
 import SwiftCurrent_SwiftUI
+import SwiftCurrent_UIKit
 
 struct TestView: View {
     var body: some View {
@@ -204,5 +205,197 @@ struct FR4: View, FlowRepresentable {
     func shouldLoad() -> Bool {
         guard case .shouldLoad(_, let shouldLoad) = Environment.shouldLoad(for: Self.self) else { return true }
         return shouldLoad
+    }
+}
+
+final class FRUI1: UIWorkflowItem<Never, Never>, FlowRepresentable {
+    private lazy var text: UITextField = {
+        let textField = UITextField()
+        textField.text = "This is: \(String(describing: Self.self))"
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+
+    private lazy var navigateForwardButton: UIButton = {
+        let button = UIButton(primaryAction: UIAction(title: "Navigate foward", handler: { [self] _ in
+            proceedInWorkflow()
+        }))
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
+    private lazy var navigateBackwardButton: UIButton = {
+        let button = UIButton(primaryAction: UIAction(title: "Navigate backward", handler: { [self] _ in
+            try? backUpInWorkflow()
+        }))
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        view.backgroundColor = .systemBackground
+
+        view.addSubview(text)
+        view.addSubview(navigateForwardButton)
+        view.addSubview(navigateBackwardButton)
+
+        NSLayoutConstraint.activate([
+            text.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            text.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            text.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            text.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            navigateForwardButton.topAnchor.constraint(equalTo: text.bottomAnchor, constant: 10),
+            navigateForwardButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            navigateForwardButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            navigateBackwardButton.topAnchor.constraint(equalTo: navigateForwardButton.bottomAnchor, constant: 10),
+            navigateBackwardButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            navigateBackwardButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+        ])
+    }
+}
+
+final class FRUI2: UIWorkflowItem<Never, Never>, FlowRepresentable {
+    private lazy var text: UITextField = {
+        let textField = UITextField()
+        textField.text = "This is: \(String(describing: Self.self))"
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+
+    private lazy var navigateForwardButton: UIButton = {
+        let button = UIButton(primaryAction: UIAction(title: "Navigate foward", handler: { [self] _ in
+            proceedInWorkflow()
+        }))
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
+    private lazy var navigateBackwardButton: UIButton = {
+        let button = UIButton(primaryAction: UIAction(title: "Navigate backward", handler: { [self] _ in
+            try? backUpInWorkflow()
+        }))
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        view.backgroundColor = .systemBackground
+
+        view.addSubview(text)
+        view.addSubview(navigateForwardButton)
+        view.addSubview(navigateBackwardButton)
+
+        NSLayoutConstraint.activate([
+            text.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            text.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            text.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            text.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            navigateForwardButton.topAnchor.constraint(equalTo: text.bottomAnchor, constant: 10),
+            navigateForwardButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            navigateForwardButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            navigateBackwardButton.topAnchor.constraint(equalTo: navigateForwardButton.bottomAnchor, constant: 10),
+            navigateBackwardButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            navigateBackwardButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+        ])
+    }
+}
+
+final class FRUI3: UIWorkflowItem<Never, Never>, FlowRepresentable {
+    private lazy var text: UITextField = {
+        let textField = UITextField()
+        textField.text = "This is: \(String(describing: Self.self))"
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+
+    private lazy var navigateForwardButton: UIButton = {
+        let button = UIButton(primaryAction: UIAction(title: "Navigate foward", handler: { [self] _ in
+            proceedInWorkflow()
+        }))
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
+    private lazy var navigateBackwardButton: UIButton = {
+        let button = UIButton(primaryAction: UIAction(title: "Navigate backward", handler: { [self] _ in
+            try? backUpInWorkflow()
+        }))
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        view.backgroundColor = .systemBackground
+
+        view.addSubview(text)
+        view.addSubview(navigateForwardButton)
+        view.addSubview(navigateBackwardButton)
+
+        NSLayoutConstraint.activate([
+            text.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            text.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            text.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            text.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            navigateForwardButton.topAnchor.constraint(equalTo: text.bottomAnchor, constant: 10),
+            navigateForwardButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            navigateForwardButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            navigateBackwardButton.topAnchor.constraint(equalTo: navigateForwardButton.bottomAnchor, constant: 10),
+            navigateBackwardButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            navigateBackwardButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+        ])
+    }
+}
+
+final class FRUI4: UIWorkflowItem<Never, Never>, FlowRepresentable {
+    private lazy var text: UITextField = {
+        let textField = UITextField()
+        textField.text = "This is: \(String(describing: Self.self))"
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+
+    private lazy var navigateForwardButton: UIButton = {
+        let button = UIButton(primaryAction: UIAction(title: "Navigate foward", handler: { [self] _ in
+            proceedInWorkflow()
+        }))
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
+    private lazy var navigateBackwardButton: UIButton = {
+        let button = UIButton(primaryAction: UIAction(title: "Navigate backward", handler: { [self] _ in
+            try? backUpInWorkflow()
+        }))
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        view.backgroundColor = .systemBackground
+
+        view.addSubview(text)
+        view.addSubview(navigateForwardButton)
+        view.addSubview(navigateBackwardButton)
+
+        NSLayoutConstraint.activate([
+            text.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            text.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            text.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            text.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            navigateForwardButton.topAnchor.constraint(equalTo: text.bottomAnchor, constant: 10),
+            navigateForwardButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            navigateForwardButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            navigateBackwardButton.topAnchor.constraint(equalTo: navigateForwardButton.bottomAnchor, constant: 10),
+            navigateBackwardButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            navigateBackwardButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+        ])
     }
 }
