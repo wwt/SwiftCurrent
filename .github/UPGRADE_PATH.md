@@ -10,6 +10,16 @@ Our directions are written for only 1 major version upgrade at a time, as we hav
   Our approach to a SwiftUI API drastically changed. This new API is much more idiomatic and natural feeling when using SwiftUI. Additionally, it enables a series of new features. Previously, you used `thenProceed(with:)` and `WorkflowLauncher` to launch a workflow in SwiftUI. You now use `WorkflowItem` and `WorkflowView`, respectively. If you need more than 10 `WorkflowItem` in your workflow, use `WorkflowGroup` similar to `Group` for other SwiftUI views.
 
   ```swift
+  // OLD
+  WorkflowLauncher(isLaunched: .constant(true)) {
+    thenProceed(with: FirstView.self) {
+        thenProceed(with: SecondView.self)
+    }
+  }
+  ```
+
+  ```swift
+  // NEW
   WorkflowView {
     WorkflowItem(FirstView.self) // This view is shown first
     WorkflowItem(SecondView.self) // After proceeding, this view is shown
