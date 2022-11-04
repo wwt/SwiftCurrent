@@ -99,13 +99,12 @@ final class UIKitInteropTests: XCTestCase, View {
 
     func testPuttingAUIKitViewThatDoesNotTakeInDataInsideASwiftUIWorkflow() async throws {
         final class FR1: UIWorkflowItem<Never, Never>, FlowRepresentable {
-            let nextButton = UIButton()
-
             @objc private func nextPressed() {
                 proceedInWorkflow()
             }
 
             override func viewDidLoad() {
+                let nextButton = UIButton()
                 nextButton.setTitle("Next", for: .normal)
                 nextButton.setTitleColor(.systemBlue, for: .normal)
                 nextButton.addTarget(self, action: #selector(nextPressed), for: .touchUpInside)
@@ -143,8 +142,9 @@ final class UIKitInteropTests: XCTestCase, View {
                 proceedCalled.fulfill()
             }
 
-            XCTAssertEqual(vc.nextButton.willRespondToUser, true)
-            vc.nextButton.simulateTouch()
+            let nextButton = try XCTUnwrap(vc.view.subviews.first { $0 is UIButton } as? UIButton)
+            XCTAssertEqual(nextButton.willRespondToUser, true)
+            nextButton.simulateTouch()
 
             wait(for: [proceedCalled], timeout: TestConstant.timeout)
         }
