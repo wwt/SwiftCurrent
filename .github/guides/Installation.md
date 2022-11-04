@@ -9,7 +9,7 @@ If you're a framework author and want to use SwiftCurrent as a dependency, these
 Add the following line to the package dependencies:
 
 ```swift
-.package(url: "https://github.com/wwt/SwiftCurrent.git", .upToNextMajor(from: "4.5.0")),
+.package(url: "https://github.com/wwt/SwiftCurrent.git", .upToNextMajor(from: "5.1.0")),
 ```
 
 ## Get the Products

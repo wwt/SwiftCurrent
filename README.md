@@ -36,7 +36,7 @@ This library:
 Why show a quick start when we have an example app? Because it's so easy to get started, we can drop in two code snippets, and you're ready to go! This quick start uses Swift Package Manager and SwiftUI, but for other approaches, [see our installation instructions](https://wwt.github.io/SwiftCurrent/installation.html).
 
 ```swift
-.package(url: "https://github.com/wwt/SwiftCurrent.git", .upToNextMajor(from: "4.5.0")),
+.package(url: "https://github.com/wwt/SwiftCurrent.git", .upToNextMajor(from: "5.1.0")),
 ...
 .product(name: "SwiftCurrent", package: "SwiftCurrent"),
 .product(name: "SwiftCurrent_SwiftUI", package: "SwiftCurrent")
