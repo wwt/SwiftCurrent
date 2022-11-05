@@ -17,9 +17,11 @@ jobs:
         run: bundle exec fastlane unit_test
         working-directory: ${{ env.working-directory }}
       - name: Codecov
-        uses: codecov/codecov-action@v3.0.0
+        uses: codecov/codecov-action@v3
         with:
           fail_ci_if_error: true
+          xcode: true
+          xcode_archive_path: .github/test_output/SwiftCurrent.xcresult
       - name: Upload Test logs
         if: ${{ always() }}
         uses: actions/upload-artifact@v2
