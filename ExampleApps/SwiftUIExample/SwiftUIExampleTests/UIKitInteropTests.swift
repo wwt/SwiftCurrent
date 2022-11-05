@@ -100,6 +100,7 @@ final class UIKitInteropTests: XCTestCase, View {
     func testPuttingAUIKitViewThatDoesNotTakeInDataInsideASwiftUIWorkflow() async throws {
         final class FR1: UIWorkflowItem<Never, Never>, FlowRepresentable {
             let nextButtonTag = UUID().hashValue
+            
             @objc private func nextPressed() {
                 proceedInWorkflow()
             }
