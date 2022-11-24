@@ -30,7 +30,7 @@ extension AnyWorkflow {
      - Parameter onFinish: a callback after the workflow has been abandoned.
      - Important: In order to dismiss UIKit views the workflow must have an `OrchestrationResponder` that is a `UIKitPresenter`.
      */
-    public func abandon(animated: Bool = true, onFinish:(() -> Void)? = nil) {
+    public func abandon(animated: Bool = true, onFinish: (() -> Void)? = nil) {
         if let presenter = orchestrationResponder as? UIKitPresenter {
             presenter.abandon(self, animated: animated) { [self] in
                 self._abandon()

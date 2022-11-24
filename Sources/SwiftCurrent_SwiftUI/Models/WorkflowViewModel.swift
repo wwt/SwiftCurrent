@@ -30,7 +30,10 @@ final class WorkflowViewModel: ObservableObject {
 extension WorkflowViewModel: OrchestrationResponder {
     func launch(to destination: AnyWorkflow.Element) {
         onFinishPublisher.send(nil) // We launched, so make sure nobody thinks we finished yet.
-        body = destination
+        DispatchQueue.main.async { [weak self] in
+            // Probably makes previews require running, but it's better than publishing during the view lifecycle
+            self?.body = destination
+        }
     }
 
     func proceed(to destination: AnyWorkflow.Element, from source: AnyWorkflow.Element) {
