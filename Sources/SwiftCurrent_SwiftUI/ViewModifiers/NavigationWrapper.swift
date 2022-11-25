@@ -13,11 +13,15 @@ extension View {
     // PROBLEM: SwiftUI has a bug if isActive is defaulted to true on NavLinks.
     // See details here: https://stackoverflow.com/questions/68365774/nested-navigationlinks-with-isactive-true-are-not-displaying-correctly
     func navLink<D: View>(to destination: D, isActive: Binding<Bool>) -> some View {
-        background(
-            List {
-                NavigationLink(destination: destination,
-                               isActive: isActive) { EmptyView() }
-            }.opacity(0.01)
-        )
+        if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
+            return navigationDestination(isPresented: isActive) { destination }
+        } else {
+            return background(
+                List {
+                    NavigationLink(destination: destination,
+                                   isActive: isActive) { EmptyView() }
+                }.opacity(0.01)
+            )
+        }
     }
 }

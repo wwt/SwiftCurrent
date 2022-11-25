@@ -11,7 +11,7 @@ import SwiftCurrent
 
 /// :nodoc: Protocol is forced to be public, but it is an internal protocol.
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-public protocol _WorkflowItemProtocol: View where FlowRepresentableType: FlowRepresentable & View {
+public protocol _WorkflowItemProtocol: View where FlowRepresentableType: FlowRepresentable & View { // swiftlint:disable:this type_name
     associatedtype FlowRepresentableType
 
     var workflowLaunchStyle: LaunchStyle.SwiftUI.PresentationType { get }

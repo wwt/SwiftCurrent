@@ -45,7 +45,7 @@ open class MockOrchestrationResponder: OrchestrationResponder {
 
     open var abandonCalled = 0
     open var lastWorkflow: AnyWorkflow?
-    open var lastOnFinish:(() -> Void)?
+    open var lastOnFinish: (() -> Void)?
     open func abandon(_ workflow: AnyWorkflow, onFinish: (() -> Void)?) {
         lastWorkflow = workflow
         lastOnFinish = onFinish
