@@ -31,7 +31,7 @@ public struct WorkflowLauncher<Content: _WorkflowItemProtocol>: View {
         ViewBuilder {
             if isLaunched {
                 if shouldEmbedInNavView {
-                    if #available(iOS 16.0, *) {
+                    if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
                         NavigationStack {
                             workflowContent
                         }
