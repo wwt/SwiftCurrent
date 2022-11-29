@@ -15,8 +15,8 @@ struct MapFeatureView: View, FlowRepresentable {
 
     let inspection = Inspection<Self>() // ViewInspector
     // WWT Global Headquarters
-    var coordinate = CLLocationCoordinate2D(latitude: 38.70196,
-                                            longitude: -90.44906)
+    var coordinate = CLLocationCoordinate2D(latitude: 38.70196, // swiftlint:disable:this number_separator
+                                            longitude: -90.44906) // swiftlint:disable:this number_separator
 
     weak var _workflowPointer: AnyFlowRepresentable?
 
