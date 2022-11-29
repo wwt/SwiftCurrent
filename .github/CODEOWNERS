@@ -1,0 +1,14 @@
+/.gitignore @wwt/workflow-pipeline
+/.github/ @wwt/workflow-pipeline
+/fastlane/ @wwt/workflow-pipeline
+
+/SwiftCurrentLint/.swiftlint.yml @wwt/workflow-pipeline
+
+/changelog_configuration.json @wwt/workflow-pipeline
+/document.sh @wwt/workflow-pipeline
+
+/.clabot @wwt/workflow-pipeline
+/SwiftCurrent.podspec @wwt/workflow-pipeline
+
+/LICENSE @wwt/workflow-license
+/NOTICE @wwt/workflow-license

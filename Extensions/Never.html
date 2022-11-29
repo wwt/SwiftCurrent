@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+ <head> 
+  <title>Never Extension Reference</title> 
+  <link rel="stylesheet" type="text/css" href="../css/jazzy.css"> 
+  <link rel="stylesheet" type="text/css" href="../css/highlight.css"> 
+  <meta charset="utf-8"> 
+  <script src="../js/jquery.min.js" defer></script> 
+  <script src="../js/jazzy.js" defer></script> 
+  <script src="../js/lunr.min.js" defer></script> 
+  <script src="../js/typeahead.jquery.js" defer></script> 
+  <script src="../js/jazzy.search.js" defer></script> 
+ </head> 
+ <body> 
+  <a name="//apple_ref/swift/Extension/Never" class="dashAnchor"></a> 
+  <a title="Never Extension Reference"></a> 
+  <header class="header"> 
+   <p class="header-col header-col--primary"> <a class="header-link" href="../index.html"> SwiftCurrent 5.1.12 Docs </a> (95% documented) </p> 
+   <div class="header-col--secondary"> 
+    <form role="search" action="../search.json"> 
+     <input type="text" placeholder="Search documentation" data-typeahead> 
+    </form> 
+   </div> 
+   <p class="header-col header-col--secondary"> <a class="header-link" href="https://github.com/wwt/SwiftCurrent"> <img class="header-icon" src="../img/gh.png" alt="GitHub"> View on GitHub </a> </p> 
+  </header> 
+  <p class="breadcrumbs"> <a class="breadcrumb" href="../index.html">SwiftCurrent Reference</a> <img class="carat" src="../img/carat.png" alt=""> Never Extension Reference </p> 
+  <div class="content-wrapper"> 
+   <nav class="navigation"> 
+    <ul class="nav-groups"> 
+     <li class="nav-group-name"> <a class="nav-group-name-link" href="../index.html">Overview</a> 
+      <ul class="nav-group-tasks"> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../why-this-library.html">Why This Library</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../installation.html">Installation</a> </li> 
+      </ul> </li> 
+     <li class="nav-group-name"> <a class="nav-group-name-link" href="../Creating%20Workflows.html">Creating Workflows</a> 
+      <ul class="nav-group-tasks"> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Protocols/FlowRepresentable.html">FlowRepresentable</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Classes/Workflow.html">Workflow</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Protocols/PassthroughFlowRepresentable.html">PassthroughFlowRepresentable</a> </li> 
+      </ul> </li> 
+     <li class="nav-group-name"> <a class="nav-group-name-link" href="../How%20to%20use%20SwiftCurrent%20with%20SwiftUI.html">How to use SwiftCurrent with SwiftUI</a> 
+      <ul class="nav-group-tasks"> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../getting-started-with-swiftui.html">Getting Started with SwiftUI</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../working-with-navigationview.html">Working with NavigationView</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../working-with-modals.html">Working with Modals</a> </li> 
+      </ul> </li> 
+     <li class="nav-group-name"> <a class="nav-group-name-link" href="../Creating%20Workflows%20in%20SwiftUI.html">Creating Workflows in SwiftUI</a> 
+      <ul class="nav-group-tasks"> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Structs/WorkflowView.html">WorkflowView</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Structs/WorkflowItem.html">WorkflowItem</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Enums/WorkflowBuilder.html">WorkflowBuilder</a> </li> 
+      </ul> </li> 
+     <li class="nav-group-name"> <a class="nav-group-name-link" href="../How%20to%20use%20SwiftCurrent%20with%20UIKit.html">How to use SwiftCurrent with UIKit</a> 
+      <ul class="nav-group-tasks"> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../using-programmatic-views.html">Using Programmatic Views</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../using-storyboards.html">Using Storyboards</a> </li> 
+      </ul> </li> 
+     <li class="nav-group-name"> <a class="nav-group-name-link" href="../Creating%20Workflows%20in%20UIKit.html">Creating Workflows in UIKit</a> 
+      <ul class="nav-group-tasks"> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Extensions/UIViewController.html">UIViewController</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Classes/UIWorkflowItem.html">UIWorkflowItem</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Classes/HostedWorkflowItem.html">HostedWorkflowItem</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Protocols/StoryboardLoadable.html">StoryboardLoadable</a> </li> 
+      </ul> </li> 
+     <li class="nav-group-name"> <a class="nav-group-name-link" href="../Server%20Driven%20Workflows.html">Server Driven Workflows</a> 
+      <ul class="nav-group-tasks"> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../generated-type-registry.html">Generated Type Registry</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Extensions/JSONDecoder.html">JSONDecoder</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Structs/DecodeWorkflow.html">DecodeWorkflow</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Protocols/FlowRepresentableAggregator.html">FlowRepresentableAggregator</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Protocols/WorkflowDecodable.html">WorkflowDecodable</a> </li> 
+      </ul> </li> 
+     <li class="nav-group-name"> <a class="nav-group-name-link" href="../Controlling%20Presentation.html">Controlling Presentation</a> 
+      <ul class="nav-group-tasks"> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Classes/LaunchStyle.html">LaunchStyle</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Classes/LaunchStyle/PresentationType.html">– PresentationType</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Classes/LaunchStyle/SwiftUI.html">– SwiftUI</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Classes/FlowPersistence.html">FlowPersistence</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Classes/FlowPersistence/SwiftUI.html">– SwiftUI</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Classes/UIKitPresenter.html">UIKitPresenter</a> </li> 
+      </ul> </li> 
+     <li class="nav-group-name"> <a class="nav-group-name-link" href="../Type%20Erasure.html">Type Erasure</a> 
+      <ul class="nav-group-tasks"> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Classes/AnyWorkflow.html">AnyWorkflow</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Classes/AnyWorkflow/DecodingError.html">– DecodingError</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Classes/AnyWorkflow/JSONSchemaVersion.html">– JSONSchemaVersion</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Classes/AnyWorkflow/PassedArgs.html">– PassedArgs</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Classes/AnyFlowRepresentable.html">AnyFlowRepresentable</a> </li> 
+      </ul> </li> 
+     <li class="nav-group-name"> <a class="nav-group-name-link" href="../Underlying%20Types.html">Underlying Types</a> 
+      <ul class="nav-group-tasks"> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Classes/FlowRepresentableMetadata.html">FlowRepresentableMetadata</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Classes/LinkedList.html">LinkedList</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Classes/LinkedList/Node.html">– Node</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Protocols/OrchestrationResponder.html">OrchestrationResponder</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Structs/ViewControllerWrapper.html">ViewControllerWrapper</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Enums/WorkflowError.html">WorkflowError</a> </li> 
+      </ul> </li> 
+     <li class="nav-group-name"> <a class="nav-group-name-link" href="../Other%20Extensions.html">Other Extensions</a> 
+      <ul class="nav-group-tasks"> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Extensions/Never.html">Never</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Extensions/WorkflowViewModel.html">WorkflowViewModel</a> </li> 
+      </ul> </li> 
+     <li class="nav-group-name"> <a class="nav-group-name-link" href="../Other%20Structs.html">Other Structures</a> 
+      <ul class="nav-group-tasks"> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Structs/AnyWorkflowItem.html">AnyWorkflowItem</a> </li> 
+       <li class="nav-group-task"> <a class="nav-group-task-link" href="../Structs/WorkflowGroup.html">WorkflowGroup</a> </li> 
+      </ul> </li> 
+    </ul> 
+   </nav> 
+   <article class="main-content"> 
+    <section class="section"> 
+     <div class="section-content top-matter"> 
+      <h1>Never</h1> 
+      <div class="declaration"> 
+       <div class="language"> 
+        <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Never</span><span class="p">:</span> <span class="kt"><a href="../Protocols/FlowRepresentable.html">FlowRepresentable</a></span></code></pre> 
+        <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Never</span><span class="p">:</span> <span class="n">_WorkflowItemProtocol</span></code></pre> 
+       </div> 
+      </div> 
+     </div> 
+    </section> 
+    <section class="section"> 
+     <div class="section-content"> 
+      <div class="task-group"> 
+       <ul class="item-container"> 
+        <li class="item"> 
+         <div> 
+          <code> <a name="/s:12SwiftCurrent17FlowRepresentableP16_workflowPointerAA03AnycD0CSgvp"></a> <a name="//apple_ref/swift/Property/_workflowPointer" class="dashAnchor"></a> <a class="token" href="#/s:12SwiftCurrent17FlowRepresentableP16_workflowPointerAA03AnycD0CSgvp">_workflowPointer</a> </code> 
+         </div> 
+         <div class="height-container"> 
+          <div class="pointer-container"></div> 
+          <section class="section"> 
+           <div class="pointer"></div> 
+           <div class="abstract"> 
+           </div> 
+           <div class="declaration"> 
+            <h4>Declaration</h4> 
+            <div class="language"> 
+             <p class="aside-title">Swift</p> 
+             <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">_workflowPointer</span><span class="p">:</span> <span class="kt"><a href="../Classes/AnyFlowRepresentable.html">AnyFlowRepresentable</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre> 
+            </div> 
+           </div> 
+          </section> 
+         </div> </li> 
+        <li class="item"> 
+         <div> 
+          <code> <a name="/s:12SwiftCurrent17FlowRepresentablePxycfc"></a> <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a> <a class="token" href="#/s:12SwiftCurrent17FlowRepresentablePxycfc">init()</a> </code> 
+         </div> 
+         <div class="height-container"> 
+          <div class="pointer-container"></div> 
+          <section class="section"> 
+           <div class="pointer"></div> 
+           <div class="abstract"> 
+           </div> 
+           <div class="declaration"> 
+            <h4>Declaration</h4> 
+            <div class="language"> 
+             <p class="aside-title">Swift</p> 
+             <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">()</span></code></pre> 
+            </div> 
+           </div> 
+          </section> 
+         </div> </li> 
+       </ul> 
+      </div> 
+     </div> 
+    </section> 
+   </article> 
+  </div> 
+  <section class="footer"> 
+   <p>© 2022 <a class="link" href="https://github.com/wwt/SwiftCurrent" target="_blank" rel="external noopener">WWT and Tyler Thompson</a>. All rights reserved. (Last updated: 2022-11-29)</p> 
+   <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p> 
+  </section>   
+ </body>
+</html>

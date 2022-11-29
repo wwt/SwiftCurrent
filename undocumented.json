@@ -1,0 +1,110 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/runner/work/SwiftCurrent/SwiftCurrent/Sources/SwiftCurrent/LinkedList/LinkedList.swift",
+      "line": 19,
+      "symbol": "LinkedList.Index",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/SwiftCurrent/SwiftCurrent/Sources/SwiftCurrent/LinkedList/LinkedList.swift",
+      "line": 20,
+      "symbol": "LinkedList.SubSequence",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/SwiftCurrent/SwiftCurrent/Sources/SwiftCurrent/Models/Workflow.swift",
+      "line": 147,
+      "symbol": "Workflow._abandon()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/SwiftCurrent/SwiftCurrent/Sources/SwiftCurrent/Models/_WorkflowItem.swift",
+      "line": 12,
+      "symbol": "_WorkflowItem",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/SwiftCurrent/SwiftCurrent/Sources/SwiftCurrent/Models/_WorkflowItem.swift",
+      "line": 24,
+      "symbol": "AnyWorkflow.Element.previouslyLoadedElement",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/SwiftCurrent/SwiftCurrent/Sources/SwiftCurrent/PropertyWrappers/DecodeWorkflow.swift",
+      "line": 28,
+      "symbol": "DecodeWorkflow.wrappedValue",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/SwiftCurrent/SwiftCurrent/Sources/SwiftCurrent/PropertyWrappers/DecodeWorkflow.swift",
+      "line": 30,
+      "symbol": "DecodeWorkflow.init(wrappedValue:aggregator:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/SwiftCurrent/SwiftCurrent/Sources/SwiftCurrent/Protocols/FlowRepresentable.swift",
+      "line": 79,
+      "symbol": "FlowRepresentable._factory(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/SwiftCurrent/SwiftCurrent/Sources/SwiftCurrent/Protocols/FlowRepresentable.swift",
+      "line": 82,
+      "symbol": "FlowRepresentable._factory(_:with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/SwiftCurrent/SwiftCurrent/Sources/SwiftCurrent/Protocols/FlowRepresentable.swift",
+      "line": 101,
+      "symbol": "FlowRepresentable._workflowUnderlyingInstance",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/SwiftCurrent/SwiftCurrent/Sources/SwiftCurrent/Protocols/FlowRepresentable.swift",
+      "line": 110,
+      "symbol": "FlowRepresentable._factory(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/SwiftCurrent/SwiftCurrent/Sources/SwiftCurrent/Protocols/FlowRepresentable.swift",
+      "line": 113,
+      "symbol": "FlowRepresentable._factory(_:with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/SwiftCurrent/SwiftCurrent/Sources/SwiftCurrent/Protocols/PassthroughFlowRepresentable.swift",
+      "line": 10,
+      "symbol": "_PassthroughIdentifiable",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/SwiftCurrent/SwiftCurrent/Sources/SwiftCurrent/TypeErased/AnyWorkflow.swift",
+      "line": 48,
+      "symbol": "AnyWorkflow._abandon()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/SwiftCurrent/SwiftCurrent/Sources/SwiftCurrent/TypeErased/AnyWorkflow.swift",
+      "line": 85,
+      "symbol": "AnyWorkflow.last(where:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/runner/work/SwiftCurrent/SwiftCurrent"
+}

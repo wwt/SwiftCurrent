@@ -1,0 +1,176 @@
+# By default, SwiftLint uses a set of sensible default rules you can adjust:
+disabled_rules: # rule identifiers turned on by default to exclude from running
+  - identifier_name
+  - function_parameter_count
+opt_in_rules: # some rules are turned off by default, so you need to opt-in
+  - anyobject_protocol # https://realm.github.io/SwiftLint/anyobject_protocol.html
+  #   - array_init # https://realm.github.io/SwiftLint/array_init.html
+  #   - capture_variable
+  - closure_body_length # https://realm.github.io/SwiftLint/closure_body_length.html
+  - closure_end_indentation # https://realm.github.io/SwiftLint/closure_end_indentation.html
+  - closure_spacing # https://realm.github.io/SwiftLint/closure_spacing.html
+  - collection_alignment # https://realm.github.io/SwiftLint/collection_alignment.html
+  #   - conditional_returns_on_newline # https://realm.github.io/SwiftLint/conditional_returns_on_newline.html
+  - contains_over_filter_count # https://realm.github.io/SwiftLint/contains_over_filter_count.html
+  - contains_over_first_not_nil # https://realm.github.io/SwiftLint/contains_over_first_not_nil.html
+  - convenience_type # https://realm.github.io/SwiftLint/convenience_type.html
+  - discarded_notification_center_observer # https://realm.github.io/SwiftLint/discarded_notification_center_observer.html
+  - discouraged_assert # https://realm.github.io/SwiftLint/discouraged_assert.html
+  - discouraged_object_literal # https://realm.github.io/SwiftLint/discouraged_object_literal.html
+  #   - discouraged_optional_boolean # https://realm.github.io/SwiftLint/discouraged_optional_boolean.html
+  #   - discouraged_optional_collection # https://realm.github.io/SwiftLint/discouraged_optional_collection.html
+  - duplicate_enum_cases # https://realm.github.io/SwiftLint/duplicate_enum_cases.html
+  - empty_collection_literal # https://realm.github.io/SwiftLint/empty_collection_literal.html
+  - empty_count # https://realm.github.io/SwiftLint/empty_count.html
+  - empty_string # https://realm.github.io/SwiftLint/empty_string.html
+  - empty_xctest_method # https://realm.github.io/SwiftLint/empty_xctest_method.html
+  - enum_case_associated_values_count # https://realm.github.io/SwiftLint/enum_case_associated_values_count.html
+  - expiring_todo # https://realm.github.io/SwiftLint/expiring_todo.html
+  #   - explicit_acl # https://realm.github.io/SwiftLint/explicit_acl.html
+  #   - explicit_enum_raw_value # https://realm.github.io/SwiftLint/explicit_enum_raw_value.html
+  - explicit_init # https://realm.github.io/SwiftLint/explicit_init.html
+  #   - explicit_self # https://realm.github.io/SwiftLint/explicit_self.html
+  #   - explicit_top_level_acl # https://realm.github.io/SwiftLint/explicit_top_level_acl.html #
+  #   - explicit_type_interface # https://realm.github.io/SwiftLint/explicit_type_interface.html
+  #   - extension_access_modifier # https://realm.github.io/SwiftLint/extension_access_modifier.html
+  - fallthrough # https://realm.github.io/SwiftLint/fallthrough.html
+  - fatal_error_message # https://realm.github.io/SwiftLint/fatal_error_message.html
+  - file_header # https://realm.github.io/SwiftLint/file_header.html
+  - file_name # https://realm.github.io/SwiftLint/file_name.html
+  - file_name_no_space # https://realm.github.io/SwiftLint/file_name_no_space.html
+  - file_types_order # https://realm.github.io/SwiftLint/file_types_order.html
+  - first_where # https://realm.github.io/SwiftLint/first_where.html
+  - flatmap_over_map_reduce # https://realm.github.io/SwiftLint/flatmap_over_map_reduce.html
+  - force_unwrapping # https://realm.github.io/SwiftLint/force_unwrapping.html
+  #   - function_default_parameter_at_end # https://realm.github.io/SwiftLint/function_default_parameter_at_end.html
+  #   - ibinspectable_in_extension # https://realm.github.io/SwiftLint/ibinspectable_in_extension.html
+  - identical_operands # https://realm.github.io/SwiftLint/identical_operands.html
+  - implicit_return # https://realm.github.io/SwiftLint/implicit_return.html
+  #   - implicitly_unwrapped_optional # https://realm.github.io/SwiftLint/implicitly_unwrapped_optional.html
+  #   - indentation_width # https://realm.github.io/SwiftLint/indentation_width.html
+  - joined_default_parameter # https://realm.github.io/SwiftLint/joined_default_parameter.html
+  - last_where # https://realm.github.io/SwiftLint/last_where.html
+  #   - legacy_multiple # https://realm.github.io/SwiftLint/legacy_multiple.html
+  - legacy_objc_type # https://realm.github.io/SwiftLint/legacy_objc_type.html
+  - legacy_random # https://realm.github.io/SwiftLint/legacy_random.html
+  #   - let_var_whitespace # https://realm.github.io/SwiftLint/let_var_whitespace.html
+  - literal_expression_end_indentation # https://realm.github.io/SwiftLint/literal_expression_end_indentation.html
+  - lower_acl_than_parent # https://realm.github.io/SwiftLint/lower_acl_than_parent.html
+  - missing_docs # https://realm.github.io/SwiftLint/missing_docs.html
+  - modifier_order # https://realm.github.io/SwiftLint/modifier_order.html
+  - multiline_arguments # https://realm.github.io/SwiftLint/multiline_arguments.html
+  #   - multiline_arguments_brackets # https://realm.github.io/SwiftLint/multiline_arguments_brackets.html
+  - multiline_function_chains # https://realm.github.io/SwiftLint/multiline_function_chains.html
+  - multiline_literal_brackets # https://realm.github.io/SwiftLint/multiline_literal_brackets.html
+  - multiline_parameters # https://realm.github.io/SwiftLint/multiline_parameters.html
+  #   - multiline_parameters_brackets # https://realm.github.io/SwiftLint/multiline_parameters_brackets.html
+  #   - nimble_operator # https://realm.github.io/SwiftLint/nimble_operator.html
+  - no_extension_access_modifier # https://realm.github.io/SwiftLint/no_extension_access_modifier.html
+  #   - no_grouping_extension # https://realm.github.io/SwiftLint/no_grouping_extension.html
+  #   - nslocalizedstring_key # https://realm.github.io/SwiftLint/nslocalizedstring_key.html
+  #   - nslocalizedstring_require_bundle # https://realm.github.io/SwiftLint/nslocalizedstring_require_bundle.html
+  - number_separator # https://realm.github.io/SwiftLint/number_separator.html
+  - object_literal # https://realm.github.io/SwiftLint/object_literal.html
+  - operator_usage_whitespace # https://realm.github.io/SwiftLint/operator_usage_whitespace.html
+  #   - optional_enum_case_matching # https://realm.github.io/SwiftLint/optional_enum_case_matching.html
+  #   - overridden_super_call # https://realm.github.io/SwiftLint/overridden_super_call.html
+  #   - override_in_extension # https://realm.github.io/SwiftLint/override_in_extension.html
+  #   - pattern_matching_keywords # https://realm.github.io/SwiftLint/pattern_matching_keywords.html
+  #   - prefer_nimble # https://realm.github.io/SwiftLint/prefer_nimble.html
+  - prefer_self_type_over_type_of_self # https://realm.github.io/SwiftLint/prefer_self_type_over_type_of_self.html
+  - prefer_zero_over_explicit_init # https://realm.github.io/SwiftLint/prefer_zero_over_explicit_init.html
+  #   - prefixed_toplevel_constant # https://realm.github.io/SwiftLint/prefixed_toplevel_constant.html
+  - private_action # https://realm.github.io/SwiftLint/private_action.html
+  - private_outlet # https://realm.github.io/SwiftLint/private_outlet.html
+  #   - private_subject # https://realm.github.io/SwiftLint/private_subject.html
+  #   - prohibited_interface_builder # https://realm.github.io/SwiftLint/prohibited_interface_builder.html
+  #   - prohibited_super_call # https://realm.github.io/SwiftLint/prohibited_super_call.html
+  #   - quick_discouraged_call # https://realm.github.io/SwiftLint/quick_discouraged_call.html
+  #   - quick_discouraged_focused_test # https://realm.github.io/SwiftLint/quick_discouraged_focused_test.html
+  #   - quick_discouraged_pending_test # https://realm.github.io/SwiftLint/quick_discouraged_pending_test.html
+  #   - raw_value_for_camel_cased_codable_enum # https://realm.github.io/SwiftLint/raw_value_for_camel_cased_codable_enum.html
+  - reduce_into # https://realm.github.io/SwiftLint/reduce_into.html
+  - redundant_nil_coalescing # https://realm.github.io/SwiftLint/redundant_nil_coalescing.html
+  - redundant_type_annotation # https://realm.github.io/SwiftLint/redundant_type_annotation.html
+  #   - required_deinit # https://realm.github.io/SwiftLint/required_deinit.html
+  #   - required_enum_case # https://realm.github.io/SwiftLint/required_enum_case.html
+  - single_test_class # https://realm.github.io/SwiftLint/single_test_class.html
+  - sorted_first_last # https://realm.github.io/SwiftLint/sorted_first_last.html
+  #   - sorted_imports # https://realm.github.io/SwiftLint/sorted_imports.html
+  #   - static_operator # https://realm.github.io/SwiftLint/static_operator.html
+  #   - strict_fileprivate # https://realm.github.io/SwiftLint/strict_fileprivate.html
+  #   - strong_iboutlet # https://realm.github.io/SwiftLint/strong_iboutlet.html
+  #   - switch_case_on_newline # https://realm.github.io/SwiftLint/switch_case_on_newline.html
+  #   - test_case_accessibility # https://realm.github.io/SwiftLint/test_case_accessibility.html
+  - toggle_bool # https://realm.github.io/SwiftLint/toggle_bool.html
+  - trailing_closure # https://realm.github.io/SwiftLint/trailing_closure.html
+  - type_contents_order # https://realm.github.io/SwiftLint/type_contents_order.html
+  - unavailable_function # https://realm.github.io/SwiftLint/unavailable_function.html
+  - unneeded_parentheses_in_closure_argument # https://realm.github.io/SwiftLint/unneeded_parentheses_in_closure_argument.html
+  - unowned_variable_capture # https://realm.github.io/SwiftLint/unowned_variable_capture.html
+  #   - untyped_error_in_catch # https://realm.github.io/SwiftLint/untyped_error_in_catch.html
+  #   - unused_declaration # https://realm.github.io/SwiftLint/unused_declaration.html
+  - unused_import # https://realm.github.io/SwiftLint/unused_import.html
+  - vertical_parameter_alignment_on_call # https://realm.github.io/SwiftLint/vertical_parameter_alignment_on_call.html
+  #   - vertical_whitespace_between_cases # https://realm.github.io/SwiftLint/vertical_whitespace_between_cases.html
+  - vertical_whitespace_closing_braces # https://realm.github.io/SwiftLint/vertical_whitespace_closing_braces.html
+  - vertical_whitespace_opening_braces # https://realm.github.io/SwiftLint/vertical_whitespace_opening_braces.html
+  #   - xct_specific_matcher # https://realm.github.io/SwiftLint/xct_specific_matcher.html
+  - yoda_condition # https://realm.github.io/SwiftLint/yoda_condition.html
+
+# Alternatively, specify all rules explicitly by uncommenting this option:
+# only_rules: # delete `disabled_rules` & `opt_in_rules` if using this
+#   - empty_parameters
+#   - vertical_whitespace
+
+included: # paths to include during linting. `--path` is ignored if present.
+  - ../../Sources
+  - ../../ExampleApps/SwiftUIExample
+  # - ../../Tests
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - ../../ExampleApps/SwiftUIExample/SwiftCurrent_SwiftUI_UITests
+  - ../../ExampleApps/SwiftUIExample/SwiftUIExample/TestViews
+#   - Workflow/.swiftpm/
+#   - Workflow/Package.swift
+
+line_length:
+  warning: 205
+  error: 250
+  ignores_comments: true
+
+nesting:
+  type_level: 2
+
+switch_case_alignment:
+  indented_cases: true
+
+cyclomatic_complexity:
+  ignores_case_statements: true
+
+type_contents_order:
+  order: [
+      [SwiftLintFramework.TypeContent.case],
+      [
+        SwiftLintFramework.TypeContent.typeAlias,
+        SwiftLintFramework.TypeContent.associatedType,
+      ],
+      [SwiftLintFramework.TypeContent.subtype],
+      [SwiftLintFramework.TypeContent.typeProperty],
+      [SwiftLintFramework.TypeContent.instanceProperty],
+      [SwiftLintFramework.TypeContent.typeMethod],
+      # [SwiftLintFramework.TypeContent.ibInspectable],
+      # [SwiftLintFramework.TypeContent.ibOutlet],
+      [SwiftLintFramework.TypeContent.initializer],
+      [SwiftLintFramework.TypeContent.deinitializer],
+      [SwiftLintFramework.TypeContent.viewLifeCycleMethod],
+      [
+        SwiftLintFramework.TypeContent.ibAction,
+        SwiftLintFramework.TypeContent.otherMethod,
+        SwiftLintFramework.TypeContent.subscript,
+      ],
+    ]
+
+file_header:
+    required_pattern: '//  Copyright © 2021 WWT and Tyler Thompson\. All rights reserved\.'
+
+reporter: "xcode" # reporter type (xcode, json, csv, checkstyle, codeclimate, junit, html, emoji, markdown, github-actions-logging)

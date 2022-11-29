@@ -1,0 +1,80 @@
+name: Version Bump
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: [ "CI" ]
+    branches: [ main ]
+    types: [ completed ]
+
+jobs:
+  version_bump:
+    runs-on: macos-11
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.repository == 'wwt/SwiftCurrent' }}
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_13.0.app/Contents/Developer
+      working-directory: .github
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.RELEASE_PAT }}
+      - name: Bump version in Podspec and Plist
+        id: bump_version
+        run: bundle exec fastlane patch
+        working-directory: ${{ env.working-directory }}
+      - name: Commit version changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "[ci skip] Apply automatic changes"
+          tagging_message: "${{ steps.bump_version.outputs.version }}"
+          push_options: --force
+      - name: Build Changelog
+        id: build_changelog
+        uses: mikepenz/release-changelog-builder-action@v1.7.3
+        with:
+          configuration: ".github/changelog_configuration.json"
+          ignorePreReleases: "false"
+          toTag: ${{ steps.bump_version.outputs.version }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build XCFrameworks
+        run: |
+          # BE CAREFUL this script rewrites the package.swift and you do not want that change committed
+          .github/build-xcframework.sh SwiftCurrent "iOS" "iOS Simulator" "WatchOS" "WatchOS Simulator" "TvOS" "TvOS Simulator" "macOS"
+          .github/build-xcframework.sh SwiftCurrent_UIKit "iOS" "iOS Simulator" "TvOS" "TvOS Simulator"
+          .github/build-xcframework.sh SwiftCurrent_SwiftUI "iOS" "iOS Simulator" "WatchOS" "WatchOS Simulator" "TvOS" "TvOS Simulator" "macOS"
+          echo "Zipping SwiftCurrent.xcframework"
+          zip -r SwiftCurrent-framework.zip SwiftCurrent.xcframework
+          echo "Zipping SwiftCurrent_UIKit.xcframework"
+          zip -r SwiftCurrent_UIKit-framework.zip SwiftCurrent_UIKit.xcframework
+          echo "Zipping SwiftCurrent_SwiftUI.xcframework"
+          zip -r SwiftCurrent_SwiftUI-framework.zip SwiftCurrent_SwiftUI.xcframework
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "SwiftCurrent-framework.zip,SwiftCurrent_UIKit-framework.zip,SwiftCurrent_SwiftUI-framework.zip"
+          body: ${{steps.build_changelog.outputs.changelog}}
+          token: ${{ secrets.RELEASE_PAT }}
+          tag: ${{ steps.bump_version.outputs.version }}
+          name: Release ${{ steps.bump_version.outputs.version }}
+  deploy_documentation:
+    runs-on: macos-11
+    env:
+      working-directory: .github
+      DEVELOPER_DIR: /Applications/Xcode_13.0.app/Contents/Developer
+    needs: version_bump
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: main
+      - name: Install sourcekitten
+        run: brew install sourcekitten
+      - name: Install jazzy
+        run: gem install jazzy
+      - name: Generate documentation
+        run: ./.github/document.sh
+      - uses: JamesIves/github-pages-deploy-action@4.1.3
+        with:
+          branch: gh-pages
+          folder: docs
+          commit-message: "Deploying docs"
+          single-commit: true # optional

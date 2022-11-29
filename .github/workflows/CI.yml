@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: macos-11
+    env:
+      working-directory: .github
+      DEVELOPER_DIR: /Applications/Xcode_13.0.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run TESTS
+        run: bundle exec fastlane unit_test
+        working-directory: ${{ env.working-directory }}
+      - name: Codecov
+        uses: codecov/codecov-action@v1.5.2
+        with:
+          fail_ci_if_error: true
+      - name: Upload Test logs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-logs
+          path: ~/Library/Logs/scan
+          retention-days: 90
+
+  build_for_swift_package_manager:
+    runs-on: macos-11
+    env:
+      working-directory: .github
+      DEVELOPER_DIR: /Applications/Xcode_13.0.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@v2
+      - name: Validate SwiftPM BUILDs
+        run: bundle exec fastlane build_swiftpm
+        working-directory: ${{ env.working-directory }}
+
+  build_for_cocoapods:
+    runs-on: macos-11
+    env:
+      working-directory: .github
+      DEVELOPER_DIR: /Applications/Xcode_13.0.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@v2
+      - name: Validate Cocoapods Can Deploy (lib lint)
+        run: bundle exec fastlane cocoapods_liblint
+        working-directory: ${{ env.working-directory }}
+
+  lint: 
+    runs-on: macos-11
+    env:
+      working-directory: .github
+      DEVELOPER_DIR: /Applications/Xcode_13.0.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@v2
+      - name: Swiftlint
+        run: bundle exec fastlane lint
+        working-directory: ${{ env.working-directory }}
