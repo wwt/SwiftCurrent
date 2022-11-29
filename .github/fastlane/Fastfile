@@ -26,8 +26,8 @@ platform :ios do
         destination: [
           'platform=iOS Simulator,name=iPhone 8',
           'platform=tvOS Simulator,name=Apple TV',
-          'platform=watchOS Simulator,name=Apple Watch Series 5 - 44mm',
-          'platform=iOS Simulator,name=iPad Pro (12.9-inch) (4th generation)',
+          'platform=watchOS Simulator,name=Apple Watch Series 8 (45mm)',
+          'platform=iOS Simulator,name=iPad Pro (12.9-inch) (5th generation)',
           'platform=macOS',
           'platform=macOS,variant=Mac Catalyst',
         ]
@@ -44,8 +44,8 @@ platform :ios do
         destination: [
           'platform=iOS Simulator,name=iPhone 8',
           'platform=tvOS Simulator,name=Apple TV',
-          'platform=watchOS Simulator,name=Apple Watch Series 5 - 44mm',
-          'platform=iOS Simulator,name=iPad Pro (12.9-inch) (4th generation)',
+          'platform=watchOS Simulator,name=Apple Watch Series 8 (45mm)',
+          'platform=iOS Simulator,name=iPad Pro (12.9-inch) (5th generation)',
           'platform=macOS',
           'platform=macOS,variant=Mac Catalyst',
         ]
@@ -55,7 +55,7 @@ platform :ios do
         destination: [
           'platform=iOS Simulator,name=iPhone 8',
           'platform=tvOS Simulator,name=Apple TV',
-          'platform=iOS Simulator,name=iPad Pro (12.9-inch) (4th generation)',
+          'platform=iOS Simulator,name=iPad Pro (12.9-inch) (5th generation)',
           'platform=macOS,variant=Mac Catalyst',
         ]
       )
@@ -64,8 +64,8 @@ platform :ios do
         destination: [
           'platform=iOS Simulator,name=iPhone 8',
           'platform=tvOS Simulator,name=Apple TV',
-          'platform=watchOS Simulator,name=Apple Watch Series 5 - 44mm',
-          'platform=iOS Simulator,name=iPad Pro (12.9-inch) (4th generation)',
+          'platform=watchOS Simulator,name=Apple Watch Series 8 (45mm)',
+          'platform=iOS Simulator,name=iPad Pro (12.9-inch) (5th generation)',
           'platform=macOS',
           'platform=macOS,variant=Mac Catalyst',
         ]
@@ -75,10 +75,10 @@ platform :ios do
         destination: [
           'platform=iOS Simulator,name=iPhone 8',
           'platform=tvOS Simulator,name=Apple TV',
-          'platform=iOS Simulator,name=iPad Pro (12.9-inch) (4th generation)',
+          'platform=iOS Simulator,name=iPad Pro (12.9-inch) (5th generation)',
           'platform=macOS',
           'platform=macOS,variant=Mac Catalyst',
-          'platform=watchOS Simulator,name=Apple Watch Series 5 - 44mm',
+          'platform=watchOS Simulator,name=Apple Watch Series 8 (45mm)',
         ]
       )
     end
