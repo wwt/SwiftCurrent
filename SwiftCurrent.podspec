@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
     ss.ios.deployment_target = '11.0'
     ss.macos.deployment_target = '11.0'
     ss.tvos.deployment_target = '14.0'
-    ss.watchos.deployment_target = '7.0'
+    # ss.watchos.deployment_target = '7.0' # CocoaPods issue: https://github.com/CocoaPods/CocoaPods/issues/11558#issuecomment-1284573492
     ss.source_files = 'Sources/SwiftCurrent/**/*.{swift,h,m}'
   end
   
@@ -36,7 +36,7 @@ Pod::Spec.new do |s|
     ss.ios.deployment_target = '11.0'
     ss.macos.deployment_target = '11.0'
     ss.tvos.deployment_target = '14.0'
-    ss.watchos.deployment_target = '7.0'
+    # ss.watchos.deployment_target = '7.0' # CocoaPods issue: https://github.com/CocoaPods/CocoaPods/issues/11558#issuecomment-1284573492
     ss.source_files = 'Sources/SwiftCurrent_SwiftUI/**/*.{swift,h,m}'
     ss.dependency 'SwiftCurrent/Core'
   end
