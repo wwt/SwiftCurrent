@@ -7,7 +7,7 @@
 //
 
 // swiftlint:disable:next missing_docs
-public protocol _PassthroughIdentifiable { }
+public protocol _PassthroughIdentifiable { }  // swiftlint:disable:this type_name
 
 /// A `FlowRepresentable` that automatically captures data from the `Workflow` and passes it forward.
 public protocol PassthroughFlowRepresentable: FlowRepresentable, _PassthroughIdentifiable where WorkflowInput == AnyWorkflow.PassedArgs, WorkflowOutput == AnyWorkflow.PassedArgs { }

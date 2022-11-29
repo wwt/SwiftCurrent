@@ -88,7 +88,7 @@ extension FlowRepresentable where Self: UIViewController {
      - Parameter onFinish: a callback after the workflow has been abandoned.
      - Note: In order to dismiss UIKit views, the workflow must have an `OrchestrationResponder` that is a `UIKitPresenter`.
      */
-    public func abandonWorkflow(animated: Bool = true, onFinish:(() -> Void)? = nil) {
+    public func abandonWorkflow(animated: Bool = true, onFinish: (() -> Void)? = nil) {
         workflow?.abandon(animated: animated, onFinish: onFinish)
     }
 }

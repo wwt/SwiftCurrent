@@ -1,142 +1,131 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "CodeScanner",
-        "repositoryURL": "https://github.com/twostraws/CodeScanner",
-        "state": {
-          "branch": null,
-          "revision": "8a9ce909a4ea502d4a2ccf327ae8c16b7e48e740",
-          "version": "1.1.0"
-        }
-      },
-      {
-        "package": "CwlCatchException",
-        "repositoryURL": "https://github.com/mattgallagher/CwlCatchException.git",
-        "state": {
-          "branch": null,
-          "revision": "35f9e770f54ce62dd8526470f14c6e137cef3eea",
-          "version": "2.1.1"
-        }
-      },
-      {
-        "package": "CwlPreconditionTesting",
-        "repositoryURL": "https://github.com/mattgallagher/CwlPreconditionTesting.git",
-        "state": {
-          "branch": null,
-          "revision": "c21f7bab5ca8eee0a9998bbd17ca1d0eb45d4688",
-          "version": "2.1.0"
-        }
-      },
-      {
-        "package": "ExceptionCatcher",
-        "repositoryURL": "https://github.com/sindresorhus/ExceptionCatcher",
-        "state": {
-          "branch": null,
-          "revision": "9d99a736e17f67ab3aa333c0dad7ed2ee9d6b2b9",
-          "version": "2.0.0"
-        }
-      },
-      {
-        "package": "ShellOut",
-        "repositoryURL": "https://github.com/JohnSundell/ShellOut.git",
-        "state": {
-          "branch": null,
-          "revision": "e1577acf2b6e90086d01a6d5e2b8efdaae033568",
-          "version": "2.3.0"
-        }
-      },
-      {
-        "package": "SourceKitten",
-        "repositoryURL": "https://github.com/jpsim/SourceKitten.git",
-        "state": {
-          "branch": "main",
-          "revision": "cd09bbcc90f5b424dcd32cfa464021cdb572dfb0",
-          "version": null
-        }
-      },
-      {
-        "package": "swift-algorithms",
-        "repositoryURL": "https://github.com/apple/swift-algorithms.git",
-        "state": {
-          "branch": null,
-          "revision": "b14b7f4c528c942f121c8b860b9410b2bf57825e",
-          "version": "1.0.0"
-        }
-      },
-      {
-        "package": "swift-argument-parser",
-        "repositoryURL": "https://github.com/apple/swift-argument-parser.git",
-        "state": {
-          "branch": null,
-          "revision": "e394bf350e38cb100b6bc4172834770ede1b7232",
-          "version": "1.0.3"
-        }
-      },
-      {
-        "package": "swift-numerics",
-        "repositoryURL": "https://github.com/apple/swift-numerics",
-        "state": {
-          "branch": null,
-          "revision": "0a5bc04095a675662cf24757cc0640aa2204253b",
-          "version": "1.0.2"
-        }
-      },
-      {
-        "package": "SwiftSyntax",
-        "repositoryURL": "https://github.com/apple/swift-syntax.git",
-        "state": {
-          "branch": null,
-          "revision": "0b6c22b97f8e9320bca62e82cdbee601cf37ad3f",
-          "version": "0.50600.1"
-        }
-      },
-      {
-        "package": "Swinject",
-        "repositoryURL": "https://github.com/Swinject/Swinject",
-        "state": {
-          "branch": null,
-          "revision": "f10b6e9ebff440f985c43008f7c2d097639fcb81",
-          "version": "2.8.1"
-        }
-      },
-      {
-        "package": "SWXMLHash",
-        "repositoryURL": "https://github.com/drmohundro/SWXMLHash.git",
-        "state": {
-          "branch": null,
-          "revision": "6469881a3f30417c5bb02404ea4b69207f297592",
-          "version": "6.0.0"
-        }
-      },
-      {
-        "package": "UIUTest",
-        "repositoryURL": "https://github.com/nallick/UIUTest.git",
-        "state": {
-          "branch": null,
-          "revision": "33cc7be1352dfdb37984e38e4276daa65030c5bc",
-          "version": "1.8.0"
-        }
-      },
-      {
-        "package": "ViewInspector",
-        "repositoryURL": "https://github.com/nalexn/ViewInspector.git",
-        "state": {
-          "branch": null,
-          "revision": "6b88c4ec1fa20cf38f2138052e63c8e79df5d76e",
-          "version": "0.9.1"
-        }
-      },
-      {
-        "package": "Yams",
-        "repositoryURL": "https://github.com/jpsim/Yams.git",
-        "state": {
-          "branch": null,
-          "revision": "9ff1cc9327586db4e0c8f46f064b6a82ec1566fa",
-          "version": "4.0.6"
-        }
+  "pins" : [
+    {
+      "identity" : "codescanner",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/twostraws/CodeScanner",
+      "state" : {
+        "revision" : "8a9ce909a4ea502d4a2ccf327ae8c16b7e48e740",
+        "version" : "1.1.0"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "cwlcatchexception",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mattgallagher/CwlCatchException.git",
+      "state" : {
+        "revision" : "35f9e770f54ce62dd8526470f14c6e137cef3eea",
+        "version" : "2.1.1"
+      }
+    },
+    {
+      "identity" : "cwlpreconditiontesting",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mattgallagher/CwlPreconditionTesting.git",
+      "state" : {
+        "revision" : "c21f7bab5ca8eee0a9998bbd17ca1d0eb45d4688",
+        "version" : "2.1.0"
+      }
+    },
+    {
+      "identity" : "exceptioncatcher",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sindresorhus/ExceptionCatcher",
+      "state" : {
+        "revision" : "9d99a736e17f67ab3aa333c0dad7ed2ee9d6b2b9",
+        "version" : "2.0.0"
+      }
+    },
+    {
+      "identity" : "shellout",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/JohnSundell/ShellOut.git",
+      "state" : {
+        "revision" : "e1577acf2b6e90086d01a6d5e2b8efdaae033568",
+        "version" : "2.3.0"
+      }
+    },
+    {
+      "identity" : "sourcekitten",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jpsim/SourceKitten.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "cd09bbcc90f5b424dcd32cfa464021cdb572dfb0"
+      }
+    },
+    {
+      "identity" : "swift-algorithms",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-algorithms.git",
+      "state" : {
+        "revision" : "b14b7f4c528c942f121c8b860b9410b2bf57825e",
+        "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "swift-argument-parser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-argument-parser.git",
+      "state" : {
+        "revision" : "e394bf350e38cb100b6bc4172834770ede1b7232",
+        "version" : "1.0.3"
+      }
+    },
+    {
+      "identity" : "swift-numerics",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-numerics",
+      "state" : {
+        "revision" : "0a5bc04095a675662cf24757cc0640aa2204253b",
+        "version" : "1.0.2"
+      }
+    },
+    {
+      "identity" : "swinject",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Swinject/Swinject",
+      "state" : {
+        "revision" : "f10b6e9ebff440f985c43008f7c2d097639fcb81",
+        "version" : "2.8.1"
+      }
+    },
+    {
+      "identity" : "swxmlhash",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/drmohundro/SWXMLHash.git",
+      "state" : {
+        "revision" : "6469881a3f30417c5bb02404ea4b69207f297592",
+        "version" : "6.0.0"
+      }
+    },
+    {
+      "identity" : "uiutest",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nallick/UIUTest.git",
+      "state" : {
+        "revision" : "33cc7be1352dfdb37984e38e4276daa65030c5bc",
+        "version" : "1.8.0"
+      }
+    },
+    {
+      "identity" : "viewinspector",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nalexn/ViewInspector.git",
+      "state" : {
+        "revision" : "6b88c4ec1fa20cf38f2138052e63c8e79df5d76e",
+        "version" : "0.9.1"
+      }
+    },
+    {
+      "identity" : "yams",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jpsim/Yams.git",
+      "state" : {
+        "revision" : "9ff1cc9327586db4e0c8f46f064b6a82ec1566fa",
+        "version" : "4.0.6"
+      }
+    }
+  ],
+  "version" : 2
 }
