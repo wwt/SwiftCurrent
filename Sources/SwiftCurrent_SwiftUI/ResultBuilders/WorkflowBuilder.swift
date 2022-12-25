@@ -48,13 +48,13 @@ public enum WorkflowBuilder {
     }
 
     // swiftlint:disable:next missing_docs
-    public static func buildBlock<W0: _WorkflowItemProtocol>(_ w0: W0) -> WorkflowItemWrapper<W0, Never> {
+    public static func buildBlock<W0: _WorkflowItemProtocol>(_ w0: W0) -> some Workflow {
         WorkflowItemWrapper<W0, Never>(content: w0)
     }
 
     // swiftlint:disable:next missing_docs
     public static func buildBlock<W0: _WorkflowItemProtocol,
-                                  W1: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1) -> WorkflowItemWrapper<W0, WorkflowItemWrapper<W1, Never>> {
+                                  W1: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1) -> some Workflow {
         WorkflowItemWrapper(content: w0) {
             WorkflowItemWrapper(content: w1)
         }
@@ -63,7 +63,7 @@ public enum WorkflowBuilder {
     // swiftlint:disable:next missing_docs
     public static func buildBlock<W0: _WorkflowItemProtocol,
                                   W1: _WorkflowItemProtocol,
-                                  W2: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1, _ w2: W2) -> WorkflowItemWrapper<W0, WorkflowItemWrapper<W1, WorkflowItemWrapper<W2, Never>>> {
+                                  W2: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1, _ w2: W2) -> some Workflow {
         WorkflowItemWrapper(content: w0) {
             WorkflowItemWrapper(content: w1) {
                 WorkflowItemWrapper(content: w2)
@@ -75,7 +75,7 @@ public enum WorkflowBuilder {
     public static func buildBlock<W0: _WorkflowItemProtocol,
                                   W1: _WorkflowItemProtocol,
                                   W2: _WorkflowItemProtocol,
-                                  W3: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1, _ w2: W2, _ w3: W3) -> WorkflowItemWrapper<W0, WorkflowItemWrapper<W1, WorkflowItemWrapper<W2, WorkflowItemWrapper<W3, Never>>>> {
+                                  W3: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1, _ w2: W2, _ w3: W3) -> some Workflow {
         WorkflowItemWrapper(content: w0) {
             WorkflowItemWrapper(content: w1) {
                 WorkflowItemWrapper(content: w2) {
@@ -90,7 +90,7 @@ public enum WorkflowBuilder {
                                   W1: _WorkflowItemProtocol,
                                   W2: _WorkflowItemProtocol,
                                   W3: _WorkflowItemProtocol,
-                                  W4: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1, _ w2: W2, _ w3: W3, _ w4: W4) -> WorkflowItemWrapper<W0, WorkflowItemWrapper<W1, WorkflowItemWrapper<W2, WorkflowItemWrapper<W3, WorkflowItemWrapper<W4, Never>>>>> {
+                                  W4: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1, _ w2: W2, _ w3: W3, _ w4: W4) -> some Workflow {
         WorkflowItemWrapper(content: w0) {
             WorkflowItemWrapper(content: w1) {
                 WorkflowItemWrapper(content: w2) {
@@ -108,7 +108,7 @@ public enum WorkflowBuilder {
                                   W2: _WorkflowItemProtocol,
                                   W3: _WorkflowItemProtocol,
                                   W4: _WorkflowItemProtocol,
-                                  W5: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1, _ w2: W2, _ w3: W3, _ w4: W4, _ w5: W5) -> WorkflowItemWrapper<W0, WorkflowItemWrapper<W1, WorkflowItemWrapper<W2, WorkflowItemWrapper<W3, WorkflowItemWrapper<W4, WorkflowItemWrapper<W5, Never>>>>>> {
+                                  W5: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1, _ w2: W2, _ w3: W3, _ w4: W4, _ w5: W5) -> some Workflow {
         WorkflowItemWrapper(content: w0) {
             WorkflowItemWrapper(content: w1) {
                 WorkflowItemWrapper(content: w2) {
@@ -129,7 +129,7 @@ public enum WorkflowBuilder {
                                   W3: _WorkflowItemProtocol,
                                   W4: _WorkflowItemProtocol,
                                   W5: _WorkflowItemProtocol,
-                                  W6: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1, _ w2: W2, _ w3: W3, _ w4: W4, _ w5: W5, _ w6: W6) -> WorkflowItemWrapper<W0, WorkflowItemWrapper<W1, WorkflowItemWrapper<W2, WorkflowItemWrapper<W3, WorkflowItemWrapper<W4, WorkflowItemWrapper<W5, WorkflowItemWrapper<W6, Never>>>>>>> {
+                                  W6: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1, _ w2: W2, _ w3: W3, _ w4: W4, _ w5: W5, _ w6: W6) -> some Workflow {
         WorkflowItemWrapper(content: w0) {
             WorkflowItemWrapper(content: w1) {
                 WorkflowItemWrapper(content: w2) {
@@ -153,7 +153,7 @@ public enum WorkflowBuilder {
                                   W4: _WorkflowItemProtocol,
                                   W5: _WorkflowItemProtocol,
                                   W6: _WorkflowItemProtocol,
-                                  W7: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1, _ w2: W2, _ w3: W3, _ w4: W4, _ w5: W5, _ w6: W6, _ w7: W7) -> WorkflowItemWrapper<W0, WorkflowItemWrapper<W1, WorkflowItemWrapper<W2, WorkflowItemWrapper<W3, WorkflowItemWrapper<W4, WorkflowItemWrapper<W5, WorkflowItemWrapper<W6, WorkflowItemWrapper<W7, Never>>>>>>>> {
+                                  W7: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1, _ w2: W2, _ w3: W3, _ w4: W4, _ w5: W5, _ w6: W6, _ w7: W7) -> some Workflow {
         WorkflowItemWrapper(content: w0) {
             WorkflowItemWrapper(content: w1) {
                 WorkflowItemWrapper(content: w2) {
@@ -180,7 +180,7 @@ public enum WorkflowBuilder {
                                   W5: _WorkflowItemProtocol,
                                   W6: _WorkflowItemProtocol,
                                   W7: _WorkflowItemProtocol,
-                                  W8: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1, _ w2: W2, _ w3: W3, _ w4: W4, _ w5: W5, _ w6: W6, _ w7: W7, _ w8: W8) -> WorkflowItemWrapper<W0, WorkflowItemWrapper<W1, WorkflowItemWrapper<W2, WorkflowItemWrapper<W3, WorkflowItemWrapper<W4, WorkflowItemWrapper<W5, WorkflowItemWrapper<W6, WorkflowItemWrapper<W7, WorkflowItemWrapper<W8, Never>>>>>>>>> {
+                                  W8: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1, _ w2: W2, _ w3: W3, _ w4: W4, _ w5: W5, _ w6: W6, _ w7: W7, _ w8: W8) -> some Workflow {
         WorkflowItemWrapper(content: w0) {
             WorkflowItemWrapper(content: w1) {
                 WorkflowItemWrapper(content: w2) {
@@ -210,7 +210,7 @@ public enum WorkflowBuilder {
                                   W6: _WorkflowItemProtocol,
                                   W7: _WorkflowItemProtocol,
                                   W8: _WorkflowItemProtocol,
-                                  W9: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1, _ w2: W2, _ w3: W3, _ w4: W4, _ w5: W5, _ w6: W6, _ w7: W7, _ w8: W8, _ w9: W9) -> WorkflowItemWrapper<W0, WorkflowItemWrapper<W1, WorkflowItemWrapper<W2, WorkflowItemWrapper<W3, WorkflowItemWrapper<W4, WorkflowItemWrapper<W5, WorkflowItemWrapper<W6, WorkflowItemWrapper<W7, WorkflowItemWrapper<W8, WorkflowItemWrapper<W9, Never>>>>>>>>>> {
+                                  W9: _WorkflowItemProtocol>(_ w0: W0, _ w1: W1, _ w2: W2, _ w3: W3, _ w4: W4, _ w5: W5, _ w6: W6, _ w7: W7, _ w8: W8, _ w9: W9) -> some Workflow {
         WorkflowItemWrapper(content: w0) {
             WorkflowItemWrapper(content: w1) {
                 WorkflowItemWrapper(content: w2) {

@@ -54,12 +54,3 @@ extension Scene {
         fatalError("Obsoleted")
     }
 }
-
-@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-extension WorkflowLauncher {
-    /// :nodoc: WorkflowLauncher deprecation
-    @available(*, unavailable, renamed: "WorkflowView(isLaunched:launchingWith:_:)")
-    public init<T>(isLaunched: Binding<Bool>, startingArgs: T, _: () -> Content) {
-        fatalError("Obsoleted")
-    }
-}

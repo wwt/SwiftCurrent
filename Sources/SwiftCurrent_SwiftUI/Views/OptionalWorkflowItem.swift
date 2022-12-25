@@ -12,9 +12,9 @@ import SwiftCurrent
 /// :nodoc: ResultBuilder requirement.
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct OptionalWorkflowItem<WI: _WorkflowItemProtocol>: View, _WorkflowItemProtocol {
-    /// :nodoc: Protocol requirement.
-    public typealias FlowRepresentableType = WI.FlowRepresentableType
-
+    public var presentationType: State<SwiftCurrent.LaunchStyle.SwiftUI.PresentationType> {
+        content?.presentationType ?? State(wrappedValue: .default)
+    }
     @State var content: WI?
 
     /// :nodoc: Protocol requirement.
@@ -24,28 +24,5 @@ public struct OptionalWorkflowItem<WI: _WorkflowItemProtocol>: View, _WorkflowIt
 
     init(content: WI?) {
         _content = State(initialValue: content)
-    }
-
-    /// :nodoc: Protocol requirement.
-    public func canDisplay(_ element: AnyWorkflow.Element?) -> Bool {
-        content?.canDisplay(element) ?? false
-    }
-
-    /// :nodoc: Protocol requirement.
-    public func didDisplay(_ element: AnyWorkflow.Element?) -> Bool {
-        content?.didDisplay(element) ?? false
-    }
-}
-
-@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-extension OptionalWorkflowItem {
-    /// :nodoc: Protocol requirement.
-    public func modify(workflow: AnyWorkflow) {
-        content?.modify(workflow: workflow)
-    }
-
-    /// :nodoc: Protocol requirement.
-    public var workflowLaunchStyle: LaunchStyle.SwiftUI.PresentationType {
-        content?.workflowLaunchStyle ?? .default
     }
 }

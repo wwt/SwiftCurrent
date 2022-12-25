@@ -32,44 +32,13 @@ public struct AnyWorkflowItem: View, _WorkflowItemProtocol {
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension AnyWorkflowItem {
     /// :nodoc: Protocol requirement.
-    public var workflowLaunchStyle: LaunchStyle.SwiftUI.PresentationType {
-        storage.workflowLaunchStyle
-    }
-
-    /// :nodoc: Protocol requirement.
-    public func canDisplay(_ element: AnyWorkflow.Element?) -> Bool {
-        storage.canDisplay(element)
-    }
-
-    /// :nodoc: Protocol requirement.
-    public func modify(workflow: AnyWorkflow) {
-        storage.modify(workflow: workflow)
-    }
-
-    /// :nodoc: Protocol requirement.
-    public func didDisplay(_ element: AnyWorkflow.Element?) -> Bool {
-        storage.didDisplay(element)
-    }
+    public var presentationType: State<SwiftCurrent.LaunchStyle.SwiftUI.PresentationType> { storage.presentationType }
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 fileprivate class AnyWorkflowItemStorageBase {
     // swiftlint:disable:next unavailable_function
-    func canDisplay(_ element: AnyWorkflow.Element?) -> Bool {
-        fatalError("AnyWorkflowItemStorageBase called directly, only available internally so something has gone VERY wrong.")
-    }
-
-    // swiftlint:disable:next unavailable_function
-    func modify(workflow: AnyWorkflow) {
-        fatalError("AnyWorkflowItemStorageBase called directly, only available internally so something has gone VERY wrong.")
-    }
-
-    // swiftlint:disable:next unavailable_function
-    func didDisplay(_ element: AnyWorkflow.Element?) -> Bool {
-        fatalError("AnyWorkflowItemStorageBase called directly, only available internally so something has gone VERY wrong.")
-    }
-
-    var workflowLaunchStyle: LaunchStyle.SwiftUI.PresentationType {
+    var presentationType: State<SwiftCurrent.LaunchStyle.SwiftUI.PresentationType> {
         fatalError("AnyWorkflowItemStorageBase called directly, only available internally so something has gone VERY wrong.")
     }
 }
@@ -81,19 +50,7 @@ fileprivate final class AnyWorkflowItemStorage<Wrapped: _WorkflowItemProtocol>: 
         holder = wrapped
     }
 
-    override func canDisplay(_ element: AnyWorkflow.Element?) -> Bool {
-        holder.canDisplay(element)
-    }
-
-    override func modify(workflow: AnyWorkflow) {
-        holder.modify(workflow: workflow)
-    }
-
-    override func didDisplay(_ element: AnyWorkflow.Element?) -> Bool {
-        holder.didDisplay(element)
-    }
-
-    override var workflowLaunchStyle: LaunchStyle.SwiftUI.PresentationType {
-        holder.workflowLaunchStyle
+    override var presentationType: State<SwiftCurrent.LaunchStyle.SwiftUI.PresentationType> {
+        holder.presentationType
     }
 }
