@@ -7,12 +7,12 @@
 //  
 
 import SwiftUI
-import SwiftCurrent
+import SwiftCurrent_SwiftUI
 import Swinject
 
-struct GenericOnboardingView: View, FlowRepresentable {
+struct GenericOnboardingView: View {
+    @State private var shouldProceed = false
     private var onboardedToProfileFeature: AppStorage<Bool>
-    weak var _workflowPointer: AnyFlowRepresentable?
 
     let inspection = Inspection<Self>() // ViewInspector
     private let onboardingModel: OnboardingData
@@ -52,13 +52,11 @@ struct GenericOnboardingView: View, FlowRepresentable {
             }
             PrimaryButton(title: "Continue") {
                 onboardedToProfileFeature.wrappedValue = true
-                if _workflowPointer != nil { // Running in Workflow
-                    proceedInWorkflow()
-                } else { // Running as a generic view
-                    continueAction?()
-                }
+                shouldProceed = true
+                continueAction?()
             }
         }
+        .workflowLink(isPresented: $shouldProceed)
         .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 

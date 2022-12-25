@@ -7,13 +7,13 @@
 //  swiftlint:disable line_length closure_body_length
 
 import SwiftUI
-import SwiftCurrent
+import SwiftCurrent_SwiftUI
 
-struct SwiftCurrentOnboarding: View, PassthroughFlowRepresentable {
+struct SwiftCurrentOnboarding: View {
     @AppStorage("OnboardedToSwiftCurrent", store: .fromDI) private var onboardedToSwiftCurrent = false
 
     let inspection = Inspection<Self>() // ViewInspector
-    weak var _workflowPointer: AnyFlowRepresentable?
+    @State var shouldProceed = false
 
     var body: some View {
         VStack {
@@ -110,14 +110,13 @@ struct SwiftCurrentOnboarding: View, PassthroughFlowRepresentable {
             PrimaryButton(title: "Check It Out!") {
                 withAnimation {
                     onboardedToSwiftCurrent = true
-                    proceedInWorkflow()
+                    shouldProceed = true
                 }
             }
-        }.onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
-    }
-
-    func shouldLoad() -> Bool {
-        !onboardedToSwiftCurrent
+        }
+        .workflowLink(isPresented: $shouldProceed)
+        .shouldLoad(!onboardedToSwiftCurrent)
+        .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 }
 

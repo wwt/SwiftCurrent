@@ -23,14 +23,16 @@ struct TestView: View {
 
     @ViewBuilder var oneItemWorkflow: some View {
         if Environment.shouldEmbedInNavStack {
-            WorkflowView {
-                WorkflowItem(FR1.self)
-                    .persistence(persistence(for: FR1.self))
-                    .presentationType(presentationType(for: FR1.self))
-            }.embedInNavigationView()
+            NavigationStack {
+                WorkflowView {
+                    WorkflowItem { FR1() }
+                        .persistence(persistence(for: FR1.self))
+                        .presentationType(presentationType(for: FR1.self))
+                }
+            }
         } else {
             WorkflowView {
-                WorkflowItem(FR1.self)
+                WorkflowItem { FR1() }
                     .persistence(persistence(for: FR1.self))
                     .presentationType(presentationType(for: FR1.self))
             }
@@ -39,20 +41,22 @@ struct TestView: View {
 
     @ViewBuilder var twoItemWorkflow: some View {
         if Environment.shouldEmbedInNavStack {
-            WorkflowView {
-                WorkflowItem(FR1.self)
-                    .persistence(persistence(for: FR1.self))
-                    .presentationType(presentationType(for: FR1.self))
-                WorkflowItem(FR2.self)
-                    .persistence(persistence(for: FR2.self))
-                    .presentationType(presentationType(for: FR2.self))
-            }.embedInNavigationView()
+            NavigationStack {
+                WorkflowView {
+                    WorkflowItem { FR1() }
+                        .persistence(persistence(for: FR1.self))
+                        .presentationType(presentationType(for: FR1.self))
+                    WorkflowItem { FR2() }
+                        .persistence(persistence(for: FR2.self))
+                        .presentationType(presentationType(for: FR2.self))
+                }
+            }
         } else {
             WorkflowView {
-                WorkflowItem(FR1.self)
+                WorkflowItem { FR1() }
                     .persistence(persistence(for: FR1.self))
                     .presentationType(presentationType(for: FR1.self))
-                WorkflowItem(FR2.self)
+                WorkflowItem { FR2() }
                     .persistence(persistence(for: FR2.self))
                     .presentationType(presentationType(for: FR2.self))
             }
@@ -61,26 +65,28 @@ struct TestView: View {
 
     @ViewBuilder var threeItemWorkflow: some View {
         if Environment.shouldEmbedInNavStack {
-            WorkflowView {
-                WorkflowItem(FR1.self)
-                    .persistence(persistence(for: FR1.self))
-                    .presentationType(presentationType(for: FR1.self))
-                WorkflowItem(FR2.self)
-                    .persistence(persistence(for: FR2.self))
-                    .presentationType(presentationType(for: FR2.self))
-                WorkflowItem(FR3.self)
-                    .persistence(persistence(for: FR2.self))
-                    .presentationType(presentationType(for: FR2.self))
-            }.embedInNavigationView()
+            NavigationStack {
+                WorkflowView {
+                    WorkflowItem { FR1() }
+                        .persistence(persistence(for: FR1.self))
+                        .presentationType(presentationType(for: FR1.self))
+                    WorkflowItem { FR2() }
+                        .persistence(persistence(for: FR2.self))
+                        .presentationType(presentationType(for: FR2.self))
+                    WorkflowItem { FR3() }
+                        .persistence(persistence(for: FR2.self))
+                        .presentationType(presentationType(for: FR2.self))
+                }
+            }
         } else {
             WorkflowView {
-                WorkflowItem(FR1.self)
+                WorkflowItem { FR1() }
                     .persistence(persistence(for: FR1.self))
                     .presentationType(presentationType(for: FR1.self))
-                WorkflowItem(FR2.self)
+                WorkflowItem { FR2() }
                     .persistence(persistence(for: FR2.self))
                     .presentationType(presentationType(for: FR2.self))
-                WorkflowItem(FR3.self)
+                WorkflowItem { FR3() }
                     .persistence(persistence(for: FR2.self))
                     .presentationType(presentationType(for: FR2.self))
             }
@@ -89,32 +95,34 @@ struct TestView: View {
 
     @ViewBuilder var fourItemWorkflow: some View {
         if Environment.shouldEmbedInNavStack {
-            WorkflowView {
-                WorkflowItem(FR1.self)
-                    .persistence(persistence(for: FR1.self))
-                    .presentationType(presentationType(for: FR1.self))
-                WorkflowItem(FR2.self)
-                    .persistence(persistence(for: FR2.self))
-                    .presentationType(presentationType(for: FR2.self))
-                WorkflowItem(FR3.self)
-                    .persistence(persistence(for: FR3.self))
-                    .presentationType(presentationType(for: FR3.self))
-                WorkflowItem(FR4.self)
-                    .persistence(persistence(for: FR4.self))
-                    .presentationType(presentationType(for: FR4.self))
-            }.embedInNavigationView()
+            NavigationStack {
+                WorkflowView {
+                    WorkflowItem { FR1() }
+                        .persistence(persistence(for: FR1.self))
+                        .presentationType(presentationType(for: FR1.self))
+                    WorkflowItem { FR2() }
+                        .persistence(persistence(for: FR2.self))
+                        .presentationType(presentationType(for: FR2.self))
+                    WorkflowItem { FR3() }
+                        .persistence(persistence(for: FR3.self))
+                        .presentationType(presentationType(for: FR3.self))
+                    WorkflowItem { FR4() }
+                        .persistence(persistence(for: FR4.self))
+                        .presentationType(presentationType(for: FR4.self))
+                }
+            }
         } else {
             WorkflowView {
-                WorkflowItem(FR1.self)
+                WorkflowItem { FR1() }
                     .persistence(persistence(for: FR1.self))
                     .presentationType(presentationType(for: FR1.self))
-                WorkflowItem(FR2.self)
+                WorkflowItem { FR2() }
                     .persistence(persistence(for: FR2.self))
                     .presentationType(presentationType(for: FR2.self))
-                WorkflowItem(FR3.self)
+                WorkflowItem { FR3() }
                     .persistence(persistence(for: FR3.self))
                     .presentationType(presentationType(for: FR3.self))
-                WorkflowItem(FR4.self)
+                WorkflowItem { FR4() }
                     .persistence(persistence(for: FR4.self))
                     .presentationType(presentationType(for: FR4.self))
             }
@@ -143,68 +151,69 @@ struct TestView_Previews: PreviewProvider {
     }
 }
 
+#warning("ALL backup calls disabled")
 import SwiftCurrent
-struct FR1: View, FlowRepresentable {
-    weak var _workflowPointer: AnyFlowRepresentable?
+struct FR1: View {
+    @State var shouldProceed = false
     var body: some View {
         VStack {
             Text("This is \(String(describing: Self.self))")
-            Button("Navigate forward") { proceedInWorkflow() }
-            Button("Navigate backward") { try? backUpInWorkflow() }
+            Button("Navigate forward") { shouldProceed = true }
+//            Button("Navigate backward") { try? backUpInWorkflow() }
         }
-    }
-
-    func shouldLoad() -> Bool {
-        guard case .shouldLoad(_, let shouldLoad) = Environment.shouldLoad(for: Self.self) else { return true }
-        return shouldLoad
+        .workflowLink(isPresented: $shouldProceed)
+        .shouldLoad {
+            guard case .shouldLoad(_, let shouldLoad) = Environment.shouldLoad(for: Self.self) else { return true }
+            return shouldLoad
+        }
     }
 }
 
-struct FR2: View, FlowRepresentable {
-    weak var _workflowPointer: AnyFlowRepresentable?
+struct FR2: View {
+    @State var shouldProceed = false
     var body: some View {
         VStack {
             Text("This is \(String(describing: Self.self))")
-            Button("Navigate forward") { proceedInWorkflow() }
-            Button("Navigate backward") { try? backUpInWorkflow() }
+            Button("Navigate forward") { shouldProceed = true }
+//            Button("Navigate backward") { try? backUpInWorkflow() }
         }
-    }
-
-    func shouldLoad() -> Bool {
-        guard case .shouldLoad(_, let shouldLoad) = Environment.shouldLoad(for: Self.self) else { return true }
-        return shouldLoad
+        .workflowLink(isPresented: $shouldProceed)
+        .shouldLoad {
+            guard case .shouldLoad(_, let shouldLoad) = Environment.shouldLoad(for: Self.self) else { return true }
+            return shouldLoad
+        }
     }
 }
 
-struct FR3: View, FlowRepresentable {
-    weak var _workflowPointer: AnyFlowRepresentable?
+struct FR3: View {
+    @State var shouldProceed = false
     var body: some View {
         VStack {
             Text("This is \(String(describing: Self.self))")
-            Button("Navigate forward") { proceedInWorkflow() }
-            Button("Navigate backward") { try? backUpInWorkflow() }
+            Button("Navigate forward") { shouldProceed = true }
+//            Button("Navigate backward") { try? backUpInWorkflow() }
         }
-    }
-
-    func shouldLoad() -> Bool {
-        guard case .shouldLoad(_, let shouldLoad) = Environment.shouldLoad(for: Self.self) else { return true }
-        return shouldLoad
+        .workflowLink(isPresented: $shouldProceed)
+        .shouldLoad {
+            guard case .shouldLoad(_, let shouldLoad) = Environment.shouldLoad(for: Self.self) else { return true }
+            return shouldLoad
+        }
     }
 }
 
-struct FR4: View, FlowRepresentable {
-    weak var _workflowPointer: AnyFlowRepresentable?
+struct FR4: View {
+    @State var shouldProceed = false
     var body: some View {
         VStack {
             Text("This is \(String(describing: Self.self))")
-            Button("Navigate forward") { proceedInWorkflow() }
-            Button("Navigate backward") { try? backUpInWorkflow() }
+            Button("Navigate forward") { shouldProceed = true }
+//            Button("Navigate backward") { try? backUpInWorkflow() }
         }
-    }
-
-    func shouldLoad() -> Bool {
-        guard case .shouldLoad(_, let shouldLoad) = Environment.shouldLoad(for: Self.self) else { return true }
-        return shouldLoad
+        .workflowLink(isPresented: $shouldProceed)
+        .shouldLoad {
+            guard case .shouldLoad(_, let shouldLoad) = Environment.shouldLoad(for: Self.self) else { return true }
+            return shouldLoad
+        }
     }
 }
 

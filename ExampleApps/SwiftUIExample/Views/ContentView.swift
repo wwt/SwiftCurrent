@@ -24,36 +24,37 @@ struct ContentView: View, FlowRepresentable {
         TabView(selection: $selectedTab) {
             // NOTE: Using constant here guarantees the workflow cannot abandon, it stays launched forever.
             WorkflowView {
-                WorkflowItem(MapFeatureOnboardingView.self)
-                WorkflowItem(MapFeatureView.self)
+                WorkflowItem { MapFeatureOnboardingView() }
+                WorkflowItem { MapFeatureView() }
             }.tabItem {
                 Label("Map", systemImage: "map")
             }
             .tag(Tab.map)
 
             WorkflowView {
-                WorkflowItem(QRScannerFeatureOnboardingView.self)
-                WorkflowItem(QRScannerFeatureView.self)
+                WorkflowItem { QRScannerFeatureOnboardingView() }
+                WorkflowItem { QRScannerFeatureView() }
             }.tabItem {
                 Label("QR Scanner", systemImage: "camera")
             }
             .tag(Tab.qr)
 
             WorkflowView {
-                WorkflowItem(ProfileFeatureOnboardingView.self)
-                WorkflowItem(ProfileFeatureView.self)
+                WorkflowItem { ProfileFeatureOnboardingView() }
+                WorkflowItem { ProfileFeatureView() }
             }.tabItem {
                 Label("Profile", systemImage: "person.crop.circle")
             }
             .tag(Tab.profile)
 
-            WorkflowView {
-                WorkflowItem(SettingsOnboardingViewController.self)
-                WorkflowItem(SettingsViewController.self)
-            }.tabItem {
-                Label("Settings", systemImage: "gear.circle.fill")
-            }
-            .tag(Tab.settings)
+            #warning("FINDME")
+//            WorkflowView {
+//                WorkflowItem { SettingsOnboardingViewController() }
+//                WorkflowItem { SettingsViewController() }
+//            }.tabItem {
+//                Label("Settings", systemImage: "gear.circle.fill")
+//            }
+//            .tag(Tab.settings)
         }
         .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }

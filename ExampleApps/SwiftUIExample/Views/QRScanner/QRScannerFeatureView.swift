@@ -7,14 +7,12 @@
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 
 import SwiftUI
-import SwiftCurrent
 import CodeScanner
 
-struct QRScannerFeatureView: View, FlowRepresentable {
+struct QRScannerFeatureView: View {
     @State private var scannedCode: ScannedCode?
 
     let inspection = Inspection<Self>() // ViewInspector
-    weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
         CodeScannerView(codeTypes: [.qr]) { result in

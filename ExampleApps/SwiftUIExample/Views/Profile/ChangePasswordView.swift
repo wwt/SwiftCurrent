@@ -7,21 +7,19 @@
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 
 import SwiftUI
-import SwiftCurrent
+import SwiftCurrent_SwiftUI
 
-struct ChangePasswordView: View, FlowRepresentable {
-    typealias WorkflowOutput = String
+struct ChangePasswordView: View {
     @State private var oldPassword = ""
     @State private var newPassword = ""
     @State private var confirmNewPassword = ""
     @State private var submitted = false
     @State private var errors = [String]()
+    @State private var shouldProceed = false
 
     let inspection = Inspection<Self>() // ViewInspector
 
     private let currentPassword: String
-
-    weak var _workflowPointer: AnyFlowRepresentable?
 
     init(with password: String) {
         currentPassword = password
@@ -46,7 +44,7 @@ struct ChangePasswordView: View, FlowRepresentable {
                 validatePassword(newPassword)
                 if errors.isEmpty {
                     withAnimation {
-                        proceedInWorkflow(newPassword)
+                        shouldProceed = true
                     }
                 }
             }
@@ -54,6 +52,7 @@ struct ChangePasswordView: View, FlowRepresentable {
         .onChange(of: oldPassword, perform: validateOldPassword)
         .onChange(of: newPassword, perform: validatePassword)
         .onChange(of: confirmNewPassword, perform: validatePassword)
+        .workflowLink(isPresented: $shouldProceed, value: newPassword)
         .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 

@@ -8,17 +8,14 @@
 
 import SwiftUI
 import MapKit
-import SwiftCurrent
 
-struct MapFeatureView: View, FlowRepresentable {
+struct MapFeatureView: View {
     @State private var region = MKCoordinateRegion()
 
     let inspection = Inspection<Self>() // ViewInspector
     // WWT Global Headquarters
-    var coordinate = CLLocationCoordinate2D(latitude: 38.70196, // swiftlint:disable:this number_separator
-                                            longitude: -90.44906) // swiftlint:disable:this number_separator
-
-    weak var _workflowPointer: AnyFlowRepresentable?
+    var coordinate = CLLocationCoordinate2D(latitude: 38.70196,
+                                            longitude: -90.44906)
 
     var body: some View {
         Map(coordinateRegion: $region)

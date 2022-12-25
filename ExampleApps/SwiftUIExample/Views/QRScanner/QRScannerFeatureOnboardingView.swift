@@ -7,27 +7,25 @@
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 
 import SwiftUI
-import SwiftCurrent
+import SwiftCurrent_SwiftUI
 import Swinject
 
-struct QRScannerFeatureOnboardingView: View, FlowRepresentable {
+struct QRScannerFeatureOnboardingView: View {
     @AppStorage("OnboardedToQRScanningFeature", store: .fromDI) private var onboardedToQRScanningFeature = false
+    @State private var shouldProceed = false
 
     let inspection = Inspection<Self>() // ViewInspector
-    weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
         VStack {
             Text("Learn about our awesome QR scanning feature!")
             Button("Continue") {
                 onboardedToQRScanningFeature = true
-                proceedInWorkflow()
+                shouldProceed = true
             }
         }
+        .workflowLink(isPresented: $shouldProceed)
+        .shouldLoad(!onboardedToQRScanningFeature)
         .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
-    }
-
-    func shouldLoad() -> Bool {
-        !onboardedToQRScanningFeature
     }
 }

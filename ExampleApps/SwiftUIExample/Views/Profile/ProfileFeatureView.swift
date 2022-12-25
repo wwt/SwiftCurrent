@@ -7,12 +7,11 @@
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 
 import SwiftUI
-import SwiftCurrent
+import SwiftCurrent_SwiftUI
 
-struct ProfileFeatureView: View, FlowRepresentable {
+struct ProfileFeatureView: View {
     let inspection = Inspection<Self>() // ViewInspector
     @DependencyInjected private static var userDefaults: UserDefaults!
-    weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
         VStack {

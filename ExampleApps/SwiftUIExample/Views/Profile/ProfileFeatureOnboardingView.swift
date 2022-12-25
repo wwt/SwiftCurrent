@@ -11,18 +11,19 @@ import SwiftCurrent
 import Swinject
 import SwiftCurrent_SwiftUI
 
-struct ProfileFeatureOnboardingView: View, PassthroughFlowRepresentable {
+struct ProfileFeatureOnboardingView: View {
+    @State private var shouldProceed = false
     let inspection = Inspection<Self>() // ViewInspector
-    weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
         onboardingView
+            .workflowLink(isPresented: $shouldProceed)
             .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 
     private var onboardingView: GenericOnboardingView {
         GenericOnboardingView(model: .profileFeature) {
-            proceedInWorkflow()
+            shouldProceed = true
         }
     }
 

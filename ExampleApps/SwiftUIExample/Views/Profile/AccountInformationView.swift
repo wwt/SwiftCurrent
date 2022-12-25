@@ -7,17 +7,15 @@
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 
 import SwiftUI
-import SwiftCurrent
 import SwiftCurrent_SwiftUI
 
-struct AccountInformationView: View, FlowRepresentable {
+struct AccountInformationView: View {
     @State var password = "supersecure"
     @State var email = "SwiftCurrent@wwt.com"
     @State var emailWorkflowLaunched = false
     @State var passwordWorkflowLaunched = false
 
     let inspection = Inspection<Self>() // ViewInspector
-    weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 25) { // swiftlint:disable:this closure_body_length
@@ -43,8 +41,8 @@ struct AccountInformationView: View, FlowRepresentable {
                 .textEntryStyle()
             } else {
                 WorkflowView(isLaunched: $emailWorkflowLaunched.animation(), launchingWith: email) {
-                    WorkflowItem(MFAView.self)
-                    WorkflowItem(ChangeEmailView.self)
+                    WorkflowItem { MFAView() }
+                    WorkflowItem { (args: String) in ChangeEmailView(with: args) }
                 }.onFinish {
                     guard case .args(let newEmail as String) = $0 else { return }
                     email = newEmail
@@ -75,23 +73,22 @@ struct AccountInformationView: View, FlowRepresentable {
                 .textEntryStyle()
             } else {
                 WorkflowView(isLaunched: $passwordWorkflowLaunched.animation(), launchingWith: password) {
-                    WorkflowItem(MFAView.self)
-                    WorkflowItem(ChangePasswordView.self)
-                        .presentationType(.modal)
-                        .applyModifiers { cpv in
-                            NavigationView {
-                                VStack {
-                                    cpv
-                                        .padding()
-                                        .background(Color.card)
-                                        .cornerRadius(35)
-                                        .padding(.horizontal, 20)
-                                        .navigationTitle("Update password")
+                    WorkflowItem { MFAView() }
+                    WorkflowItem { (args: String) in
+                        NavigationStack {
+                            VStack {
+                                ChangePasswordView(with: args)
+                                    .padding()
+                                    .background(Color.card)
+                                    .cornerRadius(35)
+                                    .padding(.horizontal, 20)
+                                    .navigationTitle("Update password")
 
-                                    Spacer()
-                                }
+                                Spacer()
                             }
                         }
+                    }
+                    .presentationType(.modal)
                 }.onFinish {
                     guard case .args(let newPassword as String) = $0 else { return }
                     password = newPassword

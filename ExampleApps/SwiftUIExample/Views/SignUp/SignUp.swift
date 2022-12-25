@@ -7,14 +7,14 @@
 //
 
 import SwiftUI
-import SwiftCurrent
+import SwiftCurrent_SwiftUI
 
-struct SignUp: View, FlowRepresentable {
+struct SignUp: View {
     let inspection = Inspection<Self>() // ViewInspector
-    weak var _workflowPointer: AnyFlowRepresentable?
     @State private var email = ""
     @State private var password = ""
     @State private var confirmPassword = ""
+    @State private var shouldProceed = false
 
     var body: some View {
         GeometryReader { _ in
@@ -35,7 +35,7 @@ struct SignUp: View, FlowRepresentable {
                     Spacer(minLength: 0)
                 }
 
-                PrimaryButton(title: "Next", action: proceedInWorkflow)
+                PrimaryButton(title: "Next") { shouldProceed = true }
             }
             .padding()
             .padding(.bottom, 5)
@@ -46,6 +46,7 @@ struct SignUp: View, FlowRepresentable {
         }
         .background(Color.primaryBackground.edgesIgnoringSafeArea(.all))
         .navigationTitle("Sign Up!")
+        .workflowLink(isPresented: $shouldProceed)
         .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 }

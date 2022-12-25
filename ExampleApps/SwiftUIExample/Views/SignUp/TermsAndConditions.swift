@@ -7,11 +7,12 @@
 //  swiftlint:disable line_length closure_body_length
 
 import SwiftUI
-import SwiftCurrent
+import SwiftCurrent_SwiftUI
 
-struct TermsAndConditions: View, PassthroughFlowRepresentable {
+struct TermsAndConditions: View {
+    @State private var shouldProceed = false
+
     let inspection = Inspection<Self>() // ViewInspector
-    weak var _workflowPointer: AnyFlowRepresentable?
     var body: some View {
         VStack {
             HStack {
@@ -47,12 +48,17 @@ struct TermsAndConditions: View, PassthroughFlowRepresentable {
             .padding(.bottom)
 
             HStack {
-                SecondaryButton(title: "Decline") { workflow?.abandon() }
+                SecondaryButton(title: "Decline") {
+                    #warning("Abandon not a thing")
+                }
 
-                PrimaryButton(title: "Accept", action: proceedInWorkflow)
+                PrimaryButton(title: "Accept") {
+                    shouldProceed = true
+                }
             }
         }
         .navigationTitle("Terms of Service")
+        .workflowLink(isPresented: $shouldProceed)
         .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 }

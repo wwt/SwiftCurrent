@@ -7,15 +7,13 @@
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 
 import SwiftUI
-import SwiftCurrent
+import SwiftCurrent_SwiftUI
 
-struct ChangeEmailView: View, FlowRepresentable {
-    typealias WorkflowOutput = String
-
+struct ChangeEmailView: View {
     @State private var currentEmail: String
+    @State private var shouldProceed = false
 
     let inspection = Inspection<Self>() // ViewInspector
-    weak var _workflowPointer: AnyFlowRepresentable?
 
     init(with email: String) {
         _currentEmail = State(initialValue: email)
@@ -28,10 +26,11 @@ struct ChangeEmailView: View, FlowRepresentable {
 
             PrimaryButton(title: "SAVE") {
                 withAnimation {
-                    proceedInWorkflow(currentEmail)
+                    shouldProceed = true
                 }
             }
         }
+        .workflowLink(isPresented: $shouldProceed, value: currentEmail)
         .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 }

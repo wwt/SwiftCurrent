@@ -72,16 +72,17 @@ struct LoginView: View, FlowRepresentable {
         }
         .background(Color.primaryBackground.edgesIgnoringSafeArea(.all))
         .sheet(isPresented: $showSignUp) {
-            WorkflowView(isLaunched: $showSignUp) {
-                WorkflowItem(SignUp.self)
-                    .presentationType(.navigationLink)
-                WorkflowItem(TermsAndConditions.self)
-                    .presentationType(.navigationLink)
-            }
-            .embedInNavigationView()
-            .onFinish { _ in
-                showSignUp = false
-                proceedInWorkflow() // untested
+            NavigationStack {
+                WorkflowView(isLaunched: $showSignUp) {
+                    WorkflowItem { SignUp() }
+                        .presentationType(.navigationLink)
+                    WorkflowItem { TermsAndConditions() }
+                        .presentationType(.navigationLink)
+                }
+                .onFinish { _ in
+                    showSignUp = false
+                    proceedInWorkflow() // untested
+                }
             }
         }
         .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector

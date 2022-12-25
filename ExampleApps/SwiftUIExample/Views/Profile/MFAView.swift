@@ -7,16 +7,16 @@
 //  Copyright © 2021 WWT and Tyler Thompson. All rights reserved.
 
 import SwiftUI
-import SwiftCurrent
+import SwiftCurrent_SwiftUI
 
-struct MFAView: View, PassthroughFlowRepresentable {
+struct MFAView: View {
     @State var pushSent = false
     @State var enteredCode = ""
     @State var errorMessage: ErrorMessage?
     @State private var id = UUID()
+    @State private var shouldProceed = false
 
     let inspection = Inspection<Self>() // ViewInspector
-    weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
         VStack(spacing: 30) {
@@ -33,7 +33,7 @@ struct MFAView: View, PassthroughFlowRepresentable {
                 PrimaryButton(title: "Submit") {
                     if enteredCode == "1234" {
                         withAnimation {
-                            proceedInWorkflow()
+                            shouldProceed = true
                         }
                     } else {
                         errorMessage = ErrorMessage(message: "Invalid code entered, abandoning workflow.")
@@ -45,12 +45,13 @@ struct MFAView: View, PassthroughFlowRepresentable {
         .testableAlert(item: $errorMessage) { message in
             Alert(title: Text(message.message), dismissButton: .default(Text("Ok")) {
                 withAnimation {
-                    workflow?.abandon()
+                    #warning("Abandon not a thing")
                 }
             })
         }
         .animation(.easeInOut, value: true)
         .transition(.opacity)
+        .workflowLink(isPresented: $shouldProceed)
         .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 }
@@ -64,7 +65,7 @@ extension MFAView {
 
 struct MFAView_Previews: PreviewProvider {
     static var previews: some View {
-        MFAView(with: .none)
+        MFAView()
             .preferredColorScheme(.dark)
     }
 }

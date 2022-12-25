@@ -9,26 +9,24 @@
 import Foundation
 import SwiftUI
 import Swinject
+import SwiftCurrent_SwiftUI
 
-import SwiftCurrent
-
-struct MapFeatureOnboardingView: View, FlowRepresentable {
+struct MapFeatureOnboardingView: View {
     @AppStorage("OnboardedToMapFeature", store: .fromDI) private var onboardedToMapFeature = false
+    @State var shouldProceed = false
 
     let inspection = Inspection<Self>() // ViewInspector
-    weak var _workflowPointer: AnyFlowRepresentable?
 
     var body: some View {
         VStack {
             Text("Learn about our awesome map feature!")
             Button("Continue") {
                 onboardedToMapFeature = true
-                proceedInWorkflow()
+                shouldProceed = true
             }
-        }.onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
-    }
-
-    func shouldLoad() -> Bool {
-        !onboardedToMapFeature
+        }
+        .workflowLink(isPresented: $shouldProceed)
+        .shouldLoad(!onboardedToMapFeature)
+        .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 }

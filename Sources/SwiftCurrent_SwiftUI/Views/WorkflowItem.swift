@@ -31,7 +31,7 @@ import UIKit
  */
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowItem<Content: View, Args>: _WorkflowItemProtocol {
-    public var presentationType: State<LaunchStyle.SwiftUI.PresentationType> = State(wrappedValue: .navigationLink)
+    public var presentationType: State<LaunchStyle.SwiftUI.PresentationType> = State(wrappedValue: .default)
 
     @Environment(\.workflowArgs) var args
     @ViewBuilder var content: (AnyWorkflow.PassedArgs) -> Content
