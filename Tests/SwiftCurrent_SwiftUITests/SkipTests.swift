@@ -36,10 +36,10 @@ final class SkipTests: XCTestCase, View {
         }
         let launcher = try await MainActor.run {
             WorkflowView {
-                WorkflowItem(FR1.self)
-                WorkflowItem(FR2.self)
-                WorkflowItem(FR3.self)
-                WorkflowItem(FR4.self)
+                WorkflowItem { FR1() }
+                WorkflowItem { FR2() }
+                WorkflowItem { FR3() }
+                WorkflowItem { FR4() }
             }
         }.hostAndInspect(with: \.inspection)
 
@@ -69,10 +69,10 @@ final class SkipTests: XCTestCase, View {
         }
         let launcher = try await MainActor.run {
             WorkflowView {
-                WorkflowItem(FR1.self)
-                WorkflowItem(FR2.self)
-                WorkflowItem(FR3.self)
-                WorkflowItem(FR4.self)
+                WorkflowItem { FR1() }
+                WorkflowItem { FR2() }
+                WorkflowItem { FR3() }
+                WorkflowItem { FR4() }
             }
         }.hostAndInspect(with: \.inspection)
 
@@ -103,10 +103,10 @@ final class SkipTests: XCTestCase, View {
         let expectOnFinish = expectation(description: "OnFinish called")
         let launcher = try await MainActor.run {
             WorkflowView {
-                WorkflowItem(FR1.self)
-                WorkflowItem(FR2.self)
-                WorkflowItem(FR3.self)
-                WorkflowItem(FR4.self)
+                WorkflowItem { FR1() }
+                WorkflowItem { FR2() }
+                WorkflowItem { FR3() }
+                WorkflowItem { FR4() }
             }
             .onFinish { _ in expectOnFinish.fulfill() }
         }.hostAndInspect(with: \.inspection)
@@ -141,10 +141,10 @@ final class SkipTests: XCTestCase, View {
         }
         let launcher = try await MainActor.run {
             WorkflowView {
-                WorkflowItem(FR1.self)
-                WorkflowItem(FR2.self)
-                WorkflowItem(FR3.self)
-                WorkflowItem(FR4.self)
+                WorkflowItem { FR1() }
+                WorkflowItem { FR2() }
+                WorkflowItem { FR3() }
+                WorkflowItem { FR4() }
             }
         }.hostAndInspect(with: \.inspection)
 
@@ -178,10 +178,10 @@ final class SkipTests: XCTestCase, View {
         let expectOnFinish = expectation(description: "OnFinish called")
         let launcher = try await MainActor.run {
             WorkflowView {
-                WorkflowItem(FR1.self)
-                WorkflowItem(FR2.self)
-                WorkflowItem(FR3.self)
-                WorkflowItem(FR4.self)
+                WorkflowItem { FR1() }
+                WorkflowItem { FR2() }
+                WorkflowItem { FR3() }
+                WorkflowItem { FR4() }
             }
             .onFinish { _ in expectOnFinish.fulfill() }
         }.hostAndInspect(with: \.inspection)

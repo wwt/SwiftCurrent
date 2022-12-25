@@ -32,6 +32,7 @@ import UIKit
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowItem<Content: View, Args>: _WorkflowItemProtocol {
     public var launchStyle: State<LaunchStyle.SwiftUI.PresentationType> = State(wrappedValue: .default)
+    let persistence: FlowPersistence.SwiftUI.Persistence = .default
 
     @Environment(\.workflowArgs) var args
     @ViewBuilder var content: (AnyWorkflow.PassedArgs) -> Content
@@ -212,13 +213,14 @@ extension WorkflowItem {
 //             flowPersistenceClosure: { persistence($0).rawValue })
 //    }
 //
-//    /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.
-//    public func persistence(_ persistence: @escaping () -> FlowPersistence.SwiftUI.Persistence) -> Self where FlowRepresentableType.WorkflowInput == Never {
+    /// Sets persistence on the `FlowRepresentable` of the `WorkflowItem`.
+    public func persistence(_ persistence: @escaping () -> FlowPersistence.SwiftUI.Persistence) -> Self {
+        self
 //        Self(previous: self,
 //             launchStyle: launchStyle,
 //             modifierClosure: modifierClosure ?? { _ in },
 //             flowPersistenceClosure: { _ in persistence().rawValue })
-//    }
+    }
     // swiftlint:enable trailing_closure
 }
 

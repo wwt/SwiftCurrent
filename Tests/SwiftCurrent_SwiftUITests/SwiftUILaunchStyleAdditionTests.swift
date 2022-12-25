@@ -71,7 +71,7 @@ final class LaunchStyleAdditionTests: XCTestCase, View {
         let launchStyle = LaunchStyle.new
         let flowPersistence = FlowPersistence.new
         let metadata = WD.metadataFactory(launchStyle: launchStyle) { _ in flowPersistence }
-        let wf = Workflow<Never>(metadata)
+        let wf = SwiftCurrent.Workflow<Never>(metadata)
         let orchestrationResponder = MockOrchestrationResponder()
 
         wf.launch(withOrchestrationResponder: orchestrationResponder)

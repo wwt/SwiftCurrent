@@ -22,7 +22,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
         }
         let viewUnderTest = try await MainActor.run {
             WorkflowView {
-                WorkflowItem(FR1.self)
+                WorkflowItem { FR1() }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -41,8 +41,8 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
 
         let viewUnderTest = try await MainActor.run {
             WorkflowView {
-                WorkflowItem(FR1.self)
-                WorkflowItem(FR2.self)
+                WorkflowItem { FR1() }
+                WorkflowItem { FR2() }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -65,9 +65,9 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
         }
         let viewUnderTest = try await MainActor.run {
             WorkflowView {
-                WorkflowItem(FR1.self)
-                WorkflowItem(FR2.self)
-                WorkflowItem(FR3.self)
+                WorkflowItem { FR1() }
+                WorkflowItem { FR2() }
+                WorkflowItem { FR3() }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -91,10 +91,10 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
         }
         let viewUnderTest = try await MainActor.run {
             WorkflowView {
-                WorkflowItem(FR1.self)
+                WorkflowItem { FR1() }
                 if true {
-                    WorkflowItem(FR2.self)
-                    WorkflowItem(FR3.self)
+                    WorkflowItem { FR2() }
+                    WorkflowItem { FR3() }
                 }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
@@ -119,13 +119,13 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
         }
         let viewUnderTest = try await MainActor.run {
             WorkflowView {
-                WorkflowItem(FR1.self)
+                WorkflowItem { FR1() }
                 if true {
-                    WorkflowItem(FR2.self)
-                    WorkflowItem(FR3.self)
+                    WorkflowItem { FR2() }
+                    WorkflowItem { FR3() }
                 } else {
-                    WorkflowItem(FR3.self)
-                    WorkflowItem(FR2.self)
+                    WorkflowItem { FR3() }
+                    WorkflowItem { FR2() }
                 }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
@@ -155,10 +155,10 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
 
         let viewUnderTest = try await MainActor.run {
             WorkflowView {
-                WorkflowItem(FR1.self)
-                WorkflowItem(FR2.self)
-                WorkflowItem(FR3.self)
-                WorkflowItem(FR4.self)
+                WorkflowItem { FR1() }
+                WorkflowItem { FR2() }
+                WorkflowItem { FR3() }
+                WorkflowItem { FR4() }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -192,11 +192,11 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
 
         let viewUnderTest = try await MainActor.run {
             WorkflowView {
-                WorkflowItem(FR1.self)
-                WorkflowItem(FR2.self)
-                WorkflowItem(FR3.self)
-                WorkflowItem(FR4.self)
-                WorkflowItem(FR5.self)
+                WorkflowItem { FR1() }
+                WorkflowItem { FR2() }
+                WorkflowItem { FR3() }
+                WorkflowItem { FR4() }
+                WorkflowItem { FR5() }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -235,12 +235,12 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
 
         let viewUnderTest = try await MainActor.run {
             WorkflowView {
-                WorkflowItem(FR1.self)
-                WorkflowItem(FR2.self)
-                WorkflowItem(FR3.self)
-                WorkflowItem(FR4.self)
-                WorkflowItem(FR5.self)
-                WorkflowItem(FR6.self)
+                WorkflowItem { FR1() }
+                WorkflowItem { FR2() }
+                WorkflowItem { FR3() }
+                WorkflowItem { FR4() }
+                WorkflowItem { FR5() }
+                WorkflowItem { FR6() }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -284,13 +284,13 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
 
         let viewUnderTest = try await MainActor.run {
             WorkflowView {
-                WorkflowItem(FR1.self)
-                WorkflowItem(FR2.self)
-                WorkflowItem(FR3.self)
-                WorkflowItem(FR4.self)
-                WorkflowItem(FR5.self)
-                WorkflowItem(FR6.self)
-                WorkflowItem(FR7.self)
+                WorkflowItem { FR1() }
+                WorkflowItem { FR2() }
+                WorkflowItem { FR3() }
+                WorkflowItem { FR4() }
+                WorkflowItem { FR5() }
+                WorkflowItem { FR6() }
+                WorkflowItem { FR7() }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -339,14 +339,14 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
 
         let viewUnderTest = try await MainActor.run {
             WorkflowView {
-                WorkflowItem(FR1.self)
-                WorkflowItem(FR2.self)
-                WorkflowItem(FR3.self)
-                WorkflowItem(FR4.self)
-                WorkflowItem(FR5.self)
-                WorkflowItem(FR6.self)
-                WorkflowItem(FR7.self)
-                WorkflowItem(FR8.self)
+                WorkflowItem { FR1() }
+                WorkflowItem { FR2() }
+                WorkflowItem { FR3() }
+                WorkflowItem { FR4() }
+                WorkflowItem { FR5() }
+                WorkflowItem { FR6() }
+                WorkflowItem { FR7() }
+                WorkflowItem { FR8() }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -400,15 +400,15 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
 
         let viewUnderTest = try await MainActor.run {
             WorkflowView {
-                WorkflowItem(FR1.self)
-                WorkflowItem(FR2.self)
-                WorkflowItem(FR3.self)
-                WorkflowItem(FR4.self)
-                WorkflowItem(FR5.self)
-                WorkflowItem(FR6.self)
-                WorkflowItem(FR7.self)
-                WorkflowItem(FR8.self)
-                WorkflowItem(FR9.self)
+                WorkflowItem { FR1() }
+                WorkflowItem { FR2() }
+                WorkflowItem { FR3() }
+                WorkflowItem { FR4() }
+                WorkflowItem { FR5() }
+                WorkflowItem { FR6() }
+                WorkflowItem { FR7() }
+                WorkflowItem { FR8() }
+                WorkflowItem { FR9() }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -467,16 +467,16 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
 
         let viewUnderTest = try await MainActor.run {
             WorkflowView {
-                WorkflowItem(FR1.self)
-                WorkflowItem(FR2.self)
-                WorkflowItem(FR3.self)
-                WorkflowItem(FR4.self)
-                WorkflowItem(FR5.self)
-                WorkflowItem(FR6.self)
-                WorkflowItem(FR7.self)
-                WorkflowItem(FR8.self)
-                WorkflowItem(FR9.self)
-                WorkflowItem(FR10.self)
+                WorkflowItem { FR1() }
+                WorkflowItem { FR2() }
+                WorkflowItem { FR3() }
+                WorkflowItem { FR4() }
+                WorkflowItem { FR5() }
+                WorkflowItem { FR6() }
+                WorkflowItem { FR7() }
+                WorkflowItem { FR8() }
+                WorkflowItem { FR9() }
+                WorkflowItem { FR10() }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
@@ -536,17 +536,17 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
 
         let viewUnderTest = try await MainActor.run {
             WorkflowView {
-                WorkflowItem(FR1.self)
-                WorkflowItem(FR2.self)
-                WorkflowItem(FR3.self)
-                WorkflowItem(FR4.self)
-                WorkflowItem(FR5.self)
+                WorkflowItem { FR1() }
+                WorkflowItem { FR2() }
+                WorkflowItem { FR3() }
+                WorkflowItem { FR4() }
+                WorkflowItem { FR5() }
                 WorkflowGroup {
-                    WorkflowItem(FR6.self)
-                    WorkflowItem(FR7.self)
-                    WorkflowItem(FR8.self)
-                    WorkflowItem(FR9.self)
-                    WorkflowItem(FR10.self)
+                    WorkflowItem { FR6() }
+                    WorkflowItem { FR7() }
+                    WorkflowItem { FR8() }
+                    WorkflowItem { FR9() }
+                    WorkflowItem { FR10() }
                 }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
@@ -647,29 +647,29 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
         
         let viewUnderTest = try await MainActor.run {
             WorkflowView {
-                WorkflowItem(FR1.self)
+                WorkflowItem { FR1() }
                 WorkflowGroup {
-                    WorkflowItem(FR2.self)
-                    WorkflowItem(FR3.self)
-                    WorkflowItem(FR4.self)
-                    WorkflowItem(FR5.self)
-                    WorkflowItem(FR6.self)
-                    WorkflowItem(FR7.self)
-                    WorkflowItem(FR8.self)
-                    WorkflowItem(FR9.self)
+                    WorkflowItem { FR2() }
+                    WorkflowItem { FR3() }
+                    WorkflowItem { FR4() }
+                    WorkflowItem { FR5() }
+                    WorkflowItem { FR6() }
+                    WorkflowItem { FR7() }
+                    WorkflowItem { FR8() }
+                    WorkflowItem { FR9() }
                     WorkflowGroup {
-                        WorkflowItem(FR10.self)
-                        WorkflowItem(FR11.self)
-                        WorkflowItem(FR12.self)
-                        WorkflowItem(FR13.self)
-                        WorkflowItem(FR14.self)
-                        WorkflowItem(FR15.self)
-                        WorkflowItem(FR16.self)
-                        WorkflowItem(FR17.self)
-                        WorkflowItem(FR18.self)
+                        WorkflowItem { FR10() }
+                        WorkflowItem { FR11() }
+                        WorkflowItem { FR12() }
+                        WorkflowItem { FR13() }
+                        WorkflowItem { FR14() }
+                        WorkflowItem { FR15() }
+                        WorkflowItem { FR16() }
+                        WorkflowItem { FR17() }
+                        WorkflowItem { FR18() }
                         WorkflowGroup {
-                            WorkflowItem(FR19.self)
-                            WorkflowItem(FR20.self)
+                            WorkflowItem { FR19() }
+                            WorkflowItem { FR20() }
                         }
                     }
                 }

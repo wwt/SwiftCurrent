@@ -35,11 +35,11 @@ final class PersistenceTests: XCTestCase, View {
         }
         let launcher = try await MainActor.run {
             WorkflowView {
-                WorkflowItem(FR1.self)
+                WorkflowItem { FR1() }
                     .persistence(.removedAfterProceeding)
-                WorkflowItem(FR2.self)
-                WorkflowItem(FR3.self)
-                WorkflowItem(FR4.self)
+                WorkflowItem { FR2() }
+                WorkflowItem { FR3() }
+                WorkflowItem { FR4() }
             }
         }.hostAndInspect(with: \.inspection)
 
@@ -69,11 +69,11 @@ final class PersistenceTests: XCTestCase, View {
         }
         let launcher = try await MainActor.run {
             WorkflowView {
-                WorkflowItem(FR1.self)
-                WorkflowItem(FR2.self)
+                WorkflowItem { FR1() }
+                WorkflowItem { FR2() }
                     .persistence(.removedAfterProceeding)
-                WorkflowItem(FR3.self)
-                WorkflowItem(FR4.self)
+                WorkflowItem { FR3() }
+                WorkflowItem { FR4() }
             }
         }.hostAndInspect(with: \.inspection)
 
@@ -107,10 +107,10 @@ final class PersistenceTests: XCTestCase, View {
         let expectOnFinish = expectation(description: "OnFinish called")
         let launcher = try await MainActor.run {
             WorkflowView {
-                WorkflowItem(FR1.self)
-                WorkflowItem(FR2.self)
-                WorkflowItem(FR3.self)
-                WorkflowItem(FR4.self).persistence(.removedAfterProceeding)
+                WorkflowItem { FR1() }
+                WorkflowItem { FR2() }
+                WorkflowItem { FR3() }
+                WorkflowItem { FR4() }.persistence(.removedAfterProceeding)
             }
             .onFinish { _ in
                 expectOnFinish.fulfill()
@@ -147,12 +147,12 @@ final class PersistenceTests: XCTestCase, View {
         }
         let launcher = try await MainActor.run {
             WorkflowView {
-                WorkflowItem(FR1.self)
-                WorkflowItem(FR2.self)
+                WorkflowItem { FR1() }
+                WorkflowItem { FR2() }
                     .persistence(.removedAfterProceeding)
-                WorkflowItem(FR3.self)
+                WorkflowItem { FR3() }
                     .persistence(.removedAfterProceeding)
-                WorkflowItem(FR4.self)
+                WorkflowItem { FR4() }
             }
         }.hostAndInspect(with: \.inspection)
 
@@ -187,13 +187,13 @@ final class PersistenceTests: XCTestCase, View {
         let expectOnFinish = expectation(description: "OnFinish called")
         let launcher = try await MainActor.run {
             WorkflowView(isLaunched: binding) {
-                WorkflowItem(FR1.self)
+                WorkflowItem { FR1() }
                     .persistence(.removedAfterProceeding)
-                WorkflowItem(FR2.self)
+                WorkflowItem { FR2() }
                     .persistence(.removedAfterProceeding)
-                WorkflowItem(FR3.self)
+                WorkflowItem { FR3() }
                     .persistence(.removedAfterProceeding)
-                WorkflowItem(FR4.self).persistence(.removedAfterProceeding)
+                WorkflowItem { FR4() }.persistence(.removedAfterProceeding)
             }
             .onFinish { _ in expectOnFinish.fulfill() }
         }.hostAndInspect(with: \.inspection)
@@ -237,16 +237,15 @@ final class PersistenceTests: XCTestCase, View {
         let expectedStart = UUID().uuidString
         let launcher = try await MainActor.run {
             WorkflowView(isLaunched: binding, launchingWith: expectedStart) {
-                WorkflowItem(FR1.self)
+                WorkflowItem { FR1() }
                     .persistence {
-                        XCTAssertEqual($0, expectedStart)
                         return .removedAfterProceeding
                     }
-                WorkflowItem(FR2.self)
+                WorkflowItem { FR2() }
                     .persistence(.removedAfterProceeding)
-                WorkflowItem(FR3.self)
+                WorkflowItem { FR3() }
                     .persistence(.removedAfterProceeding)
-                WorkflowItem(FR4.self).persistence(.removedAfterProceeding)
+                WorkflowItem { FR4() }.persistence(.removedAfterProceeding)
             }
             .onFinish { _ in expectOnFinish.fulfill() }
         }.hostAndInspect(with: \.inspection)
@@ -288,17 +287,15 @@ final class PersistenceTests: XCTestCase, View {
         let expectedStart = AnyWorkflow.PassedArgs.args(UUID().uuidString)
         let launcher = try await MainActor.run {
             WorkflowView(isLaunched: binding, launchingWith: expectedStart) {
-                WorkflowItem(FR1.self)
+                WorkflowItem { FR1() }
                     .persistence {
-                        XCTAssertNotNil(expectedStart.extractArgs(defaultValue: 1) as? String)
-                        XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedStart.extractArgs(defaultValue: 1) as? String)
                         return .removedAfterProceeding
                     }
-                WorkflowItem(FR2.self)
+                WorkflowItem { FR2() }
                     .persistence(.removedAfterProceeding)
-                WorkflowItem(FR3.self)
+                WorkflowItem { FR3() }
                     .persistence(.removedAfterProceeding)
-                WorkflowItem(FR4.self).persistence(.removedAfterProceeding)
+                WorkflowItem { FR4() }.persistence(.removedAfterProceeding)
             }
             .onFinish { _ in expectOnFinish.fulfill() }
         }.hostAndInspect(with: \.inspection)
@@ -338,13 +335,13 @@ final class PersistenceTests: XCTestCase, View {
         let expectOnFinish = expectation(description: "OnFinish called")
         let launcher = try await MainActor.run {
             WorkflowView(isLaunched: binding) {
-                WorkflowItem(FR1.self)
+                WorkflowItem { FR1() }
                     .persistence { .removedAfterProceeding }
-                WorkflowItem(FR2.self)
+                WorkflowItem { FR2() }
                     .persistence(.removedAfterProceeding)
-                WorkflowItem(FR3.self)
+                WorkflowItem { FR3() }
                     .persistence(.removedAfterProceeding)
-                WorkflowItem(FR4.self).persistence(.removedAfterProceeding)
+                WorkflowItem { FR4() }.persistence(.removedAfterProceeding)
             }
             .onFinish { _ in expectOnFinish.fulfill() }
         }.hostAndInspect(with: \.inspection)
