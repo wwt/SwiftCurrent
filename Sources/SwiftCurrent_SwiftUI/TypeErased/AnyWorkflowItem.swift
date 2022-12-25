@@ -32,7 +32,7 @@ public struct AnyWorkflowItem: View, _WorkflowItemProtocol {
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension AnyWorkflowItem {
     /// :nodoc: Protocol requirement.
-    public var presentationType: State<SwiftCurrent.LaunchStyle.SwiftUI.PresentationType> { storage.presentationType }
+    public var launchStyle: State<SwiftCurrent.LaunchStyle.SwiftUI.PresentationType> { storage.presentationType }
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
@@ -51,6 +51,6 @@ fileprivate final class AnyWorkflowItemStorage<Wrapped: _WorkflowItemProtocol>: 
     }
 
     override var presentationType: State<SwiftCurrent.LaunchStyle.SwiftUI.PresentationType> {
-        holder.presentationType
+        holder.launchStyle
     }
 }

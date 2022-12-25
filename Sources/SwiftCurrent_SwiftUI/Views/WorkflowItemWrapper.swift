@@ -12,7 +12,7 @@ import SwiftCurrent
 /// :nodoc: ResultBuilder requirement.
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowItemWrapper<WI: _WorkflowItemProtocol, Wrapped: _WorkflowItemProtocol>: _WorkflowItemProtocol, Workflow {
-    public var presentationType: State<LaunchStyle.SwiftUI.PresentationType> { content.presentationType }
+    public var launchStyle: State<LaunchStyle.SwiftUI.PresentationType> { content.launchStyle }
 
     @StateObject private var proxy = WorkflowProxy()
     @State private var shouldLoad = true
@@ -36,7 +36,7 @@ public struct WorkflowItemWrapper<WI: _WorkflowItemProtocol, Wrapped: _WorkflowI
     public var body: some View {
         Group {
             if shouldLoad && environmentShouldLoad {
-                navigate(presentationType: presentationType.wrappedValue, content: content, nextView: wrapped, isActive: $hasProceeded)
+                navigate(presentationType: launchStyle.wrappedValue, content: content, nextView: wrapped, isActive: $hasProceeded)
             } else {
                 wrapped
             }

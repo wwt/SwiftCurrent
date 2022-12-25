@@ -15,8 +15,8 @@ public struct EitherWorkflowItem<W0: _WorkflowItemProtocol, W1: _WorkflowItemPro
     enum Either<First, Second>: View where First: _WorkflowItemProtocol, Second: _WorkflowItemProtocol {
         var presentationType: State<SwiftCurrent.LaunchStyle.SwiftUI.PresentationType> {
             switch self {
-                case .first(let first): return first.presentationType
-                case .second(let second): return second.presentationType
+                case .first(let first): return first.launchStyle
+                case .second(let second): return second.launchStyle
             }
         }
 
@@ -39,7 +39,7 @@ public struct EitherWorkflowItem<W0: _WorkflowItemProtocol, W1: _WorkflowItemPro
     }
 
     /// :nodoc: Protocol requirement.
-    public var presentationType: State<SwiftCurrent.LaunchStyle.SwiftUI.PresentationType> {
+    public var launchStyle: State<SwiftCurrent.LaunchStyle.SwiftUI.PresentationType> {
         content.presentationType
     }
 }

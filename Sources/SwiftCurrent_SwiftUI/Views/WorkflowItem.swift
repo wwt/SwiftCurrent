@@ -31,7 +31,7 @@ import UIKit
  */
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowItem<Content: View, Args>: _WorkflowItemProtocol {
-    public var presentationType: State<LaunchStyle.SwiftUI.PresentationType> = State(wrappedValue: .default)
+    public var launchStyle: State<LaunchStyle.SwiftUI.PresentationType> = State(wrappedValue: .default)
 
     @Environment(\.workflowArgs) var args
     @ViewBuilder var content: (AnyWorkflow.PassedArgs) -> Content
@@ -55,7 +55,7 @@ public struct WorkflowItem<Content: View, Args>: _WorkflowItemProtocol {
 
     private init<A>(previous: WorkflowItem<Content, A>,
                     presentationType: LaunchStyle.SwiftUI.PresentationType) {
-        self.presentationType = State(wrappedValue: presentationType)
+        self.launchStyle = State(wrappedValue: presentationType)
         content = previous.content
     }
 

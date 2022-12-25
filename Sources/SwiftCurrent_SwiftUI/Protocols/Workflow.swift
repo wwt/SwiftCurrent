@@ -25,7 +25,8 @@ extension Workflow {
                 DefaultWorkflowPresenter().present(content: content, nextView: nextView, isActive: isActive)
             case .navigationLink:
                 NavigationWorkflowPresenter().present(content: content, nextView: nextView, isActive: isActive)
-            default: nil as Never?
+            case .modal(let modalType):
+                ModalWorkflowPresenter().present(content: content, nextView: nextView, isActive: isActive, style: modalType)
         }
     }
 }
