@@ -53,6 +53,12 @@ public struct WorkflowItem<Content: View, Args>: _WorkflowItemProtocol {
         self.content = { content($0) }
     }
 
+    private init<A>(previous: WorkflowItem<Content, A>,
+                    presentationType: LaunchStyle.SwiftUI.PresentationType) {
+        self.presentationType = State(wrappedValue: presentationType)
+        content = previous.content
+    }
+
     public var body: some View {
         content(args)
     }
@@ -220,11 +226,7 @@ extension WorkflowItem {
 extension WorkflowItem {
     /// Sets the presentationType on the `FlowRepresentable` of the `WorkflowItem`.
     public func presentationType(_ presentationType: @escaping @autoclosure () -> LaunchStyle.SwiftUI.PresentationType) -> Self {
-        self
-//        Self(previous: self,
-//             launchStyle: presentationType(),
-//             modifierClosure: modifierClosure ?? { _ in },
-//             flowPersistenceClosure: flowPersistenceClosure)
+        Self(previous: self, presentationType: presentationType())
     }
 }
 //// swiftlint:enable line_length
