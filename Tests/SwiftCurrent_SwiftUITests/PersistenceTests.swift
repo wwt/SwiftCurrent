@@ -17,20 +17,16 @@ import SwiftCurrent
 final class PersistenceTests: XCTestCase, View {
     // MARK: RemovedAfterProceedingTests
     func testRemovedAfterProceeding_OnFirstItemInAWorkflow() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
-        struct FR4: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR4: View {
             var body: some View { Text("FR4 type") }
         }
         let launcher = try await MainActor.run {
@@ -44,27 +40,26 @@ final class PersistenceTests: XCTestCase, View {
         }.hostAndInspect(with: \.inspection)
 
         try await launcher.find(FR1.self).proceedInWorkflow()
-        XCTAssertThrowsError(try launcher.find(FR2.self).actualView().backUpInWorkflow())
+        do {
+            try await launcher.find(FR2.self).backUpInWorkflow()
+            XCTFail("Expected back up to throw an error")
+        }
         try await launcher.find(FR2.self).proceedInWorkflow()
         try await launcher.find(FR3.self).proceedInWorkflow()
         try await launcher.find(FR4.self).proceedInWorkflow()
     }
 
     func testRemovedAfterProceeding_OnMiddleItemInAWorkflow() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
-        struct FR4: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR4: View {
             var body: some View { Text("FR4 type") }
         }
         let launcher = try await MainActor.run {
@@ -88,20 +83,16 @@ final class PersistenceTests: XCTestCase, View {
     }
 
     func testRemovedAfterProceeding_OnLastItemInAWorkflow() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
-        struct FR4: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR4: View {
             var body: some View { Text("FR4 type") }
         }
         let expectOnFinish = expectation(description: "OnFinish called")
@@ -129,20 +120,16 @@ final class PersistenceTests: XCTestCase, View {
     }
 
     func testRemovedAfterProceeding_OnMultipleItemsInAWorkflow() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
-        struct FR4: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR4: View {
             var body: some View { Text("FR4 type") }
         }
         let launcher = try await MainActor.run {
@@ -167,20 +154,16 @@ final class PersistenceTests: XCTestCase, View {
     }
 
     func testRemovedAfterProceeding_OnAllItemsInAWorkflow() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
-        struct FR4: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR4: View {
             var body: some View { Text("FR4 type") }
         }
         let binding = Binding(wrappedValue: true)
@@ -201,7 +184,10 @@ final class PersistenceTests: XCTestCase, View {
         try await launcher.find(FR1.self).proceedInWorkflow()
         try await launcher.find(FR2.self).proceedInWorkflow()
         try await launcher.find(FR3.self).proceedInWorkflow()
-        XCTAssertThrowsError(try launcher.find(FR4.self).actualView().backUpInWorkflow())
+        do {
+            try await launcher.find(FR4.self).backUpInWorkflow()
+            XCTFail("Expected back up to throw an error")
+        }
         try await launcher.find(FR4.self).proceedInWorkflow()
         XCTAssertThrowsError(try launcher.find(FR4.self))
         XCTAssertThrowsError(try launcher.find(FR3.self))
@@ -215,21 +201,17 @@ final class PersistenceTests: XCTestCase, View {
     // MARK: Closure API Tests
 
     func testPersistenceWorks_WhenDefinedFromAClosure() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
+        struct FR1: View {
             init(with args: String) { }
-            var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
-        struct FR4: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR4: View {
             var body: some View { Text("FR4 type") }
         }
         let binding = Binding(wrappedValue: true)
@@ -237,7 +219,7 @@ final class PersistenceTests: XCTestCase, View {
         let expectedStart = UUID().uuidString
         let launcher = try await MainActor.run {
             WorkflowView(isLaunched: binding, launchingWith: expectedStart) {
-                WorkflowItem { FR1() }
+                WorkflowItem { (args: String) in FR1(with: args) }
                     .persistence {
                         return .removedAfterProceeding
                     }
@@ -253,7 +235,10 @@ final class PersistenceTests: XCTestCase, View {
         try await launcher.find(FR1.self).proceedInWorkflow()
         try await launcher.find(FR2.self).proceedInWorkflow()
         try await launcher.find(FR3.self).proceedInWorkflow()
-        XCTAssertThrowsError(try launcher.find(FR4.self).actualView().backUpInWorkflow())
+        do {
+            try await launcher.find(FR4.self).backUpInWorkflow()
+            XCTFail("Expected back up to throw an error")
+        }
         try await launcher.find(FR4.self).proceedInWorkflow()
         XCTAssertThrowsError(try launcher.find(FR4.self))
         XCTAssertThrowsError(try launcher.find(FR3.self))
@@ -265,29 +250,26 @@ final class PersistenceTests: XCTestCase, View {
     }
 
     func testPersistenceWorks_WhenDefinedFromAClosure_AndItemHasInputOfPassedArgs() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
+        struct FR1: View {
             init(with args: AnyWorkflow.PassedArgs) { }
-            var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
-        struct FR4: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR4: View {
             var body: some View { Text("FR4 type") }
         }
+        
         let binding = Binding(wrappedValue: true)
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectedStart = AnyWorkflow.PassedArgs.args(UUID().uuidString)
         let launcher = try await MainActor.run {
             WorkflowView(isLaunched: binding, launchingWith: expectedStart) {
-                WorkflowItem { FR1() }
+                WorkflowItem { (args: AnyWorkflow.PassedArgs) in FR1(with: args) }
                     .persistence {
                         return .removedAfterProceeding
                     }
@@ -303,7 +285,10 @@ final class PersistenceTests: XCTestCase, View {
         try await launcher.find(FR1.self).proceedInWorkflow()
         try await launcher.find(FR2.self).proceedInWorkflow()
         try await launcher.find(FR3.self).proceedInWorkflow()
-        XCTAssertThrowsError(try launcher.find(FR4.self).actualView().backUpInWorkflow())
+        do {
+            try await launcher.find(FR4.self).backUpInWorkflow()
+            XCTFail("Expected back up to throw an error")
+        }
         try await launcher.find(FR4.self).proceedInWorkflow()
         XCTAssertThrowsError(try launcher.find(FR4.self))
         XCTAssertThrowsError(try launcher.find(FR3.self))
@@ -315,20 +300,16 @@ final class PersistenceTests: XCTestCase, View {
     }
 
     func testPersistenceWorks_WhenDefinedFromAClosure_AndItemHasInputOfNever() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
-        struct FR4: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR4: View {
             var body: some View { Text("FR4 type") }
         }
         let binding = Binding(wrappedValue: true)
@@ -349,7 +330,10 @@ final class PersistenceTests: XCTestCase, View {
         try await launcher.find(FR1.self).proceedInWorkflow()
         try await launcher.find(FR2.self).proceedInWorkflow()
         try await launcher.find(FR3.self).proceedInWorkflow()
-        XCTAssertThrowsError(try launcher.find(FR4.self).actualView().backUpInWorkflow())
+        do {
+            try await launcher.find(FR4.self).backUpInWorkflow()
+            XCTFail("Expected back up to throw an error")
+        }
         try await launcher.find(FR4.self).proceedInWorkflow()
         XCTAssertThrowsError(try launcher.find(FR4.self))
         XCTAssertThrowsError(try launcher.find(FR3.self))
@@ -362,22 +346,18 @@ final class PersistenceTests: XCTestCase, View {
 
     // MARK: PersistWhenSkippedTests
     //    func testPersistWhenSkipped_OnFirstItemInAWorkflow() throws {
-    //        struct FR1: View, FlowRepresentable, Inspectable {
-    //            var _workflowPointer: AnyFlowRepresentable?
-    //            var body: some View { Text("FR1 type") }
+    //        struct FR1: View {
+    //    //            var body: some View { Text("FR1 type") }
     //            func shouldLoad() -> Bool { false }
     //        }
-    //        struct FR2: View, FlowRepresentable, Inspectable {
-    //            var _workflowPointer: AnyFlowRepresentable?
-    //            var body: some View { Text("FR2 type") }
+    //        struct FR2: View {
+    //    //            var body: some View { Text("FR2 type") }
     //        }
-    //        struct FR3: View, FlowRepresentable, Inspectable {
-    //            var _workflowPointer: AnyFlowRepresentable?
-    //            var body: some View { Text("FR3 type") }
+    //        struct FR3: View {
+    //    //            var body: some View { Text("FR3 type") }
     //        }
-    //        struct FR4: View, FlowRepresentable, Inspectable {
-    //            var _workflowPointer: AnyFlowRepresentable?
-    //            var body: some View { Text("FR4 type") }
+    //        struct FR4: View {
+    //    //            var body: some View { Text("FR4 type") }
     //        }
     //        let expectViewLoaded = ViewHosting.loadView(
     //            WorkflowLauncher(isLaunched: .constant(true)) {
@@ -412,22 +392,18 @@ final class PersistenceTests: XCTestCase, View {
     //    }
     //
     //    func testPersistWhenSkipped_OnMiddleItemInAWorkflow() throws {
-    //        struct FR1: View, FlowRepresentable, Inspectable {
-    //            var _workflowPointer: AnyFlowRepresentable?
-    //            var body: some View { Text("FR1 type") }
+    //        struct FR1: View {
+    //    //            var body: some View { Text("FR1 type") }
     //        }
-    //        struct FR2: View, FlowRepresentable, Inspectable {
-    //            var _workflowPointer: AnyFlowRepresentable?
-    //            var body: some View { Text("FR2 type") }
+    //        struct FR2: View {
+    //    //            var body: some View { Text("FR2 type") }
     //            func shouldLoad() -> Bool { false }
     //        }
-    //        struct FR3: View, FlowRepresentable, Inspectable {
-    //            var _workflowPointer: AnyFlowRepresentable?
-    //            var body: some View { Text("FR3 type") }
+    //        struct FR3: View {
+    //    //            var body: some View { Text("FR3 type") }
     //        }
-    //        struct FR4: View, FlowRepresentable, Inspectable {
-    //            var _workflowPointer: AnyFlowRepresentable?
-    //            var body: some View { Text("FR4 type") }
+    //        struct FR4: View {
+    //    //            var body: some View { Text("FR4 type") }
     //        }
     //        let expectViewLoaded = ViewHosting.loadView(
     //            WorkflowLauncher(isLaunched: .constant(true)) {
@@ -463,21 +439,17 @@ final class PersistenceTests: XCTestCase, View {
     //    }
     //
     //    func testPersistWhenSkipped_OnLastItemInAWorkflow() throws {
-    //        struct FR1: View, FlowRepresentable, Inspectable {
-    //            var _workflowPointer: AnyFlowRepresentable?
-    //            var body: some View { Text("FR1 type") }
+    //        struct FR1: View {
+    //    //            var body: some View { Text("FR1 type") }
     //        }
-    //        struct FR2: View, FlowRepresentable, Inspectable {
-    //            var _workflowPointer: AnyFlowRepresentable?
-    //            var body: some View { Text("FR2 type") }
+    //        struct FR2: View {
+    //    //            var body: some View { Text("FR2 type") }
     //        }
-    //        struct FR3: View, FlowRepresentable, Inspectable {
-    //            var _workflowPointer: AnyFlowRepresentable?
-    //            var body: some View { Text("FR3 type") }
+    //        struct FR3: View {
+    //    //            var body: some View { Text("FR3 type") }
     //        }
-    //        struct FR4: View, FlowRepresentable, Inspectable {
-    //            var _workflowPointer: AnyFlowRepresentable?
-    //            var body: some View { Text("FR4 type") }
+    //        struct FR4: View {
+    //    //            var body: some View { Text("FR4 type") }
     //            func shouldLoad() -> Bool { false }
     //        }
     //        let expectOnFinish = expectation(description: "OnFinish called")
@@ -506,23 +478,19 @@ final class PersistenceTests: XCTestCase, View {
     //    }
     //
     //    func testPersistWhenSkipped_OnMultipleItemsInAWorkflow() throws {
-    //        struct FR1: View, FlowRepresentable, Inspectable {
-    //            var _workflowPointer: AnyFlowRepresentable?
-    //            var body: some View { Text("FR1 type") }
+    //        struct FR1: View {
+    //    //            var body: some View { Text("FR1 type") }
     //        }
-    //        struct FR2: View, FlowRepresentable, Inspectable {
-    //            var _workflowPointer: AnyFlowRepresentable?
-    //            var body: some View { Text("FR2 type") }
+    //        struct FR2: View {
+    //    //            var body: some View { Text("FR2 type") }
     //            func shouldLoad() -> Bool { false }
     //        }
-    //        struct FR3: View, FlowRepresentable, Inspectable {
-    //            var _workflowPointer: AnyFlowRepresentable?
-    //            var body: some View { Text("FR3 type") }
+    //        struct FR3: View {
+    //    //            var body: some View { Text("FR3 type") }
     //            func shouldLoad() -> Bool { false }
     //        }
-    //        struct FR4: View, FlowRepresentable, Inspectable {
-    //            var _workflowPointer: AnyFlowRepresentable?
-    //            var body: some View { Text("FR4 type") }
+    //        struct FR4: View {
+    //    //            var body: some View { Text("FR4 type") }
     //        }
     //        let expectViewLoaded = ViewHosting.loadView(
     //            WorkflowLauncher(isLaunched: .constant(true)) {
@@ -564,24 +532,20 @@ final class PersistenceTests: XCTestCase, View {
     //    }
     //
     //    func testPersistWhenSkipped_OnAllItemsInAWorkflow() throws {
-    //        struct FR1: View, FlowRepresentable, Inspectable {
-    //            var _workflowPointer: AnyFlowRepresentable?
-    //            var body: some View { Text("FR1 type") }
+    //        struct FR1: View {
+    //    //            var body: some View { Text("FR1 type") }
     //            func shouldLoad() -> Bool { false }
     //        }
-    //        struct FR2: View, FlowRepresentable, Inspectable {
-    //            var _workflowPointer: AnyFlowRepresentable?
-    //            var body: some View { Text("FR2 type") }
+    //        struct FR2: View {
+    //    //            var body: some View { Text("FR2 type") }
     //            func shouldLoad() -> Bool { false }
     //        }
-    //        struct FR3: View, FlowRepresentable, Inspectable {
-    //            var _workflowPointer: AnyFlowRepresentable?
-    //            var body: some View { Text("FR3 type") }
+    //        struct FR3: View {
+    //    //            var body: some View { Text("FR3 type") }
     //            func shouldLoad() -> Bool { false }
     //        }
-    //        struct FR4: View, FlowRepresentable, Inspectable {
-    //            var _workflowPointer: AnyFlowRepresentable?
-    //            var body: some View { Text("FR4 type") }
+    //        struct FR4: View {
+    //    //            var body: some View { Text("FR4 type") }
     //            func shouldLoad() -> Bool { false }
     //        }
     //        let expectOnFinish = expectation(description: "OnFinish called")

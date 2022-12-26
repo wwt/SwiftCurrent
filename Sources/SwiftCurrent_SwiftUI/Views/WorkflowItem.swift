@@ -30,31 +30,31 @@ import UIKit
   ```
  */
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-public struct WorkflowItem<Content: View, Args>: _WorkflowItemProtocol {
+public struct WorkflowItem<Content: View>: _WorkflowItemProtocol {
     public var launchStyle: State<LaunchStyle.SwiftUI.PresentationType> = State(wrappedValue: .default)
     let persistence: FlowPersistence.SwiftUI.Persistence = .default
 
     @Environment(\.workflowArgs) var args
     @ViewBuilder var content: (AnyWorkflow.PassedArgs) -> Content
 
-    public init(@ViewBuilder _ content: @escaping () -> Content) where Args == Never {
+    public init(@ViewBuilder _ content: @escaping () -> Content) {
         self.content = { _ in content() }
     }
 
-    public init(@ViewBuilder _ content: @escaping (Args) -> Content) {
+    public init<A>(@ViewBuilder _ content: @escaping (A) -> Content) {
         self.content = {
-            guard case .args(let args as Args) = $0 else {
-                fatalError("View expected type: \(type(of: Args.self)), but got type: \($0) instead")
+            guard case .args(let args as A) = $0 else {
+                fatalError("View expected type: \(type(of: A.self)), but got type: \($0) instead")
             }
             return content(args)
         }
     }
 
-    public init(@ViewBuilder _ content: @escaping (Args) -> Content) where Args == AnyWorkflow.PassedArgs {
+    public init(@ViewBuilder _ content: @escaping (AnyWorkflow.PassedArgs) -> Content) {
         self.content = { content($0) }
     }
 
-    private init<A>(previous: WorkflowItem<Content, A>,
+    private init(previous: WorkflowItem<Content>,
                     presentationType: LaunchStyle.SwiftUI.PresentationType) {
         self.launchStyle = State(wrappedValue: presentationType)
         content = previous.content

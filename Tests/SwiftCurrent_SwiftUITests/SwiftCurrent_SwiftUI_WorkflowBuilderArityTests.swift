@@ -16,8 +16,7 @@ import SwiftCurrent
 @available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
     func testArity1() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
         let viewUnderTest = try await MainActor.run {
@@ -30,12 +29,10 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
     }
 
     func testArity2() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
 
@@ -51,16 +48,13 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
     }
 
     func testArity3() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
         let viewUnderTest = try await MainActor.run {
@@ -77,16 +71,13 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
     }
 
     func testArity3_WithBuildOptional() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
         let viewUnderTest = try await MainActor.run {
@@ -105,16 +96,13 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
     }
 
     func testArity3_WithBuildEither() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
         let viewUnderTest = try await MainActor.run {
@@ -136,20 +124,16 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
     }
 
     func testArity4() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
-        struct FR4: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR4: View {
             var body: some View { Text("FR4 type") }
         }
 
@@ -169,24 +153,19 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
     }
 
     func testArity5() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
-        struct FR4: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR4: View {
             var body: some View { Text("FR4 type") }
         }
-        struct FR5: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR5: View {
             var body: some View { Text("FR5 type") }
         }
 
@@ -208,28 +187,22 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
     }
 
     func testArity6() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
-        struct FR4: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR4: View {
             var body: some View { Text("FR4 type") }
         }
-        struct FR5: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR5: View {
             var body: some View { Text("FR5 type") }
         }
-        struct FR6: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR6: View {
             var body: some View { Text("FR6 type") }
         }
 
@@ -253,32 +226,25 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
     }
 
     func testArity7() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
-        struct FR4: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR4: View {
             var body: some View { Text("FR4 type") }
         }
-        struct FR5: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR5: View {
             var body: some View { Text("FR5 type") }
         }
-        struct FR6: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR6: View {
             var body: some View { Text("FR6 type") }
         }
-        struct FR7: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR7: View {
             var body: some View { Text("FR7 type") }
         }
 
@@ -304,36 +270,28 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
     }
 
     func testArity8() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
-        struct FR4: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR4: View {
             var body: some View { Text("FR4 type") }
         }
-        struct FR5: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR5: View {
             var body: some View { Text("FR5 type") }
         }
-        struct FR6: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR6: View {
             var body: some View { Text("FR6 type") }
         }
-        struct FR7: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR7: View {
             var body: some View { Text("FR7 type") }
         }
-        struct FR8: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR8: View {
             var body: some View { Text("FR8 type") }
         }
 
@@ -361,40 +319,31 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
     }
 
     func testArity9() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
-        struct FR4: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR4: View {
             var body: some View { Text("FR4 type") }
         }
-        struct FR5: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR5: View {
             var body: some View { Text("FR5 type") }
         }
-        struct FR6: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR6: View {
             var body: some View { Text("FR6 type") }
         }
-        struct FR7: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR7: View {
             var body: some View { Text("FR7 type") }
         }
-        struct FR8: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR8: View {
             var body: some View { Text("FR8 type") }
         }
-        struct FR9: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR9: View {
             var body: some View { Text("FR9 type") }
         }
 
@@ -424,44 +373,34 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
     }
 
     func testArity10() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
-        struct FR4: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR4: View {
             var body: some View { Text("FR4 type") }
         }
-        struct FR5: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR5: View {
             var body: some View { Text("FR5 type") }
         }
-        struct FR6: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR6: View {
             var body: some View { Text("FR6 type") }
         }
-        struct FR7: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR7: View {
             var body: some View { Text("FR7 type") }
         }
-        struct FR8: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR8: View {
             var body: some View { Text("FR8 type") }
         }
-        struct FR9: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR9: View {
             var body: some View { Text("FR9 type") }
         }
-        struct FR10: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR10: View {
             var body: some View { Text("FR10 type") }
         }
 
@@ -493,44 +432,34 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
     }
 
     func testArity5_WithWorkflowGroup() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
-        struct FR4: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR4: View {
             var body: some View { Text("FR4 type") }
         }
-        struct FR5: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR5: View {
             var body: some View { Text("FR5 type") }
         }
-        struct FR6: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR6: View {
             var body: some View { Text("FR6 type") }
         }
-        struct FR7: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR7: View {
             var body: some View { Text("FR7 type") }
         }
-        struct FR8: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR8: View {
             var body: some View { Text("FR8 type") }
         }
-        struct FR9: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR9: View {
             var body: some View { Text("FR9 type") }
         }
-        struct FR10: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR10: View {
             var body: some View { Text("FR10 type") }
         }
 
@@ -564,84 +493,64 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
     }
 
     func testUltramassiveWorkflow() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
-        struct FR4: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR4: View {
             var body: some View { Text("FR4 type") }
         }
-        struct FR5: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR5: View {
             var body: some View { Text("FR5 type") }
         }
-        struct FR6: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR6: View {
             var body: some View { Text("FR6 type") }
         }
-        struct FR7: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR7: View {
             var body: some View { Text("FR7 type") }
         }
-        struct FR8: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR8: View {
             var body: some View { Text("FR8 type") }
         }
-        struct FR9: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR9: View {
             var body: some View { Text("FR9 type") }
         }
-        struct FR10: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR10: View {
             var body: some View { Text("FR10 type") }
         }
-        struct FR11: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR11: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR12: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR12: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR13: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR13: View {
             var body: some View { Text("FR3 type") }
         }
-        struct FR14: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR14: View {
             var body: some View { Text("FR4 type") }
         }
-        struct FR15: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR15: View {
             var body: some View { Text("FR5 type") }
         }
-        struct FR16: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR16: View {
             var body: some View { Text("FR6 type") }
         }
-        struct FR17: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR17: View {
             var body: some View { Text("FR7 type") }
         }
-        struct FR18: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR18: View {
             var body: some View { Text("FR8 type") }
         }
-        struct FR19: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR19: View {
             var body: some View { Text("FR9 type") }
         }
-        struct FR20: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR20: View {
             var body: some View { Text("FR10 type") }
         }
         

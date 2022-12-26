@@ -52,6 +52,281 @@
                BlueprintName = "SwiftCurrent-SwiftUITests"
                ReferencedContainer = "container:">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "AnyFlowRepresentableViewTests">
+               </Test>
+               <Test
+                  Identifier = "AnyWorkflowTests">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testCreatingMalformedWorkflowWithMismatchingConcreteTypes()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingTwiceWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToNeverItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsAnyWorkflowPassedArgsWithAutoclosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsAnyWorkflowPassedArgsWithAutoclosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsAnyWorkflowPassedArgsWithAutoclosureFlowPersistence_WorkflowCanProceedToNeverItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToNeverItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToNeverItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsAnyWorkflowPassedArgs_FlowPersistenceCanBeSetWithAutoclosure()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsAnyWorkflowPassedArgs_FlowPersistenceCanBeSetWithClosure()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsConcreteTypeArgsWithDefaultFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsConcreteTypeArgsWithDefaultFlowPersistence_WorkflowCanProceedToTheSameInputTypeItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsConcreteTypeWithAutoclosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsConcreteTypeWithAutoclosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsConcreteTypeWithAutoclosureFlowPersistence_WorkflowCanProceedToNeverItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsConcreteTypeWithAutoclosureFlowPersistence_WorkflowCanProceedToTheSameInputTypeItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToAnyWorkflowPassedArgsItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToNeverItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToTheSameInputTypeItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsConcreteTypeWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsConcreteTypeWithDefaultFlowPersistence_WorkflowCanProceedToNeverItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsConcreteType_FlowPersistenceCanBeSetWithAutoclosure()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsConcreteType_FlowPersistenceCanBeSetWithClosure()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsNeverWithAutoclosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsNeverWithAutoclosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsNeverWithAutoclosureFlowPersistence_WorkflowCanProceedToAnotherNeverItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToAnotherNeverItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsNeverWithDefaultFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsNeverWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsNeverWithDefaultFlowPersistence_WorkflowCanProceedToAnotherNeverItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsNever_FlowPersistenceCanBeSetWithAutoclosure()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsNever_FlowPersistenceCanBeSetWithClosure()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsAnyWorkflowPassedArgsWithAutoclosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsAnyWorkflowPassedArgsWithAutoclosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsAnyWorkflowPassedArgsWithAutoclosureFlowPersistence_WorkflowCanProceedToNeverItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsAnyWorkflowPassedArgsWithClosureFlowPersistence_WorkflowCanProceedToNeverItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToNeverItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsAnyWorkflowPassedArgs_FlowPersistenceCanBeSetWithAutoclosure()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsAnyWorkflowPassedArgs_FlowPersistenceCanBeSetWithClosure()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsAnyWorkflowPassedArgs_PresentationTypeCanBeSetWithAutoclosure()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsConcreteTypeArgsWithDefaultFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsConcreteTypeArgsWithDefaultFlowPersistence_WorkflowCanProceedToTheSameInputTypeItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsConcreteTypeWithAutoclosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsConcreteTypeWithAutoclosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsConcreteTypeWithAutoclosureFlowPersistence_WorkflowCanProceedToNeverItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsConcreteTypeWithAutoclosureFlowPersistence_WorkflowCanProceedToTheSameInputTypeItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToNeverItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsConcreteTypeWithClosureFlowPersistence_WorkflowCanProceedToTheSameInputTypeItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsConcreteTypeWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsConcreteTypeWithDefaultFlowPersistence_WorkflowCanProceedToNeverItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsConcreteType_FlowPersistenceCanBeSetWithAutoclosure()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsConcreteType_FlowPersistenceCanBeSetWithClosure()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsConcreteType_PresentationTypeCanBeSetWithAutoclosure()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsNeverWithAutoclosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsNeverWithAutoclosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsNeverWithAutoclosureFlowPersistence_WorkflowCanProceedToAnotherNeverItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToAnotherNeverItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsNeverWithDefaultFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsNeverWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsNever_FlowPersistenceCanBeSetWithAutoclosure()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsNever_FlowPersistenceCanBeSetWithClosure()">
+               </Test>
+               <Test
+                  Identifier = "GenericConstraintTests/testWhenInputIsNever_PresentationTypeCanBeSetWithAutoclosure()">
+               </Test>
+               <Test
+                  Identifier = "LaunchStyleAdditionTests">
+               </Test>
+               <Test
+                  Identifier = "PersistenceTests">
+               </Test>
+               <Test
+                  Identifier = "SkipTests">
+               </Test>
+               <Test
+                  Identifier = "SwiftCurrent_ModalTests">
+               </Test>
+               <Test
+                  Identifier = "SwiftCurrent_NavigationLinkTests">
+               </Test>
+               <Test
+                  Identifier = "SwiftCurrent_SwiftUIConsumerTests">
+               </Test>
+               <Test
+                  Identifier = "SwiftCurrent_SwiftUI_WorkflowBuilderArityTests">
+               </Test>
+               <Test
+                  Identifier = "SwiftCurrent_SwiftUI_WorkflowBuilderTests">
+               </Test>
+               <Test
+                  Identifier = "ThenProceedOnAppTests">
+               </Test>
+               <Test
+                  Identifier = "ThenProceedOnSceneTests">
+               </Test>
+               <Test
+                  Identifier = "WorkflowDecodableExtensionsTests">
+               </Test>
+               <Test
+                  Identifier = "WorkflowViewModelTests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>

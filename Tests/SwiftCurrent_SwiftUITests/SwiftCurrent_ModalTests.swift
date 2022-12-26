@@ -38,12 +38,10 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 //
 //    func testWorkflowCanBeFollowed() async throws {
 //        struct FR1: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR1 type") }
+////            var body: some View { Text("FR1 type") }
 //        }
 //        struct FR2: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR2 type") }
+////            var body: some View { Text("FR2 type") }
 //        }
 //        let expectOnFinish = expectation(description: "OnFinish called")
 //        let wfr1 = try await MainActor.run {
@@ -73,12 +71,10 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 //
 //    func testWorkflowCanBeFollowed_WithWorkflowGroup() async throws {
 //        struct FR1: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR1 type") }
+////            var body: some View { Text("FR1 type") }
 //        }
 //        struct FR2: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR2 type") }
+////            var body: some View { Text("FR2 type") }
 //        }
 //        let expectOnFinish = expectation(description: "OnFinish called")
 //        let wfr1 = try await MainActor.run {
@@ -110,12 +106,10 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 //
 //    func testWorkflowCanBeFollowed_WithOptionalWorkflowItem_WhenTrue() async throws {
 //        struct FR1: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR1 type") }
+////            var body: some View { Text("FR1 type") }
 //        }
 //        struct FR2: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR2 type") }
+////            var body: some View { Text("FR2 type") }
 //        }
 //        let expectOnFinish = expectation(description: "OnFinish called")
 //        let wfr1 = try await MainActor.run {
@@ -147,16 +141,13 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 //
 //    func testWorkflowCanBeFollowed_WithEitherWorkflowItem_WhenTrue() async throws {
 //        struct FR1: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR1 type") }
+////            var body: some View { Text("FR1 type") }
 //        }
 //        struct FR2: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR2 type") }
+////            var body: some View { Text("FR2 type") }
 //        }
 //        struct FR3: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR3 type") }
+////            var body: some View { Text("FR3 type") }
 //        }
 //        let expectOnFinish = expectation(description: "OnFinish called")
 //        let wfr1 = try await MainActor.run {
@@ -190,16 +181,13 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 //
 //    func testWorkflowCanBeFollowed_WithEitherWorkflowItem_WhenFalse() async throws {
 //        struct FR1: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR1 type") }
+////            var body: some View { Text("FR1 type") }
 //        }
 //        struct FR2: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR2 type") }
+////            var body: some View { Text("FR2 type") }
 //        }
 //        struct FR3: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR3 type") }
+////            var body: some View { Text("FR3 type") }
 //        }
 //        let expectOnFinish = expectation(description: "OnFinish called")
 //        let wfr1 = try await MainActor.run {
@@ -233,8 +221,7 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 //
 //    func testWorkflowItemsOfTheSameTypeCanBeFollowed() async throws {
 //        struct FR1: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR1 type") }
+////            var body: some View { Text("FR1 type") }
 //        }
 //
 //        let wfr1 = try await MainActor.run {
@@ -261,32 +248,25 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 //
 //    func testLargeWorkflowCanBeFollowed() async throws {
 //        struct FR1: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR1 type") }
+////            var body: some View { Text("FR1 type") }
 //        }
 //        struct FR2: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR2 type") }
+////            var body: some View { Text("FR2 type") }
 //        }
 //        struct FR3: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR3 type") }
+////            var body: some View { Text("FR3 type") }
 //        }
 //        struct FR4: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR4 type") }
+////            var body: some View { Text("FR4 type") }
 //        }
 //        struct FR5: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR5 type") }
+////            var body: some View { Text("FR5 type") }
 //        }
 //        struct FR6: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR6 type") }
+////            var body: some View { Text("FR6 type") }
 //        }
 //        struct FR7: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR7 type") }
+////            var body: some View { Text("FR7 type") }
 //        }
 //
 //        let wfr1 = try await MainActor.run {
@@ -333,17 +313,14 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 //
 //    func testNavLinkWorkflowsCanSkipTheFirstItem() async throws {
 //        struct FR1: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR1 type") }
+////            var body: some View { Text("FR1 type") }
 //            func shouldLoad() -> Bool { false }
 //        }
 //        struct FR2: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR2 type") }
+////            var body: some View { Text("FR2 type") }
 //        }
 //        struct FR3: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR3 type") }
+////            var body: some View { Text("FR3 type") }
 //        }
 //        let wfr1 = try await MainActor.run {
 //            WorkflowView {
@@ -368,17 +345,14 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 //
 //    func testNavLinkWorkflowsCanSkipOneItemInTheMiddle() async throws {
 //        struct FR1: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR1 type") }
+////            var body: some View { Text("FR1 type") }
 //        }
 //        struct FR2: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR2 type") }
+////            var body: some View { Text("FR2 type") }
 //            func shouldLoad() -> Bool { false }
 //        }
 //        struct FR3: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR3 type") }
+////            var body: some View { Text("FR3 type") }
 //        }
 //
 //        let wfr1 = try await MainActor.run {
@@ -404,22 +378,18 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 //
 //    func testNavLinkWorkflowsCanSkipTwoItemsInTheMiddle() async throws {
 //        struct FR1: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR1 type") }
+////            var body: some View { Text("FR1 type") }
 //        }
 //        struct FR2: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR2 type") }
+////            var body: some View { Text("FR2 type") }
 //            func shouldLoad() -> Bool { false }
 //        }
 //        struct FR3: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR3 type") }
+////            var body: some View { Text("FR3 type") }
 //            func shouldLoad() -> Bool { false }
 //        }
 //        struct FR4: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR3 type") }
+////            var body: some View { Text("FR3 type") }
 //        }
 //
 //        let wfr1 = try await MainActor.run {
@@ -449,16 +419,13 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 //
 //    func testNavLinkWorkflowsCanSkipLastItem() async throws {
 //        struct FR1: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR1 type") }
+////            var body: some View { Text("FR1 type") }
 //        }
 //        struct FR2: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR2 type") }
+////            var body: some View { Text("FR2 type") }
 //        }
 //        struct FR3: View, FlowRepresentable, Inspectable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR3 type") }
+////            var body: some View { Text("FR3 type") }
 //            func shouldLoad() -> Bool { false }
 //        }
 //

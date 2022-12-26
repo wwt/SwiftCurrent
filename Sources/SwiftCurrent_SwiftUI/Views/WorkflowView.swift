@@ -43,7 +43,8 @@ import SwiftCurrent
  */
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowView<Content: View>: View {
-    @WorkflowBuilder var workflow: Content
+    @State private var args: AnyWorkflow.PassedArgs
+    @WorkflowBuilder private var workflow: Content
     #warning("Needed?")
     let inspection = Inspection<Self>() // needed?
 
@@ -79,11 +80,13 @@ public struct WorkflowView<Content: View>: View {
                 launchingWith args: AnyWorkflow.PassedArgs,
                 @WorkflowBuilder content: () -> Content) {
         workflow = content()
+        _args = State(wrappedValue: args)
     }
 
     private init(_ other: WorkflowView<Content>,
                  newContent: Content) {
         workflow = newContent
+        _args = other._args
     }
 
     /// Adds an action to perform when this `Workflow` has finished.
@@ -105,7 +108,9 @@ public struct WorkflowView<Content: View>: View {
     }
 
     public var body: some View {
-        workflow.environment(\.workflowArgs, .none)
+        workflow
+            .environment(\.workflowArgs, args)
+            .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 }
 //public struct WorkflowView<Content: View>: View {

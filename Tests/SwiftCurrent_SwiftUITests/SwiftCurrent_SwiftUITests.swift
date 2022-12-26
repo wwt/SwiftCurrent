@@ -18,12 +18,10 @@ import SwiftCurrent_Testing
 @available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     func testWorkflowCanBeFollowed() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
         let expectOnFinish = expectation(description: "OnFinish called")
@@ -47,12 +45,10 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     }
 
     func testWorkflowCanBuildOptionalItem_WhenTrue() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
         let expectOnFinish = expectation(description: "OnFinish called")
@@ -78,12 +74,10 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     }
 
     func testWorkflowCanBuildOptionalItem_WhenFalse() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
         let expectOnFinish = expectation(description: "OnFinish called")
@@ -106,16 +100,13 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     }
 
     func testWorkflowCanBuildEitherItem_WhenTrue() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
         let expectOnFinish = expectation(description: "OnFinish called")
@@ -143,16 +134,13 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     }
 
     func testWorkflowCanBuildEitherItem_WhenFalse() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
         let expectOnFinish = expectation(description: "OnFinish called")
@@ -180,12 +168,10 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     }
 
     func testWorkflowCanHaveMultipleOnFinishClosures() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
         let expectOnFinish1 = expectation(description: "OnFinish1 called")
@@ -208,12 +194,10 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
 
     func testWorkflowCanFinishMultipleTimes() async throws {
         throw XCTSkip("We are currently unable to test this because of a limitation in ViewInspector, see here: https://github.com/nalexn/ViewInspector/issues/126")
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
         @MainActor struct TestUtils {
@@ -251,8 +235,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     }
 
     func testWorkflowPassesArgumentsToTheFirstItem() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             let stringProperty: String
             init(with: String) {
                 self.stringProperty = with
@@ -262,7 +245,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         let expected = UUID().uuidString
         let launcher = try await MainActor.run {
             WorkflowView(isLaunched: .constant(true), launchingWith: expected) {
-                WorkflowItem { FR1() }
+                WorkflowItem { (args: String) in FR1(with: args) }
             }
         }.hostAndInspect(with: \.inspection)
 
@@ -270,8 +253,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     }
 
     func testWorkflowPassesArgumentsToTheFirstItem_WhenThatFirstItemTakesInAnyWorkflowPassedArgs() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             let property: AnyWorkflow.PassedArgs
             init(with: AnyWorkflow.PassedArgs) {
                 self.property = with
@@ -281,8 +263,8 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         let expected = UUID().uuidString
         let launcher = try await MainActor.run {
             WorkflowView(isLaunched: .constant(true), launchingWith: expected) {
-                WorkflowItem { FR1() }
-                WorkflowItem { FR1() }
+                WorkflowItem { (args: AnyWorkflow.PassedArgs) in FR1(with: args) }
+                WorkflowItem { (args: AnyWorkflow.PassedArgs) in FR1(with: args) }
             }
         }.hostAndInspect(with: \.inspection)
 
@@ -290,9 +272,8 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     }
 
     func testWorkflowPassesArgumentsToTheFirstItem_WhenThatFirstItemTakesInAnyWorkflowPassedArgs_AndTheLaunchArgsAreAnyWorkflowPassedArgs() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
+        struct FR1: View {
             typealias WorkflowOutput = AnyWorkflow.PassedArgs
-            var _workflowPointer: AnyFlowRepresentable?
             let property: AnyWorkflow.PassedArgs
             init(with: AnyWorkflow.PassedArgs) {
                 self.property = with
@@ -302,8 +283,8 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         let expected = UUID().uuidString
         let launcher = try await MainActor.run {
             WorkflowView(isLaunched: .constant(true), launchingWith: AnyWorkflow.PassedArgs.args(expected)) {
-                WorkflowItem { FR1() }
-                WorkflowItem { FR1() }
+                WorkflowItem { (args: AnyWorkflow.PassedArgs) in FR1(with: args) }
+                WorkflowItem { (args: AnyWorkflow.PassedArgs) in FR1(with: args) }
             }
         }.hostAndInspect(with: \.inspection)
 
@@ -311,27 +292,24 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     }
 
     func testWorkflowPassesArgumentsToAllItems() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
+        struct FR1: View {
             typealias WorkflowOutput = Int
-            var _workflowPointer: AnyFlowRepresentable?
             let property: String
             init(with: String) {
                 self.property = with
             }
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
+        struct FR2: View {
             typealias WorkflowOutput = Bool
-            var _workflowPointer: AnyFlowRepresentable?
             let property: Int
             init(with: Int) {
                 self.property = with
             }
             var body: some View { Text("FR1 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
+        struct FR3: View {
             typealias WorkflowOutput = String
-            var _workflowPointer: AnyFlowRepresentable?
             let property: Bool
             init(with: Bool) {
                 self.property = with
@@ -345,9 +323,9 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
 
         let launcher = try await MainActor.run {
             WorkflowView(isLaunched: .constant(true), launchingWith: expectedFR1) {
-                WorkflowItem { FR1() }
-                WorkflowItem { FR2() }
-                WorkflowItem { FR3() }
+                WorkflowItem { (args: String) in FR1(with: args) }
+                WorkflowItem { (args: Int) in FR2(with: args) }
+                WorkflowItem { (args: Bool) in FR3(with: args) }
             }
             .onFinish {
                 XCTAssertEqual($0.extractArgs(defaultValue: nil) as? String, expectedEnd)
@@ -363,32 +341,25 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     }
 
     func testLargeWorkflowCanBeFollowed() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
-        struct FR4: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR4: View {
             var body: some View { Text("FR4 type") }
         }
-        struct FR5: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR5: View {
             var body: some View { Text("FR5 type") }
         }
-        struct FR6: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR6: View {
             var body: some View { Text("FR6 type") }
         }
-        struct FR7: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR7: View {
             var body: some View { Text("FR7 type") }
         }
 
@@ -414,16 +385,13 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     }
 
     func testWorkflowOnlyShowsOneViewAtATime() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
         let launcher = try await MainActor.run {
@@ -443,20 +411,16 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     }
 
     func testMovingBiDirectionallyInAWorkflow() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
-        struct FR4: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR4: View {
             var body: some View { Text("FR4 type") }
         }
         let launcher = try await MainActor.run {
@@ -469,18 +433,17 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         }.hostAndInspect(with: \.inspection)
 
         try await launcher.find(FR1.self).proceedInWorkflow()
-        XCTAssertNoThrow(try launcher.find(FR2.self).actualView().backUpInWorkflow())
+        try await launcher.find(FR2.self).backUpInWorkflow()
         try await launcher.find(FR1.self).proceedInWorkflow()
         try await launcher.find(FR2.self).proceedInWorkflow()
-        XCTAssertNoThrow(try launcher.find(FR3.self).actualView().backUpInWorkflow())
+        try await launcher.find(FR3.self).backUpInWorkflow()
         try await launcher.find(FR2.self).proceedInWorkflow()
         try await launcher.find(FR3.self).proceedInWorkflow()
         try await launcher.find(FR4.self).proceedInWorkflow()
     }
 
     func testWorkflowSetsBindingBooleanToFalseWhenAbandoned() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
         let isLaunched = Binding(wrappedValue: true)
@@ -503,8 +466,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     }
 
     func testWorkflowCanHaveMultipleOnAbandonCallbacks() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
         let isLaunched = Binding(wrappedValue: true)
@@ -532,8 +494,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
 
     func testWorkflowCanAbandonFromAPublisher() async throws {
         let publisher = PassthroughSubject<Void, Never>()
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
         let isLaunched = Binding(wrappedValue: true)
@@ -557,8 +518,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     }
 
     func testWorkflowCanHaveModifiers() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
 
             func customModifier() -> Self { self }
@@ -576,14 +536,12 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
 
     func testWorkflowRelaunchesWhenSubsequentlyLaunched() async throws {
         throw XCTSkip("We are currently unable to test this because of a limitation in ViewInspector, see here: https://github.com/nalexn/ViewInspector/issues/126")
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
 
             func customModifier() -> Self { self }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
 
@@ -612,16 +570,15 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     }
 
     func testWorkflowRelaunchesWhenAbandoned_WithAConstantOfTrue() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
 
             func abandon() {
-                workflow?.abandon()
+                #warning("No abandon mechanism")
+//                workflow?.abandon()
             }
         }
         let onFinishCalled = expectation(description: "onFinish Called")
@@ -646,9 +603,8 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     }
 
     func testWorkflowCanHaveAPassthroughRepresentable() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
+        struct FR1: View {
             typealias WorkflowOutput = AnyWorkflow.PassedArgs
-            var _workflowPointer: AnyFlowRepresentable?
             private let data: AnyWorkflow.PassedArgs
             var body: some View { Text("FR1 type") }
 
@@ -656,17 +612,16 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
                 self.data = data
             }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
+        struct FR2: View {
             init(with str: String) { }
-            var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR2 type") }
         }
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectedArgs = UUID().uuidString
         let launcher = try await MainActor.run {
             WorkflowView(isLaunched: .constant(true), launchingWith: expectedArgs) {
-                WorkflowItem { FR1() }
-                WorkflowItem { FR2() }
+                WorkflowItem { (args: AnyWorkflow.PassedArgs) in FR1(with: args) }
+                WorkflowItem { (args: String) in FR2(with: args) }
             }
             .onFinish { _ in
                 expectOnFinish.fulfill()
@@ -674,7 +629,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         }.hostAndInspect(with: \.inspection)
 
         XCTAssertEqual(try launcher.find(FR1.self).text().string(), "FR1 type")
-        try await launcher.find(FR1.self).proceedInWorkflow(.args(expectedArgs))
+        try await launcher.find(FR1.self).proceedInWorkflow(AnyWorkflow.PassedArgs.args(expectedArgs))
         XCTAssertEqual(try launcher.find(FR2.self).text().string(), "FR2 type")
         try await launcher.find(FR2.self).proceedInWorkflow()
 
@@ -682,8 +637,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     }
 
     func testWorkflowCanConvertAnyArgsToCorrectTypeForFirstItem() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             let data: String
 
             var body: some View { Text("FR1 type") }
@@ -692,16 +646,15 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
                 self.data = data
             }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
+        struct FR2: View {
             init(with str: String) { }
-            var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR2 type") }
         }
         let expectOnFinish = expectation(description: "OnFinish called")
         let expectedArgs = UUID().uuidString
         let launcher = try await MainActor.run {
             WorkflowView(isLaunched: .constant(true), launchingWith: AnyWorkflow.PassedArgs.args(expectedArgs)) {
-                WorkflowItem { FR1() }
+                WorkflowItem { (args: String) in FR1(with: args) }
             }
             .onFinish { _ in
                 expectOnFinish.fulfill()
@@ -716,13 +669,11 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
     }
 
     func testWorkflowCanHaveAPassthroughRepresentableInTheMiddle() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
+        struct FR2: View {
             typealias WorkflowOutput = AnyWorkflow.PassedArgs
-            var _workflowPointer: AnyFlowRepresentable?
             private let data: AnyWorkflow.PassedArgs
             var body: some View { Text("FR2 type") }
 
@@ -730,12 +681,11 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
                 self.data = data
             }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
+        struct FR3: View {
             let str: String
             init(with str: String) {
                 self.str = str
             }
-            var _workflowPointer: AnyFlowRepresentable?
             var body: some View { Text("FR3 type, \(str)") }
         }
         let expectOnFinish = expectation(description: "OnFinish called")
@@ -743,8 +693,8 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         let launcher = try await MainActor.run {
             WorkflowView {
                 WorkflowItem { FR1() }
-                WorkflowItem { FR2() }
-                WorkflowItem { FR3() }
+                WorkflowItem { (args: AnyWorkflow.PassedArgs) in FR2(with: args) }
+                WorkflowItem { (args: String) in FR3(with: args) }
             }
             .onFinish { _ in
                 expectOnFinish.fulfill()
@@ -754,7 +704,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         XCTAssertEqual(try launcher.find(FR1.self).text().string(), "FR1 type")
         try await launcher.find(FR1.self).proceedInWorkflow()
         XCTAssertEqual(try launcher.find(FR2.self).text().string(), "FR2 type")
-        try await launcher.find(FR2.self).proceedInWorkflow(.args(expectedArgs))
+        try await launcher.find(FR2.self).proceedInWorkflow(AnyWorkflow.PassedArgs.args(expectedArgs))
         XCTAssertEqual(try launcher.find(FR3.self).text().string(), "FR3 type, \(expectedArgs)")
         try await launcher.find(FR3.self).proceedInWorkflow()
 
@@ -763,7 +713,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
 
     #warning("Bring this back maybe?")
 //    func testWorkflowCorrectlyHandlesState() throws {
-//        struct FR1: View, FlowRepresentable {
+//        struct FR1: View {
 //            weak var _workflowPointer: AnyFlowRepresentable?
 //
 //            var body: some View {
@@ -791,7 +741,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
 //    }
 
     func testWorkflowCanHaveADelayedLaunch() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
+        struct FR1: View {
             weak var _workflowPointer: AnyFlowRepresentable?
 
             var body: some View {
@@ -799,7 +749,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             }
         }
 
-        struct Wrapper: View, Inspectable {
+        struct Wrapper: View {
             @State var showingWorkflow = false
             let inspection = Inspection<Self>()
             var body: some View {
@@ -816,15 +766,15 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
         let wrapper = try await MainActor.run { Wrapper() }.hostAndInspect(with: \.inspection)
 
         let stack = try wrapper.vStack()
-        let launcher = try stack.view(WorkflowView<WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>>.self, 1)
-        XCTAssertThrowsError(try launcher.view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self))
+        let launcher = try stack.view(WorkflowView<WorkflowItemWrapper<WorkflowItem<FR1>, Never>>.self, 1)
+        XCTAssertThrowsError(try launcher.view(WorkflowItemWrapper<WorkflowItem<FR1>, Never>.self))
         XCTAssertNoThrow(try stack.button(0).tap())
-        XCTAssertNoThrow(try launcher.view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self))
+        XCTAssertNoThrow(try launcher.view(WorkflowItemWrapper<WorkflowItem<FR1>, Never>.self))
     }
 
     #warning("Bring this back?")
 //    func testLaunchingAWorkflowWithOneItemFromAnAnyWorkflow() async throws {
-//        struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+//        struct FR1: View, WorkflowDecodable {
 //            weak var _workflowPointer: AnyFlowRepresentable?
 //
 //            var body: some View {
@@ -842,7 +792,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
 //    }
 //
 //    func testLaunchingAWorkflowFromAnAnyWorkflow_UsesCorrectLaunchStyle() async throws {
-//        struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+//        struct FR1: View, WorkflowDecodable {
 //            weak var _workflowPointer: AnyFlowRepresentable?
 //
 //            var body: some View {
@@ -898,7 +848,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
 //    }
 //
 //    func testLaunchingAWorkflowFromAnAnyWorkflow_UsesCorrectPersistence() async throws {
-//        struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+//        struct FR1: View, WorkflowDecodable {
 //            weak var _workflowPointer: AnyFlowRepresentable?
 //
 //            var body: some View {
@@ -953,14 +903,12 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
 //    }
 //
 //    func testLaunchingAMultiTypeLongWorkflowFromAnAnyWorkflow() async throws {
-//        struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR1 type") }
+//        struct FR1: View, WorkflowDecodable {
+////            var body: some View { Text("FR1 type") }
 //        }
-//        struct FR2: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+//        struct FR2: View, WorkflowDecodable {
 //            typealias WorkflowOutput = AnyWorkflow.PassedArgs
-//            var _workflowPointer: AnyFlowRepresentable?
-//            private let data: AnyWorkflow.PassedArgs
+////            private let data: AnyWorkflow.PassedArgs
 //            var body: some View { Text("FR2 type") }
 //
 //            init(with data: AnyWorkflow.PassedArgs) {
@@ -988,15 +936,15 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
 //    }
 //
 //    func testLaunchingAWorkflowFromAnAnyWorkflow() async throws {
-//        struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+//        struct FR1: View, WorkflowDecodable {
 //            weak var _workflowPointer: AnyFlowRepresentable?
 //            var body: some View { Text("FR1 type") }
 //        }
-//        struct FR2: View, PassthroughFlowRepresentable, Inspectable, WorkflowDecodable {
+//        struct FR2: View, PassthroughFlowRepresentable, WorkflowDecodable {
 //            weak var _workflowPointer: AnyFlowRepresentable?
 //            var body: some View { Text("FR2 type") }
 //        }
-//        struct FR3: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+//        struct FR3: View, WorkflowDecodable {
 //            weak var _workflowPointer: AnyFlowRepresentable?
 //            var body: some View { Text("FR3 type") }
 //        }
@@ -1023,32 +971,28 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
 //    }
 //
 //    func testWorkflowLaunchedFromAnAnyWorkflowCanHavePassthroughFlowRepresentableInTheMiddle() async throws {
-//        struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR1 type") }
+//        struct FR1: View, WorkflowDecodable {
+////            var body: some View { Text("FR1 type") }
 //        }
-//        struct FR2: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+//        struct FR2: View, WorkflowDecodable {
 //            typealias WorkflowOutput = String
-//            var _workflowPointer: AnyFlowRepresentable?
-//            private let data: AnyWorkflow.PassedArgs
+////            private let data: AnyWorkflow.PassedArgs
 //            var body: some View { Text("FR2 type") }
 //
 //            init(with args: AnyWorkflow.PassedArgs) {
 //                self.data = args
 //            }
 //        }
-//        struct FR3: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+//        struct FR3: View, WorkflowDecodable {
 //            typealias WorkflowInput = String
 //            let str: String
 //            init(with str: String) {
 //                self.str = str
 //            }
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR3 type, \(str)") }
+////            var body: some View { Text("FR3 type, \(str)") }
 //        }
-//        struct FR4: View, FlowRepresentable, Inspectable, WorkflowDecodable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR4 type") }
+//        struct FR4: View, WorkflowDecodable {
+////            var body: some View { Text("FR4 type") }
 //        }
 //
 //        let wf = try decodeAnyWorkflow(with: FR1.self, FR2.self, FR3.self, FR4.self)
@@ -1076,32 +1020,28 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
 //    }
 //
 //    func testWorkflowLaunchedFromAnAnyWorkflowCanHaveStartingArgs() async throws {
-//        struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+//        struct FR1: View, WorkflowDecodable {
 //            typealias WorkflowOutput = AnyWorkflow.PassedArgs
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var args: AnyWorkflow.PassedArgs
+////            var args: AnyWorkflow.PassedArgs
 //            var body: some View { Text("FR1 type, \(args.extractArgs(defaultValue: "") as! String)") }
 //
 //            init(with args: AnyWorkflow.PassedArgs) {
 //                self.args = args
 //            }
 //        }
-//        struct FR2: View, FlowRepresentable, Inspectable, WorkflowDecodable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var args: AnyWorkflow.PassedArgs
+//        struct FR2: View, WorkflowDecodable {
+////            var args: AnyWorkflow.PassedArgs
 //            var body: some View { Text("FR2 type, \(args.extractArgs(defaultValue: "") as! String)") }
 //
 //            init(with args: AnyWorkflow.PassedArgs) {
 //                self.args = args
 //            }
 //        }
-//        struct FR3: View, FlowRepresentable, Inspectable, WorkflowDecodable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR3 type") }
+//        struct FR3: View, WorkflowDecodable {
+////            var body: some View { Text("FR3 type") }
 //        }
-//        struct FR4: View, FlowRepresentable, Inspectable, WorkflowDecodable {
-//            var _workflowPointer: AnyFlowRepresentable?
-//            var body: some View { Text("FR4 type") }
+//        struct FR4: View, WorkflowDecodable {
+////            var body: some View { Text("FR4 type") }
 //        }
 //
 //        let wf = try decodeAnyWorkflow(with: FR1.self, FR2.self, FR3.self, FR4.self)
@@ -1128,7 +1068,7 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
 //    }
 //
 //    func testLaunchingAWorkflowUsingNonPassedArgsStartingArgs() async throws {
-//        struct FR1: View, FlowRepresentable, Inspectable, WorkflowDecodable {
+//        struct FR1: View, WorkflowDecodable {
 //            weak var _workflowPointer: AnyFlowRepresentable?
 //            var body: some View { Text("FR1 type") }
 //            public var data: String

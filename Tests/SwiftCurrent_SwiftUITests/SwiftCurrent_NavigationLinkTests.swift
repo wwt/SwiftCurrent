@@ -18,12 +18,10 @@ import SwiftCurrent
 @available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
     func testWorkflowCanBeFollowed() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
         let expectOnFinish = expectation(description: "OnFinish called")
@@ -53,12 +51,10 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
     }
 
     func testWorkflowCanBeFollowed_WithWorkflowGroup() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
         let expectOnFinish = expectation(description: "OnFinish called")
@@ -90,12 +86,10 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
     }
 
     func testWorkflowCanBeFollowed_WithBuildOptions_WhenTrue() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
         let expectOnFinish = expectation(description: "OnFinish called")
@@ -127,16 +121,13 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
     }
 
     func testWorkflowCanBeFollowed_WithBuildOptions_WhenFalse() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
         let expectOnFinish = expectation(description: "OnFinish called")
@@ -169,16 +160,13 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
     }
 
     func testWorkflowCanBeFollowed_WithBuildEither_WhenTrue() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
         let expectOnFinish = expectation(description: "OnFinish called")
@@ -212,16 +200,13 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
     }
 
     func testWorkflowCanBeFollowed_WithBuildEither_WhenFalse() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
         let expectOnFinish = expectation(description: "OnFinish called")
@@ -255,8 +240,7 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
     }
 
     func testWorkflowItemsOfTheSameTypeCanBeFollowed() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
 
@@ -295,32 +279,25 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
     }
 
     func testLargeWorkflowCanBeFollowed() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
-        struct FR4: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR4: View {
             var body: some View { Text("FR4 type") }
         }
-        struct FR5: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR5: View {
             var body: some View { Text("FR5 type") }
         }
-        struct FR6: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR6: View {
             var body: some View { Text("FR6 type") }
         }
-        struct FR7: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR7: View {
             var body: some View { Text("FR7 type") }
         }
 
@@ -361,19 +338,17 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
     }
 
     func testWorkflowCanBeAbandoned() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View {
                 Button("continue") {
-                    workflow?.abandon()
+                    #warning("Abandon is not a thing")
+//                    workflow?.abandon()
                 }
             }
         }
@@ -404,17 +379,14 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
     }
 
     func testNavLinkWorkflowsCanSkipTheFirstItem() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
             func shouldLoad() -> Bool { false }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
         let wfr1 = try await MainActor.run {
@@ -439,17 +411,14 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
     }
 
     func testNavLinkWorkflowsCanSkipOneItemInTheMiddle() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
             func shouldLoad() -> Bool { false }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
         }
         let wfr1 = try await MainActor.run {
@@ -474,22 +443,18 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
     }
 
     func testNavLinkWorkflowsCanSkipTwoItemsInTheMiddle() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
             func shouldLoad() -> Bool { false }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
             func shouldLoad() -> Bool { false }
         }
-        struct FR4: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR4: View {
             var body: some View { Text("FR3 type") }
         }
         let wfr1 = try await MainActor.run {
@@ -518,16 +483,13 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
     }
 
     func testNavLinkWorkflowsCanSkipLastItem() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
-        struct FR2: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-        struct FR3: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR3: View {
             var body: some View { Text("FR3 type") }
             func shouldLoad() -> Bool { false }
         }
@@ -561,8 +523,7 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
     }
 
     func testConvenienceEmbedInNavViewFunction() async throws {
-        struct FR1: View, FlowRepresentable, Inspectable {
-            var _workflowPointer: AnyFlowRepresentable?
+        struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
 
@@ -575,13 +536,13 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
 
         let navView = try launcherView.navigationView()
         XCTAssert(try navView.navigationViewStyle() is StackNavigationViewStyle)
-        XCTAssertNoThrow(try navView.view(WorkflowItemWrapper<WorkflowItem<FR1, FR1>, Never>.self, 0))
+        XCTAssertNoThrow(try navView.view(WorkflowItemWrapper<WorkflowItem<FR1>, Never>.self, 0))
     }
 }
 
 @available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension InspectableView where View: CustomViewType & SingleViewContent {
-    fileprivate func proceedAndCheckNavLink<FR: FlowRepresentable & Inspectable>(on: FR.Type) async throws where FR.WorkflowOutput == Never {
+    fileprivate func proceedAndCheckNavLink<FR: SwiftUI.View>(on: FR.Type) async throws {
         XCTAssertFalse(try find(ViewType.NavigationLink.self).isActive())
 
         try await find(FR.self).proceedInWorkflow()

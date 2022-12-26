@@ -115,7 +115,7 @@ struct SwiftCurrentOnboarding: View {
             }
         }
         .workflowLink(isPresented: $shouldProceed)
-        .shouldLoad(!onboardedToSwiftCurrent)
+//        .shouldLoad(!onboardedToSwiftCurrent)
         .onReceive(inspection.notice) { inspection.visit(self, $0) } // ViewInspector
     }
 }

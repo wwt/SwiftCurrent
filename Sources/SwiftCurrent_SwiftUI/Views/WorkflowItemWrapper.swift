@@ -21,7 +21,7 @@ public struct WorkflowItemWrapper<WI: _WorkflowItemProtocol, Wrapped: _WorkflowI
     @Environment(\.shouldLoad) var environmentShouldLoad: Bool
     @State private var content: WI
     @State private var wrapped: Wrapped?
-    @State private var hasProceeded = false
+    @State var hasProceeded = false
     @State private var args: AnyWorkflow.PassedArgs?
     @Environment(\.workflowArgs) var envArgs
 
@@ -39,6 +39,7 @@ public struct WorkflowItemWrapper<WI: _WorkflowItemProtocol, Wrapped: _WorkflowI
         Group {
             if shouldLoad && environmentShouldLoad {
                 navigate(presentationType: launchStyle.wrappedValue, content: content, nextView: wrapped, isActive: $hasProceeded)
+                    .environment(\.workflowArgs, args ?? envArgs)
             } else {
                 wrapped
             }

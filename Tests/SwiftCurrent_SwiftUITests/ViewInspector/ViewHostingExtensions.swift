@@ -14,7 +14,7 @@ import SwiftCurrent
 @testable import SwiftCurrent_SwiftUI
 
 @available(iOS 15.0, macOS 10.15, tvOS 13.0, *)
-extension View where Self: Inspectable {
+extension View {
     @discardableResult func host() async -> Self {
         await MainActor.run { ViewHosting.host(view: self ) }
         return self
@@ -32,7 +32,7 @@ extension View where Self: Inspectable {
 }
 
 @available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-extension InspectableView where View: CustomViewType & SingleViewContent {
+extension InspectableView {
     func extractWorkflowLauncher() async throws -> Self {
         self
     }
@@ -45,43 +45,44 @@ extension InspectableView where View: CustomViewType & SingleViewContent {
         self
     }
 
-    func findModalModifier<C, W: Inspectable>() throws -> InspectableView<ViewType.View<ModalModifier<W>>> where View.T == WorkflowItemWrapper<C, W> {
-        try find(ModalModifier<W>.self)
-    }
+//    func findModalModifier<C, W: Inspectable>() throws -> InspectableView<ViewType.View<ModalModifier<W>>> where View.T == WorkflowItemWrapper<C, W> {
+//        try find(ModalModifier<W>.self)
+//    }
 }
 
 @available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-extension InspectableView where View: CustomViewType & SingleViewContent, View.T: FlowRepresentable {
-    func proceedInWorkflow() async throws where View.T.WorkflowOutput == Never {
-        try await MainActor.run { try actualView().proceedInWorkflow() }
+extension InspectableView where View: CustomViewType & SingleViewContent {
+    func proceedInWorkflow() async throws {
+        try await MainActor.run {
+            XCTFail("Proceed for tests not implemented.")
+//            try actualView().proceedInWorkflow()
+        }
     }
 
-    func proceedInWorkflow(_ args: View.T.WorkflowOutput) async throws where View.T.WorkflowOutput == AnyWorkflow.PassedArgs {
-        try await MainActor.run { try actualView().proceedInWorkflow(args) }
-    }
-
-    func proceedInWorkflow(_ args: View.T.WorkflowOutput) async throws {
-        try await MainActor.run { try actualView().proceedInWorkflow(args) }
+    func proceedInWorkflow<T>(_ args: T) async throws {
+        try await MainActor.run {
+            XCTFail("Proceed for tests not implemented.")
+//            try actualView().proceedInWorkflow(args)
+        }
     }
 
     func backUpInWorkflow() async throws {
-        try await MainActor.run { try actualView().backUpInWorkflow() }
+        try await MainActor.run {
+            XCTFail("Proceed for tests not implemented.")
+//            try actualView().backUpInWorkflow()
+        }
     }
 
     func abandonWorkflow() async throws {
-        try await MainActor.run { try actualView().workflow?.abandon() }
-    }
-}
-
-@available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
-extension InspectableView where View: CustomViewType & SingleViewContent, View.T: PassthroughFlowRepresentable {
-   func proceedInWorkflow() async throws {
-        try await MainActor.run { try actualView().proceedInWorkflow() }
+        try await MainActor.run {
+            XCTFail("Proceed for tests not implemented.")
+//            try actualView().workflow?.abandon()
+        }
     }
 }
 
 @available(iOS 15.0, macOS 10.15, tvOS 13.0, *)
-public extension InspectionEmissary where V: View & Inspectable {
+public extension InspectionEmissary where V: View {
     func inspect(after delay: TimeInterval = 0,
                  function: String = #function,
                  file: StaticString = #file,
