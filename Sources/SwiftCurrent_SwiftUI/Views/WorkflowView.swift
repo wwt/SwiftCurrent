@@ -43,6 +43,7 @@ import SwiftCurrent
  */
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowView<Content: View>: View {
+    @StateObject var proxy = WorkflowProxy()
     @State private var args: AnyWorkflow.PassedArgs
     @WorkflowBuilder private var workflow: Content
     #warning("Needed?")
@@ -110,6 +111,8 @@ public struct WorkflowView<Content: View>: View {
     public var body: some View {
         workflow
             .environment(\.workflowArgs, args)
+            .environment(\.workflowProxy, proxy)
+            .environment(\.workflowHasProceeded, nil)
             .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 }

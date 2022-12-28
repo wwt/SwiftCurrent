@@ -11,6 +11,7 @@ import SwiftUI
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct NavigationWorkflowLinkModifier<Wrapped: _WorkflowItemProtocol>: ViewModifier {
     @Environment(\.workflowArgs) var args
+    @Environment(\.workflowProxy) var proxy
 
     @State var nextView: Wrapped?
     @Binding var isActive: Bool
@@ -25,18 +26,13 @@ public struct NavigationWorkflowLinkModifier<Wrapped: _WorkflowItemProtocol>: Vi
         let isActive = nextView == nil ? .constant(false) : $isActive
         if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
             return AnyView(
-                content.background(
-                    List {
-                        Color.clear
-                            .navigationDestination(isPresented: isActive) { nextView.environment(\.workflowArgs, args) }
-                    }.opacity(0.01)
-                )
+                content.navigationDestination(isPresented: isActive) { nextView.environment(\.workflowArgs, args).environment(\.workflowProxy, proxy) }
             )
         } else {
             return AnyView(
                 content.background(
                     List {
-                        NavigationLink(destination: nextView.environment(\.workflowArgs, args),
+                        NavigationLink(destination: nextView.environment(\.workflowArgs, args).environment(\.workflowProxy, proxy),
                                        isActive: $isActive) { EmptyView() }
                     }.opacity(0.01)
                 )

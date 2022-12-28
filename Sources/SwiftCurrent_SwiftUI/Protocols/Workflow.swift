@@ -11,15 +11,15 @@ import SwiftCurrent
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public protocol Workflow: _WorkflowItemProtocol {
-    associatedtype WI: _WorkflowItemProtocol
-    associatedtype Wrapped: _WorkflowItemProtocol
+    associatedtype Current: _WorkflowItemProtocol
+    associatedtype Next: _WorkflowItemProtocol
     associatedtype PresentationBody: View
-    @ViewBuilder func navigate(presentationType: LaunchStyle.SwiftUI.PresentationType, content: WI, nextView: Wrapped?, isActive: Binding<Bool>) -> PresentationBody
+    @ViewBuilder func navigate(presentationType: LaunchStyle.SwiftUI.PresentationType, content: Current, nextView: Next?, isActive: Binding<Bool>) -> PresentationBody
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension Workflow {
-    @ViewBuilder public func navigate(presentationType: LaunchStyle.SwiftUI.PresentationType, content: WI, nextView: Wrapped?, isActive: Binding<Bool>) -> some View {
+    @ViewBuilder public func navigate(presentationType: LaunchStyle.SwiftUI.PresentationType, content: Current, nextView: Next?, isActive: Binding<Bool>) -> some View {
         switch presentationType {
             case .default:
                 DefaultWorkflowPresenter().present(content: content, nextView: nextView, isActive: isActive)

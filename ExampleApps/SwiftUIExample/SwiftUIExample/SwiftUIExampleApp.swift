@@ -21,27 +21,19 @@ struct SwiftUIExampleApp: App {
             if Environment.shouldTest {
                 TestView()
             } else {
-                WorkflowView(launchingWith: expectedArgument) {
-//                    WorkflowItem { FRR1().shouldLoad(false) }
-                    WorkflowItem { (input: String) in FRR2(with: input) }
+                NavigationStack {
+                    WorkflowView {
+                        WorkflowItem { FR1() }
+                            .presentationType(.navigationLink)
+                        WorkflowItem { FR2() }
+                            .presentationType(.navigationLink)
+                        WorkflowItem { FR3() }
+                        //                    WorkflowItem { SwiftCurrentOnboarding().transition(.slide) }
+                        //                    WorkflowItem { ContentView().transition(.slide) }
+                    }
                 }
-//                WorkflowView {
-//                    WorkflowItem { SwiftCurrentOnboarding().transition(.slide) }
-//                        .presentationType(.modal)
-//                    WorkflowItem { ContentView().transition(.slide) }
-//                }
                 .preferredColorScheme(.dark)
             }
         }
     }
 }
-
-struct FRR1: View {
-    var body: some View { Text(String(describing: Self.self)) }
-}
-struct FRR2: View {
-    var body: some View { Text("\(String(describing: Self.self)) INPUT: \(input)") }
-    var input: String
-    init(with input: String) { self.input = input }
-}
-let expectedArgument = UUID().uuidString

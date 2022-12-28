@@ -37,7 +37,6 @@ extension AnyWorkflowItem {
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 fileprivate class AnyWorkflowItemStorageBase {
-    // swiftlint:disable:next unavailable_function
     var presentationType: State<SwiftCurrent.LaunchStyle.SwiftUI.PresentationType> {
         fatalError("AnyWorkflowItemStorageBase called directly, only available internally so something has gone VERY wrong.")
     }

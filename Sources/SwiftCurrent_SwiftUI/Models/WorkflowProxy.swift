@@ -13,6 +13,9 @@ import Combine
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public final class WorkflowProxy: ObservableObject {
     let proceedPublisher = PassthroughSubject<AnyWorkflow.PassedArgs, Never>()
+    let backupPublisher = PassthroughSubject<Void, Never>()
+    let abandonPublisher = PassthroughSubject<Void, Never>()
+
     @Published var shouldLoad = true
 
     public func proceedInWorkflow() {
@@ -25,5 +28,13 @@ public final class WorkflowProxy: ObservableObject {
 
     public func proceedInWorkflow(_ args: AnyWorkflow.PassedArgs) {
         proceedPublisher.send(args)
+    }
+
+    public func backUpInWorkflow() throws {
+        backupPublisher.send()
+    }
+
+    public func abandonWorkflow() {
+        abandonPublisher.send()
     }
 }
