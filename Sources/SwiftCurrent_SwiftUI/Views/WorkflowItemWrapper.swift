@@ -50,6 +50,11 @@ public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _Workflo
                 wrapped
             }
         }
+        .onAppear {
+            if proxy.shouldLoad && !content._shouldLoad(args: args ?? envArgs) {
+                proxy.shouldLoad = false
+            }
+        }
         .environment(\.workflowProxy, proxy)
         .environment(\.workflowArgs, args ?? envArgs)
         .environment(\.workflowHasProceeded, $hasProceeded)
