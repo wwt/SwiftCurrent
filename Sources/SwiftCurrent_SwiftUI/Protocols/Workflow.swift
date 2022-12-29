@@ -19,6 +19,7 @@ public protocol Workflow: _WorkflowItemProtocol {
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension Workflow {
+    /// Navigates to the next view in the workflow; based ``LaunchStyle.SwiftUI.PresentationType``.
     @ViewBuilder public func navigate(presentationType: LaunchStyle.SwiftUI.PresentationType, content: Current, nextView: Next?, isActive: Binding<Bool>) -> some View {
         switch presentationType {
             case .default:

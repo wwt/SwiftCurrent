@@ -18,5 +18,6 @@ public struct ShouldLoadModifier: ViewModifier {
             .onAppear {
                 proxy.shouldLoad = shouldLoad
             }
+            .environment(\.shouldLoad, shouldLoad)
     }
 }

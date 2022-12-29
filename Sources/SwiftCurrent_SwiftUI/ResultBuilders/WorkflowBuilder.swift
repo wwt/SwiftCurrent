@@ -4,8 +4,7 @@
 //
 //  Created by Tyler Thompson on 2/21/22.
 //  Copyright © 2022 WWT and Tyler Thompson. All rights reserved.
-//  swiftlint:disable line_length
-
+//
 import Foundation
 
 /**
@@ -17,8 +16,8 @@ import Foundation
  #### Example
  ```swift
  WorkflowView(isLaunched: $isLaunched.animation(), launchingWith: "String in") {
-    WorkflowItem(FirstView.self)
-    WorkflowItem(SecondView.self)
+    WorkflowItem { (args: String) in FirstView(str: args) }
+    WorkflowItem { SecondView() }
  }
  .onAbandon { print("isLaunched is now false") }
  .onFinish { args in print("Finished 1: \(args)") }

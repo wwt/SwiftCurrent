@@ -1,4 +1,4 @@
-//
+// swiftlint:disable:this file_name
 //  ViewExtensions.swift
 //  SwiftCurrent
 //
@@ -11,14 +11,17 @@ import SwiftCurrent
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension View {
+    /// Adds a condition that determines whether the view should load in a ``Workflow``
     public func shouldLoad(_ closure: @autoclosure () -> Bool) -> some View {
         modifier(ShouldLoadModifier(shouldLoad: closure()))
     }
 
+    /// Adds a condition that determines whether the view should load in a ``Workflow``
     public func shouldLoad(_ closure: () -> Bool) -> some View {
         modifier(ShouldLoadModifier(shouldLoad: closure()))
     }
 
+    /// Proceeds in the current workflow with a value.
     public func workflowLink(isPresented: Binding<Bool>, value: AnyWorkflow.PassedArgs) -> some View {
         WorkflowReader { proxy in
             self
@@ -30,10 +33,12 @@ extension View {
         }
     }
 
+    /// Proceeds in the current workflow with no value.
     public func workflowLink(isPresented: Binding<Bool>) -> some View {
         workflowLink(isPresented: isPresented, value: .none)
     }
 
+    /// Proceeds in the current workflow with a value.
     public func workflowLink<T>(isPresented: Binding<Bool>, value: T) -> some View {
         workflowLink(isPresented: isPresented, value: .args(value))
     }

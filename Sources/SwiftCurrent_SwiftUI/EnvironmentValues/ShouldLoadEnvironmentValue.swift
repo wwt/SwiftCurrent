@@ -15,6 +15,7 @@ public struct WorkflowShouldLoadKey: EnvironmentKey {
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension EnvironmentValues {
+    /// Indicates whether the current view should load when presented in a ``Workflow``
     public internal(set) var shouldLoad: Bool {
         get { self[WorkflowShouldLoadKey.self] }
         set { self[WorkflowShouldLoadKey.self] = newValue }
