@@ -68,19 +68,25 @@ public struct WorkflowItem<Content: View>: _WorkflowItemProtocol {
         content(args)
     }
 
+    /// Provides a closure that executes *before* the view is added to the graph.
+    /// - Parameter closure: Indicates whether the ``WorkflowItem`` should load.
     public func shouldLoad(_ closure: @escaping () -> Bool) -> Self {
         Self(previous: self, presentationType: launchStyle.wrappedValue, shouldLoad: { _ in closure() }) // swiftlint:disable:this all
     }
 
+    /// Provides a closure that executes *before* the view is added to the graph.
+    /// - Parameter closure: Indicates whether the ``WorkflowItem`` should load.
     public func shouldLoad(_ closure: @autoclosure @escaping () -> Bool) -> Self {
         Self(previous: self, presentationType: launchStyle.wrappedValue, shouldLoad: { _ in closure() }) // swiftlint:disable:this all
     }
 
+    /// Provides a closure that executes *before* the view is added to the graph.
+    /// - Parameter closure: Indicates whether the ``WorkflowItem`` should load.
     public func shouldLoad<A>(_ closure: @escaping (A) -> Bool) -> Self {
         Self(previous: self, presentationType: launchStyle.wrappedValue, shouldLoad: { // swiftlint:disable:this trailing_closure
             guard case .args(let args as A) = $0 else { return false }
             return closure(args)
-        }) // swiftlint:disable:this all
+        })
     }
 
     /// :nodoc: Protocol requirement.
