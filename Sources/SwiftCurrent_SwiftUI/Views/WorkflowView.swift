@@ -113,12 +113,6 @@ public struct WorkflowView<Content: View>: View {
         return Self(current: self, onFinish: onFinish, onAbandon: onAbandon)
     }
 
-    /// Subscribers to a combine publisher, when a value is emitted the workflow will abandon.
-    public func abandonOn<P: Publisher>(_ publisher: P) -> Self where P.Failure == Never {
-        self
-//        Self(self, newContent: _content.wrappedValue.abandonOn(publisher))
-    }
-
     public var body: some View {
         if isLaunched {
             workflow

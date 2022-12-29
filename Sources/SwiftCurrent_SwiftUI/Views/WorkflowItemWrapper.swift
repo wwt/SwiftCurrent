@@ -44,7 +44,7 @@ public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _Workflo
 
     public var body: some View {
         Group {
-            if shouldLoad && envShouldLoad {
+            if shouldLoad && envShouldLoad && content._shouldLoad(args: args ?? envArgs) {
                 navigate(presentationType: launchStyle.wrappedValue, content: content, nextView: wrapped, isActive: $hasProceeded)
             } else {
                 wrapped

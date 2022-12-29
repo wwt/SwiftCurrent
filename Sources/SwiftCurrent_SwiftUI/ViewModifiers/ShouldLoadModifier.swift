@@ -21,3 +21,16 @@ public struct ShouldLoadModifier: ViewModifier {
             .environment(\.shouldLoad, shouldLoad)
     }
 }
+
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension View {
+    /// Adds a condition that determines whether the view should load in a ``Workflow``
+    public func shouldLoad(_ closure: @autoclosure () -> Bool) -> some View {
+        modifier(ShouldLoadModifier(shouldLoad: closure()))
+    }
+
+    /// Adds a condition that determines whether the view should load in a ``Workflow``
+    public func shouldLoad(_ closure: () -> Bool) -> some View {
+        modifier(ShouldLoadModifier(shouldLoad: closure()))
+    }
+}

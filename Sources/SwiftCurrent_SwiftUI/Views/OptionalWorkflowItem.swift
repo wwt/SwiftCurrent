@@ -16,6 +16,7 @@ public struct OptionalWorkflowItem<WI: _WorkflowItemProtocol>: View, _WorkflowIt
         content?.launchStyle ?? State(wrappedValue: .default)
     }
 
+    @Environment(\.workflowProxy) var proxy
     @State var content: WI?
 
     /// :nodoc: Protocol requirement.
