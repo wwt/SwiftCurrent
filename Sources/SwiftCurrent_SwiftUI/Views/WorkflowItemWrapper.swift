@@ -19,8 +19,10 @@ public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _Workflo
     @StateObject private var proxy = WorkflowProxy()
     @Environment(\.workflowProxy) var envProxy: WorkflowProxy
 
-    @State private var shouldLoad = true
     @Environment(\.shouldLoad) var envShouldLoad: Bool
+    var shouldLoad: Bool {
+        envShouldLoad && proxy.shouldLoad
+    }
 
     @State private var content: Current
     @State private var wrapped: Next?
@@ -31,6 +33,9 @@ public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _Workflo
 
     @State private var args: AnyWorkflow.PassedArgs?
     @Environment(\.workflowArgs) var envArgs
+    var passedArgs: AnyWorkflow.PassedArgs {
+        args ?? envArgs
+    }
 
     init(content: Current) where Next == Never {
         _wrapped = State(initialValue: nil)
@@ -44,46 +49,52 @@ public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _Workflo
 
     public var body: some View {
         Group {
-            if shouldLoad && envShouldLoad && content._shouldLoad(args: args ?? envArgs) {
+            if shouldLoad && content._shouldLoad(args: passedArgs) {
                 navigate(presentationType: launchStyle.wrappedValue, content: content, nextView: wrapped, isActive: $hasProceeded)
             } else {
                 wrapped
             }
         }
-        .onAppear {
-            if proxy.shouldLoad && !content._shouldLoad(args: args ?? envArgs) {
-                proxy.shouldLoad = false
-            }
-        }
         .environment(\.workflowProxy, proxy)
-        .environment(\.workflowArgs, args ?? envArgs)
+        .environment(\.workflowArgs, passedArgs)
         .environment(\.workflowHasProceeded, $hasProceeded)
-        .onReceive(proxy.proceedPublisher) {
-            guard let wrapped, wrapped._shouldLoad(args: $0) else {
-                proxy.onFinishPublisher.send($0)
-                return
-            }
-            hasProceeded = true
-            args = $0
+        .onAppear(perform: setUpProxy)
+        .onReceive(proxy.proceedPublisher, perform: proceed(_:))
+        .onReceive(proxy.backupPublisher, perform: backUp)
+        .onReceive(proxy.abandonPublisher, perform: abandon)
+        .onReceive(proxy.onFinishPublisher, perform: finish(_:))
+    }
+
+    private func setUpProxy() {
+        if proxy.shouldLoad && !content._shouldLoad(args: args ?? envArgs) {
+            proxy.shouldLoad = false
         }
-        .onReceive(proxy.$shouldLoad) {
-            guard envShouldLoad else { return }
-            shouldLoad = $0
+    }
+
+    private func proceed(_ newArgs: AnyWorkflow.PassedArgs) {
+        guard let wrapped, wrapped._shouldLoad(args: newArgs) else {
+            proxy.onFinishPublisher.send(newArgs)
+            return
         }
-        .onReceive(proxy.backupPublisher) {
-            defer { dismiss() }
-            if !envProxy.shouldLoad {
-                try? envProxy.backUpInWorkflow()
-            }
+        hasProceeded = true
+        args = newArgs
+    }
+
+    private func backUp() {
+        defer { dismiss() }
+        if !envProxy.shouldLoad {
+            try? envProxy.backUpInWorkflow()
         }
-        .onReceive(proxy.abandonPublisher) {
-            hasProceeded = false
-            envProxy.abandonWorkflow()
-        }
-        .onReceive(proxy.onFinishPublisher) {
-            guard $0 != nil else { return }
-            envProxy.onFinishPublisher.send($0)
-        }
+    }
+
+    private func abandon() {
+        hasProceeded = false
+        envProxy.abandonWorkflow()
+    }
+
+    private func finish(_ args: AnyWorkflow.PassedArgs?) {
+        guard args != nil else { return }
+        envProxy.onFinishPublisher.send(args)
     }
 
     private func dismiss() {
