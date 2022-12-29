@@ -1,4 +1,4 @@
-// swiftlint:disable:this file_name
+//
 //  ViewExtensions.swift
 //  SwiftCurrent
 //

@@ -10,6 +10,8 @@ import SwiftUI
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct NavigationWorkflowLinkModifier<Wrapped: _WorkflowItemProtocol>: ViewModifier {
+    // I filed a bug report with Apple, but navigation links swallow environment values
+    // These *must* be passed on for the workflow to work, so we forward them in the body
     @Environment(\.workflowArgs) var args
     @Environment(\.workflowProxy) var proxy
 

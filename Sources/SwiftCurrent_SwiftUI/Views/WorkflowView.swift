@@ -44,6 +44,7 @@ import SwiftCurrent
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowView<Content: View>: View {
     @StateObject var proxy = WorkflowProxy()
+    @Binding var isLaunched: Bool
     @State private var args: AnyWorkflow.PassedArgs
     @WorkflowBuilder private var workflow: Content
     #warning("Needed?")
@@ -82,12 +83,14 @@ public struct WorkflowView<Content: View>: View {
                 @WorkflowBuilder content: () -> Content) {
         workflow = content()
         _args = State(wrappedValue: args)
+        _isLaunched = isLaunched
     }
 
     private init(_ other: WorkflowView<Content>,
                  newContent: Content) {
         workflow = newContent
         _args = other._args
+        _isLaunched = other._isLaunched
     }
 
     /// Adds an action to perform when this `Workflow` has finished.
@@ -109,11 +112,14 @@ public struct WorkflowView<Content: View>: View {
     }
 
     public var body: some View {
-        workflow
-            .environment(\.workflowArgs, args)
-            .environment(\.workflowProxy, proxy)
-            .environment(\.workflowHasProceeded, nil)
-            .onReceive(inspection.notice) { inspection.visit(self, $0) }
+        if isLaunched {
+            workflow
+                .environment(\.workflowArgs, args)
+                .environment(\.workflowProxy, proxy)
+                .environment(\.workflowHasProceeded, nil)
+                .onReceive(proxy.abandonPublisher) { isLaunched = false }
+                .onReceive(inspection.notice) { inspection.visit(self, $0) }
+        }
     }
 }
 //public struct WorkflowView<Content: View>: View {
