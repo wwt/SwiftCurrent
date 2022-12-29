@@ -35,6 +35,7 @@ public struct WorkflowItem<Content: View>: _WorkflowItemProtocol {
     let persistence: FlowPersistence.SwiftUI.Persistence = .default
 
     @Environment(\.workflowArgs) var args
+    @Environment(\.workflowProxy) var proxy
     @ViewBuilder var content: (AnyWorkflow.PassedArgs) -> Content
 
     @State private var shouldLoad: (AnyWorkflow.PassedArgs) -> Bool = { _ in true }
@@ -66,6 +67,11 @@ public struct WorkflowItem<Content: View>: _WorkflowItemProtocol {
 
     public var body: some View {
         content(args)
+            .onAppear {
+                if proxy.shouldLoad && !_shouldLoad(args: args) {
+                    proxy.shouldLoad = false
+                }
+            }
     }
 
     /// Provides a closure that executes *before* the view is added to the graph.
