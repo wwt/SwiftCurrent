@@ -148,7 +148,7 @@ final class GenericConstraintTests: XCTestCase, View {
         let proxy = try parent.environment(\.workflowProxy)
         let wfv = try await MainActor.run { try workflowView.actualView() }.hostAndInspect(with: \.inspection)
         let exp = expectation(description: "")
-        try wfv.actualView().inspection.inspect(onReceive: proxy.proceedPublisher) { view in
+        try await wfv.actualView().inspection.inspect(onReceive: proxy.proceedPublisher) { view in
             exp.fulfill()
         }
         proxy.proceedInWorkflow()

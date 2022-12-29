@@ -346,9 +346,10 @@ final class SwiftCurrent_NavigationLinkTests: XCTestCase, View {
         }
         struct FR3: View {
             var body: some View {
-                Button("continue") {
-                    #warning("Abandon is not a thing")
-//                    workflow?.abandon()
+                WorkflowReader { proxy in
+                    Button("continue") {
+                        proxy.abandonWorkflow()
+                    }
                 }
             }
         }

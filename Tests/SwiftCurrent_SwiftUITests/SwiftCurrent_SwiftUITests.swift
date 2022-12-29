@@ -574,11 +574,11 @@ final class SwiftCurrent_SwiftUIConsumerTests: XCTestCase {
             var body: some View { Text("FR1 type") }
         }
         struct FR2: View {
+            @Environment(\.workflowProxy) var proxy
             var body: some View { Text("FR2 type") }
 
             func abandon() {
-                #warning("No abandon mechanism")
-//                workflow?.abandon()
+                proxy.abandonWorkflow()
             }
         }
         let onFinishCalled = expectation(description: "onFinish Called")
