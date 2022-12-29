@@ -119,7 +119,10 @@ public struct WorkflowView<Content: View>: View {
                 .environment(\.workflowArgs, args)
                 .environment(\.workflowProxy, proxy)
                 .environment(\.workflowHasProceeded, nil)
-                .onReceive(proxy.abandonPublisher) { isLaunched = false }
+                .onReceive(proxy.abandonPublisher) {
+                    isLaunched = false
+                    onAbandon.forEach { $0() }
+                }
                 .onReceive(proxy.onFinishPublisher) { args in
                     guard let args = args else { return }
                     onFinish.forEach { $0(args) }

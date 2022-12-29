@@ -21,7 +21,7 @@ public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _Workflo
 
     @Environment(\.shouldLoad) var envShouldLoad: Bool
     var shouldLoad: Bool {
-        envShouldLoad && proxy.shouldLoad
+        envShouldLoad && proxy.shouldLoad && content._shouldLoad(args: passedArgs)
     }
 
     @State private var content: Current
@@ -49,7 +49,7 @@ public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _Workflo
 
     public var body: some View {
         Group {
-            if shouldLoad && content._shouldLoad(args: passedArgs) {
+            if shouldLoad {
                 navigate(presentationType: launchStyle.wrappedValue, content: content, nextView: wrapped, isActive: $hasProceeded)
             } else {
                 wrapped
