@@ -12,17 +12,11 @@ import SwiftCurrent
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension View {
     public func shouldLoad(_ closure: @autoclosure () -> Bool) -> some View {
-        WorkflowReader { _ in
-            self
-        }
-        .environment(\.shouldLoad, closure())
+        modifier(ShouldLoadModifier(shouldLoad: closure()))
     }
 
     public func shouldLoad(_ closure: () -> Bool) -> some View {
-        WorkflowReader { _ in
-            self
-        }
-        .environment(\.shouldLoad, closure())
+        modifier(ShouldLoadModifier(shouldLoad: closure()))
     }
 
     public func workflowLink(isPresented: Binding<Bool>, value: AnyWorkflow.PassedArgs) -> some View {

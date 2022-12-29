@@ -61,7 +61,12 @@ public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _Workflo
             guard envShouldLoad else { return }
             shouldLoad = $0
         }
-        .onReceive(proxy.backupPublisher, perform: dismiss)
+        .onReceive(proxy.backupPublisher) {
+            defer { dismiss() }
+            if !envProxy.shouldLoad {
+                try? envProxy.backUpInWorkflow()
+            }
+        }
         .onReceive(proxy.abandonPublisher) {
             hasProceeded = false
             envProxy.abandonWorkflow()
