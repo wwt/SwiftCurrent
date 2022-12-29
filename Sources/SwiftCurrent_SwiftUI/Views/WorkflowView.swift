@@ -43,9 +43,12 @@ import SwiftCurrent
  */
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowView<Content: View>: View {
-    @StateObject var proxy = WorkflowProxy()
-    @Binding var isLaunched: Bool
+    @StateObject private var proxy = WorkflowProxy()
+    @Binding private var isLaunched: Bool
     @State private var args: AnyWorkflow.PassedArgs
+    @State private var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
+    @State private var onAbandon = [() -> Void]()
+
     @WorkflowBuilder private var workflow: Content
     #warning("Needed?")
     let inspection = Inspection<Self>() // needed?
@@ -86,23 +89,28 @@ public struct WorkflowView<Content: View>: View {
         _isLaunched = isLaunched
     }
 
-    private init(_ other: WorkflowView<Content>,
-                 newContent: Content) {
-        workflow = newContent
-        _args = other._args
-        _isLaunched = other._isLaunched
+    private init(current: Self,
+                 onFinish: [(AnyWorkflow.PassedArgs) -> Void],
+                 onAbandon: [() -> Void]) {
+        workflow = current.workflow
+        _args = current._args
+        _isLaunched = current._isLaunched
+        _onFinish = State(wrappedValue: onFinish)
+        _onAbandon = State(wrappedValue: onAbandon)
     }
 
     /// Adds an action to perform when this `Workflow` has finished.
     public func onFinish(_ closure: @escaping (AnyWorkflow.PassedArgs) -> Void) -> Self {
-        self
-//        Self(self, newContent: _content.wrappedValue.onFinish(closure: closure))
+        var onFinish = self.onFinish
+        onFinish.append(closure)
+        return Self(current: self, onFinish: onFinish, onAbandon: onAbandon)
     }
 
     /// Adds an action to perform when this `Workflow` has abandoned.
     public func onAbandon(_ closure: @escaping () -> Void) -> Self {
-        self
-//        Self(self, newContent: _content.wrappedValue.onAbandon(closure: closure))
+        var onAbandon = self.onAbandon
+        onAbandon.append(closure)
+        return Self(current: self, onFinish: onFinish, onAbandon: onAbandon)
     }
 
     /// Subscribers to a combine publisher, when a value is emitted the workflow will abandon.
@@ -118,6 +126,10 @@ public struct WorkflowView<Content: View>: View {
                 .environment(\.workflowProxy, proxy)
                 .environment(\.workflowHasProceeded, nil)
                 .onReceive(proxy.abandonPublisher) { isLaunched = false }
+                .onReceive(proxy.onFinishPublisher) { args in
+                    guard let args = args else { return }
+                    onFinish.forEach { $0(args) }
+                }
                 .onReceive(inspection.notice) { inspection.visit(self, $0) }
         }
     }

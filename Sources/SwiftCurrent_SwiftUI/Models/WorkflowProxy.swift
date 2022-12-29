@@ -15,6 +15,7 @@ public final class WorkflowProxy: ObservableObject {
     let proceedPublisher = PassthroughSubject<AnyWorkflow.PassedArgs, Never>()
     let backupPublisher = PassthroughSubject<Void, Never>()
     let abandonPublisher = PassthroughSubject<Void, Never>()
+    let onFinishPublisher = CurrentValueSubject<AnyWorkflow.PassedArgs?, Never>(nil)
 
     @Published var shouldLoad = true
 

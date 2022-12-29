@@ -54,7 +54,10 @@ public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _Workflo
         .environment(\.workflowArgs, args ?? envArgs)
         .environment(\.workflowHasProceeded, $hasProceeded)
         .onReceive(proxy.proceedPublisher) {
-            guard let wrapped, wrapped._shouldLoad(args: $0) else { return }
+            guard let wrapped, wrapped._shouldLoad(args: $0) else {
+                proxy.onFinishPublisher.send($0)
+                return
+            }
             hasProceeded = true
             args = $0
         }
@@ -71,6 +74,10 @@ public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _Workflo
         .onReceive(proxy.abandonPublisher) {
             hasProceeded = false
             envProxy.abandonWorkflow()
+        }
+        .onReceive(proxy.onFinishPublisher) {
+            guard $0 != nil else { return }
+            envProxy.onFinishPublisher.send($0)
         }
     }
 
