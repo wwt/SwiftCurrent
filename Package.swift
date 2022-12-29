@@ -1,4 +1,4 @@
-// swift-tools-version:5.7
+// swift-tools-version:5.3
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -27,7 +27,7 @@ let package = Package(
         .package(url: "https://github.com/mattgallagher/CwlCatchException.git", from: Version("2.0.0-beta.1")),
         .package(url: "https://github.com/apple/swift-algorithms", .upToNextMajor(from: "1.0.0")),
         .package(url: "https://github.com/sindresorhus/ExceptionCatcher", from: "2.0.0"),
-        .package(url: "git@github.com:Tyler-Keith-Thompson/ViewInspector.git", branch: "fix-namespace-issue"),
+        .package(url: "https://github.com/nalexn/ViewInspector.git", from: "0.9.3"),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing.git", from: "1.10.0"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.0.3"),
         .package(url: "https://github.com/apple/swift-syntax.git", .exact("0.50600.1"))

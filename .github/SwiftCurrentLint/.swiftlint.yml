@@ -110,13 +110,14 @@ opt_in_rules: # some rules are turned off by default, so you need to opt-in
   - unowned_variable_capture # https://realm.github.io/SwiftLint/unowned_variable_capture.html
   #   - untyped_error_in_catch # https://realm.github.io/SwiftLint/untyped_error_in_catch.html
   #   - unused_declaration # https://realm.github.io/SwiftLint/unused_declaration.html
-  - unused_import # https://realm.github.io/SwiftLint/unused_import.html
   - vertical_parameter_alignment_on_call # https://realm.github.io/SwiftLint/vertical_parameter_alignment_on_call.html
   #   - vertical_whitespace_between_cases # https://realm.github.io/SwiftLint/vertical_whitespace_between_cases.html
   - vertical_whitespace_closing_braces # https://realm.github.io/SwiftLint/vertical_whitespace_closing_braces.html
   - vertical_whitespace_opening_braces # https://realm.github.io/SwiftLint/vertical_whitespace_opening_braces.html
   #   - xct_specific_matcher # https://realm.github.io/SwiftLint/xct_specific_matcher.html
   - yoda_condition # https://realm.github.io/SwiftLint/yoda_condition.html
+analyzer_rules:
+  - unused_import # https://realm.github.io/SwiftLint/unused_import.html
 
 # Alternatively, specify all rules explicitly by uncommenting this option:
 # only_rules: # delete `disabled_rules` & `opt_in_rules` if using this
