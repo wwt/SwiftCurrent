@@ -33,11 +33,19 @@ public struct AnyWorkflowItem: View, _WorkflowItemProtocol {
 extension AnyWorkflowItem {
     /// :nodoc: Protocol requirement.
     public var launchStyle: State<SwiftCurrent.LaunchStyle.SwiftUI.PresentationType> { storage.presentationType }
+    /// :nodoc: Protocol requirement.
+    public func _shouldLoad(args: AnyWorkflow.PassedArgs) -> Bool {
+        storage._shouldLoad(args: args)
+    }
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 fileprivate class AnyWorkflowItemStorageBase {
     var presentationType: State<SwiftCurrent.LaunchStyle.SwiftUI.PresentationType> {
+        fatalError("AnyWorkflowItemStorageBase called directly, only available internally so something has gone VERY wrong.")
+    }
+
+    func _shouldLoad(args: AnyWorkflow.PassedArgs) -> Bool {
         fatalError("AnyWorkflowItemStorageBase called directly, only available internally so something has gone VERY wrong.")
     }
 }
@@ -51,5 +59,9 @@ fileprivate final class AnyWorkflowItemStorage<Wrapped: _WorkflowItemProtocol>: 
 
     override var presentationType: State<SwiftCurrent.LaunchStyle.SwiftUI.PresentationType> {
         holder.launchStyle
+    }
+
+    override func _shouldLoad(args: AnyWorkflow.PassedArgs) -> Bool {
+        holder._shouldLoad(args: args)
     }
 }

@@ -15,6 +15,7 @@ public struct OptionalWorkflowItem<WI: _WorkflowItemProtocol>: View, _WorkflowIt
     public var launchStyle: State<SwiftCurrent.LaunchStyle.SwiftUI.PresentationType> {
         content?.launchStyle ?? State(wrappedValue: .default)
     }
+
     @State var content: WI?
 
     /// :nodoc: Protocol requirement.
@@ -24,5 +25,11 @@ public struct OptionalWorkflowItem<WI: _WorkflowItemProtocol>: View, _WorkflowIt
 
     init(content: WI?) {
         _content = State(initialValue: content)
+    }
+
+    /// :nodoc: Protocol requirement.
+    public func _shouldLoad(args: AnyWorkflow.PassedArgs) -> Bool {
+        guard let content else { return false }
+        return content._shouldLoad(args: args)
     }
 }

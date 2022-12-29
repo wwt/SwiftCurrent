@@ -13,9 +13,11 @@ import SwiftCurrent
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public protocol _WorkflowItemProtocol: View { // swiftlint:disable:this type_name
     var launchStyle: State<LaunchStyle.SwiftUI.PresentationType> { get }
+    func _shouldLoad(args: AnyWorkflow.PassedArgs) -> Bool
 }
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension Never: _WorkflowItemProtocol {
     public var launchStyle: State<LaunchStyle.SwiftUI.PresentationType> { State(wrappedValue: .default) }
+    public func _shouldLoad(args: AnyWorkflow.PassedArgs) -> Bool { false }
 }

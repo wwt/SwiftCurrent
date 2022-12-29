@@ -37,6 +37,8 @@ public struct WorkflowItem<Content: View>: _WorkflowItemProtocol {
     @Environment(\.workflowArgs) var args
     @ViewBuilder var content: (AnyWorkflow.PassedArgs) -> Content
 
+    @State private var shouldLoad: (AnyWorkflow.PassedArgs) -> Bool = { _ in true }
+
     public init(@ViewBuilder _ content: @escaping () -> Content) {
         self.content = { _ in content() }
     }
@@ -55,13 +57,35 @@ public struct WorkflowItem<Content: View>: _WorkflowItemProtocol {
     }
 
     private init(previous: WorkflowItem<Content>,
-                 presentationType: LaunchStyle.SwiftUI.PresentationType) {
-        self.launchStyle = State(wrappedValue: presentationType)
+                 presentationType: LaunchStyle.SwiftUI.PresentationType,
+                 shouldLoad: @escaping (AnyWorkflow.PassedArgs) -> Bool) {
+        launchStyle = State(wrappedValue: presentationType)
         content = previous.content
+        _shouldLoad = State(wrappedValue: shouldLoad)
     }
 
     public var body: some View {
         content(args)
+    }
+
+    public func shouldLoad(_ closure: @escaping () -> Bool) -> Self {
+        Self(previous: self, presentationType: launchStyle.wrappedValue, shouldLoad: { _ in closure() }) // swiftlint:disable:this all
+    }
+
+    public func shouldLoad(_ closure: @autoclosure @escaping () -> Bool) -> Self {
+        Self(previous: self, presentationType: launchStyle.wrappedValue, shouldLoad: { _ in closure() }) // swiftlint:disable:this all
+    }
+
+    public func shouldLoad<A>(_ closure: @escaping (A) -> Bool) -> Self {
+        Self(previous: self, presentationType: launchStyle.wrappedValue, shouldLoad: { // swiftlint:disable:this trailing_closure
+            guard case .args(let args as A) = $0 else { return false }
+            return closure(args)
+        }) // swiftlint:disable:this all
+    }
+
+    /// :nodoc: Protocol requirement.
+    public func _shouldLoad(args: AnyWorkflow.PassedArgs) -> Bool {
+        shouldLoad(args)
     }
 }
 
@@ -130,6 +154,6 @@ extension WorkflowItem {
 extension WorkflowItem {
     /// Sets the presentationType on the `FlowRepresentable` of the `WorkflowItem`.
     public func presentationType(_ presentationType: @escaping @autoclosure () -> LaunchStyle.SwiftUI.PresentationType) -> Self {
-        Self(previous: self, presentationType: presentationType())
+        Self(previous: self, presentationType: presentationType(), shouldLoad: shouldLoad)
     }
 }

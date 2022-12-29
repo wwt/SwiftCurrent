@@ -54,6 +54,7 @@ public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _Workflo
         .environment(\.workflowArgs, args ?? envArgs)
         .environment(\.workflowHasProceeded, $hasProceeded)
         .onReceive(proxy.proceedPublisher) {
+            guard let wrapped, wrapped._shouldLoad(args: $0) else { return }
             hasProceeded = true
             args = $0
         }
@@ -79,5 +80,12 @@ public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _Workflo
         } else {
             presentation.wrappedValue.dismiss()
         }
+    }
+
+    /// :nodoc: Protocol requirement.
+    public func _shouldLoad(args: AnyWorkflow.PassedArgs) -> Bool {
+        guard !content._shouldLoad(args: args) else { return true }
+        guard let wrapped else { return false }
+        return wrapped._shouldLoad(args: args)
     }
 }

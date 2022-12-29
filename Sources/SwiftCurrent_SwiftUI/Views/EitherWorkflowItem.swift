@@ -29,6 +29,13 @@ public struct EitherWorkflowItem<W0: _WorkflowItemProtocol, W1: _WorkflowItemPro
                 case .second(let second): second
             }
         }
+
+        func shouldLoad(args: AnyWorkflow.PassedArgs) -> Bool {
+            switch self {
+                case .first(let first): return first._shouldLoad(args: args)
+                case .second(let second): return second._shouldLoad(args: args)
+            }
+        }
     }
 
     @State var content: Either<W0, W1>
@@ -41,5 +48,10 @@ public struct EitherWorkflowItem<W0: _WorkflowItemProtocol, W1: _WorkflowItemPro
     /// :nodoc: Protocol requirement.
     public var launchStyle: State<SwiftCurrent.LaunchStyle.SwiftUI.PresentationType> {
         content.presentationType
+    }
+
+    /// :nodoc: Protocol requirement.
+    public func _shouldLoad(args: AnyWorkflow.PassedArgs) -> Bool {
+        content.shouldLoad(args: args)
     }
 }

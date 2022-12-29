@@ -22,4 +22,9 @@ public struct WorkflowGroup<WI: _WorkflowItemProtocol>: View, _WorkflowItemProto
     public init(@WorkflowBuilder content: () -> WI) {
         _content = State(initialValue: content())
     }
+
+    /// :nodoc: Protocol requirement.
+    public func _shouldLoad(args: AnyWorkflow.PassedArgs) -> Bool {
+        content._shouldLoad(args: args)
+    }
 }

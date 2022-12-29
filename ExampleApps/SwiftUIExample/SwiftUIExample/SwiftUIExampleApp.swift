@@ -29,7 +29,9 @@ struct SwiftUIExampleApp: App {
                             .presentationType(.navigationLink)
                         WorkflowItem { FR3() }
                             .presentationType(.navigationLink)
-                        WorkflowItem { FR4().shouldLoad(false) }
+                            .shouldLoad(false)
+                        WorkflowItem { FR4() }
+                            .shouldLoad(false)
                         //                    WorkflowItem { SwiftCurrentOnboarding().transition(.slide) }
                         //                    WorkflowItem { ContentView().transition(.slide) }
                     }
