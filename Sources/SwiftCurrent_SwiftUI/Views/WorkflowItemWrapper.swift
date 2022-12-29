@@ -25,7 +25,7 @@ public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _Workflo
     }
 
     @State private var content: Current
-    @State private var wrapped: Next?
+    @State private var nextView: Next?
 
     @State private var hasProceeded = false
     @Environment(\.workflowHasProceeded) var envHasProceeded: Binding<Bool>?
@@ -38,21 +38,21 @@ public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _Workflo
     }
 
     init(content: Current) where Next == Never {
-        _wrapped = State(initialValue: nil)
+        _nextView = State(initialValue: nil)
         _content = State(initialValue: content)
     }
 
     init(content: Current, next: () -> Next) {
-        _wrapped = State(initialValue: next())
+        _nextView = State(initialValue: next())
         _content = State(initialValue: content)
     }
 
     public var body: some View {
         Group {
             if shouldLoad {
-                navigate(presentationType: launchStyle.wrappedValue, content: content, nextView: wrapped, isActive: $hasProceeded)
+                navigate(presentationType: launchStyle.wrappedValue, content: content, nextView: nextView, isActive: $hasProceeded)
             } else {
-                wrapped
+                nextView
             }
         }
         .environment(\.workflowProxy, proxy)
@@ -66,13 +66,13 @@ public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _Workflo
     }
 
     private func setUpProxy() {
-        if proxy.shouldLoad && !content._shouldLoad(args: args ?? envArgs) {
+        if proxy.shouldLoad && !content._shouldLoad(args: passedArgs) {
             proxy.shouldLoad = false
         }
     }
 
     private func proceed(_ newArgs: AnyWorkflow.PassedArgs) {
-        guard let wrapped, wrapped._shouldLoad(args: newArgs) else {
+        guard let nextView, nextView._shouldLoad(args: newArgs) else {
             proxy.onFinishPublisher.send(newArgs)
             return
         }
@@ -108,7 +108,7 @@ public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _Workflo
     /// :nodoc: Protocol requirement.
     public func _shouldLoad(args: AnyWorkflow.PassedArgs) -> Bool {
         guard !content._shouldLoad(args: args) else { return true }
-        guard let wrapped else { return false }
-        return wrapped._shouldLoad(args: args)
+        guard let nextView else { return false }
+        return nextView._shouldLoad(args: args)
     }
 }
