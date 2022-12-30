@@ -128,15 +128,6 @@
         }
       },
       {
-        "package": "ViewInspector",
-        "repositoryURL": "https://github.com/nalexn/ViewInspector.git",
-        "state": {
-          "branch": null,
-          "revision": "6b77fcff222e129fc9d74967ea40ad52aefcd004",
-          "version": "0.9.3"
-        }
-      },
-      {
         "package": "Yams",
         "repositoryURL": "https://github.com/jpsim/Yams.git",
         "state": {
