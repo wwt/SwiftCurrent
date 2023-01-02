@@ -27,12 +27,14 @@ struct SwiftUIExampleApp: App {
                     WorkflowView {
                         WorkflowItem { FR1() }
                             .presentationType(.navigationLink)
-                        if flag {
-                            WorkflowItem { FR2() }
-                                .presentationType(.navigationLink)
-                        } else {
-                            WorkflowItem { FR3() }
-                                .presentationType(.navigationLink)
+                        WorkflowGroup {
+                            if flag {
+                                WorkflowItem { FR2() }
+                                    .presentationType(.navigationLink)
+                            } else {
+                                WorkflowItem { FR3() }
+                                    .presentationType(.navigationLink)
+                            }
                         }
                         WorkflowItem { FR4() }
 //                        WorkflowItem { SwiftCurrentOnboarding().transition(.slide) }

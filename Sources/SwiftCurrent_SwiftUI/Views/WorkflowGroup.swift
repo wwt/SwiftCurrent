@@ -17,6 +17,7 @@ public struct WorkflowGroup<WI: _WorkflowItemProtocol>: View, _WorkflowItemProto
 
     public var body: some View {
         content
+            .environment(\.forwardProxyCalls, true)
     }
 
     public init(@WorkflowBuilder content: @escaping () -> WI) {
