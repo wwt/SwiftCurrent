@@ -44,6 +44,7 @@ import SwiftCurrent
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowView<Content: View>: View {
     @StateObject private var proxy = WorkflowProxy()
+    @State private var id = UUID()
     @Binding private var isLaunched: Bool
     @State private var args: AnyWorkflow.PassedArgs
     @State private var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
@@ -130,12 +131,14 @@ public struct WorkflowView<Content: View>: View {
                 .onReceive(proxy.abandonPublisher) {
                     isLaunched = false
                     onAbandon.forEach { $0() }
+                    id = UUID()
                 }
                 .onReceive(proxy.onFinishPublisher) { args in
                     guard let args = args else { return }
                     onFinish.forEach { $0(args) }
                 }
                 .onReceive(inspection.notice) { inspection.visit(self, $0) }
+                .id(id)
         }
     }
 }

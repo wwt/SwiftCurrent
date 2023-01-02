@@ -21,11 +21,8 @@ public struct OptionalWorkflowItem<WI: _WorkflowItemProtocol>: View, _WorkflowIt
 
     /// :nodoc: Protocol requirement.
     public var body: some View {
-        content
-    }
-
-    init(content: WI?) {
-        _content = State(initialValue: content)
+        content?
+            .environment(\.forwardProxyCalls, true)
     }
 
     /// :nodoc: Protocol requirement.

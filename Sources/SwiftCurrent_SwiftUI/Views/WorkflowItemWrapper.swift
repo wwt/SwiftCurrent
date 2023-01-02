@@ -24,12 +24,13 @@ public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _Workflo
         parentShouldLoad && proxy.shouldLoad && content._shouldLoad(args: passedArgs)
     }
 
-    @State private var content: Current
+    @State var content: Current
     @State private var nextView: Next?
 
     @State private var hasProceeded = false
     @Environment(\.workflowHasProceeded) private var parentHasProceeded: Binding<Bool>?
     @Environment(\.presentationMode) private var presentation
+    @Environment(\.forwardProxyCalls) private var forwardProxyCalls
 
     @State private var args: AnyWorkflow.PassedArgs?
     @Environment(\.workflowArgs) private var parentArgs
@@ -73,6 +74,7 @@ public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _Workflo
     }
 
     func proceed(_ newArgs: AnyWorkflow.PassedArgs) {
+        guard !forwardProxyCalls else { parentProxy.proceedInWorkflow(newArgs); return }
         guard let nextView, nextView._shouldLoad(args: newArgs) else {
             proxy.onFinishPublisher.send(newArgs)
             return
@@ -82,6 +84,7 @@ public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _Workflo
     }
 
     private func backUp() {
+        guard !forwardProxyCalls else { try? parentProxy.backUpInWorkflow(); return }
         defer { dismiss() }
         if !parentProxy.shouldLoad {
             try? parentProxy.backUpInWorkflow()

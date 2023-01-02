@@ -43,6 +43,7 @@ public struct EitherWorkflowItem<W0: _WorkflowItemProtocol, W1: _WorkflowItemPro
     /// :nodoc: Protocol requirement.
     public var body: some View {
         content
+            .environment(\.forwardProxyCalls, true)
     }
 
     /// :nodoc: Protocol requirement.

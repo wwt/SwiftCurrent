@@ -27,9 +27,10 @@ struct SwiftUIExampleApp: App {
                     WorkflowView {
                         WorkflowItem { FR1() }
                             .presentationType(.navigationLink)
-                        WorkflowItem { FR2() }
-                            .presentationType(.navigationLink)
                         if flag {
+                            WorkflowItem { FR2() }
+                                .presentationType(.navigationLink)
+                        } else {
                             WorkflowItem { FR3() }
                                 .presentationType(.navigationLink)
                         }
@@ -39,7 +40,7 @@ struct SwiftUIExampleApp: App {
                     }
                 }
                 .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
                         flag = true
                     }
                 }
