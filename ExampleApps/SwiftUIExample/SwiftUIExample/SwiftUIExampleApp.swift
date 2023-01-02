@@ -16,6 +16,8 @@ struct SwiftUIExampleApp: App {
         Container.default.register(UserDefaults.self) { _ in UserDefaults.standard }
     }
 
+    @State var flag = false
+
     var body: some Scene {
         WindowGroup {
             if Environment.shouldTest {
@@ -27,12 +29,18 @@ struct SwiftUIExampleApp: App {
                             .presentationType(.navigationLink)
                         WorkflowItem { FR2() }
                             .presentationType(.navigationLink)
-                        WorkflowItem { FR3() }
-                            .presentationType(.navigationLink)
-                            .shouldLoad(false)
+                        if flag {
+                            WorkflowItem { FR3() }
+                                .presentationType(.navigationLink)
+                        }
                         WorkflowItem { FR4() }
 //                        WorkflowItem { SwiftCurrentOnboarding().transition(.slide) }
 //                        WorkflowItem { ContentView().transition(.slide) }
+                    }
+                }
+                .onAppear {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+                        flag = true
                     }
                 }
                 .preferredColorScheme(.dark)
