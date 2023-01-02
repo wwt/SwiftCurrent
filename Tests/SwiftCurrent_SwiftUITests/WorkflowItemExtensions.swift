@@ -7,6 +7,7 @@
 
 import XCTest
 import SwiftUI
+import SwiftCurrent
 
 import ViewInspector
 
@@ -17,4 +18,11 @@ extension WorkflowItemWrapper {
     func getWrappedView() throws -> Next {
         try XCTUnwrap((Mirror(reflecting: self).descendant("_wrapped") as? State<Next?>)?.wrappedValue)
     }
+}
+
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension WorkflowItemWrapper: Proceedable { }
+
+protocol Proceedable {
+    func proceed(_ newArgs: AnyWorkflow.PassedArgs)
 }

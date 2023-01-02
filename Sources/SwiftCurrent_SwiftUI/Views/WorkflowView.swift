@@ -48,6 +48,7 @@ public struct WorkflowView<Content: View>: View {
     @State private var args: AnyWorkflow.PassedArgs
     @State private var onFinish = [(AnyWorkflow.PassedArgs) -> Void]()
     @State private var onAbandon = [() -> Void]()
+    @State private var abandonOnPublisher: AnyPublisher<Void, Never> = Empty(completeImmediately: false).eraseToAnyPublisher()
 
     @WorkflowBuilder private var workflow: Content
     #warning("Needed?")
@@ -91,7 +92,8 @@ public struct WorkflowView<Content: View>: View {
 
     private init(current: Self,
                  onFinish: [(AnyWorkflow.PassedArgs) -> Void],
-                 onAbandon: [() -> Void]) {
+                 onAbandon: [() -> Void],
+                 abandonOnPublisher: AnyPublisher<Void, Never>) {
         workflow = current.workflow
         _args = current._args
         _isLaunched = current._isLaunched
@@ -103,14 +105,19 @@ public struct WorkflowView<Content: View>: View {
     public func onFinish(_ closure: @escaping (AnyWorkflow.PassedArgs) -> Void) -> Self {
         var onFinish = self.onFinish
         onFinish.append(closure)
-        return Self(current: self, onFinish: onFinish, onAbandon: onAbandon)
+        return Self(current: self, onFinish: onFinish, onAbandon: onAbandon, abandonOnPublisher: abandonOnPublisher)
     }
 
     /// Adds an action to perform when this `Workflow` has abandoned.
     public func onAbandon(_ closure: @escaping () -> Void) -> Self {
         var onAbandon = self.onAbandon
         onAbandon.append(closure)
-        return Self(current: self, onFinish: onFinish, onAbandon: onAbandon)
+        return Self(current: self, onFinish: onFinish, onAbandon: onAbandon, abandonOnPublisher: abandonOnPublisher)
+    }
+
+    /// Subscribers to a combine publisher, when a value is emitted the workflow will abandon.
+    public func abandonOn<P: Publisher>(_ publisher: P) -> Self where P.Failure == Never {
+        Self(current: self, onFinish: onFinish, onAbandon: onAbandon, abandonOnPublisher: publisher.map { _ in () }.eraseToAnyPublisher())
     }
 
     public var body: some View {
@@ -119,6 +126,7 @@ public struct WorkflowView<Content: View>: View {
                 .environment(\.workflowArgs, args)
                 .environment(\.workflowProxy, proxy)
                 .environment(\.workflowHasProceeded, nil)
+                .onReceive(abandonOnPublisher, perform: proxy.abandonWorkflow)
                 .onReceive(proxy.abandonPublisher) {
                     isLaunched = false
                     onAbandon.forEach { $0() }

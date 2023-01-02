@@ -63,6 +63,7 @@ public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _Workflo
         .onReceive(proxy.backupPublisher, perform: backUp)
         .onReceive(proxy.abandonPublisher, perform: abandon)
         .onReceive(proxy.onFinishPublisher, perform: finish(_:))
+        .onReceive(inspection.notice) { inspection.visit(self, $0) }
     }
 
     private func setUpProxy() {
@@ -71,7 +72,7 @@ public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _Workflo
         }
     }
 
-    private func proceed(_ newArgs: AnyWorkflow.PassedArgs) {
+    func proceed(_ newArgs: AnyWorkflow.PassedArgs) {
         guard let nextView, nextView._shouldLoad(args: newArgs) else {
             proxy.onFinishPublisher.send(newArgs)
             return
