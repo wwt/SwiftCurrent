@@ -13,14 +13,14 @@ import SwiftCurrent
 public struct WorkflowGroup<WI: _WorkflowItemProtocol>: View, _WorkflowItemProtocol {
     public var launchStyle: State<SwiftCurrent.LaunchStyle.SwiftUI.PresentationType> { content.launchStyle }
 
-    @State var content: WI
+    @WorkflowBuilder var content: WI
 
     public var body: some View {
         content
     }
 
-    public init(@WorkflowBuilder content: () -> WI) {
-        _content = State(initialValue: content())
+    public init(@WorkflowBuilder content: @escaping () -> WI) {
+        self.content = content()
     }
 
     /// :nodoc: Protocol requirement.

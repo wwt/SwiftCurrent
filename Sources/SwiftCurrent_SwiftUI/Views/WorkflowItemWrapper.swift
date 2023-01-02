@@ -17,24 +17,24 @@ public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _Workflo
     let inspection = Inspection<Self>() // needed?
 
     @StateObject private var proxy = WorkflowProxy()
-    @Environment(\.workflowProxy) var envProxy: WorkflowProxy
+    @Environment(\.workflowProxy) private var parentProxy: WorkflowProxy
 
-    @Environment(\.shouldLoad) var envShouldLoad: Bool
-    var shouldLoad: Bool {
-        envShouldLoad && proxy.shouldLoad && content._shouldLoad(args: passedArgs)
+    @Environment(\.shouldLoad) private var parentShouldLoad: Bool
+    private var shouldLoad: Bool {
+        parentShouldLoad && proxy.shouldLoad && content._shouldLoad(args: passedArgs)
     }
 
     @State private var content: Current
     @State private var nextView: Next?
 
     @State private var hasProceeded = false
-    @Environment(\.workflowHasProceeded) var envHasProceeded: Binding<Bool>?
-    @Environment(\.presentationMode) var presentation
+    @Environment(\.workflowHasProceeded) private var parentHasProceeded: Binding<Bool>?
+    @Environment(\.presentationMode) private var presentation
 
     @State private var args: AnyWorkflow.PassedArgs?
-    @Environment(\.workflowArgs) var envArgs
+    @Environment(\.workflowArgs) private var parentArgs
     var passedArgs: AnyWorkflow.PassedArgs {
-        args ?? envArgs
+        args ?? parentArgs
     }
 
     init(content: Current) where Next == Never {
@@ -83,24 +83,24 @@ public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _Workflo
 
     private func backUp() {
         defer { dismiss() }
-        if !envProxy.shouldLoad {
-            try? envProxy.backUpInWorkflow()
+        if !parentProxy.shouldLoad {
+            try? parentProxy.backUpInWorkflow()
         }
     }
 
     private func abandon() {
         hasProceeded = false
-        envProxy.abandonWorkflow()
+        parentProxy.abandonWorkflow()
     }
 
     private func finish(_ args: AnyWorkflow.PassedArgs?) {
         guard args != nil else { return }
-        envProxy.onFinishPublisher.send(args)
+        parentProxy.onFinishPublisher.send(args)
     }
 
     private func dismiss() {
-        if let envHasProceeded {
-            envHasProceeded.wrappedValue = false
+        if let parentHasProceeded {
+            parentHasProceeded.wrappedValue = false
         } else {
             presentation.wrappedValue.dismiss()
         }

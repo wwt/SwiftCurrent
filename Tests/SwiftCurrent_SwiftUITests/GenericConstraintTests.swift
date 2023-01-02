@@ -135,37 +135,11 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
 
-//        XCTAssertThrowsError(try workflowView.find(WorkflowItem<FR2>.self))
         let fr1 = try workflowView.find(FR1.self)
-//        let parent = try fr1.find(relation: .parent, where: { view in
-//            do {
-//                try view.environment(\.workflowProxy)
-//                return true
-//            } catch {
-//                return false
-//            }
-//        })
         var wfi = try await workflowView.view(WorkflowItemWrapper<WorkflowItem<FR1>, WorkflowItemWrapper<WorkflowItem<FR2>, Never>>.self).actualView().hostAndInspect(with: \.inspection)
-//        let proxy = try parent.environment(\.workflowProxy)
-//        let wfv = try await MainActor.run { try workflowView.actualView() }.hostAndInspect(with: \.inspection)
-//        let exp = expectation(description: "")
-//        try await wfv.actualView().inspection.inspect(onReceive: proxy.proceedPublisher) { view in
-//            exp.fulfill()
-//        }
+
         try await wfi.actualView().proceed(.none)
-//        proxy.proceedInWorkflow()
-//        wait(for: [exp], timeout: 0.3)
-//        let parent = try fr1.find(relation: .parent, where: { view in
-//            view.v
-//            (view.content.view as? any _WorkflowItemProtocol) != nil
-//        })
-//        let proxy = try parent.group().environment(\.workflowProxy)
-//        try workflowView.environment(\.workflowProxy).proceedInWorkflow()
-////        try await workflowView.find(FR1.self).proceedInWorkflow()
-//        try await MainActor.run {
-//            XCTAssertEqual(try wfv.find(WorkflowItemWrapper<WorkflowItem<FR1>, WorkflowItemWrapper<WorkflowItem<FR2>, Never>>.self).actualView().hasProceeded, true)
-//        }
-//        XCTAssertNoThrow(try wfi.group().view(WorkflowItemWrapper<WorkflowItem<FR2>, Never>.self, 0).group().view(FR2.self, 0))
+
         XCTAssertNoThrow(try wfi.find(FR2.self))
     }
 
