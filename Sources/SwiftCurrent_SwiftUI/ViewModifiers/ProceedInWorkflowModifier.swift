@@ -1,14 +1,25 @@
-// swiftlint:disable:this file_name
-//  ViewExtensions.swift
+//
+//  ProceedModifier.swift
 //  SwiftCurrent
 //
-//  Created by Tyler Thompson on 12/24/22.
-//  Copyright © 2022 WWT and Tyler Thompson. All rights reserved.
+//  Created by Tyler Thompson on 1/2/23.
+//  Copyright © 2023 WWT and Tyler Thompson. All rights reserved.
 //  
 
+import Combine
 import SwiftUI
 import SwiftCurrent
-import Combine
+
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+public struct ProceedInWorkflowModifier<Pub: Publisher>: ViewModifier where Pub.Output == AnyWorkflow.PassedArgs, Pub.Failure == Never {
+    @State var publisher: Pub
+    @Environment(\.workflowProxy) var proxy
+
+    public func body(content: Content) -> some View {
+        content
+            .onReceive(publisher, perform: proxy.proceedInWorkflow(_:))
+    }
+}
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension View {

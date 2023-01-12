@@ -153,15 +153,17 @@ struct TestView_Previews: PreviewProvider {
 
 import SwiftCurrent
 struct FR1: View {
+    @State var shouldProceed = false
     var body: some View {
         WorkflowReader { proxy in
             VStack {
                 Text("This is \(String(describing: Self.self))")
-                Button("Navigate forward") { proxy.proceedInWorkflow() }
+                Button("Navigate forward") { proxy.proceedInWorkflow("some string") }
                 Button("Navigate backward") { try? proxy.backUpInWorkflow() }
                 Button("Abandon") { proxy.abandonWorkflow() }
             }
         }
+        .workflowLink(isPresented: $shouldProceed, value: "my string")
         .shouldLoad {
             guard case .shouldLoad(_, let shouldLoad) = Environment.shouldLoad(for: Self.self) else { return true }
             return shouldLoad
@@ -170,15 +172,17 @@ struct FR1: View {
 }
 
 struct FR2: View {
+    @State var shouldProceed = false
     var body: some View {
         WorkflowReader { proxy in
             VStack {
                 Text("This is \(String(describing: Self.self))")
-                Button("Navigate forward") { proxy.proceedInWorkflow() }
+                Button("Navigate forward") { shouldProceed = true }
                 Button("Navigate backward") { try? proxy.backUpInWorkflow() }
                 Button("Abandon") { proxy.abandonWorkflow() }
             }
         }
+        .workflowLink(isPresented: $shouldProceed)
         .shouldLoad {
             guard case .shouldLoad(_, let shouldLoad) = Environment.shouldLoad(for: Self.self) else { return true }
             return shouldLoad
@@ -187,15 +191,17 @@ struct FR2: View {
 }
 
 struct FR3: View {
+    @State var shouldProceed = false
     var body: some View {
         WorkflowReader { proxy in
             VStack {
                 Text("This is \(String(describing: Self.self))")
-                Button("Navigate forward") { proxy.proceedInWorkflow() }
+                Button("Navigate forward") { shouldProceed = true }
                 Button("Navigate backward") { try? proxy.backUpInWorkflow() }
                 Button("Abandon") { proxy.abandonWorkflow() }
             }
         }
+        .workflowLink(isPresented: $shouldProceed)
         .shouldLoad {
             guard case .shouldLoad(_, let shouldLoad) = Environment.shouldLoad(for: Self.self) else { return true }
             return shouldLoad
@@ -204,15 +210,17 @@ struct FR3: View {
 }
 
 struct FR4: View {
+    @State var shouldProceed = false
     var body: some View {
         WorkflowReader { proxy in
             VStack {
                 Text("This is \(String(describing: Self.self))")
-                Button("Navigate forward") { proxy.proceedInWorkflow() }
+                Button("Navigate forward") { shouldProceed = true }
                 Button("Navigate backward") { try? proxy.backUpInWorkflow() }
                 Button("Abandon") { proxy.abandonWorkflow() }
             }
         }
+        .workflowLink(isPresented: $shouldProceed)
         .shouldLoad {
             guard case .shouldLoad(_, let shouldLoad) = Environment.shouldLoad(for: Self.self) else { return true }
             return shouldLoad

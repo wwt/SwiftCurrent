@@ -20,11 +20,11 @@ public final class WorkflowProxy: ObservableObject {
     @Published var shouldLoad = true
 
     public func proceedInWorkflow() {
-        proceedPublisher.send(.none)
+        proceedInWorkflow(.none)
     }
 
     public func proceedInWorkflow<T>(_ args: T) {
-        proceedPublisher.send(.args(args))
+        proceedInWorkflow(.args(args))
     }
 
     public func proceedInWorkflow(_ args: AnyWorkflow.PassedArgs) {

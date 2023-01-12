@@ -34,7 +34,8 @@ public struct WorkflowItem<Content: View>: _WorkflowItemProtocol {
     public var launchStyle: State<LaunchStyle.SwiftUI.PresentationType> = State(wrappedValue: .default)
     let persistence: FlowPersistence.SwiftUI.Persistence = .default
 
-    @Environment(\.workflowArgs) var args
+    @Environment(\.workflowArgs) var environmentArgs
+    @State private var controller = Controller()
     @ViewBuilder var content: (AnyWorkflow.PassedArgs) -> Content
 
     @State private var shouldLoad: (AnyWorkflow.PassedArgs) -> Bool = { _ in true }
@@ -62,12 +63,13 @@ public struct WorkflowItem<Content: View>: _WorkflowItemProtocol {
         launchStyle = State(wrappedValue: presentationType)
         content = previous.content
         _shouldLoad = State(wrappedValue: shouldLoad)
+        _controller = previous._controller
     }
 
     public var body: some View {
-        content(args)
+        content(controller.argsForView(environmentArgs: environmentArgs))
     }
-
+    
     /// Provides a closure that executes *before* the view is added to the graph.
     /// - Parameter closure: Indicates whether the ``WorkflowItem`` should load.
     public func shouldLoad(_ closure: @escaping () -> Bool) -> Self {
@@ -106,6 +108,27 @@ public struct WorkflowItem<Content: View>: _WorkflowItemProtocol {
 //        _metadata = State(initialValue: metadata)
 //    }
 // #endif
+
+@available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
+extension WorkflowItem {
+    private class Controller {
+        private var args: AnyWorkflow.PassedArgs?
+
+        init() { }
+
+        init(args: AnyWorkflow.PassedArgs) {
+            self.args = args
+        }
+
+        func argsForView(environmentArgs: AnyWorkflow.PassedArgs) -> AnyWorkflow.PassedArgs {
+            guard let args else {
+                self.args = environmentArgs
+                return environmentArgs
+            }
+            return args
+        }
+    }
+}
 
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension WorkflowItem {
