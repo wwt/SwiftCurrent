@@ -158,7 +158,7 @@ struct FR1: View {
         WorkflowReader { proxy in
             VStack {
                 Text("This is \(String(describing: Self.self))")
-                Button("Navigate forward") { proxy.proceedInWorkflow("some string") }
+                Button("Navigate forward") { shouldProceed = true }
                 Button("Navigate backward") { try? proxy.backUpInWorkflow() }
                 Button("Abandon") { proxy.abandonWorkflow() }
             }

@@ -27,23 +27,15 @@ struct SwiftUIExampleApp: App {
                     WorkflowView {
                         WorkflowItem { FR1() }
                             .presentationType(.navigationLink)
-                        WorkflowGroup {
-                            if flag {
-                                WorkflowItem { FR2() }
-                                    .presentationType(.navigationLink)
-                            } else {
-                                WorkflowItem { FR3() }
-                                    .presentationType(.navigationLink)
-                            }
+                        if !flag {
+                            WorkflowItem { (args: String) in FR2() }
+                                .presentationType(.navigationLink)
                         }
+                        WorkflowItem { FR3() }
+                            .presentationType(.navigationLink)
                         WorkflowItem { FR4() }
 //                        WorkflowItem { SwiftCurrentOnboarding().transition(.slide) }
 //                        WorkflowItem { ContentView().transition(.slide) }
-                    }
-                }
-                .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
-                        flag = true
                     }
                 }
                 .preferredColorScheme(.dark)
