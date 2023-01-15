@@ -24,6 +24,7 @@ public struct NavigationWorkflowLinkModifier<Wrapped: _WorkflowItemProtocol>: Vi
     // A BuildEither (if/else) block AND wrap it in something that displays, like a List.
     // This method circumvents the ViewBuilder using the `return` keyword.
     // Because the returns *must* be the same type, we're stuck with AnyView.
+    // UPDATE: Even this seems to only work with reference types.
     public func body(content: Content) -> AnyView {
         let isActive = nextView == nil ? .constant(false) : $isActive
         if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
