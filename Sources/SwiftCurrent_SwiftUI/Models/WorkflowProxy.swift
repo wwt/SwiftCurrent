@@ -18,6 +18,7 @@ public final class WorkflowProxy: ObservableObject {
     let onFinishPublisher = CurrentValueSubject<AnyWorkflow.PassedArgs?, Never>(nil)
 
     @Published var shouldLoad = true
+    var passedArgs: AnyWorkflow.PassedArgs?
 
     public func proceedInWorkflow() {
         proceedInWorkflow(.none)
@@ -28,6 +29,7 @@ public final class WorkflowProxy: ObservableObject {
     }
 
     public func proceedInWorkflow(_ args: AnyWorkflow.PassedArgs) {
+        defer { passedArgs = args }
         proceedPublisher.send(args)
     }
 

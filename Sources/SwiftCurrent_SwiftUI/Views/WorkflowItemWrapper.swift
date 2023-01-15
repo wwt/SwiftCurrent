@@ -33,9 +33,12 @@ public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _Workflo
     @Environment(\.forwardProxyCalls) private var forwardProxyCalls
 
     @State private var args: AnyWorkflow.PassedArgs?
-    @Environment(\.workflowArgs) private var parentArgs
+    private var parentArgs: AnyWorkflow.PassedArgs? {
+        parentProxy.passedArgs
+    }
+//    @Environment(\.workflowArgs) private var parentArgs
     var passedArgs: AnyWorkflow.PassedArgs {
-        args ?? parentArgs
+        args ?? parentArgs ?? .none
     }
 
     init(content: Current) where Next == Never {
