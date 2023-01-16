@@ -53,19 +53,15 @@ extension InspectableView {
 
         return try await actual.inspection.inspect()
     }
-//
-//    func extractWrappedWrapper<C, C1, W1>() async throws -> InspectableView<ViewType.View<WorkflowItemWrapper<C1, W1>>> where View.T == WorkflowItemWrapper<C, WorkflowItemWrapper<C1, W1>> {
-//        let wrapped = try await actualView().getWrappedView()
-//        let mirror = Mirror(reflecting: try actualView())
-//        let model = try XCTUnwrap(mirror.descendant("_model") as? EnvironmentObject<WorkflowViewModel>)
-//        let launcher = try XCTUnwrap(mirror.descendant("_launcher") as? EnvironmentObject<Launcher>)
-//        DispatchQueue.main.async {
-//            ViewHosting.host(view: wrapped
-//                .environmentObject(model.wrappedValue)
-//                .environmentObject(launcher.wrappedValue))
-//        }
-//        return try await wrapped.inspection.inspect()
-//    }
+
+    func extractWrappedWrapper<C, C1, N1>() async throws -> InspectableView<ViewType.View<WorkflowItemWrapper<C1, N1>>> where View: CustomViewType & SingleViewContent, View.T == WorkflowItemWrapper<C, WorkflowItemWrapper<C1, N1>> {
+        let wrapped = try await actualView().getWrappedView()
+        DispatchQueue.main.async {
+            ViewHosting.host(view: wrapped)
+        }
+        
+        return try await wrapped.inspection.inspect()
+    }
 
 //    func findModalModifier<C, W: Inspectable>() throws -> InspectableView<ViewType.View<ModalModifier<W>>> where View.T == WorkflowItemWrapper<C, W> {
 //        try find(ModalModifier<W>.self)

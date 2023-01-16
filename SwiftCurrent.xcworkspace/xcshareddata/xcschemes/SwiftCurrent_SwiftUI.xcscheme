@@ -276,19 +276,10 @@
                   Identifier = "GenericConstraintTests/testWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToAnotherNeverItem()">
                </Test>
                <Test
-                  Identifier = "GenericConstraintTests/testWhenInputIsNeverWithDefaultFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem()">
-               </Test>
-               <Test
-                  Identifier = "GenericConstraintTests/testWhenInputIsNeverWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem()">
-               </Test>
-               <Test
                   Identifier = "GenericConstraintTests/testWhenInputIsNever_FlowPersistenceCanBeSetWithAutoclosure()">
                </Test>
                <Test
                   Identifier = "GenericConstraintTests/testWhenInputIsNever_FlowPersistenceCanBeSetWithClosure()">
-               </Test>
-               <Test
-                  Identifier = "GenericConstraintTests/testWhenInputIsNever_PresentationTypeCanBeSetWithAutoclosure()">
                </Test>
                <Test
                   Identifier = "LaunchStyleAdditionTests">
