@@ -41,7 +41,7 @@ extension InspectableView {
         self
     }
 
-    func extractWrappedWrapper() async throws -> Self {
+    @_disfavoredOverload func extractWrappedWrapper() async throws -> Self {
         self
     }
 
@@ -55,9 +55,10 @@ extension InspectableView {
     }
 
     func extractWrappedWrapper<C, C1, N1>() async throws -> InspectableView<ViewType.View<WorkflowItemWrapper<C1, N1>>> where View: CustomViewType & SingleViewContent, View.T == WorkflowItemWrapper<C, WorkflowItemWrapper<C1, N1>> {
-        let wrapped = try await actualView().getWrappedView()
-        DispatchQueue.main.async {
-            ViewHosting.host(view: wrapped)
+        let actual = try actualView()
+        let wrapped = try await actual.getWrappedView()
+        Task { @MainActor in
+            ViewHosting.host(view: wrapped.environment(\.workflowArgs, actual.passedArgs))
         }
         
         return try await wrapped.inspection.inspect()
