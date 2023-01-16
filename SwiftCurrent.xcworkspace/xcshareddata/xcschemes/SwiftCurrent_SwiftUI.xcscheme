@@ -237,13 +237,13 @@
                   Identifier = "GenericConstraintTests/testWhenInputIsNever_FlowPersistenceCanBeSetWithClosure()">
                </Test>
                <Test
-                  Identifier = "LaunchStyleAdditionTests">
+                  Identifier = "LaunchStyleAdditionTests/testKnownPresentationTypes_CanBeDecoded()">
                </Test>
                <Test
                   Identifier = "PersistenceTests">
                </Test>
                <Test
-                  Identifier = "SkipTests">
+                  Identifier = "SkipTests/testSkippingAllItemsInAWorkflow()">
                </Test>
                <Test
                   Identifier = "SwiftCurrent_ModalTests">
