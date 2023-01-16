@@ -339,10 +339,10 @@ final class GenericConstraintTests: XCTestCase, View {
         let expectedArgs = UUID().uuidString
 
         let workflowView = try await MainActor.run {
-            WorkflowView(launchingWith: expectedArgs) {
+            TestableWorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem { (args: AnyWorkflow.PassedArgs) in FR1(with: args) }.presentationType(.navigationLink)
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
+        }.hostAndInspect(with: \.inspection).extractWorkflowItemWrapper()
 
         XCTAssertEqual(try workflowView.find(WorkflowItem<FR1>.self).actualView().launchStyle.wrappedValue, .navigationLink)
     }
@@ -379,13 +379,14 @@ final class GenericConstraintTests: XCTestCase, View {
         let expectedArgs = UUID().uuidString
 
         let workflowView = try await MainActor.run {
-            WorkflowView(launchingWith: expectedArgs) {
+            TestableWorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem { (args: AnyWorkflow.PassedArgs) in FR1(with: args) }
                 WorkflowItem { FR2() }
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
+        }.hostAndInspect(with: \.inspection).extractWorkflowItemWrapper()
 
-        try await workflowView.find(FR1.self).proceedInWorkflow()
+        XCTAssertNoThrow(try workflowView.find(FR1.self))
+        try await workflowView.proceedInWorkflow()
         let view = try await workflowView.extractWrappedWrapper()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -450,13 +451,14 @@ final class GenericConstraintTests: XCTestCase, View {
         let expectedArgs = UUID().uuidString
 
         let workflowView = try await MainActor.run {
-            WorkflowView(launchingWith: expectedArgs) {
+            TestableWorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem { (args: AnyWorkflow.PassedArgs) in FR1(with: args) }
                 WorkflowItem { (args: AnyWorkflow.PassedArgs) in FR2(with: args) }
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
+        }.hostAndInspect(with: \.inspection).extractWorkflowItemWrapper()
 
-        try await workflowView.find(FR1.self).proceedInWorkflow()
+        XCTAssertNoThrow(try workflowView.find(FR1.self))
+        try await workflowView.proceedInWorkflow()
         let view = try await workflowView.extractWrappedWrapper()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
@@ -524,13 +526,14 @@ final class GenericConstraintTests: XCTestCase, View {
         let expectedArgs = UUID().uuidString
 
         let workflowView = try await MainActor.run {
-            WorkflowView(launchingWith: expectedArgs) {
+            TestableWorkflowView(launchingWith: expectedArgs) {
                 WorkflowItem { (args: AnyWorkflow.PassedArgs) in FR1(with: args) }
                 WorkflowItem { (args: Int) in FR2(with: args) }
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
+        }.hostAndInspect(with: \.inspection).extractWorkflowItemWrapper()
 
-        try await workflowView.find(FR1.self).proceedInWorkflow(1)
+        XCTAssertNoThrow(try workflowView.find(FR1.self))
+        try await workflowView.proceedInWorkflow(1)
         let view = try await workflowView.extractWrappedWrapper()
         XCTAssertNoThrow(try view.find(FR2.self))
     }
