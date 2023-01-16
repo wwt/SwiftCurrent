@@ -20,14 +20,15 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
             var body: some View { Text("FR1 type") }
         }
         let viewUnderTest = try await MainActor.run {
-            WorkflowView {
+            TestableWorkflowView {
                 WorkflowItem { FR1() }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
-
-        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
+        
+        XCTAssertNoThrow(try viewUnderTest.find(FR1.self))
+        try await viewUnderTest.proceedInWorkflow()
     }
-
+    
     func testArity2() async throws {
         struct FR1: View {
             var body: some View { Text("FR1 type") }
@@ -35,18 +36,20 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
         struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-
+        
         let viewUnderTest = try await MainActor.run {
-            WorkflowView {
+            TestableWorkflowView {
                 WorkflowItem { FR1() }
                 WorkflowItem { FR2() }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
-
-        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR2.self).proceedInWorkflow()
+        
+        XCTAssertNoThrow(try viewUnderTest.find(FR1.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR2.self))
+        try await viewUnderTest.proceedInWorkflow()
     }
-
+    
     func testArity3() async throws {
         struct FR1: View {
             var body: some View { Text("FR1 type") }
@@ -58,18 +61,21 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
             var body: some View { Text("FR3 type") }
         }
         let viewUnderTest = try await MainActor.run {
-            WorkflowView {
+            TestableWorkflowView {
                 WorkflowItem { FR1() }
                 WorkflowItem { FR2() }
                 WorkflowItem { FR3() }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
-
-        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR2.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR3.self).proceedInWorkflow()
+        
+        XCTAssertNoThrow(try viewUnderTest.find(FR1.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR2.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR3.self))
+        try await viewUnderTest.proceedInWorkflow()
     }
-
+    
     func testArity3_WithBuildOptional() async throws {
         struct FR1: View {
             var body: some View { Text("FR1 type") }
@@ -81,7 +87,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
             var body: some View { Text("FR3 type") }
         }
         let viewUnderTest = try await MainActor.run {
-            WorkflowView {
+            TestableWorkflowView {
                 WorkflowItem { FR1() }
                 if true {
                     WorkflowItem { FR2() }
@@ -89,12 +95,15 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
                 }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
-
-        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR2.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR3.self).proceedInWorkflow()
+        
+        XCTAssertNoThrow(try viewUnderTest.find(FR1.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR2.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR3.self))
+        try await viewUnderTest.proceedInWorkflow()
     }
-
+    
     func testArity3_WithBuildEither() async throws {
         struct FR1: View {
             var body: some View { Text("FR1 type") }
@@ -106,7 +115,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
             var body: some View { Text("FR3 type") }
         }
         let viewUnderTest = try await MainActor.run {
-            WorkflowView {
+            TestableWorkflowView {
                 WorkflowItem { FR1() }
                 if true {
                     WorkflowItem { FR2() }
@@ -117,12 +126,15 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
                 }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
-
-        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR2.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR3.self).proceedInWorkflow()
+        
+        XCTAssertNoThrow(try viewUnderTest.find(FR1.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR2.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR3.self))
+        try await viewUnderTest.proceedInWorkflow()
     }
-
+    
     func testArity4() async throws {
         struct FR1: View {
             var body: some View { Text("FR1 type") }
@@ -136,22 +148,26 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
         struct FR4: View {
             var body: some View { Text("FR4 type") }
         }
-
+        
         let viewUnderTest = try await MainActor.run {
-            WorkflowView {
+            TestableWorkflowView {
                 WorkflowItem { FR1() }
                 WorkflowItem { FR2() }
                 WorkflowItem { FR3() }
                 WorkflowItem { FR4() }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
-
-        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR2.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR3.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR4.self).proceedInWorkflow()
+        
+        XCTAssertNoThrow(try viewUnderTest.find(FR1.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR2.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR3.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR4.self))
+        try await viewUnderTest.proceedInWorkflow()
     }
-
+    
     func testArity5() async throws {
         struct FR1: View {
             var body: some View { Text("FR1 type") }
@@ -168,9 +184,9 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
         struct FR5: View {
             var body: some View { Text("FR5 type") }
         }
-
+        
         let viewUnderTest = try await MainActor.run {
-            WorkflowView {
+            TestableWorkflowView {
                 WorkflowItem { FR1() }
                 WorkflowItem { FR2() }
                 WorkflowItem { FR3() }
@@ -178,14 +194,19 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
                 WorkflowItem { FR5() }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
-
-        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR2.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR3.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR4.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR5.self).proceedInWorkflow()
+        
+        XCTAssertNoThrow(try viewUnderTest.find(FR1.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR2.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR3.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR4.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR5.self))
+        try await viewUnderTest.proceedInWorkflow()
     }
-
+    
     func testArity6() async throws {
         struct FR1: View {
             var body: some View { Text("FR1 type") }
@@ -205,9 +226,9 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
         struct FR6: View {
             var body: some View { Text("FR6 type") }
         }
-
+        
         let viewUnderTest = try await MainActor.run {
-            WorkflowView {
+            TestableWorkflowView {
                 WorkflowItem { FR1() }
                 WorkflowItem { FR2() }
                 WorkflowItem { FR3() }
@@ -216,15 +237,21 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
                 WorkflowItem { FR6() }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
-
-        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR2.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR3.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR4.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR5.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR6.self).proceedInWorkflow()
+        
+        XCTAssertNoThrow(try viewUnderTest.find(FR1.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR2.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR3.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR4.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR5.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR6.self))
+        try await viewUnderTest.proceedInWorkflow()
     }
-
+    
     func testArity7() async throws {
         struct FR1: View {
             var body: some View { Text("FR1 type") }
@@ -247,9 +274,9 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
         struct FR7: View {
             var body: some View { Text("FR7 type") }
         }
-
+        
         let viewUnderTest = try await MainActor.run {
-            WorkflowView {
+            TestableWorkflowView {
                 WorkflowItem { FR1() }
                 WorkflowItem { FR2() }
                 WorkflowItem { FR3() }
@@ -259,16 +286,23 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
                 WorkflowItem { FR7() }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
-
-        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR2.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR3.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR4.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR5.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR6.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR7.self).proceedInWorkflow()
+        
+        XCTAssertNoThrow(try viewUnderTest.find(FR1.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR2.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR3.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR4.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR5.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR6.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR7.self))
+        try await viewUnderTest.proceedInWorkflow()
     }
-
+    
     func testArity8() async throws {
         struct FR1: View {
             var body: some View { Text("FR1 type") }
@@ -294,9 +328,9 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
         struct FR8: View {
             var body: some View { Text("FR8 type") }
         }
-
+        
         let viewUnderTest = try await MainActor.run {
-            WorkflowView {
+            TestableWorkflowView {
                 WorkflowItem { FR1() }
                 WorkflowItem { FR2() }
                 WorkflowItem { FR3() }
@@ -307,17 +341,25 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
                 WorkflowItem { FR8() }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
-
-        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR2.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR3.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR4.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR5.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR6.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR7.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR8.self).proceedInWorkflow()
+        
+        XCTAssertNoThrow(try viewUnderTest.find(FR1.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR2.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR3.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR4.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR5.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR6.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR7.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR8.self))
+        try await viewUnderTest.proceedInWorkflow()
     }
-
+    
     func testArity9() async throws {
         struct FR1: View {
             var body: some View { Text("FR1 type") }
@@ -346,9 +388,9 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
         struct FR9: View {
             var body: some View { Text("FR9 type") }
         }
-
+        
         let viewUnderTest = try await MainActor.run {
-            WorkflowView {
+            TestableWorkflowView {
                 WorkflowItem { FR1() }
                 WorkflowItem { FR2() }
                 WorkflowItem { FR3() }
@@ -360,18 +402,27 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
                 WorkflowItem { FR9() }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
-
-        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR2.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR3.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR4.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR5.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR6.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR7.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR8.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR9.self).proceedInWorkflow()
+        
+        XCTAssertNoThrow(try viewUnderTest.find(FR1.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR2.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR3.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR4.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR5.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR6.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR7.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR8.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR9.self))
+        try await viewUnderTest.proceedInWorkflow()
     }
-
+    
     func testArity10() async throws {
         struct FR1: View {
             var body: some View { Text("FR1 type") }
@@ -403,9 +454,9 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
         struct FR10: View {
             var body: some View { Text("FR10 type") }
         }
-
+        
         let viewUnderTest = try await MainActor.run {
-            WorkflowView {
+            TestableWorkflowView {
                 WorkflowItem { FR1() }
                 WorkflowItem { FR2() }
                 WorkflowItem { FR3() }
@@ -418,19 +469,29 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
                 WorkflowItem { FR10() }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
-
-        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR2.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR3.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR4.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR5.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR6.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR7.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR8.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR9.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR10.self).proceedInWorkflow()
+        
+        XCTAssertNoThrow(try viewUnderTest.find(FR1.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR2.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR3.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR4.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR5.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR6.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR7.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR8.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR9.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR10.self))
+        try await viewUnderTest.proceedInWorkflow()
     }
-
+    
     func testArity5_WithWorkflowGroup() async throws {
         struct FR1: View {
             var body: some View { Text("FR1 type") }
@@ -462,9 +523,9 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
         struct FR10: View {
             var body: some View { Text("FR10 type") }
         }
-
+        
         let viewUnderTest = try await MainActor.run {
-            WorkflowView {
+            TestableWorkflowView {
                 WorkflowItem { FR1() }
                 WorkflowItem { FR2() }
                 WorkflowItem { FR3() }
@@ -479,19 +540,29 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
                 }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
-
-        try await viewUnderTest.find(FR1.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR2.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR3.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR4.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR5.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR6.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR7.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR8.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR9.self).proceedInWorkflow()
-        try await viewUnderTest.find(FR10.self).proceedInWorkflow()
+        
+        XCTAssertNoThrow(try viewUnderTest.find(FR1.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR2.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR3.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR4.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR5.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR6.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR7.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR8.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR9.self))
+        try await viewUnderTest.proceedInWorkflow()
+        XCTAssertNoThrow(try viewUnderTest.find(FR10.self))
+        try await viewUnderTest.proceedInWorkflow()
     }
-
+    
     func testUltramassiveWorkflow() async throws {
         struct FR1: View {
             var body: some View { Text("FR1 type") }
@@ -555,7 +626,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
         }
         
         let viewUnderTest = try await MainActor.run {
-            WorkflowView {
+            TestableWorkflowView {
                 WorkflowItem { FR1() }
                 WorkflowGroup {
                     WorkflowItem { FR2() }
@@ -584,7 +655,7 @@ final class SwiftCurrent_SwiftUI_WorkflowBuilderArityTests: XCTestCase {
                 }
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
-
+        
         try await MainActor.run {
             try viewUnderTest.find(FR1.self).actualView().proceedInWorkflow()
             try viewUnderTest.find(ViewType.View<FR2>.self, traversal: .depthFirst).actualView().proceedInWorkflow()

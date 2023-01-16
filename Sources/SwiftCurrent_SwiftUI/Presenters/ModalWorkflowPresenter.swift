@@ -16,7 +16,7 @@ public struct ModalWorkflowPresenter {
     @ViewBuilder public func present(content: some _WorkflowItemProtocol, nextView: (some _WorkflowItemProtocol)?, isActive: Binding<Bool>, style: LaunchStyle.SwiftUI.ModalPresentationStyle) -> some View {
         switch style {
             case .sheet:
-                content.sheet(isPresented: isActive) { nextView }
+                content.testableSheet(isPresented: isActive) { nextView }
             case .fullScreenCover:
                 content.fullScreenCover(isPresented: isActive) { nextView }
         }

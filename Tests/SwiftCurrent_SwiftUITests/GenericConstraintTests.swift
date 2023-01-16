@@ -109,7 +109,7 @@ extension FlowRepresentable {
         }
         let expectation = self.expectation(description: "FlowPersistence closure called")
         let workflowView = try await MainActor.run {
-            WorkflowView {
+            TestableWorkflowView {
                 WorkflowItem { FR1() }.persistence {
                     defer { expectation.fulfill() }
                     return .removedAfterProceeding
@@ -152,7 +152,7 @@ extension FlowRepresentable {
             var body: some View { Text(String(describing: Self.self)) }
         }
         let workflowView = try await MainActor.run {
-            WorkflowView {
+            TestableWorkflowView {
                 WorkflowItem { FR1() }.persistence(.removedAfterProceeding)
                 WorkflowItem { FR2() }
             }
@@ -173,7 +173,7 @@ extension FlowRepresentable {
             var body: some View { Text(String(describing: Self.self)) }
         }
         let workflowView = try await MainActor.run {
-            WorkflowView {
+            TestableWorkflowView {
                 WorkflowItem { FR1() }.persistence { .removedAfterProceeding }
                 WorkflowItem { FR2() }
             }
@@ -216,7 +216,7 @@ extension FlowRepresentable {
             init(with args: AnyWorkflow.PassedArgs) { }
         }
         let workflowView = try await MainActor.run {
-            WorkflowView {
+            TestableWorkflowView {
                 WorkflowItem { FR1() }.persistence(.removedAfterProceeding)
                 WorkflowItem { (args: AnyWorkflow.PassedArgs) in FR2(with: args) }
             }
@@ -238,7 +238,7 @@ extension FlowRepresentable {
             init(with args: AnyWorkflow.PassedArgs) { }
         }
         let workflowView = try await MainActor.run {
-            WorkflowView {
+            TestableWorkflowView {
                 WorkflowItem { FR1() }.persistence { .removedAfterProceeding }
                 WorkflowItem { (args: AnyWorkflow.PassedArgs) in FR2(with: args) }
             }
@@ -283,7 +283,7 @@ extension FlowRepresentable {
             init(with args: Int) { }
         }
         let workflowView = try await MainActor.run {
-            WorkflowView {
+            TestableWorkflowView {
                 WorkflowItem { FR1() }.persistence(.removedAfterProceeding)
                 WorkflowItem { (args: Int) in FR2(with: args) }
             }
@@ -306,7 +306,7 @@ extension FlowRepresentable {
             init(with args: Int) { }
         }
         let workflowView = try await MainActor.run {
-            WorkflowView {
+            TestableWorkflowView {
                 WorkflowItem { FR1() }.persistence { .removedAfterProceeding }
                 WorkflowItem { (args: Int) in FR2(with: args) }
             }
@@ -1654,7 +1654,7 @@ extension FlowRepresentable {
         }
         
         try XCTAssertThrowsFatalError {
-            _ = WorkflowView {
+            _ = TestableWorkflowView {
                 WorkflowItem { FR0() }
                 WorkflowItem { (args: String) in FR1(with: args) }.persistence(.removedAfterProceeding)
             }
@@ -2177,7 +2177,7 @@ extension FlowRepresentable {
 //        }
 //
 //        let workflowView = try await MainActor.run {
-//            WorkflowView {
+//            TestableWorkflowView {
 //                WorkflowItem { FR0() }
 //                WorkflowItem { FR1() }
 //                WorkflowItem { FR2() }
@@ -2244,7 +2244,7 @@ final class ThenProceedOnAppTests: XCTestCase {
 //        }
 //
 //        let workflowView = try await MainActor.run {
-//            WorkflowView {
+//            TestableWorkflowView {
 //                WorkflowItem { FR0() }
 //                WorkflowItem { FR1() }
 //                WorkflowItem { FR2() }
@@ -2311,7 +2311,7 @@ final class ThenProceedOnSceneTests: XCTestCase, Scene {
 //        }
 //
 //        let workflowView = try await MainActor.run {
-//            WorkflowView {
+//            TestableWorkflowView {
 //                WorkflowItem { FR0() }
 //                WorkflowItem { FR1() }
 //                WorkflowItem { FR2() }
