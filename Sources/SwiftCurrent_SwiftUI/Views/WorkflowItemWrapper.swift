@@ -96,7 +96,7 @@ public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _Workflo
         parentProxy.abandonWorkflow()
     }
 
-    private func finish(_ args: AnyWorkflow.PassedArgs?) {
+    func finish(_ args: AnyWorkflow.PassedArgs?) {
         guard args != nil else { return }
         parentProxy.onFinishPublisher.send(args)
     }

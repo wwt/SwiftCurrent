@@ -133,13 +133,15 @@ public struct WorkflowView<Content: View>: View {
                     onAbandon.forEach { $0() }
                     id = UUID()
                 }
-                .onReceive(proxy.onFinishPublisher) { args in
-                    guard let args = args else { return }
-                    onFinish.forEach { $0(args) }
-                }
+                .onReceive(proxy.onFinishPublisher, perform: finish)
                 .onReceive(inspection.notice) { inspection.visit(self, $0) }
                 .id(id)
         }
+    }
+
+    func finish(_ args: AnyWorkflow.PassedArgs?) {
+        guard let args = args else { return }
+        onFinish.forEach { $0(args) }
     }
 }
 

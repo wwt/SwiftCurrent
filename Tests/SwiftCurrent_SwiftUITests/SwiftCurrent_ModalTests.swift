@@ -37,22 +37,21 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 //        XCTAssertThrowsError(try viewUnderTest.sheet())
 //    }
 //
-    #warning("OnFinish does not work")
-    func testWorkflowCanBeFollowed() async throws {
+    @MainActor func testWorkflowCanBeFollowed() async throws {
         struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
         struct FR2: View {
             var body: some View { Text("FR2 type") }
         }
-//        let expectOnFinish = expectation(description: "OnFinish called")
+        let expectOnFinish = expectation(description: "OnFinish called")
         let workflowView = try await MainActor.run {
             TestableWorkflowView {
                 WorkflowItem { FR1() }.presentationType(.modal)
                 WorkflowItem { FR2() }
             }
             .onFinish { _ in
-//                expectOnFinish.fulfill()
+                expectOnFinish.fulfill()
             }
         }
         .hostAndInspect(with: \.inspection)
@@ -66,10 +65,10 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
         let fr2 = try wfr2.find(FR2.self)
         XCTAssertEqual(try fr2.text().string(), "FR2 type")
 
-        try await wfr1.actualView().hostAndInspect(with: \.inspection)
-        try await wfr2.proceedInWorkflow()
+        try await wfr2.onFinish { try workflowView.actualView().finish($0) }
+            .proceedInWorkflow()
 
-//        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
     }
 //
 //    func testWorkflowCanBeFollowed_WithWorkflowGroup() async throws {

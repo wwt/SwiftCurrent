@@ -7,8 +7,10 @@
 
 import Foundation
 import SwiftUI
-import ViewInspector
+import Combine
 import XCTest
+
+import ViewInspector
 import SwiftCurrent
 
 @testable import SwiftCurrent_SwiftUI
@@ -57,8 +59,11 @@ extension InspectableView {
     func extractWrappedWrapper<C, C1, N1>() async throws -> InspectableView<ViewType.View<WorkflowItemWrapper<C1, N1>>> where View: CustomViewType & SingleViewContent, View.T == WorkflowItemWrapper<C, WorkflowItemWrapper<C1, N1>> {
         let actual = try actualView()
         let wrapped = try await actual.getWrappedView()
+        let parentProxy = try group().environment(\.workflowProxy)
         Task { @MainActor in
-            ViewHosting.host(view: wrapped.environment(\.workflowArgs, actual.passedArgs))
+            ViewHosting.host(view: wrapped
+                .environment(\.workflowArgs, actual.passedArgs)
+                .environment(\.workflowProxy, parentProxy))
         }
         
         return try await wrapped.inspection.inspect()
@@ -69,14 +74,27 @@ extension InspectableView {
 //    }
 }
 
+fileprivate var _subscribers = Set<AnyCancellable>()
 @available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 extension InspectableView where View: CustomViewType & SingleViewContent {
+    @discardableResult func onFinish(_ perform: @escaping (AnyWorkflow.PassedArgs) throws -> Void, file: StaticString = #file, line: UInt = #line) throws -> Self where View: CustomViewType & SingleViewContent, View.T: Proceedable {
+        try group().environment(\.workflowProxy)
+            .onFinishPublisher
+            .compactMap { $0 }
+            .sink {
+                do { try perform($0) }
+                catch { XCTFail(error.localizedDescription, file: file, line: line) }
+            }
+            .store(in: &_subscribers)
+        return self
+    }
+
     func proceedInWorkflow() async throws where View: CustomViewType & SingleViewContent, View.T: Proceedable {
-        try await MainActor.run { try actualView().proceed(.none) }
+        try await proceedInWorkflow(.none)
     }
 
     func proceedInWorkflow<T>(_ args: T) async throws where View: CustomViewType & SingleViewContent, View.T: Proceedable {
-        try await MainActor.run { try actualView().proceed(.args(args)) }
+        try await proceedInWorkflow(.args(args))
     }
 
     func proceedInWorkflow(_ args: AnyWorkflow.PassedArgs) async throws where View: CustomViewType & SingleViewContent, View.T: Proceedable {
