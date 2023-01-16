@@ -82,7 +82,7 @@ final class SkipTests: XCTestCase, View {
         XCTAssertNoThrow(try wfr4.find(FR4.self))
     }
 
-    func testSkippingLastItemInAWorkflow() async throws {
+    @MainActor func testSkippingLastItemInAWorkflow() async throws {
         struct FR1: View {
             var body: some View { Text("FR1 type") }
         }
@@ -104,16 +104,19 @@ final class SkipTests: XCTestCase, View {
                 WorkflowItem { FR4() }.shouldLoad(false)
             }
             .onFinish { _ in expectOnFinish.fulfill() }
-        }.hostAndInspect(with: \.inspection).extractWorkflowItemWrapper()
+        }.hostAndInspect(with: \.inspection)
 
-        XCTAssertNoThrow(try workflowView.find(FR1.self))
-        try await workflowView.proceedInWorkflow()
-        let wfr2 = try await workflowView.extractWrappedWrapper()
+        let wfr1 = try await workflowView.extractWorkflowItemWrapper()
+
+        XCTAssertNoThrow(try wfr1.find(FR1.self))
+        try await wfr1.proceedInWorkflow()
+        let wfr2 = try await wfr1.extractWrappedWrapper()
         XCTAssertNoThrow(try wfr2.find(FR2.self))
         try await wfr2.proceedInWorkflow()
         let wfr3 = try await wfr2.extractWrappedWrapper()
         XCTAssertNoThrow(try wfr3.find(FR3.self))
-        try await wfr3.proceedInWorkflow()
+        try await wfr3.onFinish { try workflowView.actualView().finish($0) }
+            .proceedInWorkflow()
         let wfr4 = try await wfr3.extractWrappedWrapper()
         XCTAssertThrowsError(try wfr4.find(FR4.self))
 
@@ -152,7 +155,7 @@ final class SkipTests: XCTestCase, View {
         XCTAssertNoThrow(try wfr4.find(FR4.self))
     }
 
-    func testSkippingAllItemsInAWorkflow() async throws {
+    @MainActor func testSkippingAllItemsInAWorkflow() async throws {
         struct FR1: View {
             var body: some View { Text("FR1 type") }
             func shouldLoad() -> Bool { false }
@@ -178,12 +181,16 @@ final class SkipTests: XCTestCase, View {
                 WorkflowItem { FR4() }.shouldLoad(false)
             }
             .onFinish { _ in expectOnFinish.fulfill() }
-        }.hostAndInspect(with: \.inspection).extractWorkflowItemWrapper()
+        }.hostAndInspect(with: \.inspection)
 
-        XCTAssertThrowsError(try workflowView.find(FR1.self))
-        XCTAssertThrowsError(try workflowView.find(FR2.self))
-        XCTAssertThrowsError(try workflowView.find(FR3.self))
-        XCTAssertThrowsError(try workflowView.find(FR4.self))
+        let wrapper = try await workflowView.extractWorkflowItemWrapper().onFinish {
+            try workflowView.actualView().finish($0)
+        }
+
+        XCTAssertThrowsError(try wrapper.find(FR1.self))
+        XCTAssertThrowsError(try wrapper.find(FR2.self))
+        XCTAssertThrowsError(try wrapper.find(FR3.self))
+        XCTAssertThrowsError(try wrapper.find(FR4.self))
 
         wait(for: [expectOnFinish], timeout: TestConstant.timeout)
     }

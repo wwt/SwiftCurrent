@@ -246,9 +246,6 @@
                   Identifier = "SkipTests/testSkippingAllItemsInAWorkflow()">
                </Test>
                <Test
-                  Identifier = "SkipTests/testSkippingLastItemInAWorkflow()">
-               </Test>
-               <Test
                   Identifier = "SwiftCurrent_NavigationLinkTests">
                </Test>
                <Test
