@@ -24,7 +24,7 @@ public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _Workflo
         parentShouldLoad && proxy.shouldLoad && content._shouldLoad(args: passedArgs)
     }
 
-    @State var content: Current
+    @State private var content: Current
     @State private var nextView: Next?
 
     @State private var hasProceeded = false

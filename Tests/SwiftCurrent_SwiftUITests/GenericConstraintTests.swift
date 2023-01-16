@@ -129,18 +129,16 @@ final class GenericConstraintTests: XCTestCase, View {
             var body: some View { Text(String(describing: Self.self)) }
         }
         let workflowView = try await MainActor.run {
-            WorkflowView {
+            TestableWorkflowView {
                 WorkflowItem { FR1() }
                 WorkflowItem { FR2() }
             }
-        }.hostAndInspect(with: \.inspection).extractWorkflowLauncher().extractWorkflowItemWrapper()
+        }.hostAndInspect(with: \.inspection).extractWorkflowItemWrapper()
 
-        let fr1 = try workflowView.find(FR1.self)
-        var wfi = try await workflowView.view(WorkflowItemWrapper<WorkflowItem<FR1>, WorkflowItemWrapper<WorkflowItem<FR2>, Never>>.self).actualView().hostAndInspect(with: \.inspection)
-
-        try await wfi.actualView().proceed(.none)
-
-        XCTAssertNoThrow(try wfi.find(FR2.self))
+        XCTAssertNoThrow(try workflowView.find(FR1.self))
+        try await workflowView.proceedInWorkflow()
+        let view = try await workflowView.actualView().getWrappedView()
+        XCTAssertNoThrow(try workflowView.find(type(of: view)).find(FR2.self))
     }
 
     func testWhenInputIsNeverWithAutoclosureFlowPersistence_WorkflowCanProceedToAnotherNeverItem() async throws {
