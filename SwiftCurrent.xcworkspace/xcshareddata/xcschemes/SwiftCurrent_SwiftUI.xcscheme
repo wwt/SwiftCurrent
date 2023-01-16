@@ -87,12 +87,6 @@
                   Identifier = "GenericConstraintTests/testProceedingWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem()">
                </Test>
                <Test
-                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem()">
-               </Test>
-               <Test
-                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsAnyWorkflowPassedArgsWithDefaultFlowPersistence_WorkflowCanProceedToNeverItem()">
-               </Test>
-               <Test
                   Identifier = "GenericConstraintTests/testProceedingWhenInputIsAnyWorkflowPassedArgs_FlowPersistenceCanBeSetWithAutoclosure()">
                </Test>
                <Test
@@ -160,12 +154,6 @@
                </Test>
                <Test
                   Identifier = "GenericConstraintTests/testProceedingWhenInputIsNeverWithClosureFlowPersistence_WorkflowCanProceedToAnotherNeverItem()">
-               </Test>
-               <Test
-                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsNeverWithDefaultFlowPersistence_WorkflowCanProceedToADifferentInputTypeItem()">
-               </Test>
-               <Test
-                  Identifier = "GenericConstraintTests/testProceedingWhenInputIsNeverWithDefaultFlowPersistence_WorkflowCanProceedToAnAnyWorkflowPassedArgsItem()">
                </Test>
                <Test
                   Identifier = "GenericConstraintTests/testProceedingWhenInputIsNever_FlowPersistenceCanBeSetWithAutoclosure()">
