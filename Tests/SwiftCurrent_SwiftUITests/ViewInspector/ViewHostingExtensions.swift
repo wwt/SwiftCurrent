@@ -86,14 +86,14 @@ extension InspectableView where View: CustomViewType & SingleViewContent {
         try await MainActor.run { try actualView().proceed(args) }
     }
 
-    func proceedInWorkflow() async throws {
+    @_disfavoredOverload func proceedInWorkflow() async throws {
         try await MainActor.run {
             XCTFail("Proceed for tests not implemented.")
 //            try actualView().proceedInWorkflow()
         }
     }
 
-    func proceedInWorkflow<T>(_ args: T) async throws {
+    @_disfavoredOverload func proceedInWorkflow<T>(_ args: T) async throws {
         try await MainActor.run {
             XCTFail("Proceed for tests not implemented.")
 //            try actualView().proceedInWorkflow(args)

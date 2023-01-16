@@ -135,10 +135,13 @@ final class GenericConstraintTests: XCTestCase, View {
             }
         }.hostAndInspect(with: \.inspection).extractWorkflowItemWrapper()
 
+        try await MainActor.run { assertSnapshot(matching: try workflowView.actualView(), as: .image(on: .iPhone13Pro)) }
+
         XCTAssertNoThrow(try workflowView.find(FR1.self))
         try await workflowView.proceedInWorkflow()
         let view = try await workflowView.actualView().getWrappedView()
         XCTAssertNoThrow(try workflowView.find(type(of: view)).find(FR2.self))
+        try await MainActor.run { assertSnapshot(matching: try workflowView.actualView(), as: .image(on: .iPhone13Pro)) }
     }
 
     func testWhenInputIsNeverWithAutoclosureFlowPersistence_WorkflowCanProceedToAnotherNeverItem() async throws {
