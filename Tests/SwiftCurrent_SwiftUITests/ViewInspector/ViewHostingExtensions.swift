@@ -81,6 +81,7 @@ extension InspectableView where View: CustomViewType & SingleViewContent {
         try group().environment(\.workflowProxy)
             .onFinishPublisher
             .compactMap { $0 }
+            .first()
             .sink {
                 do { try perform($0) }
                 catch { XCTFail(error.localizedDescription, file: file, line: line) }

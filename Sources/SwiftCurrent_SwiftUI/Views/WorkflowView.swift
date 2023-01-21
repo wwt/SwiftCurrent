@@ -52,7 +52,6 @@ public struct WorkflowView<Content: View>: View {
     @State private var abandonOnPublisher: AnyPublisher<Void, Never> = Empty(completeImmediately: false).eraseToAnyPublisher()
 
     @WorkflowBuilder private var workflow: Content
-    #warning("Needed?")
     let inspection = Inspection<Self>() // needed?
 
     /**

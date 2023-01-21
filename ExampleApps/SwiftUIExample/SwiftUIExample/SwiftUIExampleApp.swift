@@ -26,13 +26,8 @@ struct SwiftUIExampleApp: App {
                 NavigationStack {
                     WorkflowView {
                         WorkflowItem { FR1() }
-                            .presentationType(.navigationLink)
-                        if !flag {
-                            WorkflowItem { (args: String) in FR2().onAppear { print(args) } }
-                                .presentationType(.navigationLink)
-                        }
+                        WorkflowItem { FR2() }
                         WorkflowItem { FR3() }
-                            .presentationType(.navigationLink)
                         WorkflowItem { FR4() }
 //                        WorkflowItem { SwiftCurrentOnboarding().transition(.slide) }
 //                        WorkflowItem { ContentView().transition(.slide) }

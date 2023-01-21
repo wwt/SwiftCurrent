@@ -65,13 +65,13 @@ class SwiftCurrent_SwiftUI_UITests: XCTestCase {
         app.buttons.matching(identifier: "Navigate forward").firstMatch.tap()
 
         XCTAssert(app.staticTexts["This is FR3"].exists)
-        app.buttons.matching(identifier: "Navigate forward").element(boundBy: 1).tap()
+        app.buttons.matching(identifier: "Navigate forward").firstMatch.tap()
 
         XCTAssert(app.staticTexts["This is FR4"].exists)
-        app.buttons.matching(identifier: "Navigate backward").element(boundBy: 2).tap()
+        app.buttons.matching(identifier: "Navigate backward").element(boundBy: 1).tap()
 
         XCTAssert(app.staticTexts["This is FR3"].exists)
-        app.buttons.matching(identifier: "Navigate backward").element(boundBy: 1).tap()
+        app.buttons.matching(identifier: "Navigate backward").firstMatch.tap()
 
         XCTAssert(app.staticTexts["This is FR2"].exists)
         app.buttons.matching(identifier: "Navigate backward").firstMatch.tap()

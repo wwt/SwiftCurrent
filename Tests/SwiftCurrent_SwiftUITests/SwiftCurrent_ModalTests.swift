@@ -26,17 +26,6 @@ extension InspectableView where View == ViewType.Sheet {
 
 @available(iOS 15.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 final class SwiftCurrent_ModalTests: XCTestCase, Scene {
-//    func testModalModifier() throws {
-//        let sampleView = Text("Test")
-//        let binding = Binding(wrappedValue: true)
-//        let viewUnderTest = try sampleView.modal(isPresented: binding, style: .sheet, destination: Text("nextView")).inspect()
-//        XCTAssertNoThrow(try viewUnderTest.sheet())
-//        XCTAssert(try viewUnderTest.sheet().isPresented())
-//        XCTAssertEqual(try viewUnderTest.sheet().text().string(), "nextView")
-//        binding.wrappedValue = false
-//        XCTAssertThrowsError(try viewUnderTest.sheet())
-//    }
-//
     @MainActor func testWorkflowCanBeFollowed() async throws {
         struct FR1: View {
             var body: some View { Text("FR1 type") }
@@ -70,42 +59,43 @@ final class SwiftCurrent_ModalTests: XCTestCase, Scene {
 
         wait(for: [expectOnFinish], timeout: TestConstant.timeout)
     }
-//
-//    func testWorkflowCanBeFollowed_WithWorkflowGroup() async throws {
-//        struct FR1: View, FlowRepresentable, Inspectable {
-////            var body: some View { Text("FR1 type") }
-//        }
-//        struct FR2: View, FlowRepresentable, Inspectable {
-////            var body: some View { Text("FR2 type") }
-//        }
-//        let expectOnFinish = expectation(description: "OnFinish called")
-//        let wfr1 = try await MainActor.run {
-//            TestableWorkflowView {
-//                WorkflowItem { FR1() }
-//                WorkflowGroup {
-//                    WorkflowItem { FR2() }.presentationType(.modal)
-//                }
-//            }
-//            .onFinish { _ in
-//                expectOnFinish.fulfill()
-//            }
-//        }
-//        .hostAndInspect(with: \.inspection)
-//        .extractWorkflowLauncher()
-//        .extractWorkflowItemWrapper()
-//
-//        XCTAssertEqual(try wfr1.find(FR1.self).text().string(), "FR1 type")
-//        XCTAssertNoThrow(try wfr1.findModalModifier())
-//        XCTAssertNoThrow(try wfr1.find(FR1.self))
-//try await wfr1.proceedInWorkflow()
-//        let wfr2 = try await wfr1.extractWrappedWrapper()
-//
-//        let fr2 = try wfr2.find(FR2.self)
-//        XCTAssertEqual(try fr2.text().string(), "FR2 type")
-//        try await fr2.proceedInWorkflow()
-//
-//        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
-//    }
+
+    @MainActor func testWorkflowCanBeFollowed_WithWorkflowGroup() async throws {
+        struct FR1: View {
+            var body: some View { Text("FR1 type") }
+        }
+        struct FR2: View {
+            var body: some View { Text("FR2 type") }
+        }
+        let expectOnFinish = expectation(description: "OnFinish called")
+
+        let workflowView = try await MainActor.run {
+            TestableWorkflowView {
+                WorkflowItem { FR1() }
+                WorkflowGroup {
+                    WorkflowItem { FR2() }.presentationType(.modal)
+                }
+            }
+            .onFinish { _ in
+                expectOnFinish.fulfill()
+            }
+        }
+        .hostAndInspect(with: \.inspection)
+
+        let wfr1 = try await workflowView.extractWorkflowItemWrapper()
+
+        XCTAssertEqual(try wfr1.find(FR1.self).text().string(), "FR1 type")
+        try await wfr1.proceedInWorkflow()
+        XCTAssertNoThrow(try wfr1.find(ViewType.Sheet.self))
+        let wfr2 = try await wfr1.extractWrappedWrapper()
+        let fr2 = try wfr2.find(FR2.self)
+        XCTAssertEqual(try fr2.text().string(), "FR2 type")
+
+        try await wfr2.onFinish { try workflowView.actualView().finish($0) }
+            .proceedInWorkflow()
+
+        wait(for: [expectOnFinish], timeout: TestConstant.timeout)
+    }
 //
 //    func testWorkflowCanBeFollowed_WithOptionalWorkflowItem_WhenTrue() async throws {
 //        struct FR1: View, FlowRepresentable, Inspectable {

@@ -13,7 +13,6 @@ import SwiftCurrent
 @available(iOS 14.0, macOS 11, tvOS 14.0, watchOS 7.0, *)
 public struct WorkflowItemWrapper<Current: _WorkflowItemProtocol, Next: _WorkflowItemProtocol>: _WorkflowItemProtocol, Workflow {
     public var launchStyle: State<LaunchStyle.SwiftUI.PresentationType> { content.launchStyle }
-    #warning("Needed?")
     let inspection = Inspection<Self>() // needed?
 
     @StateObject private var proxy = WorkflowProxy()

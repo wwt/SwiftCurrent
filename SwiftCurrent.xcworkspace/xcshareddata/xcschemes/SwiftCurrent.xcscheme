@@ -85,26 +85,6 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CAC34B4F26A07F840039A373"
-               BuildableName = "SwiftUIExampleTests.xctest"
-               BlueprintName = "SwiftUIExampleTests"
-               ReferencedContainer = "container:ExampleApps/SwiftUIExample/SwiftUIExample.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CAF586AD256CF2B40044C864"
-               BuildableName = "UIKitExampleTests.xctest"
-               BlueprintName = "UIKitExampleTests"
-               ReferencedContainer = "container:ExampleApps/UIKitExample/UIKitExample.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "SwiftCurrent-SwiftUITests"
                BuildableName = "SwiftCurrent-SwiftUITests"
                BlueprintName = "SwiftCurrent-SwiftUITests"
@@ -139,6 +119,16 @@
                BuildableName = "SwiftCurrentMultiPlatformTests"
                BlueprintName = "SwiftCurrentMultiPlatformTests"
                ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CAF586AD256CF2B40044C864"
+               BuildableName = "UIKitExampleTests.xctest"
+               BlueprintName = "UIKitExampleTests"
+               ReferencedContainer = "container:ExampleApps/UIKitExample/UIKitExample.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
