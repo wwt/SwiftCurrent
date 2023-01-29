@@ -154,16 +154,18 @@ struct TestView_Previews: PreviewProvider {
 import SwiftCurrent
 struct FR1: View {
     @State var shouldProceed = false
+    @State var shouldAbandon = false
+    @State var shouldBackUp = false
     var body: some View {
-        WorkflowReader { proxy in
-            VStack {
-                Text("This is \(String(describing: Self.self))")
-                Button("Navigate forward") { shouldProceed = true }
-                Button("Navigate backward") { try? proxy.backUpInWorkflow() }
-                Button("Abandon") { proxy.abandonWorkflow() }
-            }
+        VStack {
+            Text("This is \(String(describing: Self.self))")
+            Button("Navigate forward") { shouldProceed = true }
+            Button("Navigate backward") { shouldBackUp = true }
+            Button("Abandon") { shouldAbandon = true }
         }
         .workflowLink(isPresented: $shouldProceed, value: "my string")
+        .backUpInWorkflow($shouldBackUp)
+        .abandonWorkflow($shouldAbandon)
         .shouldLoad {
             guard case .shouldLoad(_, let shouldLoad) = Environment.shouldLoad(for: Self.self) else { return true }
             return shouldLoad
@@ -173,16 +175,18 @@ struct FR1: View {
 
 struct FR2: View {
     @State var shouldProceed = false
+    @State var shouldAbandon = false
+    @State var shouldBackUp = false
     var body: some View {
-        WorkflowReader { proxy in
-            VStack {
-                Text("This is \(String(describing: Self.self))")
-                Button("Navigate forward") { shouldProceed = true }
-                Button("Navigate backward") { try? proxy.backUpInWorkflow() }
-                Button("Abandon") { proxy.abandonWorkflow() }
-            }
+        VStack {
+            Text("This is \(String(describing: Self.self))")
+            Button("Navigate forward") { shouldProceed = true }
+            Button("Navigate backward") { shouldBackUp = true }
+            Button("Abandon") { shouldAbandon = true }
         }
         .workflowLink(isPresented: $shouldProceed)
+        .backUpInWorkflow($shouldBackUp)
+        .abandonWorkflow($shouldAbandon)
         .shouldLoad {
             guard case .shouldLoad(_, let shouldLoad) = Environment.shouldLoad(for: Self.self) else { return true }
             return shouldLoad
@@ -192,16 +196,18 @@ struct FR2: View {
 
 struct FR3: View {
     @State var shouldProceed = false
+    @State var shouldAbandon = false
+    @State var shouldBackUp = false
     var body: some View {
-        WorkflowReader { proxy in
-            VStack {
-                Text("This is \(String(describing: Self.self))")
-                Button("Navigate forward") { shouldProceed = true }
-                Button("Navigate backward") { try? proxy.backUpInWorkflow() }
-                Button("Abandon") { proxy.abandonWorkflow() }
-            }
+        VStack {
+            Text("This is \(String(describing: Self.self))")
+            Button("Navigate forward") { shouldProceed = true }
+            Button("Navigate backward") { shouldBackUp = true }
+            Button("Abandon") { shouldAbandon = true }
         }
         .workflowLink(isPresented: $shouldProceed)
+        .backUpInWorkflow($shouldBackUp)
+        .abandonWorkflow($shouldAbandon)
         .shouldLoad {
             guard case .shouldLoad(_, let shouldLoad) = Environment.shouldLoad(for: Self.self) else { return true }
             return shouldLoad
@@ -211,16 +217,18 @@ struct FR3: View {
 
 struct FR4: View {
     @State var shouldProceed = false
+    @State var shouldAbandon = false
+    @State var shouldBackUp = false
     var body: some View {
-        WorkflowReader { proxy in
-            VStack {
-                Text("This is \(String(describing: Self.self))")
-                Button("Navigate forward") { shouldProceed = true }
-                Button("Navigate backward") { try? proxy.backUpInWorkflow() }
-                Button("Abandon") { proxy.abandonWorkflow() }
-            }
+        VStack {
+            Text("This is \(String(describing: Self.self))")
+            Button("Navigate forward") { shouldProceed = true }
+            Button("Navigate backward") { shouldBackUp = true }
+            Button("Abandon") { shouldAbandon = true }
         }
         .workflowLink(isPresented: $shouldProceed)
+        .backUpInWorkflow($shouldBackUp)
+        .abandonWorkflow($shouldAbandon)
         .shouldLoad {
             guard case .shouldLoad(_, let shouldLoad) = Environment.shouldLoad(for: Self.self) else { return true }
             return shouldLoad

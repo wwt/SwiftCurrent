@@ -33,7 +33,7 @@ public final class WorkflowProxy: ObservableObject {
         proceedPublisher.send(args)
     }
 
-    public func backUpInWorkflow() throws {
+    public func backUpInWorkflow() {
         backupPublisher.send()
     }
 

@@ -26,11 +26,13 @@ struct SwiftUIExampleApp: App {
                 NavigationStack {
                     WorkflowView {
                         WorkflowItem { FR1() }
+                            .presentationType(.navigationLink)
                         WorkflowItem { FR2() }
+                            .presentationType(.navigationLink)
                         WorkflowItem { FR3() }
+                            .presentationType(.navigationLink)
                         WorkflowItem { FR4() }
-//                        WorkflowItem { SwiftCurrentOnboarding().transition(.slide) }
-//                        WorkflowItem { ContentView().transition(.slide) }
+                            .presentationType(.navigationLink)
                     }
                 }
                 .preferredColorScheme(.dark)
